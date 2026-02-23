@@ -1,0 +1,8 @@
+.DS_Store
+*.swp
+*.swo
+*~
+.Spotlight-V100
+.Trashes
+__MACOSX
+Thumbs.db

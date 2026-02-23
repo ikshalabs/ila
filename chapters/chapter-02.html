@@ -1,0 +1,1930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 02: Authentication and Tenant Isolation — ILA Rails + React</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    /* ═══════════════════════════════════════════════
+       ILA DESIGN SYSTEM — v1.0
+       Iksha Learning Academy
+       ═══════════════════════════════════════════════ */
+
+    :root {
+      /* Palette */
+      --ink:        #0f172a;
+      --ink-light:  #334155;
+      --ink-muted:  #64748b;
+      --surface:    #ffffff;
+      --surface-alt:#f8fafc;
+      --surface-warm:#fffbeb;
+      --border:     #e2e8f0;
+      --border-light:#f1f5f9;
+
+      /* Brand */
+      --teal-50:  #f0fdfa;
+      --teal-100: #ccfbf1;
+      --teal-200: #99f6e4;
+      --teal-500: #14b8a6;
+      --teal-600: #0d9488;
+      --teal-700: #0f766e;
+      --teal-800: #115e59;
+      --teal-900: #134e4a;
+
+      --blue-50:  #eff6ff;
+      --blue-100: #dbeafe;
+      --blue-500: #3b82f6;
+      --blue-600: #2563eb;
+      --blue-700: #1d4ed8;
+
+      --amber-50:  #fffbeb;
+      --amber-100: #fef3c7;
+      --amber-500: #f59e0b;
+      --amber-600: #d97706;
+
+      --red-50:   #fef2f2;
+      --red-100:  #fee2e2;
+      --red-500:  #ef4444;
+      --red-600:  #dc2626;
+
+      --purple-50:  #faf5ff;
+      --purple-100: #f3e8ff;
+      --purple-500: #a855f7;
+      --purple-600: #9333ea;
+
+      /* Typography */
+      --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-serif: 'Instrument Serif', Georgia, serif;
+      --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
+
+      /* Spacing */
+      --content-max: 780px;
+      --sidebar-width: 280px;
+
+      /* Transitions */
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--ink);
+      background: var(--surface);
+    }
+
+    /* ── PROGRESS BAR ─────────────────────────── */
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--teal-500), var(--blue-500));
+      z-index: 1000;
+      transition: width 0.15s var(--ease);
+    }
+
+    /* ── TOP NAV ──────────────────────────────── */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+    }
+
+    .top-nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--teal-800);
+    }
+
+    .nav-brand-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--teal-600), var(--teal-800));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .nav-brand-text {
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-chapter-nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      color: var(--ink-muted);
+      border: 1px solid var(--border);
+      background: white;
+      transition: all 0.2s var(--ease);
+      cursor: pointer;
+    }
+
+    .nav-btn:hover {
+      color: var(--ink);
+      border-color: var(--teal-500);
+      background: var(--teal-50);
+    }
+
+    .nav-btn.disabled {
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    .nav-current {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink-light);
+      padding: 0 4px;
+    }
+
+    /* ── HERO ─────────────────────────────────── */
+    .hero {
+      background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 4rem 2rem 3.5rem;
+    }
+
+    .hero-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
+    }
+
+    .hero-chapter-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--teal-700);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 1rem;
+    }
+
+    .hero-chapter-label span {
+      background: var(--teal-100);
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+
+    .hero h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(2.4rem, 5vw, 3.2rem);
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: 1rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: var(--ink-light);
+      line-height: 1.65;
+      max-width: 640px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .hero-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
+    .hero-meta-item svg {
+      width: 16px;
+      height: 16px;
+      color: var(--teal-600);
+    }
+
+    /* ── MAIN LAYOUT ──────────────────────────── */
+    .main-layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr var(--sidebar-width);
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .content {
+      padding: 3rem 0 6rem;
+      min-width: 0;
+    }
+
+    /* ── SIDEBAR TOC ──────────────────────────── */
+    .sidebar {
+      position: sticky;
+      top: 76px;
+      padding: 2rem 0;
+      max-height: calc(100vh - 76px);
+      overflow-y: auto;
+    }
+
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-muted);
+      margin-bottom: 1rem;
+      padding-left: 14px;
+    }
+
+    .toc-list {
+      list-style: none;
+    }
+
+    .toc-item a {
+      display: block;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--ink-muted);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: all 0.2s var(--ease);
+      line-height: 1.5;
+    }
+
+    .toc-item a:hover {
+      color: var(--ink);
+      background: var(--surface-alt);
+    }
+
+    .toc-item a.active {
+      color: var(--teal-700);
+      border-left-color: var(--teal-500);
+      background: var(--teal-50);
+      font-weight: 500;
+    }
+
+    /* ── TYPOGRAPHY ────────────────────────────── */
+    .content h2 {
+      font-family: var(--font-serif);
+      font-size: 1.85rem;
+      font-weight: 400;
+      color: var(--ink);
+      margin: 3rem 0 1rem;
+      padding-top: 1rem;
+      scroll-margin-top: 80px;
+    }
+
+    .content h2:first-child {
+      margin-top: 0;
+    }
+
+    .content h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 2rem 0 0.75rem;
+      scroll-margin-top: 80px;
+    }
+
+    .content p {
+      margin-bottom: 1.25rem;
+      color: var(--ink-light);
+    }
+
+    .content strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .content a {
+      color: var(--teal-700);
+      text-decoration: underline;
+      text-decoration-color: var(--teal-200);
+      text-underline-offset: 3px;
+      transition: text-decoration-color 0.2s;
+    }
+
+    .content a:hover {
+      text-decoration-color: var(--teal-600);
+    }
+
+    .content ul, .content ol {
+      margin-bottom: 1.25rem;
+      padding-left: 1.5rem;
+    }
+
+    .content li {
+      margin-bottom: 0.5rem;
+      color: var(--ink-light);
+    }
+
+    .content li::marker {
+      color: var(--teal-500);
+    }
+
+    /* ── SECTION DIVIDER ──────────────────────── */
+    .section-divider {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 3rem 0;
+    }
+
+    /* ── CALLOUT BOXES ────────────────────────── */
+    .callout {
+      padding: 1.25rem 1.5rem;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+      border: 1px solid;
+      position: relative;
+    }
+
+    .callout-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .callout-header svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    .callout p:last-child { margin-bottom: 0; }
+
+    .callout.concept {
+      background: var(--blue-50);
+      border-color: var(--blue-100);
+    }
+    .callout.concept .callout-header { color: var(--blue-700); }
+
+    .callout.important {
+      background: var(--amber-50);
+      border-color: var(--amber-100);
+    }
+    .callout.important .callout-header { color: var(--amber-600); }
+
+    .callout.danger {
+      background: var(--red-50);
+      border-color: var(--red-100);
+    }
+    .callout.danger .callout-header { color: var(--red-600); }
+
+    .callout.tip {
+      background: var(--purple-50);
+      border-color: var(--purple-100);
+    }
+    .callout.tip .callout-header { color: var(--purple-600); }
+
+    .callout.success {
+      background: var(--teal-50);
+      border-color: var(--teal-100);
+    }
+    .callout.success .callout-header { color: var(--teal-700); }
+
+    /* ── CODE BLOCKS ──────────────────────────── */
+    .code-block {
+      position: relative;
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+      background: var(--surface-alt);
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--ink-muted);
+    }
+
+    .code-lang {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .code-copy {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: white;
+      font-size: 11px;
+      font-family: var(--font-sans);
+      color: var(--ink-muted);
+      cursor: pointer;
+      transition: all 0.2s var(--ease);
+    }
+
+    .code-copy:hover {
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    .code-copy.copied {
+      background: var(--teal-50);
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    pre {
+      margin: 0;
+      padding: 1.25rem 1.5rem;
+      overflow-x: auto;
+      background: #1e293b;
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: #e2e8f0;
+    }
+
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.88em;
+    }
+
+    p code, li code {
+      padding: 2px 7px;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      color: var(--teal-800);
+      font-size: 0.85em;
+    }
+
+    /* Syntax highlights (minimal) */
+    .hl-keyword  { color: #c084fc; }
+    .hl-string   { color: #86efac; }
+    .hl-comment  { color: #64748b; font-style: italic; }
+    .hl-function { color: #7dd3fc; }
+    .hl-number   { color: #fbbf24; }
+    .hl-flag     { color: #f472b6; }
+
+    /* ── COLLAPSIBLE (DETAILS) ────────────────── */
+    details {
+      margin-bottom: 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.2s var(--ease);
+    }
+
+    details[open] {
+      border-color: var(--teal-200);
+    }
+
+    details summary {
+      padding: 1rem 1.25rem;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      background: var(--surface-alt);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.2s var(--ease);
+      user-select: none;
+    }
+
+    details summary::-webkit-details-marker { display: none; }
+
+    details summary::before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+      flex-shrink: 0;
+      transition: transform 0.2s var(--ease);
+    }
+
+    details[open] summary::before {
+      transform: rotate(90deg);
+    }
+
+    details summary:hover {
+      background: var(--teal-50);
+    }
+
+    .details-body {
+      padding: 1.25rem 1.5rem;
+    }
+
+    .details-body p:last-child { margin-bottom: 0; }
+
+    /* ── VIDEO EMBED ──────────────────────────── */
+    .video-card {
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      background: #0f172a;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .video-caption {
+      padding: 12px 16px;
+      background: var(--surface-alt);
+      font-size: 13px;
+      color: var(--ink-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .video-caption svg {
+      width: 14px;
+      height: 14px;
+      color: var(--red-500);
+    }
+
+    /* ── RESOURCE CARDS ───────────────────────── */
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .resource-card {
+      display: flex;
+      gap: 14px;
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      background: white;
+    }
+
+    .resource-card:hover {
+      border-color: var(--teal-300);
+      background: var(--teal-50);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .resource-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 18px;
+    }
+
+    .resource-icon.docs    { background: var(--blue-50);   color: var(--blue-600); }
+    .resource-icon.video   { background: var(--red-50);    color: var(--red-500); }
+    .resource-icon.github  { background: var(--ink);       color: white; }
+    .resource-icon.article { background: var(--amber-50);  color: var(--amber-600); }
+    .resource-icon.pdf     { background: var(--purple-50); color: var(--purple-600); }
+
+    .resource-info {
+      min-width: 0;
+    }
+
+    .resource-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 2px;
+      line-height: 1.4;
+    }
+
+    .resource-desc {
+      font-size: 12px;
+      color: var(--ink-muted);
+      line-height: 1.5;
+    }
+
+    /* ── ASSIGNMENT CARDS ─────────────────────── */
+    .assignment {
+      border: 2px solid var(--teal-200);
+      border-radius: 14px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--teal-50) 0%, white 100%);
+    }
+
+    .assignment-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .assignment-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--teal-700);
+    }
+
+    .assignment-difficulty {
+      display: inline-flex;
+      padding: 4px 10px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .difficulty-l1 { background: var(--teal-100); color: var(--teal-800); }
+    .difficulty-l2 { background: var(--amber-100); color: var(--amber-600); }
+    .difficulty-l3 { background: var(--red-100); color: var(--red-600); }
+
+    .assignment h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .assignment p {
+      font-size: 14px;
+    }
+
+    .checklist {
+      list-style: none;
+      padding: 0;
+    }
+
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-light);
+      font-size: 14px;
+    }
+
+    .checklist li:last-child { border-bottom: none; }
+
+    .check-box {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      border: 2px solid var(--border);
+      flex-shrink: 0;
+      margin-top: 1px;
+      cursor: pointer;
+      transition: all 0.15s var(--ease);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .check-box:hover {
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked {
+      background: var(--teal-500);
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+    }
+
+    /* ── ARCHITECTURE DIAGRAM ─────────────────── */
+    .diagram {
+      margin: 1.5rem 0;
+      padding: 2rem;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow-x: auto;
+    }
+
+    .diagram pre {
+      background: transparent;
+      color: var(--ink);
+      padding: 0;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .diagram-caption {
+      margin-top: 1rem;
+      font-size: 12px;
+      color: var(--ink-muted);
+      text-align: center;
+      font-style: italic;
+    }
+
+    /* ── FOOTER ───────────────────────────────── */
+    .chapter-footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      background: var(--surface-alt);
+    }
+
+    .chapter-footer-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
+    }
+
+    .footer-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .footer-nav-link {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 1rem 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      max-width: 320px;
+      background: white;
+    }
+
+    .footer-nav-link:hover {
+      border-color: var(--teal-300);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .footer-nav-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--teal-600);
+    }
+
+    .footer-nav-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .footer-brand {
+      text-align: center;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
+    /* ── RESPONSIVE ───────────────────────────── */
+    @media (max-width: 960px) {
+      .main-layout {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        display: none;
+      }
+      .resource-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero { padding: 2.5rem 1.25rem 2rem; }
+      .main-layout { padding: 0 1.25rem; }
+      .content { padding: 2rem 0 4rem; }
+      pre { padding: 1rem; font-size: 12.5px; }
+      .footer-nav { flex-direction: column; }
+      .footer-nav-link { max-width: 100%; width: 100%; }
+    }
+
+    /* ── PRINT ────────────────────────────────── */
+    @media print {
+      .top-nav, .sidebar, .progress-bar { display: none; }
+      .main-layout { display: block; }
+      .content { padding: 0; }
+      .hero { background: white; border: none; }
+      pre { background: #f1f5f9; color: var(--ink); border: 1px solid var(--border); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Progress Bar -->
+  <div class="progress-bar" id="progressBar"></div>
+
+  <!-- Top Navigation -->
+  <nav class="top-nav">
+    <div class="top-nav-inner">
+      <a class="nav-brand" href="index.html">
+        <div class="nav-brand-icon">ILA</div>
+        <span class="nav-brand-text">Iksha Learning Academy</span>
+      </a>
+      <div class="nav-chapter-nav">
+        <a class="nav-btn" href="chapter-01.html">&larr; Previous</a>
+        <span class="nav-current">02 / 18</span>
+        <a class="nav-btn" href="chapter-03.html">Next &rarr;</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-chapter-label">
+        <span>Chapter 02</span> &middot; Phase 1: Platform Foundations
+      </div>
+      <h1>Authentication and Tenant Isolation</h1>
+      <p class="hero-subtitle">
+        Implement login and strict account scoping so customer data never crosses tenant boundaries.
+        Before you build a single campaign or ad group, you need to know <em>who</em> is making the request and
+        <em>which account</em> they belong to.
+      </p>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Estimated: 3&ndash;4 days
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          3 Advancement Levels
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          3 Assignments
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content + Sidebar -->
+  <div class="main-layout">
+    <main class="content">
+
+      <!-- ════════════════════════════════════════
+           SECTION 1: WHY THIS MATTERS
+           ════════════════════════════════════════ -->
+      <h2 id="why-this-matters">Why This Matters</h2>
+
+      <p>
+        In a multi-tenant ad bidding platform, <strong>every row in every table belongs to someone</strong>.
+        Campaigns, budgets, creatives, leads, invoices &mdash; they're all owned by an account. If Account A
+        can read Account B's campaign data, you don't have a "bug" &mdash; you have a <strong>security breach</strong>.
+      </p>
+
+      <p>
+        Authentication answers the question "who are you?" Authorization answers "what are you allowed to do?"
+        Tenant isolation answers "whose data can you see?" All three must be solved before a single business
+        feature is safe to build. Every controller, every query, every background job in chapters 3&ndash;18
+        depends on the guarantees you establish here.
+      </p>
+
+      <div class="callout danger">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          The Cost of Getting This Wrong
+        </div>
+        <p>
+          Cross-tenant data leaks are among the most expensive bugs in SaaS. They trigger mandatory breach
+          notifications, destroy customer trust, and can result in regulatory fines. This chapter is not
+          optional &mdash; it is the security foundation for everything that follows.
+        </p>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 2: KEY CONCEPTS
+           ════════════════════════════════════════ -->
+      <h2 id="key-concepts">Key Concepts</h2>
+
+      <h3 id="authn-vs-authz">1. Authentication vs. Authorization</h3>
+
+      <p>
+        These two words are often confused, but they solve completely different problems:
+      </p>
+
+      <ul>
+        <li><strong>Authentication (AuthN)</strong> &mdash; Verifying identity. "This request is from user #42." Done via credentials (password, token, certificate).</li>
+        <li><strong>Authorization (AuthZ)</strong> &mdash; Verifying permission. "User #42 is allowed to pause Campaign #99." Done via policies, roles, and scoping rules.</li>
+      </ul>
+
+      <p>
+        In our bidding platform, authentication happens once at login (or token refresh). Authorization
+        happens on <strong>every single request</strong>. The two are layered &mdash; you cannot authorize
+        a request from an unknown user.
+      </p>
+
+      <div class="diagram">
+<pre>
+  ┌─────────────────────────────────────────────────────────────┐
+  │                     INCOMING REQUEST                        │
+  │                  Authorization: Bearer &lt;JWT&gt;                │
+  └──────────────────────┬──────────────────────────────────────┘
+                         │
+                         ▼
+              ┌──────────────────────┐
+              │   1. AUTHENTICATE    │    "Who is this?"
+              │   Decode JWT         │    Extract user_id
+              │   Verify signature   │    Check expiration
+              └──────────┬───────────┘
+                         │
+                         ▼
+              ┌──────────────────────┐
+              │   2. RESOLVE TENANT  │    "Which account?"
+              │   Load membership    │    Set Current.account
+              │   Scope all queries  │    Default scope applied
+              └──────────┬───────────┘
+                         │
+                         ▼
+              ┌──────────────────────┐
+              │   3. AUTHORIZE       │    "Is this allowed?"
+              │   Check role/policy  │    Admin? Operator? Viewer?
+              │   Verify ownership   │    This account's resource?
+              └──────────┬───────────┘
+                         │
+                         ▼
+              ┌──────────────────────┐
+              │   4. EXECUTE         │    Controller action runs
+              │   All queries scoped │    Only tenant data visible
+              └──────────────────────┘
+</pre>
+        <div class="diagram-caption">Figure 1: The four-layer request security pipeline</div>
+      </div>
+
+      <h3 id="jwt-authentication">2. JWT-Based Authentication</h3>
+
+      <p>
+        JSON Web Tokens (JWTs) are the standard way to authenticate API requests in a stateless
+        architecture. Instead of server-side sessions, the server issues a signed token that the client
+        stores and sends with every request.
+      </p>
+
+      <p>
+        A JWT has three parts, separated by dots: <code>header.payload.signature</code>. The header
+        declares the algorithm. The payload carries claims (user ID, account ID, expiration). The
+        signature proves the token wasn't tampered with.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># Gemfile</span>
+gem <span class="hl-string">"bcrypt"</span>, <span class="hl-string">"~> 3.1"</span>   <span class="hl-comment"># Password hashing</span>
+gem <span class="hl-string">"jwt"</span>,    <span class="hl-string">"~> 2.7"</span>   <span class="hl-comment"># Token encoding/decoding</span>
+</pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># app/services/jwt_service.rb</span>
+<span class="hl-keyword">class</span> <span class="hl-function">JwtService</span>
+  SECRET = Rails.application.credentials.secret_key_base
+  ALGORITHM = <span class="hl-string">"HS256"</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-keyword">self</span>.<span class="hl-function">encode</span>(user)
+    payload = {
+      <span class="hl-string">sub</span>: user.id,
+      <span class="hl-string">acc</span>: user.account_id,
+      <span class="hl-string">exp</span>: <span class="hl-number">24</span>.hours.from_now.to_i,
+      <span class="hl-string">iat</span>: Time.current.to_i
+    }
+    JWT.encode(payload, SECRET, ALGORITHM)
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-keyword">self</span>.<span class="hl-function">decode</span>(token)
+    decoded = JWT.decode(token, SECRET, <span class="hl-keyword">true</span>, algorithm: ALGORITHM)
+    decoded.first.symbolize_keys
+  <span class="hl-keyword">rescue</span> JWT::DecodeError, JWT::ExpiredSignature
+    <span class="hl-keyword">nil</span>
+  <span class="hl-keyword">end</span>
+<span class="hl-keyword">end</span>
+</pre>
+      </div>
+
+      <div class="callout concept">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Key Insight
+        </div>
+        <p>
+          Notice the <code>acc</code> (account ID) claim in the payload. This is critical &mdash; it means
+          every request carries both "who" and "which tenant" without an extra database lookup. The server
+          verifies the signature is valid, trusts the claims, and scopes all queries accordingly.
+        </p>
+      </div>
+
+      <h3 id="user-account-model">3. The User-Account-Membership Model</h3>
+
+      <p>
+        A common mistake is putting <code>account_id</code> directly on the User model. This means a
+        user can only belong to one account &mdash; ever. In reality, a person might manage campaigns
+        for multiple clients. The solution is a three-table pattern:
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># app/models/user.rb</span>
+<span class="hl-keyword">class</span> <span class="hl-function">User</span> &lt; ApplicationRecord
+  has_secure_password
+  has_many <span class="hl-string">:memberships</span>, dependent: <span class="hl-string">:destroy</span>
+  has_many <span class="hl-string">:accounts</span>, through: <span class="hl-string">:memberships</span>
+
+  validates <span class="hl-string">:email</span>, presence: <span class="hl-keyword">true</span>,
+                     uniqueness: { case_sensitive: <span class="hl-keyword">false</span> },
+                     format: { with: URI::MailTo::EMAIL_REGEXP }
+<span class="hl-keyword">end</span>
+
+<span class="hl-comment"># app/models/account.rb</span>
+<span class="hl-keyword">class</span> <span class="hl-function">Account</span> &lt; ApplicationRecord
+  has_many <span class="hl-string">:memberships</span>, dependent: <span class="hl-string">:destroy</span>
+  has_many <span class="hl-string">:users</span>, through: <span class="hl-string">:memberships</span>
+  has_many <span class="hl-string">:campaigns</span>  <span class="hl-comment"># Chapter 03</span>
+
+  validates <span class="hl-string">:name</span>, presence: <span class="hl-keyword">true</span>
+<span class="hl-keyword">end</span>
+
+<span class="hl-comment"># app/models/membership.rb</span>
+<span class="hl-keyword">class</span> <span class="hl-function">Membership</span> &lt; ApplicationRecord
+  belongs_to <span class="hl-string">:user</span>
+  belongs_to <span class="hl-string">:account</span>
+
+  <span class="hl-keyword">enum</span> <span class="hl-string">:role</span>, { viewer: <span class="hl-number">0</span>, operator: <span class="hl-number">1</span>, admin: <span class="hl-number">2</span> }
+
+  validates <span class="hl-string">:role</span>, presence: <span class="hl-keyword">true</span>
+  validates <span class="hl-string">:user_id</span>, uniqueness: { scope: <span class="hl-string">:account_id</span> }
+<span class="hl-keyword">end</span>
+</pre>
+      </div>
+
+      <div class="diagram">
+<pre>
+ ┌──────────┐       ┌──────────────┐       ┌──────────┐
+ │   User   │──────▶│  Membership  │◀──────│  Account  │
+ │          │  1:N  │              │  N:1   │          │
+ │ email    │       │ role:        │       │ name     │
+ │ password │       │   viewer     │       │ slug     │
+ │          │       │   operator   │       │          │
+ │          │       │   admin      │       │ campaigns│
+ └──────────┘       └──────────────┘       │ ad_groups│
+                                           │ creatives│
+                                           │ leads    │
+                                           └──────────┘
+</pre>
+        <div class="diagram-caption">Figure 2: User, Account, and Membership &mdash; the multi-tenancy foundation</div>
+      </div>
+
+      <p>
+        The <strong>Membership</strong> join table carries the <code>role</code> column. This means the same
+        person can be an <strong>admin</strong> on their own agency's account and a <strong>viewer</strong>
+        on a client's account. Roles are per-membership, not per-user.
+      </p>
+
+      <h3 id="tenant-resolution">4. Tenant Resolution &mdash; Setting the Scope</h3>
+
+      <p>
+        Once you know who the user is, you need to determine which tenant's data they're working with.
+        This is called <strong>tenant resolution</strong>. In our platform, the JWT's <code>acc</code> claim
+        determines the current account. A <code>before_action</code> in the base controller sets the scope
+        for every request:
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># app/controllers/application_controller.rb</span>
+<span class="hl-keyword">class</span> <span class="hl-function">ApplicationController</span> &lt; ActionController::API
+  before_action <span class="hl-string">:authenticate_request!</span>
+
+  <span class="hl-keyword">private</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">authenticate_request!</span>
+    token = request.headers[<span class="hl-string">"Authorization"</span>]&.split(<span class="hl-string">" "</span>)&.last
+    claims = JwtService.decode(token)
+
+    <span class="hl-keyword">unless</span> claims
+      render json: { error: <span class="hl-string">"Unauthorized"</span> }, status: <span class="hl-string">:unauthorized</span>
+      <span class="hl-keyword">return</span>
+    <span class="hl-keyword">end</span>
+
+    @current_user = User.find_by(id: claims[<span class="hl-string">:sub</span>])
+    @current_account = Account.find_by(id: claims[<span class="hl-string">:acc</span>])
+
+    <span class="hl-keyword">unless</span> @current_user &amp;&amp; @current_account
+      render json: { error: <span class="hl-string">"Unauthorized"</span> }, status: <span class="hl-string">:unauthorized</span>
+    <span class="hl-keyword">end</span>
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">current_user</span>    = @current_user
+  <span class="hl-keyword">def</span> <span class="hl-function">current_account</span> = @current_account
+<span class="hl-keyword">end</span>
+</pre>
+      </div>
+
+      <div class="callout important">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Never Trust the Client to Scope Data
+        </div>
+        <p>
+          Don't accept <code>account_id</code> as a query parameter. Always resolve the tenant from the
+          JWT's <code>acc</code> claim. A malicious user can change query params; they cannot forge a valid JWT signature.
+        </p>
+      </div>
+
+      <h3 id="scoped-queries">5. Scoping Every Query to the Tenant</h3>
+
+      <p>
+        The most dangerous bug in a multi-tenant app is an unscoped query. If even one controller action
+        calls <code>Campaign.find(params[:id])</code> without scoping to the current account, any authenticated
+        user can access any tenant's data by guessing IDs.
+      </p>
+
+      <p>
+        The fix is to <strong>always query through the account</strong>:
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># WRONG — Unscoped. Any user can access any campaign.</span>
+campaign = Campaign.find(params[<span class="hl-string">:id</span>])
+
+<span class="hl-comment"># RIGHT — Scoped to current account. Cross-tenant access raises RecordNotFound.</span>
+campaign = current_account.campaigns.find(params[<span class="hl-string">:id</span>])
+</pre>
+      </div>
+
+      <p>
+        For extra safety, you can use a gem like
+        <a href="https://github.com/ErwinM/acts_as_tenant" target="_blank" rel="noopener">acts_as_tenant</a>
+        which automatically adds a <code>WHERE account_id = ?</code> clause to every query for tenanted models.
+        This way, even if a developer forgets to scope manually, the gem catches it.
+      </p>
+
+      <details>
+        <summary>How does <code>acts_as_tenant</code> work under the hood?</summary>
+        <div class="details-body">
+          <p>
+            The gem uses a <code>default_scope</code> and a <code>before_validation</code> callback. When you
+            call <code>ActsAsTenant.current_tenant = account</code> in a controller <code>before_action</code>,
+            the gem stores it in a thread-local variable. Every model that declares <code>acts_as_tenant :account</code>
+            then automatically adds <code>WHERE account_id = #{current_tenant.id}</code> to all queries and
+            sets <code>account_id</code> on new records before validation.
+          </p>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">ruby</span>
+              <button class="code-copy" onclick="copyCode(this)">Copy</button>
+            </div>
+<pre>
+<span class="hl-comment"># app/models/campaign.rb</span>
+<span class="hl-keyword">class</span> <span class="hl-function">Campaign</span> &lt; ApplicationRecord
+  acts_as_tenant <span class="hl-string">:account</span>
+
+  <span class="hl-comment"># Now Campaign.all automatically adds WHERE account_id = ?</span>
+  <span class="hl-comment"># and Campaign.create!(...) auto-sets account_id</span>
+<span class="hl-keyword">end</span>
+</pre>
+          </div>
+        </div>
+      </details>
+
+      <h3 id="auth-endpoints">6. Login, Logout, and Token Lifecycle</h3>
+
+      <p>
+        With the foundation in place, the auth controller is straightforward:
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># app/controllers/auth_controller.rb</span>
+<span class="hl-keyword">class</span> <span class="hl-function">AuthController</span> &lt; ApplicationController
+  skip_before_action <span class="hl-string">:authenticate_request!</span>, only: <span class="hl-string">:login</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">login</span>
+    user = User.find_by(email: params[<span class="hl-string">:email</span>]&.downcase)
+
+    <span class="hl-keyword">unless</span> user&.authenticate(params[<span class="hl-string">:password</span>])
+      render json: { error: <span class="hl-string">"Invalid credentials"</span> }, status: <span class="hl-string">:unauthorized</span>
+      <span class="hl-keyword">return</span>
+    <span class="hl-keyword">end</span>
+
+    membership = user.memberships.includes(<span class="hl-string">:account</span>).first
+    <span class="hl-keyword">unless</span> membership
+      render json: { error: <span class="hl-string">"No account access"</span> }, status: <span class="hl-string">:forbidden</span>
+      <span class="hl-keyword">return</span>
+    <span class="hl-keyword">end</span>
+
+    token = JwtService.encode(user)
+    render json: {
+      <span class="hl-string">token</span>: token,
+      <span class="hl-string">user</span>: { id: user.id, email: user.email },
+      <span class="hl-string">account</span>: { id: membership.account.id, name: membership.account.name },
+      <span class="hl-string">role</span>: membership.role
+    }
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">me</span>
+    membership = current_user.memberships
+                             .find_by(account: current_account)
+    render json: {
+      <span class="hl-string">user</span>: { id: current_user.id, email: current_user.email },
+      <span class="hl-string">account</span>: { id: current_account.id, name: current_account.name },
+      <span class="hl-string">role</span>: membership&.role
+    }
+  <span class="hl-keyword">end</span>
+<span class="hl-keyword">end</span>
+</pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># config/routes.rb</span>
+Rails.application.routes.draw <span class="hl-keyword">do</span>
+  post <span class="hl-string">"/auth/login"</span>,  to: <span class="hl-string">"auth#login"</span>
+  get  <span class="hl-string">"/auth/me"</span>,     to: <span class="hl-string">"auth#me"</span>
+  get  <span class="hl-string">"/health"</span>,      to: <span class="hl-string">"health#show"</span>
+<span class="hl-keyword">end</span>
+</pre>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Pro Tip: Secure Error Messages
+        </div>
+        <p>
+          Notice the login endpoint returns the same <code>"Invalid credentials"</code> message whether the
+          email doesn't exist or the password is wrong. This prevents <strong>user enumeration attacks</strong>
+          where an attacker probes for valid emails by observing different error messages.
+        </p>
+      </div>
+
+      <h3 id="role-policies">7. Role-Based Authorization Policies</h3>
+
+      <p>
+        Once you know who the user is and which account they belong to, you still need to check
+        <em>what they're allowed to do</em>. The
+        <a href="https://github.com/varvet/pundit" target="_blank" rel="noopener">Pundit</a> gem provides
+        a clean pattern for this using plain Ruby policy classes:
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># app/policies/campaign_policy.rb</span>
+<span class="hl-keyword">class</span> <span class="hl-function">CampaignPolicy</span>
+  attr_reader <span class="hl-string">:membership</span>, <span class="hl-string">:campaign</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">initialize</span>(membership, campaign)
+    @membership = membership
+    @campaign   = campaign
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">show?</span>
+    <span class="hl-keyword">true</span>  <span class="hl-comment"># Any member can view campaigns in their account</span>
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">create?</span>
+    membership.admin? || membership.operator?
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">update?</span>
+    membership.admin? || membership.operator?
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">destroy?</span>
+    membership.admin?
+  <span class="hl-keyword">end</span>
+<span class="hl-keyword">end</span>
+</pre>
+      </div>
+
+      <p>
+        Policy classes are pure Ruby &mdash; no DSL, no magic, easy to test. The convention is one policy
+        per model, with a method for each action. A <code>viewer</code> can read but not modify. An
+        <code>operator</code> can create and update campaigns. Only an <code>admin</code> can delete.
+      </p>
+
+      <details>
+        <summary>Why not use <code>cancancan</code> instead of Pundit?</summary>
+        <div class="details-body">
+          <p>
+            Both work. <code>cancancan</code> centralizes all rules in a single <code>Ability</code> class,
+            which can become unwieldy in a platform with many models. Pundit distributes policies across
+            separate files (one per model), which scales better for team development. In a codebase where
+            5+ developers are working across campaigns, ad groups, creatives, and billing, Pundit's
+            file-per-model approach causes fewer merge conflicts and is easier to review.
+          </p>
+        </div>
+      </details>
+
+      <h3 id="security-logging">8. Secure Logging Without Leaking Secrets</h3>
+
+      <p>
+        Auth failures must be observable. If someone is brute-forcing passwords or probing for cross-tenant
+        access, you need to know. But the logs must never contain passwords, tokens, or user PII.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># config/initializers/filter_parameter_logging.rb</span>
+Rails.application.config.filter_parameters += [
+  <span class="hl-string">:password</span>, <span class="hl-string">:token</span>, <span class="hl-string">:secret</span>, <span class="hl-string">:authorization</span>,
+  <span class="hl-string">:_key</span>, <span class="hl-string">:crypt</span>, <span class="hl-string">:salt</span>, <span class="hl-string">:certificate</span>, <span class="hl-string">:otp</span>
+]
+
+<span class="hl-comment"># In your auth controller, log safely:</span>
+Rails.logger.info(
+  <span class="hl-string">"auth.login_failed"</span>,
+  email_hash: Digest::SHA256.hexdigest(params[<span class="hl-string">:email</span>].to_s),
+  ip: request.remote_ip
+)
+</pre>
+      </div>
+
+      <div class="callout concept">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Key Insight
+        </div>
+        <p>
+          Log a <strong>hash</strong> of the email, not the email itself. This lets you correlate repeat
+          failures ("same hash tried 47 times in 5 minutes") without storing PII in your log aggregator.
+          Your incident response team can identify patterns without handling personal data.
+        </p>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 3: WATCH & LEARN
+           ════════════════════════════════════════ -->
+      <h2 id="watch-learn">Watch &amp; Learn</h2>
+
+      <p>
+        These videos cover JWT fundamentals and token-based authentication. Watch them before starting
+        the assignments to build a solid mental model of how tokens flow through the system.
+      </p>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/7Q17ubqLfaM?rel=0&amp;modestbranding=1"
+            title="What Is JWT and Why Should You Use JWT"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Web Dev Simplified &mdash; What Is JWT and Why Should You Use JWT (clear conceptual explanation of header, payload, signature)
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/x5gLL8-M9Fo?rel=0&amp;modestbranding=1"
+            title="What are JSON Web Tokens? JWT Auth Explained [Tutorial]"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          freeCodeCamp.org &mdash; What are JSON Web Tokens? JWT Auth Explained (in-depth tutorial on token lifecycle and security)
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 4: FURTHER READING
+           ════════════════════════════════════════ -->
+      <h2 id="further-reading">Further Reading</h2>
+
+      <p>Deep-dive into the official documentation and reference material for authentication, authorization, and multi-tenancy.</p>
+
+      <div class="resource-grid">
+        <a class="resource-card" href="https://guides.rubyonrails.org/security.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Rails Guides: Security</div>
+            <div class="resource-desc">Official Rails security guide. Covers CSRF, XSS, SQL injection, session management, and parameter filtering.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://jwt.io/introduction" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">JWT.io: Introduction to JSON Web Tokens</div>
+            <div class="resource-desc">The definitive reference for JWT structure, signing algorithms, and best practices. Includes an interactive debugger.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://owasp.org/www-project-top-ten/" target="_blank" rel="noopener">
+          <div class="resource-icon article">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">OWASP Top 10</div>
+            <div class="resource-desc">The industry standard for web application security risks. A01:2021 is Broken Access Control &mdash; directly relevant to tenant isolation.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html" target="_blank" rel="noopener">
+          <div class="resource-icon article">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">OWASP Authentication Cheat Sheet</div>
+            <div class="resource-desc">Practical checklist for implementing authentication. Covers password storage, error messages, brute force protection.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://github.com/varvet/pundit" target="_blank" rel="noopener">
+          <div class="resource-icon github">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Pundit &mdash; Authorization for Rails</div>
+            <div class="resource-desc">Policy-based authorization gem. One plain Ruby class per model. Clean, testable, and scales well in teams.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://github.com/ErwinM/acts_as_tenant" target="_blank" rel="noopener">
+          <div class="resource-icon github">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">acts_as_tenant &mdash; Multi-tenancy for Rails</div>
+            <div class="resource-desc">Automatic tenant scoping via default_scope. Prevents cross-tenant data leaks at the model layer.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://github.com/bcrypt-ruby/bcrypt-ruby" target="_blank" rel="noopener">
+          <div class="resource-icon github">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">bcrypt-ruby &mdash; Password Hashing</div>
+            <div class="resource-desc">Industry-standard password hashing with adaptive cost factor. Powers Rails' <code>has_secure_password</code>.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://guides.rubyonrails.org/action_controller_overview.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Rails Guides: Action Controller Overview</div>
+            <div class="resource-desc">Before actions, filters, parameter handling, and rendering. Essential for understanding the request lifecycle.</div>
+          </div>
+        </a>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 5: ASSIGNMENTS
+           ════════════════════════════════════════ -->
+      <h2 id="assignments">Assignments</h2>
+
+      <p>
+        Complete these in order. Each level builds on the previous one. Submit your work as a GitHub PR
+        with <code>docs/chapter-02.md</code> containing your security design decisions and proof that
+        cross-tenant access is blocked.
+      </p>
+
+      <!-- Assignment 1: Level 1 -->
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 1
+          </div>
+          <span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span>
+        </div>
+        <h4>JWT Login/Logout and Protected Routes</h4>
+        <p>Build the authentication layer. Users should be able to log in with email and password and receive a JWT. All other endpoints should reject unauthenticated requests.</p>
+
+        <ul class="checklist">
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Add <code>bcrypt</code> and <code>jwt</code> gems to the Gemfile</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Create User model with <code>has_secure_password</code> and email validation</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Create Account and Membership models with role enum (<code>viewer</code>, <code>operator</code>, <code>admin</code>)</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Implement <code>JwtService</code> with <code>encode</code> and <code>decode</code> methods</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Build <code>POST /auth/login</code> that returns a JWT on valid credentials</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Build <code>GET /auth/me</code> that returns current user info (requires valid token)</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Verify: requests without a token receive <code>401 Unauthorized</code></span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Verify: requests with an expired token receive <code>401 Unauthorized</code></span>
+          </li>
+        </ul>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            You can <code>curl -X POST /auth/login</code> with valid credentials and get a JWT. Using that
+            token in the <code>Authorization: Bearer</code> header on <code>/auth/me</code> returns user info.
+            Hitting <code>/auth/me</code> without a token returns 401.
+          </p>
+        </div>
+      </div>
+
+      <!-- Assignment 2: Level 2 -->
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 2
+          </div>
+          <span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span>
+        </div>
+        <h4>Tenant-Scoped Authorization for All Domain Actions</h4>
+        <p>Ensure every query is scoped to the current account and role-based policies gate destructive actions.</p>
+
+        <ul class="checklist">
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Integrate <code>acts_as_tenant</code> and set the tenant in <code>ApplicationController</code></span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Add <code>acts_as_tenant :account</code> to Campaign model (you'll build it in Chapter 03, but scaffold it now)</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Create Pundit policy classes for Campaign with role-based <code>create?</code>, <code>update?</code>, <code>destroy?</code></span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Viewers can only read. Operators can create and update. Admins can delete.</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Filter <code>password</code>, <code>token</code>, and <code>authorization</code> from Rails logs</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Add structured logging for auth failures (hashed email + IP, never plaintext credentials)</span>
+          </li>
+        </ul>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            A user authenticated for Account A cannot access Campaign data from Account B, even by
+            guessing the ID. A viewer cannot create or delete campaigns. All auth failures appear in logs
+            without leaking credentials.
+          </p>
+        </div>
+      </div>
+
+      <!-- Assignment 3: Level 3 -->
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 3
+          </div>
+          <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Production-Ready</span>
+        </div>
+        <h4>Security Regression Tests for Cross-Tenant Attack Paths</h4>
+        <p>Write automated tests that prove cross-tenant access is impossible. These tests become a safety net for every future chapter.</p>
+
+        <ul class="checklist">
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Write request specs: authenticated user from Account A hits Account B's campaign endpoint &rarr; receives <code>404 Not Found</code></span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Write request specs: expired JWT &rarr; 401</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Write request specs: tampered JWT (modified payload, same signature) &rarr; 401</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Write request specs: viewer attempts to create/delete campaigns &rarr; 403 Forbidden</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Verify that failed login attempts are logged with hashed email and IP (no plaintext passwords)</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Run the full test suite &mdash; all tests green, no cross-tenant leaks</span>
+          </li>
+        </ul>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            The test suite includes at least 8 security-focused request specs. Cross-tenant access returns 404
+            (not 403 &mdash; don't reveal that the resource exists). JWT tampering and expiration are covered.
+            A mentor can read your test names and understand every attack vector you've defended against.
+          </p>
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 6: SELF-CHECK
+           ════════════════════════════════════════ -->
+      <h2 id="self-check">Self-Check</h2>
+
+      <p>Before moving to Chapter 03, honestly answer these questions. If any answer is "no", go back and fix it.</p>
+
+      <details>
+        <summary>Do protected endpoints fail safely when auth context is missing?</summary>
+        <div class="details-body">
+          <p>
+            Hit any endpoint without an <code>Authorization</code> header. You should get a clean
+            <code>401 Unauthorized</code> JSON response, not a 500 error or a stack trace. Now try with
+            an invalid token (random string). Same result &mdash; 401. The error message should be generic
+            (<code>"Unauthorized"</code>) and never hint at why authentication failed.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Can an authenticated user access data from another tenant?</summary>
+        <div class="details-body">
+          <p>
+            Create two accounts with different campaigns. Log in as Account A and try to access Account B's
+            campaign by ID. You should get <code>404 Not Found</code>, not <code>403 Forbidden</code>. Why 404?
+            Because returning 403 confirms the resource <em>exists</em> &mdash; it just says you can't access it.
+            A 404 reveals nothing about other tenants' data.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Are auth failures observable in logs without leaking sensitive data?</summary>
+        <div class="details-body">
+          <p>
+            Trigger a failed login. Check your Rails logs. You should see the event type
+            (<code>auth.login_failed</code>), a hashed email, and the requester's IP address. You should
+            <strong>not</strong> see the attempted password, the full email, or the JWT token. Run
+            <code>grep -i password log/development.log</code> &mdash; if it returns anything, you have a leak.
+          </p>
+        </div>
+      </details>
+
+    </main>
+
+    <!-- Sidebar: Table of Contents -->
+    <aside class="sidebar">
+      <div class="sidebar-title">On this page</div>
+      <ul class="toc-list">
+        <li class="toc-item"><a href="#why-this-matters">Why This Matters</a></li>
+        <li class="toc-item"><a href="#key-concepts">Key Concepts</a></li>
+        <li class="toc-item"><a href="#authn-vs-authz" style="padding-left: 28px; font-size: 12px;">AuthN vs. AuthZ</a></li>
+        <li class="toc-item"><a href="#jwt-authentication" style="padding-left: 28px; font-size: 12px;">JWT Authentication</a></li>
+        <li class="toc-item"><a href="#user-account-model" style="padding-left: 28px; font-size: 12px;">User-Account-Membership</a></li>
+        <li class="toc-item"><a href="#tenant-resolution" style="padding-left: 28px; font-size: 12px;">Tenant Resolution</a></li>
+        <li class="toc-item"><a href="#scoped-queries" style="padding-left: 28px; font-size: 12px;">Scoped Queries</a></li>
+        <li class="toc-item"><a href="#auth-endpoints" style="padding-left: 28px; font-size: 12px;">Login &amp; Token Lifecycle</a></li>
+        <li class="toc-item"><a href="#role-policies" style="padding-left: 28px; font-size: 12px;">Role-Based Policies</a></li>
+        <li class="toc-item"><a href="#security-logging" style="padding-left: 28px; font-size: 12px;">Secure Logging</a></li>
+        <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a></li>
+        <li class="toc-item"><a href="#further-reading">Further Reading</a></li>
+        <li class="toc-item"><a href="#assignments">Assignments</a></li>
+        <li class="toc-item"><a href="#self-check">Self-Check</a></li>
+      </ul>
+    </aside>
+  </div>
+
+  <!-- Footer Navigation -->
+  <footer class="chapter-footer">
+    <div class="chapter-footer-inner">
+      <nav class="footer-nav">
+        <a class="footer-nav-link" href="chapter-01.html">
+          <span class="footer-nav-label">&larr; Previous Chapter</span>
+          <span class="footer-nav-title">01: Platform Bootstrap</span>
+        </a>
+        <a class="footer-nav-link" href="chapter-03.html">
+          <span class="footer-nav-label">Next Chapter &rarr;</span>
+          <span class="footer-nav-title">03: Campaign Management Core</span>
+        </a>
+      </nav>
+      <div class="footer-brand">
+        ILA (Iksha Learning Academy) &middot; Rails + React Engineering Certification &middot; Level 2
+      </div>
+    </div>
+  </footer>
+
+  <!-- ════════════════════════════════════════
+       SCRIPTS
+       ════════════════════════════════════════ -->
+  <script>
+    // ── Progress Bar ──
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      document.getElementById('progressBar').style.width = progress + '%';
+    });
+
+    // ── Active TOC ──
+    const tocLinks = document.querySelectorAll('.toc-item a');
+    const sections = [];
+
+    tocLinks.forEach(link => {
+      const id = link.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) sections.push({ id, el, link });
+    });
+
+    const observerOptions = {
+      rootMargin: '-80px 0px -60% 0px',
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const item = sections.find(s => s.el === entry.target);
+        if (item) {
+          if (entry.isIntersecting) {
+            tocLinks.forEach(l => l.classList.remove('active'));
+            item.link.classList.add('active');
+          }
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(s => observer.observe(s.el));
+
+    // ── Copy Code ──
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      const text = pre.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.classList.add('copied');
+        btn.textContent = 'Copied!';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.textContent = 'Copy';
+        }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>

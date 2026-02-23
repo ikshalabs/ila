@@ -1,0 +1,1700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 01: Platform Bootstrap — ILA Rails + React</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    /* ═══════════════════════════════════════════════
+       ILA DESIGN SYSTEM — v1.0
+       Iksha Learning Academy
+       ═══════════════════════════════════════════════ */
+
+    :root {
+      /* Palette */
+      --ink:        #0f172a;
+      --ink-light:  #334155;
+      --ink-muted:  #64748b;
+      --surface:    #ffffff;
+      --surface-alt:#f8fafc;
+      --surface-warm:#fffbeb;
+      --border:     #e2e8f0;
+      --border-light:#f1f5f9;
+
+      /* Brand */
+      --teal-50:  #f0fdfa;
+      --teal-100: #ccfbf1;
+      --teal-200: #99f6e4;
+      --teal-500: #14b8a6;
+      --teal-600: #0d9488;
+      --teal-700: #0f766e;
+      --teal-800: #115e59;
+      --teal-900: #134e4a;
+
+      --blue-50:  #eff6ff;
+      --blue-100: #dbeafe;
+      --blue-500: #3b82f6;
+      --blue-600: #2563eb;
+      --blue-700: #1d4ed8;
+
+      --amber-50:  #fffbeb;
+      --amber-100: #fef3c7;
+      --amber-500: #f59e0b;
+      --amber-600: #d97706;
+
+      --red-50:   #fef2f2;
+      --red-100:  #fee2e2;
+      --red-500:  #ef4444;
+      --red-600:  #dc2626;
+
+      --purple-50:  #faf5ff;
+      --purple-100: #f3e8ff;
+      --purple-500: #a855f7;
+      --purple-600: #9333ea;
+
+      /* Typography */
+      --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-serif: 'Instrument Serif', Georgia, serif;
+      --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
+
+      /* Spacing */
+      --content-max: 780px;
+      --sidebar-width: 280px;
+
+      /* Transitions */
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--ink);
+      background: var(--surface);
+    }
+
+    /* ── PROGRESS BAR ─────────────────────────── */
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--teal-500), var(--blue-500));
+      z-index: 1000;
+      transition: width 0.15s var(--ease);
+    }
+
+    /* ── TOP NAV ──────────────────────────────── */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+    }
+
+    .top-nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--teal-800);
+    }
+
+    .nav-brand-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--teal-600), var(--teal-800));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .nav-brand-text {
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-chapter-nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      color: var(--ink-muted);
+      border: 1px solid var(--border);
+      background: white;
+      transition: all 0.2s var(--ease);
+      cursor: pointer;
+    }
+
+    .nav-btn:hover {
+      color: var(--ink);
+      border-color: var(--teal-500);
+      background: var(--teal-50);
+    }
+
+    .nav-btn.disabled {
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    .nav-current {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink-light);
+      padding: 0 4px;
+    }
+
+    /* ── HERO ─────────────────────────────────── */
+    .hero {
+      background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 4rem 2rem 3.5rem;
+    }
+
+    .hero-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
+    }
+
+    .hero-chapter-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--teal-700);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 1rem;
+    }
+
+    .hero-chapter-label span {
+      background: var(--teal-100);
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+
+    .hero h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(2.4rem, 5vw, 3.2rem);
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: 1rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: var(--ink-light);
+      line-height: 1.65;
+      max-width: 640px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .hero-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
+    .hero-meta-item svg {
+      width: 16px;
+      height: 16px;
+      color: var(--teal-600);
+    }
+
+    /* ── MAIN LAYOUT ──────────────────────────── */
+    .main-layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr var(--sidebar-width);
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .content {
+      padding: 3rem 0 6rem;
+      min-width: 0;
+    }
+
+    /* ── SIDEBAR TOC ──────────────────────────── */
+    .sidebar {
+      position: sticky;
+      top: 76px;
+      padding: 2rem 0;
+      max-height: calc(100vh - 76px);
+      overflow-y: auto;
+    }
+
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-muted);
+      margin-bottom: 1rem;
+      padding-left: 14px;
+    }
+
+    .toc-list {
+      list-style: none;
+    }
+
+    .toc-item a {
+      display: block;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--ink-muted);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: all 0.2s var(--ease);
+      line-height: 1.5;
+    }
+
+    .toc-item a:hover {
+      color: var(--ink);
+      background: var(--surface-alt);
+    }
+
+    .toc-item a.active {
+      color: var(--teal-700);
+      border-left-color: var(--teal-500);
+      background: var(--teal-50);
+      font-weight: 500;
+    }
+
+    /* ── TYPOGRAPHY ────────────────────────────── */
+    .content h2 {
+      font-family: var(--font-serif);
+      font-size: 1.85rem;
+      font-weight: 400;
+      color: var(--ink);
+      margin: 3rem 0 1rem;
+      padding-top: 1rem;
+      scroll-margin-top: 80px;
+    }
+
+    .content h2:first-child {
+      margin-top: 0;
+    }
+
+    .content h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 2rem 0 0.75rem;
+      scroll-margin-top: 80px;
+    }
+
+    .content p {
+      margin-bottom: 1.25rem;
+      color: var(--ink-light);
+    }
+
+    .content strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .content a {
+      color: var(--teal-700);
+      text-decoration: underline;
+      text-decoration-color: var(--teal-200);
+      text-underline-offset: 3px;
+      transition: text-decoration-color 0.2s;
+    }
+
+    .content a:hover {
+      text-decoration-color: var(--teal-600);
+    }
+
+    .content ul, .content ol {
+      margin-bottom: 1.25rem;
+      padding-left: 1.5rem;
+    }
+
+    .content li {
+      margin-bottom: 0.5rem;
+      color: var(--ink-light);
+    }
+
+    .content li::marker {
+      color: var(--teal-500);
+    }
+
+    /* ── SECTION DIVIDER ──────────────────────── */
+    .section-divider {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 3rem 0;
+    }
+
+    /* ── CALLOUT BOXES ────────────────────────── */
+    .callout {
+      padding: 1.25rem 1.5rem;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+      border: 1px solid;
+      position: relative;
+    }
+
+    .callout-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .callout-header svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    .callout p:last-child { margin-bottom: 0; }
+
+    .callout.concept {
+      background: var(--blue-50);
+      border-color: var(--blue-100);
+    }
+    .callout.concept .callout-header { color: var(--blue-700); }
+
+    .callout.important {
+      background: var(--amber-50);
+      border-color: var(--amber-100);
+    }
+    .callout.important .callout-header { color: var(--amber-600); }
+
+    .callout.danger {
+      background: var(--red-50);
+      border-color: var(--red-100);
+    }
+    .callout.danger .callout-header { color: var(--red-600); }
+
+    .callout.tip {
+      background: var(--purple-50);
+      border-color: var(--purple-100);
+    }
+    .callout.tip .callout-header { color: var(--purple-600); }
+
+    .callout.success {
+      background: var(--teal-50);
+      border-color: var(--teal-100);
+    }
+    .callout.success .callout-header { color: var(--teal-700); }
+
+    /* ── CODE BLOCKS ──────────────────────────── */
+    .code-block {
+      position: relative;
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+      background: var(--surface-alt);
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--ink-muted);
+    }
+
+    .code-lang {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .code-copy {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: white;
+      font-size: 11px;
+      font-family: var(--font-sans);
+      color: var(--ink-muted);
+      cursor: pointer;
+      transition: all 0.2s var(--ease);
+    }
+
+    .code-copy:hover {
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    .code-copy.copied {
+      background: var(--teal-50);
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    pre {
+      margin: 0;
+      padding: 1.25rem 1.5rem;
+      overflow-x: auto;
+      background: #1e293b;
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: #e2e8f0;
+    }
+
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.88em;
+    }
+
+    p code, li code {
+      padding: 2px 7px;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      color: var(--teal-800);
+      font-size: 0.85em;
+    }
+
+    /* Syntax highlights (minimal) */
+    .hl-keyword  { color: #c084fc; }
+    .hl-string   { color: #86efac; }
+    .hl-comment  { color: #64748b; font-style: italic; }
+    .hl-function { color: #7dd3fc; }
+    .hl-number   { color: #fbbf24; }
+    .hl-flag     { color: #f472b6; }
+
+    /* ── COLLAPSIBLE (DETAILS) ────────────────── */
+    details {
+      margin-bottom: 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.2s var(--ease);
+    }
+
+    details[open] {
+      border-color: var(--teal-200);
+    }
+
+    details summary {
+      padding: 1rem 1.25rem;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      background: var(--surface-alt);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.2s var(--ease);
+      user-select: none;
+    }
+
+    details summary::-webkit-details-marker { display: none; }
+
+    details summary::before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+      flex-shrink: 0;
+      transition: transform 0.2s var(--ease);
+    }
+
+    details[open] summary::before {
+      transform: rotate(90deg);
+    }
+
+    details summary:hover {
+      background: var(--teal-50);
+    }
+
+    .details-body {
+      padding: 1.25rem 1.5rem;
+    }
+
+    .details-body p:last-child { margin-bottom: 0; }
+
+    /* ── VIDEO EMBED ──────────────────────────── */
+    .video-card {
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      background: #0f172a;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .video-caption {
+      padding: 12px 16px;
+      background: var(--surface-alt);
+      font-size: 13px;
+      color: var(--ink-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .video-caption svg {
+      width: 14px;
+      height: 14px;
+      color: var(--red-500);
+    }
+
+    /* ── RESOURCE CARDS ───────────────────────── */
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .resource-card {
+      display: flex;
+      gap: 14px;
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      background: white;
+    }
+
+    .resource-card:hover {
+      border-color: var(--teal-300);
+      background: var(--teal-50);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .resource-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 18px;
+    }
+
+    .resource-icon.docs    { background: var(--blue-50);   color: var(--blue-600); }
+    .resource-icon.video   { background: var(--red-50);    color: var(--red-500); }
+    .resource-icon.github  { background: var(--ink);       color: white; }
+    .resource-icon.article { background: var(--amber-50);  color: var(--amber-600); }
+    .resource-icon.pdf     { background: var(--purple-50); color: var(--purple-600); }
+
+    .resource-info {
+      min-width: 0;
+    }
+
+    .resource-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 2px;
+      line-height: 1.4;
+    }
+
+    .resource-desc {
+      font-size: 12px;
+      color: var(--ink-muted);
+      line-height: 1.5;
+    }
+
+    /* ── ASSIGNMENT CARDS ─────────────────────── */
+    .assignment {
+      border: 2px solid var(--teal-200);
+      border-radius: 14px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--teal-50) 0%, white 100%);
+    }
+
+    .assignment-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .assignment-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--teal-700);
+    }
+
+    .assignment-difficulty {
+      display: inline-flex;
+      padding: 4px 10px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .difficulty-l1 { background: var(--teal-100); color: var(--teal-800); }
+    .difficulty-l2 { background: var(--amber-100); color: var(--amber-600); }
+    .difficulty-l3 { background: var(--red-100); color: var(--red-600); }
+
+    .assignment h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .assignment p {
+      font-size: 14px;
+    }
+
+    .checklist {
+      list-style: none;
+      padding: 0;
+    }
+
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-light);
+      font-size: 14px;
+    }
+
+    .checklist li:last-child { border-bottom: none; }
+
+    .check-box {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      border: 2px solid var(--border);
+      flex-shrink: 0;
+      margin-top: 1px;
+      cursor: pointer;
+      transition: all 0.15s var(--ease);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .check-box:hover {
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked {
+      background: var(--teal-500);
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+    }
+
+    /* ── ARCHITECTURE DIAGRAM ─────────────────── */
+    .diagram {
+      margin: 1.5rem 0;
+      padding: 2rem;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow-x: auto;
+    }
+
+    .diagram pre {
+      background: transparent;
+      color: var(--ink);
+      padding: 0;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .diagram-caption {
+      margin-top: 1rem;
+      font-size: 12px;
+      color: var(--ink-muted);
+      text-align: center;
+      font-style: italic;
+    }
+
+    /* ── FOOTER ───────────────────────────────── */
+    .chapter-footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      background: var(--surface-alt);
+    }
+
+    .chapter-footer-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
+    }
+
+    .footer-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .footer-nav-link {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 1rem 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      max-width: 320px;
+      background: white;
+    }
+
+    .footer-nav-link:hover {
+      border-color: var(--teal-300);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .footer-nav-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--teal-600);
+    }
+
+    .footer-nav-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .footer-brand {
+      text-align: center;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
+    /* ── RESPONSIVE ───────────────────────────── */
+    @media (max-width: 960px) {
+      .main-layout {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        display: none;
+      }
+      .resource-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero { padding: 2.5rem 1.25rem 2rem; }
+      .main-layout { padding: 0 1.25rem; }
+      .content { padding: 2rem 0 4rem; }
+      pre { padding: 1rem; font-size: 12.5px; }
+      .footer-nav { flex-direction: column; }
+      .footer-nav-link { max-width: 100%; width: 100%; }
+    }
+
+    /* ── PRINT ────────────────────────────────── */
+    @media print {
+      .top-nav, .sidebar, .progress-bar { display: none; }
+      .main-layout { display: block; }
+      .content { padding: 0; }
+      .hero { background: white; border: none; }
+      pre { background: #f1f5f9; color: var(--ink); border: 1px solid var(--border); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Progress Bar -->
+  <div class="progress-bar" id="progressBar"></div>
+
+  <!-- Top Navigation -->
+  <nav class="top-nav">
+    <div class="top-nav-inner">
+      <a class="nav-brand" href="index.html">
+        <div class="nav-brand-icon">ILA</div>
+        <span class="nav-brand-text">Iksha Learning Academy</span>
+      </a>
+      <div class="nav-chapter-nav">
+        <span class="nav-btn disabled">&larr; Previous</span>
+        <span class="nav-current">01 / 18</span>
+        <a class="nav-btn" href="chapter-02.html">Next &rarr;</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-chapter-label">
+        <span>Chapter 01</span> &middot; Phase 1: Platform Foundations
+      </div>
+      <h1>Platform Bootstrap</h1>
+      <p class="hero-subtitle">
+        Create the project skeleton and shared developer workflow for a new ad bidding platform.
+        Before you write a single feature, the team needs a project that boots cleanly, tests reliably, and
+        welcomes new engineers without friction.
+      </p>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Estimated: 2&ndash;3 days
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          3 Advancement Levels
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          3 Assignments
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content + Sidebar -->
+  <div class="main-layout">
+    <main class="content">
+
+      <!-- ════════════════════════════════════════
+           SECTION 1: WHY THIS MATTERS
+           ════════════════════════════════════════ -->
+      <h2 id="why-this-matters">Why This Matters</h2>
+
+      <p>
+        Every production system starts with a bootstrap moment &mdash; the first <code>rails new</code>, the first
+        <code>npx create-react-app</code>, the first <code>docker compose up</code>. This moment seems trivial,
+        but the decisions you make here cascade through every chapter that follows.
+      </p>
+
+      <p>
+        A badly bootstrapped project creates invisible drag: slow test suites, mysterious environment bugs,
+        "works on my machine" conversations, and hours lost to configuration archaeology. A well-bootstrapped
+        project does the opposite &mdash; it makes every subsequent feature faster to build, test, and ship.
+      </p>
+
+      <div class="callout concept">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Key Insight
+        </div>
+        <p>
+          The goal of bootstrap is not to build features. It's to build <strong>the machine that builds features</strong>.
+          A team of 5 engineers who can each boot the project in 2 minutes will outperform a team of 10 who
+          spend 45 minutes fighting environment setup.
+        </p>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 2: KEY CONCEPTS
+           ════════════════════════════════════════ -->
+      <h2 id="key-concepts">Key Concepts</h2>
+
+      <h3 id="service-boundaries">1. Service Boundaries for a Bidding MVP</h3>
+
+      <p>
+        An ad bidding platform has a minimum of three runtime concerns that should be separated early,
+        even if they live in the same repository:
+      </p>
+
+      <ul>
+        <li><strong>API server</strong> &mdash; Rails in API mode. Serves JSON to the frontend, accepts webhook callbacks, exposes health endpoints.</li>
+        <li><strong>Background workers</strong> &mdash; Sidekiq (or Solid Queue). Processes async jobs like lead enrichment, conversion imports, billing events.</li>
+        <li><strong>Frontend app</strong> &mdash; React SPA. The operator console where campaigns are managed, bids are tuned, and analytics are consumed.</li>
+      </ul>
+
+      <div class="diagram">
+<pre>
+ ┌──────────────┐     ┌──────────────┐     ┌──────────────┐
+ │   React SPA  │────▶│   Rails API  │────▶│  PostgreSQL  │
+ │  (port 3001) │     │  (port 3000) │     │  (port 5432) │
+ └──────────────┘     └──────┬───────┘     └──────────────┘
+                             │
+                             │ enqueue
+                             ▼
+                      ┌──────────────┐     ┌──────────────┐
+                      │   Sidekiq    │────▶│    Redis      │
+                      │  (workers)   │     │  (port 6379) │
+                      └──────────────┘     └──────────────┘
+</pre>
+        <div class="diagram-caption">Figure 1: Minimum service topology for the ad bidding platform</div>
+      </div>
+
+      <p>
+        All five services &mdash; React, Rails, Sidekiq, PostgreSQL, and Redis &mdash; should boot with a single command.
+        If any one of them is down, the others should report a clear health status, not a cryptic stack trace.
+      </p>
+
+      <h3 id="rails-api-mode">2. Rails API Mode</h3>
+
+      <p>
+        When you run <code>rails new</code> with the <code>--api</code> flag, Rails strips out everything you don't
+        need for a JSON API: views, helpers, assets pipeline, cookie-based sessions. What you get is a lean
+        framework that's purpose-built for serving structured data.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">bash</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># Create a new Rails API application</span>
+rails new bidding_api <span class="hl-flag">--api</span> \
+  <span class="hl-flag">--database</span>=postgresql \
+  <span class="hl-flag">--skip-action-mailer</span> \
+  <span class="hl-flag">--skip-action-mailbox</span> \
+  <span class="hl-flag">--skip-action-text</span> \
+  <span class="hl-flag">--skip-active-storage</span> \
+  <span class="hl-flag">--skip-action-cable</span>
+</pre>
+      </div>
+
+      <p>
+        The <code>--skip-*</code> flags remove subsystems you won't need for a bidding API. You can always add
+        them back later &mdash; it's easier to add than to untangle.
+      </p>
+
+      <div class="callout important">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Why not skip Active Storage?
+        </div>
+        <p>
+          We skip it in the bootstrap because creative asset management (Chapter 06) will use a different
+          storage pattern. If you find you need it later, <code>rails active_storage:install</code> takes 30 seconds.
+          Don't cargo-cult gems you aren't using yet.
+        </p>
+      </div>
+
+      <h3 id="react-project-setup">3. React Project Setup</h3>
+
+      <p>
+        For the operator console, we use Vite + React. Vite gives sub-second hot reloads during development
+        and optimized production builds. The key decisions at bootstrap:
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">bash</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># Create React app with Vite and TypeScript</span>
+npm create vite@latest bidding_console <span class="hl-flag">--</span> <span class="hl-flag">--template</span> react-ts
+
+<span class="hl-keyword">cd</span> bidding_console
+npm install
+
+<span class="hl-comment"># Essential deps for what's ahead</span>
+npm install axios react-router-dom @tanstack/react-query
+</pre>
+      </div>
+
+      <ul>
+        <li><strong>TypeScript</strong> &mdash; Catches type errors at compile time. In a bidding system where a mistyped <code>budget</code> field could cost real money, this is non-negotiable.</li>
+        <li><strong>React Router</strong> &mdash; We'll need protected routes (Chapter 13) and deep-linking for campaign/ad-group detail pages.</li>
+        <li><strong>TanStack Query</strong> &mdash; Manages server state, caching, and background refetching. Eliminates an entire category of bugs around stale data.</li>
+      </ul>
+
+      <h3 id="docker-compose">4. Docker Compose for Local Development</h3>
+
+      <p>
+        Docker Compose is the single most impactful bootstrap decision. It guarantees that PostgreSQL and Redis
+        versions match across every developer machine, CI, and staging. No more "I'm on Postgres 14, you're on 16" bugs.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">yaml</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># docker-compose.yml</span>
+<span class="hl-keyword">version</span>: <span class="hl-string">'3.8'</span>
+
+<span class="hl-keyword">services</span>:
+  <span class="hl-function">db</span>:
+    <span class="hl-keyword">image</span>: <span class="hl-string">postgres:16-alpine</span>
+    <span class="hl-keyword">ports</span>:
+      - <span class="hl-string">"5432:5432"</span>
+    <span class="hl-keyword">environment</span>:
+      <span class="hl-keyword">POSTGRES_USER</span>: <span class="hl-string">bidding</span>
+      <span class="hl-keyword">POSTGRES_PASSWORD</span>: <span class="hl-string">bidding_dev</span>
+      <span class="hl-keyword">POSTGRES_DB</span>: <span class="hl-string">bidding_development</span>
+    <span class="hl-keyword">volumes</span>:
+      - pgdata:<span class="hl-string">/var/lib/postgresql/data</span>
+    <span class="hl-keyword">healthcheck</span>:
+      <span class="hl-keyword">test</span>: [<span class="hl-string">"CMD-SHELL"</span>, <span class="hl-string">"pg_isready -U bidding"</span>]
+      <span class="hl-keyword">interval</span>: <span class="hl-number">5</span>s
+      <span class="hl-keyword">timeout</span>: <span class="hl-number">5</span>s
+      <span class="hl-keyword">retries</span>: <span class="hl-number">5</span>
+
+  <span class="hl-function">redis</span>:
+    <span class="hl-keyword">image</span>: <span class="hl-string">redis:7-alpine</span>
+    <span class="hl-keyword">ports</span>:
+      - <span class="hl-string">"6379:6379"</span>
+    <span class="hl-keyword">healthcheck</span>:
+      <span class="hl-keyword">test</span>: [<span class="hl-string">"CMD"</span>, <span class="hl-string">"redis-cli"</span>, <span class="hl-string">"ping"</span>]
+      <span class="hl-keyword">interval</span>: <span class="hl-number">5</span>s
+      <span class="hl-keyword">timeout</span>: <span class="hl-number">5</span>s
+      <span class="hl-keyword">retries</span>: <span class="hl-number">5</span>
+
+<span class="hl-keyword">volumes</span>:
+  <span class="hl-function">pgdata</span>:
+</pre>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Pro Tip
+        </div>
+        <p>
+          Always include <code>healthcheck</code> directives. Without them, <code>docker compose up</code> will report
+          services as "running" while they're still initializing. Your Rails app will crash trying to connect to a
+          Postgres that isn't ready yet, and you'll waste 10 minutes debugging a timing issue.
+        </p>
+      </div>
+
+      <h3 id="health-endpoints">5. Health Check Endpoints</h3>
+
+      <p>
+        Every service should answer the question "are you okay?" with a deterministic, machine-readable response.
+        For the Rails API, this means a <code>/health</code> endpoint that checks database and Redis connectivity:
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># app/controllers/health_controller.rb</span>
+<span class="hl-keyword">class</span> <span class="hl-function">HealthController</span> &lt; ApplicationController
+  <span class="hl-keyword">def</span> <span class="hl-function">show</span>
+    checks = {
+      <span class="hl-string">database</span>: database_healthy?,
+      <span class="hl-string">redis</span>:    redis_healthy?,
+      <span class="hl-string">time</span>:     Time.current.iso8601
+    }
+
+    status = checks.values_at(<span class="hl-string">:database</span>, <span class="hl-string">:redis</span>).all? ? <span class="hl-string">:ok</span> : <span class="hl-string">:service_unavailable</span>
+    render json: checks, status: status
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">private</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">database_healthy?</span>
+    ActiveRecord::Base.connection.execute(<span class="hl-string">"SELECT 1"</span>)
+    <span class="hl-keyword">true</span>
+  <span class="hl-keyword">rescue</span> StandardError
+    <span class="hl-keyword">false</span>
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">redis_healthy?</span>
+    Redis.new.ping == <span class="hl-string">"PONG"</span>
+  <span class="hl-keyword">rescue</span> StandardError
+    <span class="hl-keyword">false</span>
+  <span class="hl-keyword">end</span>
+<span class="hl-keyword">end</span>
+</pre>
+      </div>
+
+      <p>
+        This simple pattern &mdash; check each dependency, return a boolean per service, return HTTP 503 if any are
+        down &mdash; will save you hours of debugging in every chapter that follows.
+      </p>
+
+      <h3 id="one-command-boot">6. One-Command Boot</h3>
+
+      <p>
+        The "gold standard" for bootstrap is a single script that takes a developer from a fresh clone to a
+        running system. Here's what <code>bin/setup</code> should do:
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">bash</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">#!/usr/bin/env bash</span>
+<span class="hl-comment"># bin/setup — Boot the entire platform from zero</span>
+<span class="hl-keyword">set</span> <span class="hl-flag">-euo</span> pipefail
+
+<span class="hl-function">echo</span> <span class="hl-string">"==> Starting infrastructure..."</span>
+docker compose up -d
+
+<span class="hl-function">echo</span> <span class="hl-string">"==> Waiting for Postgres..."</span>
+<span class="hl-keyword">until</span> docker compose exec db pg_isready -U bidding &gt; /dev/null <span class="hl-number">2</span>&gt;&amp;<span class="hl-number">1</span>; <span class="hl-keyword">do</span>
+  sleep <span class="hl-number">1</span>
+<span class="hl-keyword">done</span>
+
+<span class="hl-function">echo</span> <span class="hl-string">"==> Setting up Rails..."</span>
+<span class="hl-keyword">cd</span> api
+bundle install
+bin/rails db:prepare
+<span class="hl-keyword">cd</span> ..
+
+<span class="hl-function">echo</span> <span class="hl-string">"==> Setting up React..."</span>
+<span class="hl-keyword">cd</span> console
+npm install
+<span class="hl-keyword">cd</span> ..
+
+<span class="hl-function">echo</span> <span class="hl-string">"==> Done! Run bin/dev to start all services."</span>
+</pre>
+      </div>
+
+      <details>
+        <summary>What should <code>bin/dev</code> look like?</summary>
+        <div class="details-body">
+          <p>
+            Use <a href="https://github.com/DarthSim/overmind" target="_blank" rel="noopener">Overmind</a> or
+            <a href="https://github.com/ddollar/foreman" target="_blank" rel="noopener">Foreman</a> to run all
+            processes from a single <code>Procfile.dev</code>:
+          </p>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">procfile</span>
+              <button class="code-copy" onclick="copyCode(this)">Copy</button>
+            </div>
+<pre>
+api:     cd api && bin/rails server -p 3000
+worker:  cd api && bundle exec sidekiq
+console: cd console && npm run dev -- --port 3001
+</pre>
+          </div>
+          <p>
+            Then <code>bin/dev</code> is simply: <code>overmind start -f Procfile.dev</code>
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Environment variable management</summary>
+        <div class="details-body">
+          <p>
+            Never commit <code>.env</code> files. Instead, commit a <code>.env.example</code> with placeholder values
+            and document every variable:
+          </p>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">env</span>
+              <button class="code-copy" onclick="copyCode(this)">Copy</button>
+            </div>
+<pre>
+<span class="hl-comment"># .env.example — Copy to .env and fill in values</span>
+<span class="hl-keyword">DATABASE_URL</span>=<span class="hl-string">postgresql://bidding:bidding_dev@localhost:5432/bidding_development</span>
+<span class="hl-keyword">REDIS_URL</span>=<span class="hl-string">redis://localhost:6379/0</span>
+<span class="hl-keyword">RAILS_ENV</span>=<span class="hl-string">development</span>
+<span class="hl-keyword">SECRET_KEY_BASE</span>=<span class="hl-string">generate-with-rails-secret</span>
+</pre>
+          </div>
+          <p>
+            Use the <a href="https://github.com/bkeepers/dotenv" target="_blank" rel="noopener">dotenv</a> gem
+            to load these automatically in development.
+          </p>
+        </div>
+      </details>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 3: WATCH & LEARN
+           ════════════════════════════════════════ -->
+      <h2 id="watch-learn">Watch &amp; Learn</h2>
+
+      <p>
+        These videos cover the core concepts in this chapter. Watch them before starting the assignments &mdash;
+        they'll save you time on setup decisions.
+      </p>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/fmyvWz5TUWg?rel=0&amp;modestbranding=1"
+            title="Learn Ruby on Rails - Full Course"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          freeCodeCamp — Learn Ruby on Rails Full Course (covers project creation, MVC, and API basics)
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/3c-iBn73dDE?rel=0&amp;modestbranding=1"
+            title="Docker Tutorial for Beginners [FULL COURSE in 3 Hours]"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          TechWorld with Nana — Docker Tutorial for Beginners (covers Compose, volumes, networking)
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 4: FURTHER READING
+           ════════════════════════════════════════ -->
+      <h2 id="further-reading">Further Reading</h2>
+
+      <p>Deep-dive into the official documentation and reference material for this chapter's tools.</p>
+
+      <div class="resource-grid">
+        <a class="resource-card" href="https://guides.rubyonrails.org/getting_started.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Rails Guides: Getting Started</div>
+            <div class="resource-desc">Official Rails walkthrough. Covers project creation, MVC basics, and routing fundamentals.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://guides.rubyonrails.org/api_app.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Rails Guides: API-only Applications</div>
+            <div class="resource-desc">What changes when you use --api mode. Middleware stack, JSON rendering, and CORS configuration.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://docs.docker.com/compose/" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Docker Compose: Overview</div>
+            <div class="resource-desc">Official reference for multi-container orchestration. Health checks, volumes, and networking.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://vitejs.dev/guide/" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Vite: Getting Started</div>
+            <div class="resource-desc">Build tool for the React frontend. Dev server, HMR, and production bundling.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://12factor.net/" target="_blank" rel="noopener">
+          <div class="resource-icon article">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">The Twelve-Factor App</div>
+            <div class="resource-desc">Methodology for building SaaS apps. Especially relevant: config, dependencies, and dev/prod parity.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://www.youtube.com/watch?v=QojnRc7SS9o" target="_blank" rel="noopener">
+          <div class="resource-icon video">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Simple Rails REST API From Scratch (Traversy Media)</div>
+            <div class="resource-desc">Hands-on video building a Rails API from scratch. Covers routing, controllers, and JSON responses.</div>
+          </div>
+        </a>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 5: ASSIGNMENTS
+           ════════════════════════════════════════ -->
+      <h2 id="assignments">Assignments</h2>
+
+      <p>
+        Complete these in order. Each level builds on the previous one. Submit your work as a GitHub PR
+        with <code>docs/chapter-01.md</code> containing your architecture notes and setup proof (screenshots or
+        terminal output).
+      </p>
+
+      <!-- Assignment 1: Level 1 -->
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 1
+          </div>
+          <span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span>
+        </div>
+        <h4>Local API + UI Boot with Health Checks</h4>
+        <p>Get the full stack running locally. Both the Rails API and React app should be accessible, and health checks should return clean status.</p>
+
+        <ul class="checklist">
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Create a new Rails API app with <code>--api --database=postgresql</code></span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Create a new React + TypeScript app with Vite</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Write a <code>docker-compose.yml</code> for PostgreSQL and Redis with health checks</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Add a <code>/health</code> endpoint to Rails that checks DB and Redis connectivity</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Verify: <code>curl localhost:3000/health</code> returns <code>{"database":true,"redis":true}</code></span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Verify: React app loads at <code>localhost:3001</code></span>
+          </li>
+        </ul>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            A mentor can clone your repo, run <code>docker compose up -d</code> and <code>bin/rails server</code>,
+            and see a healthy API response and a React welcome page without editing any files.
+          </p>
+        </div>
+      </div>
+
+      <!-- Assignment 2: Level 2 -->
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 2
+          </div>
+          <span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span>
+        </div>
+        <h4>One-Command Startup/Shutdown and Environment Templates</h4>
+        <p>Automate the entire boot process so no developer ever has to read a README to get started.</p>
+
+        <ul class="checklist">
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Create <code>bin/setup</code> that bootstraps everything from a fresh clone</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Create <code>bin/dev</code> using Overmind/Foreman and a <code>Procfile.dev</code></span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Add <code>.env.example</code> with every required variable documented</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span><code>bin/setup</code> should auto-copy <code>.env.example</code> to <code>.env</code> if missing</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Add a <code>bin/teardown</code> script to cleanly stop and remove containers</span>
+          </li>
+        </ul>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            A new engineer can clone the repo and run <strong>one command</strong> (<code>bin/setup && bin/dev</code>)
+            to have the full system running. No manual steps. No "see the wiki."
+          </p>
+        </div>
+      </div>
+
+      <!-- Assignment 3: Level 3 -->
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 3
+          </div>
+          <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Production-Ready</span>
+        </div>
+        <h4>Team-Ready Onboarding Guide with Troubleshooting Matrix</h4>
+        <p>Write documentation that anticipates failure. The best setup guide is one that helps engineers help themselves when things go wrong.</p>
+
+        <ul class="checklist">
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Write <code>docs/chapter-01.md</code> with architecture diagram and service overview</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Include a troubleshooting table: symptom &rarr; likely cause &rarr; fix command</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Document coding conventions: linters, test commands, branch naming</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Time a full setup from scratch &mdash; target under 20 minutes</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Have another person follow your guide without your help and note where they get stuck</span>
+          </li>
+        </ul>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            A colleague who has never seen the repo can complete setup in under 20 minutes by following your
+            documentation alone. If they get stuck, the troubleshooting matrix resolves it without Slack.
+          </p>
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 6: SELF-CHECK
+           ════════════════════════════════════════ -->
+      <h2 id="self-check">Self-Check</h2>
+
+      <p>Before moving to Chapter 02, honestly answer these questions. If any answer is "no", go back and fix it.</p>
+
+      <details>
+        <summary>Can a new engineer run the project in under 20 minutes?</summary>
+        <div class="details-body">
+          <p>
+            Time it yourself. If it takes longer, identify where the friction is: slow dependency installs?
+            Missing documentation? A database migration that requires manual steps? Each pain point is
+            a setup bug that needs fixing.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Are service health checks deterministic and easy to debug?</summary>
+        <div class="details-body">
+          <p>
+            Try stopping Redis (<code>docker compose stop redis</code>) and hitting <code>/health</code>.
+            Does it clearly say <code>"redis": false</code>? Or does it return a 500 with a stack trace?
+            Health checks should diagnose, not crash.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Is the scope constrained enough for feature-by-feature delivery?</summary>
+        <div class="details-body">
+          <p>
+            You should have zero business logic in the codebase right now. No models beyond what Rails
+            generates. No routes beyond <code>/health</code>. If you've built anything else, you've
+            over-scoped the bootstrap &mdash; move it to the appropriate chapter.
+          </p>
+        </div>
+      </details>
+
+    </main>
+
+    <!-- Sidebar: Table of Contents -->
+    <aside class="sidebar">
+      <div class="sidebar-title">On this page</div>
+      <ul class="toc-list">
+        <li class="toc-item"><a href="#why-this-matters">Why This Matters</a></li>
+        <li class="toc-item"><a href="#key-concepts">Key Concepts</a></li>
+        <li class="toc-item"><a href="#service-boundaries" style="padding-left: 28px; font-size: 12px;">Service Boundaries</a></li>
+        <li class="toc-item"><a href="#rails-api-mode" style="padding-left: 28px; font-size: 12px;">Rails API Mode</a></li>
+        <li class="toc-item"><a href="#react-project-setup" style="padding-left: 28px; font-size: 12px;">React Project Setup</a></li>
+        <li class="toc-item"><a href="#docker-compose" style="padding-left: 28px; font-size: 12px;">Docker Compose</a></li>
+        <li class="toc-item"><a href="#health-endpoints" style="padding-left: 28px; font-size: 12px;">Health Check Endpoints</a></li>
+        <li class="toc-item"><a href="#one-command-boot" style="padding-left: 28px; font-size: 12px;">One-Command Boot</a></li>
+        <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a></li>
+        <li class="toc-item"><a href="#further-reading">Further Reading</a></li>
+        <li class="toc-item"><a href="#assignments">Assignments</a></li>
+        <li class="toc-item"><a href="#self-check">Self-Check</a></li>
+      </ul>
+    </aside>
+  </div>
+
+  <!-- Footer Navigation -->
+  <footer class="chapter-footer">
+    <div class="chapter-footer-inner">
+      <nav class="footer-nav">
+        <div></div>
+        <a class="footer-nav-link" href="chapter-02.html">
+          <span class="footer-nav-label">Next Chapter &rarr;</span>
+          <span class="footer-nav-title">02: Authentication and Tenant Isolation</span>
+        </a>
+      </nav>
+      <div class="footer-brand">
+        ILA (Iksha Learning Academy) &middot; Rails + React Engineering Certification &middot; Level 2
+      </div>
+    </div>
+  </footer>
+
+  <!-- ════════════════════════════════════════
+       SCRIPTS
+       ════════════════════════════════════════ -->
+  <script>
+    // ── Progress Bar ──
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      document.getElementById('progressBar').style.width = progress + '%';
+    });
+
+    // ── Active TOC ──
+    const tocLinks = document.querySelectorAll('.toc-item a');
+    const sections = [];
+
+    tocLinks.forEach(link => {
+      const id = link.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) sections.push({ id, el, link });
+    });
+
+    const observerOptions = {
+      rootMargin: '-80px 0px -60% 0px',
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const item = sections.find(s => s.el === entry.target);
+        if (item) {
+          if (entry.isIntersecting) {
+            tocLinks.forEach(l => l.classList.remove('active'));
+            item.link.classList.add('active');
+          }
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(s => observer.observe(s.el));
+
+    // ── Copy Code ──
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      const text = pre.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.classList.add('copied');
+        btn.textContent = 'Copied!';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.textContent = 'Copy';
+        }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,1007 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ILA Rails React Advanced Curriculum - Feature-by-Feature Ad Bidding Platform</title>
+  <style>
+    :root {
+      --ink: #0f172a;
+      --muted: #334155;
+      --line: #cbd5e1;
+      --teal-700: #0f766e;
+      --bg: #f8fafc;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      color: var(--ink);
+      line-height: 1.45;
+      font-size: 13px;
+      background: white;
+    }
+    .page {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 20px 24px;
+    }
+    .cover {
+      background: linear-gradient(180deg, #ecfeff 0%, #ffffff 38%);
+      border-bottom: 1px solid var(--line);
+    }
+    h1 {
+      margin: 0 0 8px 0;
+      color: #115e59;
+      font-size: 26px;
+    }
+    h2 {
+      margin: 0 0 8px 0;
+      font-size: 22px;
+    }
+    h3 {
+      margin: 12px 0 6px 0;
+      color: var(--teal-700);
+      font-size: 15px;
+    }
+    h4 {
+      margin: 0 0 5px 0;
+      font-size: 14px;
+      color: #115e59;
+    }
+    p { margin: 0 0 8px 0; }
+    ul, ol {
+      margin: 0 0 10px 18px;
+      padding: 0;
+    }
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 12px 0;
+    }
+    .meta span {
+      border: 1px solid var(--line);
+      background: white;
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 12px;
+    }
+    .journey {
+      border: 1px solid var(--line);
+      background: var(--bg);
+      border-radius: 10px;
+      padding: 12px;
+      margin-top: 10px;
+    }
+    .journey li { margin-bottom: 5px; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+    }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 7px 8px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th { background: #f1f5f9; }
+    .cards {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 10px 12px;
+      background: #ffffff;
+    }
+    .format {
+      margin: 0;
+      color: #0f766e;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .chapter {
+      page-break-before: always;
+    }
+    .nav {
+      font-size: 11px;
+      color: #64748b;
+      margin-bottom: 6px;
+    }
+    .feature {
+      border: 1px solid var(--line);
+      border-left: 4px solid #2563eb;
+      background: #eff6ff;
+      padding: 8px;
+      border-radius: 8px;
+    }
+    .value {
+      border: 1px solid var(--line);
+      border-left: 4px solid #0f766e;
+      background: #f8fafc;
+      padding: 8px;
+      border-radius: 8px;
+      margin-top: 6px;
+    }
+    .step {
+      margin-top: 8px;
+      padding: 8px 10px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #ffffff;
+    }
+    .url {
+      color: var(--muted);
+      font-size: 11px;
+      word-break: break-all;
+    }
+    a {
+      color: #0c4a6e;
+      text-decoration: underline;
+    }
+    .evidence {
+      margin-top: 8px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .rubric {
+      page-break-before: always;
+    }
+    .validation-note {
+      margin-top: 6px;
+      color: #334155;
+      font-size: 12px;
+    }
+    @media print {
+      a {
+        color: inherit;
+      }
+    }
+  </style>
+</head>
+<body>
+  <section class="page cover">
+    <h1>ILA (Iksha Learning Academy)</h1>
+    <p><strong>Rails and React Advanced Curriculum</strong></p>
+    <p>Feature-by-feature build of an ad bidding platform. Each chapter explains one feature and advances it step by step.</p>
+
+    <div class="meta">
+      <span>Completion Window: 4-5 weeks</span>
+      <span>Chapters: 18</span>
+      <span>Track: Rails API + React operator console</span>
+      <span>Certification: Level 2, Mentor-reviewed</span>
+    </div>
+
+    <h3>How to Navigate</h3>
+    <ol>
+      <li>Build one feature per chapter in order. Do not skip chapters.</li>
+      <li>Use the Feature Advancement Path to move from basic to advanced implementation.</li>
+      <li>Submit chapter evidence in docs/chapter-XX.md with code and test proof.</li>
+      <li>Complete D. Review before moving to the next chapter.</li>
+    </ol>
+
+    <h3>Chapter Format (Required)</h3>
+    <ol>
+      <li>Learn concept</li>
+      <li>Write code</li>
+      <li>Suggested reading (working links)</li>
+      <li>Review</li>
+    </ol>
+    <p class="validation-note">Suggested links validated on: 2026-02-19</p>
+
+    <h3>Learning Journey</h3>
+    <ul class="journey">
+      <li>Phase 1: Build secure platform foundations.</li>
+      <li>Phase 2: Deliver the bidding and revenue core.</li>
+      <li>Phase 3: Ship high-velocity operator UX.</li>
+      <li>Phase 4: Harden for reliability and launch.</li>
+    </ul>
+  </section>
+
+  <section class="page chapter">
+    <h2>Table of Contents</h2>
+    <table>
+      <thead><tr><th>ID</th><th>Feature Chapter</th><th>Page</th></tr></thead>
+      <tbody><tr><td>01</td><td>Platform Bootstrap</td><td>Open</td></tr>
+<tr><td>02</td><td>Authentication and Tenant Isolation</td><td>Open</td></tr>
+<tr><td>03</td><td>Campaign Management Core</td><td>Open</td></tr>
+<tr><td>04</td><td>Budget Pacing Guardrails</td><td>Open</td></tr>
+<tr><td>05</td><td>Ad Group Targeting</td><td>Open</td></tr>
+<tr><td>06</td><td>Creative Asset Pipeline</td><td>Open</td></tr>
+<tr><td>07</td><td>Bid Strategy Engine</td><td>Open</td></tr>
+<tr><td>08</td><td>Lead Intake and Quality Gate</td><td>Open</td></tr>
+<tr><td>09</td><td>Conversion Attribution</td><td>Open</td></tr>
+<tr><td>10</td><td>Background Jobs and Retry Safety</td><td>Open</td></tr>
+<tr><td>11</td><td>Billing Ledger and Receipts</td><td>Open</td></tr>
+<tr><td>12</td><td>Analytics Aggregation API</td><td>Open</td></tr>
+<tr><td>13</td><td>React Shell and Protected Navigation</td><td>Open</td></tr>
+<tr><td>14</td><td>Campaign Builder UI</td><td>Open</td></tr>
+<tr><td>15</td><td>Ad Group and Bid Console UI</td><td>Open</td></tr>
+<tr><td>16</td><td>Performance Dashboard UI</td><td>Open</td></tr>
+<tr><td>17</td><td>Testing and CI Quality Gates</td><td>Open</td></tr>
+<tr><td>18</td><td>Launch Hardening and Capstone Defense</td><td>Open</td></tr></tbody>
+    </table>
+  </section>
+
+  <section class="page chapter">
+    <h2>Chapter Overview Cards</h2>
+    <div class="cards">
+      
+<article class="card">
+  <h4>Chapter 01: Platform Bootstrap</h4>
+  <p><strong>Feature:</strong> Create the project skeleton and shared developer workflow for a new ad bidding platform.</p>
+  <p><strong>Value:</strong> Fast, repeatable setup prevents execution drag as the team grows.</p>
+  <p class="format">Format: Learn concept -> Write code -> Suggested reading -> Review</p>
+</article>
+
+
+<article class="card">
+  <h4>Chapter 02: Authentication and Tenant Isolation</h4>
+  <p><strong>Feature:</strong> Implement login and strict account scoping so customer data never crosses tenant boundaries.</p>
+  <p><strong>Value:</strong> Multi-tenant isolation is mandatory for trust, compliance, and enterprise readiness.</p>
+  <p class="format">Format: Learn concept -> Write code -> Suggested reading -> Review</p>
+</article>
+
+
+<article class="card">
+  <h4>Chapter 03: Campaign Management Core</h4>
+  <p><strong>Feature:</strong> Build the core campaign entity with lifecycle states, validation, and API contracts.</p>
+  <p><strong>Value:</strong> Campaign controls are the center of spend planning and operator decision-making.</p>
+  <p class="format">Format: Learn concept -> Write code -> Suggested reading -> Review</p>
+</article>
+
+
+<article class="card">
+  <h4>Chapter 04: Budget Pacing Guardrails</h4>
+  <p><strong>Feature:</strong> Add budget pacing logic so spend is distributed safely instead of burning too early.</p>
+  <p><strong>Value:</strong> Runaway spend destroys unit economics and stakeholder confidence.</p>
+  <p class="format">Format: Learn concept -> Write code -> Suggested reading -> Review</p>
+</article>
+
+
+<article class="card">
+  <h4>Chapter 05: Ad Group Targeting</h4>
+  <p><strong>Feature:</strong> Introduce ad groups with targeting dimensions (territory, filters, source constraints).</p>
+  <p><strong>Value:</strong> Granular targeting enables better ROI and controlled experimentation.</p>
+  <p class="format">Format: Learn concept -> Write code -> Suggested reading -> Review</p>
+</article>
+
+
+<article class="card">
+  <h4>Chapter 06: Creative Asset Pipeline</h4>
+  <p><strong>Feature:</strong> Build creative management so ad assets can be created, updated, and attached safely.</p>
+  <p><strong>Value:</strong> Faster creative iteration directly affects CTR and campaign performance.</p>
+  <p class="format">Format: Learn concept -> Write code -> Suggested reading -> Review</p>
+</article>
+
+
+<article class="card">
+  <h4>Chapter 07: Bid Strategy Engine</h4>
+  <p><strong>Feature:</strong> Add bid suggestion and apply flow driven by target CPA and delivery signals.</p>
+  <p><strong>Value:</strong> Bid quality determines acquisition cost and margin stability.</p>
+  <p class="format">Format: Learn concept -> Write code -> Suggested reading -> Review</p>
+</article>
+
+
+<article class="card">
+  <h4>Chapter 08: Lead Intake and Quality Gate</h4>
+  <p><strong>Feature:</strong> Ingest inbound leads with schema validation, deduping, and abuse protection.</p>
+  <p><strong>Value:</strong> Lead quality drives revenue quality and partner trust.</p>
+  <p class="format">Format: Learn concept -> Write code -> Suggested reading -> Review</p>
+</article>
+
+
+<article class="card">
+  <h4>Chapter 09: Conversion Attribution</h4>
+  <p><strong>Feature:</strong> Track conversion events and map them to campaigns/ad groups reliably.</p>
+  <p><strong>Value:</strong> Accurate attribution is required for optimization and billing confidence.</p>
+  <p class="format">Format: Learn concept -> Write code -> Suggested reading -> Review</p>
+</article>
+
+
+<article class="card">
+  <h4>Chapter 10: Background Jobs and Retry Safety</h4>
+  <p><strong>Feature:</strong> Move heavy/slow tasks to async workers with robust retry and observability.</p>
+  <p><strong>Value:</strong> Async processing protects API latency and improves system resilience.</p>
+  <p class="format">Format: Learn concept -> Write code -> Suggested reading -> Review</p>
+</article>
+
+
+<article class="card">
+  <h4>Chapter 11: Billing Ledger and Receipts</h4>
+  <p><strong>Feature:</strong> Create immutable billing events and receipt records tied to monetizable actions.</p>
+  <p><strong>Value:</strong> Financial correctness underpins invoicing, trust, and audits.</p>
+  <p class="format">Format: Learn concept -> Write code -> Suggested reading -> Review</p>
+</article>
+
+
+<article class="card">
+  <h4>Chapter 12: Analytics Aggregation API</h4>
+  <p><strong>Feature:</strong> Build account-scoped analytics endpoints for KPI cards, trends, and breakdown tables.</p>
+  <p><strong>Value:</strong> Good analytics enable faster, better bid decisions.</p>
+  <p class="format">Format: Learn concept -> Write code -> Suggested reading -> Review</p>
+</article>
+
+
+<article class="card">
+  <h4>Chapter 13: React Shell and Protected Navigation</h4>
+  <p><strong>Feature:</strong> Create the frontend shell with authenticated routing and role-aware navigation.</p>
+  <p><strong>Value:</strong> A stable shell reduces UI regressions and speeds feature rollout.</p>
+  <p class="format">Format: Learn concept -> Write code -> Suggested reading -> Review</p>
+</article>
+
+
+<article class="card">
+  <h4>Chapter 14: Campaign Builder UI</h4>
+  <p><strong>Feature:</strong> Implement campaign list/create/edit flows with robust form validation and feedback.</p>
+  <p><strong>Value:</strong> Fast, clear campaign setup improves execution speed for growth teams.</p>
+  <p class="format">Format: Learn concept -> Write code -> Suggested reading -> Review</p>
+</article>
+
+
+<article class="card">
+  <h4>Chapter 15: Ad Group and Bid Console UI</h4>
+  <p><strong>Feature:</strong> Build ad group operations UI with bid recommendation, edit, and history visibility.</p>
+  <p><strong>Value:</strong> This is the day-to-day control center for performance operators.</p>
+  <p class="format">Format: Learn concept -> Write code -> Suggested reading -> Review</p>
+</article>
+
+
+<article class="card">
+  <h4>Chapter 16: Performance Dashboard UI</h4>
+  <p><strong>Feature:</strong> Ship dashboard cards, trends, and tables for spend, leads, conversions, and efficiency.</p>
+  <p><strong>Value:</strong> Actionable visibility closes the optimization loop every day.</p>
+  <p class="format">Format: Learn concept -> Write code -> Suggested reading -> Review</p>
+</article>
+
+
+<article class="card">
+  <h4>Chapter 17: Testing and CI Quality Gates</h4>
+  <p><strong>Feature:</strong> Introduce automated checks across API, UI, and end-to-end critical paths.</p>
+  <p><strong>Value:</strong> Reliable release velocity requires predictable quality gates.</p>
+  <p class="format">Format: Learn concept -> Write code -> Suggested reading -> Review</p>
+</article>
+
+
+<article class="card">
+  <h4>Chapter 18: Launch Hardening and Capstone Defense</h4>
+  <p><strong>Feature:</strong> Run a full launch simulation, incident drill, and final architecture defense.</p>
+  <p><strong>Value:</strong> Readiness is proven by operational behavior, not by code volume.</p>
+  <p class="format">Format: Learn concept -> Write code -> Suggested reading -> Review</p>
+</article>
+
+    </div>
+  </section>
+
+  <section class="page rubric">
+    <h2>Evaluation Rubric (Per Chapter)</h2>
+    <table>
+      <thead><tr><th>Category</th><th>Score</th><th>Expectation</th></tr></thead>
+      <tbody>
+        <tr><td>Feature Understanding</td><td>/5</td><td>You clearly explain what the feature does and why it matters.</td></tr>
+        <tr><td>Implementation Quality</td><td>/5</td><td>Code is robust, tested, and operationally safe.</td></tr>
+        <tr><td>Step-by-Step Advancement</td><td>/5</td><td>The feature evolves from basic to advanced with clear milestones.</td></tr>
+        <tr><td>Review Rigor</td><td>/5</td><td>You identify bugs, regressions, and scalability risks.</td></tr>
+        <tr><td>Evidence Quality</td><td>/5</td><td>Evidence is reproducible and supports all claims.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  
+<section class="page chapter">
+  <div class="nav">Table of Contents | Chapter 01</div>
+  <h2>Chapter 01: Platform Bootstrap</h2>
+
+  <p class="feature"><strong>Feature Overview:</strong> Create the project skeleton and shared developer workflow for a new ad bidding platform.</p>
+  <p class="value"><strong>Why This Feature Matters:</strong> Fast, repeatable setup prevents execution drag as the team grows.</p>
+
+  <h3>Feature Advancement Path</h3>
+  <ul><li>Level 1: Local API + UI boot with health checks.</li><li>Level 2: One-command startup/shutdown scripts and env templates.</li><li>Level 3: Team-ready onboarding guide with troubleshooting matrix.</li></ul>
+
+  <div class="step">
+    <h3>A. Learn Concept</h3>
+    <ul><li>Identify the minimum services required for a bidding MVP.</li><li>Define boundaries between API, jobs, and frontend app.</li><li>Set baseline coding and testing standards.</li></ul>
+  </div>
+
+  <div class="step">
+    <h3>B. Write Code</h3>
+    <ul><li>Initialize Rails API and React app repositories for the training build.</li><li>Configure Postgres/Redis and create scripts for fast local boot.</li><li>Publish docs/chapter-01.md with architecture and setup proof.</li></ul>
+  </div>
+
+  <div class="step">
+    <h3>C. Suggested Reading (Working Links)</h3>
+    <ul><li><a href="https://guides.rubyonrails.org/getting_started.html" target="_blank" rel="noopener noreferrer">Rails Guides: Getting Started</a><span class="url"> (https://guides.rubyonrails.org/getting_started.html)</span></li><li><a href="https://guides.rubyonrails.org/api_app.html" target="_blank" rel="noopener noreferrer">Rails Guides: API Applications</a><span class="url"> (https://guides.rubyonrails.org/api_app.html)</span></li><li><a href="https://docs.docker.com/compose/" target="_blank" rel="noopener noreferrer">Docker Docs: Compose Overview</a><span class="url"> (https://docs.docker.com/compose/)</span></li></ul>
+  </div>
+
+  <div class="step">
+    <h3>D. Review</h3>
+    <ul><li>Can a new engineer run the project in under 20 minutes?</li><li>Are service health checks deterministic and easy to debug?</li><li>Is scope constrained enough for feature-by-feature delivery?</li></ul>
+  </div>
+
+  <p class="evidence"><strong>Evidence to submit:</strong> docs/chapter-01.md, PR link, test output, and review notes.</p>
+</section>
+
+
+<section class="page chapter">
+  <div class="nav">Table of Contents | Chapter 02</div>
+  <h2>Chapter 02: Authentication and Tenant Isolation</h2>
+
+  <p class="feature"><strong>Feature Overview:</strong> Implement login and strict account scoping so customer data never crosses tenant boundaries.</p>
+  <p class="value"><strong>Why This Feature Matters:</strong> Multi-tenant isolation is mandatory for trust, compliance, and enterprise readiness.</p>
+
+  <h3>Feature Advancement Path</h3>
+  <ul><li>Level 1: JWT login/logout and protected routes.</li><li>Level 2: Tenant-scoped authorization checks for all domain actions.</li><li>Level 3: Security regression tests for cross-tenant attack paths.</li></ul>
+
+  <div class="step">
+    <h3>A. Learn Concept</h3>
+    <ul><li>Differentiate authentication from authorization.</li><li>Define tenant resolution rules for every request.</li><li>Model account-role permissions for operators and admins.</li></ul>
+  </div>
+
+  <div class="step">
+    <h3>B. Write Code</h3>
+    <ul><li>Add JWT-based auth endpoints and middleware.</li><li>Implement account and membership models with authorization policies.</li><li>Add request specs proving cross-tenant access is denied.</li></ul>
+  </div>
+
+  <div class="step">
+    <h3>C. Suggested Reading (Working Links)</h3>
+    <ul><li><a href="https://guides.rubyonrails.org/security.html" target="_blank" rel="noopener noreferrer">Rails Guides: Security</a><span class="url"> (https://guides.rubyonrails.org/security.html)</span></li><li><a href="https://jwt.io/introduction" target="_blank" rel="noopener noreferrer">JWT.io: Introduction</a><span class="url"> (https://jwt.io/introduction)</span></li><li><a href="https://owasp.org/www-project-top-ten/" target="_blank" rel="noopener noreferrer">OWASP Top 10</a><span class="url"> (https://owasp.org/www-project-top-ten/)</span></li></ul>
+  </div>
+
+  <div class="step">
+    <h3>D. Review</h3>
+    <ul><li>Do protected endpoints fail safely when auth context is missing?</li><li>Can an authenticated user access data from another tenant?</li><li>Are auth failures observable in logs without leaking sensitive data?</li></ul>
+  </div>
+
+  <p class="evidence"><strong>Evidence to submit:</strong> docs/chapter-02.md, PR link, test output, and review notes.</p>
+</section>
+
+
+<section class="page chapter">
+  <div class="nav">Table of Contents | Chapter 03</div>
+  <h2>Chapter 03: Campaign Management Core</h2>
+
+  <p class="feature"><strong>Feature Overview:</strong> Build the core campaign entity with lifecycle states, validation, and API contracts.</p>
+  <p class="value"><strong>Why This Feature Matters:</strong> Campaign controls are the center of spend planning and operator decision-making.</p>
+
+  <h3>Feature Advancement Path</h3>
+  <ul><li>Level 1: CRUD with hard validations.</li><li>Level 2: Lifecycle transitions and guard clauses.</li><li>Level 3: Contract-stable API responses consumed by frontend forms.</li></ul>
+
+  <div class="step">
+    <h3>A. Learn Concept</h3>
+    <ul><li>Model campaign state transitions and invalid transitions.</li><li>Define budget and date constraints at domain level.</li><li>Design serializer output for list and detail views.</li></ul>
+  </div>
+
+  <div class="step">
+    <h3>B. Write Code</h3>
+    <ul><li>Implement campaign create/list/update APIs.</li><li>Add validation rules for budgets, dates, and status transitions.</li><li>Add request tests for success and failure paths.</li></ul>
+  </div>
+
+  <div class="step">
+    <h3>C. Suggested Reading (Working Links)</h3>
+    <ul><li><a href="https://guides.rubyonrails.org/active_record_basics.html" target="_blank" rel="noopener noreferrer">Rails Guides: Active Record Basics</a><span class="url"> (https://guides.rubyonrails.org/active_record_basics.html)</span></li><li><a href="https://guides.rubyonrails.org/active_record_validations.html" target="_blank" rel="noopener noreferrer">Rails Guides: Active Record Validations</a><span class="url"> (https://guides.rubyonrails.org/active_record_validations.html)</span></li><li><a href="https://guides.rubyonrails.org/action_controller_overview.html" target="_blank" rel="noopener noreferrer">Rails Guides: Action Controller Overview</a><span class="url"> (https://guides.rubyonrails.org/action_controller_overview.html)</span></li></ul>
+  </div>
+
+  <div class="step">
+    <h3>D. Review</h3>
+    <ul><li>Are invalid transitions fully blocked and well messaged?</li><li>Do API responses remain stable as fields evolve?</li><li>Can operators recover quickly from validation errors?</li></ul>
+  </div>
+
+  <p class="evidence"><strong>Evidence to submit:</strong> docs/chapter-03.md, PR link, test output, and review notes.</p>
+</section>
+
+
+<section class="page chapter">
+  <div class="nav">Table of Contents | Chapter 04</div>
+  <h2>Chapter 04: Budget Pacing Guardrails</h2>
+
+  <p class="feature"><strong>Feature Overview:</strong> Add budget pacing logic so spend is distributed safely instead of burning too early.</p>
+  <p class="value"><strong>Why This Feature Matters:</strong> Runaway spend destroys unit economics and stakeholder confidence.</p>
+
+  <h3>Feature Advancement Path</h3>
+  <ul><li>Level 1: Daily limit checks.</li><li>Level 2: Time-window pacing decisions.</li><li>Level 3: Simulation tests for edge traffic spikes.</li></ul>
+
+  <div class="step">
+    <h3>A. Learn Concept</h3>
+    <ul><li>Understand pacing models and failure modes.</li><li>Choose where to enforce budget checks in request flow.</li><li>Define guardrails for emergency spend cutoff.</li></ul>
+  </div>
+
+  <div class="step">
+    <h3>B. Write Code</h3>
+    <ul><li>Implement budget consumption checks during bid-serving actions.</li><li>Add pacing service with deterministic output for test fixtures.</li><li>Record pacing decision reasons for auditability.</li></ul>
+  </div>
+
+  <div class="step">
+    <h3>C. Suggested Reading (Working Links)</h3>
+    <ul><li><a href="https://www.postgresql.org/docs/current/transaction-iso.html" target="_blank" rel="noopener noreferrer">PostgreSQL Docs: Transaction Isolation</a><span class="url"> (https://www.postgresql.org/docs/current/transaction-iso.html)</span></li><li><a href="https://guides.rubyonrails.org/active_record_querying.html" target="_blank" rel="noopener noreferrer">Rails Guides: Active Record Querying</a><span class="url"> (https://guides.rubyonrails.org/active_record_querying.html)</span></li><li><a href="https://www.postgresql.org/docs/current/using-explain.html" target="_blank" rel="noopener noreferrer">PostgreSQL Docs: Using EXPLAIN</a><span class="url"> (https://www.postgresql.org/docs/current/using-explain.html)</span></li></ul>
+  </div>
+
+  <div class="step">
+    <h3>D. Review</h3>
+    <ul><li>Does pacing prevent budget exhaustion under burst traffic?</li><li>Are budget decisions explainable from logs and evidence?</li><li>Is fallback behavior clear if pacing service fails?</li></ul>
+  </div>
+
+  <p class="evidence"><strong>Evidence to submit:</strong> docs/chapter-04.md, PR link, test output, and review notes.</p>
+</section>
+
+
+<section class="page chapter">
+  <div class="nav">Table of Contents | Chapter 05</div>
+  <h2>Chapter 05: Ad Group Targeting</h2>
+
+  <p class="feature"><strong>Feature Overview:</strong> Introduce ad groups with targeting dimensions (territory, filters, source constraints).</p>
+  <p class="value"><strong>Why This Feature Matters:</strong> Granular targeting enables better ROI and controlled experimentation.</p>
+
+  <h3>Feature Advancement Path</h3>
+  <ul><li>Level 1: Ad group CRUD under campaigns.</li><li>Level 2: Targeting rule composition and validation.</li><li>Level 3: Clone-and-edit workflow for rapid A/B variants.</li></ul>
+
+  <div class="step">
+    <h3>A. Learn Concept</h3>
+    <ul><li>Design ad group boundaries relative to campaign defaults.</li><li>Model targeting settings without over-coupling.</li><li>Define safe duplication behavior for experimentation.</li></ul>
+  </div>
+
+  <div class="step">
+    <h3>B. Write Code</h3>
+    <ul><li>Add ad group APIs with campaign-scoped permissions.</li><li>Implement targeting rule model and validation.</li><li>Add duplicate endpoint that safely copies configurations.</li></ul>
+  </div>
+
+  <div class="step">
+    <h3>C. Suggested Reading (Working Links)</h3>
+    <ul><li><a href="https://guides.rubyonrails.org/association_basics.html" target="_blank" rel="noopener noreferrer">Rails Guides: Associations</a><span class="url"> (https://guides.rubyonrails.org/association_basics.html)</span></li><li><a href="https://guides.rubyonrails.org/routing.html" target="_blank" rel="noopener noreferrer">Rails Guides: Routing</a><span class="url"> (https://guides.rubyonrails.org/routing.html)</span></li><li><a href="https://guides.rubyonrails.org/active_record_migrations.html" target="_blank" rel="noopener noreferrer">Rails Guides: Active Record Migrations</a><span class="url"> (https://guides.rubyonrails.org/active_record_migrations.html)</span></li></ul>
+  </div>
+
+  <div class="step">
+    <h3>D. Review</h3>
+    <ul><li>Can targeting be changed without touching campaign-level invariants?</li><li>Does clone logic avoid stale IDs and hidden coupling?</li><li>Are operators protected from invalid targeting combinations?</li></ul>
+  </div>
+
+  <p class="evidence"><strong>Evidence to submit:</strong> docs/chapter-05.md, PR link, test output, and review notes.</p>
+</section>
+
+
+<section class="page chapter">
+  <div class="nav">Table of Contents | Chapter 06</div>
+  <h2>Chapter 06: Creative Asset Pipeline</h2>
+
+  <p class="feature"><strong>Feature Overview:</strong> Build creative management so ad assets can be created, updated, and attached safely.</p>
+  <p class="value"><strong>Why This Feature Matters:</strong> Faster creative iteration directly affects CTR and campaign performance.</p>
+
+  <h3>Feature Advancement Path</h3>
+  <ul><li>Level 1: Creative CRUD and attachment.</li><li>Level 2: Validation and media constraints.</li><li>Level 3: Change history and rollback-safe updates.</li></ul>
+
+  <div class="step">
+    <h3>A. Learn Concept</h3>
+    <ul><li>Define creative ownership and reusability policy.</li><li>Set validation boundaries for titles, URLs, and media.</li><li>Plan attachment rules between creatives and ad groups.</li></ul>
+  </div>
+
+  <div class="step">
+    <h3>B. Write Code</h3>
+    <ul><li>Implement creative create/edit/delete endpoints.</li><li>Link creatives to ad groups with permission checks.</li><li>Track last-modified metadata for audit and debugging.</li></ul>
+  </div>
+
+  <div class="step">
+    <h3>C. Suggested Reading (Working Links)</h3>
+    <ul><li><a href="https://guides.rubyonrails.org/active_storage_overview.html" target="_blank" rel="noopener noreferrer">Rails Guides: Active Storage</a><span class="url"> (https://guides.rubyonrails.org/active_storage_overview.html)</span></li><li><a href="https://guides.rubyonrails.org/active_record_validations.html" target="_blank" rel="noopener noreferrer">Rails Guides: Active Record Validations</a><span class="url"> (https://guides.rubyonrails.org/active_record_validations.html)</span></li><li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html" target="_blank" rel="noopener noreferrer">OWASP Cheat Sheet: Input Validation</a><span class="url"> (https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html)</span></li></ul>
+  </div>
+
+  <div class="step">
+    <h3>D. Review</h3>
+    <ul><li>Can operators swap creatives without data corruption?</li><li>Are broken/invalid media assets blocked early?</li><li>Is creative change history enough for incident RCA?</li></ul>
+  </div>
+
+  <p class="evidence"><strong>Evidence to submit:</strong> docs/chapter-06.md, PR link, test output, and review notes.</p>
+</section>
+
+
+<section class="page chapter">
+  <div class="nav">Table of Contents | Chapter 07</div>
+  <h2>Chapter 07: Bid Strategy Engine</h2>
+
+  <p class="feature"><strong>Feature Overview:</strong> Add bid suggestion and apply flow driven by target CPA and delivery signals.</p>
+  <p class="value"><strong>Why This Feature Matters:</strong> Bid quality determines acquisition cost and margin stability.</p>
+
+  <h3>Feature Advancement Path</h3>
+  <ul><li>Level 1: Static bid suggestions by simple rules.</li><li>Level 2: Dynamic suggestions using campaign performance inputs.</li><li>Level 3: Safety rails with max/min clamps and explanation metadata.</li></ul>
+
+  <div class="step">
+    <h3>A. Learn Concept</h3>
+    <ul><li>Understand CPA and conversion-rate tradeoffs in bidding.</li><li>Design deterministic recommendation logic for testability.</li><li>Model bid history as auditable events.</li></ul>
+  </div>
+
+  <div class="step">
+    <h3>B. Write Code</h3>
+    <ul><li>Implement a recommendation service and preview endpoint.</li><li>Build bid-apply endpoint with bounds checks and reason codes.</li><li>Store bid-change history with operator and timestamp.</li></ul>
+  </div>
+
+  <div class="step">
+    <h3>C. Suggested Reading (Working Links)</h3>
+    <ul><li><a href="https://www.postgresql.org/docs/current/indexes.html" target="_blank" rel="noopener noreferrer">PostgreSQL Docs: Indexes</a><span class="url"> (https://www.postgresql.org/docs/current/indexes.html)</span></li><li><a href="https://www.postgresql.org/docs/current/using-explain.html" target="_blank" rel="noopener noreferrer">PostgreSQL Docs: Using EXPLAIN</a><span class="url"> (https://www.postgresql.org/docs/current/using-explain.html)</span></li><li><a href="https://guides.rubyonrails.org/active_record_querying.html" target="_blank" rel="noopener noreferrer">Rails Guides: Active Record Querying</a><span class="url"> (https://guides.rubyonrails.org/active_record_querying.html)</span></li></ul>
+  </div>
+
+  <div class="step">
+    <h3>D. Review</h3>
+    <ul><li>Do suggestions improve performance in sample backtests?</li><li>Are extreme bid spikes prevented by hard limits?</li><li>Can operators understand why each recommendation exists?</li></ul>
+  </div>
+
+  <p class="evidence"><strong>Evidence to submit:</strong> docs/chapter-07.md, PR link, test output, and review notes.</p>
+</section>
+
+
+<section class="page chapter">
+  <div class="nav">Table of Contents | Chapter 08</div>
+  <h2>Chapter 08: Lead Intake and Quality Gate</h2>
+
+  <p class="feature"><strong>Feature Overview:</strong> Ingest inbound leads with schema validation, deduping, and abuse protection.</p>
+  <p class="value"><strong>Why This Feature Matters:</strong> Lead quality drives revenue quality and partner trust.</p>
+
+  <h3>Feature Advancement Path</h3>
+  <ul><li>Level 1: Validated lead ingestion endpoint.</li><li>Level 2: Duplicate detection and rejection codes.</li><li>Level 3: Quality scoring hooks for downstream routing.</li></ul>
+
+  <div class="step">
+    <h3>A. Learn Concept</h3>
+    <ul><li>Define minimum valid lead payload.</li><li>Choose dedup strategy and lookback windows.</li><li>Design error contracts for partners and internal teams.</li></ul>
+  </div>
+
+  <div class="step">
+    <h3>B. Write Code</h3>
+    <ul><li>Build lead ingestion endpoint with schema checks.</li><li>Add duplicate detection and response taxonomy.</li><li>Write tests for malformed, duplicate, and valid payloads.</li></ul>
+  </div>
+
+  <div class="step">
+    <h3>C. Suggested Reading (Working Links)</h3>
+    <ul><li><a href="https://guides.rubyonrails.org/api_app.html" target="_blank" rel="noopener noreferrer">Rails Guides: API Applications</a><span class="url"> (https://guides.rubyonrails.org/api_app.html)</span></li><li><a href="https://guides.rubyonrails.org/action_controller_overview.html" target="_blank" rel="noopener noreferrer">Rails Guides: Action Controller Overview</a><span class="url"> (https://guides.rubyonrails.org/action_controller_overview.html)</span></li><li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html" target="_blank" rel="noopener noreferrer">OWASP Cheat Sheet: Input Validation</a><span class="url"> (https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html)</span></li></ul>
+  </div>
+
+  <div class="step">
+    <h3>D. Review</h3>
+    <ul><li>Are invalid payloads rejected with useful diagnostics?</li><li>Does dedup logic avoid false positives and false negatives?</li><li>Is throughput acceptable during traffic spikes?</li></ul>
+  </div>
+
+  <p class="evidence"><strong>Evidence to submit:</strong> docs/chapter-08.md, PR link, test output, and review notes.</p>
+</section>
+
+
+<section class="page chapter">
+  <div class="nav">Table of Contents | Chapter 09</div>
+  <h2>Chapter 09: Conversion Attribution</h2>
+
+  <p class="feature"><strong>Feature Overview:</strong> Track conversion events and map them to campaigns/ad groups reliably.</p>
+  <p class="value"><strong>Why This Feature Matters:</strong> Accurate attribution is required for optimization and billing confidence.</p>
+
+  <h3>Feature Advancement Path</h3>
+  <ul><li>Level 1: Conversion event ingestion.</li><li>Level 2: Campaign/ad-group matching with confidence flags.</li><li>Level 3: Idempotent retries and reconciliation reporting.</li></ul>
+
+  <div class="step">
+    <h3>A. Learn Concept</h3>
+    <ul><li>Define attribution keys and fallback matching behavior.</li><li>Understand idempotency requirements under retries.</li><li>Plan mismatch handling and correction workflows.</li></ul>
+  </div>
+
+  <div class="step">
+    <h3>B. Write Code</h3>
+    <ul><li>Create conversion endpoint for pixel/API inputs.</li><li>Implement idempotency keys and duplicate-safe writes.</li><li>Add attribution mismatch logs for manual investigation.</li></ul>
+  </div>
+
+  <div class="step">
+    <h3>C. Suggested Reading (Working Links)</h3>
+    <ul><li><a href="https://docs.stripe.com/api/idempotent_requests" target="_blank" rel="noopener noreferrer">Stripe Docs: Idempotent Requests</a><span class="url"> (https://docs.stripe.com/api/idempotent_requests)</span></li><li><a href="https://guides.rubyonrails.org/active_record_basics.html" target="_blank" rel="noopener noreferrer">Rails Guides: Active Record Basics</a><span class="url"> (https://guides.rubyonrails.org/active_record_basics.html)</span></li><li><a href="https://www.postgresql.org/docs/current/transaction-iso.html" target="_blank" rel="noopener noreferrer">PostgreSQL Docs: Transaction Isolation</a><span class="url"> (https://www.postgresql.org/docs/current/transaction-iso.html)</span></li></ul>
+  </div>
+
+  <div class="step">
+    <h3>D. Review</h3>
+    <ul><li>Can repeated conversion events create duplicates?</li><li>Are unmatched conversions surfaced and triaged quickly?</li><li>Do attribution outputs align with campaign analytics?</li></ul>
+  </div>
+
+  <p class="evidence"><strong>Evidence to submit:</strong> docs/chapter-09.md, PR link, test output, and review notes.</p>
+</section>
+
+
+<section class="page chapter">
+  <div class="nav">Table of Contents | Chapter 10</div>
+  <h2>Chapter 10: Background Jobs and Retry Safety</h2>
+
+  <p class="feature"><strong>Feature Overview:</strong> Move heavy/slow tasks to async workers with robust retry and observability.</p>
+  <p class="value"><strong>Why This Feature Matters:</strong> Async processing protects API latency and improves system resilience.</p>
+
+  <h3>Feature Advancement Path</h3>
+  <ul><li>Level 1: Queue-backed job execution.</li><li>Level 2: Retry strategy and dead-letter handling.</li><li>Level 3: Operational dashboard and replay tooling.</li></ul>
+
+  <div class="step">
+    <h3>A. Learn Concept</h3>
+    <ul><li>Identify synchronous bottlenecks that should become jobs.</li><li>Design idempotent worker behavior.</li><li>Define queue health metrics and SLOs.</li></ul>
+  </div>
+
+  <div class="step">
+    <h3>B. Write Code</h3>
+    <ul><li>Implement workers for conversion import or enrichment tasks.</li><li>Add retry/backoff policy and dead-job handling path.</li><li>Expose queue status metrics for operations.</li></ul>
+  </div>
+
+  <div class="step">
+    <h3>C. Suggested Reading (Working Links)</h3>
+    <ul><li><a href="https://guides.rubyonrails.org/active_job_basics.html" target="_blank" rel="noopener noreferrer">Rails Guides: Active Job Basics</a><span class="url"> (https://guides.rubyonrails.org/active_job_basics.html)</span></li><li><a href="https://github.com/sidekiq/sidekiq/wiki/Best-Practices" target="_blank" rel="noopener noreferrer">Sidekiq Wiki: Best Practices</a><span class="url"> (https://github.com/sidekiq/sidekiq/wiki/Best-Practices)</span></li><li><a href="https://redis.io/docs/latest/" target="_blank" rel="noopener noreferrer">Redis Docs</a><span class="url"> (https://redis.io/docs/latest/)</span></li></ul>
+  </div>
+
+  <div class="step">
+    <h3>D. Review</h3>
+    <ul><li>Do retries stay safe under partial downstream failures?</li><li>Can failed jobs be replayed without duplicating business events?</li><li>Is queue latency visible and alertable?</li></ul>
+  </div>
+
+  <p class="evidence"><strong>Evidence to submit:</strong> docs/chapter-10.md, PR link, test output, and review notes.</p>
+</section>
+
+
+<section class="page chapter">
+  <div class="nav">Table of Contents | Chapter 11</div>
+  <h2>Chapter 11: Billing Ledger and Receipts</h2>
+
+  <p class="feature"><strong>Feature Overview:</strong> Create immutable billing events and receipt records tied to monetizable actions.</p>
+  <p class="value"><strong>Why This Feature Matters:</strong> Financial correctness underpins invoicing, trust, and audits.</p>
+
+  <h3>Feature Advancement Path</h3>
+  <ul><li>Level 1: Receipt creation on billable events.</li><li>Level 2: Reconciliation views for daily totals.</li><li>Level 3: Refund/adjustment entries with full audit trail.</li></ul>
+
+  <div class="step">
+    <h3>A. Learn Concept</h3>
+    <ul><li>Model append-only financial events.</li><li>Define invariants for amount, currency, and timestamps.</li><li>Understand reconciliation flow between events and invoices.</li></ul>
+  </div>
+
+  <div class="step">
+    <h3>B. Write Code</h3>
+    <ul><li>Implement receipt model and API endpoints.</li><li>Create billing event log tied to lead/conversion events.</li><li>Add reconciliation checks for daily account totals.</li></ul>
+  </div>
+
+  <div class="step">
+    <h3>C. Suggested Reading (Working Links)</h3>
+    <ul><li><a href="https://docs.stripe.com/billing" target="_blank" rel="noopener noreferrer">Stripe Docs: Billing</a><span class="url"> (https://docs.stripe.com/billing)</span></li><li><a href="https://www.postgresql.org/docs/current/transaction-iso.html" target="_blank" rel="noopener noreferrer">PostgreSQL Docs: Transaction Isolation</a><span class="url"> (https://www.postgresql.org/docs/current/transaction-iso.html)</span></li><li><a href="https://guides.rubyonrails.org/active_record_validations.html" target="_blank" rel="noopener noreferrer">Rails Guides: Active Record Validations</a><span class="url"> (https://guides.rubyonrails.org/active_record_validations.html)</span></li></ul>
+  </div>
+
+  <div class="step">
+    <h3>D. Review</h3>
+    <ul><li>Are financial events immutable after write?</li><li>Do totals reconcile across API and reports?</li><li>Are refund corrections traceable and reversible?</li></ul>
+  </div>
+
+  <p class="evidence"><strong>Evidence to submit:</strong> docs/chapter-11.md, PR link, test output, and review notes.</p>
+</section>
+
+
+<section class="page chapter">
+  <div class="nav">Table of Contents | Chapter 12</div>
+  <h2>Chapter 12: Analytics Aggregation API</h2>
+
+  <p class="feature"><strong>Feature Overview:</strong> Build account-scoped analytics endpoints for KPI cards, trends, and breakdown tables.</p>
+  <p class="value"><strong>Why This Feature Matters:</strong> Good analytics enable faster, better bid decisions.</p>
+
+  <h3>Feature Advancement Path</h3>
+  <ul><li>Level 1: Basic KPI aggregation endpoints.</li><li>Level 2: Filtered analytics by date/source/status.</li><li>Level 3: Optimized queries and precompute strategy where needed.</li></ul>
+
+  <div class="step">
+    <h3>A. Learn Concept</h3>
+    <ul><li>Define a stable analytics contract for frontend consumption.</li><li>Choose query strategy: live aggregation vs materialized snapshots.</li><li>Plan consistency checks between summary and detail numbers.</li></ul>
+  </div>
+
+  <div class="step">
+    <h3>B. Write Code</h3>
+    <ul><li>Implement analytics service layer and dashboard endpoints.</li><li>Add filtering and pagination for heavy result sets.</li><li>Profile and optimize the slowest query path.</li></ul>
+  </div>
+
+  <div class="step">
+    <h3>C. Suggested Reading (Working Links)</h3>
+    <ul><li><a href="https://guides.rubyonrails.org/active_record_querying.html" target="_blank" rel="noopener noreferrer">Rails Guides: Active Record Querying</a><span class="url"> (https://guides.rubyonrails.org/active_record_querying.html)</span></li><li><a href="https://www.postgresql.org/docs/current/rules-materializedviews.html" target="_blank" rel="noopener noreferrer">PostgreSQL Docs: Materialized Views</a><span class="url"> (https://www.postgresql.org/docs/current/rules-materializedviews.html)</span></li><li><a href="https://www.postgresql.org/docs/current/using-explain.html" target="_blank" rel="noopener noreferrer">PostgreSQL Docs: Using EXPLAIN</a><span class="url"> (https://www.postgresql.org/docs/current/using-explain.html)</span></li></ul>
+  </div>
+
+  <div class="step">
+    <h3>D. Review</h3>
+    <ul><li>Do KPI cards reconcile with detailed tables?</li><li>Is p95 analytics latency acceptable for operator workflows?</li><li>Can analytics failures degrade gracefully?</li></ul>
+  </div>
+
+  <p class="evidence"><strong>Evidence to submit:</strong> docs/chapter-12.md, PR link, test output, and review notes.</p>
+</section>
+
+
+<section class="page chapter">
+  <div class="nav">Table of Contents | Chapter 13</div>
+  <h2>Chapter 13: React Shell and Protected Navigation</h2>
+
+  <p class="feature"><strong>Feature Overview:</strong> Create the frontend shell with authenticated routing and role-aware navigation.</p>
+  <p class="value"><strong>Why This Feature Matters:</strong> A stable shell reduces UI regressions and speeds feature rollout.</p>
+
+  <h3>Feature Advancement Path</h3>
+  <ul><li>Level 1: Authenticated route gates.</li><li>Level 2: Role-aware menus and access control UX.</li><li>Level 3: Session-expiry handling and graceful re-auth flows.</li></ul>
+
+  <div class="step">
+    <h3>A. Learn Concept</h3>
+    <ul><li>Design route boundaries for public, operator, and admin areas.</li><li>Model global auth state and account context.</li><li>Define failure behavior for token expiry and permission errors.</li></ul>
+  </div>
+
+  <div class="step">
+    <h3>B. Write Code</h3>
+    <ul><li>Build app shell layout and route protection.</li><li>Wire login/logout and token persistence.</li><li>Render clear unauthorized/session-expired states.</li></ul>
+  </div>
+
+  <div class="step">
+    <h3>C. Suggested Reading (Working Links)</h3>
+    <ul><li><a href="https://react.dev/learn" target="_blank" rel="noopener noreferrer">React Docs: Learn React</a><span class="url"> (https://react.dev/learn)</span></li><li><a href="https://reactrouter.com/en/main/start/tutorial" target="_blank" rel="noopener noreferrer">React Router: Tutorial</a><span class="url"> (https://reactrouter.com/en/main/start/tutorial)</span></li><li><a href="https://redux.js.org/tutorials/essentials/part-1-overview-concepts" target="_blank" rel="noopener noreferrer">Redux Toolkit: Essentials Tutorial</a><span class="url"> (https://redux.js.org/tutorials/essentials/part-1-overview-concepts)</span></li></ul>
+  </div>
+
+  <div class="step">
+    <h3>D. Review</h3>
+    <ul><li>Can users deep-link into protected pages safely?</li><li>Do role changes reflect correctly without full app reload?</li><li>Is navigation behavior consistent across error states?</li></ul>
+  </div>
+
+  <p class="evidence"><strong>Evidence to submit:</strong> docs/chapter-13.md, PR link, test output, and review notes.</p>
+</section>
+
+
+<section class="page chapter">
+  <div class="nav">Table of Contents | Chapter 14</div>
+  <h2>Chapter 14: Campaign Builder UI</h2>
+
+  <p class="feature"><strong>Feature Overview:</strong> Implement campaign list/create/edit flows with robust form validation and feedback.</p>
+  <p class="value"><strong>Why This Feature Matters:</strong> Fast, clear campaign setup improves execution speed for growth teams.</p>
+
+  <h3>Feature Advancement Path</h3>
+  <ul><li>Level 1: Create and list campaigns.</li><li>Level 2: Edit workflow with optimistic updates where safe.</li><li>Level 3: Validation UX and reusable form primitives.</li></ul>
+
+  <div class="step">
+    <h3>A. Learn Concept</h3>
+    <ul><li>Design forms for high-risk numeric and schedule fields.</li><li>Balance optimistic UI with server-source-of-truth behavior.</li><li>Plan data fetching and mutation state handling.</li></ul>
+  </div>
+
+  <div class="step">
+    <h3>B. Write Code</h3>
+    <ul><li>Build campaign list and create/edit pages.</li><li>Integrate with backend validation and error payloads.</li><li>Add draft/save patterns for partially complete forms.</li></ul>
+  </div>
+
+  <div class="step">
+    <h3>C. Suggested Reading (Working Links)</h3>
+    <ul><li><a href="https://react.dev/learn/thinking-in-react" target="_blank" rel="noopener noreferrer">React Docs: Thinking in React</a><span class="url"> (https://react.dev/learn/thinking-in-react)</span></li><li><a href="https://react.dev/learn/managing-state" target="_blank" rel="noopener noreferrer">React Docs: Managing State</a><span class="url"> (https://react.dev/learn/managing-state)</span></li><li><a href="https://tanstack.com/query/latest/docs/framework/react/overview" target="_blank" rel="noopener noreferrer">TanStack Query: React Overview</a><span class="url"> (https://tanstack.com/query/latest/docs/framework/react/overview)</span></li></ul>
+  </div>
+
+  <div class="step">
+    <h3>D. Review</h3>
+    <ul><li>Can operators complete common tasks quickly and accurately?</li><li>Are validation errors understandable and actionable?</li><li>Does stale data handling avoid accidental overwrites?</li></ul>
+  </div>
+
+  <p class="evidence"><strong>Evidence to submit:</strong> docs/chapter-14.md, PR link, test output, and review notes.</p>
+</section>
+
+
+<section class="page chapter">
+  <div class="nav">Table of Contents | Chapter 15</div>
+  <h2>Chapter 15: Ad Group and Bid Console UI</h2>
+
+  <p class="feature"><strong>Feature Overview:</strong> Build ad group operations UI with bid recommendation, edit, and history visibility.</p>
+  <p class="value"><strong>Why This Feature Matters:</strong> This is the day-to-day control center for performance operators.</p>
+
+  <h3>Feature Advancement Path</h3>
+  <ul><li>Level 1: Ad group list/edit actions.</li><li>Level 2: Bid suggestion preview and safe apply.</li><li>Level 3: Change history + compare mode for rapid tuning.</li></ul>
+
+  <div class="step">
+    <h3>A. Learn Concept</h3>
+    <ul><li>Design high-speed workflows for repetitive operator actions.</li><li>Model mutation safety for risky controls (bid updates).</li><li>Define UI evidence for who changed what and when.</li></ul>
+  </div>
+
+  <div class="step">
+    <h3>B. Write Code</h3>
+    <ul><li>Implement ad group table and edit panels.</li><li>Add bid modal with preview and apply actions.</li><li>Show bid history and latest change metadata in UI.</li></ul>
+  </div>
+
+  <div class="step">
+    <h3>C. Suggested Reading (Working Links)</h3>
+    <ul><li><a href="https://react.dev/learn/managing-state" target="_blank" rel="noopener noreferrer">React Docs: Managing State</a><span class="url"> (https://react.dev/learn/managing-state)</span></li><li><a href="https://tanstack.com/query/latest/docs/framework/react/overview" target="_blank" rel="noopener noreferrer">TanStack Query: React Overview</a><span class="url"> (https://tanstack.com/query/latest/docs/framework/react/overview)</span></li><li><a href="https://www.w3.org/WAI/standards-guidelines/wcag/" target="_blank" rel="noopener noreferrer">W3C: WCAG Overview</a><span class="url"> (https://www.w3.org/WAI/standards-guidelines/wcag/)</span></li></ul>
+  </div>
+
+  <div class="step">
+    <h3>D. Review</h3>
+    <ul><li>Are risky actions protected by clear confirmation and bounds?</li><li>Can operators quickly understand recent bid changes?</li><li>Is keyboard navigation workable for heavy users?</li></ul>
+  </div>
+
+  <p class="evidence"><strong>Evidence to submit:</strong> docs/chapter-15.md, PR link, test output, and review notes.</p>
+</section>
+
+
+<section class="page chapter">
+  <div class="nav">Table of Contents | Chapter 16</div>
+  <h2>Chapter 16: Performance Dashboard UI</h2>
+
+  <p class="feature"><strong>Feature Overview:</strong> Ship dashboard cards, trends, and tables for spend, leads, conversions, and efficiency.</p>
+  <p class="value"><strong>Why This Feature Matters:</strong> Actionable visibility closes the optimization loop every day.</p>
+
+  <h3>Feature Advancement Path</h3>
+  <ul><li>Level 1: KPI cards and summary charts.</li><li>Level 2: Filtered tables with drill-down context.</li><li>Level 3: Performance budgets and loading-state polish.</li></ul>
+
+  <div class="step">
+    <h3>A. Learn Concept</h3>
+    <ul><li>Select the smallest useful KPI set for bidding decisions.</li><li>Design consistent filter state across multiple widgets.</li><li>Plan loading, empty, and degraded states.</li></ul>
+  </div>
+
+  <div class="step">
+    <h3>B. Write Code</h3>
+    <ul><li>Build dashboard page with KPI widgets and trend chart.</li><li>Add campaign table with filters and pagination.</li><li>Instrument frontend performance and optimize heavy renders.</li></ul>
+  </div>
+
+  <div class="step">
+    <h3>C. Suggested Reading (Working Links)</h3>
+    <ul><li><a href="https://web.dev/learn/performance" target="_blank" rel="noopener noreferrer">web.dev: Learn Performance</a><span class="url"> (https://web.dev/learn/performance)</span></li><li><a href="https://react.dev/learn/managing-state" target="_blank" rel="noopener noreferrer">React Docs: Managing State</a><span class="url"> (https://react.dev/learn/managing-state)</span></li><li><a href="https://tanstack.com/query/latest/docs/framework/react/overview" target="_blank" rel="noopener noreferrer">TanStack Query: React Overview</a><span class="url"> (https://tanstack.com/query/latest/docs/framework/react/overview)</span></li></ul>
+  </div>
+
+  <div class="step">
+    <h3>D. Review</h3>
+    <ul><li>Do table totals and card totals always reconcile?</li><li>Does dashboard remain responsive under larger datasets?</li><li>Can operators identify next actions from current visuals?</li></ul>
+  </div>
+
+  <p class="evidence"><strong>Evidence to submit:</strong> docs/chapter-16.md, PR link, test output, and review notes.</p>
+</section>
+
+
+<section class="page chapter">
+  <div class="nav">Table of Contents | Chapter 17</div>
+  <h2>Chapter 17: Testing and CI Quality Gates</h2>
+
+  <p class="feature"><strong>Feature Overview:</strong> Introduce automated checks across API, UI, and end-to-end critical paths.</p>
+  <p class="value"><strong>Why This Feature Matters:</strong> Reliable release velocity requires predictable quality gates.</p>
+
+  <h3>Feature Advancement Path</h3>
+  <ul><li>Level 1: Unit/request/component tests for core behavior.</li><li>Level 2: End-to-end happy path + key failure path coverage.</li><li>Level 3: CI policy with enforceable pass criteria and artifacts.</li></ul>
+
+  <div class="step">
+    <h3>A. Learn Concept</h3>
+    <ul><li>Design a practical testing pyramid for this product.</li><li>Define merge-blocking quality gates.</li><li>Plan flaky-test prevention strategy early.</li></ul>
+  </div>
+
+  <div class="step">
+    <h3>B. Write Code</h3>
+    <ul><li>Add backend request specs and frontend component tests for core flows.</li><li>Add one E2E flow covering campaign creation through dashboard visibility.</li><li>Configure CI workflow for lint, tests, and build checks.</li></ul>
+  </div>
+
+  <div class="step">
+    <h3>C. Suggested Reading (Working Links)</h3>
+    <ul><li><a href="https://guides.rubyonrails.org/testing.html" target="_blank" rel="noopener noreferrer">Rails Guides: Testing</a><span class="url"> (https://guides.rubyonrails.org/testing.html)</span></li><li><a href="https://testing-library.com/docs/react-testing-library/intro/" target="_blank" rel="noopener noreferrer">Testing Library: React Testing Library Intro</a><span class="url"> (https://testing-library.com/docs/react-testing-library/intro/)</span></li><li><a href="https://playwright.dev/docs/intro" target="_blank" rel="noopener noreferrer">Playwright Docs: Introduction</a><span class="url"> (https://playwright.dev/docs/intro)</span></li></ul>
+  </div>
+
+  <div class="step">
+    <h3>D. Review</h3>
+    <ul><li>Do failing tests clearly explain root cause?</li><li>Is CI runtime fast enough for iterative development?</li><li>Are critical business flows represented in automated checks?</li></ul>
+  </div>
+
+  <p class="evidence"><strong>Evidence to submit:</strong> docs/chapter-17.md, PR link, test output, and review notes.</p>
+</section>
+
+
+<section class="page chapter">
+  <div class="nav">Table of Contents | Chapter 18</div>
+  <h2>Chapter 18: Launch Hardening and Capstone Defense</h2>
+
+  <p class="feature"><strong>Feature Overview:</strong> Run a full launch simulation, incident drill, and final architecture defense.</p>
+  <p class="value"><strong>Why This Feature Matters:</strong> Readiness is proven by operational behavior, not by code volume.</p>
+
+  <h3>Feature Advancement Path</h3>
+  <ul><li>Level 1: End-to-end demo of core business flow.</li><li>Level 2: Incident response drill with recovery targets.</li><li>Level 3: Final defense with tradeoff rationale and prioritized backlog.</li></ul>
+
+  <div class="step">
+    <h3>A. Learn Concept</h3>
+    <ul><li>Define go-live metrics and rollback triggers.</li><li>Prepare incident command process and communications.</li><li>Summarize architecture tradeoffs for non-engineering stakeholders.</li></ul>
+  </div>
+
+  <div class="step">
+    <h3>B. Write Code</h3>
+    <ul><li>Execute full demo: auth -&gt; campaign -&gt; bids -&gt; leads -&gt; conversions -&gt; dashboard.</li><li>Run one controlled failure simulation and complete recovery runbook.</li><li>Publish final capstone report with evidence index and next-phase roadmap.</li></ul>
+  </div>
+
+  <div class="step">
+    <h3>C. Suggested Reading (Working Links)</h3>
+    <ul><li><a href="https://sre.google/workbook/table-of-contents/" target="_blank" rel="noopener noreferrer">Google SRE Workbook</a><span class="url"> (https://sre.google/workbook/table-of-contents/)</span></li><li><a href="https://opentelemetry.io/docs/" target="_blank" rel="noopener noreferrer">OpenTelemetry Docs</a><span class="url"> (https://opentelemetry.io/docs/)</span></li><li><a href="https://12factor.net/" target="_blank" rel="noopener noreferrer">The Twelve-Factor App</a><span class="url"> (https://12factor.net/)</span></li></ul>
+  </div>
+
+  <div class="step">
+    <h3>D. Review</h3>
+    <ul><li>Can on-call isolate and mitigate incidents quickly?</li><li>Are go-live decisions tied to explicit measurable criteria?</li><li>Does the backlog prioritize highest-risk or highest-revenue improvements first?</li></ul>
+  </div>
+
+  <p class="evidence"><strong>Evidence to submit:</strong> docs/chapter-18.md, PR link, test output, and review notes.</p>
+</section>
+
+</body>
+</html>
