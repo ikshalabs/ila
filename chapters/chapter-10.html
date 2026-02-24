@@ -1,0 +1,2037 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 10: Testing, Launch Hardening and Capstone — ILA Rails + React</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    /* ═══════════════════════════════════════════════
+       ILA DESIGN SYSTEM — v1.0
+       Iksha Learning Academy
+       ═══════════════════════════════════════════════ */
+
+    :root {
+      /* Palette */
+      --ink:        #0f172a;
+      --ink-light:  #334155;
+      --ink-muted:  #64748b;
+      --surface:    #ffffff;
+      --surface-alt:#f8fafc;
+      --surface-warm:#fffbeb;
+      --border:     #e2e8f0;
+      --border-light:#f1f5f9;
+
+      /* Brand */
+      --teal-50:  #f0fdfa;
+      --teal-100: #ccfbf1;
+      --teal-200: #99f6e4;
+      --teal-500: #14b8a6;
+      --teal-600: #0d9488;
+      --teal-700: #0f766e;
+      --teal-800: #115e59;
+      --teal-900: #134e4a;
+
+      --blue-50:  #eff6ff;
+      --blue-100: #dbeafe;
+      --blue-500: #3b82f6;
+      --blue-600: #2563eb;
+      --blue-700: #1d4ed8;
+
+      --amber-50:  #fffbeb;
+      --amber-100: #fef3c7;
+      --amber-500: #f59e0b;
+      --amber-600: #d97706;
+
+      --red-50:   #fef2f2;
+      --red-100:  #fee2e2;
+      --red-500:  #ef4444;
+      --red-600:  #dc2626;
+
+      --purple-50:  #faf5ff;
+      --purple-100: #f3e8ff;
+      --purple-500: #a855f7;
+      --purple-600: #9333ea;
+
+      /* Typography */
+      --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-serif: 'Instrument Serif', Georgia, serif;
+      --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
+
+      /* Spacing */
+      --content-max: 780px;
+      --sidebar-width: 280px;
+
+      /* Transitions */
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--ink);
+      background: var(--surface);
+    }
+
+    /* ── PROGRESS BAR ─────────────────────────── */
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--teal-500), var(--blue-500));
+      z-index: 1000;
+      transition: width 0.15s var(--ease);
+    }
+
+    /* ── TOP NAV ──────────────────────────────── */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+    }
+
+    .top-nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--teal-800);
+    }
+
+    .nav-brand-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--teal-600), var(--teal-800));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .nav-brand-text {
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-chapter-nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      color: var(--ink-muted);
+      border: 1px solid var(--border);
+      background: white;
+      transition: all 0.2s var(--ease);
+      cursor: pointer;
+    }
+
+    .nav-btn:hover {
+      color: var(--ink);
+      border-color: var(--teal-500);
+      background: var(--teal-50);
+    }
+
+    .nav-btn.disabled {
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    .nav-current {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink-light);
+      padding: 0 4px;
+    }
+
+    /* ── HERO ─────────────────────────────────── */
+    .hero {
+      background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 4rem 2rem 3.5rem;
+    }
+
+    .hero-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
+    }
+
+    .hero-chapter-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--teal-700);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 1rem;
+    }
+
+    .hero-chapter-label span {
+      background: var(--teal-100);
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+
+    .hero h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(2.4rem, 5vw, 3.2rem);
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: 1rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: var(--ink-light);
+      line-height: 1.65;
+      max-width: 640px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .hero-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
+    .hero-meta-item svg {
+      width: 16px;
+      height: 16px;
+      color: var(--teal-600);
+    }
+
+    /* ── MAIN LAYOUT ──────────────────────────── */
+    .main-layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr var(--sidebar-width);
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .content {
+      padding: 3rem 0 6rem;
+      min-width: 0;
+    }
+
+    /* ── SIDEBAR TOC ──────────────────────────── */
+    .sidebar {
+      position: sticky;
+      top: 76px;
+      padding: 2rem 0;
+      max-height: calc(100vh - 76px);
+      overflow-y: auto;
+    }
+
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-muted);
+      margin-bottom: 1rem;
+      padding-left: 14px;
+    }
+
+    .toc-list {
+      list-style: none;
+    }
+
+    .toc-item a {
+      display: block;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--ink-muted);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: all 0.2s var(--ease);
+      line-height: 1.5;
+    }
+
+    .toc-item a:hover {
+      color: var(--ink);
+      background: var(--surface-alt);
+    }
+
+    .toc-item a.active {
+      color: var(--teal-700);
+      border-left-color: var(--teal-500);
+      background: var(--teal-50);
+      font-weight: 500;
+    }
+
+    /* ── TYPOGRAPHY ────────────────────────────── */
+    .content h2 {
+      font-family: var(--font-serif);
+      font-size: 1.85rem;
+      font-weight: 400;
+      color: var(--ink);
+      margin: 3rem 0 1rem;
+      padding-top: 1rem;
+      scroll-margin-top: 80px;
+    }
+
+    .content h2:first-child {
+      margin-top: 0;
+    }
+
+    .content h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 2rem 0 0.75rem;
+      scroll-margin-top: 80px;
+    }
+
+    .content p {
+      margin-bottom: 1.25rem;
+      color: var(--ink-light);
+    }
+
+    .content strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .content a {
+      color: var(--teal-700);
+      text-decoration: underline;
+      text-decoration-color: var(--teal-200);
+      text-underline-offset: 3px;
+      transition: text-decoration-color 0.2s;
+    }
+
+    .content a:hover {
+      text-decoration-color: var(--teal-600);
+    }
+
+    .content ul, .content ol {
+      margin-bottom: 1.25rem;
+      padding-left: 1.5rem;
+    }
+
+    .content li {
+      margin-bottom: 0.5rem;
+      color: var(--ink-light);
+    }
+
+    .content li::marker {
+      color: var(--teal-500);
+    }
+
+    /* ── SECTION DIVIDER ──────────────────────── */
+    .section-divider {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 3rem 0;
+    }
+
+    /* ── CALLOUT BOXES ────────────────────────── */
+    .callout {
+      padding: 1.25rem 1.5rem;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+      border: 1px solid;
+      position: relative;
+    }
+
+    .callout-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .callout-header svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    .callout p:last-child { margin-bottom: 0; }
+
+    .callout.concept {
+      background: var(--blue-50);
+      border-color: var(--blue-100);
+    }
+    .callout.concept .callout-header { color: var(--blue-700); }
+
+    .callout.important {
+      background: var(--amber-50);
+      border-color: var(--amber-100);
+    }
+    .callout.important .callout-header { color: var(--amber-600); }
+
+    .callout.danger {
+      background: var(--red-50);
+      border-color: var(--red-100);
+    }
+    .callout.danger .callout-header { color: var(--red-600); }
+
+    .callout.tip {
+      background: var(--purple-50);
+      border-color: var(--purple-100);
+    }
+    .callout.tip .callout-header { color: var(--purple-600); }
+
+    .callout.success {
+      background: var(--teal-50);
+      border-color: var(--teal-100);
+    }
+    .callout.success .callout-header { color: var(--teal-700); }
+
+    /* ── CODE BLOCKS ──────────────────────────── */
+    .code-block {
+      position: relative;
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+      background: var(--surface-alt);
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--ink-muted);
+    }
+
+    .code-lang {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .code-copy {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: white;
+      font-size: 11px;
+      font-family: var(--font-sans);
+      color: var(--ink-muted);
+      cursor: pointer;
+      transition: all 0.2s var(--ease);
+    }
+
+    .code-copy:hover {
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    .code-copy.copied {
+      background: var(--teal-50);
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    pre {
+      margin: 0;
+      padding: 1.25rem 1.5rem;
+      overflow-x: auto;
+      background: #1e293b;
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: #e2e8f0;
+    }
+
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.88em;
+    }
+
+    p code, li code {
+      padding: 2px 7px;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      color: var(--teal-800);
+      font-size: 0.85em;
+    }
+
+    /* Syntax highlights (minimal) */
+    .hl-keyword  { color: #c084fc; }
+    .hl-string   { color: #86efac; }
+    .hl-comment  { color: #64748b; font-style: italic; }
+    .hl-function { color: #7dd3fc; }
+    .hl-number   { color: #fbbf24; }
+    .hl-flag     { color: #f472b6; }
+
+    /* ── COLLAPSIBLE (DETAILS) ────────────────── */
+    details {
+      margin-bottom: 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.2s var(--ease);
+    }
+
+    details[open] {
+      border-color: var(--teal-200);
+    }
+
+    details summary {
+      padding: 1rem 1.25rem;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      background: var(--surface-alt);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.2s var(--ease);
+      user-select: none;
+    }
+
+    details summary::-webkit-details-marker { display: none; }
+
+    details summary::before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+      flex-shrink: 0;
+      transition: transform 0.2s var(--ease);
+    }
+
+    details[open] summary::before {
+      transform: rotate(90deg);
+    }
+
+    details summary:hover {
+      background: var(--teal-50);
+    }
+
+    .details-body {
+      padding: 1.25rem 1.5rem;
+    }
+
+    .details-body p:last-child { margin-bottom: 0; }
+
+    /* ── VIDEO EMBED ──────────────────────────── */
+    .video-card {
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      background: #0f172a;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .video-caption {
+      padding: 12px 16px;
+      background: var(--surface-alt);
+      font-size: 13px;
+      color: var(--ink-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .video-caption svg {
+      width: 14px;
+      height: 14px;
+      color: var(--red-500);
+    }
+
+    /* ── RESOURCE CARDS ───────────────────────── */
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .resource-card {
+      display: flex;
+      gap: 14px;
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      background: white;
+    }
+
+    .resource-card:hover {
+      border-color: var(--teal-300);
+      background: var(--teal-50);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .resource-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 18px;
+    }
+
+    .resource-icon.docs    { background: var(--blue-50);   color: var(--blue-600); }
+    .resource-icon.video   { background: var(--red-50);    color: var(--red-500); }
+    .resource-icon.github  { background: var(--ink);       color: white; }
+    .resource-icon.article { background: var(--amber-50);  color: var(--amber-600); }
+    .resource-icon.pdf     { background: var(--purple-50); color: var(--purple-600); }
+
+    .resource-info {
+      min-width: 0;
+    }
+
+    .resource-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 2px;
+      line-height: 1.4;
+    }
+
+    .resource-desc {
+      font-size: 12px;
+      color: var(--ink-muted);
+      line-height: 1.5;
+    }
+
+    /* ── ASSIGNMENT CARDS ─────────────────────── */
+    .assignment {
+      border: 2px solid var(--teal-200);
+      border-radius: 14px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--teal-50) 0%, white 100%);
+    }
+
+    .assignment-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .assignment-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--teal-700);
+    }
+
+    .assignment-difficulty {
+      display: inline-flex;
+      padding: 4px 10px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .difficulty-l1 { background: var(--teal-100); color: var(--teal-800); }
+    .difficulty-l2 { background: var(--amber-100); color: var(--amber-600); }
+    .difficulty-l3 { background: var(--red-100); color: var(--red-600); }
+
+    .assignment h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .assignment p {
+      font-size: 14px;
+    }
+
+    .checklist {
+      list-style: none;
+      padding: 0;
+    }
+
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-light);
+      font-size: 14px;
+    }
+
+    .checklist li:last-child { border-bottom: none; }
+
+    .check-box {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      border: 2px solid var(--border);
+      flex-shrink: 0;
+      margin-top: 1px;
+      cursor: pointer;
+      transition: all 0.15s var(--ease);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .check-box:hover {
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked {
+      background: var(--teal-500);
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+    }
+
+    /* ── ARCHITECTURE DIAGRAM ─────────────────── */
+    .diagram {
+      margin: 1.5rem 0;
+      padding: 2rem;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow-x: auto;
+    }
+
+    .diagram pre {
+      background: transparent;
+      color: var(--ink);
+      padding: 0;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .diagram-caption {
+      margin-top: 1rem;
+      font-size: 12px;
+      color: var(--ink-muted);
+      text-align: center;
+      font-style: italic;
+    }
+
+    /* ── FOOTER ───────────────────────────────── */
+    .chapter-footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      background: var(--surface-alt);
+    }
+
+    .chapter-footer-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
+    }
+
+    .footer-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .footer-nav-link {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 1rem 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      max-width: 320px;
+      background: white;
+    }
+
+    .footer-nav-link:hover {
+      border-color: var(--teal-300);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .footer-nav-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--teal-600);
+    }
+
+    .footer-nav-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .footer-brand {
+      text-align: center;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
+    /* ── RESPONSIVE ───────────────────────────── */
+    @media (max-width: 960px) {
+      .main-layout {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        display: none;
+      }
+      .resource-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero { padding: 2.5rem 1.25rem 2rem; }
+      .main-layout { padding: 0 1.25rem; }
+      .content { padding: 2rem 0 4rem; }
+      pre { padding: 1rem; font-size: 12.5px; }
+      .footer-nav { flex-direction: column; }
+      .footer-nav-link { max-width: 100%; width: 100%; }
+    }
+
+    /* ── PRINT ────────────────────────────────── */
+    @media print {
+      .top-nav, .sidebar, .progress-bar { display: none; }
+      .main-layout { display: block; }
+      .content { padding: 0; }
+      .hero { background: white; border: none; }
+      pre { background: #f1f5f9; color: var(--ink); border: 1px solid var(--border); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Progress Bar -->
+  <div class="progress-bar" id="progressBar"></div>
+
+  <!-- Top Navigation -->
+  <nav class="top-nav">
+    <div class="top-nav-inner">
+      <a class="nav-brand" href="index.html">
+        <div class="nav-brand-icon">ILA</div>
+        <span class="nav-brand-text">Iksha Learning Academy</span>
+      </a>
+      <div class="nav-chapter-nav">
+        <a class="nav-btn" href="chapter-09.html">&larr; Previous</a>
+        <span class="nav-current">10 / 10</span>
+        <span class="nav-btn disabled">Next &rarr;</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-chapter-label">
+        <span>Chapter 10</span> &middot; Phase 6: Ship It
+      </div>
+      <h1>Testing, Launch Hardening and Capstone</h1>
+      <p class="hero-subtitle">
+        Introduce automated checks across API, UI, and end-to-end critical paths. Run a full launch simulation,
+        incident drill, and final architecture defense. This is the culmination of everything you have built &mdash;
+        prove it is production-ready.
+      </p>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Estimated: 5&ndash;7 days
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          3 Advancement Levels
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          3 Assignments
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content + Sidebar -->
+  <div class="main-layout">
+    <main class="content">
+
+      <!-- ════════════════════════════════════════
+           SECTION 1: WHY THIS MATTERS
+           ════════════════════════════════════════ -->
+      <h2 id="why-this-matters">Why This Matters</h2>
+
+      <p>
+        You have spent nine chapters building a real-time ad bidding platform &mdash; authentication, campaigns,
+        bidding engines, billing, dashboards, and operational tooling. None of it matters if you cannot
+        <strong>ship it reliably</strong> and <strong>defend it under pressure</strong>.
+      </p>
+
+      <p>
+        Reliable release velocity requires <strong>predictable quality gates</strong>. A green CI pipeline is
+        not a vanity metric &mdash; it is the mechanism that prevents regressions from reaching production.
+        Readiness is proven by <strong>operational behavior</strong>, not by code volume. A team that can deploy
+        on demand, recover from incidents, and explain every architectural decision is a team that ships with confidence.
+      </p>
+
+      <p>
+        This final chapter combines two critical disciplines: the engineering rigor of automated testing with
+        the operational maturity of launch hardening. Together, they form the bridge between "it works on my
+        machine" and "it runs in production under load, with monitoring, and we can defend every decision."
+      </p>
+
+      <div class="callout danger">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          The Cost of Skipping This
+        </div>
+        <p>
+          Teams that ship without test coverage and launch hardening do not move faster &mdash; they move
+          <strong>in circles</strong>. Every production incident becomes an unplanned sprint. Every
+          regression becomes a fire drill. Every deployment becomes a gamble. The time you invest here
+          pays for itself within the first month of production operation.
+        </p>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 2: KEY CONCEPTS
+           ════════════════════════════════════════ -->
+      <h2 id="key-concepts">Key Concepts</h2>
+
+      <h3 id="testing-strategy">1. Testing Strategy</h3>
+
+      <p>
+        A mature testing strategy follows the <strong>test pyramid</strong>: many fast unit tests at the base,
+        fewer integration tests in the middle, and a small number of end-to-end tests at the top. Each layer
+        catches different classes of bugs at different costs.
+      </p>
+
+      <ul>
+        <li><strong>Unit tests</strong> &mdash; Test individual methods and classes in isolation. Fastest to run, cheapest to maintain. Cover business logic, validations, and service objects.</li>
+        <li><strong>Integration tests</strong> &mdash; Test how components work together. API request specs that hit the full Rails stack (routing, controllers, models, database) without a browser.</li>
+        <li><strong>End-to-end tests</strong> &mdash; Test complete user flows through a real browser. Slowest and most expensive, but catch issues that no other layer can (JavaScript errors, CSS layout breaks, race conditions).</li>
+      </ul>
+
+      <div class="diagram">
+<pre>
+                        ┌───────────┐
+                       /  E2E Tests  \            Slow, expensive, high confidence
+                      /   (Cypress)   \           5-15 tests for critical paths
+                     /─────────────────\
+                    /  Integration Tests \         Medium speed, medium confidence
+                   /    (RSpec Request)    \       50-200 request specs
+                  /────────────────────────\
+                 /      Unit Tests          \      Fast, cheap, high volume
+                /    (RSpec + Jest)           \    500+ specs across models,
+               /──────────────────────────────\   services, and components
+
+  ┌─────────────────────────────────────────────────────────────────────┐
+  │  RULE OF THUMB                                                      │
+  │  70% unit  ·  20% integration  ·  10% end-to-end                   │
+  │  If a bug can be caught by a unit test, don't write an E2E for it  │
+  └─────────────────────────────────────────────────────────────────────┘
+</pre>
+        <div class="diagram-caption">Figure 1: The test pyramid &mdash; catch bugs at the cheapest layer possible</div>
+      </div>
+
+      <p>
+        For our Rails + React platform, the pyramid maps to concrete tools:
+      </p>
+
+      <ul>
+        <li><strong>RSpec</strong> for all backend testing &mdash; model specs, service specs, request specs, and job specs</li>
+        <li><strong>Jest + React Testing Library</strong> for frontend component and hook testing</li>
+        <li><strong>Cypress or Playwright</strong> for browser-based end-to-end flows</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># Gemfile — Testing group</span>
+group <span class="hl-string">:test</span> <span class="hl-keyword">do</span>
+  gem <span class="hl-string">"rspec-rails"</span>,    <span class="hl-string">"~> 6.1"</span>
+  gem <span class="hl-string">"factory_bot_rails"</span>, <span class="hl-string">"~> 6.4"</span>
+  gem <span class="hl-string">"faker"</span>,           <span class="hl-string">"~> 3.2"</span>
+  gem <span class="hl-string">"shoulda-matchers"</span>, <span class="hl-string">"~> 6.0"</span>
+  gem <span class="hl-string">"simplecov"</span>,       <span class="hl-string">"~> 0.22"</span>, require: <span class="hl-keyword">false</span>
+  gem <span class="hl-string">"webmock"</span>,          <span class="hl-string">"~> 3.19"</span>
+  gem <span class="hl-string">"vcr"</span>,              <span class="hl-string">"~> 6.2"</span>
+<span class="hl-keyword">end</span>
+</pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># spec/models/campaign_spec.rb</span>
+RSpec.describe Campaign, type: <span class="hl-string">:model</span> <span class="hl-keyword">do</span>
+  describe <span class="hl-string">"validations"</span> <span class="hl-keyword">do</span>
+    it { is_expected.to validate_presence_of(<span class="hl-string">:name</span>) }
+    it { is_expected.to validate_numericality_of(<span class="hl-string">:daily_budget</span>).is_greater_than(<span class="hl-number">0</span>) }
+    it { is_expected.to belong_to(<span class="hl-string">:account</span>) }
+  <span class="hl-keyword">end</span>
+
+  describe <span class="hl-string">"#activate!"</span> <span class="hl-keyword">do</span>
+    let(<span class="hl-string">:campaign</span>) { create(<span class="hl-string">:campaign</span>, status: <span class="hl-string">:draft</span>) }
+
+    it <span class="hl-string">"transitions from draft to active"</span> <span class="hl-keyword">do</span>
+      campaign.activate!
+      expect(campaign.reload.status).to eq(<span class="hl-string">"active"</span>)
+    <span class="hl-keyword">end</span>
+
+    it <span class="hl-string">"raises when budget is zero"</span> <span class="hl-keyword">do</span>
+      campaign.update!(daily_budget: <span class="hl-number">0</span>)
+      expect { campaign.activate! }.to raise_error(Campaign::InsufficientBudget)
+    <span class="hl-keyword">end</span>
+  <span class="hl-keyword">end</span>
+<span class="hl-keyword">end</span>
+</pre>
+      </div>
+
+      <div class="callout concept">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Key Insight
+        </div>
+        <p>
+          Test <strong>behavior</strong>, not implementation. A test that asserts "calling <code>activate!</code>
+          changes the status to active" is useful. A test that asserts "the third line of the method calls
+          <code>update_column</code>" is brittle and breaks when you refactor. Good tests survive refactoring.
+        </p>
+      </div>
+
+      <h3 id="ci-cd-pipeline">2. CI/CD Pipeline</h3>
+
+      <p>
+        Continuous Integration ensures every push is validated. Continuous Deployment automates the release
+        process. Together, they eliminate the "works on my machine" problem and enforce quality gates before
+        code reaches production.
+      </p>
+
+      <div class="diagram">
+<pre>
+  ┌──────────┐    ┌───────────┐    ┌───────────┐    ┌──────────┐    ┌──────────┐
+  │  Push /   │───▶│   Lint    │───▶│   Test    │───▶│  Build   │───▶│  Deploy  │
+  │  PR Open  │    │           │    │           │    │          │    │          │
+  └──────────┘    │ rubocop   │    │ rspec     │    │ docker   │    │ staging  │
+                  │ eslint    │    │ jest      │    │ build    │    │ or prod  │
+                  │ prettier  │    │ cypress   │    │ assets   │    │          │
+                  └─────┬─────┘    └─────┬─────┘    └────┬─────┘    └────┬─────┘
+                        │                │               │               │
+                  ┌─────▼─────┐    ┌─────▼─────┐    ┌────▼─────┐    ┌────▼─────┐
+                  │  FAIL?    │    │  FAIL or  │    │  FAIL?   │    │  Smoke   │
+                  │  Block PR │    │  &lt;90% cov │    │  Block   │    │  Tests   │
+                  └───────────┘    │  Block PR │    └──────────┘    └──────────┘
+                                   └───────────┘
+
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │  QUALITY GATES: Every gate must pass before code advances to the next stage │
+  └─────────────────────────────────────────────────────────────────────────────┘
+</pre>
+        <div class="diagram-caption">Figure 2: CI/CD pipeline with quality gates at every stage</div>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">yaml</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># .github/workflows/ci.yml</span>
+<span class="hl-keyword">name</span>: CI Pipeline
+<span class="hl-keyword">on</span>:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+<span class="hl-keyword">jobs</span>:
+  <span class="hl-function">lint</span>:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: <span class="hl-keyword">true</span>
+      - run: bundle exec rubocop --parallel
+      - uses: actions/setup-node@v4
+        with:
+          node-version: <span class="hl-number">20</span>
+          cache: <span class="hl-string">"yarn"</span>
+      - run: yarn install --frozen-lockfile
+      - run: yarn lint
+
+  <span class="hl-function">test-backend</span>:
+    runs-on: ubuntu-latest
+    needs: lint
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: postgres
+        ports: [<span class="hl-string">"5432:5432"</span>]
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+      redis:
+        image: redis:7
+        ports: [<span class="hl-string">"6379:6379"</span>]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: <span class="hl-keyword">true</span>
+      - run: bundle exec rails db:setup
+      - run: bundle exec rspec --format progress --profile 10
+      - run: bundle exec rails coverage:check  <span class="hl-comment"># Fail if &lt;90%</span>
+
+  <span class="hl-function">test-frontend</span>:
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: <span class="hl-number">20</span>
+          cache: <span class="hl-string">"yarn"</span>
+      - run: yarn install --frozen-lockfile
+      - run: yarn test --coverage --watchAll=<span class="hl-keyword">false</span>
+
+  <span class="hl-function">e2e</span>:
+    runs-on: ubuntu-latest
+    needs: [test-backend, test-frontend]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cypress-io/github-action@v6
+        with:
+          build: yarn build
+          start: yarn start
+          wait-on: <span class="hl-string">"http://localhost:3000"</span>
+</pre>
+      </div>
+
+      <div class="callout important">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Parallel Execution is Essential
+        </div>
+        <p>
+          Backend and frontend tests run in parallel (both <code>needs: lint</code>). E2E tests run only
+          after both pass. This structure means a lint failure blocks everything immediately, saving CI minutes.
+          A typical pipeline should complete in under 10 minutes. If it takes longer, developers stop waiting
+          and merge without green builds.
+        </p>
+      </div>
+
+      <h3 id="e2e-testing">3. End-to-End Testing</h3>
+
+      <p>
+        End-to-end tests validate <strong>critical user flows</strong> through a real browser. They are the
+        most expensive tests to write and maintain, so you should reserve them for paths where a failure
+        would have the highest business impact: login, campaign creation, bid submission, and payment flows.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">javascript</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">// cypress/e2e/campaign-lifecycle.cy.js</span>
+describe(<span class="hl-string">"Campaign Lifecycle"</span>, () => {
+  beforeEach(() => {
+    cy.task(<span class="hl-string">"db:seed"</span>);   <span class="hl-comment">// Reset DB to known state</span>
+    cy.login(<span class="hl-string">"operator@example.com"</span>, <span class="hl-string">"password123"</span>);
+  });
+
+  it(<span class="hl-string">"creates, activates, and pauses a campaign"</span>, () => {
+    <span class="hl-comment">// Navigate to campaigns</span>
+    cy.visit(<span class="hl-string">"/campaigns"</span>);
+    cy.findByRole(<span class="hl-string">"button"</span>, { name: <span class="hl-string">/new campaign/i</span> }).click();
+
+    <span class="hl-comment">// Fill in campaign form</span>
+    cy.findByLabelText(<span class="hl-string">/campaign name/i</span>).type(<span class="hl-string">"Holiday Sale 2025"</span>);
+    cy.findByLabelText(<span class="hl-string">/daily budget/i</span>).type(<span class="hl-string">"500"</span>);
+    cy.findByLabelText(<span class="hl-string">/bid strategy/i</span>).select(<span class="hl-string">"maximize_clicks"</span>);
+    cy.findByRole(<span class="hl-string">"button"</span>, { name: <span class="hl-string">/create campaign/i</span> }).click();
+
+    <span class="hl-comment">// Verify creation</span>
+    cy.findByText(<span class="hl-string">"Holiday Sale 2025"</span>).should(<span class="hl-string">"be.visible"</span>);
+    cy.findByTestId(<span class="hl-string">"campaign-status"</span>).should(<span class="hl-string">"contain"</span>, <span class="hl-string">"Draft"</span>);
+
+    <span class="hl-comment">// Activate</span>
+    cy.findByRole(<span class="hl-string">"button"</span>, { name: <span class="hl-string">/activate/i</span> }).click();
+    cy.findByTestId(<span class="hl-string">"campaign-status"</span>).should(<span class="hl-string">"contain"</span>, <span class="hl-string">"Active"</span>);
+
+    <span class="hl-comment">// Pause</span>
+    cy.findByRole(<span class="hl-string">"button"</span>, { name: <span class="hl-string">/pause/i</span> }).click();
+    cy.findByTestId(<span class="hl-string">"campaign-status"</span>).should(<span class="hl-string">"contain"</span>, <span class="hl-string">"Paused"</span>);
+  });
+
+  it(<span class="hl-string">"blocks viewer from creating campaigns"</span>, () => {
+    cy.login(<span class="hl-string">"viewer@example.com"</span>, <span class="hl-string">"password123"</span>);
+    cy.visit(<span class="hl-string">"/campaigns"</span>);
+    cy.findByRole(<span class="hl-string">"button"</span>, { name: <span class="hl-string">/new campaign/i</span> }).should(<span class="hl-string">"not.exist"</span>);
+  });
+});
+</pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">javascript</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">// cypress/support/commands.js</span>
+Cypress.Commands.add(<span class="hl-string">"login"</span>, (email, password) => {
+  cy.request({
+    method: <span class="hl-string">"POST"</span>,
+    url: <span class="hl-string">"/auth/login"</span>,
+    body: { email, password },
+  }).then((response) => {
+    window.localStorage.setItem(<span class="hl-string">"token"</span>, response.body.token);
+  });
+});
+</pre>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Pro Tip: Managing Flaky Tests
+        </div>
+        <p>
+          Flaky tests erode trust in the entire test suite. When a test fails intermittently, <strong>quarantine
+          it</strong> &mdash; move it to a separate CI job that does not block merges, tag it with
+          <code>@flaky</code>, and fix it within one sprint. Never leave a flaky test in the critical path.
+          Track flakiness rates over time; a suite with &gt;2% flakiness needs structural attention.
+        </p>
+      </div>
+
+      <h3 id="launch-hardening">4. Launch Hardening</h3>
+
+      <p>
+        Launch hardening is the process of stress-testing your application against the conditions it will face
+        in production. This is not about writing more features &mdash; it is about making the features you
+        already have <strong>resilient, observable, and secure</strong>.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># app/controllers/health_controller.rb</span>
+<span class="hl-keyword">class</span> <span class="hl-function">HealthController</span> &lt; ApplicationController
+  skip_before_action <span class="hl-string">:authenticate_request!</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">show</span>
+    checks = {
+      <span class="hl-string">database</span>:  database_healthy?,
+      <span class="hl-string">redis</span>:     redis_healthy?,
+      <span class="hl-string">sidekiq</span>:   sidekiq_healthy?,
+      <span class="hl-string">disk_space</span>: disk_space_ok?
+    }
+
+    status = checks.values.all? ? <span class="hl-string">:ok</span> : <span class="hl-string">:service_unavailable</span>
+
+    render json: {
+      <span class="hl-string">status</span>:    status == <span class="hl-string">:ok</span> ? <span class="hl-string">"healthy"</span> : <span class="hl-string">"degraded"</span>,
+      <span class="hl-string">checks</span>:    checks,
+      <span class="hl-string">version</span>:   ENV[<span class="hl-string">"GIT_SHA"</span>] || <span class="hl-string">"dev"</span>,
+      <span class="hl-string">timestamp</span>: Time.current.iso8601
+    }, status: status
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">private</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">database_healthy?</span>
+    ActiveRecord::Base.connection.active?
+  <span class="hl-keyword">rescue</span>
+    <span class="hl-keyword">false</span>
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">redis_healthy?</span>
+    Redis.current.ping == <span class="hl-string">"PONG"</span>
+  <span class="hl-keyword">rescue</span>
+    <span class="hl-keyword">false</span>
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">sidekiq_healthy?</span>
+    Sidekiq::ProcessSet.new.size > <span class="hl-number">0</span>
+  <span class="hl-keyword">rescue</span>
+    <span class="hl-keyword">false</span>
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">disk_space_ok?</span>
+    usage = `df -h / | tail -1 | awk <span class="hl-string">'{print $5}'</span>`.to_i
+    usage &lt; <span class="hl-number">90</span>
+  <span class="hl-keyword">rescue</span>
+    <span class="hl-keyword">false</span>
+  <span class="hl-keyword">end</span>
+<span class="hl-keyword">end</span>
+</pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># config/initializers/sentry.rb — Error Monitoring</span>
+Sentry.init <span class="hl-keyword">do</span> |config|
+  config.dsn = ENV[<span class="hl-string">"SENTRY_DSN"</span>]
+  config.breadcrumbs_logger = [<span class="hl-string">:active_support_logger</span>, <span class="hl-string">:http_logger</span>]
+  config.traces_sample_rate = <span class="hl-number">0.1</span>  <span class="hl-comment"># 10% of transactions for performance monitoring</span>
+  config.profiles_sample_rate = <span class="hl-number">0.1</span>
+
+  config.before_send = <span class="hl-keyword">lambda</span> <span class="hl-keyword">do</span> |event, hint|
+    <span class="hl-comment"># Scrub sensitive data before sending to Sentry</span>
+    event.request.data = <span class="hl-string">"[FILTERED]"</span> <span class="hl-keyword">if</span> event.request&.data
+    event
+  <span class="hl-keyword">end</span>
+<span class="hl-keyword">end</span>
+</pre>
+      </div>
+
+      <p>
+        The launch hardening checklist below covers the critical areas. Every item must be verified
+        before the application can be considered production-ready:
+      </p>
+
+      <div class="diagram">
+<pre>
+  ╔═══════════════════════════════════════════════════════════════════╗
+  ║                    LAUNCH HARDENING CHECKLIST                     ║
+  ╠═══════════════════════════════════════════════════════════════════╣
+  ║                                                                   ║
+  ║  SECURITY (OWASP Top 10)                                         ║
+  ║  ☐ A01 — Broken Access Control: tenant isolation verified        ║
+  ║  ☐ A02 — Cryptographic Failures: secrets in ENV, not in code    ║
+  ║  ☐ A03 — Injection: parameterized queries, no raw SQL           ║
+  ║  ☐ A04 — Insecure Design: rate limiting on auth endpoints       ║
+  ║  ☐ A05 — Security Misconfiguration: CORS, CSP headers set      ║
+  ║  ☐ A06 — Vulnerable Components: bundle audit clean              ║
+  ║  ☐ A07 — Auth Failures: account lockout after N attempts        ║
+  ║  ☐ A08 — Data Integrity: CSRF tokens, signed cookies            ║
+  ║  ☐ A09 — Logging Failures: structured logs, no PII              ║
+  ║  ☐ A10 — SSRF: URL allowlisting for external requests           ║
+  ║                                                                   ║
+  ║  PERFORMANCE                                                      ║
+  ║  ☐ N+1 queries eliminated (Bullet gem, query logs)               ║
+  ║  ☐ Database indexes on all foreign keys and query columns        ║
+  ║  ☐ Redis caching for hot paths (dashboard stats, bid lookups)    ║
+  ║  ☐ Load test: 100 concurrent users, p95 response &lt; 500ms       ║
+  ║  ☐ Asset fingerprinting and CDN configuration                    ║
+  ║                                                                   ║
+  ║  OBSERVABILITY                                                    ║
+  ║  ☐ Health check endpoint at /health (no auth required)           ║
+  ║  ☐ Sentry or equivalent error monitoring configured              ║
+  ║  ☐ Structured JSON logging with correlation IDs                  ║
+  ║  ☐ Key business metrics exposed (bids/sec, revenue, latency)     ║
+  ║  ☐ Alerting rules: error rate &gt; 1%, p95 &gt; 2s, disk &gt; 90%      ║
+  ║                                                                   ║
+  ║  OPERATIONS                                                       ║
+  ║  ☐ Database backup and restore tested                            ║
+  ║  ☐ Rollback procedure documented and rehearsed                   ║
+  ║  ☐ Runbook for top 5 incident scenarios                          ║
+  ║  ☐ On-call rotation and escalation path defined                  ║
+  ║  ☐ Feature flags for new functionality (gradual rollout)         ║
+  ║                                                                   ║
+  ╚═══════════════════════════════════════════════════════════════════╝
+</pre>
+        <div class="diagram-caption">Figure 3: Launch hardening checklist &mdash; every item must be green before go-live</div>
+      </div>
+
+      <div class="callout important">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Load Testing is Non-Negotiable
+        </div>
+        <p>
+          Use a tool like <code>k6</code>, <code>wrk</code>, or <code>Apache Bench</code> to simulate production
+          traffic patterns. Your bidding engine must handle burst traffic (ad auction spikes) without degrading.
+          If p95 response time exceeds 500ms under 100 concurrent users, you have a bottleneck that will become
+          a production incident.
+        </p>
+      </div>
+
+      <h3 id="capstone-defense">5. Capstone Defense</h3>
+
+      <p>
+        The capstone defense is the final assessment. It is not a written exam &mdash; it is a <strong>live
+        demonstration</strong> of your ability to build, operate, and defend a production-grade application.
+        You will walk through your architecture decisions, run an incident drill under time pressure, and
+        present your portfolio to a panel.
+      </p>
+
+      <p>
+        This mirrors real industry practice: senior engineers are not evaluated on what they memorized, but on
+        how they <strong>reason under pressure</strong>, how they <strong>communicate tradeoffs</strong>, and
+        how they <strong>respond to the unexpected</strong>.
+      </p>
+
+      <div class="diagram">
+<pre>
+  ╔═══════════════════════════════════════════════════════════════════╗
+  ║                     CAPSTONE DEFENSE RUBRIC                       ║
+  ╠═════════════════════════════════╦═════════╦═══════╦══════════════╣
+  ║  CRITERIA                       ║  WEIGHT ║ SCORE ║ NOTES        ║
+  ╠═════════════════════════════════╬═════════╬═══════╬══════════════╣
+  ║                                 ║         ║       ║              ║
+  ║  Architecture Walkthrough       ║   25%   ║  /25  ║              ║
+  ║  ├── Data model justification   ║         ║       ║              ║
+  ║  ├── API design rationale       ║         ║       ║              ║
+  ║  └── Scalability considerations ║         ║       ║              ║
+  ║                                 ║         ║       ║              ║
+  ║  Code Quality                   ║   20%   ║  /20  ║              ║
+  ║  ├── Test coverage (&gt; 90%)      ║         ║       ║              ║
+  ║  ├── Consistent style/linting   ║         ║       ║              ║
+  ║  └── No security vulnerabilities║         ║       ║              ║
+  ║                                 ║         ║       ║              ║
+  ║  Incident Drill (live)          ║   25%   ║  /25  ║              ║
+  ║  ├── Detection speed            ║         ║       ║              ║
+  ║  ├── Root cause analysis        ║         ║       ║              ║
+  ║  └── Resolution and communication║        ║       ║              ║
+  ║                                 ║         ║       ║              ║
+  ║  Operational Readiness          ║   15%   ║  /15  ║              ║
+  ║  ├── CI/CD pipeline is green    ║         ║       ║              ║
+  ║  ├── Monitoring and alerting    ║         ║       ║              ║
+  ║  └── Runbook completeness       ║         ║       ║              ║
+  ║                                 ║         ║       ║              ║
+  ║  Presentation &amp; Communication   ║   15%   ║  /15  ║              ║
+  ║  ├── Clarity of explanation     ║         ║       ║              ║
+  ║  ├── Handling of questions      ║         ║       ║              ║
+  ║  └── Portfolio documentation    ║         ║       ║              ║
+  ║                                 ║         ║       ║              ║
+  ╠═════════════════════════════════╬═════════╬═══════╬══════════════╣
+  ║  TOTAL                          ║  100%   ║ /100  ║              ║
+  ╠═════════════════════════════════╩═════════╩═══════╩══════════════╣
+  ║  PASS: 70+ | DISTINCTION: 85+ | HONORS: 95+                     ║
+  ╚═══════════════════════════════════════════════════════════════════╝
+</pre>
+        <div class="diagram-caption">Figure 4: Capstone defense rubric &mdash; 100 points across five criteria</div>
+      </div>
+
+      <p>
+        The <strong>incident drill</strong> works as follows: the evaluator will introduce a failure into
+        a running instance of your application (database connection drop, memory leak, misconfigured
+        environment variable, or security vulnerability). You have 20 minutes to:
+      </p>
+
+      <ol>
+        <li><strong>Detect</strong> the failure using your monitoring tools (not by reading the injected code)</li>
+        <li><strong>Diagnose</strong> the root cause using logs, metrics, and health checks</li>
+        <li><strong>Resolve</strong> the issue or implement a mitigation</li>
+        <li><strong>Communicate</strong> the incident timeline to the panel as if they were stakeholders</li>
+      </ol>
+
+      <details>
+        <summary>Sample incident drill scenarios</summary>
+        <div class="details-body">
+          <p>
+            The evaluator may choose from scenarios like these. You will not know which one in advance:
+          </p>
+          <ul>
+            <li><strong>Database connection pool exhaustion</strong> &mdash; Too many long-running queries saturate the pool. New requests queue and timeout. How do you detect it? How do you fix it?</li>
+            <li><strong>Redis memory limit reached</strong> &mdash; Sidekiq jobs start failing silently. Cached data becomes stale. The dashboard shows outdated numbers.</li>
+            <li><strong>JWT secret rotation gone wrong</strong> &mdash; A new secret is deployed but existing tokens use the old secret. All authenticated users are suddenly logged out.</li>
+            <li><strong>N+1 query under load</strong> &mdash; A campaign listing page that worked fine with 10 campaigns now takes 30 seconds with 1,000 campaigns.</li>
+            <li><strong>Cross-tenant data leak</strong> &mdash; A new endpoint was added without tenant scoping. Account A can see Account B's bid history.</li>
+          </ul>
+        </div>
+      </details>
+
+      <details>
+        <summary>Portfolio presentation guidelines</summary>
+        <div class="details-body">
+          <p>
+            Your portfolio should be a GitHub repository (or set of repositories) that demonstrates the
+            complete platform you built across all 10 chapters. It should include:
+          </p>
+          <ul>
+            <li><strong>A clear README</strong> with setup instructions that actually work (test them on a clean machine)</li>
+            <li><strong>Architecture decision records (ADRs)</strong> for major choices (database schema, caching strategy, auth approach)</li>
+            <li><strong>A running demo</strong> (deployed to a staging environment or Docker Compose setup)</li>
+            <li><strong>Test coverage report</strong> visible in CI output</li>
+            <li><strong>A 5-minute video walkthrough</strong> demonstrating the key user flows</li>
+          </ul>
+          <p>
+            This portfolio is what you show in job interviews. It is proof that you can build, test, deploy,
+            and operate a non-trivial application &mdash; not just follow a tutorial.
+          </p>
+        </div>
+      </details>
+
+      <div class="callout concept">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Key Insight
+        </div>
+        <p>
+          The capstone defense is modeled after how senior engineering hires are evaluated at companies like
+          Stripe, Shopify, and GitHub. The ability to walk through code you wrote, explain tradeoffs you made,
+          and handle curveball questions under pressure is what separates a junior developer from a
+          production-ready engineer.
+        </p>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 3: WATCH & LEARN
+           ════════════════════════════════════════ -->
+      <h2 id="watch-learn">Watch &amp; Learn</h2>
+
+      <p>
+        These videos cover testing fundamentals and CI/CD pipeline configuration. Watch them to build a
+        mental model of how automated quality gates protect production deployments.
+      </p>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/EI9_PY8mLfk?rel=0&amp;modestbranding=1"
+            title="Testing Rails Applications"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Testing Rails Applications &mdash; comprehensive walkthrough of RSpec, model specs, request specs, and test-driven development workflows
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/R8_veQiYBjI?rel=0&amp;modestbranding=1"
+            title="GitHub Actions CI/CD Tutorial"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          GitHub Actions CI/CD Tutorial &mdash; step-by-step guide to building automated pipelines with parallel jobs, caching, and deployment triggers
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 4: FURTHER READING
+           ════════════════════════════════════════ -->
+      <h2 id="further-reading">Further Reading</h2>
+
+      <p>Deep-dive into the official documentation and reference material for testing, CI/CD, and launch readiness.</p>
+
+      <div class="resource-grid">
+        <a class="resource-card" href="https://guides.rubyonrails.org/testing.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Rails Guides: Testing</div>
+            <div class="resource-desc">Official Rails testing guide. Covers fixtures, model tests, controller tests, integration tests, and system tests.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://jestjs.io/docs/getting-started" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Jest Documentation</div>
+            <div class="resource-desc">The complete Jest testing framework reference. Matchers, mocks, snapshots, async testing, and configuration.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://docs.github.com/en/actions" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">GitHub Actions Documentation</div>
+            <div class="resource-desc">Workflows, jobs, steps, matrix builds, caching, secrets management, and reusable actions.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://owasp.org/www-project-top-ten/" target="_blank" rel="noopener">
+          <div class="resource-icon article">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">OWASP Top Ten</div>
+            <div class="resource-desc">The industry standard for web application security risks. Your launch hardening checklist maps directly to these categories.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://testing-library.com/docs/react-testing-library/intro/" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">React Testing Library</div>
+            <div class="resource-desc">Testing React components by simulating user behavior. Queries by role, label, and text &mdash; not by implementation details.</div>
+          </div>
+        </a>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 5: ASSIGNMENTS
+           ════════════════════════════════════════ -->
+      <h2 id="assignments">Assignments</h2>
+
+      <p>
+        These are the final assignments of the ILA certification. Each level builds on the previous one,
+        culminating in a live capstone defense. Submit your work as a GitHub PR with
+        <code>docs/chapter-10.md</code> containing your testing strategy, launch checklist results,
+        and incident response documentation.
+      </p>
+
+      <!-- Assignment 1: Level 1 -->
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 1
+          </div>
+          <span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span>
+        </div>
+        <h4>Test Suite with Unit and Integration Coverage</h4>
+        <p>Build a comprehensive test suite that covers your core models, services, and API endpoints. Establish the testing foundation that all future development depends on.</p>
+
+        <ul class="checklist">
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Configure RSpec with <code>factory_bot</code>, <code>shoulda-matchers</code>, and <code>SimpleCov</code></span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Write model specs for Campaign, AdGroup, Creative, and Bid with validation and association coverage</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Write service specs for <code>BidService</code>, <code>JwtService</code>, and <code>BudgetEnforcer</code></span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Write request specs for authentication endpoints (login, me, token refresh)</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Write request specs for campaign CRUD with tenant scoping verification</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Configure Jest and React Testing Library for frontend component tests</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Write component tests for CampaignCard, BidForm, and DashboardStats</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Achieve minimum 85% line coverage across backend and frontend</span>
+          </li>
+        </ul>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            Running <code>bundle exec rspec</code> produces all green with &gt;85% coverage.
+            Running <code>yarn test --coverage</code> produces all green with &gt;85% coverage.
+            The SimpleCov report shows no critical paths with zero coverage.
+          </p>
+        </div>
+      </div>
+
+      <!-- Assignment 2: Level 2 -->
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 2
+          </div>
+          <span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span>
+        </div>
+        <h4>CI/CD Pipeline with Quality Gates and E2E Tests</h4>
+        <p>Configure a GitHub Actions pipeline that enforces quality gates and add end-to-end tests for critical user flows.</p>
+
+        <ul class="checklist">
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Create <code>.github/workflows/ci.yml</code> with lint, backend test, frontend test, and E2E jobs</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Configure parallel test execution (backend and frontend run simultaneously)</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Add coverage threshold gate: pipeline fails if coverage drops below 90%</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Set up Cypress or Playwright for end-to-end testing</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Write E2E tests for: login flow, campaign creation, bid submission, and dashboard rendering</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Configure test data seeding with <code>cy.task("db:seed")</code> for deterministic E2E state</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Add <code>bundle exec rubocop</code> and <code>yarn lint</code> as required CI checks</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Verify: PRs cannot be merged unless all CI checks pass</span>
+          </li>
+        </ul>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            Opening a PR triggers the full CI pipeline. All jobs pass. Introducing a linting violation,
+            a failing test, or a coverage drop below 90% causes the pipeline to fail and blocks the merge.
+            E2E tests run the complete campaign lifecycle in a real browser.
+          </p>
+        </div>
+      </div>
+
+      <!-- Assignment 3: Level 3 -->
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 3
+          </div>
+          <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Production-Ready</span>
+        </div>
+        <h4>Capstone &mdash; Full Launch Simulation and Architecture Defense</h4>
+        <p>Complete the launch hardening checklist, survive an incident drill, and defend your architecture in a live capstone presentation. This is the final evaluation of the ILA certification.</p>
+
+        <ul class="checklist">
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Complete the full launch hardening checklist (security, performance, observability, operations)</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Run <code>bundle audit</code> and <code>yarn audit</code> &mdash; resolve all critical/high vulnerabilities</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Implement health check endpoint with database, Redis, and Sidekiq probes</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Configure Sentry (or equivalent) error monitoring with PII scrubbing</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Run a load test: 100 concurrent users, verify p95 &lt; 500ms on critical endpoints</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Write a runbook covering the top 5 incident scenarios for your platform</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Survive the incident drill: detect, diagnose, resolve, and communicate within 20 minutes</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Deliver a 30-minute architecture defense and portfolio presentation to the evaluation panel</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Score 70+ on the capstone rubric to achieve certification</span>
+          </li>
+        </ul>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            The launch hardening checklist is fully green. The CI pipeline is passing with &gt;90% coverage.
+            You have survived the incident drill and delivered a confident architecture defense. The evaluation
+            panel has signed off on your capstone score. <strong>Congratulations &mdash; you are ILA certified.</strong>
+          </p>
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 6: SELF-CHECK
+           ════════════════════════════════════════ -->
+      <h2 id="self-check">Self-Check</h2>
+
+      <p>This is the final self-check of the entire program. Answer honestly. If any answer is "no", go back and fix it before scheduling your capstone defense.</p>
+
+      <details>
+        <summary>Does your test suite catch real bugs, or does it just confirm happy paths?</summary>
+        <div class="details-body">
+          <p>
+            Review your test suite. Count the number of tests that verify <strong>error conditions</strong>:
+            invalid inputs, unauthorized access, network failures, race conditions. If more than 80% of your
+            tests only check the "everything works perfectly" scenario, your suite will not catch the bugs
+            that actually happen in production. Add edge case tests for every critical service.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Can you deploy to production with a single command and roll back in under 5 minutes?</summary>
+        <div class="details-body">
+          <p>
+            Your deployment process should be documented and automated. A manual deployment that requires
+            SSH access, running migrations by hand, and restarting services is a process that will break
+            at 2 AM on a Saturday. Your rollback should be as simple as <code>git revert</code> and
+            <code>deploy</code> &mdash; or ideally, a single "rollback" button in your CI/CD system.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Can you explain every architectural decision you made and the tradeoffs involved?</summary>
+        <div class="details-body">
+          <p>
+            Pick any three major decisions from your codebase (database schema design, caching strategy,
+            authentication approach, API versioning, background job architecture). For each one, can you
+            explain: (1) what alternatives you considered, (2) why you chose this approach, and (3) what
+            you would change if requirements shifted? If you cannot articulate tradeoffs, you do not
+            understand the decision deeply enough.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>If production went down right now, would you know within 60 seconds?</summary>
+        <div class="details-body">
+          <p>
+            Check your monitoring setup. Is your health check endpoint being polled? Are error rates
+            being tracked? Do you have alerting rules that fire when thresholds are breached? If the
+            answer to any of these is "no," your observability is not production-ready. A silent failure
+            is worse than a loud one &mdash; at least a loud failure gets fixed.
+          </p>
+        </div>
+      </details>
+
+    </main>
+
+    <!-- Sidebar: Table of Contents -->
+    <aside class="sidebar">
+      <div class="sidebar-title">On this page</div>
+      <ul class="toc-list">
+        <li class="toc-item"><a href="#why-this-matters">Why This Matters</a></li>
+        <li class="toc-item"><a href="#key-concepts">Key Concepts</a></li>
+        <li class="toc-item"><a href="#testing-strategy" style="padding-left: 28px; font-size: 12px;">Testing Strategy</a></li>
+        <li class="toc-item"><a href="#ci-cd-pipeline" style="padding-left: 28px; font-size: 12px;">CI/CD Pipeline</a></li>
+        <li class="toc-item"><a href="#e2e-testing" style="padding-left: 28px; font-size: 12px;">End-to-End Testing</a></li>
+        <li class="toc-item"><a href="#launch-hardening" style="padding-left: 28px; font-size: 12px;">Launch Hardening</a></li>
+        <li class="toc-item"><a href="#capstone-defense" style="padding-left: 28px; font-size: 12px;">Capstone Defense</a></li>
+        <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a></li>
+        <li class="toc-item"><a href="#further-reading">Further Reading</a></li>
+        <li class="toc-item"><a href="#assignments">Assignments</a></li>
+        <li class="toc-item"><a href="#self-check">Self-Check</a></li>
+      </ul>
+    </aside>
+  </div>
+
+  <!-- Footer Navigation -->
+  <footer class="chapter-footer">
+    <div class="chapter-footer-inner">
+      <nav class="footer-nav">
+        <a class="footer-nav-link" href="chapter-09.html">
+          <span class="footer-nav-label">&larr; Previous Chapter</span>
+          <span class="footer-nav-title">09: Operations Console and Performance Dashboard</span>
+        </a>
+        <a class="footer-nav-link" href="index.html">
+          <span class="footer-nav-label">Course Complete &rarr;</span>
+          <span class="footer-nav-title">Back to ILA Landing Page</span>
+        </a>
+      </nav>
+      <div class="footer-brand">
+        ILA (Iksha Learning Academy) &middot; Rails + React Engineering Certification &middot; Level 2
+      </div>
+    </div>
+  </footer>
+
+  <!-- ════════════════════════════════════════
+       SCRIPTS
+       ════════════════════════════════════════ -->
+  <script>
+    // ── Progress Bar ──
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      document.getElementById('progressBar').style.width = progress + '%';
+    });
+
+    // ── Active TOC ──
+    const tocLinks = document.querySelectorAll('.toc-item a');
+    const sections = [];
+
+    tocLinks.forEach(link => {
+      const id = link.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) sections.push({ id, el, link });
+    });
+
+    const observerOptions = {
+      rootMargin: '-80px 0px -60% 0px',
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const item = sections.find(s => s.el === entry.target);
+        if (item) {
+          if (entry.isIntersecting) {
+            tocLinks.forEach(l => l.classList.remove('active'));
+            item.link.classList.add('active');
+          }
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(s => observer.observe(s.el));
+
+    // ── Copy Code ──
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      const text = pre.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.classList.add('copied');
+        btn.textContent = 'Copied!';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.textContent = 'Copy';
+        }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>

@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
-    /* ILA DESIGN SYSTEM — Landing Page */
+    /* ILA DESIGN SYSTEM — Landing Page v2 */
     :root {
       --ink:        #0f172a;
       --ink-light:  #334155;
@@ -25,12 +25,22 @@
       --teal-700: #0f766e;
       --teal-800: #115e59;
       --teal-900: #134e4a;
+      --blue-50:  #eff6ff;
+      --blue-500: #3b82f6;
+      --blue-600: #2563eb;
       --amber-50:  #fffbeb;
+      --amber-100: #fef3c7;
       --amber-500: #f59e0b;
       --amber-600: #d97706;
       --green-50:  #f0fdf4;
+      --green-100: #dcfce7;
       --green-500: #22c55e;
       --green-600: #16a34a;
+      --purple-50:  #faf5ff;
+      --purple-500: #a855f7;
+      --purple-600: #9333ea;
+      --red-50:   #fef2f2;
+      --red-500:  #ef4444;
       --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       --font-serif: 'Instrument Serif', Georgia, serif;
       --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
@@ -97,15 +107,34 @@
 
     /* Hero */
     .hero {
-      background: linear-gradient(135deg, var(--teal-900) 0%, var(--teal-700) 100%);
+      background: linear-gradient(135deg, var(--teal-900) 0%, #0c4a6e 100%);
       color: white;
-      padding: 4rem 2rem 3.5rem;
+      padding: 4.5rem 2rem 4rem;
       text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 30% 70%, rgba(20,184,166,0.15) 0%, transparent 50%),
+                  radial-gradient(circle at 70% 30%, rgba(59,130,246,0.1) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
     }
 
     .hero h1 {
       font-family: var(--font-serif);
-      font-size: 3rem;
+      font-size: clamp(2.2rem, 5vw, 3.2rem);
       font-weight: 400;
       line-height: 1.15;
       margin-bottom: 0.75rem;
@@ -114,21 +143,47 @@
     .hero p {
       font-size: 1.1rem;
       opacity: 0.85;
-      max-width: 560px;
+      max-width: 580px;
       margin: 0 auto;
+      line-height: 1.6;
     }
 
     .hero-badge {
       display: inline-block;
-      background: rgba(255,255,255,0.15);
-      border: 1px solid rgba(255,255,255,0.25);
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
       border-radius: 20px;
       padding: 4px 14px;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 600;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
       margin-bottom: 1.25rem;
+    }
+
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-stat {
+      text-align: center;
+    }
+
+    .hero-stat-value {
+      font-size: 1.75rem;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    .hero-stat-label {
+      font-size: 12px;
+      opacity: 0.7;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
     }
 
     /* Content */
@@ -147,11 +202,54 @@
       margin-bottom: 1rem;
     }
 
+    /* Progress */
+    .progress-section {
+      margin-bottom: 2.5rem;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.5rem;
+    }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .progress-bar-bg {
+      width: 100%;
+      height: 10px;
+      background: var(--border-light);
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--teal-500), var(--blue-500));
+      border-radius: 5px;
+      transition: width 0.6s var(--ease);
+    }
+
+    .progress-text {
+      font-size: 13px;
+      color: var(--ink-muted);
+      margin-top: 0.5rem;
+    }
+
+    .progress-percent {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--teal-700);
+    }
+
     /* Chapter Grid */
     .chapter-list {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 0.75rem;
     }
 
     .chapter-card {
@@ -169,19 +267,14 @@
 
     .chapter-card:hover {
       border-color: var(--teal-500);
-      box-shadow: 0 4px 12px rgba(20, 184, 166, 0.1);
-      transform: translateY(-1px);
-    }
-
-    .chapter-card.locked {
-      opacity: 0.55;
-      pointer-events: none;
+      box-shadow: 0 4px 16px rgba(20, 184, 166, 0.12);
+      transform: translateY(-2px);
     }
 
     .chapter-number {
-      width: 44px;
-      height: 44px;
-      border-radius: 10px;
+      width: 46px;
+      height: 46px;
+      border-radius: 11px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -195,10 +288,10 @@
       color: var(--green-600);
     }
 
-    .chapter-number.upcoming {
-      background: var(--surface-alt);
-      color: var(--ink-muted);
-      border: 1px solid var(--border);
+    .chapter-number.ready {
+      background: var(--teal-50);
+      color: var(--teal-700);
+      border: 1px solid var(--teal-200);
     }
 
     .chapter-info {
@@ -220,10 +313,12 @@
 
     .chapter-status {
       flex-shrink: 0;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 600;
       padding: 4px 10px;
       border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
     }
 
     .status-complete {
@@ -231,49 +326,25 @@
       color: var(--green-600);
     }
 
-    .status-upcoming {
-      background: var(--surface-alt);
-      color: var(--ink-muted);
-      border: 1px solid var(--border-light);
-    }
-
-    /* Progress Bar */
-    .progress-section {
-      margin-bottom: 2.5rem;
-    }
-
-    .progress-bar-bg {
-      width: 100%;
-      height: 8px;
-      background: var(--border-light);
-      border-radius: 4px;
-      overflow: hidden;
-      margin-top: 0.5rem;
-    }
-
-    .progress-bar-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--teal-500), var(--teal-600));
-      border-radius: 4px;
-      transition: width 0.6s var(--ease);
-    }
-
-    .progress-text {
-      font-size: 13px;
-      color: var(--ink-muted);
-      margin-top: 0.5rem;
+    .status-ready {
+      background: var(--teal-50);
+      color: var(--teal-700);
+      border: 1px solid var(--teal-100);
     }
 
     /* Phase Headers */
     .phase-header {
-      font-size: 13px;
+      font-size: 11px;
       font-weight: 700;
       color: var(--ink-muted);
-      letter-spacing: 0.04em;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
-      margin: 2rem 0 0.75rem;
-      padding-top: 1rem;
+      margin: 1.75rem 0 0.5rem;
+      padding: 0.75rem 0 0;
       border-top: 1px solid var(--border-light);
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .phase-header:first-of-type {
@@ -282,6 +353,20 @@
       border-top: none;
     }
 
+    .phase-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .phase-dot.p1 { background: var(--teal-500); }
+    .phase-dot.p2 { background: var(--blue-500); }
+    .phase-dot.p3 { background: var(--amber-500); }
+    .phase-dot.p4 { background: var(--purple-500); }
+    .phase-dot.p5 { background: var(--red-500); }
+    .phase-dot.p6 { background: var(--green-500); }
+
     /* Footer */
     .footer {
       text-align: center;
@@ -289,14 +374,26 @@
       font-size: 13px;
       color: var(--ink-muted);
       border-top: 1px solid var(--border);
+      background: white;
+    }
+
+    .footer a {
+      color: var(--teal-700);
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
     }
 
     @media (max-width: 640px) {
       .hero h1 { font-size: 2rem; }
       .hero { padding: 3rem 1.5rem 2.5rem; }
+      .hero-stats { gap: 1.5rem; }
       .content { padding: 2rem 1rem 3rem; }
       .chapter-card { flex-wrap: wrap; gap: 0.75rem; padding: 1rem; }
       .chapter-status { width: 100%; text-align: center; }
+      .progress-header { flex-direction: column; align-items: flex-start; gap: 0.25rem; }
     }
   </style>
 </head>
@@ -313,34 +410,53 @@
 
   <!-- Hero -->
   <header class="hero">
-    <div class="hero-badge">Level 2 Certification</div>
-    <h1>Rails + React Engineering</h1>
-    <p>A comprehensive, project-based curriculum covering full-stack development from platform bootstrap to production deployment.</p>
+    <div class="hero-content">
+      <div class="hero-badge">Level 2 Certification</div>
+      <h1>Rails + React Engineering</h1>
+      <p>Build a production ad-bidding platform from scratch. 10 chapters covering backend APIs, real-time bidding, React dashboards, and launch hardening.</p>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-value">10</div>
+          <div class="hero-stat-label">Chapters</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-value">30</div>
+          <div class="hero-stat-label">Assignments</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-value">6</div>
+          <div class="hero-stat-label">Phases</div>
+        </div>
+      </div>
+    </div>
   </header>
 
   <!-- Content -->
   <main class="content">
     <!-- Progress -->
     <div class="progress-section">
-      <div class="section-label">Curriculum Progress</div>
-      <div class="progress-bar-bg">
-        <div class="progress-bar-fill" style="width: 11.1%"></div>
+      <div class="progress-header">
+        <div class="section-label" style="margin-bottom: 0">Curriculum Progress</div>
+        <div class="progress-percent">20%</div>
       </div>
-      <p class="progress-text">2 of 18 chapters complete</p>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" style="width: 20%"></div>
+      </div>
+      <p class="progress-text">2 of 10 chapters complete &middot; 8 ready to start</p>
     </div>
 
     <!-- Chapter List -->
-    <div class="section-label">Chapters</div>
+    <div class="section-label">All Chapters</div>
     <div class="chapter-list">
 
       <!-- Phase 1: Platform Foundations -->
-      <div class="phase-header">Phase 1 &mdash; Platform Foundations</div>
+      <div class="phase-header"><span class="phase-dot p1"></span>Phase 1 &mdash; Platform Foundations</div>
 
       <a class="chapter-card" href="chapter-01.html">
         <div class="chapter-number done">01</div>
         <div class="chapter-info">
           <div class="chapter-title">Platform Bootstrap</div>
-          <div class="chapter-meta">Rails 7 API, React 18, Docker, CI/CD scaffold</div>
+          <div class="chapter-meta">Rails 7 API, React 18, Docker Compose, health checks, CI/CD scaffold</div>
         </div>
         <span class="chapter-status status-complete">Complete</span>
       </a>
@@ -349,169 +465,97 @@
         <div class="chapter-number done">02</div>
         <div class="chapter-info">
           <div class="chapter-title">Authentication and Tenant Isolation</div>
-          <div class="chapter-meta">Devise JWT, multi-tenancy, RBAC foundations</div>
+          <div class="chapter-meta">JWT auth, multi-tenancy, RBAC, security regression tests</div>
         </div>
         <span class="chapter-status status-complete">Complete</span>
       </a>
 
-      <div class="chapter-card locked">
-        <div class="chapter-number upcoming">03</div>
+      <!-- Phase 2: Core Business Logic -->
+      <div class="phase-header"><span class="phase-dot p2"></span>Phase 2 &mdash; Core Business Logic</div>
+
+      <a class="chapter-card" href="chapter-03.html">
+        <div class="chapter-number ready">03</div>
         <div class="chapter-info">
-          <div class="chapter-title">Core Domain Modelling</div>
-          <div class="chapter-meta">ActiveRecord patterns, polymorphism, validations</div>
+          <div class="chapter-title">Campaign Management and Budget Pacing</div>
+          <div class="chapter-meta">Campaign CRUD, state machines, budget guardrails, pacing algorithms</div>
         </div>
-        <span class="chapter-status status-upcoming">Upcoming</span>
-      </div>
+        <span class="chapter-status status-ready">Ready</span>
+      </a>
 
-      <!-- Phase 2: Core Product -->
-      <div class="phase-header">Phase 2 &mdash; Core Product</div>
-
-      <div class="chapter-card locked">
-        <div class="chapter-number upcoming">04</div>
+      <a class="chapter-card" href="chapter-04.html">
+        <div class="chapter-number ready">04</div>
         <div class="chapter-info">
-          <div class="chapter-title">API Design and Serialization</div>
-          <div class="chapter-meta">REST conventions, JSON:API, pagination</div>
+          <div class="chapter-title">Ad Group Targeting and Creative Assets</div>
+          <div class="chapter-meta">Targeting rules, creative pipeline, Active Storage, A/B variants</div>
         </div>
-        <span class="chapter-status status-upcoming">Upcoming</span>
-      </div>
+        <span class="chapter-status status-ready">Ready</span>
+      </a>
 
-      <div class="chapter-card locked">
-        <div class="chapter-number upcoming">05</div>
+      <!-- Phase 3: Revenue Engine -->
+      <div class="phase-header"><span class="phase-dot p3"></span>Phase 3 &mdash; Revenue Engine</div>
+
+      <a class="chapter-card" href="chapter-05.html">
+        <div class="chapter-number ready">05</div>
         <div class="chapter-info">
-          <div class="chapter-title">React Component Architecture</div>
-          <div class="chapter-meta">Hooks, context, component composition</div>
+          <div class="chapter-title">Bid Strategy Engine and Lead Intake</div>
+          <div class="chapter-meta">CPA-driven bids, recommendation service, lead validation, quality gates</div>
         </div>
-        <span class="chapter-status status-upcoming">Upcoming</span>
-      </div>
+        <span class="chapter-status status-ready">Ready</span>
+      </a>
 
-      <div class="chapter-card locked">
-        <div class="chapter-number upcoming">06</div>
+      <a class="chapter-card" href="chapter-06.html">
+        <div class="chapter-number ready">06</div>
         <div class="chapter-info">
-          <div class="chapter-title">State Management and Data Fetching</div>
-          <div class="chapter-meta">React Query, global state, caching strategies</div>
+          <div class="chapter-title">Conversion Attribution and Background Jobs</div>
+          <div class="chapter-meta">Event attribution, idempotency, Sidekiq workers, retry safety</div>
         </div>
-        <span class="chapter-status status-upcoming">Upcoming</span>
-      </div>
+        <span class="chapter-status status-ready">Ready</span>
+      </a>
 
-      <!-- Phase 3: Advanced Features -->
-      <div class="phase-header">Phase 3 &mdash; Advanced Features</div>
+      <!-- Phase 4: Data and Money -->
+      <div class="phase-header"><span class="phase-dot p4"></span>Phase 4 &mdash; Data &amp; Money</div>
 
-      <div class="chapter-card locked">
-        <div class="chapter-number upcoming">07</div>
+      <a class="chapter-card" href="chapter-07.html">
+        <div class="chapter-number ready">07</div>
         <div class="chapter-info">
-          <div class="chapter-title">Real-Time with Action Cable</div>
-          <div class="chapter-meta">WebSockets, channels, live notifications</div>
+          <div class="chapter-title">Billing Ledger and Analytics API</div>
+          <div class="chapter-meta">Immutable billing events, receipts, KPI aggregation, materialized views</div>
         </div>
-        <span class="chapter-status status-upcoming">Upcoming</span>
-      </div>
+        <span class="chapter-status status-ready">Ready</span>
+      </a>
 
-      <div class="chapter-card locked">
-        <div class="chapter-number upcoming">08</div>
+      <!-- Phase 5: Frontend Application -->
+      <div class="phase-header"><span class="phase-dot p5"></span>Phase 5 &mdash; Frontend Application</div>
+
+      <a class="chapter-card" href="chapter-08.html">
+        <div class="chapter-number ready">08</div>
         <div class="chapter-info">
-          <div class="chapter-title">Background Jobs and Queues</div>
-          <div class="chapter-meta">Sidekiq, Active Job, retry strategies</div>
+          <div class="chapter-title">React Shell and Campaign Builder UI</div>
+          <div class="chapter-meta">Auth guards, protected routes, campaign forms, TanStack Query</div>
         </div>
-        <span class="chapter-status status-upcoming">Upcoming</span>
-      </div>
+        <span class="chapter-status status-ready">Ready</span>
+      </a>
 
-      <div class="chapter-card locked">
-        <div class="chapter-number upcoming">09</div>
+      <a class="chapter-card" href="chapter-09.html">
+        <div class="chapter-number ready">09</div>
         <div class="chapter-info">
-          <div class="chapter-title">File Uploads and Storage</div>
-          <div class="chapter-meta">Active Storage, direct uploads, image processing</div>
+          <div class="chapter-title">Operations Console and Performance Dashboard</div>
+          <div class="chapter-meta">Bid console, ad group ops, KPI dashboards, data visualization</div>
         </div>
-        <span class="chapter-status status-upcoming">Upcoming</span>
-      </div>
+        <span class="chapter-status status-ready">Ready</span>
+      </a>
 
-      <!-- Phase 4: Quality and Performance -->
-      <div class="phase-header">Phase 4 &mdash; Quality &amp; Performance</div>
+      <!-- Phase 6: Ship It -->
+      <div class="phase-header"><span class="phase-dot p6"></span>Phase 6 &mdash; Ship It</div>
 
-      <div class="chapter-card locked">
-        <div class="chapter-number upcoming">10</div>
+      <a class="chapter-card" href="chapter-10.html">
+        <div class="chapter-number ready">10</div>
         <div class="chapter-info">
-          <div class="chapter-title">Testing Strategy</div>
-          <div class="chapter-meta">RSpec, Jest, integration tests, coverage</div>
+          <div class="chapter-title">Testing, Launch Hardening and Capstone</div>
+          <div class="chapter-meta">Test pyramid, CI/CD pipeline, security audit, incident drill, capstone defense</div>
         </div>
-        <span class="chapter-status status-upcoming">Upcoming</span>
-      </div>
-
-      <div class="chapter-card locked">
-        <div class="chapter-number upcoming">11</div>
-        <div class="chapter-info">
-          <div class="chapter-title">Performance Optimization</div>
-          <div class="chapter-meta">N+1 queries, caching, lazy loading, profiling</div>
-        </div>
-        <span class="chapter-status status-upcoming">Upcoming</span>
-      </div>
-
-      <div class="chapter-card locked">
-        <div class="chapter-number upcoming">12</div>
-        <div class="chapter-info">
-          <div class="chapter-title">Search and Filtering</div>
-          <div class="chapter-meta">Elasticsearch, full-text search, faceted filters</div>
-        </div>
-        <span class="chapter-status status-upcoming">Upcoming</span>
-      </div>
-
-      <!-- Phase 5: Production Readiness -->
-      <div class="phase-header">Phase 5 &mdash; Production Readiness</div>
-
-      <div class="chapter-card locked">
-        <div class="chapter-number upcoming">13</div>
-        <div class="chapter-info">
-          <div class="chapter-title">Error Handling and Observability</div>
-          <div class="chapter-meta">Structured logging, Sentry, health checks</div>
-        </div>
-        <span class="chapter-status status-upcoming">Upcoming</span>
-      </div>
-
-      <div class="chapter-card locked">
-        <div class="chapter-number upcoming">14</div>
-        <div class="chapter-info">
-          <div class="chapter-title">Security Hardening</div>
-          <div class="chapter-meta">OWASP top 10, CSRF, XSS, rate limiting</div>
-        </div>
-        <span class="chapter-status status-upcoming">Upcoming</span>
-      </div>
-
-      <div class="chapter-card locked">
-        <div class="chapter-number upcoming">15</div>
-        <div class="chapter-info">
-          <div class="chapter-title">Email and Notifications</div>
-          <div class="chapter-meta">Action Mailer, notification center, templates</div>
-        </div>
-        <span class="chapter-status status-upcoming">Upcoming</span>
-      </div>
-
-      <!-- Phase 6: Deployment -->
-      <div class="phase-header">Phase 6 &mdash; Deployment &amp; Operations</div>
-
-      <div class="chapter-card locked">
-        <div class="chapter-number upcoming">16</div>
-        <div class="chapter-info">
-          <div class="chapter-title">CI/CD Pipeline</div>
-          <div class="chapter-meta">GitHub Actions, Docker builds, staging environments</div>
-        </div>
-        <span class="chapter-status status-upcoming">Upcoming</span>
-      </div>
-
-      <div class="chapter-card locked">
-        <div class="chapter-number upcoming">17</div>
-        <div class="chapter-info">
-          <div class="chapter-title">Cloud Deployment</div>
-          <div class="chapter-meta">AWS/GCP, Terraform, Kubernetes basics</div>
-        </div>
-        <span class="chapter-status status-upcoming">Upcoming</span>
-      </div>
-
-      <div class="chapter-card locked">
-        <div class="chapter-number upcoming">18</div>
-        <div class="chapter-info">
-          <div class="chapter-title">Capstone Project</div>
-          <div class="chapter-meta">Full-stack application from scratch to production</div>
-        </div>
-        <span class="chapter-status status-upcoming">Upcoming</span>
-      </div>
+        <span class="chapter-status status-ready">Ready</span>
+      </a>
 
     </div>
   </main>

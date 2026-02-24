@@ -1,0 +1,2049 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 05: Bid Strategy Engine and Lead Intake — ILA Rails + React</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    /* ═══════════════════════════════════════════════
+       ILA DESIGN SYSTEM — v1.0
+       Iksha Learning Academy
+       ═══════════════════════════════════════════════ */
+
+    :root {
+      /* Palette */
+      --ink:        #0f172a;
+      --ink-light:  #334155;
+      --ink-muted:  #64748b;
+      --surface:    #ffffff;
+      --surface-alt:#f8fafc;
+      --surface-warm:#fffbeb;
+      --border:     #e2e8f0;
+      --border-light:#f1f5f9;
+
+      /* Brand */
+      --teal-50:  #f0fdfa;
+      --teal-100: #ccfbf1;
+      --teal-200: #99f6e4;
+      --teal-500: #14b8a6;
+      --teal-600: #0d9488;
+      --teal-700: #0f766e;
+      --teal-800: #115e59;
+      --teal-900: #134e4a;
+
+      --blue-50:  #eff6ff;
+      --blue-100: #dbeafe;
+      --blue-500: #3b82f6;
+      --blue-600: #2563eb;
+      --blue-700: #1d4ed8;
+
+      --amber-50:  #fffbeb;
+      --amber-100: #fef3c7;
+      --amber-500: #f59e0b;
+      --amber-600: #d97706;
+
+      --red-50:   #fef2f2;
+      --red-100:  #fee2e2;
+      --red-500:  #ef4444;
+      --red-600:  #dc2626;
+
+      --purple-50:  #faf5ff;
+      --purple-100: #f3e8ff;
+      --purple-500: #a855f7;
+      --purple-600: #9333ea;
+
+      /* Typography */
+      --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-serif: 'Instrument Serif', Georgia, serif;
+      --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
+
+      /* Spacing */
+      --content-max: 780px;
+      --sidebar-width: 280px;
+
+      /* Transitions */
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--ink);
+      background: var(--surface);
+    }
+
+    /* ── PROGRESS BAR ─────────────────────────── */
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--teal-500), var(--blue-500));
+      z-index: 1000;
+      transition: width 0.15s var(--ease);
+    }
+
+    /* ── TOP NAV ──────────────────────────────── */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+    }
+
+    .top-nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--teal-800);
+    }
+
+    .nav-brand-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--teal-600), var(--teal-800));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .nav-brand-text {
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-chapter-nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      color: var(--ink-muted);
+      border: 1px solid var(--border);
+      background: white;
+      transition: all 0.2s var(--ease);
+      cursor: pointer;
+    }
+
+    .nav-btn:hover {
+      color: var(--ink);
+      border-color: var(--teal-500);
+      background: var(--teal-50);
+    }
+
+    .nav-btn.disabled {
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    .nav-current {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink-light);
+      padding: 0 4px;
+    }
+
+    /* ── HERO ─────────────────────────────────── */
+    .hero {
+      background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 4rem 2rem 3.5rem;
+    }
+
+    .hero-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
+    }
+
+    .hero-chapter-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--teal-700);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 1rem;
+    }
+
+    .hero-chapter-label span {
+      background: var(--teal-100);
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+
+    .hero h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(2.4rem, 5vw, 3.2rem);
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: 1rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: var(--ink-light);
+      line-height: 1.65;
+      max-width: 640px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .hero-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
+    .hero-meta-item svg {
+      width: 16px;
+      height: 16px;
+      color: var(--teal-600);
+    }
+
+    /* ── MAIN LAYOUT ──────────────────────────── */
+    .main-layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr var(--sidebar-width);
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .content {
+      padding: 3rem 0 6rem;
+      min-width: 0;
+    }
+
+    /* ── SIDEBAR TOC ──────────────────────────── */
+    .sidebar {
+      position: sticky;
+      top: 76px;
+      padding: 2rem 0;
+      max-height: calc(100vh - 76px);
+      overflow-y: auto;
+    }
+
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-muted);
+      margin-bottom: 1rem;
+      padding-left: 14px;
+    }
+
+    .toc-list {
+      list-style: none;
+    }
+
+    .toc-item a {
+      display: block;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--ink-muted);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: all 0.2s var(--ease);
+      line-height: 1.5;
+    }
+
+    .toc-item a:hover {
+      color: var(--ink);
+      background: var(--surface-alt);
+    }
+
+    .toc-item a.active {
+      color: var(--teal-700);
+      border-left-color: var(--teal-500);
+      background: var(--teal-50);
+      font-weight: 500;
+    }
+
+    /* ── TYPOGRAPHY ────────────────────────────── */
+    .content h2 {
+      font-family: var(--font-serif);
+      font-size: 1.85rem;
+      font-weight: 400;
+      color: var(--ink);
+      margin: 3rem 0 1rem;
+      padding-top: 1rem;
+      scroll-margin-top: 80px;
+    }
+
+    .content h2:first-child {
+      margin-top: 0;
+    }
+
+    .content h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 2rem 0 0.75rem;
+      scroll-margin-top: 80px;
+    }
+
+    .content p {
+      margin-bottom: 1.25rem;
+      color: var(--ink-light);
+    }
+
+    .content strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .content a {
+      color: var(--teal-700);
+      text-decoration: underline;
+      text-decoration-color: var(--teal-200);
+      text-underline-offset: 3px;
+      transition: text-decoration-color 0.2s;
+    }
+
+    .content a:hover {
+      text-decoration-color: var(--teal-600);
+    }
+
+    .content ul, .content ol {
+      margin-bottom: 1.25rem;
+      padding-left: 1.5rem;
+    }
+
+    .content li {
+      margin-bottom: 0.5rem;
+      color: var(--ink-light);
+    }
+
+    .content li::marker {
+      color: var(--teal-500);
+    }
+
+    /* ── SECTION DIVIDER ──────────────────────── */
+    .section-divider {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 3rem 0;
+    }
+
+    /* ── CALLOUT BOXES ────────────────────────── */
+    .callout {
+      padding: 1.25rem 1.5rem;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+      border: 1px solid;
+      position: relative;
+    }
+
+    .callout-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .callout-header svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    .callout p:last-child { margin-bottom: 0; }
+
+    .callout.concept {
+      background: var(--blue-50);
+      border-color: var(--blue-100);
+    }
+    .callout.concept .callout-header { color: var(--blue-700); }
+
+    .callout.important {
+      background: var(--amber-50);
+      border-color: var(--amber-100);
+    }
+    .callout.important .callout-header { color: var(--amber-600); }
+
+    .callout.danger {
+      background: var(--red-50);
+      border-color: var(--red-100);
+    }
+    .callout.danger .callout-header { color: var(--red-600); }
+
+    .callout.tip {
+      background: var(--purple-50);
+      border-color: var(--purple-100);
+    }
+    .callout.tip .callout-header { color: var(--purple-600); }
+
+    .callout.success {
+      background: var(--teal-50);
+      border-color: var(--teal-100);
+    }
+    .callout.success .callout-header { color: var(--teal-700); }
+
+    /* ── CODE BLOCKS ──────────────────────────── */
+    .code-block {
+      position: relative;
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+      background: var(--surface-alt);
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--ink-muted);
+    }
+
+    .code-lang {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .code-copy {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: white;
+      font-size: 11px;
+      font-family: var(--font-sans);
+      color: var(--ink-muted);
+      cursor: pointer;
+      transition: all 0.2s var(--ease);
+    }
+
+    .code-copy:hover {
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    .code-copy.copied {
+      background: var(--teal-50);
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    pre {
+      margin: 0;
+      padding: 1.25rem 1.5rem;
+      overflow-x: auto;
+      background: #1e293b;
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: #e2e8f0;
+    }
+
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.88em;
+    }
+
+    p code, li code {
+      padding: 2px 7px;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      color: var(--teal-800);
+      font-size: 0.85em;
+    }
+
+    /* Syntax highlights (minimal) */
+    .hl-keyword  { color: #c084fc; }
+    .hl-string   { color: #86efac; }
+    .hl-comment  { color: #64748b; font-style: italic; }
+    .hl-function { color: #7dd3fc; }
+    .hl-number   { color: #fbbf24; }
+    .hl-flag     { color: #f472b6; }
+
+    /* ── COLLAPSIBLE (DETAILS) ────────────────── */
+    details {
+      margin-bottom: 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.2s var(--ease);
+    }
+
+    details[open] {
+      border-color: var(--teal-200);
+    }
+
+    details summary {
+      padding: 1rem 1.25rem;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      background: var(--surface-alt);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.2s var(--ease);
+      user-select: none;
+    }
+
+    details summary::-webkit-details-marker { display: none; }
+
+    details summary::before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+      flex-shrink: 0;
+      transition: transform 0.2s var(--ease);
+    }
+
+    details[open] summary::before {
+      transform: rotate(90deg);
+    }
+
+    details summary:hover {
+      background: var(--teal-50);
+    }
+
+    .details-body {
+      padding: 1.25rem 1.5rem;
+    }
+
+    .details-body p:last-child { margin-bottom: 0; }
+
+    /* ── VIDEO EMBED ──────────────────────────── */
+    .video-card {
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      background: #0f172a;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .video-caption {
+      padding: 12px 16px;
+      background: var(--surface-alt);
+      font-size: 13px;
+      color: var(--ink-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .video-caption svg {
+      width: 14px;
+      height: 14px;
+      color: var(--red-500);
+    }
+
+    /* ── RESOURCE CARDS ───────────────────────── */
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .resource-card {
+      display: flex;
+      gap: 14px;
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      background: white;
+    }
+
+    .resource-card:hover {
+      border-color: var(--teal-300);
+      background: var(--teal-50);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .resource-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 18px;
+    }
+
+    .resource-icon.docs    { background: var(--blue-50);   color: var(--blue-600); }
+    .resource-icon.video   { background: var(--red-50);    color: var(--red-500); }
+    .resource-icon.github  { background: var(--ink);       color: white; }
+    .resource-icon.article { background: var(--amber-50);  color: var(--amber-600); }
+    .resource-icon.pdf     { background: var(--purple-50); color: var(--purple-600); }
+
+    .resource-info {
+      min-width: 0;
+    }
+
+    .resource-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 2px;
+      line-height: 1.4;
+    }
+
+    .resource-desc {
+      font-size: 12px;
+      color: var(--ink-muted);
+      line-height: 1.5;
+    }
+
+    /* ── ASSIGNMENT CARDS ─────────────────────── */
+    .assignment {
+      border: 2px solid var(--teal-200);
+      border-radius: 14px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--teal-50) 0%, white 100%);
+    }
+
+    .assignment-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .assignment-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--teal-700);
+    }
+
+    .assignment-difficulty {
+      display: inline-flex;
+      padding: 4px 10px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .difficulty-l1 { background: var(--teal-100); color: var(--teal-800); }
+    .difficulty-l2 { background: var(--amber-100); color: var(--amber-600); }
+    .difficulty-l3 { background: var(--red-100); color: var(--red-600); }
+
+    .assignment h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .assignment p {
+      font-size: 14px;
+    }
+
+    .checklist {
+      list-style: none;
+      padding: 0;
+    }
+
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-light);
+      font-size: 14px;
+    }
+
+    .checklist li:last-child { border-bottom: none; }
+
+    .check-box {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      border: 2px solid var(--border);
+      flex-shrink: 0;
+      margin-top: 1px;
+      cursor: pointer;
+      transition: all 0.15s var(--ease);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .check-box:hover {
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked {
+      background: var(--teal-500);
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+    }
+
+    /* ── ARCHITECTURE DIAGRAM ─────────────────── */
+    .diagram {
+      margin: 1.5rem 0;
+      padding: 2rem;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow-x: auto;
+    }
+
+    .diagram pre {
+      background: transparent;
+      color: var(--ink);
+      padding: 0;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .diagram-caption {
+      margin-top: 1rem;
+      font-size: 12px;
+      color: var(--ink-muted);
+      text-align: center;
+      font-style: italic;
+    }
+
+    /* ── FOOTER ───────────────────────────────── */
+    .chapter-footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      background: var(--surface-alt);
+    }
+
+    .chapter-footer-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
+    }
+
+    .footer-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .footer-nav-link {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 1rem 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      max-width: 320px;
+      background: white;
+    }
+
+    .footer-nav-link:hover {
+      border-color: var(--teal-300);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .footer-nav-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--teal-600);
+    }
+
+    .footer-nav-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .footer-brand {
+      text-align: center;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
+    /* ── RESPONSIVE ───────────────────────────── */
+    @media (max-width: 960px) {
+      .main-layout {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        display: none;
+      }
+      .resource-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero { padding: 2.5rem 1.25rem 2rem; }
+      .main-layout { padding: 0 1.25rem; }
+      .content { padding: 2rem 0 4rem; }
+      pre { padding: 1rem; font-size: 12.5px; }
+      .footer-nav { flex-direction: column; }
+      .footer-nav-link { max-width: 100%; width: 100%; }
+    }
+
+    /* ── PRINT ────────────────────────────────── */
+    @media print {
+      .top-nav, .sidebar, .progress-bar { display: none; }
+      .main-layout { display: block; }
+      .content { padding: 0; }
+      .hero { background: white; border: none; }
+      pre { background: #f1f5f9; color: var(--ink); border: 1px solid var(--border); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Progress Bar -->
+  <div class="progress-bar" id="progressBar"></div>
+
+  <!-- Top Navigation -->
+  <nav class="top-nav">
+    <div class="top-nav-inner">
+      <a class="nav-brand" href="index.html">
+        <div class="nav-brand-icon">ILA</div>
+        <span class="nav-brand-text">Iksha Learning Academy</span>
+      </a>
+      <div class="nav-chapter-nav">
+        <a class="nav-btn" href="chapter-04.html">&larr; Previous</a>
+        <span class="nav-current">05 / 10</span>
+        <a class="nav-btn" href="chapter-06.html">Next &rarr;</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-chapter-label">
+        <span>Chapter 05</span> &middot; Phase 3: Revenue Engine
+      </div>
+      <h1>Bid Strategy Engine and Lead Intake</h1>
+      <p class="hero-subtitle">
+        Add bid suggestion and apply flow driven by target CPA and delivery signals. Ingest inbound leads
+        with schema validation, deduplication, and abuse protection. Bid quality determines acquisition cost;
+        lead quality drives revenue quality and partner trust.
+      </p>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Estimated: 4&ndash;5 days
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          3 Advancement Levels
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          3 Assignments
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content + Sidebar -->
+  <div class="main-layout">
+    <main class="content">
+
+      <!-- ════════════════════════════════════════
+           SECTION 1: WHY THIS MATTERS
+           ════════════════════════════════════════ -->
+      <h2 id="why-this-matters">Why This Matters</h2>
+
+      <p>
+        In an ad bidding platform, <strong>the bid is the single most consequential number you produce</strong>.
+        Bid too high and you destroy margin. Bid too low and you lose volume to competitors. Every dollar of
+        acquisition cost flows directly from the bid you submit, which means the bid strategy engine is where
+        business logic meets financial reality.
+      </p>
+
+      <p>
+        On the other side of the equation sits <strong>lead intake</strong> &mdash; the pipeline that accepts
+        inbound leads from partners, validates their structure, deduplicates them, and scores them for quality.
+        If your bid engine is the cost side, lead intake is the revenue side. Bad leads burn money: they waste
+        sales time, inflate conversion metrics, and erode partner trust. A quality gate at ingestion prevents
+        garbage from ever entering the system.
+      </p>
+
+      <div class="callout danger">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          The Cost of Getting This Wrong
+        </div>
+        <p>
+          An unclamped bid can spend an entire daily budget in minutes. A missing dedup window can charge
+          you twice for the same lead. These are not edge cases &mdash; they are the most common failure
+          modes in production bidding systems. Safety rails and validation are not optional; they are the
+          foundation of financial stability.
+        </p>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 2: KEY CONCEPTS
+           ════════════════════════════════════════ -->
+      <h2 id="key-concepts">Key Concepts</h2>
+
+      <h3 id="bid-strategy-fundamentals">1. Bid Strategy Fundamentals</h3>
+
+      <p>
+        A bid strategy is the set of rules that translate business goals into a dollar amount attached to
+        each ad impression or click. The most common anchor is <strong>target CPA</strong> (cost per acquisition):
+        the maximum you're willing to pay for a single conversion.
+      </p>
+
+      <ul>
+        <li><strong>CPA and conversion-rate tradeoffs</strong> &mdash; A higher bid wins more auctions but costs more per lead. A lower bid reduces cost but may starve the campaign of volume. The engine must balance these forces.</li>
+        <li><strong>Static vs. dynamic bid suggestions</strong> &mdash; Static bids use a fixed formula (e.g., target CPA &times; historical conversion rate). Dynamic bids incorporate real-time signals: recent conversion rate, time of day, device type, and remaining daily budget.</li>
+        <li><strong>Safety rails: max/min clamps</strong> &mdash; Every bid must pass through clamp logic that enforces an absolute floor and ceiling. Without clamps, a bug in dynamic logic could produce a $0.00 or $10,000 bid.</li>
+        <li><strong>Explanation metadata</strong> &mdash; Every bid recommendation should carry a <code>reason</code> hash explaining <em>why</em> this number was chosen. This is critical for debugging, auditing, and operator trust.</li>
+      </ul>
+
+      <div class="diagram">
+<pre>
+  ┌─────────────────────────────────────────────────────────────────┐
+  │                   BID DECISION FLOW                             │
+  └───────────────────────┬─────────────────────────────────────────┘
+                          │
+                          ▼
+               ┌─────────────────────┐
+               │  1. LOAD CAMPAIGN   │    target_cpa, budget_remaining
+               │     CONTEXT         │    historical conversion_rate
+               └──────────┬──────────┘
+                          │
+                          ▼
+               ┌─────────────────────┐
+               │  2. COMPUTE RAW     │    raw_bid = target_cpa *
+               │     SUGGESTION      │      conversion_rate * modifier
+               └──────────┬──────────┘
+                          │
+                          ▼
+               ┌─────────────────────┐
+               │  3. APPLY CLAMPS    │    bid = clamp(raw_bid,
+               │     (min / max)     │      campaign.bid_floor,
+               │                     │      campaign.bid_ceiling)
+               └──────────┬──────────┘
+                          │
+                          ▼
+               ┌─────────────────────┐
+               │  4. ATTACH          │    { suggested_bid: 2.45,
+               │     EXPLANATION     │      reason: "cpa_target",
+               │                     │      inputs: { ... },
+               │                     │      clamped: false }
+               └──────────┬──────────┘
+                          │
+                          ▼
+               ┌─────────────────────┐
+               │  5. RETURN or       │    Preview → return JSON
+               │     APPLY           │    Apply  → persist + audit log
+               └─────────────────────┘
+</pre>
+        <div class="diagram-caption">Figure 1: The five-step bid decision pipeline from campaign context to applied bid</div>
+      </div>
+
+      <div class="callout concept">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Key Insight
+        </div>
+        <p>
+          Notice that <strong>preview</strong> and <strong>apply</strong> share the same computation pipeline.
+          The only difference is what happens at step 5: preview returns the result without side effects, while
+          apply persists the bid and writes an audit record. This design makes the recommendation logic fully
+          testable without touching the database.
+        </p>
+      </div>
+
+      <h3 id="recommendation-service">2. Recommendation Service</h3>
+
+      <p>
+        The recommendation service is a plain Ruby service object with no side effects. It takes campaign
+        data as input and returns a bid suggestion with explanation metadata. Keeping the logic deterministic
+        and stateless means you can test every edge case with unit tests &mdash; no database, no mocks, no flaky specs.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># app/services/bid_recommendation_service.rb</span>
+<span class="hl-keyword">class</span> <span class="hl-function">BidRecommendationService</span>
+  BidResult = Struct.new(<span class="hl-string">:suggested_bid</span>, <span class="hl-string">:reason</span>, <span class="hl-string">:inputs</span>, <span class="hl-string">:clamped</span>, keyword_init: <span class="hl-keyword">true</span>)
+
+  MIN_BID_FLOOR   = <span class="hl-number">0.01</span>
+  MAX_BID_CEILING = <span class="hl-number">500.00</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">initialize</span>(campaign:, conversion_rate:, modifier: <span class="hl-number">1.0</span>)
+    @campaign        = campaign
+    @conversion_rate = conversion_rate
+    @modifier        = modifier
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">call</span>
+    raw_bid = compute_raw_bid
+    clamped_bid = clamp(raw_bid)
+
+    BidResult.new(
+      suggested_bid: clamped_bid.round(<span class="hl-number">2</span>),
+      reason:        determine_reason(raw_bid, clamped_bid),
+      inputs:        build_inputs(raw_bid),
+      clamped:       raw_bid != clamped_bid
+    )
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">private</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">compute_raw_bid</span>
+    <span class="hl-keyword">return</span> <span class="hl-number">0.0</span> <span class="hl-keyword">if</span> @conversion_rate.zero?
+
+    @campaign.target_cpa * @conversion_rate * @modifier
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">clamp</span>(bid)
+    floor   = [@campaign.bid_floor   || MIN_BID_FLOOR,   MIN_BID_FLOOR].max
+    ceiling = [@campaign.bid_ceiling || MAX_BID_CEILING, MAX_BID_CEILING].min
+
+    bid.clamp(floor, ceiling)
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">determine_reason</span>(raw, clamped)
+    <span class="hl-keyword">if</span> raw &lt; MIN_BID_FLOOR
+      <span class="hl-string">"floor_clamped"</span>
+    <span class="hl-keyword">elsif</span> raw &gt; (@campaign.bid_ceiling || MAX_BID_CEILING)
+      <span class="hl-string">"ceiling_clamped"</span>
+    <span class="hl-keyword">else</span>
+      <span class="hl-string">"cpa_target"</span>
+    <span class="hl-keyword">end</span>
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">build_inputs</span>(raw_bid)
+    {
+      target_cpa: @campaign.target_cpa,
+      conversion_rate: @conversion_rate,
+      modifier: @modifier,
+      raw_bid: raw_bid.round(<span class="hl-number">4</span>),
+      bid_floor: @campaign.bid_floor,
+      bid_ceiling: @campaign.bid_ceiling
+    }
+  <span class="hl-keyword">end</span>
+<span class="hl-keyword">end</span>
+</pre>
+      </div>
+
+      <p>
+        The <strong>preview endpoint</strong> calls this service and returns the result as JSON. The
+        <strong>apply endpoint</strong> calls the same service, persists the bid on the ad group, and
+        writes a <code>BidChange</code> audit record. Both endpoints validate that the operator has
+        permission (via Pundit policies from Chapter 02) before executing.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># app/controllers/api/v1/bid_recommendations_controller.rb</span>
+<span class="hl-keyword">module</span> Api
+  <span class="hl-keyword">module</span> V1
+    <span class="hl-keyword">class</span> <span class="hl-function">BidRecommendationsController</span> &lt; ApplicationController
+      before_action <span class="hl-string">:set_ad_group</span>
+
+      <span class="hl-comment"># GET /api/v1/ad_groups/:ad_group_id/bid_recommendation</span>
+      <span class="hl-keyword">def</span> <span class="hl-function">show</span>
+        result = BidRecommendationService.new(
+          campaign:        @ad_group.campaign,
+          conversion_rate: @ad_group.recent_conversion_rate,
+          modifier:        params.fetch(<span class="hl-string">:modifier</span>, <span class="hl-number">1.0</span>).to_f
+        ).call
+
+        render json: {
+          ad_group_id:   @ad_group.id,
+          suggested_bid: result.suggested_bid,
+          reason:        result.reason,
+          inputs:        result.inputs,
+          clamped:       result.clamped
+        }
+      <span class="hl-keyword">end</span>
+
+      <span class="hl-comment"># POST /api/v1/ad_groups/:ad_group_id/bid_recommendation/apply</span>
+      <span class="hl-keyword">def</span> <span class="hl-function">apply</span>
+        result = BidRecommendationService.new(
+          campaign:        @ad_group.campaign,
+          conversion_rate: @ad_group.recent_conversion_rate
+        ).call
+
+        <span class="hl-keyword">unless</span> result.suggested_bid.between?(
+          @ad_group.campaign.bid_floor, @ad_group.campaign.bid_ceiling
+        )
+          render json: { error: <span class="hl-string">"Bid out of bounds"</span> }, status: <span class="hl-string">:unprocessable_entity</span>
+          <span class="hl-keyword">return</span>
+        <span class="hl-keyword">end</span>
+
+        ActiveRecord::Base.transaction <span class="hl-keyword">do</span>
+          @ad_group.update!(current_bid: result.suggested_bid)
+          BidChange.create!(
+            ad_group:      @ad_group,
+            previous_bid:  @ad_group.current_bid_before_last_save,
+            new_bid:       result.suggested_bid,
+            reason:        result.reason,
+            metadata:      result.inputs,
+            operator:      current_user
+          )
+        <span class="hl-keyword">end</span>
+
+        render json: { applied: <span class="hl-keyword">true</span>, new_bid: result.suggested_bid }
+      <span class="hl-keyword">end</span>
+
+      <span class="hl-keyword">private</span>
+
+      <span class="hl-keyword">def</span> <span class="hl-function">set_ad_group</span>
+        @ad_group = current_account.ad_groups.find(params[<span class="hl-string">:ad_group_id</span>])
+      <span class="hl-keyword">end</span>
+    <span class="hl-keyword">end</span>
+  <span class="hl-keyword">end</span>
+<span class="hl-keyword">end</span>
+</pre>
+      </div>
+
+      <div class="callout important">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Bounds Check on Apply, Not Just Preview
+        </div>
+        <p>
+          The apply endpoint re-validates that the computed bid falls within bounds <em>before</em> persisting.
+          Never trust that the preview result is still valid by the time the operator clicks "apply" &mdash;
+          campaign settings may have changed between the two requests.
+        </p>
+      </div>
+
+      <h3 id="bid-history-audit">3. Bid History and Audit</h3>
+
+      <p>
+        Every bid change must be auditable. Regulators, account managers, and debugging engineers all need to
+        answer the same question: <strong>"Who changed this bid, when, and why?"</strong> The <code>BidChange</code>
+        model captures this history as an append-only audit log.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># db/migrate/XXXXXX_create_bid_changes.rb</span>
+<span class="hl-keyword">class</span> <span class="hl-function">CreateBidChanges</span> &lt; ActiveRecord::Migration[<span class="hl-number">7.1</span>]
+  <span class="hl-keyword">def</span> <span class="hl-function">change</span>
+    create_table <span class="hl-string">:bid_changes</span> <span class="hl-keyword">do</span> |t|
+      t.references <span class="hl-string">:ad_group</span>,  null: <span class="hl-keyword">false</span>, foreign_key: <span class="hl-keyword">true</span>
+      t.references <span class="hl-string">:operator</span>,  null: <span class="hl-keyword">false</span>, foreign_key: { to_table: <span class="hl-string">:users</span> }
+      t.decimal    <span class="hl-string">:previous_bid</span>, precision: <span class="hl-number">10</span>, scale: <span class="hl-number">2</span>
+      t.decimal    <span class="hl-string">:new_bid</span>,      precision: <span class="hl-number">10</span>, scale: <span class="hl-number">2</span>, null: <span class="hl-keyword">false</span>
+      t.string     <span class="hl-string">:reason</span>,       null: <span class="hl-keyword">false</span>
+      t.jsonb      <span class="hl-string">:metadata</span>,     default: {}
+      t.timestamps
+    <span class="hl-keyword">end</span>
+
+    add_index <span class="hl-string">:bid_changes</span>, [<span class="hl-string">:ad_group_id</span>, <span class="hl-string">:created_at</span>]
+  <span class="hl-keyword">end</span>
+<span class="hl-keyword">end</span>
+</pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># app/models/bid_change.rb</span>
+<span class="hl-keyword">class</span> <span class="hl-function">BidChange</span> &lt; ApplicationRecord
+  belongs_to <span class="hl-string">:ad_group</span>
+  belongs_to <span class="hl-string">:operator</span>, class_name: <span class="hl-string">"User"</span>
+
+  validates <span class="hl-string">:new_bid</span>, presence: <span class="hl-keyword">true</span>, numericality: { greater_than: <span class="hl-number">0</span> }
+  validates <span class="hl-string">:reason</span>,  presence: <span class="hl-keyword">true</span>
+
+  scope <span class="hl-string">:recent</span>, -&gt; { order(created_at: <span class="hl-string">:desc</span>).limit(<span class="hl-number">50</span>) }
+  scope <span class="hl-string">:for_ad_group</span>, -&gt;(ag_id) { where(ad_group_id: ag_id) }
+
+  <span class="hl-comment"># Backtest helper: replay bid decisions against historical data</span>
+  <span class="hl-keyword">def</span> <span class="hl-keyword">self</span>.<span class="hl-function">backtest_window</span>(ad_group_id, from:, to:)
+    where(ad_group_id: ad_group_id)
+      .where(created_at: from..to)
+      .order(<span class="hl-string">:created_at</span>)
+  <span class="hl-keyword">end</span>
+<span class="hl-keyword">end</span>
+</pre>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Pro Tip: Backtesting Framework
+        </div>
+        <p>
+          The <code>backtest_window</code> scope lets you replay historical bid decisions. Feed past conversion
+          data through the <code>BidRecommendationService</code> and compare what it <em>would</em> have
+          suggested vs. what was actually applied. This is how you validate a new bid strategy before deploying
+          it to production campaigns.
+        </p>
+      </div>
+
+      <details>
+        <summary>Why append-only instead of updating a <code>current_bid</code> column directly?</summary>
+        <div class="details-body">
+          <p>
+            If you only store the current bid, you lose all history. When an account manager asks "why did our
+            CPA spike on Tuesday?", you need to see every bid change, who made it, and what reasoning was used.
+            The append-only <code>BidChange</code> log gives you complete forensic capability. The <code>current_bid</code>
+            on the ad group is a denormalized cache for fast reads; the audit log is the source of truth.
+          </p>
+        </div>
+      </details>
+
+      <h3 id="lead-intake-pipeline">4. Lead Intake Pipeline</h3>
+
+      <p>
+        Leads arrive from external partners via API. Each lead must pass through three gates before entering
+        the system: <strong>schema validation</strong> (does the payload have the required fields?),
+        <strong>deduplication</strong> (have we seen this lead before?), and <strong>quality scoring</strong>
+        (is this lead worth pursuing?). Reject early and reject loudly &mdash; partners need clear error
+        contracts to fix integration issues.
+      </p>
+
+      <p>
+        The minimum valid lead payload includes: <code>email</code>, <code>first_name</code>, <code>last_name</code>,
+        <code>phone</code>, and <code>source_campaign_id</code>. Everything else is optional metadata.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># app/controllers/api/v1/leads_controller.rb</span>
+<span class="hl-keyword">module</span> Api
+  <span class="hl-keyword">module</span> V1
+    <span class="hl-keyword">class</span> <span class="hl-function">LeadsController</span> &lt; ApplicationController
+      skip_before_action <span class="hl-string">:authenticate_request!</span>, only: <span class="hl-string">:create</span>
+      before_action <span class="hl-string">:authenticate_partner!</span>, only: <span class="hl-string">:create</span>
+      before_action <span class="hl-string">:enforce_rate_limit!</span>,   only: <span class="hl-string">:create</span>
+
+      <span class="hl-comment"># POST /api/v1/leads</span>
+      <span class="hl-keyword">def</span> <span class="hl-function">create</span>
+        result = LeadIngestionService.new(
+          params:  lead_params,
+          partner: @current_partner
+        ).call
+
+        <span class="hl-keyword">if</span> result.success?
+          render json: {
+            lead_id:  result.lead.id,
+            status:   result.lead.status,
+            quality:  result.quality_score
+          }, status: <span class="hl-string">:created</span>
+        <span class="hl-keyword">else</span>
+          render json: {
+            error:    result.error_code,
+            message:  result.error_message,
+            details:  result.validation_errors
+          }, status: result.http_status
+        <span class="hl-keyword">end</span>
+      <span class="hl-keyword">end</span>
+
+      <span class="hl-keyword">private</span>
+
+      <span class="hl-keyword">def</span> <span class="hl-function">lead_params</span>
+        params.require(<span class="hl-string">:lead</span>).permit(
+          <span class="hl-string">:email</span>, <span class="hl-string">:first_name</span>, <span class="hl-string">:last_name</span>, <span class="hl-string">:phone</span>,
+          <span class="hl-string">:source_campaign_id</span>, <span class="hl-string">:source_ad_group_id</span>,
+          <span class="hl-string">:ip_address</span>, <span class="hl-string">:user_agent</span>,
+          metadata: {}
+        )
+      <span class="hl-keyword">end</span>
+
+      <span class="hl-keyword">def</span> <span class="hl-function">authenticate_partner!</span>
+        api_key = request.headers[<span class="hl-string">"X-Partner-Key"</span>]
+        @current_partner = Partner.find_by(api_key: api_key, active: <span class="hl-keyword">true</span>)
+
+        <span class="hl-keyword">unless</span> @current_partner
+          render json: { error: <span class="hl-string">"invalid_api_key"</span>,
+                         message: <span class="hl-string">"Missing or invalid X-Partner-Key header"</span> },
+                 status: <span class="hl-string">:unauthorized</span>
+        <span class="hl-keyword">end</span>
+      <span class="hl-keyword">end</span>
+
+      <span class="hl-keyword">def</span> <span class="hl-function">enforce_rate_limit!</span>
+        key = <span class="hl-string">"lead_intake:#{@current_partner.id}:#{Time.current.beginning_of_minute.to_i}"</span>
+        count = Rails.cache.increment(key, <span class="hl-number">1</span>, expires_in: <span class="hl-number">60</span>.seconds)
+
+        <span class="hl-keyword">if</span> count &gt; @current_partner.rate_limit_per_minute
+          render json: { error: <span class="hl-string">"rate_limit_exceeded"</span>,
+                         message: <span class="hl-string">"Rate limit: #{@current_partner.rate_limit_per_minute}/min"</span> },
+                 status: <span class="hl-string">:too_many_requests</span>
+        <span class="hl-keyword">end</span>
+      <span class="hl-keyword">end</span>
+    <span class="hl-keyword">end</span>
+  <span class="hl-keyword">end</span>
+<span class="hl-keyword">end</span>
+</pre>
+      </div>
+
+      <div class="callout concept">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Key Insight
+        </div>
+        <p>
+          The lead intake endpoint uses <strong>partner authentication</strong> (API key), not user authentication
+          (JWT). Partners are external systems pushing leads into your platform. They get their own identity,
+          their own rate limits, and their own error contracts. This is a fundamentally different auth model
+          from the operator-facing endpoints in previous chapters.
+        </p>
+      </div>
+
+      <details>
+        <summary>How does the dedup strategy work with configurable lookback windows?</summary>
+        <div class="details-body">
+          <p>
+            Deduplication checks whether a lead with the same email (or phone) has been ingested within a
+            configurable window. The default is 24 hours, but partners can set different windows depending
+            on their use case. The check happens inside <code>LeadIngestionService</code> before the lead
+            is persisted:
+          </p>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">ruby</span>
+              <button class="code-copy" onclick="copyCode(this)">Copy</button>
+            </div>
+<pre>
+<span class="hl-comment"># Inside LeadIngestionService</span>
+<span class="hl-keyword">def</span> <span class="hl-function">duplicate?</span>
+  lookback = @partner.dedup_window_hours&.hours || <span class="hl-number">24</span>.hours
+  Lead.where(email: normalized_email)
+      .where(partner_id: @partner.id)
+      .where(<span class="hl-string">"created_at > ?"</span>, lookback.ago)
+      .exists?
+<span class="hl-keyword">end</span>
+</pre>
+          </div>
+        </div>
+      </details>
+
+      <h3 id="quality-gate">5. Quality Gate</h3>
+
+      <p>
+        Not all leads are equal. A quality gate scores each lead at ingestion and routes it accordingly.
+        High-quality leads go to immediate sales follow-up. Medium-quality leads enter a nurture queue.
+        Low-quality or suspicious leads are flagged for review or rejected outright.
+      </p>
+
+      <p>
+        The quality scoring service is a pluggable pipeline. Each scoring hook receives the lead data and
+        returns a score component. The final quality score is the weighted sum of all components.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># app/services/lead_quality_scorer.rb</span>
+<span class="hl-keyword">class</span> <span class="hl-function">LeadQualityScorer</span>
+  ScoreResult = Struct.new(<span class="hl-string">:total_score</span>, <span class="hl-string">:components</span>, <span class="hl-string">:tier</span>, keyword_init: <span class="hl-keyword">true</span>)
+
+  HOOKS = [
+    Scoring::EmailValidator,
+    Scoring::PhoneValidator,
+    Scoring::CompletionChecker,
+    Scoring::AbuseDetector,
+    Scoring::GeoRelevance
+  ].freeze
+
+  TIER_THRESHOLDS = { high: <span class="hl-number">80</span>, medium: <span class="hl-number">50</span>, low: <span class="hl-number">0</span> }.freeze
+
+  <span class="hl-keyword">def</span> <span class="hl-function">initialize</span>(lead_data:, partner:)
+    @lead_data = lead_data
+    @partner   = partner
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">call</span>
+    components = HOOKS.map <span class="hl-keyword">do</span> |hook|
+      result = hook.new(@lead_data, @partner).score
+      { name: hook.name.demodulize, score: result.score, weight: result.weight }
+    <span class="hl-keyword">end</span>
+
+    total = components.sum { |c| c[<span class="hl-string">:score</span>] * c[<span class="hl-string">:weight</span>] }
+    tier  = determine_tier(total)
+
+    ScoreResult.new(total_score: total.round(<span class="hl-number">1</span>), components: components, tier: tier)
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">private</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">determine_tier</span>(score)
+    TIER_THRESHOLDS.each <span class="hl-keyword">do</span> |tier, threshold|
+      <span class="hl-keyword">return</span> tier <span class="hl-keyword">if</span> score &gt;= threshold
+    <span class="hl-keyword">end</span>
+    <span class="hl-string">:rejected</span>
+  <span class="hl-keyword">end</span>
+<span class="hl-keyword">end</span>
+</pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># app/services/scoring/abuse_detector.rb</span>
+<span class="hl-keyword">module</span> Scoring
+  <span class="hl-keyword">class</span> <span class="hl-function">AbuseDetector</span>
+    Result = Struct.new(<span class="hl-string">:score</span>, <span class="hl-string">:weight</span>, keyword_init: <span class="hl-keyword">true</span>)
+
+    DISPOSABLE_DOMAINS = %w[mailinator.com guerrillamail.com tempmail.com].freeze
+    SUSPICIOUS_PATTERNS = [
+      /(.)\1{4,}/,         <span class="hl-comment"># repeated chars: "aaaaaa"</span>
+      /test@/i,            <span class="hl-comment"># test emails</span>
+      /\d{8,}@/           <span class="hl-comment"># long numeric prefix</span>
+    ].freeze
+
+    <span class="hl-keyword">def</span> <span class="hl-function">initialize</span>(lead_data, partner)
+      @email   = lead_data[<span class="hl-string">:email</span>].to_s.downcase
+      @phone   = lead_data[<span class="hl-string">:phone</span>].to_s
+      @partner = partner
+    <span class="hl-keyword">end</span>
+
+    <span class="hl-keyword">def</span> <span class="hl-function">score</span>
+      penalty = <span class="hl-number">0</span>
+      penalty += <span class="hl-number">40</span> <span class="hl-keyword">if</span> disposable_domain?
+      penalty += <span class="hl-number">30</span> <span class="hl-keyword">if</span> suspicious_pattern?
+      penalty += <span class="hl-number">20</span> <span class="hl-keyword">if</span> velocity_spike?
+
+      Result.new(score: [<span class="hl-number">100</span> - penalty, <span class="hl-number">0</span>].max, weight: <span class="hl-number">0.3</span>)
+    <span class="hl-keyword">end</span>
+
+    <span class="hl-keyword">private</span>
+
+    <span class="hl-keyword">def</span> <span class="hl-function">disposable_domain?</span>
+      domain = @email.split(<span class="hl-string">"@"</span>).last
+      DISPOSABLE_DOMAINS.include?(domain)
+    <span class="hl-keyword">end</span>
+
+    <span class="hl-keyword">def</span> <span class="hl-function">suspicious_pattern?</span>
+      SUSPICIOUS_PATTERNS.any? { |pat| @email.match?(pat) }
+    <span class="hl-keyword">end</span>
+
+    <span class="hl-keyword">def</span> <span class="hl-function">velocity_spike?</span>
+      key = <span class="hl-string">"abuse:email_velocity:#{Digest::SHA256.hexdigest(@email)}"</span>
+      count = Rails.cache.increment(key, <span class="hl-number">1</span>, expires_in: <span class="hl-number">1</span>.hour)
+      count &gt; <span class="hl-number">3</span>
+    <span class="hl-keyword">end</span>
+  <span class="hl-keyword">end</span>
+<span class="hl-keyword">end</span>
+</pre>
+      </div>
+
+      <div class="callout important">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Error Contracts for Partners
+        </div>
+        <p>
+          Partners need machine-readable errors, not human-readable messages. Always return a stable
+          <code>error_code</code> string (e.g., <code>"duplicate_lead"</code>, <code>"invalid_email"</code>,
+          <code>"rate_limit_exceeded"</code>) alongside a human-friendly <code>message</code>. Partners build
+          retry logic against the code, not the message. Changing a message is cosmetic; changing a code is a
+          breaking API change.
+        </p>
+      </div>
+
+      <div class="diagram">
+<pre>
+  ┌──────────────┐
+  │  Partner API  │    POST /api/v1/leads
+  │  Request      │    X-Partner-Key: abc123
+  └──────┬───────┘
+         │
+         ▼
+  ┌──────────────┐     ┌──────────────┐
+  │  Rate Limit  │────▶│   429        │  Too Many Requests
+  │  Check       │ NO  │   REJECT     │
+  └──────┬───────┘     └──────────────┘
+         │ OK
+         ▼
+  ┌──────────────┐     ┌──────────────┐
+  │  Schema      │────▶│   422        │  Validation Error
+  │  Validation  │ NO  │   REJECT     │  { error: "invalid_email" }
+  └──────┬───────┘     └──────────────┘
+         │ OK
+         ▼
+  ┌──────────────┐     ┌──────────────┐
+  │  Dedup       │────▶│   409        │  Conflict
+  │  Check       │ DUP │   REJECT     │  { error: "duplicate_lead" }
+  └──────┬───────┘     └──────────────┘
+         │ NEW
+         ▼
+  ┌──────────────┐
+  │  Quality     │     score: 85 → tier: high
+  │  Scoring     │     score: 60 → tier: medium
+  └──────┬───────┘     score: 20 → tier: low
+         │
+         ▼
+  ┌──────────────┐
+  │  Persist     │     201 Created
+  │  Lead        │     { lead_id: 42, quality: "high" }
+  └──────────────┘
+</pre>
+        <div class="diagram-caption">Figure 2: The lead intake pipeline from partner request to persisted lead</div>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 3: WATCH & LEARN
+           ════════════════════════════════════════ -->
+      <h2 id="watch-learn">Watch &amp; Learn</h2>
+
+      <p>
+        These videos cover API rate limiting patterns and service object architecture in Rails. Watch them
+        before starting the assignments to build a mental model of how to structure intake pipelines and
+        service-oriented controllers.
+      </p>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/6VsBGsqr6bI?rel=0&amp;modestbranding=1"
+            title="Building API Rate Limiting in Rails"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Building API Rate Limiting in Rails &mdash; practical patterns for throttling partner requests and protecting intake endpoints
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/csCBcGFOnlA?rel=0&amp;modestbranding=1"
+            title="Service Objects in Rails"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Service Objects in Rails &mdash; how to extract business logic from controllers into testable, composable service classes
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 4: FURTHER READING
+           ════════════════════════════════════════ -->
+      <h2 id="further-reading">Further Reading</h2>
+
+      <p>Deep-dive into the official documentation and reference material for bid systems, lead ingestion, input validation, and API design.</p>
+
+      <div class="resource-grid">
+        <a class="resource-card" href="https://www.postgresql.org/docs/current/indexes.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">PostgreSQL: Indexes</div>
+            <div class="resource-desc">Index types, composite indexes, and partial indexes. Critical for dedup queries and bid history lookups at scale.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://guides.rubyonrails.org/api_app.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Rails Guides: API Applications</div>
+            <div class="resource-desc">Building API-only Rails apps. Covers middleware stack, serialization, and versioning for partner-facing endpoints.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://guides.rubyonrails.org/action_controller_overview.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Rails Guides: Action Controller Overview</div>
+            <div class="resource-desc">Before actions, filters, parameter handling, and rendering. Essential for understanding the request lifecycle.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html" target="_blank" rel="noopener">
+          <div class="resource-icon article">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">OWASP: Input Validation Cheat Sheet</div>
+            <div class="resource-desc">Comprehensive guide to validating untrusted input. Covers allowlisting, blocklisting, regex patterns, and encoding.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://docs.stripe.com/api/idempotent_requests" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Stripe: Idempotent Requests</div>
+            <div class="resource-desc">How Stripe handles duplicate API requests. A reference design for building dedup logic in lead intake pipelines.</div>
+          </div>
+        </a>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 5: ASSIGNMENTS
+           ════════════════════════════════════════ -->
+      <h2 id="assignments">Assignments</h2>
+
+      <p>
+        Complete these in order. Each level builds on the previous one. Submit your work as a GitHub PR
+        with <code>docs/chapter-05.md</code> containing your bid strategy design decisions, lead schema
+        documentation, and proof that dedup and quality gates work correctly.
+      </p>
+
+      <!-- Assignment 1: Level 1 -->
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 1
+          </div>
+          <span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span>
+        </div>
+        <h4>Static Bid Suggestions and Lead Ingestion Endpoint</h4>
+        <p>Build the basic bid recommendation service with static logic and a lead intake endpoint with schema validation. Focus on correctness and clear error contracts.</p>
+
+        <ul class="checklist">
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Create the <code>BidRecommendationService</code> with static bid logic: <code>target_cpa * conversion_rate</code></span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Implement min/max clamp logic with configurable <code>bid_floor</code> and <code>bid_ceiling</code> on campaigns</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Build the preview endpoint: <code>GET /api/v1/ad_groups/:id/bid_recommendation</code></span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Build the apply endpoint: <code>POST /api/v1/ad_groups/:id/bid_recommendation/apply</code></span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Create the <code>BidChange</code> model with operator, timestamp, previous/new bid, and reason</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Build the lead ingestion endpoint: <code>POST /api/v1/leads</code> with partner API key auth</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Validate required fields (<code>email</code>, <code>first_name</code>, <code>last_name</code>, <code>phone</code>) with clear error messages</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Return machine-readable <code>error_code</code> strings for all rejection reasons</span>
+          </li>
+        </ul>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            You can preview a bid suggestion via <code>curl</code> and see the suggested amount with explanation metadata.
+            Applying the bid writes a <code>BidChange</code> audit record. Submitting a lead with missing fields returns a
+            <code>422</code> with a clear <code>error_code</code>. Valid leads are persisted with a <code>201</code> response.
+          </p>
+        </div>
+      </div>
+
+      <!-- Assignment 2: Level 2 -->
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 2
+          </div>
+          <span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span>
+        </div>
+        <h4>Dynamic Bid Engine with Campaign Performance Inputs</h4>
+        <p>Extend the bid engine to incorporate real-time campaign signals and add lead deduplication with configurable lookback windows.</p>
+
+        <ul class="checklist">
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Add dynamic modifiers based on: time-of-day performance, remaining daily budget percentage, and recent conversion rate trends</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Implement the <code>modifier</code> parameter so operators can preview bids with different signal weights</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Add a backtest endpoint: <code>GET /api/v1/ad_groups/:id/bid_changes?from=&amp;to=</code> with date filtering</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Implement lead deduplication with configurable <code>dedup_window_hours</code> per partner</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Return <code>409 Conflict</code> with <code>error_code: "duplicate_lead"</code> for dedup rejections</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Add composite indexes on <code>leads(email, partner_id, created_at)</code> for fast dedup queries</span>
+          </li>
+        </ul>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            Bid suggestions change based on campaign performance signals, not just static formulas. Submitting the
+            same lead email twice within the lookback window returns <code>409</code>. The bid history endpoint
+            returns a paginated list of changes for a given ad group and time range.
+          </p>
+        </div>
+      </div>
+
+      <!-- Assignment 3: Level 3 -->
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 3
+          </div>
+          <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Production-Ready</span>
+        </div>
+        <h4>Quality Gate with Scoring Hooks and Abuse Protection</h4>
+        <p>Build the full quality scoring pipeline with pluggable hooks, abuse detection, and rate limiting. This is the final defense layer for lead quality.</p>
+
+        <ul class="checklist">
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Implement <code>LeadQualityScorer</code> with pluggable scoring hooks (email validation, phone validation, completeness, abuse detection)</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Build the <code>AbuseDetector</code> hook: disposable email domains, suspicious patterns, velocity spikes</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Implement per-partner rate limiting with <code>429 Too Many Requests</code> response</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Add quality tier routing: high &rarr; immediate, medium &rarr; nurture, low &rarr; review</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Store quality score and tier on the Lead record for downstream analytics</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Write request specs covering: valid lead, duplicate lead, rate-limited partner, abuse detection, and each quality tier</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Verify that the full bid + lead pipeline works end-to-end: campaign &rarr; bid suggestion &rarr; lead intake &rarr; quality score</span>
+          </li>
+        </ul>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            Leads from disposable email domains receive a low quality score. Rapid-fire submissions from
+            the same email trigger abuse detection. Partners hitting the rate limit receive a <code>429</code>
+            with a clear error contract. A mentor can review your scoring hooks and understand every quality
+            signal being evaluated. The test suite covers at least 10 lead intake scenarios.
+          </p>
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 6: SELF-CHECK
+           ════════════════════════════════════════ -->
+      <h2 id="self-check">Self-Check</h2>
+
+      <p>Before moving to Chapter 06, honestly answer these questions. If any answer is "no", go back and fix it.</p>
+
+      <details>
+        <summary>Can the bid engine produce a bid outside the configured clamp range?</summary>
+        <div class="details-body">
+          <p>
+            Set <code>bid_floor</code> to 1.00 and <code>bid_ceiling</code> to 5.00 on a campaign. Then
+            configure inputs that would produce a raw bid of $0.02 and $500.00. The service should clamp both
+            to the floor and ceiling respectively, and the <code>clamped</code> flag should be <code>true</code>
+            in both cases. If you can produce a bid outside the range, your clamp logic has a bug.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Does every bid change have an audit trail with operator and reason?</summary>
+        <div class="details-body">
+          <p>
+            Apply a bid via the API, then query <code>BidChange.last</code>. It should have: the operator who
+            applied it, the previous bid, the new bid, the reason code, and the full inputs hash. If any of
+            these fields are nil, your audit logging is incomplete. Run <code>BidChange.where(operator: nil).count</code>
+            &mdash; it should be zero.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Can a partner submit the same lead twice within the dedup window?</summary>
+        <div class="details-body">
+          <p>
+            Submit a lead with a specific email. Wait a moment and submit the exact same email again. You
+            should receive a <code>409 Conflict</code> with <code>error_code: "duplicate_lead"</code>. Now
+            wait until the dedup window expires (or shorten it for testing) and submit again &mdash; it should
+            succeed. If duplicates slip through, check your dedup query and index.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Are error responses machine-readable with stable error codes?</summary>
+        <div class="details-body">
+          <p>
+            Hit the lead endpoint with invalid data and inspect the response. You should see a JSON object
+            with <code>error</code> (a stable string code), <code>message</code> (human-friendly), and
+            optionally <code>details</code> (per-field errors). A partner should be able to build a
+            <code>switch</code> statement on your error codes without worrying about message text changes.
+          </p>
+        </div>
+      </details>
+
+    </main>
+
+    <!-- Sidebar: Table of Contents -->
+    <aside class="sidebar">
+      <div class="sidebar-title">On this page</div>
+      <ul class="toc-list">
+        <li class="toc-item"><a href="#why-this-matters">Why This Matters</a></li>
+        <li class="toc-item"><a href="#key-concepts">Key Concepts</a></li>
+        <li class="toc-item"><a href="#bid-strategy-fundamentals" style="padding-left: 28px; font-size: 12px;">Bid Strategy Fundamentals</a></li>
+        <li class="toc-item"><a href="#recommendation-service" style="padding-left: 28px; font-size: 12px;">Recommendation Service</a></li>
+        <li class="toc-item"><a href="#bid-history-audit" style="padding-left: 28px; font-size: 12px;">Bid History &amp; Audit</a></li>
+        <li class="toc-item"><a href="#lead-intake-pipeline" style="padding-left: 28px; font-size: 12px;">Lead Intake Pipeline</a></li>
+        <li class="toc-item"><a href="#quality-gate" style="padding-left: 28px; font-size: 12px;">Quality Gate</a></li>
+        <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a></li>
+        <li class="toc-item"><a href="#further-reading">Further Reading</a></li>
+        <li class="toc-item"><a href="#assignments">Assignments</a></li>
+        <li class="toc-item"><a href="#self-check">Self-Check</a></li>
+      </ul>
+    </aside>
+  </div>
+
+  <!-- Footer Navigation -->
+  <footer class="chapter-footer">
+    <div class="chapter-footer-inner">
+      <nav class="footer-nav">
+        <a class="footer-nav-link" href="chapter-04.html">
+          <span class="footer-nav-label">&larr; Previous Chapter</span>
+          <span class="footer-nav-title">04: Ad Group Targeting and Creative Assets</span>
+        </a>
+        <a class="footer-nav-link" href="chapter-06.html">
+          <span class="footer-nav-label">Next Chapter &rarr;</span>
+          <span class="footer-nav-title">06: Conversion Attribution and Background Jobs</span>
+        </a>
+      </nav>
+      <div class="footer-brand">
+        ILA (Iksha Learning Academy) &middot; Rails + React Engineering Certification &middot; Level 2
+      </div>
+    </div>
+  </footer>
+
+  <!-- ════════════════════════════════════════
+       SCRIPTS
+       ════════════════════════════════════════ -->
+  <script>
+    // ── Progress Bar ──
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      document.getElementById('progressBar').style.width = progress + '%';
+    });
+
+    // ── Active TOC ──
+    const tocLinks = document.querySelectorAll('.toc-item a');
+    const sections = [];
+
+    tocLinks.forEach(link => {
+      const id = link.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) sections.push({ id, el, link });
+    });
+
+    const observerOptions = {
+      rootMargin: '-80px 0px -60% 0px',
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const item = sections.find(s => s.el === entry.target);
+        if (item) {
+          if (entry.isIntersecting) {
+            tocLinks.forEach(l => l.classList.remove('active'));
+            item.link.classList.add('active');
+          }
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(s => observer.observe(s.el));
+
+    // ── Copy Code ──
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      const text = pre.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.classList.add('copied');
+        btn.textContent = 'Copied!';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.textContent = 'Copy';
+        }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>

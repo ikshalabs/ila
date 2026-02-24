@@ -1,0 +1,1983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 09: Operations Console and Performance Dashboard — ILA Rails + React</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    /* ═══════════════════════════════════════════════
+       ILA DESIGN SYSTEM — v1.0
+       Iksha Learning Academy
+       ═══════════════════════════════════════════════ */
+
+    :root {
+      /* Palette */
+      --ink:        #0f172a;
+      --ink-light:  #334155;
+      --ink-muted:  #64748b;
+      --surface:    #ffffff;
+      --surface-alt:#f8fafc;
+      --surface-warm:#fffbeb;
+      --border:     #e2e8f0;
+      --border-light:#f1f5f9;
+
+      /* Brand */
+      --teal-50:  #f0fdfa;
+      --teal-100: #ccfbf1;
+      --teal-200: #99f6e4;
+      --teal-500: #14b8a6;
+      --teal-600: #0d9488;
+      --teal-700: #0f766e;
+      --teal-800: #115e59;
+      --teal-900: #134e4a;
+
+      --blue-50:  #eff6ff;
+      --blue-100: #dbeafe;
+      --blue-500: #3b82f6;
+      --blue-600: #2563eb;
+      --blue-700: #1d4ed8;
+
+      --amber-50:  #fffbeb;
+      --amber-100: #fef3c7;
+      --amber-500: #f59e0b;
+      --amber-600: #d97706;
+
+      --red-50:   #fef2f2;
+      --red-100:  #fee2e2;
+      --red-500:  #ef4444;
+      --red-600:  #dc2626;
+
+      --purple-50:  #faf5ff;
+      --purple-100: #f3e8ff;
+      --purple-500: #a855f7;
+      --purple-600: #9333ea;
+
+      /* Typography */
+      --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-serif: 'Instrument Serif', Georgia, serif;
+      --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
+
+      /* Spacing */
+      --content-max: 780px;
+      --sidebar-width: 280px;
+
+      /* Transitions */
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--ink);
+      background: var(--surface);
+    }
+
+    /* ── PROGRESS BAR ─────────────────────────── */
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--teal-500), var(--blue-500));
+      z-index: 1000;
+      transition: width 0.15s var(--ease);
+    }
+
+    /* ── TOP NAV ──────────────────────────────── */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+    }
+
+    .top-nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--teal-800);
+    }
+
+    .nav-brand-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--teal-600), var(--teal-800));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .nav-brand-text {
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-chapter-nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      color: var(--ink-muted);
+      border: 1px solid var(--border);
+      background: white;
+      transition: all 0.2s var(--ease);
+      cursor: pointer;
+    }
+
+    .nav-btn:hover {
+      color: var(--ink);
+      border-color: var(--teal-500);
+      background: var(--teal-50);
+    }
+
+    .nav-btn.disabled {
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    .nav-current {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink-light);
+      padding: 0 4px;
+    }
+
+    /* ── HERO ─────────────────────────────────── */
+    .hero {
+      background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 4rem 2rem 3.5rem;
+    }
+
+    .hero-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
+    }
+
+    .hero-chapter-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--teal-700);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 1rem;
+    }
+
+    .hero-chapter-label span {
+      background: var(--teal-100);
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+
+    .hero h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(2.4rem, 5vw, 3.2rem);
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: 1rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: var(--ink-light);
+      line-height: 1.65;
+      max-width: 640px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .hero-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
+    .hero-meta-item svg {
+      width: 16px;
+      height: 16px;
+      color: var(--teal-600);
+    }
+
+    /* ── MAIN LAYOUT ──────────────────────────── */
+    .main-layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr var(--sidebar-width);
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .content {
+      padding: 3rem 0 6rem;
+      min-width: 0;
+    }
+
+    /* ── SIDEBAR TOC ──────────────────────────── */
+    .sidebar {
+      position: sticky;
+      top: 76px;
+      padding: 2rem 0;
+      max-height: calc(100vh - 76px);
+      overflow-y: auto;
+    }
+
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-muted);
+      margin-bottom: 1rem;
+      padding-left: 14px;
+    }
+
+    .toc-list {
+      list-style: none;
+    }
+
+    .toc-item a {
+      display: block;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--ink-muted);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: all 0.2s var(--ease);
+      line-height: 1.5;
+    }
+
+    .toc-item a:hover {
+      color: var(--ink);
+      background: var(--surface-alt);
+    }
+
+    .toc-item a.active {
+      color: var(--teal-700);
+      border-left-color: var(--teal-500);
+      background: var(--teal-50);
+      font-weight: 500;
+    }
+
+    /* ── TYPOGRAPHY ────────────────────────────── */
+    .content h2 {
+      font-family: var(--font-serif);
+      font-size: 1.85rem;
+      font-weight: 400;
+      color: var(--ink);
+      margin: 3rem 0 1rem;
+      padding-top: 1rem;
+      scroll-margin-top: 80px;
+    }
+
+    .content h2:first-child {
+      margin-top: 0;
+    }
+
+    .content h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 2rem 0 0.75rem;
+      scroll-margin-top: 80px;
+    }
+
+    .content p {
+      margin-bottom: 1.25rem;
+      color: var(--ink-light);
+    }
+
+    .content strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .content a {
+      color: var(--teal-700);
+      text-decoration: underline;
+      text-decoration-color: var(--teal-200);
+      text-underline-offset: 3px;
+      transition: text-decoration-color 0.2s;
+    }
+
+    .content a:hover {
+      text-decoration-color: var(--teal-600);
+    }
+
+    .content ul, .content ol {
+      margin-bottom: 1.25rem;
+      padding-left: 1.5rem;
+    }
+
+    .content li {
+      margin-bottom: 0.5rem;
+      color: var(--ink-light);
+    }
+
+    .content li::marker {
+      color: var(--teal-500);
+    }
+
+    /* ── SECTION DIVIDER ──────────────────────── */
+    .section-divider {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 3rem 0;
+    }
+
+    /* ── CALLOUT BOXES ────────────────────────── */
+    .callout {
+      padding: 1.25rem 1.5rem;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+      border: 1px solid;
+      position: relative;
+    }
+
+    .callout-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .callout-header svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    .callout p:last-child { margin-bottom: 0; }
+
+    .callout.concept {
+      background: var(--blue-50);
+      border-color: var(--blue-100);
+    }
+    .callout.concept .callout-header { color: var(--blue-700); }
+
+    .callout.important {
+      background: var(--amber-50);
+      border-color: var(--amber-100);
+    }
+    .callout.important .callout-header { color: var(--amber-600); }
+
+    .callout.danger {
+      background: var(--red-50);
+      border-color: var(--red-100);
+    }
+    .callout.danger .callout-header { color: var(--red-600); }
+
+    .callout.tip {
+      background: var(--purple-50);
+      border-color: var(--purple-100);
+    }
+    .callout.tip .callout-header { color: var(--purple-600); }
+
+    .callout.success {
+      background: var(--teal-50);
+      border-color: var(--teal-100);
+    }
+    .callout.success .callout-header { color: var(--teal-700); }
+
+    /* ── CODE BLOCKS ──────────────────────────── */
+    .code-block {
+      position: relative;
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+      background: var(--surface-alt);
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--ink-muted);
+    }
+
+    .code-lang {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .code-copy {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: white;
+      font-size: 11px;
+      font-family: var(--font-sans);
+      color: var(--ink-muted);
+      cursor: pointer;
+      transition: all 0.2s var(--ease);
+    }
+
+    .code-copy:hover {
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    .code-copy.copied {
+      background: var(--teal-50);
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    pre {
+      margin: 0;
+      padding: 1.25rem 1.5rem;
+      overflow-x: auto;
+      background: #1e293b;
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: #e2e8f0;
+    }
+
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.88em;
+    }
+
+    p code, li code {
+      padding: 2px 7px;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      color: var(--teal-800);
+      font-size: 0.85em;
+    }
+
+    /* Syntax highlights (minimal) */
+    .hl-keyword  { color: #c084fc; }
+    .hl-string   { color: #86efac; }
+    .hl-comment  { color: #64748b; font-style: italic; }
+    .hl-function { color: #7dd3fc; }
+    .hl-number   { color: #fbbf24; }
+    .hl-flag     { color: #f472b6; }
+
+    /* ── COLLAPSIBLE (DETAILS) ────────────────── */
+    details {
+      margin-bottom: 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.2s var(--ease);
+    }
+
+    details[open] {
+      border-color: var(--teal-200);
+    }
+
+    details summary {
+      padding: 1rem 1.25rem;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      background: var(--surface-alt);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.2s var(--ease);
+      user-select: none;
+    }
+
+    details summary::-webkit-details-marker { display: none; }
+
+    details summary::before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+      flex-shrink: 0;
+      transition: transform 0.2s var(--ease);
+    }
+
+    details[open] summary::before {
+      transform: rotate(90deg);
+    }
+
+    details summary:hover {
+      background: var(--teal-50);
+    }
+
+    .details-body {
+      padding: 1.25rem 1.5rem;
+    }
+
+    .details-body p:last-child { margin-bottom: 0; }
+
+    /* ── VIDEO EMBED ──────────────────────────── */
+    .video-card {
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      background: #0f172a;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .video-caption {
+      padding: 12px 16px;
+      background: var(--surface-alt);
+      font-size: 13px;
+      color: var(--ink-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .video-caption svg {
+      width: 14px;
+      height: 14px;
+      color: var(--red-500);
+    }
+
+    /* ── RESOURCE CARDS ───────────────────────── */
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .resource-card {
+      display: flex;
+      gap: 14px;
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      background: white;
+    }
+
+    .resource-card:hover {
+      border-color: var(--teal-300);
+      background: var(--teal-50);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .resource-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 18px;
+    }
+
+    .resource-icon.docs    { background: var(--blue-50);   color: var(--blue-600); }
+    .resource-icon.video   { background: var(--red-50);    color: var(--red-500); }
+    .resource-icon.github  { background: var(--ink);       color: white; }
+    .resource-icon.article { background: var(--amber-50);  color: var(--amber-600); }
+    .resource-icon.pdf     { background: var(--purple-50); color: var(--purple-600); }
+
+    .resource-info {
+      min-width: 0;
+    }
+
+    .resource-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 2px;
+      line-height: 1.4;
+    }
+
+    .resource-desc {
+      font-size: 12px;
+      color: var(--ink-muted);
+      line-height: 1.5;
+    }
+
+    /* ── ASSIGNMENT CARDS ─────────────────────── */
+    .assignment {
+      border: 2px solid var(--teal-200);
+      border-radius: 14px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--teal-50) 0%, white 100%);
+    }
+
+    .assignment-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .assignment-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--teal-700);
+    }
+
+    .assignment-difficulty {
+      display: inline-flex;
+      padding: 4px 10px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .difficulty-l1 { background: var(--teal-100); color: var(--teal-800); }
+    .difficulty-l2 { background: var(--amber-100); color: var(--amber-600); }
+    .difficulty-l3 { background: var(--red-100); color: var(--red-600); }
+
+    .assignment h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .assignment p {
+      font-size: 14px;
+    }
+
+    .checklist {
+      list-style: none;
+      padding: 0;
+    }
+
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-light);
+      font-size: 14px;
+    }
+
+    .checklist li:last-child { border-bottom: none; }
+
+    .check-box {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      border: 2px solid var(--border);
+      flex-shrink: 0;
+      margin-top: 1px;
+      cursor: pointer;
+      transition: all 0.15s var(--ease);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .check-box:hover {
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked {
+      background: var(--teal-500);
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+    }
+
+    /* ── ARCHITECTURE DIAGRAM ─────────────────── */
+    .diagram {
+      margin: 1.5rem 0;
+      padding: 2rem;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow-x: auto;
+    }
+
+    .diagram pre {
+      background: transparent;
+      color: var(--ink);
+      padding: 0;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .diagram-caption {
+      margin-top: 1rem;
+      font-size: 12px;
+      color: var(--ink-muted);
+      text-align: center;
+      font-style: italic;
+    }
+
+    /* ── FOOTER ───────────────────────────────── */
+    .chapter-footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      background: var(--surface-alt);
+    }
+
+    .chapter-footer-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
+    }
+
+    .footer-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .footer-nav-link {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 1rem 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      max-width: 320px;
+      background: white;
+    }
+
+    .footer-nav-link:hover {
+      border-color: var(--teal-300);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .footer-nav-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--teal-600);
+    }
+
+    .footer-nav-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .footer-brand {
+      text-align: center;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
+    /* ── RESPONSIVE ───────────────────────────── */
+    @media (max-width: 960px) {
+      .main-layout {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        display: none;
+      }
+      .resource-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero { padding: 2.5rem 1.25rem 2rem; }
+      .main-layout { padding: 0 1.25rem; }
+      .content { padding: 2rem 0 4rem; }
+      pre { padding: 1rem; font-size: 12.5px; }
+      .footer-nav { flex-direction: column; }
+      .footer-nav-link { max-width: 100%; width: 100%; }
+    }
+
+    /* ── PRINT ────────────────────────────────── */
+    @media print {
+      .top-nav, .sidebar, .progress-bar { display: none; }
+      .main-layout { display: block; }
+      .content { padding: 0; }
+      .hero { background: white; border: none; }
+      pre { background: #f1f5f9; color: var(--ink); border: 1px solid var(--border); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Progress Bar -->
+  <div class="progress-bar" id="progressBar"></div>
+
+  <!-- Top Navigation -->
+  <nav class="top-nav">
+    <div class="top-nav-inner">
+      <a class="nav-brand" href="index.html">
+        <div class="nav-brand-icon">ILA</div>
+        <span class="nav-brand-text">Iksha Learning Academy</span>
+      </a>
+      <div class="nav-chapter-nav">
+        <a class="nav-btn" href="chapter-08.html">&larr; Previous</a>
+        <span class="nav-current">09 / 10</span>
+        <a class="nav-btn" href="chapter-10.html">Next &rarr;</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-chapter-label">
+        <span>Chapter 09</span> &middot; Phase 5: Frontend Application
+      </div>
+      <h1>Operations Console and Performance Dashboard</h1>
+      <p class="hero-subtitle">
+        Build ad group operations UI with bid recommendation, edit, and history visibility. Ship dashboard cards,
+        trends, and tables for spend, leads, conversions, and efficiency.
+      </p>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Estimated: 4&ndash;5 days
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          3 Advancement Levels
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          3 Assignments
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content + Sidebar -->
+  <div class="main-layout">
+    <main class="content">
+
+      <!-- ════════════════════════════════════════
+           SECTION 1: WHY THIS MATTERS
+           ════════════════════════════════════════ -->
+      <h2 id="why-this-matters">Why This Matters</h2>
+
+      <p>
+        The operations console is the <strong>day-to-day control center</strong> for performance operators.
+        While the campaign builder (Chapter 08) handles setup, this console is where operators spend 90% of
+        their time &mdash; adjusting bids, reviewing performance trends, and reacting to spend anomalies.
+      </p>
+
+      <p>
+        Actionable visibility closes the optimization loop every day. If an operator cannot see that a bid
+        change from yesterday caused a 40% drop in conversions, they are flying blind. If they cannot quickly
+        compare today's CPL against last week's, they cannot justify budget reallocations to clients.
+        <strong>The dashboard is not a nice-to-have &mdash; it is the product.</strong>
+      </p>
+
+      <div class="callout danger">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          The Cost of Stale Data
+        </div>
+        <p>
+          A dashboard that shows data 30 minutes old is worse than no dashboard at all &mdash; it creates
+          false confidence. Operators make bid changes based on numbers they trust. If those numbers are stale,
+          every optimization decision is wrong. This chapter teaches you how to build real-time patterns that
+          keep data fresh and clearly indicate when it is not.
+        </p>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 2: KEY CONCEPTS
+           ════════════════════════════════════════ -->
+      <h2 id="key-concepts">Key Concepts</h2>
+
+      <h3 id="ad-group-operations">1. Ad Group Operations UI</h3>
+
+      <p>
+        The ad group operations panel is a dense, data-rich interface. Operators need to see ad groups in
+        the context of their parent campaign, preview bid suggestions from the engine (Chapter 06), and
+        apply changes with confidence. The key requirement is <strong>context without clutter</strong> &mdash;
+        every piece of information must earn its screen real estate.
+      </p>
+
+      <ul>
+        <li><strong>Ad group list with campaign context</strong> &mdash; Each row shows the ad group name, current bid, suggested bid, daily spend, and conversion count. The parent campaign name appears as a grouped header.</li>
+        <li><strong>Bid suggestion preview and safe apply flow</strong> &mdash; Before applying a bid change, operators see a diff: current vs. suggested, with projected impact. A confirmation step prevents accidental bulk changes.</li>
+        <li><strong>Change history with compare mode</strong> &mdash; Every bid change is logged with timestamp, user, old value, and new value. Compare mode lets operators overlay two time periods to spot regression.</li>
+      </ul>
+
+      <div class="diagram">
+<pre>
+ ┌─────────────────────────────────────────────────────────────────────────┐
+ │  Operations Console                                    [Refresh] [Filter] │
+ ├─────────────────────────────────────────────────────────────────────────┤
+ │                                                                         │
+ │  Campaign: "Summer Lead Gen 2025"                                       │
+ │  ┌─────────────┬──────────┬───────────┬────────┬────────┬────────────┐  │
+ │  │ Ad Group    │ Bid ($)  │ Suggested │ Spend  │ Leads  │ Actions    │  │
+ │  ├─────────────┼──────────┼───────────┼────────┼────────┼────────────┤  │
+ │  │ Brand KW    │ $2.40    │ $2.85 ▲   │ $312   │ 47     │ [Apply][H] │  │
+ │  │ Competitor  │ $3.10    │ $2.90 ▼   │ $589   │ 31     │ [Apply][H] │  │
+ │  │ Long-tail   │ $1.20    │ $1.20 ━   │ $98    │ 22     │ [Apply][H] │  │
+ │  └─────────────┴──────────┴───────────┴────────┴────────┴────────────┘  │
+ │                                                                         │
+ │  Campaign: "Q4 Retargeting"                                             │
+ │  ┌─────────────┬──────────┬───────────┬────────┬────────┬────────────┐  │
+ │  │ Ad Group    │ Bid ($)  │ Suggested │ Spend  │ Leads  │ Actions    │  │
+ │  ├─────────────┼──────────┼───────────┼────────┼────────┼────────────┤  │
+ │  │ Cart Abandon│ $4.50    │ $5.10 ▲   │ $1,204 │ 89     │ [Apply][H] │  │
+ │  │ Page View   │ $1.80    │ $1.65 ▼   │ $245   │ 18     │ [Apply][H] │  │
+ │  └─────────────┴──────────┴───────────┴────────┴────────┴────────────┘  │
+ │                                                                         │
+ │  [H] = History    ▲ = Increase suggested    ▼ = Decrease suggested      │
+ └─────────────────────────────────────────────────────────────────────────┘
+</pre>
+        <div class="diagram-caption">Figure 1: Ad group operations console wireframe with bid suggestions and action buttons</div>
+      </div>
+
+      <div class="callout concept">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Key Insight
+        </div>
+        <p>
+          The <code>[Apply]</code> button should never immediately mutate data. Always show a confirmation
+          modal with the diff: <code>$2.40 &rarr; $2.85 (+18.75%)</code>. Bulk apply should require an
+          additional "I've reviewed all changes" checkbox. This is a <strong>safe apply flow</strong> &mdash;
+          operators trust the console because it never surprises them.
+        </p>
+      </div>
+
+      <h3 id="realtime-data">2. Real-Time Data Patterns</h3>
+
+      <p>
+        Performance data changes constantly. Spend accumulates throughout the day, leads arrive in bursts,
+        and bid changes take effect within minutes. Your UI needs a strategy for keeping data fresh without
+        overwhelming the server or the user.
+      </p>
+
+      <p>
+        There are two primary patterns: <strong>polling</strong> (client asks the server on a timer) and
+        <strong>WebSockets</strong> (server pushes updates to the client). Each has tradeoffs:
+      </p>
+
+      <ul>
+        <li><strong>Polling</strong> &mdash; Simple to implement, works with any infrastructure. But it wastes bandwidth when nothing has changed and introduces latency equal to the polling interval.</li>
+        <li><strong>WebSockets</strong> &mdash; Instant updates, no wasted requests. But requires persistent connections, load balancer support, and reconnection logic.</li>
+        <li><strong>Hybrid approach</strong> &mdash; Poll for dashboard-level aggregates (every 30s), use WebSockets for critical alerts (budget exceeded, bid change confirmation). This is the recommended pattern for our platform.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">tsx</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">// hooks/usePollingQuery.ts</span>
+<span class="hl-comment">// A custom hook that wraps TanStack Query with automatic polling</span>
+<span class="hl-keyword">import</span> { useQuery } <span class="hl-keyword">from</span> <span class="hl-string">"@tanstack/react-query"</span>;
+
+<span class="hl-keyword">interface</span> <span class="hl-function">PollingOptions</span> {
+  queryKey: <span class="hl-function">string</span>[];
+  fetchFn: () =&gt; Promise&lt;<span class="hl-function">any</span>&gt;;
+  intervalMs?: <span class="hl-function">number</span>;
+  enabled?: <span class="hl-function">boolean</span>;
+}
+
+<span class="hl-keyword">export function</span> <span class="hl-function">usePollingQuery</span>({
+  queryKey,
+  fetchFn,
+  intervalMs = <span class="hl-number">30_000</span>,
+  enabled = <span class="hl-keyword">true</span>,
+}: PollingOptions) {
+  <span class="hl-keyword">return</span> useQuery({
+    queryKey,
+    queryFn: fetchFn,
+    refetchInterval: enabled ? intervalMs : <span class="hl-keyword">false</span>,
+    refetchIntervalInBackground: <span class="hl-keyword">false</span>, <span class="hl-comment">// pause when tab is hidden</span>
+    staleTime: intervalMs / <span class="hl-number">2</span>,         <span class="hl-comment">// data is "fresh" for half the interval</span>
+  });
+}
+</pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">tsx</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">// hooks/useStaleIndicator.ts</span>
+<span class="hl-comment">// Shows a visual indicator when data is older than threshold</span>
+<span class="hl-keyword">import</span> { useState, useEffect } <span class="hl-keyword">from</span> <span class="hl-string">"react"</span>;
+
+<span class="hl-keyword">export function</span> <span class="hl-function">useStaleIndicator</span>(
+  dataUpdatedAt: <span class="hl-function">number</span>,
+  thresholdMs: <span class="hl-function">number</span> = <span class="hl-number">60_000</span>
+) {
+  <span class="hl-keyword">const</span> [isStale, setIsStale] = useState(<span class="hl-keyword">false</span>);
+
+  useEffect(() =&gt; {
+    <span class="hl-keyword">const</span> check = () =&gt; {
+      setIsStale(Date.now() - dataUpdatedAt &gt; thresholdMs);
+    };
+    check();
+    <span class="hl-keyword">const</span> timer = setInterval(check, <span class="hl-number">5_000</span>);
+    <span class="hl-keyword">return</span> () =&gt; clearInterval(timer);
+  }, [dataUpdatedAt, thresholdMs]);
+
+  <span class="hl-keyword">return</span> { isStale, ageMs: Date.now() - dataUpdatedAt };
+}
+</pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">tsx</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">// hooks/useOptimisticBidUpdate.ts</span>
+<span class="hl-comment">// Optimistically update bid in UI, rollback on server failure</span>
+<span class="hl-keyword">import</span> { useMutation, useQueryClient } <span class="hl-keyword">from</span> <span class="hl-string">"@tanstack/react-query"</span>;
+<span class="hl-keyword">import</span> { updateAdGroupBid } <span class="hl-keyword">from</span> <span class="hl-string">"../api/adGroups"</span>;
+
+<span class="hl-keyword">export function</span> <span class="hl-function">useOptimisticBidUpdate</span>() {
+  <span class="hl-keyword">const</span> queryClient = useQueryClient();
+
+  <span class="hl-keyword">return</span> useMutation({
+    mutationFn: updateAdGroupBid,
+    onMutate: <span class="hl-keyword">async</span> (variables) =&gt; {
+      <span class="hl-comment">// Cancel in-flight refetches so they don't overwrite our optimistic update</span>
+      <span class="hl-keyword">await</span> queryClient.cancelQueries({ queryKey: [<span class="hl-string">"adGroups"</span>] });
+
+      <span class="hl-comment">// Snapshot previous data for rollback</span>
+      <span class="hl-keyword">const</span> previous = queryClient.getQueryData([<span class="hl-string">"adGroups"</span>]);
+
+      <span class="hl-comment">// Optimistically update the cache</span>
+      queryClient.setQueryData([<span class="hl-string">"adGroups"</span>], (old: <span class="hl-function">any</span>) =&gt;
+        old.map((ag: <span class="hl-function">any</span>) =&gt;
+          ag.id === variables.adGroupId
+            ? { ...ag, bid_amount: variables.newBid }
+            : ag
+        )
+      );
+
+      <span class="hl-keyword">return</span> { previous };
+    },
+    onError: (_err, _vars, context) =&gt; {
+      <span class="hl-comment">// Rollback to snapshot on failure</span>
+      queryClient.setQueryData([<span class="hl-string">"adGroups"</span>], context?.previous);
+    },
+    onSettled: () =&gt; {
+      <span class="hl-comment">// Always refetch to ensure consistency</span>
+      queryClient.invalidateQueries({ queryKey: [<span class="hl-string">"adGroups"</span>] });
+    },
+  });
+}
+</pre>
+      </div>
+
+      <div class="callout important">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Optimistic Updates Require Rollback
+        </div>
+        <p>
+          Never use optimistic updates without a rollback strategy. If the server rejects a bid change
+          (e.g., bid exceeds budget cap), the UI must revert to the previous value <em>and</em> show a
+          clear error message. The <code>onError</code> handler above restores the snapshot, and
+          <code>onSettled</code> forces a fresh fetch regardless of success or failure.
+        </p>
+      </div>
+
+      <h3 id="dashboard-architecture">3. Performance Dashboard Architecture</h3>
+
+      <p>
+        The performance dashboard is a grid of <strong>KPI cards</strong> at the top, <strong>trend charts</strong>
+        in the middle, and <strong>breakdown tables</strong> at the bottom. This three-tier layout is standard
+        across analytics products (Google Ads, Facebook Ads Manager, Datadog) because it maps to how operators
+        think: summary first, trends second, details on demand.
+      </p>
+
+      <ul>
+        <li><strong>KPI card components with sparklines</strong> &mdash; Four cards showing total spend, total leads, cost per lead (CPL), and conversion rate. Each includes a miniature 7-day sparkline and a delta badge ("+12% vs. last week").</li>
+        <li><strong>Trend charts with date range selectors</strong> &mdash; A line chart showing daily spend and leads over the selected period. Date range presets: Today, Last 7 Days, Last 30 Days, Custom.</li>
+        <li><strong>Breakdown tables with drill-down</strong> &mdash; A sortable table showing per-campaign or per-ad-group metrics. Clicking a row drills into that entity's detail view.</li>
+      </ul>
+
+      <div class="diagram">
+<pre>
+ ┌─────────────────────────────────────────────────────────────────────────┐
+ │  Performance Dashboard                    [Today] [7D] [30D] [Custom]  │
+ ├─────────────────────────────────────────────────────────────────────────┤
+ │                                                                         │
+ │  ┌──────────────┐ ┌──────────────┐ ┌──────────────┐ ┌──────────────┐   │
+ │  │ Total Spend  │ │ Total Leads  │ │ CPL          │ │ Conv. Rate   │   │
+ │  │              │ │              │ │              │ │              │   │
+ │  │  $12,847     │ │    847       │ │   $15.17     │ │   4.2%       │   │
+ │  │  ▁▂▃▅▇▅▆    │ │  ▂▃▅▃▆▇▅    │ │  ▇▆▅▃▂▃▂    │ │  ▂▃▃▅▅▆▇    │   │
+ │  │  +12% ▲      │ │  +8% ▲      │ │  -6% ▼      │ │  +2.1% ▲    │   │
+ │  └──────────────┘ └──────────────┘ └──────────────┘ └──────────────┘   │
+ │                                                                         │
+ │  ┌─────────────────────────────────────────────────────────────────┐    │
+ │  │                     Spend &amp; Leads Trend                         │    │
+ │  │   $                                                    Leads   │    │
+ │  │   ▕                                              ╭──╮          │    │
+ │  │   ▕              ╭──╮                      ╭────╯  │          │    │
+ │  │   ▕         ╭───╯  ╰──╮               ╭──╯       │          │    │
+ │  │   ▕    ╭───╯          ╰──╮        ╭──╯           │          │    │
+ │  │   ▕───╯                   ╰──────╯               │          │    │
+ │  │   └──────────────────────────────────────────────────────   │    │
+ │  │     Mon   Tue   Wed   Thu   Fri   Sat   Sun                 │    │
+ │  └─────────────────────────────────────────────────────────────────┘    │
+ │                                                                         │
+ │  ┌─────────────┬──────────┬────────┬────────┬────────┬────────────┐    │
+ │  │ Campaign    │ Spend    │ Leads  │ CPL    │ Conv%  │ Trend      │    │
+ │  ├─────────────┼──────────┼────────┼────────┼────────┼────────────┤    │
+ │  │ Summer Gen  │ $4,312   │ 312    │ $13.82 │ 5.1%   │ ▁▂▃▅▇     │    │
+ │  │ Q4 Retarget│ $3,890   │ 201    │ $19.35 │ 3.8%   │ ▃▅▇▅▃     │    │
+ │  │ Brand Aware │ $2,645   │ 189    │ $14.00 │ 4.4%   │ ▂▃▅▆▇     │    │
+ │  └─────────────┴──────────┴────────┴────────┴────────┴────────────┘    │
+ └─────────────────────────────────────────────────────────────────────────┘
+</pre>
+        <div class="diagram-caption">Figure 2: Performance dashboard layout with KPI cards, trend charts, and breakdown tables</div>
+      </div>
+
+      <h3 id="data-visualization">4. Data Visualization</h3>
+
+      <p>
+        For chart rendering, <a href="https://recharts.org/en-US/guide" target="_blank" rel="noopener">Recharts</a>
+        is the recommended library for our React stack. It is built on D3 primitives but exposes a declarative
+        React component API. For teams that prefer a lighter bundle,
+        <a href="https://www.chartjs.org/" target="_blank" rel="noopener">Chart.js</a> with
+        <code>react-chartjs-2</code> is a solid alternative.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">tsx</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">// components/KpiCard.tsx</span>
+<span class="hl-keyword">import</span> { Sparklines, SparklinesLine } <span class="hl-keyword">from</span> <span class="hl-string">"react-sparklines"</span>;
+
+<span class="hl-keyword">interface</span> <span class="hl-function">KpiCardProps</span> {
+  title: <span class="hl-function">string</span>;
+  value: <span class="hl-function">string</span>;
+  delta: <span class="hl-function">number</span>;         <span class="hl-comment">// percent change vs. prior period</span>
+  sparkData: <span class="hl-function">number</span>[];   <span class="hl-comment">// last 7 data points</span>
+  isLoading: <span class="hl-function">boolean</span>;
+}
+
+<span class="hl-keyword">export function</span> <span class="hl-function">KpiCard</span>({ title, value, delta, sparkData, isLoading }: KpiCardProps) {
+  <span class="hl-keyword">if</span> (isLoading) {
+    <span class="hl-keyword">return</span> (
+      &lt;<span class="hl-function">div</span> className=<span class="hl-string">"kpi-card skeleton"</span>&gt;
+        &lt;<span class="hl-function">div</span> className=<span class="hl-string">"skeleton-line w-24 h-4"</span> /&gt;
+        &lt;<span class="hl-function">div</span> className=<span class="hl-string">"skeleton-line w-32 h-8 mt-2"</span> /&gt;
+        &lt;<span class="hl-function">div</span> className=<span class="hl-string">"skeleton-line w-full h-10 mt-3"</span> /&gt;
+      &lt;/<span class="hl-function">div</span>&gt;
+    );
+  }
+
+  <span class="hl-keyword">const</span> isPositive = delta &gt;= <span class="hl-number">0</span>;
+
+  <span class="hl-keyword">return</span> (
+    &lt;<span class="hl-function">div</span> className=<span class="hl-string">"kpi-card"</span>&gt;
+      &lt;<span class="hl-function">span</span> className=<span class="hl-string">"kpi-title"</span>&gt;{title}&lt;/<span class="hl-function">span</span>&gt;
+      &lt;<span class="hl-function">span</span> className=<span class="hl-string">"kpi-value"</span>&gt;{value}&lt;/<span class="hl-function">span</span>&gt;
+      &lt;<span class="hl-function">Sparklines</span> data={sparkData} height={<span class="hl-number">32</span>} margin={<span class="hl-number">4</span>}&gt;
+        &lt;<span class="hl-function">SparklinesLine</span>
+          color={isPositive ? <span class="hl-string">"#14b8a6"</span> : <span class="hl-string">"#ef4444"</span>}
+          style={{ strokeWidth: <span class="hl-number">2</span>, fill: <span class="hl-string">"none"</span> }}
+        /&gt;
+      &lt;/<span class="hl-function">Sparklines</span>&gt;
+      &lt;<span class="hl-function">span</span> className={`kpi-delta ${isPositive ? <span class="hl-string">"positive"</span> : <span class="hl-string">"negative"</span>}`}&gt;
+        {isPositive ? <span class="hl-string">"+"</span> : <span class="hl-string">""</span>}{delta}%
+      &lt;/<span class="hl-function">span</span>&gt;
+    &lt;/<span class="hl-function">div</span>&gt;
+  );
+}
+</pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">tsx</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">// components/SpendTrendChart.tsx</span>
+<span class="hl-keyword">import</span> {
+  ResponsiveContainer, LineChart, Line, XAxis, YAxis,
+  CartesianGrid, Tooltip, Legend,
+} <span class="hl-keyword">from</span> <span class="hl-string">"recharts"</span>;
+
+<span class="hl-keyword">interface</span> <span class="hl-function">TrendDataPoint</span> {
+  date: <span class="hl-function">string</span>;
+  spend: <span class="hl-function">number</span>;
+  leads: <span class="hl-function">number</span>;
+}
+
+<span class="hl-keyword">interface</span> <span class="hl-function">SpendTrendChartProps</span> {
+  data: TrendDataPoint[];
+  isLoading: <span class="hl-function">boolean</span>;
+}
+
+<span class="hl-keyword">export function</span> <span class="hl-function">SpendTrendChart</span>({ data, isLoading }: SpendTrendChartProps) {
+  <span class="hl-keyword">if</span> (isLoading) {
+    <span class="hl-keyword">return</span> &lt;<span class="hl-function">div</span> className=<span class="hl-string">"chart-skeleton"</span> style={{ height: <span class="hl-number">320</span> }} /&gt;;
+  }
+
+  <span class="hl-keyword">if</span> (!data.length) {
+    <span class="hl-keyword">return</span> (
+      &lt;<span class="hl-function">div</span> className=<span class="hl-string">"chart-empty"</span>&gt;
+        &lt;<span class="hl-function">p</span>&gt;No data for the selected date range.&lt;/<span class="hl-function">p</span>&gt;
+      &lt;/<span class="hl-function">div</span>&gt;
+    );
+  }
+
+  <span class="hl-keyword">return</span> (
+    &lt;<span class="hl-function">ResponsiveContainer</span> width=<span class="hl-string">"100%"</span> height={<span class="hl-number">320</span>}&gt;
+      &lt;<span class="hl-function">LineChart</span> data={data} margin={{ top: <span class="hl-number">5</span>, right: <span class="hl-number">30</span>, left: <span class="hl-number">20</span>, bottom: <span class="hl-number">5</span> }}&gt;
+        &lt;<span class="hl-function">CartesianGrid</span> strokeDasharray=<span class="hl-string">"3 3"</span> stroke=<span class="hl-string">"#e2e8f0"</span> /&gt;
+        &lt;<span class="hl-function">XAxis</span> dataKey=<span class="hl-string">"date"</span> tick={{ fontSize: <span class="hl-number">12</span> }} /&gt;
+        &lt;<span class="hl-function">YAxis</span> yAxisId=<span class="hl-string">"spend"</span> tick={{ fontSize: <span class="hl-number">12</span> }} /&gt;
+        &lt;<span class="hl-function">YAxis</span> yAxisId=<span class="hl-string">"leads"</span> orientation=<span class="hl-string">"right"</span> tick={{ fontSize: <span class="hl-number">12</span> }} /&gt;
+        &lt;<span class="hl-function">Tooltip</span> /&gt;
+        &lt;<span class="hl-function">Legend</span> /&gt;
+        &lt;<span class="hl-function">Line</span>
+          yAxisId=<span class="hl-string">"spend"</span>
+          type=<span class="hl-string">"monotone"</span>
+          dataKey=<span class="hl-string">"spend"</span>
+          stroke=<span class="hl-string">"#14b8a6"</span>
+          strokeWidth={<span class="hl-number">2</span>}
+          dot={<span class="hl-keyword">false</span>}
+        /&gt;
+        &lt;<span class="hl-function">Line</span>
+          yAxisId=<span class="hl-string">"leads"</span>
+          type=<span class="hl-string">"monotone"</span>
+          dataKey=<span class="hl-string">"leads"</span>
+          stroke=<span class="hl-string">"#3b82f6"</span>
+          strokeWidth={<span class="hl-number">2</span>}
+          dot={<span class="hl-keyword">false</span>}
+        /&gt;
+      &lt;/<span class="hl-function">LineChart</span>&gt;
+    &lt;/<span class="hl-function">ResponsiveContainer</span>&gt;
+  );
+}
+</pre>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Pro Tip: Loading Skeletons Over Spinners
+        </div>
+        <p>
+          Never use a spinner for dashboard cards or charts. Skeletons (grey shimmer placeholders that match the
+          layout of the real content) feel faster because they give the user a structural preview of what is
+          coming. A spinner says "wait"; a skeleton says "almost there." Use CSS <code>@keyframes</code> with
+          a <code>linear-gradient</code> shimmer effect for production-quality loading states.
+        </p>
+      </div>
+
+      <h3 id="performance-optimization">5. Performance Optimization</h3>
+
+      <p>
+        Dashboards and operations consoles are among the most performance-sensitive UIs in any application.
+        An operator might have 500+ ad groups across 40 campaigns. The breakdown table might show 200 rows.
+        Charts might render 365 data points. Without optimization, the UI will lag, scroll will stutter, and
+        operators will lose trust in the tool.
+      </p>
+
+      <ul>
+        <li><strong>Virtualized lists for large datasets</strong> &mdash; Use <code>@tanstack/react-virtual</code> to only render the rows visible in the viewport. A list of 1,000 ad groups only renders ~20 DOM nodes at a time.</li>
+        <li><strong>Debounced search and filtering</strong> &mdash; When operators type in a search box, debounce the input by 300ms. This prevents re-rendering the entire list on every keystroke.</li>
+        <li><strong><code>React.memo</code> and <code>useMemo</code> for expensive renders</strong> &mdash; Wrap pure display components in <code>React.memo</code> so they skip re-render when props haven't changed. Use <code>useMemo</code> for derived data (filtered lists, aggregated totals).</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">tsx</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">// hooks/useDebouncedValue.ts</span>
+<span class="hl-keyword">import</span> { useState, useEffect } <span class="hl-keyword">from</span> <span class="hl-string">"react"</span>;
+
+<span class="hl-keyword">export function</span> <span class="hl-function">useDebouncedValue</span>&lt;T&gt;(value: T, delayMs: <span class="hl-function">number</span> = <span class="hl-number">300</span>): T {
+  <span class="hl-keyword">const</span> [debounced, setDebounced] = useState(value);
+
+  useEffect(() =&gt; {
+    <span class="hl-keyword">const</span> timer = setTimeout(() =&gt; setDebounced(value), delayMs);
+    <span class="hl-keyword">return</span> () =&gt; clearTimeout(timer);
+  }, [value, delayMs]);
+
+  <span class="hl-keyword">return</span> debounced;
+}
+</pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">tsx</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">// components/VirtualizedAdGroupList.tsx</span>
+<span class="hl-keyword">import</span> { useVirtualizer } <span class="hl-keyword">from</span> <span class="hl-string">"@tanstack/react-virtual"</span>;
+<span class="hl-keyword">import</span> { useRef, useMemo, memo } <span class="hl-keyword">from</span> <span class="hl-string">"react"</span>;
+<span class="hl-keyword">import</span> { useDebouncedValue } <span class="hl-keyword">from</span> <span class="hl-string">"../hooks/useDebouncedValue"</span>;
+
+<span class="hl-keyword">interface</span> <span class="hl-function">AdGroup</span> {
+  id: <span class="hl-function">number</span>;
+  name: <span class="hl-function">string</span>;
+  bid_amount: <span class="hl-function">number</span>;
+  campaign_name: <span class="hl-function">string</span>;
+  daily_spend: <span class="hl-function">number</span>;
+  leads: <span class="hl-function">number</span>;
+}
+
+<span class="hl-comment">// Memoized row component — skips re-render if props are the same</span>
+<span class="hl-keyword">const</span> AdGroupRow = memo(<span class="hl-keyword">function</span> <span class="hl-function">AdGroupRow</span>({ adGroup }: { adGroup: AdGroup }) {
+  <span class="hl-keyword">return</span> (
+    &lt;<span class="hl-function">div</span> className=<span class="hl-string">"ad-group-row"</span>&gt;
+      &lt;<span class="hl-function">span</span>&gt;{adGroup.name}&lt;/<span class="hl-function">span</span>&gt;
+      &lt;<span class="hl-function">span</span>&gt;${adGroup.bid_amount.toFixed(<span class="hl-number">2</span>)}&lt;/<span class="hl-function">span</span>&gt;
+      &lt;<span class="hl-function">span</span>&gt;${adGroup.daily_spend.toFixed(<span class="hl-number">2</span>)}&lt;/<span class="hl-function">span</span>&gt;
+      &lt;<span class="hl-function">span</span>&gt;{adGroup.leads}&lt;/<span class="hl-function">span</span>&gt;
+    &lt;/<span class="hl-function">div</span>&gt;
+  );
+});
+
+<span class="hl-keyword">export function</span> <span class="hl-function">VirtualizedAdGroupList</span>({
+  adGroups,
+  searchTerm,
+}: {
+  adGroups: AdGroup[];
+  searchTerm: <span class="hl-function">string</span>;
+}) {
+  <span class="hl-keyword">const</span> parentRef = useRef&lt;HTMLDivElement&gt;(<span class="hl-keyword">null</span>);
+  <span class="hl-keyword">const</span> debouncedSearch = useDebouncedValue(searchTerm);
+
+  <span class="hl-comment">// useMemo: only recompute filtered list when inputs change</span>
+  <span class="hl-keyword">const</span> filtered = useMemo(
+    () =&gt;
+      adGroups.filter((ag) =&gt;
+        ag.name.toLowerCase().includes(debouncedSearch.toLowerCase())
+      ),
+    [adGroups, debouncedSearch]
+  );
+
+  <span class="hl-keyword">const</span> virtualizer = useVirtualizer({
+    count: filtered.length,
+    getScrollElement: () =&gt; parentRef.current,
+    estimateSize: () =&gt; <span class="hl-number">48</span>, <span class="hl-comment">// estimated row height in px</span>
+    overscan: <span class="hl-number">5</span>,              <span class="hl-comment">// render 5 extra rows above/below viewport</span>
+  });
+
+  <span class="hl-keyword">return</span> (
+    &lt;<span class="hl-function">div</span> ref={parentRef} style={{ height: <span class="hl-number">600</span>, overflow: <span class="hl-string">"auto"</span> }}&gt;
+      &lt;<span class="hl-function">div</span> style={{ height: virtualizer.getTotalSize(), position: <span class="hl-string">"relative"</span> }}&gt;
+        {virtualizer.getVirtualItems().map((vRow) =&gt; (
+          &lt;<span class="hl-function">div</span>
+            key={vRow.key}
+            style={{
+              position: <span class="hl-string">"absolute"</span>,
+              top: <span class="hl-number">0</span>,
+              transform: `translateY(${vRow.start}px)`,
+              width: <span class="hl-string">"100%"</span>,
+            }}
+          &gt;
+            &lt;<span class="hl-function">AdGroupRow</span> adGroup={filtered[vRow.index]} /&gt;
+          &lt;/<span class="hl-function">div</span>&gt;
+        ))}
+      &lt;/<span class="hl-function">div</span>&gt;
+    &lt;/<span class="hl-function">div</span>&gt;
+  );
+}
+</pre>
+      </div>
+
+      <div class="callout concept">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Key Insight
+        </div>
+        <p>
+          The combination of <code>useDebouncedValue</code>, <code>useMemo</code>, and <code>React.memo</code>
+          creates three layers of protection against unnecessary work. The debounce prevents excessive filtering.
+          The <code>useMemo</code> caches the filtered array. The <code>memo</code> wrapper on each row prevents
+          re-rendering rows whose data has not changed. Together, they make a 1,000-row list scroll smoothly.
+        </p>
+      </div>
+
+      <details>
+        <summary>When should I use <code>React.memo</code> vs. <code>useMemo</code>?</summary>
+        <div class="details-body">
+          <p>
+            <code>React.memo</code> wraps a <strong>component</strong> &mdash; it prevents the component from
+            re-rendering when its props haven't changed. Use it for leaf components that receive stable data
+            (table rows, list items, chart points).
+          </p>
+          <p>
+            <code>useMemo</code> wraps a <strong>computation</strong> &mdash; it caches the result of an
+            expensive calculation and only recomputes when its dependencies change. Use it for filtering arrays,
+            computing aggregates, or transforming API data into chart format.
+          </p>
+          <p>
+            Rule of thumb: if you are memoizing <em>what to render</em>, use <code>React.memo</code>. If you
+            are memoizing <em>what to compute</em>, use <code>useMemo</code>.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>How do I profile React performance issues?</summary>
+        <div class="details-body">
+          <p>
+            Use the <strong>React DevTools Profiler</strong> tab. Record a session, then look for components
+            that re-render more often than expected. The flamegraph view highlights wasted renders in yellow/red.
+            For runtime performance, use Chrome DevTools' Performance tab to identify long tasks and layout thrashing.
+          </p>
+          <p>
+            A common anti-pattern: passing a new object or array literal as a prop on every render. For example,
+            <code>style={{ color: "red" }}</code> creates a new object each time, breaking <code>React.memo</code>.
+            Hoist constant objects outside the component or wrap them in <code>useMemo</code>.
+          </p>
+        </div>
+      </details>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 3: WATCH & LEARN
+           ════════════════════════════════════════ -->
+      <h2 id="watch-learn">Watch &amp; Learn</h2>
+
+      <p>
+        These videos cover dashboard design patterns and React performance optimization techniques.
+        Watch them before starting the assignments to build a mental model of component architecture
+        for data-intensive UIs.
+      </p>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/jx5hdo50a2M?rel=0&amp;modestbranding=1"
+            title="Building Dashboards in React"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Building Dashboards in React &mdash; component architecture, data fetching patterns, and responsive chart layouts
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/deyxI-6C2u4?rel=0&amp;modestbranding=1"
+            title="React Performance Optimization"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          React Performance Optimization &mdash; memo, useMemo, useCallback, virtualization, and profiling techniques
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 4: FURTHER READING
+           ════════════════════════════════════════ -->
+      <h2 id="further-reading">Further Reading</h2>
+
+      <p>Deep-dive into the official documentation and reference material for React state management, data visualization, and performance optimization.</p>
+
+      <div class="resource-grid">
+        <a class="resource-card" href="https://react.dev/learn/managing-state" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">React Docs: Managing State</div>
+            <div class="resource-desc">Official guide to structuring state in React applications. Covers lifting state, reducers, and context for complex UIs.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://tanstack.com/query/latest/docs/framework/react/overview" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">TanStack Query: Overview</div>
+            <div class="resource-desc">Server state management for React. Automatic caching, refetching, polling, optimistic updates, and stale-while-revalidate patterns.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://react.dev/learn/keeping-components-pure" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">React Docs: Keeping Components Pure</div>
+            <div class="resource-desc">Why purity matters for React performance. Pure components are predictable, testable, and safe to memoize.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://recharts.org/en-US/guide" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Recharts Documentation</div>
+            <div class="resource-desc">Declarative chart library built on D3 for React. Line charts, bar charts, area charts, and responsive containers.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://react.dev/learn/render-and-commit" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">React Docs: Performance (Render and Commit)</div>
+            <div class="resource-desc">Understanding React's render cycle is essential for optimizing dashboards. Covers trigger, render, and commit phases.</div>
+          </div>
+        </a>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 5: ASSIGNMENTS
+           ════════════════════════════════════════ -->
+      <h2 id="assignments">Assignments</h2>
+
+      <p>
+        Complete these in order. Each level builds on the previous one. Submit your work as a GitHub PR
+        with <code>docs/chapter-09.md</code> containing your component architecture decisions, screenshot
+        walkthroughs of the UI, and performance profiling results.
+      </p>
+
+      <!-- Assignment 1: Level 1 -->
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 1
+          </div>
+          <span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span>
+        </div>
+        <h4>Ad Group Operations Panel with Bid Suggestion Display</h4>
+        <p>Build the core ad group listing with campaign context and bid suggestion previews. Operators should be able to see all ad groups, grouped by campaign, with current and suggested bid values.</p>
+
+        <ul class="checklist">
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Create <code>AdGroupList</code> component that fetches ad groups from the API via TanStack Query</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Group ad groups by parent campaign with collapsible campaign headers</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Display current bid, suggested bid, daily spend, and lead count for each ad group row</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Add visual indicators for bid direction: green arrow for increase, red arrow for decrease, dash for no change</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Implement an "Apply" button that opens a confirmation modal with the bid diff and projected impact</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Build loading skeletons that match the layout of the real ad group rows</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Add an empty state for campaigns with no ad groups</span>
+          </li>
+        </ul>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            The ad group list loads from the API, groups rows by campaign, and shows bid suggestions with
+            directional indicators. Clicking "Apply" on any row opens a confirmation modal showing the
+            current bid, suggested bid, and percentage change. The UI handles loading and empty states gracefully.
+          </p>
+        </div>
+      </div>
+
+      <!-- Assignment 2: Level 2 -->
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 2
+          </div>
+          <span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span>
+        </div>
+        <h4>Performance Dashboard with KPI Cards and Trend Charts</h4>
+        <p>Build the full performance dashboard with KPI summary cards, sparklines, a trend chart with date range selection, and a sortable campaign breakdown table.</p>
+
+        <ul class="checklist">
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Create four <code>KpiCard</code> components: Total Spend, Total Leads, Cost Per Lead, Conversion Rate</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Add sparkline charts to each KPI card showing the last 7 days of data</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Implement delta badges showing percentage change vs. the prior period</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Build a <code>SpendTrendChart</code> using Recharts with dual Y-axes (spend + leads)</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Add date range selector with presets: Today, Last 7 Days, Last 30 Days, Custom</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Build a sortable campaign breakdown table with Spend, Leads, CPL, and Conversion Rate columns</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Implement <code>usePollingQuery</code> hook with 30-second refetch interval and stale data indicators</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Add loading skeletons for all cards, charts, and table rows</span>
+          </li>
+        </ul>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            The dashboard loads KPI cards with sparklines and delta badges. The trend chart renders dual-axis
+            data and responds to date range changes. The breakdown table sorts by any column. Data refreshes
+            automatically every 30 seconds with a visible "last updated" indicator. All components show
+            skeletons during loading and handle empty data gracefully.
+          </p>
+        </div>
+      </div>
+
+      <!-- Assignment 3: Level 3 -->
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 3
+          </div>
+          <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Production-Ready</span>
+        </div>
+        <h4>Full Operations Console with Change History and Compare Mode</h4>
+        <p>Wire the operations console and dashboard together into a production-grade experience with optimistic bid updates, full change history, compare mode, and performance optimization for large datasets.</p>
+
+        <ul class="checklist">
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Implement optimistic bid updates using TanStack Query's <code>onMutate</code> / <code>onError</code> rollback pattern</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Build a change history panel that shows every bid change with timestamp, user, old value, and new value</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Add compare mode: select two date ranges and overlay metrics to spot regressions after bid changes</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Virtualize the ad group list using <code>@tanstack/react-virtual</code> for smooth scrolling with 500+ rows</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Add debounced search filtering with <code>useDebouncedValue</code> hook</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Wrap row components in <code>React.memo</code> and use <code>useMemo</code> for filtered/aggregated data</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Profile with React DevTools Profiler and document before/after render counts</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Add drill-down from campaign breakdown table row to campaign detail view with ad group sub-table</span>
+          </li>
+        </ul>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            Bid changes update the UI immediately (optimistic) and roll back cleanly on server error.
+            The change history panel shows a full audit trail. Compare mode overlays two periods on the
+            trend chart. The ad group list scrolls smoothly with 500+ rows (virtualized). Search filters
+            with zero perceptible lag. React DevTools Profiler shows no wasted renders on KPI cards or
+            table rows when unrelated data changes.
+          </p>
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 6: SELF-CHECK
+           ════════════════════════════════════════ -->
+      <h2 id="self-check">Self-Check</h2>
+
+      <p>Before moving to Chapter 10, honestly answer these questions. If any answer is "no", go back and fix it.</p>
+
+      <details>
+        <summary>Does the dashboard clearly indicate when data is stale?</summary>
+        <div class="details-body">
+          <p>
+            Open the dashboard and disconnect your network (DevTools &rarr; Network &rarr; Offline). Wait
+            60 seconds. The "last updated" indicator should turn yellow or red, clearly telling the operator
+            that the numbers on screen may not reflect reality. Reconnect &mdash; the data should refresh
+            automatically and the indicator should return to green.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Does a failed bid change roll back cleanly in the UI?</summary>
+        <div class="details-body">
+          <p>
+            Mock a server error on the bid update endpoint (return 422). Click "Apply" on a bid suggestion.
+            The UI should show the new bid optimistically, then revert to the old bid when the error arrives,
+            and display a toast or inline error message. The ad group row should never show a "stuck" intermediate
+            state.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Does the ad group list stay smooth with 500+ rows?</summary>
+        <div class="details-body">
+          <p>
+            Seed your development database with 500+ ad groups. Open the operations console. Scroll rapidly
+            through the list. There should be no visible jank, no dropped frames, and no blank spaces. Open
+            React DevTools Profiler, record a scroll session, and verify that the number of rendered DOM nodes
+            stays constant (roughly 20&ndash;30 rows, not 500+).
+          </p>
+        </div>
+      </details>
+
+    </main>
+
+    <!-- Sidebar: Table of Contents -->
+    <aside class="sidebar">
+      <div class="sidebar-title">On this page</div>
+      <ul class="toc-list">
+        <li class="toc-item"><a href="#why-this-matters">Why This Matters</a></li>
+        <li class="toc-item"><a href="#key-concepts">Key Concepts</a></li>
+        <li class="toc-item"><a href="#ad-group-operations" style="padding-left: 28px; font-size: 12px;">Ad Group Operations UI</a></li>
+        <li class="toc-item"><a href="#realtime-data" style="padding-left: 28px; font-size: 12px;">Real-Time Data Patterns</a></li>
+        <li class="toc-item"><a href="#dashboard-architecture" style="padding-left: 28px; font-size: 12px;">Dashboard Architecture</a></li>
+        <li class="toc-item"><a href="#data-visualization" style="padding-left: 28px; font-size: 12px;">Data Visualization</a></li>
+        <li class="toc-item"><a href="#performance-optimization" style="padding-left: 28px; font-size: 12px;">Performance Optimization</a></li>
+        <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a></li>
+        <li class="toc-item"><a href="#further-reading">Further Reading</a></li>
+        <li class="toc-item"><a href="#assignments">Assignments</a></li>
+        <li class="toc-item"><a href="#self-check">Self-Check</a></li>
+      </ul>
+    </aside>
+  </div>
+
+  <!-- Footer Navigation -->
+  <footer class="chapter-footer">
+    <div class="chapter-footer-inner">
+      <nav class="footer-nav">
+        <a class="footer-nav-link" href="chapter-08.html">
+          <span class="footer-nav-label">&larr; Previous Chapter</span>
+          <span class="footer-nav-title">08: React Shell and Campaign Builder UI</span>
+        </a>
+        <a class="footer-nav-link" href="chapter-10.html">
+          <span class="footer-nav-label">Next Chapter &rarr;</span>
+          <span class="footer-nav-title">10: Testing, Launch Hardening and Capstone</span>
+        </a>
+      </nav>
+      <div class="footer-brand">
+        ILA (Iksha Learning Academy) &middot; Rails + React Engineering Certification &middot; Level 2
+      </div>
+    </div>
+  </footer>
+
+  <!-- ════════════════════════════════════════
+       SCRIPTS
+       ════════════════════════════════════════ -->
+  <script>
+    // ── Progress Bar ──
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      document.getElementById('progressBar').style.width = progress + '%';
+    });
+
+    // ── Active TOC ──
+    const tocLinks = document.querySelectorAll('.toc-item a');
+    const sections = [];
+
+    tocLinks.forEach(link => {
+      const id = link.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) sections.push({ id, el, link });
+    });
+
+    const observerOptions = {
+      rootMargin: '-80px 0px -60% 0px',
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const item = sections.find(s => s.el === entry.target);
+        if (item) {
+          if (entry.isIntersecting) {
+            tocLinks.forEach(l => l.classList.remove('active'));
+            item.link.classList.add('active');
+          }
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(s => observer.observe(s.el));
+
+    // ── Copy Code ──
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      const text = pre.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.classList.add('copied');
+        btn.textContent = 'Copied!';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.textContent = 'Copy';
+        }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>

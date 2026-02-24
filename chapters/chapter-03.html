@@ -1,0 +1,2314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 03: Campaign Management and Budget Pacing — ILA Rails + React</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    /* ═══════════════════════════════════════════════
+       ILA DESIGN SYSTEM — v1.0
+       Iksha Learning Academy
+       ═══════════════════════════════════════════════ */
+
+    :root {
+      /* Palette */
+      --ink:        #0f172a;
+      --ink-light:  #334155;
+      --ink-muted:  #64748b;
+      --surface:    #ffffff;
+      --surface-alt:#f8fafc;
+      --surface-warm:#fffbeb;
+      --border:     #e2e8f0;
+      --border-light:#f1f5f9;
+
+      /* Brand */
+      --teal-50:  #f0fdfa;
+      --teal-100: #ccfbf1;
+      --teal-200: #99f6e4;
+      --teal-500: #14b8a6;
+      --teal-600: #0d9488;
+      --teal-700: #0f766e;
+      --teal-800: #115e59;
+      --teal-900: #134e4a;
+
+      --blue-50:  #eff6ff;
+      --blue-100: #dbeafe;
+      --blue-500: #3b82f6;
+      --blue-600: #2563eb;
+      --blue-700: #1d4ed8;
+
+      --amber-50:  #fffbeb;
+      --amber-100: #fef3c7;
+      --amber-500: #f59e0b;
+      --amber-600: #d97706;
+
+      --red-50:   #fef2f2;
+      --red-100:  #fee2e2;
+      --red-500:  #ef4444;
+      --red-600:  #dc2626;
+
+      --purple-50:  #faf5ff;
+      --purple-100: #f3e8ff;
+      --purple-500: #a855f7;
+      --purple-600: #9333ea;
+
+      /* Typography */
+      --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-serif: 'Instrument Serif', Georgia, serif;
+      --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
+
+      /* Spacing */
+      --content-max: 780px;
+      --sidebar-width: 280px;
+
+      /* Transitions */
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--ink);
+      background: var(--surface);
+    }
+
+    /* ── PROGRESS BAR ─────────────────────────── */
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--teal-500), var(--blue-500));
+      z-index: 1000;
+      transition: width 0.15s var(--ease);
+    }
+
+    /* ── TOP NAV ──────────────────────────────── */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+    }
+
+    .top-nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--teal-800);
+    }
+
+    .nav-brand-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--teal-600), var(--teal-800));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .nav-brand-text {
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-chapter-nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      color: var(--ink-muted);
+      border: 1px solid var(--border);
+      background: white;
+      transition: all 0.2s var(--ease);
+      cursor: pointer;
+    }
+
+    .nav-btn:hover {
+      color: var(--ink);
+      border-color: var(--teal-500);
+      background: var(--teal-50);
+    }
+
+    .nav-btn.disabled {
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    .nav-current {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink-light);
+      padding: 0 4px;
+    }
+
+    /* ── HERO ─────────────────────────────────── */
+    .hero {
+      background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 4rem 2rem 3.5rem;
+    }
+
+    .hero-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
+    }
+
+    .hero-chapter-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--teal-700);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 1rem;
+    }
+
+    .hero-chapter-label span {
+      background: var(--teal-100);
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+
+    .hero h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(2.4rem, 5vw, 3.2rem);
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: 1rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: var(--ink-light);
+      line-height: 1.65;
+      max-width: 640px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .hero-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
+    .hero-meta-item svg {
+      width: 16px;
+      height: 16px;
+      color: var(--teal-600);
+    }
+
+    /* ── MAIN LAYOUT ──────────────────────────── */
+    .main-layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr var(--sidebar-width);
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .content {
+      padding: 3rem 0 6rem;
+      min-width: 0;
+    }
+
+    /* ── SIDEBAR TOC ──────────────────────────── */
+    .sidebar {
+      position: sticky;
+      top: 76px;
+      padding: 2rem 0;
+      max-height: calc(100vh - 76px);
+      overflow-y: auto;
+    }
+
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-muted);
+      margin-bottom: 1rem;
+      padding-left: 14px;
+    }
+
+    .toc-list {
+      list-style: none;
+    }
+
+    .toc-item a {
+      display: block;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--ink-muted);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: all 0.2s var(--ease);
+      line-height: 1.5;
+    }
+
+    .toc-item a:hover {
+      color: var(--ink);
+      background: var(--surface-alt);
+    }
+
+    .toc-item a.active {
+      color: var(--teal-700);
+      border-left-color: var(--teal-500);
+      background: var(--teal-50);
+      font-weight: 500;
+    }
+
+    /* ── TYPOGRAPHY ────────────────────────────── */
+    .content h2 {
+      font-family: var(--font-serif);
+      font-size: 1.85rem;
+      font-weight: 400;
+      color: var(--ink);
+      margin: 3rem 0 1rem;
+      padding-top: 1rem;
+      scroll-margin-top: 80px;
+    }
+
+    .content h2:first-child {
+      margin-top: 0;
+    }
+
+    .content h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 2rem 0 0.75rem;
+      scroll-margin-top: 80px;
+    }
+
+    .content p {
+      margin-bottom: 1.25rem;
+      color: var(--ink-light);
+    }
+
+    .content strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .content a {
+      color: var(--teal-700);
+      text-decoration: underline;
+      text-decoration-color: var(--teal-200);
+      text-underline-offset: 3px;
+      transition: text-decoration-color 0.2s;
+    }
+
+    .content a:hover {
+      text-decoration-color: var(--teal-600);
+    }
+
+    .content ul, .content ol {
+      margin-bottom: 1.25rem;
+      padding-left: 1.5rem;
+    }
+
+    .content li {
+      margin-bottom: 0.5rem;
+      color: var(--ink-light);
+    }
+
+    .content li::marker {
+      color: var(--teal-500);
+    }
+
+    /* ── SECTION DIVIDER ──────────────────────── */
+    .section-divider {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 3rem 0;
+    }
+
+    /* ── CALLOUT BOXES ────────────────────────── */
+    .callout {
+      padding: 1.25rem 1.5rem;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+      border: 1px solid;
+      position: relative;
+    }
+
+    .callout-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .callout-header svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    .callout p:last-child { margin-bottom: 0; }
+
+    .callout.concept {
+      background: var(--blue-50);
+      border-color: var(--blue-100);
+    }
+    .callout.concept .callout-header { color: var(--blue-700); }
+
+    .callout.important {
+      background: var(--amber-50);
+      border-color: var(--amber-100);
+    }
+    .callout.important .callout-header { color: var(--amber-600); }
+
+    .callout.danger {
+      background: var(--red-50);
+      border-color: var(--red-100);
+    }
+    .callout.danger .callout-header { color: var(--red-600); }
+
+    .callout.tip {
+      background: var(--purple-50);
+      border-color: var(--purple-100);
+    }
+    .callout.tip .callout-header { color: var(--purple-600); }
+
+    .callout.success {
+      background: var(--teal-50);
+      border-color: var(--teal-100);
+    }
+    .callout.success .callout-header { color: var(--teal-700); }
+
+    /* ── CODE BLOCKS ──────────────────────────── */
+    .code-block {
+      position: relative;
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+      background: var(--surface-alt);
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--ink-muted);
+    }
+
+    .code-lang {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .code-copy {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: white;
+      font-size: 11px;
+      font-family: var(--font-sans);
+      color: var(--ink-muted);
+      cursor: pointer;
+      transition: all 0.2s var(--ease);
+    }
+
+    .code-copy:hover {
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    .code-copy.copied {
+      background: var(--teal-50);
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    pre {
+      margin: 0;
+      padding: 1.25rem 1.5rem;
+      overflow-x: auto;
+      background: #1e293b;
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: #e2e8f0;
+    }
+
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.88em;
+    }
+
+    p code, li code {
+      padding: 2px 7px;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      color: var(--teal-800);
+      font-size: 0.85em;
+    }
+
+    /* Syntax highlights (minimal) */
+    .hl-keyword  { color: #c084fc; }
+    .hl-string   { color: #86efac; }
+    .hl-comment  { color: #64748b; font-style: italic; }
+    .hl-function { color: #7dd3fc; }
+    .hl-number   { color: #fbbf24; }
+    .hl-flag     { color: #f472b6; }
+
+    /* ── COLLAPSIBLE (DETAILS) ────────────────── */
+    details {
+      margin-bottom: 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.2s var(--ease);
+    }
+
+    details[open] {
+      border-color: var(--teal-200);
+    }
+
+    details summary {
+      padding: 1rem 1.25rem;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      background: var(--surface-alt);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.2s var(--ease);
+      user-select: none;
+    }
+
+    details summary::-webkit-details-marker { display: none; }
+
+    details summary::before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+      flex-shrink: 0;
+      transition: transform 0.2s var(--ease);
+    }
+
+    details[open] summary::before {
+      transform: rotate(90deg);
+    }
+
+    details summary:hover {
+      background: var(--teal-50);
+    }
+
+    .details-body {
+      padding: 1.25rem 1.5rem;
+    }
+
+    .details-body p:last-child { margin-bottom: 0; }
+
+    /* ── VIDEO EMBED ──────────────────────────── */
+    .video-card {
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      background: #0f172a;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .video-caption {
+      padding: 12px 16px;
+      background: var(--surface-alt);
+      font-size: 13px;
+      color: var(--ink-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .video-caption svg {
+      width: 14px;
+      height: 14px;
+      color: var(--red-500);
+    }
+
+    /* ── RESOURCE CARDS ───────────────────────── */
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .resource-card {
+      display: flex;
+      gap: 14px;
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      background: white;
+    }
+
+    .resource-card:hover {
+      border-color: var(--teal-300);
+      background: var(--teal-50);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .resource-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 18px;
+    }
+
+    .resource-icon.docs    { background: var(--blue-50);   color: var(--blue-600); }
+    .resource-icon.video   { background: var(--red-50);    color: var(--red-500); }
+    .resource-icon.github  { background: var(--ink);       color: white; }
+    .resource-icon.article { background: var(--amber-50);  color: var(--amber-600); }
+    .resource-icon.pdf     { background: var(--purple-50); color: var(--purple-600); }
+
+    .resource-info {
+      min-width: 0;
+    }
+
+    .resource-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 2px;
+      line-height: 1.4;
+    }
+
+    .resource-desc {
+      font-size: 12px;
+      color: var(--ink-muted);
+      line-height: 1.5;
+    }
+
+    /* ── ASSIGNMENT CARDS ─────────────────────── */
+    .assignment {
+      border: 2px solid var(--teal-200);
+      border-radius: 14px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--teal-50) 0%, white 100%);
+    }
+
+    .assignment-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .assignment-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--teal-700);
+    }
+
+    .assignment-difficulty {
+      display: inline-flex;
+      padding: 4px 10px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .difficulty-l1 { background: var(--teal-100); color: var(--teal-800); }
+    .difficulty-l2 { background: var(--amber-100); color: var(--amber-600); }
+    .difficulty-l3 { background: var(--red-100); color: var(--red-600); }
+
+    .assignment h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .assignment p {
+      font-size: 14px;
+    }
+
+    .checklist {
+      list-style: none;
+      padding: 0;
+    }
+
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-light);
+      font-size: 14px;
+    }
+
+    .checklist li:last-child { border-bottom: none; }
+
+    .check-box {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      border: 2px solid var(--border);
+      flex-shrink: 0;
+      margin-top: 1px;
+      cursor: pointer;
+      transition: all 0.15s var(--ease);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .check-box:hover {
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked {
+      background: var(--teal-500);
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+    }
+
+    /* ── ARCHITECTURE DIAGRAM ─────────────────── */
+    .diagram {
+      margin: 1.5rem 0;
+      padding: 2rem;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow-x: auto;
+    }
+
+    .diagram pre {
+      background: transparent;
+      color: var(--ink);
+      padding: 0;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .diagram-caption {
+      margin-top: 1rem;
+      font-size: 12px;
+      color: var(--ink-muted);
+      text-align: center;
+      font-style: italic;
+    }
+
+    /* ── FOOTER ───────────────────────────────── */
+    .chapter-footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      background: var(--surface-alt);
+    }
+
+    .chapter-footer-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
+    }
+
+    .footer-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .footer-nav-link {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 1rem 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      max-width: 320px;
+      background: white;
+    }
+
+    .footer-nav-link:hover {
+      border-color: var(--teal-300);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .footer-nav-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--teal-600);
+    }
+
+    .footer-nav-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .footer-brand {
+      text-align: center;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
+    /* ── RESPONSIVE ───────────────────────────── */
+    @media (max-width: 960px) {
+      .main-layout {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        display: none;
+      }
+      .resource-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero { padding: 2.5rem 1.25rem 2rem; }
+      .main-layout { padding: 0 1.25rem; }
+      .content { padding: 2rem 0 4rem; }
+      pre { padding: 1rem; font-size: 12.5px; }
+      .footer-nav { flex-direction: column; }
+      .footer-nav-link { max-width: 100%; width: 100%; }
+    }
+
+    /* ── PRINT ────────────────────────────────── */
+    @media print {
+      .top-nav, .sidebar, .progress-bar { display: none; }
+      .main-layout { display: block; }
+      .content { padding: 0; }
+      .hero { background: white; border: none; }
+      pre { background: #f1f5f9; color: var(--ink); border: 1px solid var(--border); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Progress Bar -->
+  <div class="progress-bar" id="progressBar"></div>
+
+  <!-- Top Navigation -->
+  <nav class="top-nav">
+    <div class="top-nav-inner">
+      <a class="nav-brand" href="index.html">
+        <div class="nav-brand-icon">ILA</div>
+        <span class="nav-brand-text">Iksha Learning Academy</span>
+      </a>
+      <div class="nav-chapter-nav">
+        <a class="nav-btn" href="chapter-02.html">&larr; Previous</a>
+        <span class="nav-current">03 / 10</span>
+        <a class="nav-btn" href="chapter-04.html">Next &rarr;</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-chapter-label">
+        <span>Chapter 03</span> &middot; Phase 2: Core Business Logic
+      </div>
+      <h1>Campaign Management and Budget Pacing</h1>
+      <p class="hero-subtitle">
+        Build the core campaign entity with lifecycle states, validation, and API contracts. Add budget
+        pacing logic so spend is distributed safely across a campaign's lifetime instead of burning
+        through budget in the first hour of traffic.
+      </p>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Estimated: 4&ndash;5 days
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          3 Advancement Levels
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          3 Assignments
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content + Sidebar -->
+  <div class="main-layout">
+    <main class="content">
+
+      <!-- ════════════════════════════════════════
+           SECTION 1: WHY THIS MATTERS
+           ════════════════════════════════════════ -->
+      <h2 id="why-this-matters">Why This Matters</h2>
+
+      <p>
+        Campaign controls are the center of spend planning in any ad platform. Every dollar an advertiser
+        commits flows through a campaign object &mdash; from the moment a draft is created to the final
+        impression delivered. If campaign state transitions are unreliable, operators lose control of
+        what's running. If budget pacing is absent or broken, money burns too fast and unit economics collapse.
+      </p>
+
+      <p>
+        Consider this scenario: an advertiser sets a $10,000 daily budget on a campaign targeting a
+        high-traffic geo. Without pacing, the entire budget could be exhausted in the first 90 minutes
+        of the day when bid competition is highest. The remaining 22.5 hours produce zero impressions.
+        The advertiser sees terrible performance metrics and churns. <strong>Runaway spend destroys
+        trust faster than any other bug.</strong>
+      </p>
+
+      <p>
+        This chapter combines two critical concerns &mdash; campaign lifecycle management and budget
+        pacing guardrails &mdash; because they are deeply intertwined. You cannot pace a budget without
+        understanding campaign states (is it active? paused? completed?), and you cannot safely manage
+        campaign states without understanding their budget implications (can we activate a campaign with
+        zero budget remaining?).
+      </p>
+
+      <div class="callout danger">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          The Cost of Getting This Wrong
+        </div>
+        <p>
+          A missing guard clause on a state transition can allow a paused campaign to resume spending.
+          A budget check that doesn't account for race conditions can allow double-spending under
+          concurrent traffic. These aren't theoretical &mdash; they're the top two billing disputes
+          in production ad platforms. Every dollar overspent comes out of your margin or your
+          advertiser's trust.
+        </p>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 2: KEY CONCEPTS
+           ════════════════════════════════════════ -->
+      <h2 id="key-concepts">Key Concepts</h2>
+
+      <h3 id="campaign-state-machine">1. Campaign Data Model and State Machine</h3>
+
+      <p>
+        A campaign is the top-level spending entity. It belongs to an account (tenant), has a name,
+        a budget, start and end dates, and most importantly &mdash; a <strong>status</strong> that
+        controls whether it can spend money. The status field is not just a label; it's a state
+        machine with enforced transitions.
+      </p>
+
+      <p>
+        The four canonical states are: <code>draft</code>, <code>active</code>, <code>paused</code>,
+        and <code>completed</code>. Each transition has guard clauses &mdash; conditions that must
+        be true before the transition is allowed. For example, a campaign cannot move from
+        <code>draft</code> to <code>active</code> unless it has a positive budget and valid dates.
+      </p>
+
+      <div class="diagram">
+<pre>
+                    ┌─────────────────────────────────────────────┐
+                    │          CAMPAIGN STATE MACHINE              │
+                    └─────────────────────────────────────────────┘
+
+                         ┌──────────┐
+                         │  DRAFT   │
+                         │          │
+                         └────┬─────┘
+                              │
+                    activate! │  Guards:
+                              │  - budget &gt; 0
+                              │  - start_date present
+                              │  - end_date &gt; start_date
+                              ▼
+                         ┌──────────┐
+               ┌────────▶│  ACTIVE  │◀────────┐
+               │         │          │         │
+               │         └────┬─────┘         │
+               │              │               │
+      resume!  │    pause!    │     resume!   │
+               │              ▼               │
+               │         ┌──────────┐         │
+               │         │  PAUSED  │─────────┘
+               │         │          │
+               │         └────┬─────┘
+               │              │
+               │   complete!  │  (also triggered automatically
+               │              │   when end_date passes or
+               │              │   lifetime budget exhausted)
+               │              ▼
+               │         ┌──────────┐
+               └─ ─ ─ ─ ┤COMPLETED │  (terminal — no transitions out)
+                         │          │
+                         └──────────┘
+
+    Valid transitions:
+      draft     → active
+      active    → paused
+      active    → completed
+      paused    → active    (resume)
+      paused    → completed
+</pre>
+        <div class="diagram-caption">Figure 1: Campaign state machine with guard clauses on each transition</div>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># app/models/campaign.rb</span>
+<span class="hl-keyword">class</span> <span class="hl-function">Campaign</span> &lt; ApplicationRecord
+  belongs_to <span class="hl-string">:account</span>
+  acts_as_tenant <span class="hl-string">:account</span>
+
+  <span class="hl-keyword">enum</span> <span class="hl-string">:status</span>, {
+    draft:     <span class="hl-number">0</span>,
+    active:    <span class="hl-number">1</span>,
+    paused:    <span class="hl-number">2</span>,
+    completed: <span class="hl-number">3</span>
+  }, default: <span class="hl-string">:draft</span>
+
+  validates <span class="hl-string">:name</span>,       presence: <span class="hl-keyword">true</span>, length: { maximum: <span class="hl-number">255</span> }
+  validates <span class="hl-string">:budget</span>,     presence: <span class="hl-keyword">true</span>, numericality: { greater_than_or_equal_to: <span class="hl-number">0</span> }
+  validates <span class="hl-string">:daily_budget</span>, numericality: { greater_than: <span class="hl-number">0</span> }, allow_nil: <span class="hl-keyword">true</span>
+  validates <span class="hl-string">:start_date</span>, presence: <span class="hl-keyword">true</span>
+  validates <span class="hl-string">:end_date</span>,   presence: <span class="hl-keyword">true</span>
+  validate  <span class="hl-string">:end_date_after_start_date</span>
+
+  <span class="hl-comment"># ── State Transitions ──</span>
+
+  VALID_TRANSITIONS = {
+    <span class="hl-string">"draft"</span>     =&gt; [<span class="hl-string">"active"</span>],
+    <span class="hl-string">"active"</span>    =&gt; [<span class="hl-string">"paused"</span>, <span class="hl-string">"completed"</span>],
+    <span class="hl-string">"paused"</span>    =&gt; [<span class="hl-string">"active"</span>, <span class="hl-string">"completed"</span>],
+    <span class="hl-string">"completed"</span> =&gt; []
+  }.freeze
+
+  <span class="hl-keyword">def</span> <span class="hl-function">transition_to!</span>(new_status)
+    <span class="hl-keyword">unless</span> VALID_TRANSITIONS[status]&.include?(new_status.to_s)
+      errors.add(<span class="hl-string">:status</span>, <span class="hl-string">"cannot transition from #{status} to #{new_status}"</span>)
+      <span class="hl-keyword">raise</span> ActiveRecord::RecordInvalid, <span class="hl-keyword">self</span>
+    <span class="hl-keyword">end</span>
+
+    <span class="hl-comment"># Run guard clauses for the target state</span>
+    send(<span class="hl-string">"guard_#{new_status}!"</span>)
+    update!(status: new_status)
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">private</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">guard_active!</span>
+    <span class="hl-keyword">raise</span> ActiveRecord::RecordInvalid, <span class="hl-keyword">self</span> <span class="hl-keyword">if</span> budget &lt;= <span class="hl-number">0</span>
+    <span class="hl-keyword">raise</span> ActiveRecord::RecordInvalid, <span class="hl-keyword">self</span> <span class="hl-keyword">if</span> end_date &lt;= Date.current
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">guard_paused!</span>
+    <span class="hl-comment"># No additional guards — always allowed from valid source states</span>
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">guard_completed!</span>
+    <span class="hl-comment"># No additional guards — completion is always allowed</span>
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">end_date_after_start_date</span>
+    <span class="hl-keyword">return</span> <span class="hl-keyword">unless</span> start_date &amp;&amp; end_date
+    errors.add(<span class="hl-string">:end_date</span>, <span class="hl-string">"must be after start date"</span>) <span class="hl-keyword">if</span> end_date &lt;= start_date
+  <span class="hl-keyword">end</span>
+<span class="hl-keyword">end</span>
+</pre>
+      </div>
+
+      <div class="callout concept">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Key Insight
+        </div>
+        <p>
+          The state machine is implemented with a simple hash and guard methods rather than a gem
+          like <code>aasm</code> or <code>statesman</code>. For a four-state machine, a hash is
+          more readable and debuggable than a DSL. If your state machine grows beyond 6&ndash;8 states,
+          consider switching to a dedicated gem that provides history tracking and event callbacks.
+        </p>
+      </div>
+
+      <h3 id="campaign-crud-api">2. Campaign CRUD API Design</h3>
+
+      <p>
+        The campaign API follows standard REST conventions. The key design decisions are: use separate
+        serializers for list vs. detail views (list responses should be lightweight), validate all
+        inputs through strong parameters, and always scope queries to the current tenant.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># config/routes.rb</span>
+Rails.application.routes.draw <span class="hl-keyword">do</span>
+  post <span class="hl-string">"/auth/login"</span>, to: <span class="hl-string">"auth#login"</span>
+  get  <span class="hl-string">"/auth/me"</span>,    to: <span class="hl-string">"auth#me"</span>
+
+  resources <span class="hl-string">:campaigns</span>, only: [<span class="hl-string">:index</span>, <span class="hl-string">:show</span>, <span class="hl-string">:create</span>, <span class="hl-string">:update</span>] <span class="hl-keyword">do</span>
+    member <span class="hl-keyword">do</span>
+      post <span class="hl-string">:activate</span>
+      post <span class="hl-string">:pause</span>
+      post <span class="hl-string">:complete</span>
+    <span class="hl-keyword">end</span>
+  <span class="hl-keyword">end</span>
+<span class="hl-keyword">end</span>
+</pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># app/controllers/campaigns_controller.rb</span>
+<span class="hl-keyword">class</span> <span class="hl-function">CampaignsController</span> &lt; ApplicationController
+  before_action <span class="hl-string">:set_campaign</span>, only: [<span class="hl-string">:show</span>, <span class="hl-string">:update</span>, <span class="hl-string">:activate</span>, <span class="hl-string">:pause</span>, <span class="hl-string">:complete</span>]
+
+  <span class="hl-comment"># GET /campaigns</span>
+  <span class="hl-keyword">def</span> <span class="hl-function">index</span>
+    campaigns = current_account.campaigns
+                  .order(created_at: <span class="hl-string">:desc</span>)
+                  .page(params[<span class="hl-string">:page</span>])
+                  .per(<span class="hl-number">25</span>)
+
+    render json: {
+      <span class="hl-string">campaigns</span>: campaigns.map { |c| CampaignListSerializer.new(c).as_json },
+      <span class="hl-string">meta</span>: { total: campaigns.total_count, page: campaigns.current_page }
+    }
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-comment"># GET /campaigns/:id</span>
+  <span class="hl-keyword">def</span> <span class="hl-function">show</span>
+    render json: { <span class="hl-string">campaign</span>: CampaignDetailSerializer.new(@campaign).as_json }
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-comment"># POST /campaigns</span>
+  <span class="hl-keyword">def</span> <span class="hl-function">create</span>
+    campaign = current_account.campaigns.build(campaign_params)
+
+    <span class="hl-keyword">if</span> campaign.save
+      render json: { <span class="hl-string">campaign</span>: CampaignDetailSerializer.new(campaign).as_json },
+             status: <span class="hl-string">:created</span>
+    <span class="hl-keyword">else</span>
+      render json: { <span class="hl-string">errors</span>: campaign.errors.full_messages },
+             status: <span class="hl-string">:unprocessable_entity</span>
+    <span class="hl-keyword">end</span>
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-comment"># PATCH /campaigns/:id</span>
+  <span class="hl-keyword">def</span> <span class="hl-function">update</span>
+    <span class="hl-keyword">if</span> @campaign.update(campaign_params)
+      render json: { <span class="hl-string">campaign</span>: CampaignDetailSerializer.new(@campaign).as_json }
+    <span class="hl-keyword">else</span>
+      render json: { <span class="hl-string">errors</span>: @campaign.errors.full_messages },
+             status: <span class="hl-string">:unprocessable_entity</span>
+    <span class="hl-keyword">end</span>
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-comment"># POST /campaigns/:id/activate</span>
+  <span class="hl-keyword">def</span> <span class="hl-function">activate</span>
+    @campaign.transition_to!(<span class="hl-string">:active</span>)
+    render json: { <span class="hl-string">campaign</span>: CampaignDetailSerializer.new(@campaign).as_json }
+  <span class="hl-keyword">rescue</span> ActiveRecord::RecordInvalid
+    render json: { <span class="hl-string">errors</span>: @campaign.errors.full_messages },
+           status: <span class="hl-string">:unprocessable_entity</span>
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-comment"># POST /campaigns/:id/pause</span>
+  <span class="hl-keyword">def</span> <span class="hl-function">pause</span>
+    @campaign.transition_to!(<span class="hl-string">:paused</span>)
+    render json: { <span class="hl-string">campaign</span>: CampaignDetailSerializer.new(@campaign).as_json }
+  <span class="hl-keyword">rescue</span> ActiveRecord::RecordInvalid
+    render json: { <span class="hl-string">errors</span>: @campaign.errors.full_messages },
+           status: <span class="hl-string">:unprocessable_entity</span>
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-comment"># POST /campaigns/:id/complete</span>
+  <span class="hl-keyword">def</span> <span class="hl-function">complete</span>
+    @campaign.transition_to!(<span class="hl-string">:completed</span>)
+    render json: { <span class="hl-string">campaign</span>: CampaignDetailSerializer.new(@campaign).as_json }
+  <span class="hl-keyword">rescue</span> ActiveRecord::RecordInvalid
+    render json: { <span class="hl-string">errors</span>: @campaign.errors.full_messages },
+           status: <span class="hl-string">:unprocessable_entity</span>
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">private</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">set_campaign</span>
+    @campaign = current_account.campaigns.find(params[<span class="hl-string">:id</span>])
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">campaign_params</span>
+    params.require(<span class="hl-string">:campaign</span>).permit(
+      <span class="hl-string">:name</span>, <span class="hl-string">:budget</span>, <span class="hl-string">:daily_budget</span>,
+      <span class="hl-string">:start_date</span>, <span class="hl-string">:end_date</span>
+    )
+  <span class="hl-keyword">end</span>
+<span class="hl-keyword">end</span>
+</pre>
+      </div>
+
+      <p>
+        Notice the two serializer classes. The <strong>list serializer</strong> returns only the fields
+        needed for a table view (id, name, status, budget, dates). The <strong>detail serializer</strong>
+        adds computed fields like <code>spent_today</code>, <code>remaining_budget</code>, and
+        <code>pacing_status</code>. This keeps list responses fast even when an account has thousands
+        of campaigns.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># app/serializers/campaign_list_serializer.rb</span>
+<span class="hl-keyword">class</span> <span class="hl-function">CampaignListSerializer</span>
+  <span class="hl-keyword">def</span> <span class="hl-function">initialize</span>(campaign)
+    @campaign = campaign
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">as_json</span>
+    {
+      <span class="hl-string">id</span>:         @campaign.id,
+      <span class="hl-string">name</span>:       @campaign.name,
+      <span class="hl-string">status</span>:     @campaign.status,
+      <span class="hl-string">budget</span>:     @campaign.budget.to_f,
+      <span class="hl-string">start_date</span>: @campaign.start_date,
+      <span class="hl-string">end_date</span>:   @campaign.end_date,
+      <span class="hl-string">created_at</span>: @campaign.created_at
+    }
+  <span class="hl-keyword">end</span>
+<span class="hl-keyword">end</span>
+
+<span class="hl-comment"># app/serializers/campaign_detail_serializer.rb</span>
+<span class="hl-keyword">class</span> <span class="hl-function">CampaignDetailSerializer</span> &lt; CampaignListSerializer
+  <span class="hl-keyword">def</span> <span class="hl-function">as_json</span>
+    <span class="hl-keyword">super</span>.merge(
+      <span class="hl-string">daily_budget</span>:     @campaign.daily_budget&.to_f,
+      <span class="hl-string">spent_today</span>:      @campaign.spent_today.to_f,
+      <span class="hl-string">remaining_budget</span>: @campaign.remaining_budget.to_f,
+      <span class="hl-string">pacing_status</span>:    PacingService.status_for(@campaign),
+      <span class="hl-string">updated_at</span>:       @campaign.updated_at
+    )
+  <span class="hl-keyword">end</span>
+<span class="hl-keyword">end</span>
+</pre>
+      </div>
+
+      <div class="callout important">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Always Scope to the Tenant
+        </div>
+        <p>
+          Every query in the controller goes through <code>current_account.campaigns</code>, never
+          <code>Campaign.find(...)</code>. This is the tenant isolation pattern from Chapter 02.
+          If <code>acts_as_tenant</code> is configured, this scoping happens automatically, but
+          the explicit form is clearer and safer as a habit.
+        </p>
+      </div>
+
+      <details>
+        <summary>Why separate state-transition endpoints instead of using <code>PATCH /campaigns/:id</code>?</summary>
+        <div class="details-body">
+          <p>
+            State transitions have side effects &mdash; activating a campaign may trigger bid
+            registration, pausing may cancel pending bids, completing may fire billing reconciliation.
+            A generic <code>PATCH</code> with <code>status: "active"</code> hides the intent and
+            makes it harder to add callbacks, logging, and guards. Dedicated <code>POST</code>
+            endpoints (<code>/activate</code>, <code>/pause</code>, <code>/complete</code>) make
+            the intent explicit and give you a clean place to hang before/after hooks.
+          </p>
+        </div>
+      </details>
+
+      <h3 id="budget-pacing-models">3. Budget Pacing Models</h3>
+
+      <p>
+        Budget pacing determines <strong>how fast</strong> a campaign is allowed to spend. Without
+        pacing, a campaign with a $10,000 daily budget will bid aggressively in the morning auction
+        and exhaust its budget before noon. Pacing smooths spend across the day or the campaign's
+        lifetime.
+      </p>
+
+      <p>
+        There are two budget types and three pacing strategies:
+      </p>
+
+      <ul>
+        <li><strong>Daily budget</strong> &mdash; Maximum spend per calendar day. Resets at midnight UTC. Most common for always-on campaigns.</li>
+        <li><strong>Lifetime budget</strong> &mdash; Total spend for the entire campaign duration. The system calculates an implied daily budget based on remaining days.</li>
+      </ul>
+
+      <ul>
+        <li><strong>Even distribution</strong> &mdash; Spread spend uniformly across the day. Simple, predictable, the default for most campaigns.</li>
+        <li><strong>Front-loaded</strong> &mdash; Spend more aggressively in the first half of the day, then throttle. Useful for time-sensitive promotions.</li>
+        <li><strong>Performance-based</strong> &mdash; Allocate more budget to hours with historically higher conversion rates. Requires data from prior campaigns.</li>
+      </ul>
+
+      <div class="diagram">
+<pre>
+  Spend ($)
+    │
+    │                           ╱─── Front-loaded
+    │                         ╱
+    │                       ╱
+    │                     ╱
+    │       ╱─────────╱──── ─ ─ ── Even distribution
+    │     ╱         ╱
+    │   ╱         ╱      .  .
+    │  ╱        ╱    .         . ─── Performance-based
+    │ ╱       ╱   .              .    (follows conversion curve)
+    │╱      ╱  .                   .
+    │     ╱ .                        .
+    │───╱.────────────────────────────────────── Time
+    │
+    0:00   4:00   8:00  12:00  16:00  20:00  24:00
+
+    Daily budget cap ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ $10,000
+</pre>
+        <div class="diagram-caption">Figure 2: Three pacing strategies plotted against daily budget cap</div>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># app/services/pacing_service.rb</span>
+<span class="hl-keyword">class</span> <span class="hl-function">PacingService</span>
+  <span class="hl-comment"># Returns the maximum amount this campaign can spend RIGHT NOW</span>
+  <span class="hl-comment"># based on its pacing strategy and elapsed time today.</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-keyword">self</span>.<span class="hl-function">allowed_spend</span>(campaign)
+    <span class="hl-keyword">new</span>(campaign).allowed_spend
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-keyword">self</span>.<span class="hl-function">status_for</span>(campaign)
+    <span class="hl-keyword">new</span>(campaign).status
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">initialize</span>(campaign)
+    @campaign = campaign
+    @now = Time.current
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">allowed_spend</span>
+    effective_daily = effective_daily_budget
+    <span class="hl-keyword">return</span> <span class="hl-number">0</span> <span class="hl-keyword">if</span> effective_daily &lt;= <span class="hl-number">0</span>
+
+    elapsed_fraction = elapsed_day_fraction
+    ideal_spend = effective_daily * elapsed_fraction
+    actual_spend = @campaign.spent_today
+
+    <span class="hl-comment"># Allow up to ideal_spend — what's already been spent</span>
+    [ideal_spend - actual_spend, <span class="hl-number">0</span>].max
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">status</span>
+    <span class="hl-keyword">return</span> <span class="hl-string">"paused"</span>     <span class="hl-keyword">unless</span> @campaign.active?
+    <span class="hl-keyword">return</span> <span class="hl-string">"exhausted"</span>  <span class="hl-keyword">if</span> remaining_lifetime &lt;= <span class="hl-number">0</span>
+    <span class="hl-keyword">return</span> <span class="hl-string">"throttled"</span>  <span class="hl-keyword">if</span> allowed_spend &lt;= <span class="hl-number">0</span>
+    <span class="hl-string">"on_pace"</span>
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">private</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">effective_daily_budget</span>
+    <span class="hl-keyword">if</span> @campaign.daily_budget.present?
+      @campaign.daily_budget
+    <span class="hl-keyword">else</span>
+      <span class="hl-comment"># Lifetime budget: spread remaining budget over remaining days</span>
+      remaining_days = (@campaign.end_date - Date.current).to_i
+      <span class="hl-keyword">return</span> <span class="hl-number">0</span> <span class="hl-keyword">if</span> remaining_days &lt;= <span class="hl-number">0</span>
+      remaining_lifetime / remaining_days.to_f
+    <span class="hl-keyword">end</span>
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">remaining_lifetime</span>
+    @campaign.budget - @campaign.total_spent
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">elapsed_day_fraction</span>
+    <span class="hl-comment"># What fraction of the day has passed (0.0 to 1.0)</span>
+    seconds_today = @now.seconds_since_midnight
+    seconds_today / <span class="hl-number">86_400</span>.to_f
+  <span class="hl-keyword">end</span>
+<span class="hl-keyword">end</span>
+</pre>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Pro Tip: Time Zones Matter
+        </div>
+        <p>
+          This example uses UTC for simplicity. In production, advertisers expect daily budgets
+          to reset at midnight in <em>their</em> time zone. Store a <code>timezone</code> column
+          on the Account model and use <code>Time.current.in_time_zone(account.timezone)</code>
+          for all pacing calculations.
+        </p>
+      </div>
+
+      <h3 id="budget-enforcement">4. Budget Enforcement</h3>
+
+      <p>
+        Knowing the pacing limit is one thing. <strong>Enforcing</strong> it under concurrent traffic
+        is another. When thousands of bid requests arrive per second, multiple workers may read
+        the same <code>spent_today</code> value simultaneously, each concluding "there's budget
+        remaining," and all proceeding to spend &mdash; blowing past the budget.
+      </p>
+
+      <p>
+        The solution involves three layers: optimistic checks for fast rejection, pessimistic
+        locks for atomic updates, and emergency cutoffs for catastrophic failures.
+      </p>
+
+      <div class="diagram">
+<pre>
+  ┌───────────────────────────────────────────────────────────┐
+  │                  BID REQUEST ARRIVES                       │
+  └──────────────────────┬────────────────────────────────────┘
+                         │
+                         ▼
+              ┌──────────────────────┐
+              │  Layer 1: FAST CHECK │   Read from Redis cache
+              │  Is campaign active? │   "Is there likely budget?"
+              │  Rough budget check  │   Rejects 90% of over-budget
+              └──────────┬───────────┘
+                         │ Pass
+                         ▼
+              ┌──────────────────────┐
+              │  Layer 2: DB LOCK    │   SELECT ... FOR UPDATE
+              │  Atomic spend check  │   Read true spent_today
+              │  Deduct &amp; commit     │   Single transaction
+              └──────────┬───────────┘
+                         │ Pass
+                         ▼
+              ┌──────────────────────┐
+              │  Layer 3: POST-SPEND │   Async reconciliation
+              │  Update Redis cache  │   Log budget decision
+              │  Check daily totals  │   Trigger alerts if over
+              └──────────────────────┘
+</pre>
+        <div class="diagram-caption">Figure 3: Three-layer budget enforcement pipeline</div>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># app/services/budget_enforcer.rb</span>
+<span class="hl-keyword">class</span> <span class="hl-function">BudgetEnforcer</span>
+  Result = Struct.new(<span class="hl-string">:allowed</span>, <span class="hl-string">:reason</span>, keyword_init: <span class="hl-keyword">true</span>)
+
+  <span class="hl-keyword">def</span> <span class="hl-keyword">self</span>.<span class="hl-function">can_spend?</span>(campaign, amount)
+    <span class="hl-keyword">new</span>(campaign, amount).check
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">initialize</span>(campaign, amount)
+    @campaign = campaign
+    @amount   = amount
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">check</span>
+    <span class="hl-comment"># Layer 1: Fast rejection (no DB hit)</span>
+    <span class="hl-keyword">return</span> deny(<span class="hl-string">"campaign_not_active"</span>) <span class="hl-keyword">unless</span> @campaign.active?
+    <span class="hl-keyword">return</span> deny(<span class="hl-string">"emergency_cutoff"</span>)    <span class="hl-keyword">if</span> emergency_cutoff?
+
+    <span class="hl-comment"># Layer 2: Atomic budget check with row lock</span>
+    Campaign.transaction(isolation: <span class="hl-string">:serializable</span>) <span class="hl-keyword">do</span>
+      locked = Campaign.lock(<span class="hl-string">"FOR UPDATE"</span>).find(@campaign.id)
+      allowed = PacingService.allowed_spend(locked)
+
+      <span class="hl-keyword">if</span> @amount &gt; allowed
+        <span class="hl-keyword">return</span> deny(<span class="hl-string">"pacing_limit_exceeded"</span>)
+      <span class="hl-keyword">end</span>
+
+      <span class="hl-keyword">if</span> locked.total_spent + @amount &gt; locked.budget
+        <span class="hl-keyword">return</span> deny(<span class="hl-string">"lifetime_budget_exceeded"</span>)
+      <span class="hl-keyword">end</span>
+
+      <span class="hl-comment"># Deduct budget atomically</span>
+      locked.increment!(<span class="hl-string">:spent_today</span>, @amount)
+      locked.increment!(<span class="hl-string">:total_spent</span>, @amount)
+
+      allow
+    <span class="hl-keyword">end</span>
+  <span class="hl-keyword">rescue</span> ActiveRecord::SerializationFailure
+    <span class="hl-comment"># Serializable isolation can raise on conflict — retry or reject</span>
+    deny(<span class="hl-string">"transaction_conflict"</span>)
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">private</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">emergency_cutoff?</span>
+    Redis.current.get(<span class="hl-string">"cutoff:campaign:#{@campaign.id}"</span>) == <span class="hl-string">"1"</span>
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">allow</span>
+    Result.new(allowed: <span class="hl-keyword">true</span>, reason: <span class="hl-string">"approved"</span>)
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">deny</span>(reason)
+    Result.new(allowed: <span class="hl-keyword">false</span>, reason: reason)
+  <span class="hl-keyword">end</span>
+<span class="hl-keyword">end</span>
+</pre>
+      </div>
+
+      <div class="callout danger">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Race Conditions Are the #1 Budget Bug
+        </div>
+        <p>
+          Without <code>SELECT ... FOR UPDATE</code> or serializable isolation, two concurrent
+          bid requests can both read <code>spent_today = $9,500</code> on a $10,000 budget, both
+          conclude there's $500 remaining, and both spend $500 &mdash; resulting in $10,500 total.
+          This happens under real traffic. Always use database-level locking for spend mutations.
+        </p>
+      </div>
+
+      <p>
+        PostgreSQL's <code>SERIALIZABLE</code> isolation level provides the strongest guarantee.
+        Here's what's happening at the database level:
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- Transaction 1 (Worker A)</span>
+<span class="hl-keyword">BEGIN</span> TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+
+<span class="hl-keyword">SELECT</span> spent_today, total_spent, budget
+  <span class="hl-keyword">FROM</span> campaigns
+  <span class="hl-keyword">WHERE</span> id = <span class="hl-number">42</span>
+  <span class="hl-keyword">FOR UPDATE</span>;
+<span class="hl-comment">-- Result: spent_today=9500, total_spent=45000, budget=100000</span>
+
+<span class="hl-comment">-- Check: 9500 + 500 <= daily_limit? YES</span>
+<span class="hl-comment">-- Check: 45000 + 500 <= 100000?     YES</span>
+
+<span class="hl-keyword">UPDATE</span> campaigns
+  <span class="hl-keyword">SET</span> spent_today = spent_today + <span class="hl-number">500</span>,
+      total_spent = total_spent + <span class="hl-number">500</span>
+  <span class="hl-keyword">WHERE</span> id = <span class="hl-number">42</span>;
+
+<span class="hl-keyword">COMMIT</span>;
+
+<span class="hl-comment">-- Transaction 2 (Worker B) runs concurrently</span>
+<span class="hl-comment">-- The FOR UPDATE clause forces Worker B to WAIT until</span>
+<span class="hl-comment">-- Worker A commits. Worker B then sees the updated values</span>
+<span class="hl-comment">-- (spent_today=10000) and correctly rejects the spend.</span>
+</pre>
+      </div>
+
+      <details>
+        <summary>When should I use Redis vs. PostgreSQL for budget checks?</summary>
+        <div class="details-body">
+          <p>
+            Use <strong>Redis</strong> for the fast-check layer (Layer 1). It's an approximate,
+            eventually-consistent check that rejects obviously over-budget requests without touching
+            the database. Redis counters are updated asynchronously after each spend event.
+          </p>
+          <p>
+            Use <strong>PostgreSQL</strong> for the authoritative check (Layer 2). The database
+            is the source of truth. Only PostgreSQL transactions with row-level locking can
+            guarantee that two concurrent requests don't both pass the budget check. Never rely
+            solely on Redis for budget enforcement &mdash; its counters can drift under failure.
+          </p>
+        </div>
+      </details>
+
+      <h3 id="emergency-cutoff">Emergency Spend Cutoff</h3>
+
+      <p>
+        Sometimes you need to stop spending <em>immediately</em> &mdash; a billing dispute, a
+        detected fraud pattern, or a client calling in panic. The emergency cutoff is a Redis flag
+        that short-circuits all budget checks without requiring a database write:
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># app/services/emergency_cutoff.rb</span>
+<span class="hl-keyword">class</span> <span class="hl-function">EmergencyCutoff</span>
+  <span class="hl-keyword">def</span> <span class="hl-keyword">self</span>.<span class="hl-function">activate!</span>(campaign, reason:, activated_by:)
+    Redis.current.set(
+      <span class="hl-string">"cutoff:campaign:#{campaign.id}"</span>, <span class="hl-string">"1"</span>,
+      ex: <span class="hl-number">24</span>.hours.to_i  <span class="hl-comment"># Auto-expire after 24h as safety net</span>
+    )
+
+    BudgetAuditLog.create!(
+      campaign: campaign,
+      event:    <span class="hl-string">"emergency_cutoff_activated"</span>,
+      reason:   reason,
+      user_id:  activated_by.id,
+      metadata: { spent_at_cutoff: campaign.spent_today }
+    )
+
+    Rails.logger.warn(
+      <span class="hl-string">"budget.emergency_cutoff"</span>,
+      campaign_id: campaign.id,
+      reason: reason
+    )
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-keyword">self</span>.<span class="hl-function">deactivate!</span>(campaign, deactivated_by:)
+    Redis.current.del(<span class="hl-string">"cutoff:campaign:#{campaign.id}"</span>)
+
+    BudgetAuditLog.create!(
+      campaign: campaign,
+      event:    <span class="hl-string">"emergency_cutoff_deactivated"</span>,
+      user_id:  deactivated_by.id
+    )
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-keyword">self</span>.<span class="hl-function">active?</span>(campaign)
+    Redis.current.get(<span class="hl-string">"cutoff:campaign:#{campaign.id}"</span>) == <span class="hl-string">"1"</span>
+  <span class="hl-keyword">end</span>
+<span class="hl-keyword">end</span>
+</pre>
+      </div>
+
+      <div class="callout concept">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Key Insight
+        </div>
+        <p>
+          The cutoff key has a 24-hour TTL as a safety net. If an operator activates a cutoff
+          but forgets to deactivate it, it auto-expires rather than silently blocking the campaign
+          forever. The audit log records both activation and deactivation, so there's always a
+          paper trail for billing disputes.
+        </p>
+      </div>
+
+      <h3 id="auditability">5. Auditability</h3>
+
+      <p>
+        In an ad platform, every budget decision must be <strong>explainable</strong>. When an
+        advertiser asks "why did my campaign stop spending at 2pm?", you need to pull up a log
+        that says exactly what happened: "pacing limit exceeded at 14:02 UTC; spent_today was
+        $8,450 against a $8,500 pacing target; next check passed at 14:15 UTC."
+      </p>
+
+      <p>
+        The audit trail has two components: a <strong>budget audit log</strong> for spend decisions
+        and a <strong>campaign change history</strong> for state and configuration changes.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># db/migrate/XXXXXX_create_budget_audit_logs.rb</span>
+<span class="hl-keyword">class</span> <span class="hl-function">CreateBudgetAuditLogs</span> &lt; ActiveRecord::Migration[<span class="hl-number">7.1</span>]
+  <span class="hl-keyword">def</span> <span class="hl-function">change</span>
+    create_table <span class="hl-string">:budget_audit_logs</span> <span class="hl-keyword">do</span> |t|
+      t.references <span class="hl-string">:campaign</span>,  null: <span class="hl-keyword">false</span>, foreign_key: <span class="hl-keyword">true</span>
+      t.references <span class="hl-string">:account</span>,   null: <span class="hl-keyword">false</span>, foreign_key: <span class="hl-keyword">true</span>
+      t.string     <span class="hl-string">:event</span>,     null: <span class="hl-keyword">false</span>  <span class="hl-comment"># e.g., "spend_approved", "pacing_throttled"</span>
+      t.string     <span class="hl-string">:reason</span>                  <span class="hl-comment"># human-readable reason code</span>
+      t.decimal    <span class="hl-string">:amount</span>,    precision: <span class="hl-number">12</span>, scale: <span class="hl-number">4</span>
+      t.decimal    <span class="hl-string">:balance_after</span>, precision: <span class="hl-number">12</span>, scale: <span class="hl-number">4</span>
+      t.integer    <span class="hl-string">:user_id</span>                 <span class="hl-comment"># who triggered (null for system events)</span>
+      t.jsonb      <span class="hl-string">:metadata</span>,  default: {}  <span class="hl-comment"># extra context</span>
+      t.timestamps
+    <span class="hl-keyword">end</span>
+
+    add_index <span class="hl-string">:budget_audit_logs</span>, [<span class="hl-string">:campaign_id</span>, <span class="hl-string">:created_at</span>]
+    add_index <span class="hl-string">:budget_audit_logs</span>, [<span class="hl-string">:account_id</span>, <span class="hl-string">:event</span>]
+  <span class="hl-keyword">end</span>
+<span class="hl-keyword">end</span>
+</pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># app/models/budget_audit_log.rb</span>
+<span class="hl-keyword">class</span> <span class="hl-function">BudgetAuditLog</span> &lt; ApplicationRecord
+  belongs_to <span class="hl-string">:campaign</span>
+  belongs_to <span class="hl-string">:account</span>
+
+  EVENTS = %w[
+    spend_approved
+    spend_rejected
+    pacing_throttled
+    lifetime_budget_exceeded
+    daily_budget_exceeded
+    emergency_cutoff_activated
+    emergency_cutoff_deactivated
+    budget_reconciled
+    campaign_state_changed
+  ].freeze
+
+  validates <span class="hl-string">:event</span>, inclusion: { in: EVENTS }
+
+  scope <span class="hl-string">:for_date</span>, -&gt;(date) {
+    where(created_at: date.beginning_of_day..date.end_of_day)
+  }
+
+  scope <span class="hl-string">:rejections</span>, -&gt; {
+    where(event: %w[spend_rejected pacing_throttled lifetime_budget_exceeded])
+  }
+<span class="hl-keyword">end</span>
+</pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># app/models/concerns/auditable.rb</span>
+<span class="hl-keyword">module</span> <span class="hl-function">Auditable</span>
+  extend ActiveSupport::Concern
+
+  included <span class="hl-keyword">do</span>
+    has_many <span class="hl-string">:change_logs</span>, as: <span class="hl-string">:auditable</span>, dependent: <span class="hl-string">:destroy</span>
+    after_update <span class="hl-string">:log_changes</span>
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">private</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">log_changes</span>
+    <span class="hl-keyword">return</span> <span class="hl-keyword">if</span> saved_changes.blank?
+
+    <span class="hl-comment"># Skip internal fields</span>
+    tracked = saved_changes.except(<span class="hl-string">"updated_at"</span>, <span class="hl-string">"spent_today"</span>, <span class="hl-string">"total_spent"</span>)
+    <span class="hl-keyword">return</span> <span class="hl-keyword">if</span> tracked.blank?
+
+    change_logs.create!(
+      account_id:  account_id,
+      field_changes: tracked,
+      changed_by:   Current.user&.id
+    )
+  <span class="hl-keyword">end</span>
+<span class="hl-keyword">end</span>
+
+<span class="hl-comment"># Usage in Campaign model:</span>
+<span class="hl-comment"># class Campaign &lt; ApplicationRecord</span>
+<span class="hl-comment">#   include Auditable</span>
+<span class="hl-comment">#   ...</span>
+<span class="hl-comment"># end</span>
+</pre>
+      </div>
+
+      <div class="callout important">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Audit Logs Are Append-Only
+        </div>
+        <p>
+          Never update or delete audit log records. They are an immutable ledger. If a correction
+          is needed, create a new log entry with a <code>"correction"</code> event that references
+          the original. This ensures the audit trail is trustworthy for billing disputes and
+          compliance reviews.
+        </p>
+      </div>
+
+      <details>
+        <summary>How do you handle high-volume audit logging without impacting bid latency?</summary>
+        <div class="details-body">
+          <p>
+            For spend decisions that happen on every bid request (potentially thousands per second),
+            write audit logs asynchronously using a background job queue (Sidekiq). Buffer events
+            in Redis and flush them to PostgreSQL in batches every few seconds. The critical path
+            (bid response) should never wait for an audit log insert.
+          </p>
+          <p>
+            For state changes and manual actions (activate, pause, cutoff), write synchronously.
+            These are low-frequency operations where the operator expects immediate confirmation
+            that their action was recorded.
+          </p>
+        </div>
+      </details>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 3: WATCH & LEARN
+           ════════════════════════════════════════ -->
+      <h2 id="watch-learn">Watch &amp; Learn</h2>
+
+      <p>
+        These videos cover state machine patterns and database locking strategies. Watch them before
+        starting the assignments to build intuition for how state transitions and concurrent budget
+        checks work in practice.
+      </p>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/GhEKaCCkaJE?rel=0&amp;modestbranding=1"
+            title="State Machines in Ruby"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          State Machines in Ruby &mdash; patterns for modeling lifecycle states with guard clauses and transition validation
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/GAe0B07GaRo?rel=0&amp;modestbranding=1"
+            title="Database Locking Strategies"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Database Locking Strategies &mdash; optimistic vs. pessimistic locking, row-level locks, and transaction isolation levels
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 4: FURTHER READING
+           ════════════════════════════════════════ -->
+      <h2 id="further-reading">Further Reading</h2>
+
+      <p>Deep-dive into the official documentation and reference material for Active Record, controller patterns, and database transactions.</p>
+
+      <div class="resource-grid">
+        <a class="resource-card" href="https://guides.rubyonrails.org/active_record_basics.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Rails Guides: Active Record Basics</div>
+            <div class="resource-desc">Foundational guide to models, migrations, CRUD operations, and the Active Record pattern. Start here for campaign model design.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://guides.rubyonrails.org/active_record_validations.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Rails Guides: Active Record Validations</div>
+            <div class="resource-desc">Comprehensive reference for model validations: presence, numericality, custom validators, and conditional validation.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://guides.rubyonrails.org/action_controller_overview.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Rails Guides: Action Controller Overview</div>
+            <div class="resource-desc">Strong parameters, before_action filters, rendering JSON, and error handling in API controllers.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://www.postgresql.org/docs/current/transaction-iso.html" target="_blank" rel="noopener">
+          <div class="resource-icon article">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">PostgreSQL: Transaction Isolation</div>
+            <div class="resource-desc">Official documentation on isolation levels: Read Committed, Repeatable Read, and Serializable. Essential for budget enforcement.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://guides.rubyonrails.org/active_record_querying.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Rails Guides: Active Record Querying</div>
+            <div class="resource-desc">Scopes, locking, pessimistic locking with <code>lock</code>, and advanced query patterns for budget checks.</div>
+          </div>
+        </a>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 5: ASSIGNMENTS
+           ════════════════════════════════════════ -->
+      <h2 id="assignments">Assignments</h2>
+
+      <p>
+        Complete these in order. Each level builds on the previous one. Submit your work as a GitHub PR
+        with <code>docs/chapter-03.md</code> containing your design decisions for state transitions,
+        pacing strategy, and budget enforcement approach.
+      </p>
+
+      <!-- Assignment 1: Level 1 -->
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 1
+          </div>
+          <span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Starter</span>
+        </div>
+        <h4>Implement Campaign CRUD with Hard Validations</h4>
+        <p>Create the campaign model with all validations and build a clean REST API. This is the foundation everything else plugs into.</p>
+
+        <ul class="checklist">
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Create Campaign model with <code>status</code> enum (<code>draft</code>, <code>active</code>, <code>paused</code>, <code>completed</code>), <code>budget</code>, <code>daily_budget</code>, <code>start_date</code>, <code>end_date</code></span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Add validations: name required (max 255 chars), budget &ge; 0, end_date after start_date</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Build <code>GET /campaigns</code> with pagination and list serializer (lightweight fields only)</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Build <code>GET /campaigns/:id</code> with detail serializer (includes computed fields)</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Build <code>POST /campaigns</code> with strong parameters and proper error responses</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Build <code>PATCH /campaigns/:id</code> for updating name, budget, and dates</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Write request specs for success cases and validation failure paths (at least 6 specs)</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Verify all queries are tenant-scoped (no cross-account access possible)</span>
+          </li>
+        </ul>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            You can create a campaign via <code>POST /campaigns</code>, see it in the list via
+            <code>GET /campaigns</code>, view its details, and update it. Invalid inputs
+            (missing name, negative budget, end_date before start_date) return clear 422 errors.
+            All endpoints require authentication and scope to the current tenant.
+          </p>
+        </div>
+      </div>
+
+      <!-- Assignment 2: Level 2 -->
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 2
+          </div>
+          <span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Intermediate</span>
+        </div>
+        <h4>State Machine and Budget Pacing Service</h4>
+        <p>Add state transition logic with guard clauses and a pacing service that calculates daily spend limits based on elapsed time.</p>
+
+        <ul class="checklist">
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Implement <code>VALID_TRANSITIONS</code> hash and <code>transition_to!</code> method on Campaign</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Add guard clauses: cannot activate with zero budget or past end_date</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Build dedicated endpoints: <code>POST /campaigns/:id/activate</code>, <code>/pause</code>, <code>/complete</code></span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Implement <code>PacingService</code> with <code>allowed_spend</code> and <code>status_for</code> methods</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Support both daily budget and lifetime budget pacing calculation</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Write specs for invalid transitions (draft &rarr; completed, completed &rarr; active, etc.)</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Write simulation tests for edge cases: burst traffic, zero budget, campaign with 1 day remaining</span>
+          </li>
+        </ul>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            Invalid state transitions raise clear errors with descriptive messages. The pacing service
+            correctly calculates that at 50% through the day, a campaign should have spent roughly 50%
+            of its daily budget. A campaign with $0 remaining lifetime budget returns <code>allowed_spend = 0</code>.
+          </p>
+        </div>
+      </div>
+
+      <!-- Assignment 3: Level 3 -->
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 3
+          </div>
+          <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Advanced</span>
+        </div>
+        <h4>Production Budget Guardrails</h4>
+        <p>Build the three-layer budget enforcement pipeline with database locking, Redis-backed emergency cutoff, and a complete audit trail.</p>
+
+        <ul class="checklist">
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Implement <code>BudgetEnforcer</code> with fast Redis check and atomic PostgreSQL spend deduction using <code>FOR UPDATE</code></span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Implement <code>EmergencyCutoff</code> with Redis flag, 24h TTL, and activate/deactivate methods</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Create <code>BudgetAuditLog</code> model with event types, reason codes, and metadata</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Add the <code>Auditable</code> concern to Campaign for tracking field changes</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Implement daily budget reconciliation: a Sidekiq job that compares <code>spent_today</code> against actual transaction sums</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Write concurrency specs: simulate two threads spending simultaneously and verify budget is never exceeded</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Verify audit logs record every budget decision with reason codes that can answer "why did spending stop?"</span>
+          </li>
+        </ul>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            Two concurrent spend requests on a nearly-exhausted budget never exceed the limit.
+            Emergency cutoff stops spending within milliseconds. Audit logs can answer "why did
+            campaign #42 stop spending at 2pm on Tuesday?" with a clear chain of events including
+            timestamps, amounts, and reason codes. A mentor can trace every dollar from allocation
+            to spend.
+          </p>
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 6: SELF-CHECK
+           ════════════════════════════════════════ -->
+      <h2 id="self-check">Self-Check</h2>
+
+      <p>Before moving to Chapter 04, honestly answer these questions. If any answer is "no", go back and fix it.</p>
+
+      <details>
+        <summary>Are invalid state transitions fully blocked and well-messaged?</summary>
+        <div class="details-body">
+          <p>
+            Try every invalid transition: draft &rarr; completed, draft &rarr; paused, completed &rarr; active,
+            active &rarr; draft. Each should return a <code>422 Unprocessable Entity</code> with a clear error
+            message like <code>"status cannot transition from draft to completed"</code>. The error should
+            tell the operator exactly what's wrong and what transitions are available. Check that the valid
+            transition from draft &rarr; active is also blocked when the budget is zero or the end_date is
+            in the past.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Does pacing prevent budget exhaustion under burst traffic?</summary>
+        <div class="details-body">
+          <p>
+            Simulate a scenario: a campaign with a $10,000 daily budget at 25% through the day
+            (6:00 AM). The pacing service should allow roughly $2,500 of spend. If <code>spent_today</code>
+            is already $2,400, only $100 should be allowed. If you send 100 concurrent requests
+            each trying to spend $100, at most one should succeed (the rest should be throttled).
+            Test this with a multi-threaded spec or by checking that <code>spent_today</code> never
+            exceeds the pacing target by more than one transaction amount.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Are budget decisions explainable from logs and evidence?</summary>
+        <div class="details-body">
+          <p>
+            Run a sequence of operations: create a campaign, activate it, spend against it until
+            pacing throttles, trigger an emergency cutoff, then deactivate the cutoff. Query
+            <code>BudgetAuditLog.where(campaign_id: campaign.id).order(:created_at)</code> and verify
+            you can reconstruct exactly what happened, when, and why. Every entry should have a
+            <code>reason</code> field that a non-engineer (account manager, billing support) can understand.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Can operators recover quickly from validation errors?</summary>
+        <div class="details-body">
+          <p>
+            Try to activate a campaign with a zero budget. The error message should say something
+            like <code>"Cannot activate: budget must be greater than 0"</code>, not a generic
+            <code>"Validation failed"</code>. The operator should know exactly what to fix. After
+            updating the budget to a positive value, the activation should succeed on the next attempt
+            without needing to refresh or re-create the campaign.
+          </p>
+        </div>
+      </details>
+
+    </main>
+
+    <!-- Sidebar: Table of Contents -->
+    <aside class="sidebar">
+      <div class="sidebar-title">On this page</div>
+      <ul class="toc-list">
+        <li class="toc-item"><a href="#why-this-matters">Why This Matters</a></li>
+        <li class="toc-item"><a href="#key-concepts">Key Concepts</a></li>
+        <li class="toc-item"><a href="#campaign-state-machine" style="padding-left: 28px; font-size: 12px;">State Machine</a></li>
+        <li class="toc-item"><a href="#campaign-crud-api" style="padding-left: 28px; font-size: 12px;">Campaign CRUD API</a></li>
+        <li class="toc-item"><a href="#budget-pacing-models" style="padding-left: 28px; font-size: 12px;">Budget Pacing Models</a></li>
+        <li class="toc-item"><a href="#budget-enforcement" style="padding-left: 28px; font-size: 12px;">Budget Enforcement</a></li>
+        <li class="toc-item"><a href="#emergency-cutoff" style="padding-left: 28px; font-size: 12px;">Emergency Cutoff</a></li>
+        <li class="toc-item"><a href="#auditability" style="padding-left: 28px; font-size: 12px;">Auditability</a></li>
+        <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a></li>
+        <li class="toc-item"><a href="#further-reading">Further Reading</a></li>
+        <li class="toc-item"><a href="#assignments">Assignments</a></li>
+        <li class="toc-item"><a href="#self-check">Self-Check</a></li>
+      </ul>
+    </aside>
+  </div>
+
+  <!-- Footer Navigation -->
+  <footer class="chapter-footer">
+    <div class="chapter-footer-inner">
+      <nav class="footer-nav">
+        <a class="footer-nav-link" href="chapter-02.html">
+          <span class="footer-nav-label">&larr; Previous Chapter</span>
+          <span class="footer-nav-title">02: Authentication and Tenant Isolation</span>
+        </a>
+        <a class="footer-nav-link" href="chapter-04.html">
+          <span class="footer-nav-label">Next Chapter &rarr;</span>
+          <span class="footer-nav-title">04: Ad Group Targeting and Creative Assets</span>
+        </a>
+      </nav>
+      <div class="footer-brand">
+        ILA (Iksha Learning Academy) &middot; Rails + React Engineering Certification &middot; Level 2
+      </div>
+    </div>
+  </footer>
+
+  <!-- ════════════════════════════════════════
+       SCRIPTS
+       ════════════════════════════════════════ -->
+  <script>
+    // ── Progress Bar ──
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      document.getElementById('progressBar').style.width = progress + '%';
+    });
+
+    // ── Active TOC ──
+    const tocLinks = document.querySelectorAll('.toc-item a');
+    const sections = [];
+
+    tocLinks.forEach(link => {
+      const id = link.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) sections.push({ id, el, link });
+    });
+
+    const observerOptions = {
+      rootMargin: '-80px 0px -60% 0px',
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const item = sections.find(s => s.el === entry.target);
+        if (item) {
+          if (entry.isIntersecting) {
+            tocLinks.forEach(l => l.classList.remove('active'));
+            item.link.classList.add('active');
+          }
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(s => observer.observe(s.el));
+
+    // ── Copy Code ──
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      const text = pre.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.classList.add('copied');
+        btn.textContent = 'Copied!';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.textContent = 'Copy';
+        }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>

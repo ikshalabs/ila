@@ -1,0 +1,2050 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 07: Billing Ledger and Analytics API — ILA Rails + React</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    /* ═══════════════════════════════════════════════
+       ILA DESIGN SYSTEM — v1.0
+       Iksha Learning Academy
+       ═══════════════════════════════════════════════ */
+
+    :root {
+      /* Palette */
+      --ink:        #0f172a;
+      --ink-light:  #334155;
+      --ink-muted:  #64748b;
+      --surface:    #ffffff;
+      --surface-alt:#f8fafc;
+      --surface-warm:#fffbeb;
+      --border:     #e2e8f0;
+      --border-light:#f1f5f9;
+
+      /* Brand */
+      --teal-50:  #f0fdfa;
+      --teal-100: #ccfbf1;
+      --teal-200: #99f6e4;
+      --teal-500: #14b8a6;
+      --teal-600: #0d9488;
+      --teal-700: #0f766e;
+      --teal-800: #115e59;
+      --teal-900: #134e4a;
+
+      --blue-50:  #eff6ff;
+      --blue-100: #dbeafe;
+      --blue-500: #3b82f6;
+      --blue-600: #2563eb;
+      --blue-700: #1d4ed8;
+
+      --amber-50:  #fffbeb;
+      --amber-100: #fef3c7;
+      --amber-500: #f59e0b;
+      --amber-600: #d97706;
+
+      --red-50:   #fef2f2;
+      --red-100:  #fee2e2;
+      --red-500:  #ef4444;
+      --red-600:  #dc2626;
+
+      --purple-50:  #faf5ff;
+      --purple-100: #f3e8ff;
+      --purple-500: #a855f7;
+      --purple-600: #9333ea;
+
+      /* Typography */
+      --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-serif: 'Instrument Serif', Georgia, serif;
+      --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
+
+      /* Spacing */
+      --content-max: 780px;
+      --sidebar-width: 280px;
+
+      /* Transitions */
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--ink);
+      background: var(--surface);
+    }
+
+    /* ── PROGRESS BAR ─────────────────────────── */
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--teal-500), var(--blue-500));
+      z-index: 1000;
+      transition: width 0.15s var(--ease);
+    }
+
+    /* ── TOP NAV ──────────────────────────────── */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+    }
+
+    .top-nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--teal-800);
+    }
+
+    .nav-brand-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--teal-600), var(--teal-800));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .nav-brand-text {
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-chapter-nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      color: var(--ink-muted);
+      border: 1px solid var(--border);
+      background: white;
+      transition: all 0.2s var(--ease);
+      cursor: pointer;
+    }
+
+    .nav-btn:hover {
+      color: var(--ink);
+      border-color: var(--teal-500);
+      background: var(--teal-50);
+    }
+
+    .nav-btn.disabled {
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    .nav-current {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink-light);
+      padding: 0 4px;
+    }
+
+    /* ── HERO ─────────────────────────────────── */
+    .hero {
+      background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 4rem 2rem 3.5rem;
+    }
+
+    .hero-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
+    }
+
+    .hero-chapter-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--teal-700);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 1rem;
+    }
+
+    .hero-chapter-label span {
+      background: var(--teal-100);
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+
+    .hero h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(2.4rem, 5vw, 3.2rem);
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: 1rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: var(--ink-light);
+      line-height: 1.65;
+      max-width: 640px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .hero-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
+    .hero-meta-item svg {
+      width: 16px;
+      height: 16px;
+      color: var(--teal-600);
+    }
+
+    /* ── MAIN LAYOUT ──────────────────────────── */
+    .main-layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr var(--sidebar-width);
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .content {
+      padding: 3rem 0 6rem;
+      min-width: 0;
+    }
+
+    /* ── SIDEBAR TOC ──────────────────────────── */
+    .sidebar {
+      position: sticky;
+      top: 76px;
+      padding: 2rem 0;
+      max-height: calc(100vh - 76px);
+      overflow-y: auto;
+    }
+
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-muted);
+      margin-bottom: 1rem;
+      padding-left: 14px;
+    }
+
+    .toc-list {
+      list-style: none;
+    }
+
+    .toc-item a {
+      display: block;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--ink-muted);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: all 0.2s var(--ease);
+      line-height: 1.5;
+    }
+
+    .toc-item a:hover {
+      color: var(--ink);
+      background: var(--surface-alt);
+    }
+
+    .toc-item a.active {
+      color: var(--teal-700);
+      border-left-color: var(--teal-500);
+      background: var(--teal-50);
+      font-weight: 500;
+    }
+
+    /* ── TYPOGRAPHY ────────────────────────────── */
+    .content h2 {
+      font-family: var(--font-serif);
+      font-size: 1.85rem;
+      font-weight: 400;
+      color: var(--ink);
+      margin: 3rem 0 1rem;
+      padding-top: 1rem;
+      scroll-margin-top: 80px;
+    }
+
+    .content h2:first-child {
+      margin-top: 0;
+    }
+
+    .content h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 2rem 0 0.75rem;
+      scroll-margin-top: 80px;
+    }
+
+    .content p {
+      margin-bottom: 1.25rem;
+      color: var(--ink-light);
+    }
+
+    .content strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .content a {
+      color: var(--teal-700);
+      text-decoration: underline;
+      text-decoration-color: var(--teal-200);
+      text-underline-offset: 3px;
+      transition: text-decoration-color 0.2s;
+    }
+
+    .content a:hover {
+      text-decoration-color: var(--teal-600);
+    }
+
+    .content ul, .content ol {
+      margin-bottom: 1.25rem;
+      padding-left: 1.5rem;
+    }
+
+    .content li {
+      margin-bottom: 0.5rem;
+      color: var(--ink-light);
+    }
+
+    .content li::marker {
+      color: var(--teal-500);
+    }
+
+    /* ── SECTION DIVIDER ──────────────────────── */
+    .section-divider {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 3rem 0;
+    }
+
+    /* ── CALLOUT BOXES ────────────────────────── */
+    .callout {
+      padding: 1.25rem 1.5rem;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+      border: 1px solid;
+      position: relative;
+    }
+
+    .callout-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .callout-header svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    .callout p:last-child { margin-bottom: 0; }
+
+    .callout.concept {
+      background: var(--blue-50);
+      border-color: var(--blue-100);
+    }
+    .callout.concept .callout-header { color: var(--blue-700); }
+
+    .callout.important {
+      background: var(--amber-50);
+      border-color: var(--amber-100);
+    }
+    .callout.important .callout-header { color: var(--amber-600); }
+
+    .callout.danger {
+      background: var(--red-50);
+      border-color: var(--red-100);
+    }
+    .callout.danger .callout-header { color: var(--red-600); }
+
+    .callout.tip {
+      background: var(--purple-50);
+      border-color: var(--purple-100);
+    }
+    .callout.tip .callout-header { color: var(--purple-600); }
+
+    .callout.success {
+      background: var(--teal-50);
+      border-color: var(--teal-100);
+    }
+    .callout.success .callout-header { color: var(--teal-700); }
+
+    /* ── CODE BLOCKS ──────────────────────────── */
+    .code-block {
+      position: relative;
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+      background: var(--surface-alt);
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--ink-muted);
+    }
+
+    .code-lang {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .code-copy {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: white;
+      font-size: 11px;
+      font-family: var(--font-sans);
+      color: var(--ink-muted);
+      cursor: pointer;
+      transition: all 0.2s var(--ease);
+    }
+
+    .code-copy:hover {
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    .code-copy.copied {
+      background: var(--teal-50);
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    pre {
+      margin: 0;
+      padding: 1.25rem 1.5rem;
+      overflow-x: auto;
+      background: #1e293b;
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: #e2e8f0;
+    }
+
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.88em;
+    }
+
+    p code, li code {
+      padding: 2px 7px;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      color: var(--teal-800);
+      font-size: 0.85em;
+    }
+
+    /* Syntax highlights (minimal) */
+    .hl-keyword  { color: #c084fc; }
+    .hl-string   { color: #86efac; }
+    .hl-comment  { color: #64748b; font-style: italic; }
+    .hl-function { color: #7dd3fc; }
+    .hl-number   { color: #fbbf24; }
+    .hl-flag     { color: #f472b6; }
+
+    /* ── COLLAPSIBLE (DETAILS) ────────────────── */
+    details {
+      margin-bottom: 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.2s var(--ease);
+    }
+
+    details[open] {
+      border-color: var(--teal-200);
+    }
+
+    details summary {
+      padding: 1rem 1.25rem;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      background: var(--surface-alt);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.2s var(--ease);
+      user-select: none;
+    }
+
+    details summary::-webkit-details-marker { display: none; }
+
+    details summary::before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+      flex-shrink: 0;
+      transition: transform 0.2s var(--ease);
+    }
+
+    details[open] summary::before {
+      transform: rotate(90deg);
+    }
+
+    details summary:hover {
+      background: var(--teal-50);
+    }
+
+    .details-body {
+      padding: 1.25rem 1.5rem;
+    }
+
+    .details-body p:last-child { margin-bottom: 0; }
+
+    /* ── VIDEO EMBED ──────────────────────────── */
+    .video-card {
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      background: #0f172a;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .video-caption {
+      padding: 12px 16px;
+      background: var(--surface-alt);
+      font-size: 13px;
+      color: var(--ink-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .video-caption svg {
+      width: 14px;
+      height: 14px;
+      color: var(--red-500);
+    }
+
+    /* ── RESOURCE CARDS ───────────────────────── */
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .resource-card {
+      display: flex;
+      gap: 14px;
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      background: white;
+    }
+
+    .resource-card:hover {
+      border-color: var(--teal-300);
+      background: var(--teal-50);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .resource-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 18px;
+    }
+
+    .resource-icon.docs    { background: var(--blue-50);   color: var(--blue-600); }
+    .resource-icon.video   { background: var(--red-50);    color: var(--red-500); }
+    .resource-icon.github  { background: var(--ink);       color: white; }
+    .resource-icon.article { background: var(--amber-50);  color: var(--amber-600); }
+    .resource-icon.pdf     { background: var(--purple-50); color: var(--purple-600); }
+
+    .resource-info {
+      min-width: 0;
+    }
+
+    .resource-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 2px;
+      line-height: 1.4;
+    }
+
+    .resource-desc {
+      font-size: 12px;
+      color: var(--ink-muted);
+      line-height: 1.5;
+    }
+
+    /* ── ASSIGNMENT CARDS ─────────────────────── */
+    .assignment {
+      border: 2px solid var(--teal-200);
+      border-radius: 14px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--teal-50) 0%, white 100%);
+    }
+
+    .assignment-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .assignment-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--teal-700);
+    }
+
+    .assignment-difficulty {
+      display: inline-flex;
+      padding: 4px 10px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .difficulty-l1 { background: var(--teal-100); color: var(--teal-800); }
+    .difficulty-l2 { background: var(--amber-100); color: var(--amber-600); }
+    .difficulty-l3 { background: var(--red-100); color: var(--red-600); }
+
+    .assignment h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .assignment p {
+      font-size: 14px;
+    }
+
+    .checklist {
+      list-style: none;
+      padding: 0;
+    }
+
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-light);
+      font-size: 14px;
+    }
+
+    .checklist li:last-child { border-bottom: none; }
+
+    .check-box {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      border: 2px solid var(--border);
+      flex-shrink: 0;
+      margin-top: 1px;
+      cursor: pointer;
+      transition: all 0.15s var(--ease);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .check-box:hover {
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked {
+      background: var(--teal-500);
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+    }
+
+    /* ── ARCHITECTURE DIAGRAM ─────────────────── */
+    .diagram {
+      margin: 1.5rem 0;
+      padding: 2rem;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow-x: auto;
+    }
+
+    .diagram pre {
+      background: transparent;
+      color: var(--ink);
+      padding: 0;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .diagram-caption {
+      margin-top: 1rem;
+      font-size: 12px;
+      color: var(--ink-muted);
+      text-align: center;
+      font-style: italic;
+    }
+
+    /* ── FOOTER ───────────────────────────────── */
+    .chapter-footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      background: var(--surface-alt);
+    }
+
+    .chapter-footer-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
+    }
+
+    .footer-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .footer-nav-link {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 1rem 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      max-width: 320px;
+      background: white;
+    }
+
+    .footer-nav-link:hover {
+      border-color: var(--teal-300);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .footer-nav-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--teal-600);
+    }
+
+    .footer-nav-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .footer-brand {
+      text-align: center;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
+    /* ── RESPONSIVE ───────────────────────────── */
+    @media (max-width: 960px) {
+      .main-layout {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        display: none;
+      }
+      .resource-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero { padding: 2.5rem 1.25rem 2rem; }
+      .main-layout { padding: 0 1.25rem; }
+      .content { padding: 2rem 0 4rem; }
+      pre { padding: 1rem; font-size: 12.5px; }
+      .footer-nav { flex-direction: column; }
+      .footer-nav-link { max-width: 100%; width: 100%; }
+    }
+
+    /* ── PRINT ────────────────────────────────── */
+    @media print {
+      .top-nav, .sidebar, .progress-bar { display: none; }
+      .main-layout { display: block; }
+      .content { padding: 0; }
+      .hero { background: white; border: none; }
+      pre { background: #f1f5f9; color: var(--ink); border: 1px solid var(--border); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Progress Bar -->
+  <div class="progress-bar" id="progressBar"></div>
+
+  <!-- Top Navigation -->
+  <nav class="top-nav">
+    <div class="top-nav-inner">
+      <a class="nav-brand" href="index.html">
+        <div class="nav-brand-icon">ILA</div>
+        <span class="nav-brand-text">Iksha Learning Academy</span>
+      </a>
+      <div class="nav-chapter-nav">
+        <a class="nav-btn" href="chapter-06.html">&larr; Previous</a>
+        <span class="nav-current">07 / 10</span>
+        <a class="nav-btn" href="chapter-08.html">Next &rarr;</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-chapter-label">
+        <span>Chapter 07</span> &middot; Phase 4: Data and Money
+      </div>
+      <h1>Billing Ledger and Analytics API</h1>
+      <p class="hero-subtitle">
+        Create immutable billing events and receipt records tied to monetizable actions. Build account-scoped
+        analytics endpoints for KPI cards, trends, and breakdown tables.
+      </p>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Estimated: 4&ndash;5 days
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          3 Advancement Levels
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          3 Assignments
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content + Sidebar -->
+  <div class="main-layout">
+    <main class="content">
+
+      <!-- ════════════════════════════════════════
+           SECTION 1: WHY THIS MATTERS
+           ════════════════════════════════════════ -->
+      <h2 id="why-this-matters">Why This Matters</h2>
+
+      <p>
+        In an ad bidding platform, every impression served, every lead captured, and every conversion attributed
+        eventually becomes a <strong>line item on an invoice</strong>. If your billing data is wrong &mdash; even
+        by a fraction of a cent per event &mdash; errors compound across millions of transactions into disputes,
+        lost revenue, and broken trust.
+      </p>
+
+      <p>
+        Financial correctness underpins invoicing, trust, and audits. Good analytics enable faster, better bid
+        decisions. This chapter builds both: an <strong>append-only billing ledger</strong> that guarantees
+        auditability, and an <strong>analytics aggregation API</strong> that turns raw data into actionable
+        KPI cards, trend lines, and breakdown tables for the frontend.
+      </p>
+
+      <div class="callout danger">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          The Cost of Getting This Wrong
+        </div>
+        <p>
+          Mutable billing records are a compliance nightmare. If anyone can <code>UPDATE</code> or
+          <code>DELETE</code> a billing row, you cannot prove what happened during an audit. Regulatory
+          frameworks (SOX, PCI-DSS) require an immutable trail. Similarly, slow or inaccurate analytics
+          cause operators to make bad bidding decisions &mdash; overbidding wastes budget, underbidding
+          loses market share.
+        </p>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 2: KEY CONCEPTS
+           ════════════════════════════════════════ -->
+      <h2 id="key-concepts">Key Concepts</h2>
+
+      <h3 id="append-only-ledger">1. Append-Only Billing Ledger</h3>
+
+      <p>
+        The billing ledger follows a single, inviolable rule: <strong>rows are only inserted, never updated
+        or deleted</strong>. Every billable action &mdash; an impression served, a lead captured, a conversion
+        attributed &mdash; creates a new <code>BillingEvent</code> record with the exact amount, currency,
+        and timestamp. If a charge needs to be reversed, you insert a new <strong>adjustment entry</strong>
+        with a negative amount that references the original event.
+      </p>
+
+      <ul>
+        <li><strong>Immutable event model</strong> &mdash; amount, currency, timestamps, and event type are locked at creation.</li>
+        <li><strong>Receipt creation</strong> &mdash; each billable event generates a receipt with a unique reference number.</li>
+        <li><strong>No UPDATE/DELETE</strong> &mdash; corrections are always handled via adjustment entries that reference the original.</li>
+        <li><strong>Full audit trail</strong> &mdash; every financial change is traceable to a specific event and actor.</li>
+      </ul>
+
+      <div class="diagram">
+<pre>
+ ┌─────────────────────────────────────────────────────────────────┐
+ │                     BILLING LEDGER DATA MODEL                   │
+ └─────────────────────────────────────────────────────────────────┘
+
+ ┌──────────────────┐       ┌──────────────────────┐
+ │   Account        │──────▶│   BillingEvent       │
+ │                  │  1:N  │                      │
+ │ id               │       │ id                   │
+ │ name             │       │ account_id           │
+ │ slug             │       │ event_type           │
+ └──────────────────┘       │ amount_cents         │
+                            │ currency    (USD)    │
+                            │ reference_id         │
+                            │ adjustment_for_id    │  ◀── NULL or points
+                            │ metadata    (jsonb)  │      to original event
+                            │ created_at           │
+                            └──────────┬───────────┘
+                                       │
+                                       │ 1:1
+                                       ▼
+                            ┌──────────────────────┐
+                            │   Receipt            │
+                            │                      │
+                            │ id                   │
+                            │ billing_event_id     │
+                            │ receipt_number       │
+                            │ issued_at            │
+                            │ total_cents          │
+                            │ status (issued/void) │
+                            └──────────────────────┘
+
+ Event Types: impression | lead | conversion | adjustment | refund
+</pre>
+        <div class="diagram-caption">Figure 1: The append-only billing ledger data model</div>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># db/migrate/XXXXXXXX_create_billing_events.rb</span>
+<span class="hl-keyword">class</span> <span class="hl-function">CreateBillingEvents</span> &lt; ActiveRecord::Migration[<span class="hl-number">7.1</span>]
+  <span class="hl-keyword">def</span> <span class="hl-function">change</span>
+    create_table <span class="hl-string">:billing_events</span> <span class="hl-keyword">do</span> |t|
+      t.references <span class="hl-string">:account</span>,          null: <span class="hl-keyword">false</span>, foreign_key: <span class="hl-keyword">true</span>
+      t.string     <span class="hl-string">:event_type</span>,       null: <span class="hl-keyword">false</span>
+      t.integer    <span class="hl-string">:amount_cents</span>,     null: <span class="hl-keyword">false</span>
+      t.string     <span class="hl-string">:currency</span>,         null: <span class="hl-keyword">false</span>, default: <span class="hl-string">"USD"</span>
+      t.string     <span class="hl-string">:reference_id</span>,     null: <span class="hl-keyword">false</span>
+      t.bigint     <span class="hl-string">:adjustment_for_id</span>
+      t.jsonb      <span class="hl-string">:metadata</span>,         default: {}
+      t.datetime   <span class="hl-string">:created_at</span>,       null: <span class="hl-keyword">false</span>
+    <span class="hl-keyword">end</span>
+
+    <span class="hl-comment"># No updated_at column — intentionally immutable</span>
+    add_index <span class="hl-string">:billing_events</span>, [<span class="hl-string">:account_id</span>, <span class="hl-string">:created_at</span>]
+    add_index <span class="hl-string">:billing_events</span>, <span class="hl-string">:reference_id</span>, unique: <span class="hl-keyword">true</span>
+    add_index <span class="hl-string">:billing_events</span>, <span class="hl-string">:adjustment_for_id</span>
+  <span class="hl-keyword">end</span>
+<span class="hl-keyword">end</span>
+</pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># app/models/billing_event.rb</span>
+<span class="hl-keyword">class</span> <span class="hl-function">BillingEvent</span> &lt; ApplicationRecord
+  acts_as_tenant <span class="hl-string">:account</span>
+
+  belongs_to <span class="hl-string">:account</span>
+  has_one    <span class="hl-string">:receipt</span>, dependent: <span class="hl-string">:restrict_with_error</span>
+  belongs_to <span class="hl-string">:adjustment_for</span>, class_name: <span class="hl-string">"BillingEvent"</span>, optional: <span class="hl-keyword">true</span>
+
+  <span class="hl-keyword">enum</span> <span class="hl-string">:event_type</span>, {
+    impression: <span class="hl-string">"impression"</span>,
+    lead:       <span class="hl-string">"lead"</span>,
+    conversion: <span class="hl-string">"conversion"</span>,
+    adjustment: <span class="hl-string">"adjustment"</span>,
+    refund:     <span class="hl-string">"refund"</span>
+  }
+
+  validates <span class="hl-string">:event_type</span>,   presence: <span class="hl-keyword">true</span>
+  validates <span class="hl-string">:amount_cents</span>,  presence: <span class="hl-keyword">true</span>
+  validates <span class="hl-string">:currency</span>,      presence: <span class="hl-keyword">true</span>
+  validates <span class="hl-string">:reference_id</span>,  presence: <span class="hl-keyword">true</span>, uniqueness: <span class="hl-keyword">true</span>
+  validate  <span class="hl-string">:immutability_guard</span>, on: <span class="hl-string">:update</span>
+
+  <span class="hl-keyword">before_create</span> <span class="hl-string">:generate_reference_id</span>
+
+  <span class="hl-keyword">private</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">immutability_guard</span>
+    errors.add(<span class="hl-string">:base</span>, <span class="hl-string">"Billing events are immutable"</span>)
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">generate_reference_id</span>
+    <span class="hl-keyword">self</span>.reference_id ||= <span class="hl-string">"BE-</span>#{SecureRandom.uuid}<span class="hl-string">"</span>
+  <span class="hl-keyword">end</span>
+<span class="hl-keyword">end</span>
+</pre>
+      </div>
+
+      <div class="callout concept">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Key Insight
+        </div>
+        <p>
+          Notice the <code>immutability_guard</code> validation on update. Even though your application logic
+          should never call <code>update</code> on a billing event, this guard catches accidental mutations
+          at the model layer. Defense in depth &mdash; if the code has a bug, the model stops it. You can
+          further enforce this at the database level with a PostgreSQL trigger that raises an exception on
+          <code>UPDATE</code> or <code>DELETE</code>.
+        </p>
+      </div>
+
+      <h3 id="billing-api">2. Billing API</h3>
+
+      <p>
+        The billing API provides receipt endpoints with account-scoping, reconciliation views for daily totals,
+        and refund/adjustment entries with a full audit trail. All queries are scoped through
+        <code>current_account</code> &mdash; no cross-tenant access is possible.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># app/models/receipt.rb</span>
+<span class="hl-keyword">class</span> <span class="hl-function">Receipt</span> &lt; ApplicationRecord
+  belongs_to <span class="hl-string">:billing_event</span>
+
+  <span class="hl-keyword">enum</span> <span class="hl-string">:status</span>, { issued: <span class="hl-number">0</span>, voided: <span class="hl-number">1</span> }
+
+  validates <span class="hl-string">:receipt_number</span>, presence: <span class="hl-keyword">true</span>, uniqueness: <span class="hl-keyword">true</span>
+  validates <span class="hl-string">:total_cents</span>,    presence: <span class="hl-keyword">true</span>
+
+  <span class="hl-keyword">before_validation</span> <span class="hl-string">:set_receipt_number</span>, on: <span class="hl-string">:create</span>
+
+  <span class="hl-keyword">private</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">set_receipt_number</span>
+    <span class="hl-keyword">self</span>.receipt_number ||= <span class="hl-string">"RCT-</span>#{Time.current.strftime(<span class="hl-string">'%Y%m%d'</span>)}<span class="hl-string">-</span>#{SecureRandom.hex(<span class="hl-number">6</span>).upcase}<span class="hl-string">"</span>
+  <span class="hl-keyword">end</span>
+<span class="hl-keyword">end</span>
+</pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># app/controllers/api/v1/billing_events_controller.rb</span>
+<span class="hl-keyword">module</span> <span class="hl-function">Api</span>
+  <span class="hl-keyword">module</span> <span class="hl-function">V1</span>
+    <span class="hl-keyword">class</span> <span class="hl-function">BillingEventsController</span> &lt; ApplicationController
+      <span class="hl-keyword">def</span> <span class="hl-function">index</span>
+        events = current_account.billing_events
+                   .order(created_at: <span class="hl-string">:desc</span>)
+                   .page(params[<span class="hl-string">:page</span>])
+                   .per(<span class="hl-number">25</span>)
+
+        render json: {
+          <span class="hl-string">billing_events</span>: events.as_json(include: <span class="hl-string">:receipt</span>),
+          <span class="hl-string">meta</span>: pagination_meta(events)
+        }
+      <span class="hl-keyword">end</span>
+
+      <span class="hl-keyword">def</span> <span class="hl-function">show</span>
+        event = current_account.billing_events.find(params[<span class="hl-string">:id</span>])
+        render json: event.as_json(include: <span class="hl-string">:receipt</span>)
+      <span class="hl-keyword">end</span>
+
+      <span class="hl-keyword">def</span> <span class="hl-function">reconciliation</span>
+        daily_totals = current_account.billing_events
+          .where(created_at: params[<span class="hl-string">:start_date</span>]..params[<span class="hl-string">:end_date</span>])
+          .group(<span class="hl-string">"DATE(created_at)"</span>)
+          .group(<span class="hl-string">:event_type</span>)
+          .select(
+            <span class="hl-string">"DATE(created_at) AS date"</span>,
+            <span class="hl-string">:event_type</span>,
+            <span class="hl-string">"SUM(amount_cents) AS total_cents"</span>,
+            <span class="hl-string">"COUNT(*) AS event_count"</span>
+          )
+
+        render json: { <span class="hl-string">reconciliation</span>: daily_totals }
+      <span class="hl-keyword">end</span>
+
+      <span class="hl-keyword">def</span> <span class="hl-function">create_adjustment</span>
+        original = current_account.billing_events.find(params[<span class="hl-string">:billing_event_id</span>])
+
+        adjustment = current_account.billing_events.create!(
+          event_type:       <span class="hl-string">:adjustment</span>,
+          amount_cents:     -original.amount_cents,
+          currency:         original.currency,
+          adjustment_for:   original,
+          metadata:         { reason: params[<span class="hl-string">:reason</span>], adjusted_by: current_user.id }
+        )
+
+        render json: adjustment.as_json(include: <span class="hl-string">:receipt</span>), status: <span class="hl-string">:created</span>
+      <span class="hl-keyword">end</span>
+    <span class="hl-keyword">end</span>
+  <span class="hl-keyword">end</span>
+<span class="hl-keyword">end</span>
+</pre>
+      </div>
+
+      <div class="callout important">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Adjustments, Not Edits
+        </div>
+        <p>
+          Never modify a billing event directly. The <code>create_adjustment</code> action creates a new row
+          with a negative <code>amount_cents</code> that references the original event via <code>adjustment_for_id</code>.
+          The ledger balance is always the <strong>sum of all events</strong> &mdash; originals and adjustments alike.
+          This is the same pattern used by banks, payment processors, and accounting systems worldwide.
+        </p>
+      </div>
+
+      <h3 id="analytics-service">3. Analytics Service Layer</h3>
+
+      <p>
+        The analytics service provides a <strong>stable contract for frontend consumption</strong>. It exposes
+        KPI card endpoints (spend, leads, conversions, efficiency), trend data for charts, and breakdown tables
+        for detailed analysis. The service layer abstracts whether data comes from live aggregation or
+        materialized snapshots.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># app/services/analytics_service.rb</span>
+<span class="hl-keyword">class</span> <span class="hl-function">AnalyticsService</span>
+  <span class="hl-keyword">def</span> <span class="hl-function">initialize</span>(account, date_range: <span class="hl-number">30</span>.days.ago..<span class="hl-function">Time</span>.current)
+    @account    = account
+    @date_range = date_range
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-comment"># KPI Cards — top-level numbers for the dashboard</span>
+  <span class="hl-keyword">def</span> <span class="hl-function">kpi_cards</span>
+    {
+      <span class="hl-string">total_spend</span>:    total_spend,
+      <span class="hl-string">total_leads</span>:    total_leads,
+      <span class="hl-string">total_conversions</span>: total_conversions,
+      <span class="hl-string">cost_per_lead</span>:  cost_per_lead,
+      <span class="hl-string">cost_per_conversion</span>: cost_per_conversion,
+      <span class="hl-string">conversion_rate</span>: conversion_rate
+    }
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-comment"># Trend data — daily aggregates for line/bar charts</span>
+  <span class="hl-keyword">def</span> <span class="hl-function">trends</span>(group_by: <span class="hl-string">:day</span>)
+    @account.billing_events
+      .where(created_at: @date_range)
+      .group(<span class="hl-string">"DATE(created_at)"</span>)
+      .group(<span class="hl-string">:event_type</span>)
+      .select(
+        <span class="hl-string">"DATE(created_at) AS date"</span>,
+        <span class="hl-string">:event_type</span>,
+        <span class="hl-string">"SUM(amount_cents) AS total_cents"</span>,
+        <span class="hl-string">"COUNT(*) AS event_count"</span>
+      )
+      .order(<span class="hl-string">"date ASC"</span>)
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-comment"># Breakdown table — drill-down by source, campaign, etc.</span>
+  <span class="hl-keyword">def</span> <span class="hl-function">breakdown</span>(dimension: <span class="hl-string">:event_type</span>)
+    @account.billing_events
+      .where(created_at: @date_range)
+      .group(dimension)
+      .select(
+        <span class="hl-string">"</span>#{dimension}<span class="hl-string"> AS dimension"</span>,
+        <span class="hl-string">"SUM(amount_cents) AS total_cents"</span>,
+        <span class="hl-string">"COUNT(*) AS event_count"</span>,
+        <span class="hl-string">"AVG(amount_cents) AS avg_cents"</span>
+      )
+      .order(<span class="hl-string">"total_cents DESC"</span>)
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">private</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">total_spend</span>
+    scoped_events.sum(<span class="hl-string">:amount_cents</span>)
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">total_leads</span>
+    scoped_events.where(event_type: <span class="hl-string">:lead</span>).count
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">total_conversions</span>
+    scoped_events.where(event_type: <span class="hl-string">:conversion</span>).count
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">cost_per_lead</span>
+    <span class="hl-keyword">return</span> <span class="hl-number">0</span> <span class="hl-keyword">if</span> total_leads.zero?
+    total_spend.to_f / total_leads
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">cost_per_conversion</span>
+    <span class="hl-keyword">return</span> <span class="hl-number">0</span> <span class="hl-keyword">if</span> total_conversions.zero?
+    total_spend.to_f / total_conversions
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">conversion_rate</span>
+    <span class="hl-keyword">return</span> <span class="hl-number">0.0</span> <span class="hl-keyword">if</span> total_leads.zero?
+    (total_conversions.to_f / total_leads * <span class="hl-number">100</span>).round(<span class="hl-number">2</span>)
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">scoped_events</span>
+    @scoped_events ||= @account.billing_events.where(created_at: @date_range)
+  <span class="hl-keyword">end</span>
+<span class="hl-keyword">end</span>
+</pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># app/controllers/api/v1/analytics_controller.rb</span>
+<span class="hl-keyword">module</span> <span class="hl-function">Api</span>
+  <span class="hl-keyword">module</span> <span class="hl-function">V1</span>
+    <span class="hl-keyword">class</span> <span class="hl-function">AnalyticsController</span> &lt; ApplicationController
+      <span class="hl-keyword">def</span> <span class="hl-function">kpi</span>
+        service = AnalyticsService.new(current_account, date_range: parsed_range)
+        render json: { <span class="hl-string">kpi</span>: service.kpi_cards }
+      <span class="hl-keyword">end</span>
+
+      <span class="hl-keyword">def</span> <span class="hl-function">trends</span>
+        service = AnalyticsService.new(current_account, date_range: parsed_range)
+        render json: { <span class="hl-string">trends</span>: service.trends }
+      <span class="hl-keyword">end</span>
+
+      <span class="hl-keyword">def</span> <span class="hl-function">breakdown</span>
+        service = AnalyticsService.new(current_account, date_range: parsed_range)
+        dimension = params[<span class="hl-string">:dimension</span>]&.to_sym || <span class="hl-string">:event_type</span>
+        render json: { <span class="hl-string">breakdown</span>: service.breakdown(dimension: dimension) }
+      <span class="hl-keyword">end</span>
+
+      <span class="hl-keyword">private</span>
+
+      <span class="hl-keyword">def</span> <span class="hl-function">parsed_range</span>
+        start_date = Date.parse(params[<span class="hl-string">:start_date</span>] || <span class="hl-number">30</span>.days.ago.to_s)
+        end_date   = Date.parse(params[<span class="hl-string">:end_date</span>]   || Date.current.to_s)
+        start_date.beginning_of_day..end_date.end_of_day
+      <span class="hl-keyword">end</span>
+    <span class="hl-keyword">end</span>
+  <span class="hl-keyword">end</span>
+<span class="hl-keyword">end</span>
+</pre>
+      </div>
+
+      <details>
+        <summary>Live aggregation vs. materialized snapshots &mdash; when to use which?</summary>
+        <div class="details-body">
+          <p>
+            <strong>Live aggregation</strong> queries raw tables on every request. It is always accurate but
+            can be slow on large datasets. Use it when data freshness matters more than speed &mdash; for example,
+            the real-time spend counter on a campaign detail page.
+          </p>
+          <p>
+            <strong>Materialized snapshots</strong> pre-compute aggregates and store them in summary tables or
+            PostgreSQL materialized views. They are fast to read but stale by the refresh interval. Use them
+            for dashboard KPI cards and trend charts where a 5&ndash;15 minute lag is acceptable. The analytics
+            service can seamlessly switch between the two strategies based on the query context.
+          </p>
+        </div>
+      </details>
+
+      <h3 id="query-optimization">4. Query Optimization</h3>
+
+      <p>
+        Analytics queries aggregate millions of rows. Without proper indexing and query planning, dashboard
+        pages will time out. PostgreSQL materialized views, composite indexes, and <code>EXPLAIN ANALYZE</code>
+        are your primary tools.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- Materialized view for daily account summaries</span>
+<span class="hl-keyword">CREATE MATERIALIZED VIEW</span> account_daily_summaries <span class="hl-keyword">AS</span>
+<span class="hl-keyword">SELECT</span>
+  account_id,
+  <span class="hl-function">DATE</span>(created_at)   <span class="hl-keyword">AS</span> event_date,
+  event_type,
+  <span class="hl-function">SUM</span>(amount_cents)   <span class="hl-keyword">AS</span> total_cents,
+  <span class="hl-function">COUNT</span>(*)             <span class="hl-keyword">AS</span> event_count,
+  <span class="hl-function">AVG</span>(amount_cents)   <span class="hl-keyword">AS</span> avg_cents
+<span class="hl-keyword">FROM</span> billing_events
+<span class="hl-keyword">GROUP BY</span> account_id, <span class="hl-function">DATE</span>(created_at), event_type
+<span class="hl-keyword">ORDER BY</span> event_date <span class="hl-keyword">DESC</span>;
+
+<span class="hl-comment">-- Create a unique index for concurrent refresh</span>
+<span class="hl-keyword">CREATE UNIQUE INDEX</span> idx_account_daily_summaries_unique
+  <span class="hl-keyword">ON</span> account_daily_summaries (account_id, event_date, event_type);
+
+<span class="hl-comment">-- Refresh without locking reads (requires unique index)</span>
+<span class="hl-keyword">REFRESH MATERIALIZED VIEW CONCURRENTLY</span> account_daily_summaries;
+</pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- EXPLAIN ANALYZE: verify the query plan uses indexes</span>
+<span class="hl-keyword">EXPLAIN ANALYZE</span>
+<span class="hl-keyword">SELECT</span>
+  event_type,
+  <span class="hl-function">SUM</span>(amount_cents) <span class="hl-keyword">AS</span> total,
+  <span class="hl-function">COUNT</span>(*)          <span class="hl-keyword">AS</span> cnt
+<span class="hl-keyword">FROM</span> billing_events
+<span class="hl-keyword">WHERE</span> account_id = <span class="hl-number">42</span>
+  <span class="hl-keyword">AND</span> created_at <span class="hl-keyword">BETWEEN</span> <span class="hl-string">'2025-01-01'</span> <span class="hl-keyword">AND</span> <span class="hl-string">'2025-01-31'</span>
+<span class="hl-keyword">GROUP BY</span> event_type;
+
+<span class="hl-comment">-- Expected: Index Scan using idx_billing_events_account_id_created_at</span>
+<span class="hl-comment">-- If you see Seq Scan, add the composite index:</span>
+<span class="hl-keyword">CREATE INDEX</span> idx_billing_events_acct_date
+  <span class="hl-keyword">ON</span> billing_events (account_id, created_at);
+</pre>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Pro Tip: EXPLAIN Before You Ship
+        </div>
+        <p>
+          Run <code>EXPLAIN ANALYZE</code> on every analytics query before deploying. Look for sequential scans
+          on large tables &mdash; they indicate missing indexes. A query that runs in 2ms on your dev database
+          with 100 rows can take 30 seconds in production with 10 million rows. The composite index
+          <code>(account_id, created_at)</code> is the most important index in this chapter.
+        </p>
+      </div>
+
+      <details>
+        <summary>How do you schedule materialized view refreshes?</summary>
+        <div class="details-body">
+          <p>
+            Use a recurring Sidekiq job (or <code>solid_queue</code> if you followed Chapter 06) to refresh
+            the materialized view on a schedule. Every 5&ndash;15 minutes is typical for dashboard analytics.
+            The <code>CONCURRENTLY</code> option lets reads continue during the refresh.
+          </p>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">ruby</span>
+              <button class="code-copy" onclick="copyCode(this)">Copy</button>
+            </div>
+<pre>
+<span class="hl-comment"># app/jobs/refresh_analytics_view_job.rb</span>
+<span class="hl-keyword">class</span> <span class="hl-function">RefreshAnalyticsViewJob</span> &lt; ApplicationJob
+  queue_as <span class="hl-string">:low</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">perform</span>
+    ActiveRecord::Base.connection.execute(
+      <span class="hl-string">"REFRESH MATERIALIZED VIEW CONCURRENTLY account_daily_summaries"</span>
+    )
+    Rails.logger.info(<span class="hl-string">"analytics.materialized_view.refreshed"</span>)
+  <span class="hl-keyword">end</span>
+<span class="hl-keyword">end</span>
+</pre>
+          </div>
+        </div>
+      </details>
+
+      <h3 id="consistency-reliability">5. Consistency and Reliability</h3>
+
+      <p>
+        Analytics dashboards must never show numbers that contradict each other. If the KPI card says
+        "Total Spend: $4,230" but the breakdown table sums to $4,180, the user loses trust in the
+        entire system. Consistency checks, graceful degradation, and caching are essential.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># app/services/analytics_cache.rb</span>
+<span class="hl-keyword">class</span> <span class="hl-function">AnalyticsCache</span>
+  TTL = <span class="hl-number">5</span>.minutes
+
+  <span class="hl-keyword">def</span> <span class="hl-function">initialize</span>(account)
+    @account = account
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">fetch_kpi</span>(date_range:)
+    cache_key = kpi_key(date_range)
+
+    Rails.cache.fetch(cache_key, expires_in: TTL) <span class="hl-keyword">do</span>
+      service = AnalyticsService.new(@account, date_range: date_range)
+      result  = service.kpi_cards
+
+      <span class="hl-comment"># Consistency check: verify summary matches detail</span>
+      verify_consistency!(result, date_range)
+
+      result
+    <span class="hl-keyword">end</span>
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">invalidate!</span>
+    Rails.cache.delete_matched(<span class="hl-string">"analytics/</span>#{@account.id}<span class="hl-string">/*"</span>)
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">private</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">kpi_key</span>(date_range)
+    <span class="hl-string">"analytics/</span>#{@account.id}<span class="hl-string">/kpi/</span>#{date_range.first.to_date}<span class="hl-string">-</span>#{date_range.last.to_date}<span class="hl-string">"</span>
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">verify_consistency!</span>(result, date_range)
+    breakdown_total = @account.billing_events
+      .where(created_at: date_range)
+      .group(<span class="hl-string">:event_type</span>)
+      .sum(<span class="hl-string">:amount_cents</span>)
+      .values
+      .sum
+
+    <span class="hl-keyword">if</span> result[<span class="hl-string">:total_spend</span>] != breakdown_total
+      Rails.logger.warn(
+        <span class="hl-string">"analytics.consistency_mismatch"</span>,
+        account_id:      @account.id,
+        kpi_total:       result[<span class="hl-string">:total_spend</span>],
+        breakdown_total: breakdown_total
+      )
+    <span class="hl-keyword">end</span>
+  <span class="hl-keyword">end</span>
+<span class="hl-keyword">end</span>
+</pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># Graceful degradation in the controller</span>
+<span class="hl-keyword">def</span> <span class="hl-function">kpi</span>
+  cache = AnalyticsCache.new(current_account)
+  result = cache.fetch_kpi(date_range: parsed_range)
+  render json: { <span class="hl-string">kpi</span>: result, <span class="hl-string">cached</span>: <span class="hl-keyword">true</span> }
+<span class="hl-keyword">rescue</span> ActiveRecord::StatementInvalid, PG::Error => e
+  Rails.logger.error(<span class="hl-string">"analytics.query_failed"</span>, error: e.message)
+
+  <span class="hl-comment"># Fall back to last known good cache, even if expired</span>
+  stale = Rails.cache.read(cache.send(<span class="hl-string">:kpi_key</span>, parsed_range))
+  <span class="hl-keyword">if</span> stale
+    render json: { <span class="hl-string">kpi</span>: stale, <span class="hl-string">stale</span>: <span class="hl-keyword">true</span> }
+  <span class="hl-keyword">else</span>
+    render json: { <span class="hl-string">error</span>: <span class="hl-string">"Analytics temporarily unavailable"</span> }, status: <span class="hl-string">:service_unavailable</span>
+  <span class="hl-keyword">end</span>
+<span class="hl-keyword">end</span>
+</pre>
+      </div>
+
+      <div class="callout concept">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Key Insight
+        </div>
+        <p>
+          The <code>verify_consistency!</code> method cross-checks the KPI total against an independent
+          breakdown sum. If they diverge, it logs a warning but does not fail the request. This is a
+          <strong>canary</strong> &mdash; it tells you something is wrong before users notice. In production,
+          wire this to your alerting system (Datadog, PagerDuty, etc.) so the on-call engineer investigates
+          before it becomes a customer complaint.
+        </p>
+      </div>
+
+      <details>
+        <summary>What caching backend should I use?</summary>
+        <div class="details-body">
+          <p>
+            For development and small deployments, Rails' built-in <code>:memory_store</code> works fine.
+            For production, use <strong>Redis</strong> via the <code>redis</code> gem and
+            <code>config.cache_store = :redis_cache_store</code>. Redis gives you shared caching across
+            multiple app servers, TTL support, and the <code>delete_matched</code> pattern for selective
+            invalidation. If you are already using Solid Cache (Rails 8), that is another excellent option
+            that stores cache entries in your database.
+          </p>
+        </div>
+      </details>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 3: WATCH & LEARN
+           ════════════════════════════════════════ -->
+      <h2 id="watch-learn">Watch &amp; Learn</h2>
+
+      <p>
+        These videos cover PostgreSQL performance tuning and double-entry bookkeeping principles. Watch them
+        before starting the assignments to build intuition for how financial systems and query optimization work.
+      </p>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/BgMFMBePRek?rel=0&amp;modestbranding=1"
+            title="PostgreSQL Performance Tuning"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          PostgreSQL Performance Tuning &mdash; index strategies, EXPLAIN ANALYZE, and query plan optimization
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/csCBcGFOnlA?rel=0&amp;modestbranding=1"
+            title="Double-Entry Bookkeeping for Engineers"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Double-Entry Bookkeeping for Engineers &mdash; why immutable ledgers matter and how corrections work
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 4: FURTHER READING
+           ════════════════════════════════════════ -->
+      <h2 id="further-reading">Further Reading</h2>
+
+      <p>Deep-dive into the official documentation and reference material for billing systems, PostgreSQL optimization, and Rails caching.</p>
+
+      <div class="resource-grid">
+        <a class="resource-card" href="https://docs.stripe.com/billing" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Stripe Docs: Billing</div>
+            <div class="resource-desc">Industry-standard billing API design. Study their event model, invoice lifecycle, and idempotency patterns.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://www.postgresql.org/docs/current/rules-materializedviews.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">PostgreSQL: Materialized Views</div>
+            <div class="resource-desc">Official docs on creating, refreshing, and indexing materialized views for pre-computed analytics.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://www.postgresql.org/docs/current/using-explain.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">PostgreSQL: Using EXPLAIN</div>
+            <div class="resource-desc">How to read query plans, identify sequential scans, and verify index usage. Essential for analytics tuning.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://guides.rubyonrails.org/active_record_querying.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Rails Guides: Active Record Querying</div>
+            <div class="resource-desc">Group, aggregate, pluck, and calculation methods. Covers the Rails API used throughout the analytics service.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://guides.rubyonrails.org/caching_with_rails.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Rails Guides: Caching</div>
+            <div class="resource-desc">Fragment caching, Russian doll caching, cache stores (Redis, Solid Cache), and invalidation strategies.</div>
+          </div>
+        </a>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 5: ASSIGNMENTS
+           ════════════════════════════════════════ -->
+      <h2 id="assignments">Assignments</h2>
+
+      <p>
+        Complete these in order. Each level builds on the previous one. Submit your work as a GitHub PR
+        with <code>docs/chapter-07.md</code> containing your billing data model decisions and analytics
+        query performance analysis.
+      </p>
+
+      <!-- Assignment 1: Level 1 -->
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 1
+          </div>
+          <span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span>
+        </div>
+        <h4>Billing Event Model and Receipt Endpoints</h4>
+        <p>Build the immutable billing event model and receipt system. Users should be able to view billing events and receipts scoped to their account.</p>
+
+        <ul class="checklist">
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Create the <code>BillingEvent</code> migration with <code>amount_cents</code>, <code>currency</code>, <code>event_type</code>, <code>reference_id</code>, and <code>adjustment_for_id</code></span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Create the <code>Receipt</code> model with auto-generated <code>receipt_number</code> and <code>status</code> enum</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Add <code>immutability_guard</code> validation that prevents updates to billing events</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Scope all billing queries through <code>current_account</code> using <code>acts_as_tenant</code></span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Build <code>GET /api/v1/billing_events</code> with pagination</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Build <code>GET /api/v1/billing_events/:id</code> with receipt included</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Verify: <code>BillingEvent.first.update!(amount_cents: 0)</code> raises a validation error</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Verify: cross-tenant billing event access returns <code>404 Not Found</code></span>
+          </li>
+        </ul>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            Billing events are created with receipts on billable actions. Attempting to update a billing event
+            raises a validation error. All billing queries are scoped to the current account. The billing
+            events index endpoint returns paginated results with receipts.
+          </p>
+        </div>
+      </div>
+
+      <!-- Assignment 2: Level 2 -->
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 2
+          </div>
+          <span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span>
+        </div>
+        <h4>Analytics Aggregation Service with Filtering</h4>
+        <p>Build the analytics service layer with KPI cards, trend data, and breakdown tables. Support filtering by date range, event type, and custom dimensions.</p>
+
+        <ul class="checklist">
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Create <code>AnalyticsService</code> with <code>kpi_cards</code>, <code>trends</code>, and <code>breakdown</code> methods</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Build <code>GET /api/v1/analytics/kpi</code> with date range filtering</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Build <code>GET /api/v1/analytics/trends</code> with daily grouping</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Build <code>GET /api/v1/analytics/breakdown</code> with configurable dimension parameter</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Implement <code>AnalyticsCache</code> with TTL-based caching and selective invalidation</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Add consistency check between KPI totals and breakdown sums</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Implement graceful degradation &mdash; serve stale cache on database errors</span>
+          </li>
+        </ul>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            The analytics endpoints return KPI cards (spend, leads, conversions, CPL, CPC, conversion rate),
+            daily trend data for charting, and breakdown tables by event type. Results are cached with a 5-minute TTL.
+            A consistency mismatch between KPI and breakdown totals triggers a log warning.
+          </p>
+        </div>
+      </div>
+
+      <!-- Assignment 3: Level 3 -->
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 3
+          </div>
+          <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Production-Ready</span>
+        </div>
+        <h4>Reconciliation Engine and Optimized Query Pipeline</h4>
+        <p>Build the reconciliation system, create materialized views, and prove query performance with EXPLAIN ANALYZE.</p>
+
+        <ul class="checklist">
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Build <code>GET /api/v1/billing_events/reconciliation</code> with daily totals by event type</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Implement adjustment/refund endpoint that creates a new billing event referencing the original</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Create the <code>account_daily_summaries</code> materialized view with a unique index</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Create <code>RefreshAnalyticsViewJob</code> that runs <code>REFRESH MATERIALIZED VIEW CONCURRENTLY</code></span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Run <code>EXPLAIN ANALYZE</code> on all analytics queries and document the results</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Add composite indexes where EXPLAIN shows sequential scans</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Write request specs: reconciliation totals match sum of individual billing events</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Write request specs: adjustment creates new event with negative amount, original is unchanged</span>
+          </li>
+        </ul>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            The reconciliation endpoint produces daily totals that match the sum of individual events.
+            Adjustments create new rows without modifying originals. The materialized view refreshes
+            concurrently via a background job. All analytics queries use index scans as verified by
+            <code>EXPLAIN ANALYZE</code> output in your PR documentation.
+          </p>
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 6: SELF-CHECK
+           ════════════════════════════════════════ -->
+      <h2 id="self-check">Self-Check</h2>
+
+      <p>Before moving to Chapter 08, honestly answer these questions. If any answer is "no", go back and fix it.</p>
+
+      <details>
+        <summary>Can a billing event be modified after creation?</summary>
+        <div class="details-body">
+          <p>
+            Try calling <code>BillingEvent.first.update!(amount_cents: 0)</code> in the Rails console.
+            You should get a validation error from the <code>immutability_guard</code>. If the update
+            succeeds, your guard is not working. Bonus: add a PostgreSQL trigger that raises an exception
+            on <code>UPDATE</code> or <code>DELETE</code> for defense in depth.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Do the KPI card totals match the breakdown table sums?</summary>
+        <div class="details-body">
+          <p>
+            Hit <code>/api/v1/analytics/kpi</code> and <code>/api/v1/analytics/breakdown</code> with the same
+            date range. Sum the <code>total_cents</code> values from the breakdown response. It should exactly
+            equal <code>total_spend</code> from the KPI response. If they diverge, check your
+            <code>verify_consistency!</code> method and look for missing event types in the breakdown query.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Do your analytics queries use index scans in production-like conditions?</summary>
+        <div class="details-body">
+          <p>
+            Seed your development database with at least 100,000 billing events across multiple accounts.
+            Run <code>EXPLAIN ANALYZE</code> on your analytics queries. Look for <code>Index Scan</code>
+            or <code>Bitmap Index Scan</code> in the output. If you see <code>Seq Scan</code> on the
+            <code>billing_events</code> table, you need to add the composite index
+            <code>(account_id, created_at)</code>. Document the before/after query plans in your PR.
+          </p>
+        </div>
+      </details>
+
+    </main>
+
+    <!-- Sidebar: Table of Contents -->
+    <aside class="sidebar">
+      <div class="sidebar-title">On this page</div>
+      <ul class="toc-list">
+        <li class="toc-item"><a href="#why-this-matters">Why This Matters</a></li>
+        <li class="toc-item"><a href="#key-concepts">Key Concepts</a></li>
+        <li class="toc-item"><a href="#append-only-ledger" style="padding-left: 28px; font-size: 12px;">Append-Only Ledger</a></li>
+        <li class="toc-item"><a href="#billing-api" style="padding-left: 28px; font-size: 12px;">Billing API</a></li>
+        <li class="toc-item"><a href="#analytics-service" style="padding-left: 28px; font-size: 12px;">Analytics Service</a></li>
+        <li class="toc-item"><a href="#query-optimization" style="padding-left: 28px; font-size: 12px;">Query Optimization</a></li>
+        <li class="toc-item"><a href="#consistency-reliability" style="padding-left: 28px; font-size: 12px;">Consistency &amp; Reliability</a></li>
+        <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a></li>
+        <li class="toc-item"><a href="#further-reading">Further Reading</a></li>
+        <li class="toc-item"><a href="#assignments">Assignments</a></li>
+        <li class="toc-item"><a href="#self-check">Self-Check</a></li>
+      </ul>
+    </aside>
+  </div>
+
+  <!-- Footer Navigation -->
+  <footer class="chapter-footer">
+    <div class="chapter-footer-inner">
+      <nav class="footer-nav">
+        <a class="footer-nav-link" href="chapter-06.html">
+          <span class="footer-nav-label">&larr; Previous Chapter</span>
+          <span class="footer-nav-title">06: Conversion Attribution and Background Jobs</span>
+        </a>
+        <a class="footer-nav-link" href="chapter-08.html">
+          <span class="footer-nav-label">Next Chapter &rarr;</span>
+          <span class="footer-nav-title">08: React Shell and Campaign Builder UI</span>
+        </a>
+      </nav>
+      <div class="footer-brand">
+        ILA (Iksha Learning Academy) &middot; Rails + React Engineering Certification &middot; Level 2
+      </div>
+    </div>
+  </footer>
+
+  <!-- ════════════════════════════════════════
+       SCRIPTS
+       ════════════════════════════════════════ -->
+  <script>
+    // ── Progress Bar ──
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      document.getElementById('progressBar').style.width = progress + '%';
+    });
+
+    // ── Active TOC ──
+    const tocLinks = document.querySelectorAll('.toc-item a');
+    const sections = [];
+
+    tocLinks.forEach(link => {
+      const id = link.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) sections.push({ id, el, link });
+    });
+
+    const observerOptions = {
+      rootMargin: '-80px 0px -60% 0px',
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const item = sections.find(s => s.el === entry.target);
+        if (item) {
+          if (entry.isIntersecting) {
+            tocLinks.forEach(l => l.classList.remove('active'));
+            item.link.classList.add('active');
+          }
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(s => observer.observe(s.el));
+
+    // ── Copy Code ──
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      const text = pre.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.classList.add('copied');
+        btn.textContent = 'Copied!';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.textContent = 'Copy';
+        }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>
