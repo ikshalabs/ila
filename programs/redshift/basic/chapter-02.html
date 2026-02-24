@@ -3,437 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chapter 02: Cluster Setup and Data Loading &mdash; ILA Redshift</title>
+  <title>Chapter 02: SQL for Analytics &mdash; ILA Redshift Foundations</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --ink:        #0f172a;
-      --ink-light:  #334155;
-      --ink-muted:  #64748b;
-      --surface:    #ffffff;
-      --surface-alt:#f8fafc;
-      --surface-warm:#fffbeb;
-      --border:     #e2e8f0;
-      --border-light:#f1f5f9;
-      --teal-50:  #f0fdfa;
-      --teal-100: #ccfbf1;
-      --teal-200: #99f6e4;
-      --teal-500: #14b8a6;
-      --teal-600: #0d9488;
-      --teal-700: #0f766e;
-      --teal-800: #115e59;
-      --teal-900: #134e4a;
-      --blue-50:  #eff6ff;
-      --blue-100: #dbeafe;
-      --blue-500: #3b82f6;
-      --blue-600: #2563eb;
-      --blue-700: #1d4ed8;
-      --amber-50:  #fffbeb;
-      --amber-100: #fef3c7;
-      --amber-500: #f59e0b;
-      --amber-600: #d97706;
-      --red-50:   #fef2f2;
-      --red-100:  #fee2e2;
-      --red-500:  #ef4444;
-      --red-600:  #dc2626;
-      --purple-50:  #faf5ff;
-      --purple-100: #f3e8ff;
-      --purple-500: #a855f7;
-      --purple-600: #9333ea;
-      --green-50:  #f0fdf4;
-      --green-100: #dcfce7;
-      --green-500: #22c55e;
-      --green-600: #16a34a;
-      --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      --font-serif: 'Instrument Serif', Georgia, serif;
-      --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
-      --content-max: 780px;
-      --ease: cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
-
-    body {
-      font-family: var(--font-sans);
-      font-size: 16px;
-      line-height: 1.7;
-      color: var(--ink);
-      background: var(--surface);
-    }
-
-    .progress-bar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 0%;
-      height: 3px;
-      background: linear-gradient(90deg, var(--teal-500), var(--blue-500));
-      z-index: 1000;
-      transition: width 0.15s var(--ease);
-    }
-
-    .top-nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-      padding: 0 2rem;
-    }
-
-    .top-nav-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 56px;
-    }
-
-    .nav-brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-      color: var(--teal-800);
-    }
-
-    .nav-brand-icon {
-      width: 32px;
-      height: 32px;
-      background: linear-gradient(135deg, var(--teal-600), var(--teal-800));
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-weight: 800;
-      font-size: 14px;
-    }
-
-    .nav-brand-text {
-      font-weight: 700;
-      font-size: 15px;
-      letter-spacing: -0.02em;
-    }
-
-    .nav-chapter-nav {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .nav-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 14px;
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: 500;
-      text-decoration: none;
-      color: var(--ink-muted);
-      border: 1px solid var(--border);
-      background: white;
-      transition: all 0.2s var(--ease);
-      cursor: pointer;
-    }
-
-    .nav-btn:hover {
-      color: var(--ink);
-      border-color: var(--teal-500);
-      background: var(--teal-50);
-    }
-
-    .nav-btn.disabled {
-      opacity: 0.4;
-      pointer-events: none;
-    }
-
-    .nav-current {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--ink-light);
-      padding: 0 4px;
-    }
-
-    .hero {
-      background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%);
-      border-bottom: 1px solid var(--border);
-      padding: 4rem 2rem 3.5rem;
-    }
-
-    .hero-inner {
-      max-width: var(--content-max);
-      margin: 0 auto;
-    }
-
-    .hero-chapter-label {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--teal-700);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 1rem;
-    }
-
-    .hero-chapter-label span {
-      background: var(--teal-100);
-      padding: 3px 10px;
-      border-radius: 100px;
-    }
-
-    .hero h1 {
-      font-family: var(--font-serif);
-      font-size: clamp(2.4rem, 5vw, 3.2rem);
-      font-weight: 400;
-      line-height: 1.15;
-      color: var(--ink);
-      margin-bottom: 1rem;
-    }
-
-    .hero-subtitle {
-      font-size: 1.15rem;
-      color: var(--ink-light);
-      line-height: 1.65;
-      max-width: 640px;
-    }
-
-    .hero-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-top: 1.5rem;
-    }
-
-    .hero-meta-item {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 13px;
-      color: var(--ink-muted);
-    }
-
-    .content {
-      max-width: var(--content-max);
-      margin: 0 auto;
-      padding: 3rem 2rem 6rem;
-    }
-
-    .content h2 {
-      font-family: var(--font-serif);
-      font-size: 1.85rem;
-      font-weight: 400;
-      color: var(--ink);
-      margin: 3rem 0 1rem;
-      scroll-margin-top: 80px;
-    }
-
-    .content h2:first-child { margin-top: 0; }
-
-    .content h3 {
-      font-size: 1.15rem;
-      font-weight: 600;
-      color: var(--ink);
-      margin: 2rem 0 0.75rem;
-    }
-
-    .content p {
-      margin-bottom: 1.25rem;
-      color: var(--ink-light);
-    }
-
-    .content ul, .content ol {
-      margin-bottom: 1.25rem;
-      padding-left: 1.5rem;
-    }
-
-    .content li {
-      margin-bottom: 0.5rem;
-      color: var(--ink-light);
-    }
-
-    .content li::marker { color: var(--teal-500); }
-
-    .callout {
-      padding: 1.25rem 1.5rem;
-      border-radius: 12px;
-      margin-bottom: 1.5rem;
-      border: 1px solid;
-    }
-
-    .callout-header {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-    }
-
-    .callout p:last-child { margin-bottom: 0; }
-
-    .callout.concept {
-      background: var(--blue-50);
-      border-color: var(--blue-100);
-    }
-    .callout.concept .callout-header { color: var(--blue-700); }
-
-    .callout.important {
-      background: var(--amber-50);
-      border-color: var(--amber-100);
-    }
-    .callout.important .callout-header { color: var(--amber-600); }
-
-    .callout.tip {
-      background: var(--purple-50);
-      border-color: var(--purple-100);
-    }
-    .callout.tip .callout-header { color: var(--purple-600); }
-
-    .callout.success {
-      background: var(--teal-50);
-      border-color: var(--teal-100);
-    }
-    .callout.success .callout-header { color: var(--teal-700); }
-
-    .section-divider {
-      border: none;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--border), transparent);
-      margin: 3rem 0;
-    }
-
-    .coming-soon-banner {
-      background: var(--amber-50);
-      border: 1px solid var(--amber-100);
-      border-radius: 12px;
-      padding: 2.5rem;
-      text-align: center;
-      margin: 2rem 0;
-    }
-
-    .coming-soon-banner h3 {
-      color: var(--amber-600);
-      margin-bottom: 0.5rem;
-    }
-
-    .coming-soon-banner p {
-      color: var(--ink-muted);
-      margin-bottom: 0;
-    }
-
-    .topics-preview {
-      background: var(--surface-alt);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.5rem 2rem;
-      margin: 1.5rem 0;
-    }
-
-    .topics-preview h3 {
-      font-size: 0.95rem;
-      margin-bottom: 0.75rem;
-      color: var(--ink);
-    }
-
-    .topics-preview ul {
-      list-style: none;
-      padding: 0;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 0.5rem;
-    }
-
-    .topics-preview li {
-      font-size: 14px;
-      color: var(--ink-light);
-      padding-left: 1.25rem;
-      position: relative;
-    }
-
-    .topics-preview li::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 8px;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--teal-500);
-    }
-
-    .footer-nav {
-      max-width: var(--content-max);
-      margin: 0 auto;
-      padding: 2rem;
-      display: flex;
-      justify-content: space-between;
-      border-top: 1px solid var(--border);
-    }
-
-    .footer-nav-link {
-      display: flex;
-      flex-direction: column;
-      text-decoration: none;
-      padding: 1rem;
-      border-radius: 12px;
-      transition: background 0.2s var(--ease);
-      max-width: 45%;
-    }
-
-    .footer-nav-link:hover {
-      background: var(--surface-alt);
-    }
-
-    .footer-nav-label {
-      font-size: 12px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--ink-muted);
-      margin-bottom: 4px;
-    }
-
-    .footer-nav-title {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--teal-700);
-    }
-
-    .footer-nav-link.next { text-align: right; margin-left: auto; }
-
-    .footer {
-      text-align: center;
-      padding: 2rem;
-      font-size: 13px;
-      color: var(--ink-muted);
-      border-top: 1px solid var(--border);
-    }
-
-    .footer a {
-      color: var(--teal-700);
-      text-decoration: none;
-    }
-
-    .footer a:hover { text-decoration: underline; }
-
-    @media (max-width: 768px) {
-      .hero { padding: 3rem 1.5rem 2.5rem; }
-      .content { padding: 2rem 1.5rem 4rem; }
-      .hero h1 { font-size: 2rem; }
-      .footer-nav { flex-direction: column; gap: 1rem; }
-      .footer-nav-link { max-width: 100%; }
-      .footer-nav-link.next { text-align: left; }
-    }
+    :root{--ink:#0f172a;--ink-light:#334155;--ink-muted:#64748b;--surface:#ffffff;--surface-alt:#f8fafc;--surface-warm:#fffbeb;--border:#e2e8f0;--border-light:#f1f5f9;--teal-50:#f0fdfa;--teal-100:#ccfbf1;--teal-200:#99f6e4;--teal-500:#14b8a6;--teal-600:#0d9488;--teal-700:#0f766e;--teal-800:#115e59;--teal-900:#134e4a;--blue-50:#eff6ff;--blue-100:#dbeafe;--blue-500:#3b82f6;--blue-600:#2563eb;--blue-700:#1d4ed8;--amber-50:#fffbeb;--amber-100:#fef3c7;--amber-500:#f59e0b;--amber-600:#d97706;--red-50:#fef2f2;--red-100:#fee2e2;--red-500:#ef4444;--red-600:#dc2626;--purple-50:#faf5ff;--purple-100:#f3e8ff;--purple-500:#a855f7;--purple-600:#9333ea;--font-sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;--font-serif:'Instrument Serif',Georgia,serif;--font-mono:'JetBrains Mono','Fira Code',monospace;--content-max:780px;--sidebar-width:280px;--ease:cubic-bezier(0.4,0,0.2,1)}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}body{font-family:var(--font-sans);font-size:16px;line-height:1.7;color:var(--ink);background:var(--surface)}.progress-bar{position:fixed;top:0;left:0;width:0%;height:3px;background:linear-gradient(90deg,var(--teal-500),var(--blue-500));z-index:1000;transition:width .15s var(--ease)}.top-nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem}.top-nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px}.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--teal-800)}.nav-brand-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--teal-600),var(--teal-800));border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px}.nav-brand-text{font-weight:700;font-size:15px;letter-spacing:-.02em}.nav-chapter-nav{display:flex;align-items:center;gap:8px}.nav-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;color:var(--ink-muted);border:1px solid var(--border);background:#fff;transition:all .2s var(--ease);cursor:pointer}.nav-btn:hover{color:var(--ink);border-color:var(--teal-500);background:var(--teal-50)}.nav-btn.disabled{opacity:.4;pointer-events:none}.nav-current{font-size:13px;font-weight:600;color:var(--ink-light);padding:0 4px}.hero{background:linear-gradient(170deg,var(--teal-50) 0%,var(--surface) 50%,var(--blue-50) 100%);border-bottom:1px solid var(--border);padding:4rem 2rem 3.5rem}.hero-inner{max-width:var(--content-max);margin:0 auto}.hero-chapter-label{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--teal-700);text-transform:uppercase;letter-spacing:.08em;margin-bottom:1rem}.hero-chapter-label span{background:var(--teal-100);padding:3px 10px;border-radius:100px}.hero h1{font-family:var(--font-serif);font-size:clamp(2.4rem,5vw,3.2rem);font-weight:400;line-height:1.15;color:var(--ink);margin-bottom:1rem}.hero-subtitle{font-size:1.15rem;color:var(--ink-light);line-height:1.65;max-width:640px}.hero-meta{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1.5rem}.hero-meta-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-muted)}.hero-meta-item svg{width:16px;height:16px;color:var(--teal-600)}.main-layout{max-width:1200px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:1fr var(--sidebar-width);gap:4rem;align-items:start}.content{padding:3rem 0 6rem;min-width:0}.sidebar{position:sticky;top:76px;padding:2rem 0;max-height:calc(100vh - 76px);overflow-y:auto}.sidebar-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-muted);margin-bottom:1rem;padding-left:14px}.toc-list{list-style:none}.toc-item a{display:block;padding:6px 14px;font-size:13px;color:var(--ink-muted);text-decoration:none;border-left:2px solid transparent;transition:all .2s var(--ease);line-height:1.5}.toc-item a:hover{color:var(--ink);background:var(--surface-alt)}.toc-item a.active{color:var(--teal-700);border-left-color:var(--teal-500);background:var(--teal-50);font-weight:500}.content h2{font-family:var(--font-serif);font-size:1.85rem;font-weight:400;color:var(--ink);margin:3rem 0 1rem;padding-top:1rem;scroll-margin-top:80px}.content h2:first-child{margin-top:0}.content h3{font-size:1.15rem;font-weight:600;color:var(--ink);margin:2rem 0 .75rem;scroll-margin-top:80px}.content p{margin-bottom:1.25rem;color:var(--ink-light)}.content strong{color:var(--ink);font-weight:600}.content a{color:var(--teal-700);text-decoration:underline;text-decoration-color:var(--teal-200);text-underline-offset:3px;transition:text-decoration-color .2s}.content a:hover{text-decoration-color:var(--teal-600)}.content ul,.content ol{margin-bottom:1.25rem;padding-left:1.5rem}.content li{margin-bottom:.5rem;color:var(--ink-light)}.content li::marker{color:var(--teal-500)}.section-divider{border:none;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:3rem 0}.callout{padding:1.25rem 1.5rem;border-radius:12px;margin-bottom:1.5rem;border:1px solid;position:relative}.callout-header{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;margin-bottom:.5rem}.callout-header svg{width:18px;height:18px;flex-shrink:0}.callout p:last-child{margin-bottom:0}.callout.concept{background:var(--blue-50);border-color:var(--blue-100)}.callout.concept .callout-header{color:var(--blue-700)}.callout.important{background:var(--amber-50);border-color:var(--amber-100)}.callout.important .callout-header{color:var(--amber-600)}.callout.danger{background:var(--red-50);border-color:var(--red-100)}.callout.danger .callout-header{color:var(--red-600)}.callout.tip{background:var(--purple-50);border-color:var(--purple-100)}.callout.tip .callout-header{color:var(--purple-600)}.callout.success{background:var(--teal-50);border-color:var(--teal-100)}.callout.success .callout-header{color:var(--teal-700)}.code-block{position:relative;margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}.code-header{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:var(--surface-alt);border-bottom:1px solid var(--border);font-size:12px;color:var(--ink-muted)}.code-lang{font-family:var(--font-mono);font-weight:600;text-transform:uppercase;letter-spacing:.05em}.code-copy{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:#fff;font-size:11px;font-family:var(--font-sans);color:var(--ink-muted);cursor:pointer;transition:all .2s var(--ease)}.code-copy:hover{border-color:var(--teal-500);color:var(--teal-700)}.code-copy.copied{background:var(--teal-50);border-color:var(--teal-500);color:var(--teal-700)}pre{margin:0;padding:1.25rem 1.5rem;overflow-x:auto;background:#1e293b;font-family:var(--font-mono);font-size:13.5px;line-height:1.7;color:#e2e8f0}code{font-family:var(--font-mono);font-size:.88em}p code,li code{padding:2px 7px;background:var(--surface-alt);border:1px solid var(--border);border-radius:5px;color:var(--teal-800);font-size:.85em}.hl-keyword{color:#c084fc}.hl-string{color:#86efac}.hl-comment{color:#64748b;font-style:italic}.hl-function{color:#7dd3fc}.hl-number{color:#fbbf24}.hl-flag{color:#f472b6}details{margin-bottom:1.25rem;border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .2s var(--ease)}details[open]{border-color:var(--teal-200)}details summary{padding:1rem 1.25rem;font-weight:600;font-size:15px;cursor:pointer;background:var(--surface-alt);list-style:none;display:flex;align-items:center;gap:10px;transition:background .2s var(--ease);user-select:none}details summary::-webkit-details-marker{display:none}details summary::before{content:'';width:20px;height:20px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain;flex-shrink:0;transition:transform .2s var(--ease)}details[open] summary::before{transform:rotate(90deg)}details summary:hover{background:var(--teal-50)}.details-body{padding:1.25rem 1.5rem}.details-body p:last-child{margin-bottom:0}.video-card{margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}.video-wrapper{position:relative;padding-bottom:56.25%;height:0;background:#0f172a}.video-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}.video-caption{padding:12px 16px;background:var(--surface-alt);font-size:13px;color:var(--ink-muted);display:flex;align-items:center;gap:6px}.video-caption svg{width:14px;height:14px;color:var(--red-500)}.resource-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1rem;margin-bottom:1.5rem}.resource-card{display:flex;gap:14px;padding:1rem 1.25rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all .2s var(--ease);background:#fff}.resource-card:hover{border-color:var(--teal-300);background:var(--teal-50);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.04)}.resource-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}.resource-icon.docs{background:var(--blue-50);color:var(--blue-600)}.resource-icon.video{background:var(--red-50);color:var(--red-500)}.resource-icon.github{background:var(--ink);color:#fff}.resource-icon.article{background:var(--amber-50);color:var(--amber-600)}.resource-icon.pdf{background:var(--purple-50);color:var(--purple-600)}.resource-info{min-width:0}.resource-title{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:2px;line-height:1.4}.resource-desc{font-size:12px;color:var(--ink-muted);line-height:1.5}.assignment{border:2px solid var(--teal-200);border-radius:14px;padding:1.5rem 1.75rem;margin-bottom:1.5rem;background:linear-gradient(135deg,var(--teal-50) 0%,#fff 100%)}.assignment-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}.assignment-label{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--teal-700)}.assignment-difficulty{display:inline-flex;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:600}.difficulty-l1{background:var(--teal-100);color:var(--teal-800)}.difficulty-l2{background:var(--amber-100);color:var(--amber-600)}.difficulty-l3{background:var(--red-100);color:var(--red-600)}.assignment h4{font-size:1.05rem;font-weight:700;margin-bottom:.75rem}.assignment p{font-size:14px}.checklist{list-style:none;padding:0}.checklist li{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border-light);font-size:14px}.checklist li:last-child{border-bottom:none}.check-box{width:20px;height:20px;border-radius:6px;border:2px solid var(--border);flex-shrink:0;margin-top:1px;cursor:pointer;transition:all .15s var(--ease);display:flex;align-items:center;justify-content:center}.check-box:hover{border-color:var(--teal-500)}.check-box.checked{background:var(--teal-500);border-color:var(--teal-500)}.check-box.checked::after{content:'';width:10px;height:10px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain}.diagram{margin:1.5rem 0;padding:2rem;background:var(--surface-alt);border:1px solid var(--border);border-radius:14px;overflow-x:auto}.diagram pre{background:transparent;color:var(--ink);padding:0;font-size:13px;line-height:1.6}.diagram-caption{margin-top:1rem;font-size:12px;color:var(--ink-muted);text-align:center;font-style:italic}.chapter-footer{border-top:1px solid var(--border);padding:3rem 2rem;background:var(--surface-alt)}.chapter-footer-inner{max-width:var(--content-max);margin:0 auto}.footer-nav{display:flex;justify-content:space-between;align-items:center;gap:1rem}.footer-nav-link{display:flex;flex-direction:column;gap:4px;padding:1rem 1.5rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all .2s var(--ease);max-width:320px;background:#fff}.footer-nav-link:hover{border-color:var(--teal-300);box-shadow:0 4px 12px rgba(0,0,0,.04)}.footer-nav-label{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--teal-600)}.footer-nav-title{font-size:15px;font-weight:600;color:var(--ink)}.footer-brand{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border);font-size:13px;color:var(--ink-muted)}@media(max-width:960px){.main-layout{grid-template-columns:1fr}.sidebar{display:none}.resource-grid{grid-template-columns:1fr}}@media(max-width:640px){.hero{padding:2.5rem 1.25rem 2rem}.main-layout{padding:0 1.25rem}.content{padding:2rem 0 4rem}pre{padding:1rem;font-size:12.5px}.footer-nav{flex-direction:column}.footer-nav-link{max-width:100%;width:100%}}@media print{.top-nav,.sidebar,.progress-bar{display:none}.main-layout{display:block}.content{padding:0}.hero{background:#fff;border:none}pre{background:#f1f5f9;color:var(--ink);border:1px solid var(--border)}}
   </style>
 </head>
 <body>
@@ -456,68 +31,480 @@
   <header class="hero">
     <div class="hero-inner">
       <div class="hero-chapter-label">
-        <span>Chapter 02</span> 
+        <span>Chapter 02</span> &middot; Redshift Foundations
       </div>
-      <h1>Cluster Setup and Data Loading</h1>
-      <p class="hero-subtitle">Provisioning, IAM roles, COPY command, S3 integration, manifest files, load errors</p>
+      <h1>SQL for Analytics</h1>
+      <p class="hero-subtitle">
+        Master the analytical SQL patterns that power ad-tech reporting &mdash; aggregations, window functions,
+        date arithmetic, and the query idioms that transform raw impression logs into actionable campaign insights.
+      </p>
       <div class="hero-meta">
-        <div class="hero-meta-item">3 Assignments</div>
-        <div class="hero-meta-item">~45 min read</div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Estimated: 60&ndash;90 min
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          5 Key Concepts
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          3 Assignments
+        </div>
       </div>
     </div>
   </header>
 
-  <main class="content">
-    <h2>Overview</h2>
-    <p>This chapter covers <strong>cluster setup and data loading</strong> as part of the Redshift Foundations curriculum. You will build practical skills through guided explanations, code examples, and hands-on assignments.</p>
+  <div class="main-layout">
+    <main class="content">
 
-    <div class="topics-preview">
-      <h3>Topics Covered</h3>
-      <ul>
-            <li>Provisioning</li>
-            <li>IAM roles</li>
-            <li>COPY command</li>
-            <li>S3 integration</li>
-            <li>manifest files</li>
-            <li>load errors</li>
+      <h2 id="why-this-matters">Why This Matters</h2>
+
+      <p>
+        Every dashboard your campaign managers use, every report your advertisers receive, and every optimization
+        algorithm your bidding engine runs is ultimately powered by SQL queries against your impression and click
+        data. The difference between an analyst who writes basic <code>GROUP BY</code> queries and one who fluently
+        uses window functions, date series, and conditional aggregation is the difference between a 10-minute
+        report and a 10-hour report.
+      </p>
+
+      <p>
+        Redshift's SQL dialect is based on PostgreSQL 8.0 with significant extensions for analytics. It supports
+        window functions, common table expressions (CTEs), approximate count distinct via HyperLogLog, and date/time
+        functions specifically useful for time-series ad-tech data. Mastering these patterns means you can
+        answer complex questions &mdash; "What is the 7-day rolling average CTR by campaign?" or "Which creatives
+        showed a significant lift in viewability last week?" &mdash; in a single query.
+      </p>
+
+      <div class="callout concept">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Key Insight
+        </div>
+        <p>
+          In ad-tech analytics, <strong>window functions are not optional</strong>. They are the fundamental tool
+          for running totals (cumulative spend), ranking (top campaigns by ROAS), moving averages
+          (7-day CTR trends), and lead/lag comparisons (day-over-day impression changes). Every query pattern
+          in this chapter appears in real production dashboards.
+        </p>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="key-concepts">Key Concepts</h2>
+
+      <h3 id="aggregation-patterns">1. Aggregation Patterns for Campaign Reporting</h3>
+
+      <p>
+        The most common ad-tech query pattern is aggregating impression-level events into campaign-level metrics.
+        This involves <code>GROUP BY</code> with multiple aggregate functions and conditional logic:
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- Daily campaign performance report</span>
+<span class="hl-keyword">SELECT</span>
+    fi.event_date,
+    dc.campaign_name,
+    dc.advertiser_name,
+    <span class="hl-function">COUNT</span>(*) <span class="hl-keyword">AS</span> impressions,
+    <span class="hl-function">SUM</span>(<span class="hl-keyword">CASE WHEN</span> fi.is_clicked <span class="hl-keyword">THEN</span> <span class="hl-number">1</span> <span class="hl-keyword">ELSE</span> <span class="hl-number">0</span> <span class="hl-keyword">END</span>) <span class="hl-keyword">AS</span> clicks,
+    <span class="hl-function">SUM</span>(<span class="hl-keyword">CASE WHEN</span> fi.is_viewable <span class="hl-keyword">THEN</span> <span class="hl-number">1</span> <span class="hl-keyword">ELSE</span> <span class="hl-number">0</span> <span class="hl-keyword">END</span>) <span class="hl-keyword">AS</span> viewable_impressions,
+    <span class="hl-function">SUM</span>(fi.win_price_cpm) / <span class="hl-number">1000.0</span> <span class="hl-keyword">AS</span> total_spend,
+    <span class="hl-function">ROUND</span>(
+        <span class="hl-function">SUM</span>(<span class="hl-keyword">CASE WHEN</span> fi.is_clicked <span class="hl-keyword">THEN</span> <span class="hl-number">1.0</span> <span class="hl-keyword">ELSE</span> <span class="hl-number">0</span> <span class="hl-keyword">END</span>) * <span class="hl-number">100.0</span> /
+        <span class="hl-function">NULLIF</span>(<span class="hl-function">COUNT</span>(*), <span class="hl-number">0</span>),
+    <span class="hl-number">4</span>) <span class="hl-keyword">AS</span> ctr_pct,
+    <span class="hl-function">ROUND</span>(
+        <span class="hl-function">SUM</span>(<span class="hl-keyword">CASE WHEN</span> fi.is_viewable <span class="hl-keyword">THEN</span> <span class="hl-number">1.0</span> <span class="hl-keyword">ELSE</span> <span class="hl-number">0</span> <span class="hl-keyword">END</span>) * <span class="hl-number">100.0</span> /
+        <span class="hl-function">NULLIF</span>(<span class="hl-function">COUNT</span>(*), <span class="hl-number">0</span>),
+    <span class="hl-number">2</span>) <span class="hl-keyword">AS</span> viewability_pct
+<span class="hl-keyword">FROM</span> analytics.fact_impressions fi
+<span class="hl-keyword">JOIN</span> analytics.dim_campaign dc <span class="hl-keyword">ON</span> fi.campaign_id = dc.campaign_id
+<span class="hl-keyword">WHERE</span> fi.event_date <span class="hl-keyword">BETWEEN</span> <span class="hl-string">'2025-01-01'</span> <span class="hl-keyword">AND</span> <span class="hl-string">'2025-01-31'</span>
+<span class="hl-keyword">GROUP BY</span> fi.event_date, dc.campaign_name, dc.advertiser_name
+<span class="hl-keyword">ORDER BY</span> fi.event_date, total_spend <span class="hl-keyword">DESC</span>;
+</pre>
+      </div>
+
+      <p>
+        Notice the use of <code>NULLIF</code> to prevent division by zero &mdash; a common issue when campaigns
+        have zero impressions on a given day. The <code>CASE WHEN</code> pattern for conditional counting is
+        the standard idiom in Redshift because there is no native <code>COUNT_IF</code> function.
+      </p>
+
+      <h3 id="window-functions">2. Window Functions for Time-Series Analysis</h3>
+
+      <p>
+        Window functions compute values across a set of rows related to the current row without collapsing them
+        into a single output row. They are essential for calculating running totals, rankings, and moving averages
+        over time-series ad-tech data:
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- 7-day rolling average CTR by campaign</span>
+<span class="hl-keyword">WITH</span> daily_stats <span class="hl-keyword">AS</span> (
+    <span class="hl-keyword">SELECT</span>
+        event_date,
+        campaign_id,
+        <span class="hl-function">COUNT</span>(*) <span class="hl-keyword">AS</span> impressions,
+        <span class="hl-function">SUM</span>(<span class="hl-keyword">CASE WHEN</span> is_clicked <span class="hl-keyword">THEN</span> <span class="hl-number">1</span> <span class="hl-keyword">ELSE</span> <span class="hl-number">0</span> <span class="hl-keyword">END</span>) <span class="hl-keyword">AS</span> clicks
+    <span class="hl-keyword">FROM</span> analytics.fact_impressions
+    <span class="hl-keyword">WHERE</span> event_date >= <span class="hl-string">'2025-01-01'</span>
+    <span class="hl-keyword">GROUP BY</span> event_date, campaign_id
+)
+<span class="hl-keyword">SELECT</span>
+    event_date,
+    campaign_id,
+    impressions,
+    clicks,
+    <span class="hl-function">ROUND</span>(clicks * <span class="hl-number">100.0</span> / <span class="hl-function">NULLIF</span>(impressions, <span class="hl-number">0</span>), <span class="hl-number">4</span>) <span class="hl-keyword">AS</span> daily_ctr,
+    <span class="hl-function">ROUND</span>(
+        <span class="hl-function">AVG</span>(clicks * <span class="hl-number">100.0</span> / <span class="hl-function">NULLIF</span>(impressions, <span class="hl-number">0</span>))
+        <span class="hl-keyword">OVER</span> (
+            <span class="hl-keyword">PARTITION BY</span> campaign_id
+            <span class="hl-keyword">ORDER BY</span> event_date
+            <span class="hl-keyword">ROWS BETWEEN</span> <span class="hl-number">6</span> <span class="hl-keyword">PRECEDING AND CURRENT ROW</span>
+        ),
+    <span class="hl-number">4</span>) <span class="hl-keyword">AS</span> rolling_7d_ctr,
+    <span class="hl-function">SUM</span>(impressions) <span class="hl-keyword">OVER</span> (
+        <span class="hl-keyword">PARTITION BY</span> campaign_id
+        <span class="hl-keyword">ORDER BY</span> event_date
+        <span class="hl-keyword">ROWS UNBOUNDED PRECEDING</span>
+    ) <span class="hl-keyword">AS</span> cumulative_impressions
+<span class="hl-keyword">FROM</span> daily_stats
+<span class="hl-keyword">ORDER BY</span> campaign_id, event_date;
+</pre>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Pro Tip
+        </div>
+        <p>
+          Use <code>ROWS BETWEEN</code> instead of <code>RANGE BETWEEN</code> for rolling window calculations.
+          <code>ROWS</code> is based on physical row position and is faster, while <code>RANGE</code> is based on
+          value comparison, which is slower and can produce unexpected results with duplicate dates.
+        </p>
+      </div>
+
+      <h3 id="ranking-functions">3. Ranking and Top-N Analysis</h3>
+
+      <p>
+        Ad-tech reporting frequently requires finding "top 10 campaigns by spend" or "rank publishers by viewability
+        within each advertiser." Redshift supports <code>ROW_NUMBER()</code>, <code>RANK()</code>, and <code>DENSE_RANK()</code>:
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- Top 5 creatives per campaign by click-through rate</span>
+<span class="hl-keyword">WITH</span> creative_stats <span class="hl-keyword">AS</span> (
+    <span class="hl-keyword">SELECT</span>
+        campaign_id,
+        creative_id,
+        <span class="hl-function">COUNT</span>(*) <span class="hl-keyword">AS</span> impressions,
+        <span class="hl-function">SUM</span>(<span class="hl-keyword">CASE WHEN</span> is_clicked <span class="hl-keyword">THEN</span> <span class="hl-number">1</span> <span class="hl-keyword">ELSE</span> <span class="hl-number">0</span> <span class="hl-keyword">END</span>) <span class="hl-keyword">AS</span> clicks,
+        <span class="hl-function">ROW_NUMBER</span>() <span class="hl-keyword">OVER</span> (
+            <span class="hl-keyword">PARTITION BY</span> campaign_id
+            <span class="hl-keyword">ORDER BY</span> <span class="hl-function">SUM</span>(<span class="hl-keyword">CASE WHEN</span> is_clicked <span class="hl-keyword">THEN</span> <span class="hl-number">1.0</span> <span class="hl-keyword">ELSE</span> <span class="hl-number">0</span> <span class="hl-keyword">END</span>) /
+                <span class="hl-function">NULLIF</span>(<span class="hl-function">COUNT</span>(*), <span class="hl-number">0</span>) <span class="hl-keyword">DESC</span>
+        ) <span class="hl-keyword">AS</span> ctr_rank
+    <span class="hl-keyword">FROM</span> analytics.fact_impressions
+    <span class="hl-keyword">WHERE</span> event_date >= <span class="hl-function">DATEADD</span>(<span class="hl-string">'day'</span>, <span class="hl-number">-30</span>, <span class="hl-function">GETDATE</span>())
+    <span class="hl-keyword">GROUP BY</span> campaign_id, creative_id
+    <span class="hl-keyword">HAVING</span> <span class="hl-function">COUNT</span>(*) >= <span class="hl-number">1000</span>
+)
+<span class="hl-keyword">SELECT</span> * <span class="hl-keyword">FROM</span> creative_stats
+<span class="hl-keyword">WHERE</span> ctr_rank <= <span class="hl-number">5</span>
+<span class="hl-keyword">ORDER BY</span> campaign_id, ctr_rank;
+</pre>
+      </div>
+
+      <h3 id="date-functions">4. Date Functions and Time-Series Generation</h3>
+
+      <p>
+        Ad-tech reports always have a time dimension. Redshift provides powerful date functions including
+        <code>DATEADD</code>, <code>DATEDIFF</code>, <code>DATE_TRUNC</code>, and <code>EXTRACT</code>.
+        A common pattern is generating a complete date series to ensure reports show zero-value days:
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- Generate a date series and LEFT JOIN to fill gaps with zeros</span>
+<span class="hl-keyword">WITH</span> date_series <span class="hl-keyword">AS</span> (
+    <span class="hl-keyword">SELECT</span>
+        (<span class="hl-string">'2025-01-01'</span>::<span class="hl-function">DATE</span> + row_number <span class="hl-keyword">OVER</span> () - <span class="hl-number">1</span>) <span class="hl-keyword">AS</span> report_date
+    <span class="hl-keyword">FROM</span> stl_scan
+    <span class="hl-keyword">LIMIT</span> <span class="hl-number">31</span>
+),
+daily_metrics <span class="hl-keyword">AS</span> (
+    <span class="hl-keyword">SELECT</span>
+        event_date,
+        <span class="hl-function">COUNT</span>(*) <span class="hl-keyword">AS</span> impressions,
+        <span class="hl-function">SUM</span>(win_price_cpm) / <span class="hl-number">1000.0</span> <span class="hl-keyword">AS</span> spend
+    <span class="hl-keyword">FROM</span> analytics.fact_impressions
+    <span class="hl-keyword">WHERE</span> campaign_id = <span class="hl-number">42</span>
+      <span class="hl-keyword">AND</span> event_date <span class="hl-keyword">BETWEEN</span> <span class="hl-string">'2025-01-01'</span> <span class="hl-keyword">AND</span> <span class="hl-string">'2025-01-31'</span>
+    <span class="hl-keyword">GROUP BY</span> event_date
+)
+<span class="hl-keyword">SELECT</span>
+    ds.report_date,
+    <span class="hl-function">COALESCE</span>(dm.impressions, <span class="hl-number">0</span>) <span class="hl-keyword">AS</span> impressions,
+    <span class="hl-function">COALESCE</span>(dm.spend, <span class="hl-number">0</span>) <span class="hl-keyword">AS</span> spend,
+    <span class="hl-function">TO_CHAR</span>(ds.report_date, <span class="hl-string">'Day'</span>) <span class="hl-keyword">AS</span> day_of_week
+<span class="hl-keyword">FROM</span> date_series ds
+<span class="hl-keyword">LEFT JOIN</span> daily_metrics dm <span class="hl-keyword">ON</span> ds.report_date = dm.event_date
+<span class="hl-keyword">ORDER BY</span> ds.report_date;
+</pre>
+      </div>
+
+      <div class="callout important">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Important
+        </div>
+        <p>
+          Redshift does not have a native <code>generate_series()</code> function like PostgreSQL. The pattern
+          above uses <code>ROW_NUMBER() OVER ()</code> on an existing system table to generate sequential numbers.
+          For production use, create a permanent <code>dim_date</code> dimension table with pre-computed attributes
+          (fiscal week, quarter, holiday flags, etc.).
+        </p>
+      </div>
+
+      <h3 id="approximate-functions">5. Approximate Count Distinct (HyperLogLog)</h3>
+
+      <p>
+        Counting unique users across billions of impressions is one of the most expensive operations in ad-tech.
+        Redshift offers <code>APPROXIMATE COUNT(DISTINCT ...)</code> which uses the HyperLogLog algorithm to
+        deliver results within 2% accuracy at 10-100x the speed of exact counts:
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- Exact unique users (slow on billions of rows)</span>
+<span class="hl-keyword">SELECT</span>
+    campaign_id,
+    <span class="hl-function">COUNT</span>(<span class="hl-keyword">DISTINCT</span> user_cookie_id) <span class="hl-keyword">AS</span> exact_uniques
+<span class="hl-keyword">FROM</span> analytics.fact_impressions
+<span class="hl-keyword">GROUP BY</span> campaign_id;
+
+<span class="hl-comment">-- Approximate unique users (fast, ~2% error margin)</span>
+<span class="hl-keyword">SELECT</span>
+    campaign_id,
+    <span class="hl-function">APPROXIMATE COUNT</span>(<span class="hl-keyword">DISTINCT</span> user_cookie_id) <span class="hl-keyword">AS</span> approx_uniques
+<span class="hl-keyword">FROM</span> analytics.fact_impressions
+<span class="hl-keyword">GROUP BY</span> campaign_id;
+</pre>
+      </div>
+
+      <p>
+        For ad-tech reach and frequency analysis, approximate counts are almost always sufficient. Reserve exact
+        distinct counts for financial reconciliation where precision is legally required.
+      </p>
+
+      <hr class="section-divider">
+
+      <h2 id="watch-learn">Watch &amp; Learn</h2>
+
+      <p>These videos cover SQL analytics patterns and Redshift-specific SQL features.</p>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/Ww71knvhQ-s?rel=0&amp;modestbranding=1" title="Advanced SQL Window Functions" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Advanced SQL Tutorial &mdash; Window Functions for analytics (ROW_NUMBER, RANK, running totals)
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/BHwzDmr6d7s?rel=0&amp;modestbranding=1" title="Amazon Redshift SQL Features" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          AWS Online Tech Talks &mdash; Amazon Redshift tips and tricks for SQL developers
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="further-reading">Further Reading</h2>
+
+      <div class="resource-grid">
+        <a class="resource-card" href="https://docs.aws.amazon.com/redshift/latest/dg/c_Window_functions.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+          <div class="resource-info"><div class="resource-title">Redshift Window Functions</div><div class="resource-desc">Complete reference for window functions including PARTITION BY and frame clauses.</div></div>
+        </a>
+        <a class="resource-card" href="https://docs.aws.amazon.com/redshift/latest/dg/c_Aggregate_Functions.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+          <div class="resource-info"><div class="resource-title">Aggregate Functions Reference</div><div class="resource-desc">SUM, COUNT, AVG, APPROXIMATE COUNT DISTINCT, LISTAGG, and other aggregation functions.</div></div>
+        </a>
+        <a class="resource-card" href="https://docs.aws.amazon.com/redshift/latest/dg/cm-c-sql-functions-dateadd.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+          <div class="resource-info"><div class="resource-title">DATEADD Function</div><div class="resource-desc">Date arithmetic in Redshift with year, month, day, hour, minute, and second intervals.</div></div>
+        </a>
+        <a class="resource-card" href="https://docs.aws.amazon.com/redshift/latest/dg/r_WITH_clause.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+          <div class="resource-info"><div class="resource-title">WITH Clause (CTEs)</div><div class="resource-desc">Common Table Expressions for breaking complex queries into readable, modular steps.</div></div>
+        </a>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="assignments">Assignments</h2>
+
+      <p>Complete these in order. Each level builds on the previous one.</p>
+
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 1</div>
+          <span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span>
+        </div>
+        <h4>Basic Campaign Aggregation Queries</h4>
+        <p>Write SQL queries to produce standard ad-tech reporting metrics from the impression fact table.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write a query that returns daily impressions, clicks, and CTR for each campaign in the last 30 days</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write a query that calculates total spend and average CPM by device type (mobile, desktop, tablet)</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write a query that finds the top 10 campaigns by total spend using <code>ORDER BY</code> and <code>LIMIT</code></span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Use <code>HAVING</code> to filter only campaigns with CTR above 0.5%</span></li>
+        </ul>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div>
+          <p>All four queries return correct results and you can explain each aggregate function and filter clause.</p>
+        </div>
+      </div>
+
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 2</div>
+          <span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span>
+        </div>
+        <h4>Window Functions for Campaign Trend Analysis</h4>
+        <p>Use window functions to create time-series analytics for a campaign dashboard.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Calculate a 7-day rolling average of impressions per campaign using <code>AVG() OVER (ROWS BETWEEN 6 PRECEDING AND CURRENT ROW)</code></span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Use <code>LAG()</code> to compute day-over-day impression change percentage</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Rank creatives within each campaign by CTR using <code>RANK()</code> and filter to top 3</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Calculate cumulative spend over time using <code>SUM() OVER (ORDER BY event_date ROWS UNBOUNDED PRECEDING)</code></span></li>
+        </ul>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div>
+          <p>You can produce a dataset suitable for a time-series line chart and a ranked creative table directly from SQL.</p>
+        </div>
+      </div>
+
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 3</div>
+          <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Production-Ready</span>
+        </div>
+        <h4>Complete Dashboard Query Suite</h4>
+        <p>Build the complete set of queries that would power a production campaign analytics dashboard.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a date-spine CTE that generates all dates in the report range and LEFT JOIN to handle zero-impression days</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Build an advertiser summary: total spend, unique campaigns, avg CPM, overall CTR, week-over-week spend change</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write a geo performance query using <code>APPROXIMATE COUNT(DISTINCT user_id)</code> for reach by country</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a day-parting analysis: impressions and CTR by hour-of-day using <code>EXTRACT(hour FROM event_timestamp)</code></span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Document each query with comments explaining the business question it answers</span></li>
+        </ul>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div>
+          <p>Your query suite could be handed to a BI engineer to wire into Looker/Tableau dashboards without modification.</p>
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="self-check">Self-Check</h2>
+
+      <details>
+        <summary>Can you explain the difference between ROW_NUMBER(), RANK(), and DENSE_RANK()?</summary>
+        <div class="details-body">
+          <p><code>ROW_NUMBER()</code> assigns a unique sequential integer to each row. <code>RANK()</code> assigns the same rank to tied values but skips subsequent ranks (1,2,2,4). <code>DENSE_RANK()</code> gives tied values the same rank without skipping (1,2,2,3). For ad-tech top-N queries, <code>ROW_NUMBER()</code> is usually preferred because it guarantees exactly N results.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Why should you use NULLIF() in CTR calculations?</summary>
+        <div class="details-body">
+          <p>CTR is calculated as <code>clicks / impressions * 100</code>. If a campaign has zero impressions on a given day, dividing by zero causes an error. <code>NULLIF(impressions, 0)</code> returns NULL when impressions is zero, which makes the division return NULL instead of an error. Use <code>COALESCE</code> to convert NULL to 0 for display.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>When would you use APPROXIMATE COUNT DISTINCT instead of exact COUNT DISTINCT?</summary>
+        <div class="details-body">
+          <p>Use approximate counts when the table has hundreds of millions or billions of rows and you need unique user counts for dashboards where 2% error margin is acceptable. For financial reporting (unique advertisers, exact campaign counts), use exact <code>COUNT(DISTINCT)</code>. For reach/frequency analysis on impression data, the approximate version can be 10-100x faster.</p>
+        </div>
+      </details>
+
+    </main>
+
+    <aside class="sidebar">
+      <div class="sidebar-title">On this page</div>
+      <ul class="toc-list">
+        <li class="toc-item"><a href="#why-this-matters">Why This Matters</a></li>
+        <li class="toc-item"><a href="#key-concepts">Key Concepts</a></li>
+        <li class="toc-item"><a href="#aggregation-patterns" style="padding-left:28px;font-size:12px">Aggregation Patterns</a></li>
+        <li class="toc-item"><a href="#window-functions" style="padding-left:28px;font-size:12px">Window Functions</a></li>
+        <li class="toc-item"><a href="#ranking-functions" style="padding-left:28px;font-size:12px">Ranking &amp; Top-N</a></li>
+        <li class="toc-item"><a href="#date-functions" style="padding-left:28px;font-size:12px">Date Functions</a></li>
+        <li class="toc-item"><a href="#approximate-functions" style="padding-left:28px;font-size:12px">Approximate Counts</a></li>
+        <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a></li>
+        <li class="toc-item"><a href="#further-reading">Further Reading</a></li>
+        <li class="toc-item"><a href="#assignments">Assignments</a></li>
+        <li class="toc-item"><a href="#self-check">Self-Check</a></li>
       </ul>
-    </div>
+    </aside>
+  </div>
 
-    <hr class="section-divider">
-
-    <div class="coming-soon-banner">
-      <h3>Content In Development</h3>
-      <p>Full chapter content with detailed explanations, code examples, video walkthroughs, and assignments is being developed. Check back soon.</p>
-    </div>
-
-    <div class="callout tip">
-      <div class="callout-header">What You Will Learn</div>
-      <p>By the end of this chapter, you will understand provisioning, iam roles, copy command, s3 integration, manifest files, load errors and be able to apply these concepts in real-world scenarios.</p>
-    </div>
-
-  </main>
-
-  <nav class="footer-nav">
-        <a class="footer-nav-link prev" href="chapter-01.html">
-          <span class="footer-nav-label">&larr; Previous</span>
-          <span class="footer-nav-title">Chapter 01: Introduction to Data Warehousing</span>
+  <footer class="chapter-footer">
+    <div class="chapter-footer-inner">
+      <nav class="footer-nav">
+        <a class="footer-nav-link" href="chapter-01.html">
+          <span class="footer-nav-label">&larr; Previous Chapter</span>
+          <span class="footer-nav-title">01: Redshift Architecture</span>
         </a>
-        <a class="footer-nav-link next" href="chapter-03.html">
-          <span class="footer-nav-label">Next &rarr;</span>
-          <span class="footer-nav-title">Chapter 03: Analytical Query Patterns</span>
+        <a class="footer-nav-link" href="chapter-03.html">
+          <span class="footer-nav-label">Next Chapter &rarr;</span>
+          <span class="footer-nav-title">03: Distribution and Sort Keys</span>
         </a>
-  </nav>
-
-  <footer class="footer">
-    ILA (Iksha Learning Academy) &middot; Redshift Foundations &middot; <a href="index.html">All Chapters</a>
+      </nav>
+      <div class="footer-brand">ILA (Iksha Learning Academy) &middot; Redshift Foundations &middot; Basic Track</div>
+    </div>
   </footer>
 
   <script>
-    window.addEventListener('scroll', () => {
-      const h = document.documentElement;
-      const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
-      document.getElementById('progressBar').style.width = Math.min(pct, 100) + '%';
-    });
+    window.addEventListener('scroll',()=>{const s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight;document.getElementById('progressBar').style.width=(d>0?(s/d)*100:0)+'%'});
+    const tocLinks=document.querySelectorAll('.toc-item a'),sections=[];
+    tocLinks.forEach(link=>{const id=link.getAttribute('href').slice(1),el=document.getElementById(id);if(el)sections.push({id,el,link})});
+    const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{const item=sections.find(s=>s.el===entry.target);if(item&&entry.isIntersecting){tocLinks.forEach(l=>l.classList.remove('active'));item.link.classList.add('active')}})},{rootMargin:'-80px 0px -60% 0px',threshold:0});
+    sections.forEach(s=>observer.observe(s.el));
+    function copyCode(btn){const pre=btn.closest('.code-block').querySelector('pre');navigator.clipboard.writeText(pre.textContent).then(()=>{btn.classList.add('copied');btn.textContent='Copied!';setTimeout(()=>{btn.classList.remove('copied');btn.textContent='Copy'},2000)})}
   </script>
 </body>
 </html>

@@ -3,521 +3,376 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chapter 06: Query Optimization &mdash; ILA Redshift</title>
+  <title>Chapter 06: Query Optimization &mdash; ILA Redshift Foundations</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --ink:        #0f172a;
-      --ink-light:  #334155;
-      --ink-muted:  #64748b;
-      --surface:    #ffffff;
-      --surface-alt:#f8fafc;
-      --surface-warm:#fffbeb;
-      --border:     #e2e8f0;
-      --border-light:#f1f5f9;
-      --teal-50:  #f0fdfa;
-      --teal-100: #ccfbf1;
-      --teal-200: #99f6e4;
-      --teal-500: #14b8a6;
-      --teal-600: #0d9488;
-      --teal-700: #0f766e;
-      --teal-800: #115e59;
-      --teal-900: #134e4a;
-      --blue-50:  #eff6ff;
-      --blue-100: #dbeafe;
-      --blue-500: #3b82f6;
-      --blue-600: #2563eb;
-      --blue-700: #1d4ed8;
-      --amber-50:  #fffbeb;
-      --amber-100: #fef3c7;
-      --amber-500: #f59e0b;
-      --amber-600: #d97706;
-      --red-50:   #fef2f2;
-      --red-100:  #fee2e2;
-      --red-500:  #ef4444;
-      --red-600:  #dc2626;
-      --purple-50:  #faf5ff;
-      --purple-100: #f3e8ff;
-      --purple-500: #a855f7;
-      --purple-600: #9333ea;
-      --green-50:  #f0fdf4;
-      --green-100: #dcfce7;
-      --green-500: #22c55e;
-      --green-600: #16a34a;
-      --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      --font-serif: 'Instrument Serif', Georgia, serif;
-      --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
-      --content-max: 780px;
-      --ease: cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
-
-    body {
-      font-family: var(--font-sans);
-      font-size: 16px;
-      line-height: 1.7;
-      color: var(--ink);
-      background: var(--surface);
-    }
-
-    .progress-bar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 0%;
-      height: 3px;
-      background: linear-gradient(90deg, var(--teal-500), var(--blue-500));
-      z-index: 1000;
-      transition: width 0.15s var(--ease);
-    }
-
-    .top-nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-      padding: 0 2rem;
-    }
-
-    .top-nav-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 56px;
-    }
-
-    .nav-brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-      color: var(--teal-800);
-    }
-
-    .nav-brand-icon {
-      width: 32px;
-      height: 32px;
-      background: linear-gradient(135deg, var(--teal-600), var(--teal-800));
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-weight: 800;
-      font-size: 14px;
-    }
-
-    .nav-brand-text {
-      font-weight: 700;
-      font-size: 15px;
-      letter-spacing: -0.02em;
-    }
-
-    .nav-chapter-nav {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .nav-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 14px;
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: 500;
-      text-decoration: none;
-      color: var(--ink-muted);
-      border: 1px solid var(--border);
-      background: white;
-      transition: all 0.2s var(--ease);
-      cursor: pointer;
-    }
-
-    .nav-btn:hover {
-      color: var(--ink);
-      border-color: var(--teal-500);
-      background: var(--teal-50);
-    }
-
-    .nav-btn.disabled {
-      opacity: 0.4;
-      pointer-events: none;
-    }
-
-    .nav-current {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--ink-light);
-      padding: 0 4px;
-    }
-
-    .hero {
-      background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%);
-      border-bottom: 1px solid var(--border);
-      padding: 4rem 2rem 3.5rem;
-    }
-
-    .hero-inner {
-      max-width: var(--content-max);
-      margin: 0 auto;
-    }
-
-    .hero-chapter-label {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--teal-700);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 1rem;
-    }
-
-    .hero-chapter-label span {
-      background: var(--teal-100);
-      padding: 3px 10px;
-      border-radius: 100px;
-    }
-
-    .hero h1 {
-      font-family: var(--font-serif);
-      font-size: clamp(2.4rem, 5vw, 3.2rem);
-      font-weight: 400;
-      line-height: 1.15;
-      color: var(--ink);
-      margin-bottom: 1rem;
-    }
-
-    .hero-subtitle {
-      font-size: 1.15rem;
-      color: var(--ink-light);
-      line-height: 1.65;
-      max-width: 640px;
-    }
-
-    .hero-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-top: 1.5rem;
-    }
-
-    .hero-meta-item {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 13px;
-      color: var(--ink-muted);
-    }
-
-    .content {
-      max-width: var(--content-max);
-      margin: 0 auto;
-      padding: 3rem 2rem 6rem;
-    }
-
-    .content h2 {
-      font-family: var(--font-serif);
-      font-size: 1.85rem;
-      font-weight: 400;
-      color: var(--ink);
-      margin: 3rem 0 1rem;
-      scroll-margin-top: 80px;
-    }
-
-    .content h2:first-child { margin-top: 0; }
-
-    .content h3 {
-      font-size: 1.15rem;
-      font-weight: 600;
-      color: var(--ink);
-      margin: 2rem 0 0.75rem;
-    }
-
-    .content p {
-      margin-bottom: 1.25rem;
-      color: var(--ink-light);
-    }
-
-    .content ul, .content ol {
-      margin-bottom: 1.25rem;
-      padding-left: 1.5rem;
-    }
-
-    .content li {
-      margin-bottom: 0.5rem;
-      color: var(--ink-light);
-    }
-
-    .content li::marker { color: var(--teal-500); }
-
-    .callout {
-      padding: 1.25rem 1.5rem;
-      border-radius: 12px;
-      margin-bottom: 1.5rem;
-      border: 1px solid;
-    }
-
-    .callout-header {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-    }
-
-    .callout p:last-child { margin-bottom: 0; }
-
-    .callout.concept {
-      background: var(--blue-50);
-      border-color: var(--blue-100);
-    }
-    .callout.concept .callout-header { color: var(--blue-700); }
-
-    .callout.important {
-      background: var(--amber-50);
-      border-color: var(--amber-100);
-    }
-    .callout.important .callout-header { color: var(--amber-600); }
-
-    .callout.tip {
-      background: var(--purple-50);
-      border-color: var(--purple-100);
-    }
-    .callout.tip .callout-header { color: var(--purple-600); }
-
-    .callout.success {
-      background: var(--teal-50);
-      border-color: var(--teal-100);
-    }
-    .callout.success .callout-header { color: var(--teal-700); }
-
-    .section-divider {
-      border: none;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--border), transparent);
-      margin: 3rem 0;
-    }
-
-    .coming-soon-banner {
-      background: var(--amber-50);
-      border: 1px solid var(--amber-100);
-      border-radius: 12px;
-      padding: 2.5rem;
-      text-align: center;
-      margin: 2rem 0;
-    }
-
-    .coming-soon-banner h3 {
-      color: var(--amber-600);
-      margin-bottom: 0.5rem;
-    }
-
-    .coming-soon-banner p {
-      color: var(--ink-muted);
-      margin-bottom: 0;
-    }
-
-    .topics-preview {
-      background: var(--surface-alt);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.5rem 2rem;
-      margin: 1.5rem 0;
-    }
-
-    .topics-preview h3 {
-      font-size: 0.95rem;
-      margin-bottom: 0.75rem;
-      color: var(--ink);
-    }
-
-    .topics-preview ul {
-      list-style: none;
-      padding: 0;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 0.5rem;
-    }
-
-    .topics-preview li {
-      font-size: 14px;
-      color: var(--ink-light);
-      padding-left: 1.25rem;
-      position: relative;
-    }
-
-    .topics-preview li::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 8px;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--teal-500);
-    }
-
-    .footer-nav {
-      max-width: var(--content-max);
-      margin: 0 auto;
-      padding: 2rem;
-      display: flex;
-      justify-content: space-between;
-      border-top: 1px solid var(--border);
-    }
-
-    .footer-nav-link {
-      display: flex;
-      flex-direction: column;
-      text-decoration: none;
-      padding: 1rem;
-      border-radius: 12px;
-      transition: background 0.2s var(--ease);
-      max-width: 45%;
-    }
-
-    .footer-nav-link:hover {
-      background: var(--surface-alt);
-    }
-
-    .footer-nav-label {
-      font-size: 12px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--ink-muted);
-      margin-bottom: 4px;
-    }
-
-    .footer-nav-title {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--teal-700);
-    }
-
-    .footer-nav-link.next { text-align: right; margin-left: auto; }
-
-    .footer {
-      text-align: center;
-      padding: 2rem;
-      font-size: 13px;
-      color: var(--ink-muted);
-      border-top: 1px solid var(--border);
-    }
-
-    .footer a {
-      color: var(--teal-700);
-      text-decoration: none;
-    }
-
-    .footer a:hover { text-decoration: underline; }
-
-    @media (max-width: 768px) {
-      .hero { padding: 3rem 1.5rem 2.5rem; }
-      .content { padding: 2rem 1.5rem 4rem; }
-      .hero h1 { font-size: 2rem; }
-      .footer-nav { flex-direction: column; gap: 1rem; }
-      .footer-nav-link { max-width: 100%; }
-      .footer-nav-link.next { text-align: left; }
-    }
+    :root{--ink:#0f172a;--ink-light:#334155;--ink-muted:#64748b;--surface:#ffffff;--surface-alt:#f8fafc;--surface-warm:#fffbeb;--border:#e2e8f0;--border-light:#f1f5f9;--teal-50:#f0fdfa;--teal-100:#ccfbf1;--teal-200:#99f6e4;--teal-500:#14b8a6;--teal-600:#0d9488;--teal-700:#0f766e;--teal-800:#115e59;--teal-900:#134e4a;--blue-50:#eff6ff;--blue-100:#dbeafe;--blue-500:#3b82f6;--blue-600:#2563eb;--blue-700:#1d4ed8;--amber-50:#fffbeb;--amber-100:#fef3c7;--amber-500:#f59e0b;--amber-600:#d97706;--red-50:#fef2f2;--red-100:#fee2e2;--red-500:#ef4444;--red-600:#dc2626;--purple-50:#faf5ff;--purple-100:#f3e8ff;--purple-500:#a855f7;--purple-600:#9333ea;--font-sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;--font-serif:'Instrument Serif',Georgia,serif;--font-mono:'JetBrains Mono','Fira Code',monospace;--content-max:780px;--sidebar-width:280px;--ease:cubic-bezier(0.4,0,0.2,1)}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+    body{font-family:var(--font-sans);font-size:16px;line-height:1.7;color:var(--ink);background:var(--surface)}
+    .progress-bar{position:fixed;top:0;left:0;width:0%;height:3px;background:linear-gradient(90deg,var(--teal-500),var(--blue-500));z-index:1000;transition:width .15s var(--ease)}
+    .top-nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem}
+    .top-nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px}
+    .nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--teal-800)}
+    .nav-brand-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--teal-600),var(--teal-800));border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px}
+    .nav-brand-text{font-weight:700;font-size:15px;letter-spacing:-.02em}
+    .nav-chapter-nav{display:flex;align-items:center;gap:8px}
+    .nav-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;color:var(--ink-muted);border:1px solid var(--border);background:#fff;transition:all .2s var(--ease);cursor:pointer}
+    .nav-btn:hover{color:var(--ink);border-color:var(--teal-500);background:var(--teal-50)}
+    .nav-btn.disabled{opacity:.4;pointer-events:none}
+    .nav-current{font-size:13px;font-weight:600;color:var(--ink-light);padding:0 4px}
+    .hero{background:linear-gradient(170deg,var(--teal-50) 0%,var(--surface) 50%,var(--blue-50) 100%);border-bottom:1px solid var(--border);padding:4rem 2rem 3.5rem}
+    .hero-inner{max-width:var(--content-max);margin:0 auto}
+    .hero-chapter-label{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--teal-700);text-transform:uppercase;letter-spacing:.08em;margin-bottom:1rem}
+    .hero-chapter-label span{background:var(--teal-100);padding:3px 10px;border-radius:100px}
+    .hero h1{font-family:var(--font-serif);font-size:clamp(2.4rem,5vw,3.2rem);font-weight:400;line-height:1.15;color:var(--ink);margin-bottom:1rem}
+    .hero-subtitle{font-size:1.15rem;color:var(--ink-light);line-height:1.65;max-width:640px}
+    .hero-meta{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1.5rem}
+    .hero-meta-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-muted)}
+    .hero-meta-item svg{width:16px;height:16px;color:var(--teal-600)}
+    .main-layout{max-width:1200px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:1fr var(--sidebar-width);gap:4rem;align-items:start}
+    .content{padding:3rem 0 6rem;min-width:0}
+    .sidebar{position:sticky;top:76px;padding:2rem 0;max-height:calc(100vh - 76px);overflow-y:auto}
+    .sidebar-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-muted);margin-bottom:1rem;padding-left:14px}
+    .toc-list{list-style:none}
+    .toc-item a{display:block;padding:6px 14px;font-size:13px;color:var(--ink-muted);text-decoration:none;border-left:2px solid transparent;transition:all .2s var(--ease);line-height:1.5}
+    .toc-item a:hover{color:var(--ink);background:var(--surface-alt)}
+    .toc-item a.active{color:var(--teal-700);border-left-color:var(--teal-500);background:var(--teal-50);font-weight:500}
+    .content h2{font-family:var(--font-serif);font-size:1.85rem;font-weight:400;color:var(--ink);margin:3rem 0 1rem;padding-top:1rem;scroll-margin-top:80px}
+    .content h2:first-child{margin-top:0}
+    .content h3{font-size:1.15rem;font-weight:600;color:var(--ink);margin:2rem 0 .75rem;scroll-margin-top:80px}
+    .content p{margin-bottom:1.25rem;color:var(--ink-light)}
+    .content strong{color:var(--ink);font-weight:600}
+    .content a{color:var(--teal-700);text-decoration:underline;text-decoration-color:var(--teal-200);text-underline-offset:3px;transition:text-decoration-color .2s}
+    .content a:hover{text-decoration-color:var(--teal-600)}
+    .content ul,.content ol{margin-bottom:1.25rem;padding-left:1.5rem}
+    .content li{margin-bottom:.5rem;color:var(--ink-light)}
+    .content li::marker{color:var(--teal-500)}
+    .section-divider{border:none;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:3rem 0}
+    .callout{padding:1.25rem 1.5rem;border-radius:12px;margin-bottom:1.5rem;border:1px solid;position:relative}
+    .callout-header{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;margin-bottom:.5rem}
+    .callout-header svg{width:18px;height:18px;flex-shrink:0}
+    .callout p:last-child{margin-bottom:0}
+    .callout.concept{background:var(--blue-50);border-color:var(--blue-100)}
+    .callout.concept .callout-header{color:var(--blue-700)}
+    .callout.important{background:var(--amber-50);border-color:var(--amber-100)}
+    .callout.important .callout-header{color:var(--amber-600)}
+    .callout.danger{background:var(--red-50);border-color:var(--red-100)}
+    .callout.danger .callout-header{color:var(--red-600)}
+    .callout.tip{background:var(--purple-50);border-color:var(--purple-100)}
+    .callout.tip .callout-header{color:var(--purple-600)}
+    .callout.success{background:var(--teal-50);border-color:var(--teal-100)}
+    .callout.success .callout-header{color:var(--teal-700)}
+    .code-block{position:relative;margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}
+    .code-header{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:var(--surface-alt);border-bottom:1px solid var(--border);font-size:12px;color:var(--ink-muted)}
+    .code-lang{font-family:var(--font-mono);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+    .code-copy{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:#fff;font-size:11px;font-family:var(--font-sans);color:var(--ink-muted);cursor:pointer;transition:all .2s var(--ease)}
+    .code-copy:hover{border-color:var(--teal-500);color:var(--teal-700)}
+    .code-copy.copied{background:var(--teal-50);border-color:var(--teal-500);color:var(--teal-700)}
+    pre{margin:0;padding:1.25rem 1.5rem;overflow-x:auto;background:#1e293b;font-family:var(--font-mono);font-size:13.5px;line-height:1.7;color:#e2e8f0}
+    code{font-family:var(--font-mono);font-size:.88em}
+    p code,li code{padding:2px 7px;background:var(--surface-alt);border:1px solid var(--border);border-radius:5px;color:var(--teal-800);font-size:.85em}
+    .hl-keyword{color:#c084fc}
+    .hl-string{color:#86efac}
+    .hl-comment{color:#64748b;font-style:italic}
+    .hl-function{color:#7dd3fc}
+    .hl-number{color:#fbbf24}
+    .hl-flag{color:#f472b6}
+    details{margin-bottom:1.25rem;border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .2s var(--ease)}
+    details[open]{border-color:var(--teal-200)}
+    details summary{padding:1rem 1.25rem;font-weight:600;font-size:15px;cursor:pointer;background:var(--surface-alt);list-style:none;display:flex;align-items:center;gap:10px;transition:background .2s var(--ease);user-select:none}
+    details summary::-webkit-details-marker{display:none}
+    details summary::before{content:'';width:20px;height:20px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain;flex-shrink:0;transition:transform .2s var(--ease)}
+    details[open] summary::before{transform:rotate(90deg)}
+    details summary:hover{background:var(--teal-50)}
+    .details-body{padding:1.25rem 1.5rem}
+    .details-body p:last-child{margin-bottom:0}
+    .video-card{margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}
+    .video-wrapper{position:relative;padding-bottom:56.25%;height:0;background:#0f172a}
+    .video-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
+    .video-caption{padding:12px 16px;background:var(--surface-alt);font-size:13px;color:var(--ink-muted);display:flex;align-items:center;gap:6px}
+    .video-caption svg{width:14px;height:14px;color:var(--red-500)}
+    .resource-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1rem;margin-bottom:1.5rem}
+    .resource-card{display:flex;gap:14px;padding:1rem 1.25rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all .2s var(--ease);background:#fff}
+    .resource-card:hover{border-color:var(--teal-300);background:var(--teal-50);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.04)}
+    .resource-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}
+    .resource-icon.docs{background:var(--blue-50);color:var(--blue-600)}
+    .resource-icon.video{background:var(--red-50);color:var(--red-500)}
+    .resource-icon.github{background:var(--ink);color:#fff}
+    .resource-icon.article{background:var(--amber-50);color:var(--amber-600)}
+    .resource-icon.pdf{background:var(--purple-50);color:var(--purple-600)}
+    .resource-info{min-width:0}
+    .resource-title{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:2px;line-height:1.4}
+    .resource-desc{font-size:12px;color:var(--ink-muted);line-height:1.5}
+    .assignment{border:2px solid var(--teal-200);border-radius:14px;padding:1.5rem 1.75rem;margin-bottom:1.5rem;background:linear-gradient(135deg,var(--teal-50) 0%,#fff 100%)}
+    .assignment-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+    .assignment-label{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--teal-700)}
+    .assignment-difficulty{display:inline-flex;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:600}
+    .difficulty-l1{background:var(--teal-100);color:var(--teal-800)}
+    .difficulty-l2{background:var(--amber-100);color:var(--amber-600)}
+    .difficulty-l3{background:var(--red-100);color:var(--red-600)}
+    .assignment h4{font-size:1.05rem;font-weight:700;margin-bottom:.75rem}
+    .assignment p{font-size:14px}
+    .checklist{list-style:none;padding:0}
+    .checklist li{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border-light);font-size:14px}
+    .checklist li:last-child{border-bottom:none}
+    .check-box{width:20px;height:20px;border-radius:6px;border:2px solid var(--border);flex-shrink:0;margin-top:1px;cursor:pointer;transition:all .15s var(--ease);display:flex;align-items:center;justify-content:center}
+    .check-box:hover{border-color:var(--teal-500)}
+    .check-box.checked{background:var(--teal-500);border-color:var(--teal-500)}
+    .check-box.checked::after{content:'';width:10px;height:10px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain}
+    .diagram{margin:1.5rem 0;padding:2rem;background:var(--surface-alt);border:1px solid var(--border);border-radius:14px;overflow-x:auto}
+    .diagram pre{background:transparent;color:var(--ink);padding:0;font-size:13px;line-height:1.6}
+    .diagram-caption{margin-top:1rem;font-size:12px;color:var(--ink-muted);text-align:center;font-style:italic}
+    .chapter-footer{border-top:1px solid var(--border);padding:3rem 2rem;background:var(--surface-alt)}
+    .chapter-footer-inner{max-width:var(--content-max);margin:0 auto}
+    .footer-nav{display:flex;justify-content:space-between;align-items:center;gap:1rem}
+    .footer-nav-link{display:flex;flex-direction:column;gap:4px;padding:1rem 1.5rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all .2s var(--ease);max-width:320px;background:#fff}
+    .footer-nav-link:hover{border-color:var(--teal-300);box-shadow:0 4px 12px rgba(0,0,0,.04)}
+    .footer-nav-label{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--teal-600)}
+    .footer-nav-title{font-size:15px;font-weight:600;color:var(--ink)}
+    .footer-brand{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border);font-size:13px;color:var(--ink-muted)}
+    @media(max-width:960px){.main-layout{grid-template-columns:1fr}.sidebar{display:none}.resource-grid{grid-template-columns:1fr}}
+    @media(max-width:640px){.hero{padding:2.5rem 1.25rem 2rem}.main-layout{padding:0 1.25rem}.content{padding:2rem 0 4rem}pre{padding:1rem;font-size:12.5px}.footer-nav{flex-direction:column}.footer-nav-link{max-width:100%;width:100%}}
+    @media print{.top-nav,.sidebar,.progress-bar{display:none}.main-layout{display:block}.content{padding:0}.hero{background:#fff;border:none}pre{background:#f1f5f9;color:var(--ink);border:1px solid var(--border)}}
   </style>
 </head>
 <body>
   <div class="progress-bar" id="progressBar"></div>
+  <nav class="top-nav"><div class="top-nav-inner"><a class="nav-brand" href="index.html"><div class="nav-brand-icon">ILA</div><span class="nav-brand-text">Iksha Learning Academy</span></a><div class="nav-chapter-nav"><a class="nav-btn" href="chapter-05.html">&larr; Previous</a><span class="nav-current">06 / 08</span><a class="nav-btn" href="chapter-07.html">Next &rarr;</a></div></div></nav>
 
-  <nav class="top-nav">
-    <div class="top-nav-inner">
-      <a class="nav-brand" href="index.html">
-        <div class="nav-brand-icon">ILA</div>
-        <span class="nav-brand-text">Iksha Learning Academy</span>
-      </a>
-      <div class="nav-chapter-nav">
-        <a class="nav-btn" href="chapter-05.html">&larr; Previous</a>
-        <span class="nav-current">06 / 08</span>
-        <a class="nav-btn" href="chapter-07.html">Next &rarr;</a>
-      </div>
+  <header class="hero"><div class="hero-inner">
+    <div class="hero-chapter-label"><span>Chapter 06</span> &middot; Redshift Basic</div>
+    <h1>Query Optimization</h1>
+    <p class="hero-subtitle">Learn to read EXPLAIN plans, understand query compilation, leverage the Workload Management (WLM) system, and use system tables to diagnose and fix slow ad-tech analytics queries.</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Estimated: 60&ndash;90 min</div>
+      <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> Key Concepts</div>
+      <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> 3 Assignments</div>
     </div>
-  </nav>
+  </div></header>
 
-  <header class="hero">
-    <div class="hero-inner">
-      <div class="hero-chapter-label">
-        <span>Chapter 06</span> 
+  <div class="main-layout">
+    <main class="content">
+
+      <h2 id="why-this-matters">Why This Matters</h2>
+      <p>When a campaign manager complains that "the dashboard is slow," the root cause is almost always a poorly optimized query. In ad-tech, where analysts run hundreds of queries daily against billion-row impression tables, the difference between a 3-second query and a 60-second query determines whether your platform feels responsive or broken.</p>
+      <p>Redshift provides rich diagnostic tools &mdash; EXPLAIN plans, system views like <code>SVL_QUERY_SUMMARY</code> and <code>STL_ALERT_EVENT_LOG</code>, and query compilation caching &mdash; that allow you to systematically identify and eliminate performance bottlenecks. This chapter teaches you to think like the Redshift query optimizer.</p>
+
+      <div class="callout concept">
+        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg> Key Insight</div>
+        <p>80% of slow queries in ad-tech are caused by just four issues: (1) missing or wrong sort keys causing full table scans, (2) distribution key mismatches causing network redistribution, (3) insufficient statistics causing bad join order choices, and (4) queries returning too many rows to the client. Learn to diagnose these four patterns and you will solve most performance problems.</p>
       </div>
-      <h1>Query Optimization</h1>
-      <p class="hero-subtitle">EXPLAIN plans, query queues, WLM, concurrency scaling, result caching, predicate pushdown</p>
-      <div class="hero-meta">
-        <div class="hero-meta-item">3 Assignments</div>
-        <div class="hero-meta-item">~45 min read</div>
+
+      <hr class="section-divider">
+
+      <h2 id="key-concepts">Key Concepts</h2>
+
+      <h3 id="explain-plans">1. Reading EXPLAIN Plans</h3>
+      <p>The EXPLAIN command shows you how Redshift will execute a query without actually running it. It reveals the join strategy, scan type, and expected row counts:</p>
+
+      <div class="code-block"><div class="code-header"><span class="code-lang">sql</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+<pre>
+<span class="hl-comment">-- Get the execution plan for a campaign report query</span>
+<span class="hl-keyword">EXPLAIN</span>
+<span class="hl-keyword">SELECT</span>
+    fi.event_date,
+    dc.campaign_name,
+    <span class="hl-function">COUNT</span>(*) <span class="hl-keyword">AS</span> impressions,
+    <span class="hl-function">SUM</span>(fi.win_price_cpm) / <span class="hl-number">1000.0</span> <span class="hl-keyword">AS</span> spend
+<span class="hl-keyword">FROM</span> analytics.fact_impressions fi
+<span class="hl-keyword">JOIN</span> analytics.dim_campaign dc <span class="hl-keyword">ON</span> fi.campaign_id = dc.campaign_id
+<span class="hl-keyword">WHERE</span> fi.event_date = <span class="hl-string">'2025-01-15'</span>
+<span class="hl-keyword">GROUP BY</span> fi.event_date, dc.campaign_name;
+
+<span class="hl-comment">-- Key things to look for in the plan:</span>
+<span class="hl-comment">-- DS_BCAST_INNER = broadcast (dim table sent to all nodes, normal for ALL dist)</span>
+<span class="hl-comment">-- DS_DIST_BOTH  = both tables redistributed (expensive!)</span>
+<span class="hl-comment">-- DS_DIST_NONE  = colocated join (best case)</span>
+</pre></div>
+
+      <h3 id="query-compilation">2. Query Compilation and Caching</h3>
+      <p>Redshift compiles each unique query into optimized C++ machine code. The first execution includes compilation time (typically 2-5 seconds). Subsequent executions of the same query structure (even with different parameter values) reuse the compiled code and run much faster.</p>
+
+      <div class="callout tip">
+        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg> Pro Tip</div>
+        <p>Use parameterized queries in your BI tools rather than string concatenation. A query like <code>WHERE event_date = '2025-01-15'</code> and <code>WHERE event_date = '2025-01-16'</code> share the same compiled plan. But <code>WHERE event_date IN ('2025-01-15')</code> vs <code>WHERE event_date IN ('2025-01-15','2025-01-16')</code> are different query structures that require separate compilation.</p>
       </div>
-    </div>
-  </header>
 
-  <main class="content">
-    <h2>Overview</h2>
-    <p>This chapter covers <strong>query optimization</strong> as part of the Redshift Foundations curriculum. You will build practical skills through guided explanations, code examples, and hands-on assignments.</p>
+      <h3 id="system-tables">3. Diagnostic System Tables</h3>
+      <p>Redshift's system tables are your primary debugging tool for query performance:</p>
 
-    <div class="topics-preview">
-      <h3>Topics Covered</h3>
-      <ul>
-            <li>EXPLAIN plans</li>
-            <li>query queues</li>
-            <li>WLM</li>
-            <li>concurrency scaling</li>
-            <li>result caching</li>
-            <li>predicate pushdown</li>
+      <div class="code-block"><div class="code-header"><span class="code-lang">sql</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+<pre>
+<span class="hl-comment">-- Find the slowest queries in the last 24 hours</span>
+<span class="hl-keyword">SELECT</span>
+    query,
+    <span class="hl-function">TRIM</span>(querytxt) <span class="hl-keyword">AS</span> query_text,
+    starttime,
+    endtime,
+    <span class="hl-function">DATEDIFF</span>(<span class="hl-string">'ms'</span>, starttime, endtime) <span class="hl-keyword">AS</span> duration_ms,
+    aborted
+<span class="hl-keyword">FROM</span> stl_query
+<span class="hl-keyword">WHERE</span> starttime >= <span class="hl-function">DATEADD</span>(<span class="hl-string">'hour'</span>, <span class="hl-number">-24</span>, <span class="hl-function">GETDATE</span>())
+  <span class="hl-keyword">AND</span> userid > <span class="hl-number">1</span>  <span class="hl-comment">-- exclude system queries</span>
+<span class="hl-keyword">ORDER BY</span> duration_ms <span class="hl-keyword">DESC</span>
+<span class="hl-keyword">LIMIT</span> <span class="hl-number">20</span>;
+
+<span class="hl-comment">-- Check for query alerts (missing stats, nested loops, etc.)</span>
+<span class="hl-keyword">SELECT</span>
+    query,
+    <span class="hl-function">TRIM</span>(event) <span class="hl-keyword">AS</span> alert_event,
+    <span class="hl-function">TRIM</span>(solution) <span class="hl-keyword">AS</span> suggested_fix
+<span class="hl-keyword">FROM</span> stl_alert_event_log
+<span class="hl-keyword">WHERE</span> event_time >= <span class="hl-function">DATEADD</span>(<span class="hl-string">'hour'</span>, <span class="hl-number">-24</span>, <span class="hl-function">GETDATE</span>())
+<span class="hl-keyword">ORDER BY</span> event_time <span class="hl-keyword">DESC</span>;
+</pre></div>
+
+      <h3 id="statistics">4. Table Statistics and ANALYZE</h3>
+      <p>Redshift uses table statistics to make query planning decisions: join order, join type (hash vs merge), and row count estimates. Stale statistics lead to suboptimal plans. Run ANALYZE after every significant data load:</p>
+
+      <div class="code-block"><div class="code-header"><span class="code-lang">sql</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+<pre>
+<span class="hl-comment">-- Update statistics for impression table after daily load</span>
+<span class="hl-keyword">ANALYZE</span> analytics.fact_impressions;
+
+<span class="hl-comment">-- Check when statistics were last updated</span>
+<span class="hl-keyword">SELECT</span>
+    <span class="hl-function">TRIM</span>(schemaname) <span class="hl-keyword">AS</span> schema_name,
+    <span class="hl-function">TRIM</span>(tablename) <span class="hl-keyword">AS</span> table_name,
+    stats_off <span class="hl-keyword">AS</span> stats_staleness_pct
+<span class="hl-keyword">FROM</span> svv_table_info
+<span class="hl-keyword">WHERE</span> schema = <span class="hl-string">'analytics'</span>
+<span class="hl-keyword">ORDER BY</span> stats_off <span class="hl-keyword">DESC</span>;
+</pre></div>
+
+      <div class="callout important">
+        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Important</div>
+        <p>A <code>stats_off</code> value above 10% means your table statistics are stale and the query optimizer may choose suboptimal plans. After your nightly impression data load, always run <code>ANALYZE</code> on the loaded tables before analysts start querying. Include ANALYZE in your ETL pipeline as a mandatory post-load step.</p>
+      </div>
+
+      <h3 id="wlm-basics">5. Workload Management (WLM) Basics</h3>
+      <p>WLM controls how queries are queued, prioritized, and allocated memory. For ad-tech, you typically need at least two queues: one for interactive dashboard queries (short timeout, higher priority) and one for ETL/batch loads (longer timeout, lower priority):</p>
+
+      <div class="code-block"><div class="code-header"><span class="code-lang">sql</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+<pre>
+<span class="hl-comment">-- Check current WLM configuration</span>
+<span class="hl-keyword">SELECT</span>
+    service_class,
+    num_query_tasks <span class="hl-keyword">AS</span> concurrency,
+    query_working_mem <span class="hl-keyword">AS</span> memory_mb,
+    max_execution_time <span class="hl-keyword">AS</span> timeout_ms,
+    query_priority
+<span class="hl-keyword">FROM</span> stv_wlm_service_class_config
+<span class="hl-keyword">WHERE</span> service_class > <span class="hl-number">5</span>;  <span class="hl-comment">-- user-defined queues</span>
+</pre></div>
+
+      <hr class="section-divider">
+
+      <h2 id="watch-learn">Watch &amp; Learn</h2>
+      <p>These videos cover the core concepts in this chapter. Watch them before starting assignments.</p>
+
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/lWwFJV_9PoE?rel=0&amp;modestbranding=1" title="Redshift Performance Tuning" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></div>
+        <div class="video-caption"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg> AWS re:Invent &mdash; Amazon Redshift performance tuning deep dive</div></div>
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/Ro9idBUCBSk?rel=0&amp;modestbranding=1" title="Query Optimization Tips" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></div>
+        <div class="video-caption"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg> AWS &mdash; Top 10 performance tuning techniques for Amazon Redshift</div></div>
+
+      <hr class="section-divider">
+
+      <h2 id="further-reading">Further Reading</h2>
+      <p>Deep-dive into the official documentation and reference material.</p>
+      <div class="resource-grid">
+        <a class="resource-card" href="https://docs.aws.amazon.com/redshift/latest/dg/c-query-processing.html" target="_blank" rel="noopener"><div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><div class="resource-info"><div class="resource-title">Query Processing</div><div class="resource-desc">How Redshift processes queries from parse to execution across compute nodes.</div></div></a>
+        <a class="resource-card" href="https://docs.aws.amazon.com/redshift/latest/dg/r_EXPLAIN.html" target="_blank" rel="noopener"><div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><div class="resource-info"><div class="resource-title">EXPLAIN Reference</div><div class="resource-desc">Complete guide to reading and interpreting EXPLAIN output.</div></div></a>
+        <a class="resource-card" href="https://docs.aws.amazon.com/redshift/latest/dg/cm-c-wlm-system-tables-and-views.html" target="_blank" rel="noopener"><div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><div class="resource-info"><div class="resource-title">WLM System Tables</div><div class="resource-desc">Monitor workload management queues and query execution.</div></div></a>
+        <a class="resource-card" href="https://docs.aws.amazon.com/redshift/latest/dg/r_ANALYZE.html" target="_blank" rel="noopener"><div class="resource-icon article"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div class="resource-info"><div class="resource-title">ANALYZE Command</div><div class="resource-desc">Update table statistics for the query optimizer.</div></div></a>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="assignments">Assignments</h2>
+      <p>Complete these in order. Each level builds on the previous one.</p>
+
+      <div class="assignment">
+        <div class="assignment-header"><div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 1</div><span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span></div>
+        <h4>Read and Interpret EXPLAIN Plans</h4>
+        <p>Use EXPLAIN to understand how Redshift executes your ad-tech queries.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Run EXPLAIN on 3 different queries: a simple scan, a join, and an aggregation</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Identify the join type (hash join, merge join, nested loop) in each plan</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Find the scan type (sequential scan vs sort-key-based scan) for date-filtered queries</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Document each plan with annotations explaining what each step does</span></li>
+        </ul>
+        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div><p>You can read an EXPLAIN plan and identify the most expensive steps.</p></div>
+      </div>
+      <div class="assignment">
+        <div class="assignment-header"><div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 2</div><span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span></div>
+        <h4>Diagnose and Fix Slow Queries</h4>
+        <p>Use system tables to find and optimize the slowest queries in your workload.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Query <code>STL_QUERY</code> to find the top 10 slowest queries</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Use <code>SVL_QUERY_SUMMARY</code> to identify the bottleneck step in each slow query</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Check <code>STL_ALERT_EVENT_LOG</code> for optimization suggestions</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Fix at least 2 slow queries by adding sort keys, fixing distribution, or rewriting SQL</span></li>
+        </ul>
+        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div><p>You have a repeatable process for identifying and fixing the top performance bottlenecks.</p></div>
+      </div>
+      <div class="assignment">
+        <div class="assignment-header"><div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 3</div><span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Production-Ready</span></div>
+        <h4>Performance Monitoring Dashboard</h4>
+        <p>Build a SQL-based performance monitoring system for your ad-tech Redshift cluster.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a query that reports the top 20 slowest queries daily with execution details</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Build a statistics freshness monitor that alerts when stats_off exceeds 10%</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a WLM queue utilization report showing concurrency and memory usage</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Design an automated ANALYZE schedule triggered after ETL loads</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Document the performance monitoring runbook for the operations team</span></li>
+        </ul>
+        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div><p>Your monitoring queries could be scheduled to run daily and surface performance regressions proactively.</p></div>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="self-check">Self-Check</h2>
+      <p>Before moving to the next chapter, honestly answer these questions.</p>
+
+      <details><summary>What does DS_DIST_BOTH in an EXPLAIN plan mean and how do you fix it?</summary><div class="details-body"><p>DS_DIST_BOTH means both tables in a join must be redistributed across the network because neither table's distribution key matches the join key. This is the most expensive redistribution pattern. Fix it by changing one table's DISTKEY to match the join column, or by making the smaller table DISTSTYLE ALL.</p></div></details>
+      <details><summary>Why is the first execution of a query slower than subsequent runs?</summary><div class="details-body"><p>Redshift compiles each unique query structure into optimized C++ machine code on first execution. This compilation takes 2-5 seconds. The compiled code is cached and reused for subsequent executions with the same query structure (even with different literal values). This is why dashboard queries feel slow the first time after a cluster reboot but fast afterward.</p></div></details>
+      <details><summary>When should you run ANALYZE and what happens if you do not?</summary><div class="details-body"><p>Run ANALYZE after every significant data load (daily impression loads, dimension updates). If you skip it, the query optimizer uses stale statistics that may show the table has 1M rows when it actually has 1B rows. This leads to wrong join orders (small table chosen as build side when it is actually large), wrong join types (nested loop instead of hash join), and dramatically slower queries.</p></div></details>
+
+    </main>
+    <aside class="sidebar">
+      <div class="sidebar-title">On this page</div>
+      <ul class="toc-list">
+        <li class="toc-item"><a href="#why-this-matters">Why This Matters</a></li>
+        <li class="toc-item"><a href="#key-concepts">Key Concepts</a></li>
+        <li class="toc-item"><a href="#explain-plans" style="padding-left:28px;font-size:12px">EXPLAIN Plans</a></li>
+        <li class="toc-item"><a href="#query-compilation" style="padding-left:28px;font-size:12px">Query Compilation</a></li>
+        <li class="toc-item"><a href="#system-tables" style="padding-left:28px;font-size:12px">System Tables</a></li>
+        <li class="toc-item"><a href="#statistics" style="padding-left:28px;font-size:12px">Statistics &amp; ANALYZE</a></li>
+        <li class="toc-item"><a href="#wlm-basics" style="padding-left:28px;font-size:12px">WLM Basics</a></li>
+        <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a></li>
+        <li class="toc-item"><a href="#further-reading">Further Reading</a></li>
+        <li class="toc-item"><a href="#assignments">Assignments</a></li>
+        <li class="toc-item"><a href="#self-check">Self-Check</a></li>
       </ul>
-    </div>
+    </aside>
+  </div>
 
-    <hr class="section-divider">
-
-    <div class="coming-soon-banner">
-      <h3>Content In Development</h3>
-      <p>Full chapter content with detailed explanations, code examples, video walkthroughs, and assignments is being developed. Check back soon.</p>
-    </div>
-
-    <div class="callout tip">
-      <div class="callout-header">What You Will Learn</div>
-      <p>By the end of this chapter, you will understand explain plans, query queues, wlm, concurrency scaling, result caching, predicate pushdown and be able to apply these concepts in real-world scenarios.</p>
-    </div>
-
-  </main>
-
-  <nav class="footer-nav">
-        <a class="footer-nav-link prev" href="chapter-05.html">
-          <span class="footer-nav-label">&larr; Previous</span>
-          <span class="footer-nav-title">Chapter 05: Distribution and Sort Keys</span>
-        </a>
-        <a class="footer-nav-link next" href="chapter-07.html">
-          <span class="footer-nav-label">Next &rarr;</span>
-          <span class="footer-nav-title">Chapter 07: Data Loading Patterns</span>
-        </a>
-  </nav>
-
-  <footer class="footer">
-    ILA (Iksha Learning Academy) &middot; Redshift Foundations &middot; <a href="index.html">All Chapters</a>
-  </footer>
+  <footer class="chapter-footer"><div class="chapter-footer-inner">
+    <nav class="footer-nav">
+      <a class="footer-nav-link" href="chapter-05.html"><span class="footer-nav-label">&larr; Previous Chapter</span><span class="footer-nav-title">05: Schema Design for Analytics</span></a>
+      <a class="footer-nav-link" href="chapter-07.html"><span class="footer-nav-label">Next Chapter &rarr;</span><span class="footer-nav-title">07: Data Transformation</span></a>
+    </nav>
+    <div class="footer-brand">ILA (Iksha Learning Academy) &middot; Redshift Foundations &middot; Basic Track</div>
+  </div></footer>
 
   <script>
-    window.addEventListener('scroll', () => {
-      const h = document.documentElement;
-      const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
-      document.getElementById('progressBar').style.width = Math.min(pct, 100) + '%';
-    });
+    window.addEventListener('scroll',()=>{const s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight;document.getElementById('progressBar').style.width=(d>0?(s/d)*100:0)+'%'});
+    const tocLinks=document.querySelectorAll('.toc-item a'),sections=[];tocLinks.forEach(link=>{const id=link.getAttribute('href').slice(1),el=document.getElementById(id);if(el)sections.push({id,el,link})});
+    const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{const item=sections.find(s=>s.el===entry.target);if(item&&entry.isIntersecting){tocLinks.forEach(l=>l.classList.remove('active'));item.link.classList.add('active')}})},{rootMargin:'-80px 0px -60% 0px',threshold:0});sections.forEach(s=>observer.observe(s.el));
+    function copyCode(btn){const pre=btn.closest('.code-block').querySelector('pre');navigator.clipboard.writeText(pre.textContent).then(()=>{btn.classList.add('copied');btn.textContent='Copied!';setTimeout(()=>{btn.classList.remove('copied');btn.textContent='Copy'},2000)})}
   </script>
 </body>
 </html>

@@ -3,438 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chapter 05: Neural Network Fundamentals &mdash; ILA AI and Machine Learning</title>
+  <title>Chapter 05: Neural Network Foundations &mdash; ILA AI &amp; Machine Learning</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --ink:        #0f172a;
-      --ink-light:  #334155;
-      --ink-muted:  #64748b;
-      --surface:    #ffffff;
-      --surface-alt:#f8fafc;
-      --surface-warm:#fffbeb;
-      --border:     #e2e8f0;
-      --border-light:#f1f5f9;
-      --teal-50:  #f0fdfa;
-      --teal-100: #ccfbf1;
-      --teal-200: #99f6e4;
-      --teal-500: #14b8a6;
-      --teal-600: #0d9488;
-      --teal-700: #0f766e;
-      --teal-800: #115e59;
-      --teal-900: #134e4a;
-      --blue-50:  #eff6ff;
-      --blue-100: #dbeafe;
-      --blue-500: #3b82f6;
-      --blue-600: #2563eb;
-      --blue-700: #1d4ed8;
-      --amber-50:  #fffbeb;
-      --amber-100: #fef3c7;
-      --amber-500: #f59e0b;
-      --amber-600: #d97706;
-      --red-50:   #fef2f2;
-      --red-100:  #fee2e2;
-      --red-500:  #ef4444;
-      --red-600:  #dc2626;
-      --purple-50:  #faf5ff;
-      --purple-100: #f3e8ff;
-      --purple-500: #a855f7;
-      --purple-600: #9333ea;
-      --green-50:  #f0fdf4;
-      --green-100: #dcfce7;
-      --green-500: #22c55e;
-      --green-600: #16a34a;
-      --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      --font-serif: 'Instrument Serif', Georgia, serif;
-      --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
-      --content-max: 780px;
-      --ease: cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
-
-    body {
-      font-family: var(--font-sans);
-      font-size: 16px;
-      line-height: 1.7;
-      color: var(--ink);
-      background: var(--surface);
-    }
-
-    .progress-bar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 0%;
-      height: 3px;
-      background: linear-gradient(90deg, var(--teal-500), var(--blue-500));
-      z-index: 1000;
-      transition: width 0.15s var(--ease);
-    }
-
-    .top-nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-      padding: 0 2rem;
-    }
-
-    .top-nav-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 56px;
-    }
-
-    .nav-brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-      color: var(--teal-800);
-    }
-
-    .nav-brand-icon {
-      width: 32px;
-      height: 32px;
-      background: linear-gradient(135deg, var(--teal-600), var(--teal-800));
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-weight: 800;
-      font-size: 14px;
-    }
-
-    .nav-brand-text {
-      font-weight: 700;
-      font-size: 15px;
-      letter-spacing: -0.02em;
-    }
-
-    .nav-chapter-nav {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .nav-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 14px;
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: 500;
-      text-decoration: none;
-      color: var(--ink-muted);
-      border: 1px solid var(--border);
-      background: white;
-      transition: all 0.2s var(--ease);
-      cursor: pointer;
-    }
-
-    .nav-btn:hover {
-      color: var(--ink);
-      border-color: var(--teal-500);
-      background: var(--teal-50);
-    }
-
-    .nav-btn.disabled {
-      opacity: 0.4;
-      pointer-events: none;
-    }
-
-    .nav-current {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--ink-light);
-      padding: 0 4px;
-    }
-
-    .hero {
-      background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%);
-      border-bottom: 1px solid var(--border);
-      padding: 4rem 2rem 3.5rem;
-    }
-
-    .hero-inner {
-      max-width: var(--content-max);
-      margin: 0 auto;
-    }
-
-    .hero-chapter-label {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--teal-700);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 1rem;
-    }
-
-    .hero-chapter-label span {
-      background: var(--teal-100);
-      padding: 3px 10px;
-      border-radius: 100px;
-    }
-
-    .hero h1 {
-      font-family: var(--font-serif);
-      font-size: clamp(2.4rem, 5vw, 3.2rem);
-      font-weight: 400;
-      line-height: 1.15;
-      color: var(--ink);
-      margin-bottom: 1rem;
-    }
-
-    .hero-subtitle {
-      font-size: 1.15rem;
-      color: var(--ink-light);
-      line-height: 1.65;
-      max-width: 640px;
-    }
-
-    .hero-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-top: 1.5rem;
-    }
-
-    .hero-meta-item {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 13px;
-      color: var(--ink-muted);
-    }
-
-    .content {
-      max-width: var(--content-max);
-      margin: 0 auto;
-      padding: 3rem 2rem 6rem;
-    }
-
-    .content h2 {
-      font-family: var(--font-serif);
-      font-size: 1.85rem;
-      font-weight: 400;
-      color: var(--ink);
-      margin: 3rem 0 1rem;
-      scroll-margin-top: 80px;
-    }
-
-    .content h2:first-child { margin-top: 0; }
-
-    .content h3 {
-      font-size: 1.15rem;
-      font-weight: 600;
-      color: var(--ink);
-      margin: 2rem 0 0.75rem;
-    }
-
-    .content p {
-      margin-bottom: 1.25rem;
-      color: var(--ink-light);
-    }
-
-    .content ul, .content ol {
-      margin-bottom: 1.25rem;
-      padding-left: 1.5rem;
-    }
-
-    .content li {
-      margin-bottom: 0.5rem;
-      color: var(--ink-light);
-    }
-
-    .content li::marker { color: var(--teal-500); }
-
-    .callout {
-      padding: 1.25rem 1.5rem;
-      border-radius: 12px;
-      margin-bottom: 1.5rem;
-      border: 1px solid;
-    }
-
-    .callout-header {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-    }
-
-    .callout p:last-child { margin-bottom: 0; }
-
-    .callout.concept {
-      background: var(--blue-50);
-      border-color: var(--blue-100);
-    }
-    .callout.concept .callout-header { color: var(--blue-700); }
-
-    .callout.important {
-      background: var(--amber-50);
-      border-color: var(--amber-100);
-    }
-    .callout.important .callout-header { color: var(--amber-600); }
-
-    .callout.tip {
-      background: var(--purple-50);
-      border-color: var(--purple-100);
-    }
-    .callout.tip .callout-header { color: var(--purple-600); }
-
-    .callout.success {
-      background: var(--teal-50);
-      border-color: var(--teal-100);
-    }
-    .callout.success .callout-header { color: var(--teal-700); }
-
-    .section-divider {
-      border: none;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--border), transparent);
-      margin: 3rem 0;
-    }
-
-    .coming-soon-banner {
-      background: var(--amber-50);
-      border: 1px solid var(--amber-100);
-      border-radius: 12px;
-      padding: 2.5rem;
-      text-align: center;
-      margin: 2rem 0;
-    }
-
-    .coming-soon-banner h3 {
-      color: var(--amber-600);
-      margin-bottom: 0.5rem;
-    }
-
-    .coming-soon-banner p {
-      color: var(--ink-muted);
-      margin-bottom: 0;
-    }
-
-    .topics-preview {
-      background: var(--surface-alt);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.5rem 2rem;
-      margin: 1.5rem 0;
-    }
-
-    .topics-preview h3 {
-      font-size: 0.95rem;
-      margin-bottom: 0.75rem;
-      color: var(--ink);
-    }
-
-    .topics-preview ul {
-      list-style: none;
-      padding: 0;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 0.5rem;
-    }
-
-    .topics-preview li {
-      font-size: 14px;
-      color: var(--ink-light);
-      padding-left: 1.25rem;
-      position: relative;
-    }
-
-    .topics-preview li::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 8px;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--teal-500);
-    }
-
-    .footer-nav {
-      max-width: var(--content-max);
-      margin: 0 auto;
-      padding: 2rem;
-      display: flex;
-      justify-content: space-between;
-      border-top: 1px solid var(--border);
-    }
-
-    .footer-nav-link {
-      display: flex;
-      flex-direction: column;
-      text-decoration: none;
-      padding: 1rem;
-      border-radius: 12px;
-      transition: background 0.2s var(--ease);
-      max-width: 45%;
-    }
-
-    .footer-nav-link:hover {
-      background: var(--surface-alt);
-    }
-
-    .footer-nav-label {
-      font-size: 12px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--ink-muted);
-      margin-bottom: 4px;
-    }
-
-    .footer-nav-title {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--teal-700);
-    }
-
-    .footer-nav-link.next { text-align: right; margin-left: auto; }
-
-    .footer {
-      text-align: center;
-      padding: 2rem;
-      font-size: 13px;
-      color: var(--ink-muted);
-      border-top: 1px solid var(--border);
-    }
-
-    .footer a {
-      color: var(--teal-700);
-      text-decoration: none;
-    }
-
-    .footer a:hover { text-decoration: underline; }
-
-    @media (max-width: 768px) {
-      .hero { padding: 3rem 1.5rem 2.5rem; }
-      .content { padding: 2rem 1.5rem 4rem; }
-      .hero h1 { font-size: 2rem; }
-      .footer-nav { flex-direction: column; gap: 1rem; }
-      .footer-nav-link { max-width: 100%; }
-      .footer-nav-link.next { text-align: left; }
-    }
-  </style>
+  <style>:root{--ink:#0f172a;--ink-light:#334155;--ink-muted:#64748b;--surface:#ffffff;--surface-alt:#f8fafc;--surface-warm:#fffbeb;--border:#e2e8f0;--border-light:#f1f5f9;--teal-50:#f0fdfa;--teal-100:#ccfbf1;--teal-200:#99f6e4;--teal-500:#14b8a6;--teal-600:#0d9488;--teal-700:#0f766e;--teal-800:#115e59;--teal-900:#134e4a;--blue-50:#eff6ff;--blue-100:#dbeafe;--blue-500:#3b82f6;--blue-600:#2563eb;--blue-700:#1d4ed8;--amber-50:#fffbeb;--amber-100:#fef3c7;--amber-500:#f59e0b;--amber-600:#d97706;--red-50:#fef2f2;--red-100:#fee2e2;--red-500:#ef4444;--red-600:#dc2626;--purple-50:#faf5ff;--purple-100:#f3e8ff;--purple-500:#a855f7;--purple-600:#9333ea;--font-sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;--font-serif:'Instrument Serif',Georgia,serif;--font-mono:'JetBrains Mono','Fira Code',monospace;--content-max:780px;--sidebar-width:280px;--ease:cubic-bezier(0.4,0,0.2,1)}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}body{font-family:var(--font-sans);font-size:16px;line-height:1.7;color:var(--ink);background:var(--surface)}.progress-bar{position:fixed;top:0;left:0;width:0%;height:3px;background:linear-gradient(90deg,var(--teal-500),var(--blue-500));z-index:1000;transition:width .15s var(--ease)}.top-nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem}.top-nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px}.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--teal-800)}.nav-brand-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--teal-600),var(--teal-800));border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px}.nav-brand-text{font-weight:700;font-size:15px;letter-spacing:-.02em}.nav-chapter-nav{display:flex;align-items:center;gap:8px}.nav-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;color:var(--ink-muted);border:1px solid var(--border);background:#fff;transition:all .2s var(--ease);cursor:pointer}.nav-btn:hover{color:var(--ink);border-color:var(--teal-500);background:var(--teal-50)}.nav-btn.disabled{opacity:.4;pointer-events:none}.nav-current{font-size:13px;font-weight:600;color:var(--ink-light);padding:0 4px}.hero{background:linear-gradient(170deg,var(--teal-50) 0%,var(--surface) 50%,var(--blue-50) 100%);border-bottom:1px solid var(--border);padding:4rem 2rem 3.5rem}.hero-inner{max-width:var(--content-max);margin:0 auto}.hero-chapter-label{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--teal-700);text-transform:uppercase;letter-spacing:.08em;margin-bottom:1rem}.hero-chapter-label span{background:var(--teal-100);padding:3px 10px;border-radius:100px}.hero h1{font-family:var(--font-serif);font-size:clamp(2.4rem,5vw,3.2rem);font-weight:400;line-height:1.15;color:var(--ink);margin-bottom:1rem}.hero-subtitle{font-size:1.15rem;color:var(--ink-light);line-height:1.65;max-width:640px}.hero-meta{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1.5rem}.hero-meta-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-muted)}.hero-meta-item svg{width:16px;height:16px;color:var(--teal-600)}.main-layout{max-width:1200px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:1fr var(--sidebar-width);gap:4rem;align-items:start}.content{padding:3rem 0 6rem;min-width:0}.sidebar{position:sticky;top:76px;padding:2rem 0;max-height:calc(100vh - 76px);overflow-y:auto}.sidebar-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-muted);margin-bottom:1rem;padding-left:14px}.toc-list{list-style:none}.toc-item a{display:block;padding:6px 14px;font-size:13px;color:var(--ink-muted);text-decoration:none;border-left:2px solid transparent;transition:all .2s var(--ease);line-height:1.5}.toc-item a:hover{color:var(--ink);background:var(--surface-alt)}.toc-item a.active{color:var(--teal-700);border-left-color:var(--teal-500);background:var(--teal-50);font-weight:500}.content h2{font-family:var(--font-serif);font-size:1.85rem;font-weight:400;color:var(--ink);margin:3rem 0 1rem;padding-top:1rem;scroll-margin-top:80px}.content h2:first-child{margin-top:0}.content h3{font-size:1.15rem;font-weight:600;color:var(--ink);margin:2rem 0 .75rem;scroll-margin-top:80px}.content p{margin-bottom:1.25rem;color:var(--ink-light)}.content strong{color:var(--ink);font-weight:600}.content a{color:var(--teal-700);text-decoration:underline;text-decoration-color:var(--teal-200);text-underline-offset:3px;transition:text-decoration-color .2s}.content a:hover{text-decoration-color:var(--teal-600)}.content ul,.content ol{margin-bottom:1.25rem;padding-left:1.5rem}.content li{margin-bottom:.5rem;color:var(--ink-light)}.content li::marker{color:var(--teal-500)}.section-divider{border:none;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:3rem 0}.callout{padding:1.25rem 1.5rem;border-radius:12px;margin-bottom:1.5rem;border:1px solid;position:relative}.callout-header{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;margin-bottom:.5rem}.callout-header svg{width:18px;height:18px;flex-shrink:0}.callout p:last-child{margin-bottom:0}.callout.concept{background:var(--blue-50);border-color:var(--blue-100)}.callout.concept .callout-header{color:var(--blue-700)}.callout.important{background:var(--amber-50);border-color:var(--amber-100)}.callout.important .callout-header{color:var(--amber-600)}.callout.danger{background:var(--red-50);border-color:var(--red-100)}.callout.danger .callout-header{color:var(--red-600)}.callout.tip{background:var(--purple-50);border-color:var(--purple-100)}.callout.tip .callout-header{color:var(--purple-600)}.callout.success{background:var(--teal-50);border-color:var(--teal-100)}.callout.success .callout-header{color:var(--teal-700)}.code-block{position:relative;margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}.code-header{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:var(--surface-alt);border-bottom:1px solid var(--border);font-size:12px;color:var(--ink-muted)}.code-lang{font-family:var(--font-mono);font-weight:600;text-transform:uppercase;letter-spacing:.05em}.code-copy{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:#fff;font-size:11px;font-family:var(--font-sans);color:var(--ink-muted);cursor:pointer;transition:all .2s var(--ease)}.code-copy:hover{border-color:var(--teal-500);color:var(--teal-700)}.code-copy.copied{background:var(--teal-50);border-color:var(--teal-500);color:var(--teal-700)}pre{margin:0;padding:1.25rem 1.5rem;overflow-x:auto;background:#1e293b;font-family:var(--font-mono);font-size:13.5px;line-height:1.7;color:#e2e8f0}code{font-family:var(--font-mono);font-size:.88em}p code,li code{padding:2px 7px;background:var(--surface-alt);border:1px solid var(--border);border-radius:5px;color:var(--teal-800);font-size:.85em}.hl-keyword{color:#c084fc}.hl-string{color:#86efac}.hl-comment{color:#64748b;font-style:italic}.hl-function{color:#7dd3fc}.hl-number{color:#fbbf24}.hl-flag{color:#f472b6}details{margin-bottom:1.25rem;border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .2s var(--ease)}details[open]{border-color:var(--teal-200)}details summary{padding:1rem 1.25rem;font-weight:600;font-size:15px;cursor:pointer;background:var(--surface-alt);list-style:none;display:flex;align-items:center;gap:10px;transition:background .2s var(--ease);user-select:none}details summary::-webkit-details-marker{display:none}details summary::before{content:'';width:20px;height:20px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain;flex-shrink:0;transition:transform .2s var(--ease)}details[open] summary::before{transform:rotate(90deg)}details summary:hover{background:var(--teal-50)}.details-body{padding:1.25rem 1.5rem}.details-body p:last-child{margin-bottom:0}.video-card{margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}.video-wrapper{position:relative;padding-bottom:56.25%;height:0;background:#0f172a}.video-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}.video-caption{padding:12px 16px;background:var(--surface-alt);font-size:13px;color:var(--ink-muted);display:flex;align-items:center;gap:6px}.video-caption svg{width:14px;height:14px;color:var(--red-500)}.resource-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1rem;margin-bottom:1.5rem}.resource-card{display:flex;gap:14px;padding:1rem 1.25rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all .2s var(--ease);background:#fff}.resource-card:hover{border-color:var(--teal-300);background:var(--teal-50);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.04)}.resource-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}.resource-icon.docs{background:var(--blue-50);color:var(--blue-600)}.resource-icon.video{background:var(--red-50);color:var(--red-500)}.resource-icon.github{background:var(--ink);color:#fff}.resource-icon.article{background:var(--amber-50);color:var(--amber-600)}.resource-icon.pdf{background:var(--purple-50);color:var(--purple-600)}.resource-info{min-width:0}.resource-title{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:2px;line-height:1.4}.resource-desc{font-size:12px;color:var(--ink-muted);line-height:1.5}.assignment{border:2px solid var(--teal-200);border-radius:14px;padding:1.5rem 1.75rem;margin-bottom:1.5rem;background:linear-gradient(135deg,var(--teal-50) 0%,#fff 100%)}.assignment-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}.assignment-label{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--teal-700)}.assignment-difficulty{display:inline-flex;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:600}.difficulty-l1{background:var(--teal-100);color:var(--teal-800)}.difficulty-l2{background:var(--amber-100);color:var(--amber-600)}.difficulty-l3{background:var(--red-100);color:var(--red-600)}.assignment h4{font-size:1.05rem;font-weight:700;margin-bottom:.75rem}.assignment p{font-size:14px}.checklist{list-style:none;padding:0}.checklist li{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border-light);font-size:14px}.checklist li:last-child{border-bottom:none}.check-box{width:20px;height:20px;border-radius:6px;border:2px solid var(--border);flex-shrink:0;margin-top:1px;cursor:pointer;transition:all .15s var(--ease);display:flex;align-items:center;justify-content:center}.check-box:hover{border-color:var(--teal-500)}.check-box.checked{background:var(--teal-500);border-color:var(--teal-500)}.check-box.checked::after{content:'';width:10px;height:10px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain}.diagram{margin:1.5rem 0;padding:2rem;background:var(--surface-alt);border:1px solid var(--border);border-radius:14px;overflow-x:auto}.diagram pre{background:transparent;color:var(--ink);padding:0;font-size:13px;line-height:1.6}.chapter-footer{border-top:1px solid var(--border);padding:3rem 2rem;background:var(--surface-alt)}.chapter-footer-inner{max-width:var(--content-max);margin:0 auto}.footer-nav{display:flex;justify-content:space-between;align-items:center;gap:1rem}.footer-nav-link{display:flex;flex-direction:column;gap:4px;padding:1rem 1.5rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all .2s var(--ease);max-width:320px;background:#fff}.footer-nav-link:hover{border-color:var(--teal-300);box-shadow:0 4px 12px rgba(0,0,0,.04)}.footer-nav-label{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--teal-600)}.footer-nav-title{font-size:15px;font-weight:600;color:var(--ink)}.footer-brand{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border);font-size:13px;color:var(--ink-muted)}@media(max-width:960px){.main-layout{grid-template-columns:1fr}.sidebar{display:none}.resource-grid{grid-template-columns:1fr}}@media(max-width:640px){.hero{padding:2.5rem 1.25rem 2rem}.main-layout{padding:0 1.25rem}.content{padding:2rem 0 4rem}pre{padding:1rem;font-size:12.5px}.footer-nav{flex-direction:column}.footer-nav-link{max-width:100%;width:100%}}@media print{.top-nav,.sidebar,.progress-bar{display:none}.main-layout{display:block}.content{padding:0}.hero{background:#fff;border:none}pre{background:#f1f5f9;color:var(--ink);border:1px solid var(--border)}}</style>
 </head>
 <body>
   <div class="progress-bar" id="progressBar"></div>
@@ -456,66 +29,749 @@
   <header class="hero">
     <div class="hero-inner">
       <div class="hero-chapter-label">
-        <span>Chapter 05</span> 
+        <span>Chapter 05</span> &middot; Phase 3: Deep Learning
       </div>
-      <h1>Neural Network Fundamentals</h1>
-      <p class="hero-subtitle">Perceptrons, activation functions, backpropagation, PyTorch basics</p>
+      <h1>Neural Network Foundations</h1>
+      <p class="hero-subtitle">
+        Understand neural networks from the ground up: perceptrons, activation functions, backpropagation,
+        and gradient descent. Build a working neural network from scratch using only NumPy before ever
+        touching a framework.
+      </p>
       <div class="hero-meta">
-        <div class="hero-meta-item">3 Assignments</div>
-        <div class="hero-meta-item">~45 min read</div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Estimated: 4&ndash;5 days
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          3 Advancement Levels
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          3 Assignments
+        </div>
       </div>
     </div>
   </header>
 
-  <main class="content">
-    <h2>Overview</h2>
-    <p>This chapter covers <strong>neural network fundamentals</strong> as part of the AI and ML Foundations curriculum. You will build practical skills through guided explanations, code examples, and hands-on assignments.</p>
+  <div class="main-layout">
+    <main class="content">
 
-    <div class="topics-preview">
-      <h3>Topics Covered</h3>
+      <h2 id="why-this-matters">Why This Matters</h2>
+
+      <p>
+        Neural networks are the foundation of modern AI. From image recognition to language translation,
+        from game-playing agents to protein structure prediction, every breakthrough in the past decade
+        has been built on the concepts you will learn in this chapter. Understanding how they work at
+        a fundamental level &mdash; not just how to call an API &mdash; is what separates engineers
+        who can debug and innovate from those who can only follow tutorials.
+      </p>
+
+      <p>
+        When your model produces <code>NaN</code> losses, when training stalls, when gradients explode
+        or vanish, you need to understand what is happening inside the network. That understanding starts
+        here: with the math of forward passes, the chain rule in backpropagation, and the geometry of
+        loss landscapes.
+      </p>
+
+      <div class="callout concept">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Key Insight
+        </div>
+        <p>
+          A neural network is a <strong>composition of linear transformations and non-linear activation functions</strong>,
+          trained by computing gradients of a loss function and updating parameters in the direction that reduces that loss.
+          Every deep learning framework &mdash; PyTorch, TensorFlow, JAX &mdash; automates this process, but understanding
+          it from scratch is the single most important step in your ML education.
+        </p>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="key-concepts">Key Concepts</h2>
+
+      <h3 id="perceptron">1. The Perceptron</h3>
+
+      <p>
+        The perceptron is the simplest neural network: a single neuron that takes weighted inputs,
+        adds a bias, and passes the result through a step function. Invented by Frank Rosenblatt
+        in 1958, it can learn to classify linearly separable data. While limited, it introduces
+        the core idea of <strong>learning from errors</strong> that powers all modern deep learning.
+      </p>
+
+      <p>
+        The perceptron update rule is straightforward: if the prediction is wrong, adjust the weights
+        in the direction that would have produced the correct answer. This is a simplified version of
+        gradient descent that works because the step function's "gradient" points in the right direction
+        for linear boundaries.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">python</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-keyword">import</span> numpy <span class="hl-keyword">as</span> np
+
+<span class="hl-keyword">class</span> <span class="hl-function">Perceptron</span>:
+    <span class="hl-string">"""Single-layer perceptron for binary classification."""</span>
+
+    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, n_features, lr=<span class="hl-number">0.01</span>):
+        self.weights = np.random.randn(n_features) * <span class="hl-number">0.01</span>
+        self.bias = <span class="hl-number">0.0</span>
+        self.lr = lr
+
+    <span class="hl-keyword">def</span> <span class="hl-function">forward</span>(self, x):
+        <span class="hl-string">"""Compute weighted sum and apply step function."""</span>
+        z = np.dot(x, self.weights) + self.bias
+        <span class="hl-keyword">return</span> <span class="hl-number">1.0</span> <span class="hl-keyword">if</span> z &gt; <span class="hl-number">0</span> <span class="hl-keyword">else</span> <span class="hl-number">0.0</span>
+
+    <span class="hl-keyword">def</span> <span class="hl-function">train</span>(self, X, y, epochs=<span class="hl-number">100</span>):
+        <span class="hl-string">"""Perceptron learning rule: adjust on errors."""</span>
+        <span class="hl-keyword">for</span> epoch <span class="hl-keyword">in</span> <span class="hl-function">range</span>(epochs):
+            errors = <span class="hl-number">0</span>
+            <span class="hl-keyword">for</span> xi, yi <span class="hl-keyword">in</span> <span class="hl-function">zip</span>(X, y):
+                pred = self.forward(xi)
+                error = yi - pred
+                <span class="hl-keyword">if</span> error != <span class="hl-number">0</span>:
+                    self.weights += self.lr * error * xi
+                    self.bias += self.lr * error
+                    errors += <span class="hl-number">1</span>
+            <span class="hl-keyword">if</span> errors == <span class="hl-number">0</span>:
+                <span class="hl-function">print</span>(<span class="hl-string">f"Converged at epoch {epoch}"</span>)
+                <span class="hl-keyword">break</span>
+
+<span class="hl-comment"># Train on AND gate (linearly separable)</span>
+X = np.array([[<span class="hl-number">0</span>,<span class="hl-number">0</span>], [<span class="hl-number">0</span>,<span class="hl-number">1</span>], [<span class="hl-number">1</span>,<span class="hl-number">0</span>], [<span class="hl-number">1</span>,<span class="hl-number">1</span>]])
+y = np.array([<span class="hl-number">0</span>, <span class="hl-number">0</span>, <span class="hl-number">0</span>, <span class="hl-number">1</span>])
+
+p = Perceptron(n_features=<span class="hl-number">2</span>)
+p.train(X, y)
+
+<span class="hl-keyword">for</span> xi <span class="hl-keyword">in</span> X:
+    <span class="hl-function">print</span>(<span class="hl-string">f"{xi} -&gt; {p.forward(xi)}"</span>)
+<span class="hl-comment"># [0,0] -&gt; 0.0, [0,1] -&gt; 0.0, [1,0] -&gt; 0.0, [1,1] -&gt; 1.0</span>
+</pre>
+      </div>
+
+      <div class="callout important">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          The XOR Problem
+        </div>
+        <p>
+          A single perceptron <strong>cannot</strong> learn XOR because XOR is not linearly separable. This
+          limitation, highlighted by Minsky and Papert in 1969, stalled neural network research for over a
+          decade. The solution? Stack multiple layers &mdash; which is exactly what we build next.
+        </p>
+      </div>
+
+      <h3 id="activations">2. Activation Functions</h3>
+
+      <p>
+        Activation functions introduce <strong>non-linearity</strong> into neural networks. Without them,
+        stacking layers would be equivalent to a single linear transformation (a matrix times a matrix is
+        still a matrix). The choice of activation function affects training speed, gradient flow, and the
+        types of functions your network can learn.
+      </p>
+
+      <p>
+        The four activation functions you must know are <strong>Sigmoid</strong> (maps to 0-1, used in
+        output layers for binary classification), <strong>Tanh</strong> (maps to -1 to 1, zero-centered),
+        <strong>ReLU</strong> (max(0, x), the default for hidden layers), and <strong>Softmax</strong>
+        (converts a vector of logits into probabilities that sum to 1).
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">python</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-keyword">import</span> numpy <span class="hl-keyword">as</span> np
+<span class="hl-keyword">import</span> matplotlib.pyplot <span class="hl-keyword">as</span> plt
+
+<span class="hl-comment"># ---- Activation Functions and Their Derivatives ----</span>
+
+<span class="hl-keyword">def</span> <span class="hl-function">sigmoid</span>(x):
+    <span class="hl-keyword">return</span> <span class="hl-number">1</span> / (<span class="hl-number">1</span> + np.exp(-np.clip(x, -<span class="hl-number">500</span>, <span class="hl-number">500</span>)))
+
+<span class="hl-keyword">def</span> <span class="hl-function">sigmoid_deriv</span>(x):
+    s = sigmoid(x)
+    <span class="hl-keyword">return</span> s * (<span class="hl-number">1</span> - s)  <span class="hl-comment"># Max value: 0.25 at x=0</span>
+
+<span class="hl-keyword">def</span> <span class="hl-function">relu</span>(x):
+    <span class="hl-keyword">return</span> np.maximum(<span class="hl-number">0</span>, x)
+
+<span class="hl-keyword">def</span> <span class="hl-function">relu_deriv</span>(x):
+    <span class="hl-keyword">return</span> (x &gt; <span class="hl-number">0</span>).astype(<span class="hl-function">float</span>)  <span class="hl-comment"># 1 if x &gt; 0, else 0</span>
+
+<span class="hl-keyword">def</span> <span class="hl-function">tanh_fn</span>(x):
+    <span class="hl-keyword">return</span> np.tanh(x)
+
+<span class="hl-keyword">def</span> <span class="hl-function">tanh_deriv</span>(x):
+    <span class="hl-keyword">return</span> <span class="hl-number">1</span> - np.tanh(x)**<span class="hl-number">2</span>
+
+<span class="hl-keyword">def</span> <span class="hl-function">leaky_relu</span>(x, alpha=<span class="hl-number">0.01</span>):
+    <span class="hl-keyword">return</span> np.where(x &gt; <span class="hl-number">0</span>, x, alpha * x)
+
+<span class="hl-keyword">def</span> <span class="hl-function">softmax</span>(x):
+    <span class="hl-string">"""Numerically stable softmax."""</span>
+    exp_x = np.exp(x - np.max(x, axis=-<span class="hl-number">1</span>, keepdims=<span class="hl-keyword">True</span>))
+    <span class="hl-keyword">return</span> exp_x / np.sum(exp_x, axis=-<span class="hl-number">1</span>, keepdims=<span class="hl-keyword">True</span>)
+
+<span class="hl-comment"># Visualize activations and their derivatives</span>
+x = np.linspace(-<span class="hl-number">5</span>, <span class="hl-number">5</span>, <span class="hl-number">200</span>)
+fig, axes = plt.subplots(<span class="hl-number">2</span>, <span class="hl-number">4</span>, figsize=(<span class="hl-number">16</span>, <span class="hl-number">8</span>))
+
+<span class="hl-keyword">for</span> ax, fn, name <span class="hl-keyword">in</span> <span class="hl-function">zip</span>(axes[<span class="hl-number">0</span>],
+    [sigmoid, relu, tanh_fn, leaky_relu],
+    [<span class="hl-string">"Sigmoid"</span>, <span class="hl-string">"ReLU"</span>, <span class="hl-string">"Tanh"</span>, <span class="hl-string">"Leaky ReLU"</span>]):
+    ax.plot(x, fn(x), linewidth=<span class="hl-number">2</span>)
+    ax.set_title(name); ax.grid(<span class="hl-keyword">True</span>); ax.axhline(<span class="hl-number">0</span>, color=<span class="hl-string">'k'</span>, lw=<span class="hl-number">0.5</span>)
+
+<span class="hl-keyword">for</span> ax, fn, name <span class="hl-keyword">in</span> <span class="hl-function">zip</span>(axes[<span class="hl-number">1</span>],
+    [sigmoid_deriv, relu_deriv, tanh_deriv, <span class="hl-keyword">lambda</span> x: np.where(x &gt; <span class="hl-number">0</span>, <span class="hl-number">1</span>, <span class="hl-number">0.01</span>)],
+    [<span class="hl-string">"Sigmoid'"</span>, <span class="hl-string">"ReLU'"</span>, <span class="hl-string">"Tanh'"</span>, <span class="hl-string">"Leaky ReLU'"</span>]):
+    ax.plot(x, fn(x), linewidth=<span class="hl-number">2</span>, color=<span class="hl-string">'orange'</span>)
+    ax.set_title(name); ax.grid(<span class="hl-keyword">True</span>)
+
+plt.suptitle(<span class="hl-string">"Activations (top) and Derivatives (bottom)"</span>)
+plt.tight_layout()
+plt.show()
+</pre>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          When to Use Which Activation
+        </div>
+        <p>
+          <strong>Hidden layers:</strong> Start with ReLU. If you see "dying neurons" (many outputs stuck at 0),
+          try Leaky ReLU or GELU. <strong>Output layer:</strong> Sigmoid for binary classification, Softmax for
+          multi-class, linear (no activation) for regression. Never use Sigmoid or Tanh in hidden layers of deep
+          networks &mdash; their gradients saturate and cause vanishing gradients.
+        </p>
+      </div>
+
+      <h3 id="backprop">3. Backpropagation from Scratch</h3>
+
+      <p>
+        Backpropagation is the algorithm that makes neural networks trainable. It computes the gradient
+        of the loss function with respect to every weight in the network using the <strong>chain rule
+        of calculus</strong>. In the forward pass, you compute activations layer by layer. In the
+        backward pass, you propagate the error gradient from the output back to the input, computing
+        how much each weight contributed to the error.
+      </p>
+
+      <p>
+        The key mathematical insight is that the gradient at any layer can be expressed as the gradient
+        from the layer above, multiplied by the local derivative. For a layer computing
+        <code>z = Wx + b</code> followed by <code>a = f(z)</code>, the gradients are:
+        <code>dL/dW = (dL/da * f'(z)) * x^T</code> and <code>dL/db = dL/da * f'(z)</code>.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">python</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-keyword">class</span> <span class="hl-function">TwoLayerNet</span>:
+    <span class="hl-string">"""
+    A 2-layer neural network trained with backpropagation.
+    Architecture: Input -&gt; Hidden (ReLU) -&gt; Output (Softmax)
+    """</span>
+
+    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, d_in, d_hidden, d_out):
+        <span class="hl-comment"># Xavier initialization for better gradient flow</span>
+        self.W1 = np.random.randn(d_in, d_hidden) * np.sqrt(<span class="hl-number">2.0</span> / d_in)
+        self.b1 = np.zeros(d_hidden)
+        self.W2 = np.random.randn(d_hidden, d_out) * np.sqrt(<span class="hl-number">2.0</span> / d_hidden)
+        self.b2 = np.zeros(d_out)
+
+    <span class="hl-keyword">def</span> <span class="hl-function">forward</span>(self, X):
+        <span class="hl-string">"""Forward pass: compute predictions."""</span>
+        <span class="hl-comment"># Layer 1: linear + ReLU</span>
+        self.z1 = X @ self.W1 + self.b1     <span class="hl-comment"># (N, d_hidden)</span>
+        self.a1 = np.maximum(<span class="hl-number">0</span>, self.z1)     <span class="hl-comment"># ReLU activation</span>
+
+        <span class="hl-comment"># Layer 2: linear + Softmax</span>
+        self.z2 = self.a1 @ self.W2 + self.b2  <span class="hl-comment"># (N, d_out)</span>
+        exp_z = np.exp(self.z2 - self.z2.max(axis=<span class="hl-number">1</span>, keepdims=<span class="hl-keyword">True</span>))
+        self.probs = exp_z / exp_z.sum(axis=<span class="hl-number">1</span>, keepdims=<span class="hl-keyword">True</span>)
+        <span class="hl-keyword">return</span> self.probs
+
+    <span class="hl-keyword">def</span> <span class="hl-function">compute_loss</span>(self, y):
+        <span class="hl-string">"""Cross-entropy loss."""</span>
+        m = len(y)
+        log_probs = -np.log(self.probs[<span class="hl-function">range</span>(m), y] + <span class="hl-number">1e-8</span>)
+        <span class="hl-keyword">return</span> log_probs.mean()
+
+    <span class="hl-keyword">def</span> <span class="hl-function">backward</span>(self, X, y, lr=<span class="hl-number">0.01</span>):
+        <span class="hl-string">"""Backward pass: compute gradients and update weights."""</span>
+        m = X.shape[<span class="hl-number">0</span>]
+
+        <span class="hl-comment"># Gradient of loss w.r.t. z2 (softmax + cross-entropy)</span>
+        dz2 = self.probs.copy()
+        dz2[<span class="hl-function">range</span>(m), y] -= <span class="hl-number">1</span>
+        dz2 /= m
+
+        <span class="hl-comment"># Gradients for W2 and b2</span>
+        dW2 = self.a1.T @ dz2           <span class="hl-comment"># (d_hidden, d_out)</span>
+        db2 = dz2.sum(axis=<span class="hl-number">0</span>)           <span class="hl-comment"># (d_out,)</span>
+
+        <span class="hl-comment"># Backprop through ReLU</span>
+        da1 = dz2 @ self.W2.T           <span class="hl-comment"># (N, d_hidden)</span>
+        dz1 = da1 * (self.z1 &gt; <span class="hl-number">0</span>)      <span class="hl-comment"># ReLU derivative</span>
+
+        <span class="hl-comment"># Gradients for W1 and b1</span>
+        dW1 = X.T @ dz1                 <span class="hl-comment"># (d_in, d_hidden)</span>
+        db1 = dz1.sum(axis=<span class="hl-number">0</span>)           <span class="hl-comment"># (d_hidden,)</span>
+
+        <span class="hl-comment"># Parameter update (gradient descent)</span>
+        self.W2 -= lr * dW2
+        self.b2 -= lr * db2
+        self.W1 -= lr * dW1
+        self.b1 -= lr * db1
+</pre>
+      </div>
+
+      <h3 id="gradient-descent">4. Gradient Descent Variants</h3>
+
+      <p>
+        Vanilla gradient descent computes the gradient over the <strong>entire</strong> dataset before
+        making one update. This is slow for large datasets. In practice, you use variants that trade
+        off gradient accuracy for update frequency.
+      </p>
+
       <ul>
-            <li>Perceptrons</li>
-            <li>activation functions</li>
-            <li>backpropagation</li>
-            <li>PyTorch basics</li>
+        <li><strong>Batch Gradient Descent:</strong> Uses all samples. Stable but slow. Memory-intensive.</li>
+        <li><strong>Stochastic Gradient Descent (SGD):</strong> Uses one sample per update. Very noisy but fast. The noise can help escape local minima.</li>
+        <li><strong>Mini-batch SGD:</strong> Uses a small batch (typically 32-256 samples). The standard approach. Balances noise and stability.</li>
       </ul>
-    </div>
 
-    <hr class="section-divider">
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">python</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-keyword">from</span> sklearn.datasets <span class="hl-keyword">import</span> make_classification
 
-    <div class="coming-soon-banner">
-      <h3>Content In Development</h3>
-      <p>Full chapter content with detailed explanations, code examples, video walkthroughs, and assignments is being developed. Check back soon.</p>
-    </div>
+<span class="hl-comment"># Generate synthetic classification data</span>
+X, y = make_classification(
+    n_samples=<span class="hl-number">1000</span>, n_features=<span class="hl-number">20</span>,
+    n_classes=<span class="hl-number">3</span>, n_informative=<span class="hl-number">10</span>,
+    random_state=<span class="hl-number">42</span>
+)
 
-    <div class="callout tip">
-      <div class="callout-header">What You Will Learn</div>
-      <p>By the end of this chapter, you will understand perceptrons, activation functions, backpropagation, pytorch basics and be able to apply these concepts in real-world scenarios.</p>
-    </div>
+<span class="hl-comment"># Split into train/validation</span>
+X_train, X_val = X[:<span class="hl-number">800</span>], X[<span class="hl-number">800</span>:]
+y_train, y_val = y[:<span class="hl-number">800</span>], y[<span class="hl-number">800</span>:]
 
-  </main>
+<span class="hl-comment"># Train with mini-batch SGD</span>
+net = TwoLayerNet(d_in=<span class="hl-number">20</span>, d_hidden=<span class="hl-number">64</span>, d_out=<span class="hl-number">3</span>)
+batch_size = <span class="hl-number">32</span>
+train_losses, val_losses = [], []
 
-  <nav class="footer-nav">
-        <a class="footer-nav-link prev" href="chapter-04.html">
-          <span class="footer-nav-label">&larr; Previous</span>
-          <span class="footer-nav-title">Chapter 04: Ensemble Methods and Model Selection</span>
+<span class="hl-keyword">for</span> epoch <span class="hl-keyword">in</span> <span class="hl-function">range</span>(<span class="hl-number">200</span>):
+    <span class="hl-comment"># Shuffle data each epoch</span>
+    perm = np.random.permutation(len(X_train))
+    X_shuffled = X_train[perm]
+    y_shuffled = y_train[perm]
+
+    epoch_loss = <span class="hl-number">0</span>
+    n_batches = <span class="hl-number">0</span>
+
+    <span class="hl-keyword">for</span> i <span class="hl-keyword">in</span> <span class="hl-function">range</span>(<span class="hl-number">0</span>, len(X_train), batch_size):
+        Xb = X_shuffled[i:i + batch_size]
+        yb = y_shuffled[i:i + batch_size]
+
+        <span class="hl-comment"># Forward pass</span>
+        probs = net.forward(Xb)
+        loss = net.compute_loss(yb)
+        epoch_loss += loss
+        n_batches += <span class="hl-number">1</span>
+
+        <span class="hl-comment"># Backward pass + update</span>
+        net.backward(Xb, yb, lr=<span class="hl-number">0.1</span>)
+
+    <span class="hl-comment"># Track metrics</span>
+    train_losses.append(epoch_loss / n_batches)
+    val_probs = net.forward(X_val)
+    val_losses.append(net.compute_loss(y_val))
+
+    <span class="hl-keyword">if</span> epoch % <span class="hl-number">50</span> == <span class="hl-number">0</span>:
+        train_acc = (net.forward(X_train).argmax(<span class="hl-number">1</span>) == y_train).mean()
+        val_acc = (net.forward(X_val).argmax(<span class="hl-number">1</span>) == y_val).mean()
+        <span class="hl-function">print</span>(<span class="hl-string">f"Epoch {epoch:3d} | Train acc: {train_acc:.3f} | Val acc: {val_acc:.3f}"</span>)
+</pre>
+      </div>
+
+      <h3 id="loss-functions">5. Loss Functions</h3>
+
+      <p>
+        The loss function measures how wrong your predictions are. It defines the "landscape" that
+        gradient descent navigates. Choosing the right loss function is as important as choosing the
+        right architecture. The loss must be <strong>differentiable</strong> so that gradients can be computed.
+      </p>
+
+      <p>
+        The three most common loss functions are <strong>Mean Squared Error</strong> (for regression),
+        <strong>Binary Cross-Entropy</strong> (for binary classification), and <strong>Categorical
+        Cross-Entropy</strong> (for multi-class classification). Each one encodes a different assumption
+        about the distribution of errors.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">python</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># ---- Common Loss Functions ----</span>
+
+<span class="hl-keyword">def</span> <span class="hl-function">mse_loss</span>(y_true, y_pred):
+    <span class="hl-string">"""Mean Squared Error: for regression tasks."""</span>
+    <span class="hl-keyword">return</span> np.mean((y_true - y_pred) ** <span class="hl-number">2</span>)
+
+<span class="hl-keyword">def</span> <span class="hl-function">mse_gradient</span>(y_true, y_pred):
+    <span class="hl-keyword">return</span> <span class="hl-number">2</span> * (y_pred - y_true) / len(y_true)
+
+<span class="hl-keyword">def</span> <span class="hl-function">binary_cross_entropy</span>(y_true, y_pred):
+    <span class="hl-string">"""Binary Cross-Entropy: for binary classification."""</span>
+    y_pred = np.clip(y_pred, <span class="hl-number">1e-8</span>, <span class="hl-number">1</span> - <span class="hl-number">1e-8</span>)
+    <span class="hl-keyword">return</span> -np.mean(
+        y_true * np.log(y_pred) + (<span class="hl-number">1</span> - y_true) * np.log(<span class="hl-number">1</span> - y_pred)
+    )
+
+<span class="hl-keyword">def</span> <span class="hl-function">categorical_cross_entropy</span>(y_true_onehot, y_pred_probs):
+    <span class="hl-string">"""Categorical Cross-Entropy: for multi-class classification."""</span>
+    y_pred_probs = np.clip(y_pred_probs, <span class="hl-number">1e-8</span>, <span class="hl-number">1.0</span>)
+    <span class="hl-keyword">return</span> -np.mean(np.sum(y_true_onehot * np.log(y_pred_probs), axis=<span class="hl-number">1</span>))
+
+<span class="hl-comment"># Visualize MSE vs Cross-Entropy gradient behavior</span>
+y_true = <span class="hl-number">1.0</span>
+y_pred = np.linspace(<span class="hl-number">0.01</span>, <span class="hl-number">0.99</span>, <span class="hl-number">100</span>)
+
+mse_vals = (y_true - y_pred) ** <span class="hl-number">2</span>
+bce_vals = -(y_true * np.log(y_pred) + (<span class="hl-number">1</span> - y_true) * np.log(<span class="hl-number">1</span> - y_pred))
+
+fig, ax = plt.subplots(figsize=(<span class="hl-number">8</span>, <span class="hl-number">5</span>))
+ax.plot(y_pred, mse_vals, label=<span class="hl-string">"MSE"</span>, linewidth=<span class="hl-number">2</span>)
+ax.plot(y_pred, bce_vals, label=<span class="hl-string">"Cross-Entropy"</span>, linewidth=<span class="hl-number">2</span>)
+ax.set_xlabel(<span class="hl-string">"Predicted probability"</span>)
+ax.set_ylabel(<span class="hl-string">"Loss (true label = 1)"</span>)
+ax.legend(); ax.grid(<span class="hl-keyword">True</span>)
+ax.set_title(<span class="hl-string">"Cross-Entropy penalizes confident wrong predictions more heavily"</span>)
+plt.show()
+</pre>
+      </div>
+
+      <div class="callout danger">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Common Pitfall: NaN Loss
+        </div>
+        <p>
+          If your loss becomes <code>NaN</code>, the most common causes are: (1) taking <code>log(0)</code> &mdash;
+          always clip probabilities before computing cross-entropy, (2) learning rate too high &mdash; weights
+          explode to infinity, (3) numerical overflow in softmax &mdash; subtract the max value before
+          exponentiating. Every implementation above includes these safety measures.
+        </p>
+      </div>
+
+      <h3 id="weight-init">6. Weight Initialization</h3>
+
+      <p>
+        How you initialize weights dramatically affects whether your network trains at all. If weights
+        are too small, signals shrink to zero as they pass through layers (vanishing activations). If
+        too large, they explode. The goal is to keep the <strong>variance of activations roughly constant</strong>
+        across layers.
+      </p>
+
+      <p>
+        Two initialization strategies dominate modern practice: <strong>Xavier/Glorot initialization</strong>
+        (for sigmoid and tanh activations) and <strong>He/Kaiming initialization</strong> (for ReLU).
+        Both set the initial weight variance based on the number of input and output neurons in each layer.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">python</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-keyword">def</span> <span class="hl-function">xavier_init</span>(fan_in, fan_out):
+    <span class="hl-string">"""Xavier/Glorot: for sigmoid and tanh layers."""</span>
+    std = np.sqrt(<span class="hl-number">2.0</span> / (fan_in + fan_out))
+    <span class="hl-keyword">return</span> np.random.randn(fan_in, fan_out) * std
+
+<span class="hl-keyword">def</span> <span class="hl-function">he_init</span>(fan_in, fan_out):
+    <span class="hl-string">"""He/Kaiming: for ReLU layers."""</span>
+    std = np.sqrt(<span class="hl-number">2.0</span> / fan_in)
+    <span class="hl-keyword">return</span> np.random.randn(fan_in, fan_out) * std
+
+<span class="hl-comment"># Demonstrate the effect of initialization</span>
+np.random.seed(<span class="hl-number">42</span>)
+x = np.random.randn(<span class="hl-number">256</span>, <span class="hl-number">512</span>)  <span class="hl-comment"># batch of 256, 512 features</span>
+
+fig, axes = plt.subplots(<span class="hl-number">1</span>, <span class="hl-number">3</span>, figsize=(<span class="hl-number">15</span>, <span class="hl-number">4</span>))
+
+<span class="hl-comment"># Bad: too small</span>
+W_small = np.random.randn(<span class="hl-number">512</span>, <span class="hl-number">512</span>) * <span class="hl-number">0.001</span>
+a_small = np.maximum(<span class="hl-number">0</span>, x @ W_small)
+axes[<span class="hl-number">0</span>].hist(a_small.flatten(), bins=<span class="hl-number">50</span>)
+axes[<span class="hl-number">0</span>].set_title(<span class="hl-string">f"Too Small (std=0.001)\nMean act: {a_small.mean():.6f}"</span>)
+
+<span class="hl-comment"># Bad: too large</span>
+W_large = np.random.randn(<span class="hl-number">512</span>, <span class="hl-number">512</span>) * <span class="hl-number">1.0</span>
+a_large = np.maximum(<span class="hl-number">0</span>, x @ W_large)
+axes[<span class="hl-number">1</span>].hist(a_large.flatten(), bins=<span class="hl-number">50</span>)
+axes[<span class="hl-number">1</span>].set_title(<span class="hl-string">f"Too Large (std=1.0)\nMean act: {a_large.mean():.2f}"</span>)
+
+<span class="hl-comment"># Good: He initialization</span>
+W_he = he_init(<span class="hl-number">512</span>, <span class="hl-number">512</span>)
+a_he = np.maximum(<span class="hl-number">0</span>, x @ W_he)
+axes[<span class="hl-number">2</span>].hist(a_he.flatten(), bins=<span class="hl-number">50</span>)
+axes[<span class="hl-number">2</span>].set_title(<span class="hl-string">f"He Init (std={np.sqrt(2/512):.4f})\nMean act: {a_he.mean():.4f}"</span>)
+
+plt.suptitle(<span class="hl-string">"Weight Initialization: Effect on Activation Distribution"</span>)
+plt.tight_layout()
+plt.show()
+</pre>
+      </div>
+
+      <div class="callout concept">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          The Vanishing Gradient Problem
+        </div>
+        <p>
+          In deep networks with sigmoid activations, gradients are multiplied by sigmoid derivatives (max 0.25) at
+          each layer. After 10 layers: 0.25^10 = 0.000001. The gradient effectively disappears, and early layers
+          stop learning. This is why <strong>ReLU + He initialization</strong> became the default: ReLU's derivative
+          is 1 for positive inputs, so gradients flow through without shrinking.
+        </p>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="watch-learn">Watch &amp; Learn</h2>
+
+      <p>These videos provide the visual intuition that makes the math click. Watch the 3Blue1Brown series before starting the assignments.</p>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/aircAruvnKk?rel=0&amp;modestbranding=1" title="3Blue1Brown: But what is a neural network?" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          3Blue1Brown &mdash; But what is a neural network? Deep learning chapter 1
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/Ilg3gGewQ5U?rel=0&amp;modestbranding=1" title="3Blue1Brown: Backpropagation, what is it really doing?" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          3Blue1Brown &mdash; Backpropagation: what is it really doing?
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="further-reading">Further Reading</h2>
+
+      <p>Deep-dive into these resources to solidify your understanding of neural network fundamentals.</p>
+
+      <div class="resource-grid">
+        <a class="resource-card" href="https://playground.tensorflow.org/" target="_blank" rel="noopener">
+          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+          <div class="resource-info"><div class="resource-title">TensorFlow Playground</div><div class="resource-desc">Interactive neural network visualization. Experiment with layers, activations, and learning rates in real time.</div></div>
         </a>
-        <a class="footer-nav-link next" href="chapter-06.html">
-          <span class="footer-nav-label">Next &rarr;</span>
-          <span class="footer-nav-title">Chapter 06: CNNs and Computer Vision</span>
+        <a class="resource-card" href="https://cs231n.github.io/" target="_blank" rel="noopener">
+          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+          <div class="resource-info"><div class="resource-title">Stanford CS231n Course Notes</div><div class="resource-desc">The gold standard for understanding neural networks, backpropagation, and optimization from first principles.</div></div>
         </a>
-  </nav>
+        <a class="resource-card" href="http://neuralnetworksanddeeplearning.com/" target="_blank" rel="noopener">
+          <div class="resource-icon article"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <div class="resource-info"><div class="resource-title">Neural Networks and Deep Learning (Michael Nielsen)</div><div class="resource-desc">Free online book with interactive visual proofs of backpropagation. Excellent for building mathematical intuition.</div></div>
+        </a>
+        <a class="resource-card" href="https://github.com/karpathy/micrograd" target="_blank" rel="noopener">
+          <div class="resource-icon github"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg></div>
+          <div class="resource-info"><div class="resource-title">Karpathy's micrograd</div><div class="resource-desc">A tiny autograd engine in ~150 lines of Python. Study this code to understand how PyTorch computes gradients.</div></div>
+        </a>
+        <a class="resource-card" href="https://www.youtube.com/watch?v=VMj-3S1tku0" target="_blank" rel="noopener">
+          <div class="resource-icon video"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg></div>
+          <div class="resource-info"><div class="resource-title">Karpathy: Building micrograd</div><div class="resource-desc">2.5-hour video building an autograd engine and neural network from scratch. The best hands-on neural network tutorial.</div></div>
+        </a>
+        <a class="resource-card" href="https://d2l.ai/chapter_multilayer-perceptrons/" target="_blank" rel="noopener">
+          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+          <div class="resource-info"><div class="resource-title">D2L: Multilayer Perceptrons</div><div class="resource-desc">Interactive textbook chapter with runnable code examples covering MLPs, activation functions, and weight initialization.</div></div>
+        </a>
+      </div>
 
-  <footer class="footer">
-    ILA (Iksha Learning Academy) &middot; AI and ML Foundations &middot; <a href="index.html">All Chapters</a>
+      <hr class="section-divider">
+
+      <h2 id="assignments">Assignments</h2>
+
+      <p>Complete these in order. Each level builds on the previous one. Do not skip the from-scratch implementation &mdash; it is the most important exercise in this entire course.</p>
+
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 1</div>
+          <span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span>
+        </div>
+        <h4>Build a Neural Network from Scratch</h4>
+        <p>Implement a complete 2-layer neural network using only NumPy. No frameworks allowed.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Implement a <code>Perceptron</code> class that learns AND, OR, and NAND gates</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Implement all 4 activation functions (sigmoid, tanh, relu, leaky_relu) with their derivatives</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Build a <code>TwoLayerNet</code> with forward pass, loss computation, and backpropagation</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Verify gradients numerically: compute <code>(f(x+h) - f(x-h)) / 2h</code> and compare with analytical gradients</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Train on the Iris dataset and achieve &gt;90% validation accuracy</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Plot training and validation loss curves over epochs</span></li>
+        </ul>
+        <div class="callout success" style="margin-top:1rem;margin-bottom:0">
+          <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div>
+          <p>Your numerical gradient check shows relative error &lt; 1e-5 for all parameters, and your network trains successfully on Iris.</p>
+        </div>
+      </div>
+
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 2</div>
+          <span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span>
+        </div>
+        <h4>Multi-Layer Network with Visualization</h4>
+        <p>Extend your network to N layers and visualize what the network is learning at each stage.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Generalize to an <code>NLayerNet</code> class that accepts a list of layer sizes</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Implement both Xavier and He initialization and compare training dynamics</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Train on the MNIST digits dataset (use sklearn's <code>fetch_openml</code>)</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Visualize learned weight matrices as images for the first hidden layer</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Plot decision boundaries for a 2D dataset at different training stages (epoch 1, 10, 100)</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Experiment with 3 different learning rates and document the effect on convergence</span></li>
+        </ul>
+        <div class="callout success" style="margin-top:1rem;margin-bottom:0">
+          <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div>
+          <p>Your MNIST network achieves &gt;95% test accuracy, and your visualizations clearly show the network learning increasingly complex features.</p>
+        </div>
+      </div>
+
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 3</div>
+          <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Production-Ready</span>
+        </div>
+        <h4>Build Your Own Micrograd</h4>
+        <p>Implement an automatic differentiation engine that can compute gradients for arbitrary computational graphs.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a <code>Value</code> class that tracks operations and supports <code>backward()</code></span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Support addition, multiplication, power, ReLU, exp, and log operations</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Implement topological sort for correct gradient computation order</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Build <code>Neuron</code>, <code>Layer</code>, and <code>MLP</code> classes on top of your engine</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Train your MLP on a classification task and verify results match the numpy implementation</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write a computational graph visualizer using graphviz that shows forward and backward values</span></li>
+        </ul>
+        <div class="callout success" style="margin-top:1rem;margin-bottom:0">
+          <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div>
+          <p>Your autograd engine produces the same gradients as PyTorch for test cases, and your visualization clearly shows the computational graph with gradient flow.</p>
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="self-check">Self-Check</h2>
+
+      <p>Before moving on, honestly answer these. If any answer is "no," go back and practice.</p>
+
+      <details>
+        <summary>Can you implement backpropagation for a 2-layer network from memory?</summary>
+        <div class="details-body">
+          <p>
+            Open a blank notebook and write the forward pass, loss computation, and backward pass without
+            any reference. You should be able to derive the gradients for each weight matrix and bias vector
+            using the chain rule. If you cannot, re-read section 3 and work through the matrix dimensions
+            on paper before coding.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Can you explain why ReLU replaced sigmoid in hidden layers?</summary>
+        <div class="details-body">
+          <p>
+            The sigmoid derivative has a maximum value of 0.25. In a 10-layer network, gradients shrink by
+            at least 0.25^10 = 0.000001, making early layers nearly untrainable. ReLU has a derivative of
+            1 for positive inputs, allowing gradients to flow without shrinking. The tradeoff is "dying neurons"
+            (units stuck at 0), which Leaky ReLU addresses.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Do you understand the difference between He and Xavier initialization?</summary>
+        <div class="details-body">
+          <p>
+            Xavier initialization (<code>std = sqrt(2 / (fan_in + fan_out))</code>) is designed for layers with
+            symmetric activations like sigmoid and tanh. He initialization (<code>std = sqrt(2 / fan_in)</code>)
+            accounts for the fact that ReLU zeros out half the inputs, so it uses a larger variance. Using Xavier
+            with ReLU leads to activations that shrink toward zero; using He with sigmoid leads to saturation.
+          </p>
+        </div>
+      </details>
+
+    </main>
+
+    <aside class="sidebar">
+      <div class="sidebar-title">On this page</div>
+      <ul class="toc-list">
+        <li class="toc-item"><a href="#why-this-matters">Why This Matters</a></li>
+        <li class="toc-item"><a href="#key-concepts">Key Concepts</a></li>
+        <li class="toc-item"><a href="#perceptron" style="padding-left:28px;font-size:12px">The Perceptron</a></li>
+        <li class="toc-item"><a href="#activations" style="padding-left:28px;font-size:12px">Activation Functions</a></li>
+        <li class="toc-item"><a href="#backprop" style="padding-left:28px;font-size:12px">Backpropagation</a></li>
+        <li class="toc-item"><a href="#gradient-descent" style="padding-left:28px;font-size:12px">Gradient Descent Variants</a></li>
+        <li class="toc-item"><a href="#loss-functions" style="padding-left:28px;font-size:12px">Loss Functions</a></li>
+        <li class="toc-item"><a href="#weight-init" style="padding-left:28px;font-size:12px">Weight Initialization</a></li>
+        <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a></li>
+        <li class="toc-item"><a href="#further-reading">Further Reading</a></li>
+        <li class="toc-item"><a href="#assignments">Assignments</a></li>
+        <li class="toc-item"><a href="#self-check">Self-Check</a></li>
+      </ul>
+    </aside>
+  </div>
+
+  <footer class="chapter-footer">
+    <div class="chapter-footer-inner">
+      <nav class="footer-nav">
+        <a class="footer-nav-link" href="chapter-04.html">
+          <span class="footer-nav-label">&larr; Previous Chapter</span>
+          <span class="footer-nav-title">04: Unsupervised Learning</span>
+        </a>
+        <a class="footer-nav-link" href="chapter-06.html">
+          <span class="footer-nav-label">Next Chapter &rarr;</span>
+          <span class="footer-nav-title">06: Deep Learning with PyTorch</span>
+        </a>
+      </nav>
+      <div class="footer-brand">ILA (Iksha Learning Academy) &middot; AI &amp; Machine Learning Certification &middot; Basic Track</div>
+    </div>
   </footer>
 
   <script>
-    window.addEventListener('scroll', () => {
-      const h = document.documentElement;
-      const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
-      document.getElementById('progressBar').style.width = Math.min(pct, 100) + '%';
-    });
+    window.addEventListener('scroll',()=>{const s=window.scrollY;const d=document.documentElement.scrollHeight-window.innerHeight;document.getElementById('progressBar').style.width=(d>0?(s/d)*100:0)+'%'});
+    const tocLinks=document.querySelectorAll('.toc-item a');const sections=[];tocLinks.forEach(l=>{const id=l.getAttribute('href').slice(1);const el=document.getElementById(id);if(el)sections.push({id,el,link:l})});
+    const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{const item=sections.find(s=>s.el===entry.target);if(item&&entry.isIntersecting){tocLinks.forEach(l=>l.classList.remove('active'));item.link.classList.add('active')}})},{rootMargin:'-80px 0px -60% 0px',threshold:0});
+    sections.forEach(s=>observer.observe(s.el));
+    function copyCode(btn){const pre=btn.closest('.code-block').querySelector('pre');navigator.clipboard.writeText(pre.textContent).then(()=>{btn.classList.add('copied');btn.textContent='Copied!';setTimeout(()=>{btn.classList.remove('copied');btn.textContent='Copy'},2000)})}
   </script>
 </body>
 </html>

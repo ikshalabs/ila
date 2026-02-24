@@ -3,12 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chapter 08: Observability and Monitoring &mdash; ILA Python and FastAPI</title>
+  <title>Chapter 08: Performance Optimization &mdash; ILA Python + FastAPI</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
+    /* ═══════════════════════════════════════════════
+       ILA DESIGN SYSTEM — v1.0
+       Iksha Learning Academy
+       ═══════════════════════════════════════════════ */
+
     :root {
+      /* Palette */
       --ink:        #0f172a;
       --ink-light:  #334155;
       --ink-muted:  #64748b;
@@ -17,6 +23,8 @@
       --surface-warm:#fffbeb;
       --border:     #e2e8f0;
       --border-light:#f1f5f9;
+
+      /* Brand */
       --teal-50:  #f0fdfa;
       --teal-100: #ccfbf1;
       --teal-200: #99f6e4;
@@ -25,36 +33,48 @@
       --teal-700: #0f766e;
       --teal-800: #115e59;
       --teal-900: #134e4a;
+
       --blue-50:  #eff6ff;
       --blue-100: #dbeafe;
       --blue-500: #3b82f6;
       --blue-600: #2563eb;
       --blue-700: #1d4ed8;
+
       --amber-50:  #fffbeb;
       --amber-100: #fef3c7;
       --amber-500: #f59e0b;
       --amber-600: #d97706;
+
       --red-50:   #fef2f2;
       --red-100:  #fee2e2;
       --red-500:  #ef4444;
       --red-600:  #dc2626;
+
       --purple-50:  #faf5ff;
       --purple-100: #f3e8ff;
       --purple-500: #a855f7;
       --purple-600: #9333ea;
-      --green-50:  #f0fdf4;
-      --green-100: #dcfce7;
-      --green-500: #22c55e;
-      --green-600: #16a34a;
+
+      /* Typography */
       --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       --font-serif: 'Instrument Serif', Georgia, serif;
       --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
+
+      /* Spacing */
       --content-max: 780px;
+      --sidebar-width: 280px;
+
+      /* Transitions */
       --ease: cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
 
     body {
       font-family: var(--font-sans);
@@ -64,6 +84,7 @@
       background: var(--surface);
     }
 
+    /* ── PROGRESS BAR ─────────────────────────── */
     .progress-bar {
       position: fixed;
       top: 0;
@@ -75,6 +96,7 @@
       transition: width 0.15s var(--ease);
     }
 
+    /* ── TOP NAV ──────────────────────────────── */
     .top-nav {
       position: sticky;
       top: 0;
@@ -162,6 +184,7 @@
       padding: 0 4px;
     }
 
+    /* ── HERO ─────────────────────────────────── */
     .hero {
       background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%);
       border-bottom: 1px solid var(--border);
@@ -222,33 +245,117 @@
       color: var(--ink-muted);
     }
 
-    .content {
-      max-width: var(--content-max);
-      margin: 0 auto;
-      padding: 3rem 2rem 6rem;
+    .hero-meta-item svg {
+      width: 16px;
+      height: 16px;
+      color: var(--teal-600);
     }
 
+    /* ── MAIN LAYOUT ──────────────────────────── */
+    .main-layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr var(--sidebar-width);
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .content {
+      padding: 3rem 0 6rem;
+      min-width: 0;
+    }
+
+    /* ── SIDEBAR TOC ──────────────────────────── */
+    .sidebar {
+      position: sticky;
+      top: 76px;
+      padding: 2rem 0;
+      max-height: calc(100vh - 76px);
+      overflow-y: auto;
+    }
+
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-muted);
+      margin-bottom: 1rem;
+      padding-left: 14px;
+    }
+
+    .toc-list {
+      list-style: none;
+    }
+
+    .toc-item a {
+      display: block;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--ink-muted);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: all 0.2s var(--ease);
+      line-height: 1.5;
+    }
+
+    .toc-item a:hover {
+      color: var(--ink);
+      background: var(--surface-alt);
+    }
+
+    .toc-item a.active {
+      color: var(--teal-700);
+      border-left-color: var(--teal-500);
+      background: var(--teal-50);
+      font-weight: 500;
+    }
+
+    /* ── TYPOGRAPHY ────────────────────────────── */
     .content h2 {
       font-family: var(--font-serif);
       font-size: 1.85rem;
       font-weight: 400;
       color: var(--ink);
       margin: 3rem 0 1rem;
+      padding-top: 1rem;
       scroll-margin-top: 80px;
     }
 
-    .content h2:first-child { margin-top: 0; }
+    .content h2:first-child {
+      margin-top: 0;
+    }
 
     .content h3 {
       font-size: 1.15rem;
       font-weight: 600;
       color: var(--ink);
       margin: 2rem 0 0.75rem;
+      scroll-margin-top: 80px;
     }
 
     .content p {
       margin-bottom: 1.25rem;
       color: var(--ink-light);
+    }
+
+    .content strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .content a {
+      color: var(--teal-700);
+      text-decoration: underline;
+      text-decoration-color: var(--teal-200);
+      text-underline-offset: 3px;
+      transition: text-decoration-color 0.2s;
+    }
+
+    .content a:hover {
+      text-decoration-color: var(--teal-600);
     }
 
     .content ul, .content ol {
@@ -261,13 +368,25 @@
       color: var(--ink-light);
     }
 
-    .content li::marker { color: var(--teal-500); }
+    .content li::marker {
+      color: var(--teal-500);
+    }
 
+    /* ── SECTION DIVIDER ──────────────────────── */
+    .section-divider {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 3rem 0;
+    }
+
+    /* ── CALLOUT BOXES ────────────────────────── */
     .callout {
       padding: 1.25rem 1.5rem;
       border-radius: 12px;
       margin-bottom: 1.5rem;
       border: 1px solid;
+      position: relative;
     }
 
     .callout-header {
@@ -277,6 +396,12 @@
       font-size: 14px;
       font-weight: 600;
       margin-bottom: 0.5rem;
+    }
+
+    .callout-header svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
     }
 
     .callout p:last-child { margin-bottom: 0; }
@@ -293,6 +418,12 @@
     }
     .callout.important .callout-header { color: var(--amber-600); }
 
+    .callout.danger {
+      background: var(--red-50);
+      border-color: var(--red-100);
+    }
+    .callout.danger .callout-header { color: var(--red-600); }
+
     .callout.tip {
       background: var(--purple-50);
       border-color: var(--purple-100);
@@ -305,93 +436,403 @@
     }
     .callout.success .callout-header { color: var(--teal-700); }
 
-    .section-divider {
-      border: none;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--border), transparent);
-      margin: 3rem 0;
-    }
-
-    .coming-soon-banner {
-      background: var(--amber-50);
-      border: 1px solid var(--amber-100);
+    /* ── CODE BLOCKS ──────────────────────────── */
+    .code-block {
+      position: relative;
+      margin-bottom: 1.5rem;
       border-radius: 12px;
-      padding: 2.5rem;
-      text-align: center;
-      margin: 2rem 0;
+      overflow: hidden;
+      border: 1px solid var(--border);
     }
 
-    .coming-soon-banner h3 {
-      color: var(--amber-600);
-      margin-bottom: 0.5rem;
-    }
-
-    .coming-soon-banner p {
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+      background: var(--surface-alt);
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
       color: var(--ink-muted);
-      margin-bottom: 0;
     }
 
-    .topics-preview {
+    .code-lang {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .code-copy {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: white;
+      font-size: 11px;
+      font-family: var(--font-sans);
+      color: var(--ink-muted);
+      cursor: pointer;
+      transition: all 0.2s var(--ease);
+    }
+
+    .code-copy:hover {
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    .code-copy.copied {
+      background: var(--teal-50);
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    pre {
+      margin: 0;
+      padding: 1.25rem 1.5rem;
+      overflow-x: auto;
+      background: #1e293b;
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: #e2e8f0;
+    }
+
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.88em;
+    }
+
+    p code, li code {
+      padding: 2px 7px;
       background: var(--surface-alt);
       border: 1px solid var(--border);
+      border-radius: 5px;
+      color: var(--teal-800);
+      font-size: 0.85em;
+    }
+
+    /* Syntax highlights (minimal) */
+    .hl-keyword  { color: #c084fc; }
+    .hl-string   { color: #86efac; }
+    .hl-comment  { color: #64748b; font-style: italic; }
+    .hl-function { color: #7dd3fc; }
+    .hl-number   { color: #fbbf24; }
+    .hl-flag     { color: #f472b6; }
+
+    /* ── COLLAPSIBLE (DETAILS) ────────────────── */
+    details {
+      margin-bottom: 1.25rem;
+      border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 1.5rem 2rem;
-      margin: 1.5rem 0;
+      overflow: hidden;
+      transition: border-color 0.2s var(--ease);
     }
 
-    .topics-preview h3 {
-      font-size: 0.95rem;
-      margin-bottom: 0.75rem;
+    details[open] {
+      border-color: var(--teal-200);
+    }
+
+    details summary {
+      padding: 1rem 1.25rem;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      background: var(--surface-alt);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.2s var(--ease);
+      user-select: none;
+    }
+
+    details summary::-webkit-details-marker { display: none; }
+
+    details summary::before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+      flex-shrink: 0;
+      transition: transform 0.2s var(--ease);
+    }
+
+    details[open] summary::before {
+      transform: rotate(90deg);
+    }
+
+    details summary:hover {
+      background: var(--teal-50);
+    }
+
+    .details-body {
+      padding: 1.25rem 1.5rem;
+    }
+
+    .details-body p:last-child { margin-bottom: 0; }
+
+    /* ── VIDEO EMBED ──────────────────────────── */
+    .video-card {
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      background: #0f172a;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .video-caption {
+      padding: 12px 16px;
+      background: var(--surface-alt);
+      font-size: 13px;
+      color: var(--ink-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .video-caption svg {
+      width: 14px;
+      height: 14px;
+      color: var(--red-500);
+    }
+
+    /* ── RESOURCE CARDS ───────────────────────── */
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .resource-card {
+      display: flex;
+      gap: 14px;
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      background: white;
+    }
+
+    .resource-card:hover {
+      border-color: var(--teal-300);
+      background: var(--teal-50);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .resource-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 18px;
+    }
+
+    .resource-icon.docs    { background: var(--blue-50);   color: var(--blue-600); }
+    .resource-icon.video   { background: var(--red-50);    color: var(--red-500); }
+    .resource-icon.github  { background: var(--ink);       color: white; }
+    .resource-icon.article { background: var(--amber-50);  color: var(--amber-600); }
+    .resource-icon.pdf     { background: var(--purple-50); color: var(--purple-600); }
+
+    .resource-info {
+      min-width: 0;
+    }
+
+    .resource-title {
+      font-size: 14px;
+      font-weight: 600;
       color: var(--ink);
+      margin-bottom: 2px;
+      line-height: 1.4;
     }
 
-    .topics-preview ul {
+    .resource-desc {
+      font-size: 12px;
+      color: var(--ink-muted);
+      line-height: 1.5;
+    }
+
+    /* ── ASSIGNMENT CARDS ─────────────────────── */
+    .assignment {
+      border: 2px solid var(--teal-200);
+      border-radius: 14px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--teal-50) 0%, white 100%);
+    }
+
+    .assignment-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .assignment-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--teal-700);
+    }
+
+    .assignment-difficulty {
+      display: inline-flex;
+      padding: 4px 10px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .difficulty-l1 { background: var(--teal-100); color: var(--teal-800); }
+    .difficulty-l2 { background: var(--amber-100); color: var(--amber-600); }
+    .difficulty-l3 { background: var(--red-100); color: var(--red-600); }
+
+    .assignment h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .assignment p {
+      font-size: 14px;
+    }
+
+    .checklist {
       list-style: none;
       padding: 0;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 0.5rem;
     }
 
-    .topics-preview li {
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-light);
       font-size: 14px;
-      color: var(--ink-light);
-      padding-left: 1.25rem;
-      position: relative;
     }
 
-    .topics-preview li::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 8px;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
+    .checklist li:last-child { border-bottom: none; }
+
+    .check-box {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      border: 2px solid var(--border);
+      flex-shrink: 0;
+      margin-top: 1px;
+      cursor: pointer;
+      transition: all 0.15s var(--ease);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .check-box:hover {
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked {
       background: var(--teal-500);
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+    }
+
+    /* ── ARCHITECTURE DIAGRAM ─────────────────── */
+    .diagram {
+      margin: 1.5rem 0;
+      padding: 2rem;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow-x: auto;
+    }
+
+    .diagram pre {
+      background: transparent;
+      color: var(--ink);
+      padding: 0;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .diagram-caption {
+      margin-top: 1rem;
+      font-size: 12px;
+      color: var(--ink-muted);
+      text-align: center;
+      font-style: italic;
+    }
+
+    /* ── FOOTER ───────────────────────────────── */
+    .chapter-footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      background: var(--surface-alt);
+    }
+
+    .chapter-footer-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
     }
 
     .footer-nav {
-      max-width: var(--content-max);
-      margin: 0 auto;
-      padding: 2rem;
       display: flex;
       justify-content: space-between;
-      border-top: 1px solid var(--border);
+      align-items: center;
+      gap: 1rem;
     }
 
     .footer-nav-link {
       display: flex;
       flex-direction: column;
-      text-decoration: none;
-      padding: 1rem;
+      gap: 4px;
+      padding: 1rem 1.5rem;
+      border: 1px solid var(--border);
       border-radius: 12px;
-      transition: background 0.2s var(--ease);
-      max-width: 45%;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      max-width: 320px;
+      background: white;
     }
 
     .footer-nav-link:hover {
-      background: var(--surface-alt);
+      border-color: var(--teal-300);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
     }
 
     .footer-nav-label {
@@ -399,123 +840,370 @@
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.06em;
-      color: var(--ink-muted);
-      margin-bottom: 4px;
+      color: var(--teal-600);
     }
 
     .footer-nav-title {
       font-size: 15px;
       font-weight: 600;
-      color: var(--teal-700);
+      color: var(--ink);
     }
 
-    .footer-nav-link.next { text-align: right; margin-left: auto; }
-
-    .footer {
+    .footer-brand {
       text-align: center;
-      padding: 2rem;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
       font-size: 13px;
       color: var(--ink-muted);
-      border-top: 1px solid var(--border);
     }
 
-    .footer a {
-      color: var(--teal-700);
-      text-decoration: none;
+    /* ── RESPONSIVE ───────────────────────────── */
+    @media (max-width: 960px) {
+      .main-layout {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        display: none;
+      }
+      .resource-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
-    .footer a:hover { text-decoration: underline; }
+    @media (max-width: 640px) {
+      .hero { padding: 2.5rem 1.25rem 2rem; }
+      .main-layout { padding: 0 1.25rem; }
+      .content { padding: 2rem 0 4rem; }
+      pre { padding: 1rem; font-size: 12.5px; }
+      .footer-nav { flex-direction: column; }
+      .footer-nav-link { max-width: 100%; width: 100%; }
+    }
 
-    @media (max-width: 768px) {
-      .hero { padding: 3rem 1.5rem 2.5rem; }
-      .content { padding: 2rem 1.5rem 4rem; }
-      .hero h1 { font-size: 2rem; }
-      .footer-nav { flex-direction: column; gap: 1rem; }
-      .footer-nav-link { max-width: 100%; }
-      .footer-nav-link.next { text-align: left; }
+    /* ── PRINT ────────────────────────────────── */
+    @media print {
+      .top-nav, .sidebar, .progress-bar { display: none; }
+      .main-layout { display: block; }
+      .content { padding: 0; }
+      .hero { background: white; border: none; }
+      pre { background: #f1f5f9; color: var(--ink); border: 1px solid var(--border); }
     }
   </style>
 </head>
 <body>
-  <div class="progress-bar" id="progressBar"></div>
-
+  <div class="progress-bar" id="progressBar">
+  </div>
   <nav class="top-nav">
-    <div class="top-nav-inner">
-      <a class="nav-brand" href="index.html">
-        <div class="nav-brand-icon">ILA</div>
-        <span class="nav-brand-text">Iksha Learning Academy</span>
-      </a>
-      <div class="nav-chapter-nav">
-        <a class="nav-btn" href="chapter-07.html">&larr; Previous</a>
-        <span class="nav-current">08 / 10</span>
-        <a class="nav-btn" href="chapter-09.html">Next &rarr;</a>
-      </div>
-    </div>
+    <div class="top-nav-inner"><a class="nav-brand" href="index.html">
+        <div class="nav-brand-icon">ILA</div><span class="nav-brand-text">Iksha Learning Academy</span></a>
+      <div class="nav-chapter-nav"><a class="nav-btn" href="chapter-07.html">&larr; Previous</a><span class="nav-current">08 / 10</span><a class="nav-btn" href="chapter-09.html">Next &rarr;</a>
+      </div></div>
   </nav>
-
   <header class="hero">
     <div class="hero-inner">
-      <div class="hero-chapter-label">
-        <span>Chapter 08</span> 
-      </div>
-      <h1>Observability and Monitoring</h1>
-      <p class="hero-subtitle">Structured logging, distributed tracing, Prometheus metrics, Grafana dashboards</p>
+      <div class="hero-chapter-label"><span>Chapter 08</span> &middot; Phase 4: Production Operations</div>
+      <h1>Performance Optimization</h1>
+      <p class="hero-subtitle">Profiling, caching strategies, connection pooling, query optimization, and async performance tuning. Make your API fast under real-world load.</p>
       <div class="hero-meta">
-        <div class="hero-meta-item">3 Assignments</div>
-        <div class="hero-meta-item">~45 min read</div>
+        <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Estimated: 3&ndash;4 days</div>
+        <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>3 Advancement Levels</div>
+        <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>3 Assignments</div>
       </div>
     </div>
   </header>
+  <div class="main-layout">
+    <main class="content">
+      <h2 id="why-this-matters">Why This Matters</h2>
+      <p>Performance optimization is the art of making your API fast under real-world conditions. It starts with measurement (profiling), continues with the highest-impact changes (caching, query optimization), and finishes with fine-tuning (connection pools, compression).</p>
+      <p>The biggest performance gains usually come from two places: <strong>caching</strong> (avoiding work) and <strong>query optimization</strong> (doing less work). These two optimizations alone can improve API throughput by 10-100x. Everything else is marginal by comparison.</p>
+      <div class="callout concept">
+        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>Key Insight</div>
+        <p><strong>Measure first, optimize second.</strong> Profile your application to find the actual bottleneck. Developers are notoriously bad at guessing where time is spent. The bottleneck is almost never where you think it is. Always benchmark before and after to verify your optimization worked.</p>
+      </div>
+      <hr class="section-divider">
+      <h2 id="key-concepts">Key Concepts</h2>
+      <h3 id="profiling">1. Profiling Python Applications</h3>
+      <p>Before optimizing, measure. Python profiling tools identify where your application spends time and memory.</p>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre>
+<span class="hl-comment"># CPU profiling with cProfile</span>
+python <span class="hl-flag">-m</span> cProfile <span class="hl-flag">-s</span> cumulative app.py
 
-  <main class="content">
-    <h2>Overview</h2>
-    <p>This chapter covers <strong>observability and monitoring</strong> as part of the Python and FastAPI Engineering curriculum. You will build practical skills through guided explanations, code examples, and hands-on assignments.</p>
+<span class="hl-comment"># Line-level profiling</span>
+pip install line-profiler
+kernprof <span class="hl-flag">-l</span> <span class="hl-flag">-v</span> app.py
 
-    <div class="topics-preview">
-      <h3>Topics Covered</h3>
-      <ul>
-            <li>Structured logging</li>
-            <li>distributed tracing</li>
-            <li>Prometheus metrics</li>
-            <li>Grafana dashboards</li>
-      </ul>
+<span class="hl-comment"># Memory profiling</span>
+pip install memory-profiler
+python <span class="hl-flag">-m</span> memory_profiler app.py
+</pre></div>
+      <h3 id="caching">2. Caching with Redis</h3>
+      <p>Caching is the most impactful performance optimization. Redis provides sub-millisecond access to cached data, reducing database load dramatically.</p>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">python</span><button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre>
+<span class="hl-keyword">import</span> redis.asyncio <span class="hl-keyword">as</span> redis
+<span class="hl-keyword">import</span> json
+
+<span class="hl-keyword">class</span> <span class="hl-function">CacheService</span>:
+    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, redis_url: <span class="hl-function">str</span>):
+        self.redis = redis.<span class="hl-function">from_url</span>(redis_url)
+
+    <span class="hl-keyword">async def</span> <span class="hl-function">get_or_set</span>(self, key: <span class="hl-function">str</span>, factory, ttl: <span class="hl-function">int</span> = <span class="hl-number">300</span>):
+        cached = <span class="hl-keyword">await</span> self.redis.<span class="hl-function">get</span>(key)
+        <span class="hl-keyword">if</span> cached:
+            <span class="hl-keyword">return</span> json.<span class="hl-function">loads</span>(cached)
+        value = <span class="hl-keyword">await</span> <span class="hl-function">factory</span>()
+        <span class="hl-keyword">await</span> self.redis.<span class="hl-function">setex</span>(key, ttl, json.<span class="hl-function">dumps</span>(value))
+        <span class="hl-keyword">return</span> value
+</pre></div>
+      <h3 id="connection-pooling">3. Database Connection Pooling</h3>
+      <p>Creating a new database connection for every request is expensive. Connection pools maintain a set of reusable connections.</p>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">python</span><button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre>
+<span class="hl-keyword">from</span> sqlalchemy.ext.asyncio <span class="hl-keyword">import</span> create_async_engine
+
+engine = <span class="hl-function">create_async_engine</span>(
+    <span class="hl-string">"postgresql+asyncpg://user:pass@localhost/db"</span>,
+    pool_size=<span class="hl-number">20</span>,          <span class="hl-comment"># maintained connections</span>
+    max_overflow=<span class="hl-number">10</span>,       <span class="hl-comment"># extra connections under load</span>
+    pool_timeout=<span class="hl-number">30</span>,       <span class="hl-comment"># wait time for connection</span>
+    pool_recycle=<span class="hl-number">3600</span>,     <span class="hl-comment"># recycle after 1 hour</span>
+    pool_pre_ping=<span class="hl-keyword">True</span>,    <span class="hl-comment"># verify connections are alive</span>
+)
+</pre></div>
+      <h3 id="query-optimization">4. SQL Query Optimization</h3>
+      <p>Slow queries are the most common performance bottleneck. Understanding indexes, query plans, and N+1 problems is essential.</p>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">python</span><button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre>
+<span class="hl-comment"># N+1 Problem — BAD</span>
+users = <span class="hl-keyword">await</span> session.<span class="hl-function">execute</span>(<span class="hl-function">select</span>(User))
+<span class="hl-keyword">for</span> user <span class="hl-keyword">in</span> users.scalars():
+    posts = <span class="hl-keyword">await</span> session.<span class="hl-function">execute</span>(  <span class="hl-comment"># N extra queries!</span>
+        <span class="hl-function">select</span>(Post).<span class="hl-function">where</span>(Post.user_id == user.id)
+    )
+
+<span class="hl-comment"># Eager loading — GOOD</span>
+stmt = <span class="hl-function">select</span>(User).<span class="hl-function">options</span>(
+    <span class="hl-function">selectinload</span>(User.posts)  <span class="hl-comment"># 1 query for all posts</span>
+)
+users = <span class="hl-keyword">await</span> session.<span class="hl-function">execute</span>(stmt)
+</pre></div>
+      <hr class="section-divider">
+      <h2 id="watch-learn">Watch &amp; Learn</h2>
+      <p>These videos cover the core concepts in this chapter. Watch them before starting the assignments.</p>
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/0sOvCWFmrtA?rel=0&amp;modestbranding=1" title="FastAPI Performance" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy">
+        </iframe>
+      </div>
+      <div class="video-caption"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>freeCodeCamp &mdash; FastAPI Course (performance optimization tips)</div>
     </div>
-
-    <hr class="section-divider">
-
-    <div class="coming-soon-banner">
-      <h3>Content In Development</h3>
-      <p>Full chapter content with detailed explanations, code examples, video walkthroughs, and assignments is being developed. Check back soon.</p>
+    <div class="video-card">
+      <div class="video-wrapper">
+        <iframe src="https://www.youtube.com/embed/Qb9s3UiMSTA?rel=0&amp;modestbranding=1" title="Python Performance" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy">
+      </iframe>
     </div>
-
-    <div class="callout tip">
-      <div class="callout-header">What You Will Learn</div>
-      <p>By the end of this chapter, you will understand structured logging, distributed tracing, prometheus metrics, grafana dashboards and be able to apply these concepts in real-world scenarios.</p>
+    <div class="video-caption"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>ArjanCodes &mdash; Python Performance Tips (profiling and optimization)</div>
+  </div>
+  <hr class="section-divider">
+  <h2 id="further-reading">Further Reading</h2>
+  <p>Deep-dive into the official documentation and reference material for this chapter.</p>
+  <div class="resource-grid">
+    <a class="resource-card" href="https://docs.sqlalchemy.org/en/20/core/pooling.html" target="_blank" rel="noopener">
+      <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+      <div class="resource-info">
+        <div class="resource-title">SQLAlchemy Connection Pooling</div>
+        <div class="resource-desc">Database connection pool configuration and tuning.</div>
+      </div></a>
+    <a class="resource-card" href="https://redis.io/docs/" target="_blank" rel="noopener">
+      <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+      <div class="resource-info">
+        <div class="resource-title">Redis Documentation</div>
+        <div class="resource-desc">In-memory data store for caching and queuing.</div>
+      </div></a>
+    <a class="resource-card" href="https://realpython.com/python-profiling/" target="_blank" rel="noopener">
+      <div class="resource-icon article"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+      <div class="resource-info">
+        <div class="resource-title">Real Python: Profiling</div>
+        <div class="resource-desc">Guide to profiling Python applications.</div>
+      </div></a>
+    <a class="resource-card" href="https://github.com/joerick/pyinstrument" target="_blank" rel="noopener">
+      <div class="resource-icon github"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></div>
+      <div class="resource-info">
+        <div class="resource-title">pyinstrument</div>
+        <div class="resource-desc">Statistical profiler for Python with clean output.</div>
+      </div></a>
+  </div>
+  <hr class="section-divider">
+  <h2 id="assignments">Assignments</h2>
+  <p>Complete these in order. Each level builds on the previous one.</p>
+  <div class="assignment">
+    <div class="assignment-header">
+      <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Assignment 1</div><span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span>
     </div>
-
-  </main>
-
-  <nav class="footer-nav">
-        <a class="footer-nav-link prev" href="chapter-07.html">
-          <span class="footer-nav-label">&larr; Previous</span>
-          <span class="footer-nav-title">Chapter 07: Performance Optimization</span>
-        </a>
-        <a class="footer-nav-link next" href="chapter-09.html">
-          <span class="footer-nav-label">Next &rarr;</span>
-          <span class="footer-nav-title">Chapter 09: Cloud-Native Deployment</span>
-        </a>
-  </nav>
-
-  <footer class="footer">
-    ILA (Iksha Learning Academy) &middot; Python and FastAPI Engineering &middot; <a href="index.html">All Chapters</a>
-  </footer>
-
-  <script>
-    window.addEventListener('scroll', () => {
-      const h = document.documentElement;
-      const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
-      document.getElementById('progressBar').style.width = Math.min(pct, 100) + '%';
-    });
-  </script>
+    <h4>Redis Caching Layer</h4>
+    <p>Add Redis caching to your API for frequently accessed data.</p>
+    <ul class="checklist">
+      <li>
+        <div class="check-box" onclick="this.classList.toggle('checked')">
+        </div><span>Implement cache-aside pattern for database queries</span>
+      </li>
+      <li>
+        <div class="check-box" onclick="this.classList.toggle('checked')">
+        </div><span>Add cache invalidation on data mutations</span>
+      </li>
+      <li>
+        <div class="check-box" onclick="this.classList.toggle('checked')">
+        </div><span>Configure TTL based on data freshness requirements</span>
+      </li>
+      <li>
+        <div class="check-box" onclick="this.classList.toggle('checked')">
+        </div><span>Add cache hit/miss metrics</span>
+      </li>
+      <li>
+        <div class="check-box" onclick="this.classList.toggle('checked')">
+        </div><span>Benchmark response time improvement</span>
+      </li>
+    </ul>
+    <div class="callout success" style="margin-top:1rem;margin-bottom:0">
+      <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Done when</div>
+      <p>Cached endpoints respond in under 10ms. Cache is invalidated correctly on writes. Hit rate is above 80%.</p>
+    </div></div>
+  <div class="assignment">
+    <div class="assignment-header">
+      <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Assignment 2</div><span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span>
+    </div>
+    <h4>Database Query Optimization</h4>
+    <p>Identify and fix N+1 queries, missing indexes, and slow queries.</p>
+    <ul class="checklist">
+      <li>
+        <div class="check-box" onclick="this.classList.toggle('checked')">
+        </div><span>Add SQL query logging to identify N+1 problems</span>
+      </li>
+      <li>
+        <div class="check-box" onclick="this.classList.toggle('checked')">
+        </div><span>Fix all N+1 queries with eager loading</span>
+      </li>
+      <li>
+        <div class="check-box" onclick="this.classList.toggle('checked')">
+        </div><span>Add database indexes based on query patterns</span>
+      </li>
+      <li>
+        <div class="check-box" onclick="this.classList.toggle('checked')">
+        </div><span>Implement cursor-based pagination for large result sets</span>
+      </li>
+      <li>
+        <div class="check-box" onclick="this.classList.toggle('checked')">
+        </div><span>Benchmark query performance before and after</span>
+      </li>
+    </ul>
+    <div class="callout success" style="margin-top:1rem;margin-bottom:0">
+      <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Done when</div>
+      <p>No N+1 queries remain. P95 query time is under 50ms. Pagination works efficiently on million-row tables.</p>
+    </div></div>
+  <div class="assignment">
+    <div class="assignment-header">
+      <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Assignment 3</div><span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Production-Ready</span>
+    </div>
+    <h4>Full Performance Audit</h4>
+    <p>Conduct a complete performance audit and optimization pass on your API.</p>
+    <ul class="checklist">
+      <li>
+        <div class="check-box" onclick="this.classList.toggle('checked')">
+        </div><span>Profile the application with pyinstrument</span>
+      </li>
+      <li>
+        <div class="check-box" onclick="this.classList.toggle('checked')">
+        </div><span>Optimize connection pool settings for production load</span>
+      </li>
+      <li>
+        <div class="check-box" onclick="this.classList.toggle('checked')">
+        </div><span>Add response compression with gzip/brotli</span>
+      </li>
+      <li>
+        <div class="check-box" onclick="this.classList.toggle('checked')">
+        </div><span>Implement HTTP caching headers (ETag, Cache-Control)</span>
+      </li>
+      <li>
+        <div class="check-box" onclick="this.classList.toggle('checked')">
+        </div><span>Load test to determine maximum throughput</span>
+      </li>
+    </ul>
+    <div class="callout success" style="margin-top:1rem;margin-bottom:0">
+      <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Done when</div>
+      <p>The API handles 1000+ requests/second on a single instance. Response times are under 100ms at p99. Resource usage is optimized.</p>
+    </div></div>
+  <hr class="section-divider">
+  <h2 id="self-check">Self-Check</h2>
+  <p>Before moving on, honestly answer these questions. If any answer is "no", go back and review.</p>
+  <details>
+    <summary>Can you identify an N+1 query problem?</summary>
+    <div class="details-body">
+      <p>An N+1 query happens when you load a list of N items, then make one additional query per item to load related data. The fix is eager loading: <code>selectinload</code> or <code>joinedload</code> in SQLAlchemy, which loads all related data in one or two queries instead of N+1.</p>
+    </div>
+  </details>
+  <details>
+    <summary>Do you understand cache invalidation strategies?</summary>
+    <div class="details-body">
+      <p>Cache invalidation is one of the hardest problems in CS. Common strategies: TTL (time-based expiry), write-through (update cache on write), write-behind (async cache update), and event-based (invalidate on change events). Choose based on consistency requirements.</p>
+    </div>
+  </details>
+  <details>
+    <summary>Can you tune a database connection pool?</summary>
+    <div class="details-body">
+      <p>Set pool_size to match your expected concurrent queries (not total traffic). Set max_overflow for burst handling. Set pool_timeout to fail fast. Set pool_recycle below your database's connection timeout. Enable pool_pre_ping to detect stale connections.</p>
+    </div>
+  </details>
+</main>
+<aside class="sidebar">
+  <div class="sidebar-title">On this page</div>
+  <ul class="toc-list">
+    <li class="toc-item"><a href="#why-this-matters">Why This Matters</a>
+    </li>
+    <li class="toc-item"><a href="#key-concepts">Key Concepts</a>
+    </li>
+    <li class="toc-item"><a href="#profiling" style="padding-left:28px;font-size:12px">Profiling</a>
+    </li>
+    <li class="toc-item"><a href="#caching" style="padding-left:28px;font-size:12px">Caching Strategies</a>
+    </li>
+    <li class="toc-item"><a href="#connection-pooling" style="padding-left:28px;font-size:12px">Connection Pooling</a>
+    </li>
+    <li class="toc-item"><a href="#query-optimization" style="padding-left:28px;font-size:12px">Query Optimization</a>
+    </li>
+    <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a>
+    </li>
+    <li class="toc-item"><a href="#further-reading">Further Reading</a>
+    </li>
+    <li class="toc-item"><a href="#assignments">Assignments</a>
+    </li>
+    <li class="toc-item"><a href="#self-check">Self-Check</a>
+    </li>
+  </ul>
+</aside>
+</div>
+<footer class="chapter-footer">
+  <div class="chapter-footer-inner">
+    <nav class="footer-nav">
+      <a class="footer-nav-link" href="chapter-07.html"><span class="footer-nav-label">&larr; Previous Chapter</span><span class="footer-nav-title">07: Observability and Monitoring</span></a>
+      <a class="footer-nav-link" href="chapter-09.html"><span class="footer-nav-label">Next Chapter &rarr;</span><span class="footer-nav-title">09: Container Orchestration</span></a>
+    </nav>
+    <div class="footer-brand">ILA (Iksha Learning Academy) &middot; Python + FastAPI Engineering Certification &middot; Advanced Track</div>
+  </div>
+</footer>
+<script>
+  window.addEventListener('scroll',()=>{const s=window.scrollY;const d=document.documentElement.scrollHeight-window.innerHeight;document.getElementById('progressBar').style.width=(d>0?(s/d)*100:0)+'%'});
+  const tocLinks=document.querySelectorAll('.toc-item a');const sections=[];tocLinks.forEach(link=>{const id=link.getAttribute('href').slice(1);const el=document.getElementById(id);if(el)sections.push({id,el,link})});
+  const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{const item=sections.find(s=>s.el===entry.target);if(item&&entry.isIntersecting){tocLinks.forEach(l=>l.classList.remove('active'));item.link.classList.add('active')}})},{rootMargin:'-80px 0px -60% 0px',threshold:0});
+  sections.forEach(s=>observer.observe(s.el));
+  function copyCode(btn){const pre=btn.closest('.code-block').querySelector('pre');navigator.clipboard.writeText(pre.textContent).then(()=>{btn.classList.add('copied');btn.textContent='Copied!';setTimeout(()=>{btn.classList.remove('copied');btn.textContent='Copy'},2000)})}
+</script>
 </body>
 </html>

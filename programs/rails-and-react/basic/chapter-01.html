@@ -8,7 +8,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
+    /* ═══════════════════════════════════════════════
+       ILA DESIGN SYSTEM — v1.0
+       Iksha Learning Academy
+       ═══════════════════════════════════════════════ */
+
     :root {
+      /* Palette */
       --ink:        #0f172a;
       --ink-light:  #334155;
       --ink-muted:  #64748b;
@@ -17,6 +23,8 @@
       --surface-warm:#fffbeb;
       --border:     #e2e8f0;
       --border-light:#f1f5f9;
+
+      /* Brand */
       --teal-50:  #f0fdfa;
       --teal-100: #ccfbf1;
       --teal-200: #99f6e4;
@@ -25,36 +33,48 @@
       --teal-700: #0f766e;
       --teal-800: #115e59;
       --teal-900: #134e4a;
+
       --blue-50:  #eff6ff;
       --blue-100: #dbeafe;
       --blue-500: #3b82f6;
       --blue-600: #2563eb;
       --blue-700: #1d4ed8;
+
       --amber-50:  #fffbeb;
       --amber-100: #fef3c7;
       --amber-500: #f59e0b;
       --amber-600: #d97706;
+
       --red-50:   #fef2f2;
       --red-100:  #fee2e2;
       --red-500:  #ef4444;
       --red-600:  #dc2626;
+
       --purple-50:  #faf5ff;
       --purple-100: #f3e8ff;
       --purple-500: #a855f7;
       --purple-600: #9333ea;
-      --green-50:  #f0fdf4;
-      --green-100: #dcfce7;
-      --green-500: #22c55e;
-      --green-600: #16a34a;
+
+      /* Typography */
       --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       --font-serif: 'Instrument Serif', Georgia, serif;
       --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
+
+      /* Spacing */
       --content-max: 780px;
+      --sidebar-width: 280px;
+
+      /* Transitions */
       --ease: cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
 
     body {
       font-family: var(--font-sans);
@@ -64,6 +84,7 @@
       background: var(--surface);
     }
 
+    /* ── PROGRESS BAR ─────────────────────────── */
     .progress-bar {
       position: fixed;
       top: 0;
@@ -75,6 +96,7 @@
       transition: width 0.15s var(--ease);
     }
 
+    /* ── TOP NAV ──────────────────────────────── */
     .top-nav {
       position: sticky;
       top: 0;
@@ -162,6 +184,7 @@
       padding: 0 4px;
     }
 
+    /* ── HERO ─────────────────────────────────── */
     .hero {
       background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%);
       border-bottom: 1px solid var(--border);
@@ -222,33 +245,117 @@
       color: var(--ink-muted);
     }
 
-    .content {
-      max-width: var(--content-max);
-      margin: 0 auto;
-      padding: 3rem 2rem 6rem;
+    .hero-meta-item svg {
+      width: 16px;
+      height: 16px;
+      color: var(--teal-600);
     }
 
+    /* ── MAIN LAYOUT ──────────────────────────── */
+    .main-layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr var(--sidebar-width);
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .content {
+      padding: 3rem 0 6rem;
+      min-width: 0;
+    }
+
+    /* ── SIDEBAR TOC ──────────────────────────── */
+    .sidebar {
+      position: sticky;
+      top: 76px;
+      padding: 2rem 0;
+      max-height: calc(100vh - 76px);
+      overflow-y: auto;
+    }
+
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-muted);
+      margin-bottom: 1rem;
+      padding-left: 14px;
+    }
+
+    .toc-list {
+      list-style: none;
+    }
+
+    .toc-item a {
+      display: block;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--ink-muted);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: all 0.2s var(--ease);
+      line-height: 1.5;
+    }
+
+    .toc-item a:hover {
+      color: var(--ink);
+      background: var(--surface-alt);
+    }
+
+    .toc-item a.active {
+      color: var(--teal-700);
+      border-left-color: var(--teal-500);
+      background: var(--teal-50);
+      font-weight: 500;
+    }
+
+    /* ── TYPOGRAPHY ────────────────────────────── */
     .content h2 {
       font-family: var(--font-serif);
       font-size: 1.85rem;
       font-weight: 400;
       color: var(--ink);
       margin: 3rem 0 1rem;
+      padding-top: 1rem;
       scroll-margin-top: 80px;
     }
 
-    .content h2:first-child { margin-top: 0; }
+    .content h2:first-child {
+      margin-top: 0;
+    }
 
     .content h3 {
       font-size: 1.15rem;
       font-weight: 600;
       color: var(--ink);
       margin: 2rem 0 0.75rem;
+      scroll-margin-top: 80px;
     }
 
     .content p {
       margin-bottom: 1.25rem;
       color: var(--ink-light);
+    }
+
+    .content strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .content a {
+      color: var(--teal-700);
+      text-decoration: underline;
+      text-decoration-color: var(--teal-200);
+      text-underline-offset: 3px;
+      transition: text-decoration-color 0.2s;
+    }
+
+    .content a:hover {
+      text-decoration-color: var(--teal-600);
     }
 
     .content ul, .content ol {
@@ -261,13 +368,25 @@
       color: var(--ink-light);
     }
 
-    .content li::marker { color: var(--teal-500); }
+    .content li::marker {
+      color: var(--teal-500);
+    }
 
+    /* ── SECTION DIVIDER ──────────────────────── */
+    .section-divider {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 3rem 0;
+    }
+
+    /* ── CALLOUT BOXES ────────────────────────── */
     .callout {
       padding: 1.25rem 1.5rem;
       border-radius: 12px;
       margin-bottom: 1.5rem;
       border: 1px solid;
+      position: relative;
     }
 
     .callout-header {
@@ -277,6 +396,12 @@
       font-size: 14px;
       font-weight: 600;
       margin-bottom: 0.5rem;
+    }
+
+    .callout-header svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
     }
 
     .callout p:last-child { margin-bottom: 0; }
@@ -293,6 +418,12 @@
     }
     .callout.important .callout-header { color: var(--amber-600); }
 
+    .callout.danger {
+      background: var(--red-50);
+      border-color: var(--red-100);
+    }
+    .callout.danger .callout-header { color: var(--red-600); }
+
     .callout.tip {
       background: var(--purple-50);
       border-color: var(--purple-100);
@@ -305,93 +436,403 @@
     }
     .callout.success .callout-header { color: var(--teal-700); }
 
-    .section-divider {
-      border: none;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--border), transparent);
-      margin: 3rem 0;
-    }
-
-    .coming-soon-banner {
-      background: var(--amber-50);
-      border: 1px solid var(--amber-100);
+    /* ── CODE BLOCKS ──────────────────────────── */
+    .code-block {
+      position: relative;
+      margin-bottom: 1.5rem;
       border-radius: 12px;
-      padding: 2.5rem;
-      text-align: center;
-      margin: 2rem 0;
+      overflow: hidden;
+      border: 1px solid var(--border);
     }
 
-    .coming-soon-banner h3 {
-      color: var(--amber-600);
-      margin-bottom: 0.5rem;
-    }
-
-    .coming-soon-banner p {
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+      background: var(--surface-alt);
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
       color: var(--ink-muted);
-      margin-bottom: 0;
     }
 
-    .topics-preview {
+    .code-lang {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .code-copy {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: white;
+      font-size: 11px;
+      font-family: var(--font-sans);
+      color: var(--ink-muted);
+      cursor: pointer;
+      transition: all 0.2s var(--ease);
+    }
+
+    .code-copy:hover {
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    .code-copy.copied {
+      background: var(--teal-50);
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    pre {
+      margin: 0;
+      padding: 1.25rem 1.5rem;
+      overflow-x: auto;
+      background: #1e293b;
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: #e2e8f0;
+    }
+
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.88em;
+    }
+
+    p code, li code {
+      padding: 2px 7px;
       background: var(--surface-alt);
       border: 1px solid var(--border);
+      border-radius: 5px;
+      color: var(--teal-800);
+      font-size: 0.85em;
+    }
+
+    /* Syntax highlights */
+    .hl-keyword  { color: #c084fc; }
+    .hl-string   { color: #86efac; }
+    .hl-comment  { color: #64748b; font-style: italic; }
+    .hl-function { color: #7dd3fc; }
+    .hl-number   { color: #fbbf24; }
+    .hl-flag     { color: #f472b6; }
+
+    /* ── COLLAPSIBLE (DETAILS) ────────────────── */
+    details {
+      margin-bottom: 1.25rem;
+      border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 1.5rem 2rem;
-      margin: 1.5rem 0;
+      overflow: hidden;
+      transition: border-color 0.2s var(--ease);
     }
 
-    .topics-preview h3 {
-      font-size: 0.95rem;
-      margin-bottom: 0.75rem;
+    details[open] {
+      border-color: var(--teal-200);
+    }
+
+    details summary {
+      padding: 1rem 1.25rem;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      background: var(--surface-alt);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.2s var(--ease);
+      user-select: none;
+    }
+
+    details summary::-webkit-details-marker { display: none; }
+
+    details summary::before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+      flex-shrink: 0;
+      transition: transform 0.2s var(--ease);
+    }
+
+    details[open] summary::before {
+      transform: rotate(90deg);
+    }
+
+    details summary:hover {
+      background: var(--teal-50);
+    }
+
+    .details-body {
+      padding: 1.25rem 1.5rem;
+    }
+
+    .details-body p:last-child { margin-bottom: 0; }
+
+    /* ── VIDEO EMBED ──────────────────────────── */
+    .video-card {
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      background: #0f172a;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .video-caption {
+      padding: 12px 16px;
+      background: var(--surface-alt);
+      font-size: 13px;
+      color: var(--ink-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .video-caption svg {
+      width: 14px;
+      height: 14px;
+      color: var(--red-500);
+    }
+
+    /* ── RESOURCE CARDS ───────────────────────── */
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .resource-card {
+      display: flex;
+      gap: 14px;
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      background: white;
+    }
+
+    .resource-card:hover {
+      border-color: var(--teal-300);
+      background: var(--teal-50);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .resource-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 18px;
+    }
+
+    .resource-icon.docs    { background: var(--blue-50);   color: var(--blue-600); }
+    .resource-icon.video   { background: var(--red-50);    color: var(--red-500); }
+    .resource-icon.github  { background: var(--ink);       color: white; }
+    .resource-icon.article { background: var(--amber-50);  color: var(--amber-600); }
+    .resource-icon.pdf     { background: var(--purple-50); color: var(--purple-600); }
+
+    .resource-info {
+      min-width: 0;
+    }
+
+    .resource-title {
+      font-size: 14px;
+      font-weight: 600;
       color: var(--ink);
+      margin-bottom: 2px;
+      line-height: 1.4;
     }
 
-    .topics-preview ul {
+    .resource-desc {
+      font-size: 12px;
+      color: var(--ink-muted);
+      line-height: 1.5;
+    }
+
+    /* ── ASSIGNMENT CARDS ─────────────────────── */
+    .assignment {
+      border: 2px solid var(--teal-200);
+      border-radius: 14px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--teal-50) 0%, white 100%);
+    }
+
+    .assignment-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .assignment-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--teal-700);
+    }
+
+    .assignment-difficulty {
+      display: inline-flex;
+      padding: 4px 10px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .difficulty-l1 { background: var(--teal-100); color: var(--teal-800); }
+    .difficulty-l2 { background: var(--amber-100); color: var(--amber-600); }
+    .difficulty-l3 { background: var(--red-100); color: var(--red-600); }
+
+    .assignment h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .assignment p {
+      font-size: 14px;
+    }
+
+    .checklist {
       list-style: none;
       padding: 0;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 0.5rem;
     }
 
-    .topics-preview li {
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-light);
       font-size: 14px;
-      color: var(--ink-light);
-      padding-left: 1.25rem;
-      position: relative;
     }
 
-    .topics-preview li::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 8px;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
+    .checklist li:last-child { border-bottom: none; }
+
+    .check-box {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      border: 2px solid var(--border);
+      flex-shrink: 0;
+      margin-top: 1px;
+      cursor: pointer;
+      transition: all 0.15s var(--ease);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .check-box:hover {
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked {
       background: var(--teal-500);
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+    }
+
+    /* ── ARCHITECTURE DIAGRAM ─────────────────── */
+    .diagram {
+      margin: 1.5rem 0;
+      padding: 2rem;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow-x: auto;
+    }
+
+    .diagram pre {
+      background: transparent;
+      color: var(--ink);
+      padding: 0;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .diagram-caption {
+      margin-top: 1rem;
+      font-size: 12px;
+      color: var(--ink-muted);
+      text-align: center;
+      font-style: italic;
+    }
+
+    /* ── FOOTER ───────────────────────────────── */
+    .chapter-footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      background: var(--surface-alt);
+    }
+
+    .chapter-footer-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
     }
 
     .footer-nav {
-      max-width: var(--content-max);
-      margin: 0 auto;
-      padding: 2rem;
       display: flex;
       justify-content: space-between;
-      border-top: 1px solid var(--border);
+      align-items: center;
+      gap: 1rem;
     }
 
     .footer-nav-link {
       display: flex;
       flex-direction: column;
-      text-decoration: none;
-      padding: 1rem;
+      gap: 4px;
+      padding: 1rem 1.5rem;
+      border: 1px solid var(--border);
       border-radius: 12px;
-      transition: background 0.2s var(--ease);
-      max-width: 45%;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      max-width: 320px;
+      background: white;
     }
 
     .footer-nav-link:hover {
-      background: var(--surface-alt);
+      border-color: var(--teal-300);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
     }
 
     .footer-nav-label {
@@ -399,46 +840,61 @@
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.06em;
-      color: var(--ink-muted);
-      margin-bottom: 4px;
+      color: var(--teal-600);
     }
 
     .footer-nav-title {
       font-size: 15px;
       font-weight: 600;
-      color: var(--teal-700);
+      color: var(--ink);
     }
 
-    .footer-nav-link.next { text-align: right; margin-left: auto; }
-
-    .footer {
+    .footer-brand {
       text-align: center;
-      padding: 2rem;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
       font-size: 13px;
       color: var(--ink-muted);
-      border-top: 1px solid var(--border);
     }
 
-    .footer a {
-      color: var(--teal-700);
-      text-decoration: none;
+    /* ── RESPONSIVE ───────────────────────────── */
+    @media (max-width: 960px) {
+      .main-layout {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        display: none;
+      }
+      .resource-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
-    .footer a:hover { text-decoration: underline; }
+    @media (max-width: 640px) {
+      .hero { padding: 2.5rem 1.25rem 2rem; }
+      .main-layout { padding: 0 1.25rem; }
+      .content { padding: 2rem 0 4rem; }
+      pre { padding: 1rem; font-size: 12.5px; }
+      .footer-nav { flex-direction: column; }
+      .footer-nav-link { max-width: 100%; width: 100%; }
+    }
 
-    @media (max-width: 768px) {
-      .hero { padding: 3rem 1.5rem 2.5rem; }
-      .content { padding: 2rem 1.5rem 4rem; }
-      .hero h1 { font-size: 2rem; }
-      .footer-nav { flex-direction: column; gap: 1rem; }
-      .footer-nav-link { max-width: 100%; }
-      .footer-nav-link.next { text-align: left; }
+    /* ── PRINT ────────────────────────────────── */
+    @media print {
+      .top-nav, .sidebar, .progress-bar { display: none; }
+      .main-layout { display: block; }
+      .content { padding: 0; }
+      .hero { background: white; border: none; }
+      pre { background: #f1f5f9; color: var(--ink); border: 1px solid var(--border); }
     }
   </style>
 </head>
 <body>
+  <!-- Progress Bar -->
   <div class="progress-bar" id="progressBar"></div>
 
+  <!-- Top Navigation -->
   <nav class="top-nav">
     <div class="top-nav-inner">
       <a class="nav-brand" href="index.html">
@@ -453,68 +909,1010 @@
     </div>
   </nav>
 
+  <!-- Hero -->
   <header class="hero">
     <div class="hero-inner">
       <div class="hero-chapter-label">
-        <span>Chapter 01</span> 
+        <span>Chapter 01</span> &middot; Phase 1: Ruby &amp; Rails Fundamentals
       </div>
       <h1>Ruby Language Essentials</h1>
-      <p class="hero-subtitle">Ruby syntax, OOP, blocks, modules, Bundler, RSpec basics</p>
+      <p class="hero-subtitle">
+        Master the Ruby programming language from the ground up &mdash; syntax, object-oriented design,
+        blocks, modules, dependency management with Bundler, and testing fundamentals with RSpec.
+        Ruby is the foundation everything else in this course builds upon.
+      </p>
       <div class="hero-meta">
-        <div class="hero-meta-item">3 Assignments</div>
-        <div class="hero-meta-item">~45 min read</div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Estimated: 3&ndash;4 days
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          3 Advancement Levels
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          3 Assignments
+        </div>
       </div>
     </div>
   </header>
 
-  <main class="content">
-    <h2>Overview</h2>
-    <p>This chapter covers <strong>ruby language essentials</strong> as part of the Rails + React Foundations curriculum. You will build practical skills through guided explanations, code examples, and hands-on assignments.</p>
+  <!-- Main Content + Sidebar -->
+  <div class="main-layout">
+    <main class="content">
 
-    <div class="topics-preview">
-      <h3>Topics Covered</h3>
-      <ul>
-            <li>Ruby syntax</li>
-            <li>OOP</li>
-            <li>blocks</li>
-            <li>modules</li>
-            <li>Bundler</li>
-            <li>RSpec basics</li>
-      </ul>
-    </div>
+      <!-- ════════════════════════════════════════
+           SECTION 1: WHY THIS MATTERS
+           ════════════════════════════════════════ -->
+      <h2 id="why-this-matters">Why This Matters</h2>
 
-    <hr class="section-divider">
+      <p>
+        Ruby is not just the language that powers Rails &mdash; it is a language designed for
+        <strong>developer happiness</strong>. Created by Yukihiro "Matz" Matsumoto in 1995, Ruby was
+        built on the philosophy that programming should be productive and enjoyable. Every design
+        decision in Ruby optimizes for human readability over machine convenience.
+      </p>
 
-    <div class="coming-soon-banner">
-      <h3>Content In Development</h3>
-      <p>Full chapter content with detailed explanations, code examples, video walkthroughs, and assignments is being developed. Check back soon.</p>
-    </div>
+      <p>
+        Before you touch a single Rails controller or React component, you need to think in Ruby.
+        That means understanding how Ruby handles objects (everything is one), how blocks give you
+        functional programming powers within an OOP language, and how modules let you compose
+        behavior without deep inheritance hierarchies.
+      </p>
 
-    <div class="callout tip">
-      <div class="callout-header">What You Will Learn</div>
-      <p>By the end of this chapter, you will understand ruby syntax, oop, blocks, modules, bundler, rspec basics and be able to apply these concepts in real-world scenarios.</p>
-    </div>
+      <p>
+        In production Rails applications, the code you write daily &mdash; model validations, service
+        objects, background jobs, API serializers &mdash; is pure Ruby. If your Ruby fundamentals are
+        shaky, you will fight Rails instead of leveraging it. This chapter builds the foundation that
+        makes every subsequent chapter faster.
+      </p>
 
-  </main>
+      <div class="callout concept">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Key Insight
+        </div>
+        <p>
+          Ruby's principle of least surprise means that if you guess how something works based on its
+          name, you are usually right. <code>"hello".reverse</code> reverses the string.
+          <code>[3, 1, 2].sort</code> sorts the array. This is by design, and it is why Ruby
+          developers are often more productive than they expect.
+        </p>
+      </div>
 
-  <nav class="footer-nav">
+      <hr class="section-divider">
 
-        <a class="footer-nav-link next" href="chapter-02.html">
-          <span class="footer-nav-label">Next &rarr;</span>
-          <span class="footer-nav-title">Chapter 02: Rails MVC Architecture</span>
+      <!-- ════════════════════════════════════════
+           SECTION 2: KEY CONCEPTS
+           ════════════════════════════════════════ -->
+      <h2 id="key-concepts">Key Concepts</h2>
+
+      <h3 id="ruby-syntax">1. Ruby Syntax and Data Types</h3>
+
+      <p>
+        Ruby is dynamically typed, meaning you do not declare variable types. Instead, Ruby infers
+        types at runtime. Variables are simply labels pointing to objects. Ruby has several core data
+        types you will use constantly: strings, integers, floats, arrays, hashes, symbols, and booleans.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># Variables and basic types</span>
+name = <span class="hl-string">"Ruby"</span>              <span class="hl-comment"># String</span>
+version = <span class="hl-number">3.3</span>              <span class="hl-comment"># Float</span>
+year = <span class="hl-number">1995</span>                 <span class="hl-comment"># Integer</span>
+is_awesome = <span class="hl-keyword">true</span>          <span class="hl-comment"># Boolean</span>
+language = <span class="hl-string">:ruby</span>            <span class="hl-comment"># Symbol (immutable, memory-efficient identifier)</span>
+
+<span class="hl-comment"># Arrays — ordered collections</span>
+frameworks = [<span class="hl-string">"Rails"</span>, <span class="hl-string">"Sinatra"</span>, <span class="hl-string">"Hanami"</span>]
+frameworks.first          <span class="hl-comment"># => "Rails"</span>
+frameworks.length         <span class="hl-comment"># => 3</span>
+frameworks &lt;&lt; <span class="hl-string">"Roda"</span>      <span class="hl-comment"># push to end</span>
+
+<span class="hl-comment"># Hashes — key-value pairs (Ruby's dictionary)</span>
+config = {
+  <span class="hl-string">host:</span> <span class="hl-string">"localhost"</span>,
+  <span class="hl-string">port:</span> <span class="hl-number">3000</span>,
+  <span class="hl-string">debug:</span> <span class="hl-keyword">true</span>
+}
+config[<span class="hl-string">:host</span>]              <span class="hl-comment"># => "localhost"</span>
+
+<span class="hl-comment"># String interpolation (only works with double quotes)</span>
+greeting = <span class="hl-string">"Hello, #{name} #{version}!"</span>
+<span class="hl-comment"># => "Hello, Ruby 3.3!"</span>
+
+<span class="hl-comment"># Conditional expressions</span>
+status = <span class="hl-keyword">if</span> version >= <span class="hl-number">3.0</span>
+           <span class="hl-string">"modern"</span>
+         <span class="hl-keyword">else</span>
+           <span class="hl-string">"legacy"</span>
+         <span class="hl-keyword">end</span>
+
+<span class="hl-comment"># Guard clauses (idiomatic Ruby)</span>
+<span class="hl-keyword">def</span> <span class="hl-function">process</span>(data)
+  <span class="hl-keyword">return</span> <span class="hl-keyword">nil</span> <span class="hl-keyword">if</span> data.empty?
+  <span class="hl-comment"># ... do work</span>
+<span class="hl-keyword">end</span>
+</pre>
+      </div>
+
+      <div class="callout important">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Symbols vs Strings
+        </div>
+        <p>
+          Symbols (<code>:name</code>) and strings (<code>"name"</code>) look similar but behave differently.
+          Symbols are immutable and only stored once in memory &mdash; the same symbol <code>:name</code> used
+          in 100 places is the same object. Strings are mutable and each one is a separate object. Use symbols
+          for hash keys, method names, and identifiers. Use strings for text that changes.
+        </p>
+      </div>
+
+      <h3 id="oop-in-ruby">2. Object-Oriented Programming in Ruby</h3>
+
+      <p>
+        In Ruby, <strong>everything is an object</strong>. The number <code>42</code> is an object. The string
+        <code>"hello"</code> is an object. Even <code>nil</code> and <code>true</code> are objects. This means
+        every value in Ruby has methods you can call on it. Ruby's OOP model uses classes for blueprints
+        and instances for the actual objects.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-keyword">class</span> <span class="hl-function">User</span>
+  <span class="hl-comment"># attr_accessor creates getter and setter methods</span>
+  <span class="hl-keyword">attr_accessor</span> <span class="hl-string">:name</span>, <span class="hl-string">:email</span>
+  <span class="hl-keyword">attr_reader</span>   <span class="hl-string">:created_at</span>    <span class="hl-comment"># read-only</span>
+
+  <span class="hl-comment"># Class-level constant</span>
+  MAX_NAME_LENGTH = <span class="hl-number">100</span>
+
+  <span class="hl-comment"># Constructor — called when User.new is invoked</span>
+  <span class="hl-keyword">def</span> <span class="hl-function">initialize</span>(name, email)
+    <span class="hl-keyword">@name</span> = name
+    <span class="hl-keyword">@email</span> = email
+    <span class="hl-keyword">@created_at</span> = Time.now
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-comment"># Instance method</span>
+  <span class="hl-keyword">def</span> <span class="hl-function">display_name</span>
+    <span class="hl-string">"#{name} &lt;#{email}&gt;"</span>
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-comment"># Method with a predicate (?) convention — returns boolean</span>
+  <span class="hl-keyword">def</span> <span class="hl-function">valid?</span>
+    name && !name.empty? && email&.include?(<span class="hl-string">"@"</span>)
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-comment"># Class method (called on the class itself, not an instance)</span>
+  <span class="hl-keyword">def</span> <span class="hl-keyword">self</span>.<span class="hl-function">from_hash</span>(attrs)
+    new(attrs[<span class="hl-string">:name</span>], attrs[<span class="hl-string">:email</span>])
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-comment"># Private methods — only callable from inside the class</span>
+  <span class="hl-keyword">private</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">normalize_email</span>
+    <span class="hl-keyword">@email</span> = email.downcase.strip
+  <span class="hl-keyword">end</span>
+<span class="hl-keyword">end</span>
+
+<span class="hl-comment"># Inheritance</span>
+<span class="hl-keyword">class</span> <span class="hl-function">Admin</span> &lt; User
+  <span class="hl-keyword">attr_reader</span> <span class="hl-string">:role</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">initialize</span>(name, email, role = <span class="hl-string">"admin"</span>)
+    <span class="hl-keyword">super</span>(name, email)  <span class="hl-comment"># calls User#initialize</span>
+    <span class="hl-keyword">@role</span> = role
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">display_name</span>
+    <span class="hl-string">"[#{role.upcase}] #{super}"</span>  <span class="hl-comment"># calls User#display_name</span>
+  <span class="hl-keyword">end</span>
+<span class="hl-keyword">end</span>
+
+<span class="hl-comment"># Usage</span>
+user = User.new(<span class="hl-string">"Alice"</span>, <span class="hl-string">"alice@example.com"</span>)
+user.display_name   <span class="hl-comment"># => "Alice &lt;alice@example.com&gt;"</span>
+user.valid?         <span class="hl-comment"># => true</span>
+
+admin = Admin.new(<span class="hl-string">"Bob"</span>, <span class="hl-string">"bob@example.com"</span>)
+admin.display_name  <span class="hl-comment"># => "[ADMIN] Bob &lt;bob@example.com&gt;"</span>
+</pre>
+      </div>
+
+      <h3 id="blocks-and-iterators">3. Blocks, Procs, and Iterators</h3>
+
+      <p>
+        Blocks are one of Ruby's most powerful features. A block is a chunk of code you pass to a method,
+        which the method can then execute using <code>yield</code>. This pattern enables Ruby's expressive
+        iterators like <code>each</code>, <code>map</code>, <code>select</code>, and <code>reduce</code>
+        &mdash; all of which you will use daily in Rails.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># Blocks with do..end (multi-line) or curly braces (single-line)</span>
+[<span class="hl-number">1</span>, <span class="hl-number">2</span>, <span class="hl-number">3</span>].each <span class="hl-keyword">do</span> |num|
+  puts num * <span class="hl-number">2</span>
+<span class="hl-keyword">end</span>
+
+[<span class="hl-number">1</span>, <span class="hl-number">2</span>, <span class="hl-number">3</span>].map { |n| n * <span class="hl-number">2</span> }  <span class="hl-comment"># => [2, 4, 6]</span>
+
+<span class="hl-comment"># Common iterators you will use constantly in Rails</span>
+numbers = [<span class="hl-number">1</span>, <span class="hl-number">2</span>, <span class="hl-number">3</span>, <span class="hl-number">4</span>, <span class="hl-number">5</span>, <span class="hl-number">6</span>, <span class="hl-number">7</span>, <span class="hl-number">8</span>, <span class="hl-number">9</span>, <span class="hl-number">10</span>]
+
+<span class="hl-comment"># select — filter elements matching a condition</span>
+evens = numbers.select { |n| n.even? }    <span class="hl-comment"># => [2, 4, 6, 8, 10]</span>
+
+<span class="hl-comment"># reject — inverse of select</span>
+odds = numbers.reject { |n| n.even? }     <span class="hl-comment"># => [1, 3, 5, 7, 9]</span>
+
+<span class="hl-comment"># map — transform every element</span>
+doubled = numbers.map { |n| n * <span class="hl-number">2</span> }       <span class="hl-comment"># => [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]</span>
+
+<span class="hl-comment"># reduce — accumulate into a single value</span>
+sum = numbers.reduce(<span class="hl-number">0</span>) { |acc, n| acc + n } <span class="hl-comment"># => 55</span>
+
+<span class="hl-comment"># Chaining iterators (very common in Rails)</span>
+numbers
+  .select { |n| n > <span class="hl-number">3</span> }
+  .map { |n| n ** <span class="hl-number">2</span> }
+  .reduce(<span class="hl-number">0</span>, <span class="hl-string">:+</span>)        <span class="hl-comment"># => 16 + 25 + 36 + 49 + 64 + 81 + 100 = 371</span>
+
+<span class="hl-comment"># Writing a method that accepts a block</span>
+<span class="hl-keyword">def</span> <span class="hl-function">with_logging</span>(label)
+  puts <span class="hl-string">"[START] #{label}"</span>
+  result = <span class="hl-keyword">yield</span>    <span class="hl-comment"># execute the block</span>
+  puts <span class="hl-string">"[END]   #{label} — returned: #{result}"</span>
+  result
+<span class="hl-keyword">end</span>
+
+with_logging(<span class="hl-string">"user_creation"</span>) <span class="hl-keyword">do</span>
+  User.new(<span class="hl-string">"Alice"</span>, <span class="hl-string">"alice@example.com"</span>)
+<span class="hl-keyword">end</span>
+
+<span class="hl-comment"># Procs and Lambdas — blocks stored as objects</span>
+square = ->(x) { x ** <span class="hl-number">2</span> }
+square.call(<span class="hl-number">5</span>)    <span class="hl-comment"># => 25</span>
+
+doubler = <span class="hl-keyword">Proc</span>.new { |x| x * <span class="hl-number">2</span> }
+[<span class="hl-number">1</span>, <span class="hl-number">2</span>, <span class="hl-number">3</span>].map(&amp;doubler)  <span class="hl-comment"># => [2, 4, 6]</span>
+</pre>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Pro Tip
+        </div>
+        <p>
+          The <code>&amp;</code> operator converts a symbol to a block. So <code>["a", "b"].map(&amp;:upcase)</code>
+          is shorthand for <code>["a", "b"].map { |s| s.upcase }</code>. You will see this pattern everywhere
+          in Rails codebases.
+        </p>
+      </div>
+
+      <h3 id="modules-and-mixins">4. Modules and Mixins</h3>
+
+      <p>
+        Ruby supports single inheritance only &mdash; a class can have one parent. But real-world code
+        often needs to share behavior across unrelated classes. Modules solve this through <strong>mixins</strong>.
+        You define behavior in a module and <code>include</code> it into any class that needs it. This is
+        how Rails adds functionality like validations and callbacks to your models.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># Module as a mixin — shared behavior</span>
+<span class="hl-keyword">module</span> <span class="hl-function">Sluggable</span>
+  <span class="hl-keyword">def</span> <span class="hl-function">slug</span>
+    name.downcase.gsub(<span class="hl-string">/[^a-z0-9]+/</span>, <span class="hl-string">"-"</span>).gsub(<span class="hl-string">/^-|-$/</span>, <span class="hl-string">""</span>)
+  <span class="hl-keyword">end</span>
+<span class="hl-keyword">end</span>
+
+<span class="hl-keyword">module</span> <span class="hl-function">Timestampable</span>
+  <span class="hl-keyword">def</span> <span class="hl-function">created_ago</span>
+    seconds = Time.now - created_at
+    <span class="hl-keyword">case</span> seconds
+    <span class="hl-keyword">when</span> <span class="hl-number">0</span>..<span class="hl-number">60</span>    <span class="hl-keyword">then</span> <span class="hl-string">"just now"</span>
+    <span class="hl-keyword">when</span> <span class="hl-number">60</span>..<span class="hl-number">3600</span>  <span class="hl-keyword">then</span> <span class="hl-string">"#{(seconds / 60).to_i} minutes ago"</span>
+    <span class="hl-keyword">when</span> <span class="hl-number">3600</span>..<span class="hl-number">86400</span> <span class="hl-keyword">then</span> <span class="hl-string">"#{(seconds / 3600).to_i} hours ago"</span>
+    <span class="hl-keyword">else</span> <span class="hl-string">"#{(seconds / 86400).to_i} days ago"</span>
+    <span class="hl-keyword">end</span>
+  <span class="hl-keyword">end</span>
+<span class="hl-keyword">end</span>
+
+<span class="hl-comment"># Module as a namespace — grouping related classes</span>
+<span class="hl-keyword">module</span> <span class="hl-function">Billing</span>
+  <span class="hl-keyword">class</span> <span class="hl-function">Invoice</span>
+    <span class="hl-keyword">include</span> Sluggable
+    <span class="hl-keyword">include</span> Timestampable
+
+    <span class="hl-keyword">attr_reader</span> <span class="hl-string">:name</span>, <span class="hl-string">:amount</span>, <span class="hl-string">:created_at</span>
+
+    <span class="hl-keyword">def</span> <span class="hl-function">initialize</span>(name, amount)
+      <span class="hl-keyword">@name</span> = name
+      <span class="hl-keyword">@amount</span> = amount
+      <span class="hl-keyword">@created_at</span> = Time.now
+    <span class="hl-keyword">end</span>
+  <span class="hl-keyword">end</span>
+<span class="hl-keyword">end</span>
+
+invoice = Billing::Invoice.new(<span class="hl-string">"Q1 Services"</span>, <span class="hl-number">5000</span>)
+invoice.slug          <span class="hl-comment"># => "q1-services"</span>
+invoice.created_ago   <span class="hl-comment"># => "just now"</span>
+</pre>
+      </div>
+
+      <div class="diagram">
+<pre>
+  Module Lookup Order (Method Resolution)
+  ═══════════════════════════════════════
+
+  Billing::Invoice.ancestors
+  ─────────────────────────────────────
+
+  1. Billing::Invoice     (the class itself)
+  2. Timestampable        (last included = first checked)
+  3. Sluggable            (first included = second checked)
+  4. Object               (base class)
+  5. Kernel               (core methods like puts, require)
+  6. BasicObject          (root of all objects)
+</pre>
+        <div class="diagram-caption">Figure 1: Ruby method resolution order — last included module is checked first</div>
+      </div>
+
+      <h3 id="bundler">5. Bundler and Dependency Management</h3>
+
+      <p>
+        Bundler is Ruby's package manager. It reads a <code>Gemfile</code> to know which gems (libraries)
+        your project needs, resolves version conflicts, and locks exact versions in <code>Gemfile.lock</code>.
+        Every Rails project uses Bundler. Understanding it prevents the dreaded "it works on my machine"
+        dependency issues.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># Gemfile — declare your dependencies</span>
+source <span class="hl-string">"https://rubygems.org"</span>
+
+<span class="hl-comment"># Core framework</span>
+gem <span class="hl-string">"rails"</span>, <span class="hl-string">"~> 7.1"</span>       <span class="hl-comment"># pessimistic: >= 7.1.0, &lt; 7.2.0</span>
+gem <span class="hl-string">"pg"</span>, <span class="hl-string">"~> 1.5"</span>           <span class="hl-comment"># PostgreSQL adapter</span>
+gem <span class="hl-string">"puma"</span>, <span class="hl-string">"~> 6.0"</span>        <span class="hl-comment"># Web server</span>
+
+<span class="hl-comment"># API essentials</span>
+gem <span class="hl-string">"jbuilder"</span>               <span class="hl-comment"># JSON response builder</span>
+gem <span class="hl-string">"rack-cors"</span>              <span class="hl-comment"># Cross-Origin Resource Sharing</span>
+
+<span class="hl-comment"># Development and test gems only</span>
+group <span class="hl-string">:development</span>, <span class="hl-string">:test</span> <span class="hl-keyword">do</span>
+  gem <span class="hl-string">"rspec-rails"</span>, <span class="hl-string">"~> 6.0"</span>
+  gem <span class="hl-string">"factory_bot_rails"</span>
+  gem <span class="hl-string">"faker"</span>
+  gem <span class="hl-string">"pry-byebug"</span>           <span class="hl-comment"># debugger</span>
+<span class="hl-keyword">end</span>
+
+group <span class="hl-string">:development</span> <span class="hl-keyword">do</span>
+  gem <span class="hl-string">"rubocop"</span>, require: <span class="hl-keyword">false</span>   <span class="hl-comment"># linter</span>
+  gem <span class="hl-string">"rubocop-rails"</span>, require: <span class="hl-keyword">false</span>
+<span class="hl-keyword">end</span>
+</pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">bash</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># Install all gems defined in Gemfile</span>
+bundle install
+
+<span class="hl-comment"># Add a new gem</span>
+bundle add sidekiq
+
+<span class="hl-comment"># Update a specific gem (respects version constraints)</span>
+bundle update pg
+
+<span class="hl-comment"># Run a command within the bundle context</span>
+bundle exec rspec
+
+<span class="hl-comment"># Check for outdated gems</span>
+bundle outdated
+
+<span class="hl-comment"># Show where a gem is installed</span>
+bundle show rack
+</pre>
+      </div>
+
+      <div class="callout danger">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Always commit Gemfile.lock
+        </div>
+        <p>
+          The <code>Gemfile.lock</code> records the exact versions of every gem (and their transitive
+          dependencies) that were resolved. Committing it ensures every developer and CI server uses
+          identical gem versions. Never add <code>Gemfile.lock</code> to <code>.gitignore</code> in an
+          application (libraries are different).
+        </p>
+      </div>
+
+      <h3 id="rspec-basics">6. Testing with RSpec</h3>
+
+      <p>
+        RSpec is Ruby's most popular testing framework. Its syntax reads like English specifications,
+        which makes tests double as living documentation. You describe behavior, set expectations, and
+        RSpec tells you what works and what does not.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># spec/models/user_spec.rb</span>
+require <span class="hl-string">"spec_helper"</span>
+require_relative <span class="hl-string">"../models/user"</span>
+
+RSpec.describe User <span class="hl-keyword">do</span>
+  <span class="hl-comment"># subject — the object under test</span>
+  subject { described_class.new(<span class="hl-string">"Alice"</span>, <span class="hl-string">"alice@example.com"</span>) }
+
+  describe <span class="hl-string">"#display_name"</span> <span class="hl-keyword">do</span>
+    it <span class="hl-string">"returns name with email in angle brackets"</span> <span class="hl-keyword">do</span>
+      expect(subject.display_name).to eq(<span class="hl-string">"Alice &lt;alice@example.com&gt;"</span>)
+    <span class="hl-keyword">end</span>
+  <span class="hl-keyword">end</span>
+
+  describe <span class="hl-string">"#valid?"</span> <span class="hl-keyword">do</span>
+    context <span class="hl-string">"when name and email are present"</span> <span class="hl-keyword">do</span>
+      it <span class="hl-string">"returns true"</span> <span class="hl-keyword">do</span>
+        expect(subject).to be_valid
+      <span class="hl-keyword">end</span>
+    <span class="hl-keyword">end</span>
+
+    context <span class="hl-string">"when email is missing @ symbol"</span> <span class="hl-keyword">do</span>
+      subject { described_class.new(<span class="hl-string">"Alice"</span>, <span class="hl-string">"invalid-email"</span>) }
+
+      it <span class="hl-string">"returns false"</span> <span class="hl-keyword">do</span>
+        expect(subject).not_to be_valid
+      <span class="hl-keyword">end</span>
+    <span class="hl-keyword">end</span>
+
+    context <span class="hl-string">"when name is empty"</span> <span class="hl-keyword">do</span>
+      subject { described_class.new(<span class="hl-string">""</span>, <span class="hl-string">"alice@example.com"</span>) }
+
+      it <span class="hl-string">"returns false"</span> <span class="hl-keyword">do</span>
+        expect(subject).not_to be_valid
+      <span class="hl-keyword">end</span>
+    <span class="hl-keyword">end</span>
+  <span class="hl-keyword">end</span>
+
+  describe <span class="hl-string">".from_hash"</span> <span class="hl-keyword">do</span>
+    it <span class="hl-string">"creates a user from a hash of attributes"</span> <span class="hl-keyword">do</span>
+      user = User.from_hash(<span class="hl-string">name:</span> <span class="hl-string">"Bob"</span>, <span class="hl-string">email:</span> <span class="hl-string">"bob@example.com"</span>)
+      expect(user.name).to eq(<span class="hl-string">"Bob"</span>)
+      expect(user.email).to eq(<span class="hl-string">"bob@example.com"</span>)
+    <span class="hl-keyword">end</span>
+  <span class="hl-keyword">end</span>
+<span class="hl-keyword">end</span>
+</pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">bash</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># Run all specs</span>
+bundle exec rspec
+
+<span class="hl-comment"># Run a specific file</span>
+bundle exec rspec spec/models/user_spec.rb
+
+<span class="hl-comment"># Run a specific test by line number</span>
+bundle exec rspec spec/models/user_spec.rb:<span class="hl-number">12</span>
+
+<span class="hl-comment"># Run with documentation format (readable output)</span>
+bundle exec rspec <span class="hl-flag">--format</span> documentation
+</pre>
+      </div>
+
+      <details>
+        <summary>What is the difference between <code>describe</code>, <code>context</code>, and <code>it</code>?</summary>
+        <div class="details-body">
+          <p>
+            <strong><code>describe</code></strong> groups tests around a method or behavior. Use <code>#method</code>
+            for instance methods and <code>.method</code> for class methods.
+          </p>
+          <p>
+            <strong><code>context</code></strong> describes a scenario or precondition. Always start context
+            descriptions with "when" or "with" to make them read naturally.
+          </p>
+          <p>
+            <strong><code>it</code></strong> is a single test case. It should describe the expected outcome, not
+            the implementation. "returns true" is good. "calls the valid method" is bad.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>RSpec matchers cheat sheet</summary>
+        <div class="details-body">
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">ruby</span>
+              <button class="code-copy" onclick="copyCode(this)">Copy</button>
+            </div>
+<pre>
+<span class="hl-comment"># Equality</span>
+expect(result).to eq(<span class="hl-number">42</span>)         <span class="hl-comment"># value equality</span>
+expect(result).to eql(<span class="hl-number">42</span>)        <span class="hl-comment"># type + value equality</span>
+expect(result).to be(<span class="hl-number">42</span>)         <span class="hl-comment"># object identity</span>
+
+<span class="hl-comment"># Truthiness</span>
+expect(result).to be_truthy
+expect(result).to be_falsey
+expect(result).to be_nil
+
+<span class="hl-comment"># Comparisons</span>
+expect(result).to be > <span class="hl-number">10</span>
+expect(result).to be_between(<span class="hl-number">1</span>, <span class="hl-number">10</span>)
+
+<span class="hl-comment"># Collections</span>
+expect(array).to include(<span class="hl-number">3</span>)
+expect(array).to contain_exactly(<span class="hl-number">1</span>, <span class="hl-number">2</span>, <span class="hl-number">3</span>)
+expect(hash).to have_key(<span class="hl-string">:name</span>)
+
+<span class="hl-comment"># Exceptions</span>
+expect { risky_code }.to raise_error(ArgumentError)
+expect { safe_code }.not_to raise_error
+
+<span class="hl-comment"># Change</span>
+expect { user.activate! }.to change(user, <span class="hl-string">:active?</span>).from(<span class="hl-keyword">false</span>).to(<span class="hl-keyword">true</span>)
+</pre>
+          </div>
+        </div>
+      </details>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 3: WATCH & LEARN
+           ════════════════════════════════════════ -->
+      <h2 id="watch-learn">Watch &amp; Learn</h2>
+
+      <p>
+        These videos cover the Ruby fundamentals from this chapter. Watch them alongside your practice
+        to reinforce the concepts.
+      </p>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/t_ispmWmdjY?rel=0&amp;modestbranding=1"
+            title="Ruby Programming Full Course"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          freeCodeCamp &mdash; Ruby Programming Language Full Course (covers syntax, OOP, and core concepts)
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/71wu2AdFcQs?rel=0&amp;modestbranding=1"
+            title="RSpec Tutorial for Beginners"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Jesus Castello &mdash; RSpec Tutorial for Beginners (covers describe, context, matchers, and best practices)
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 4: FURTHER READING
+           ════════════════════════════════════════ -->
+      <h2 id="further-reading">Further Reading</h2>
+
+      <p>Deep-dive into the official documentation and reference material for Ruby fundamentals.</p>
+
+      <div class="resource-grid">
+        <a class="resource-card" href="https://www.ruby-lang.org/en/documentation/quickstart/" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Ruby in Twenty Minutes</div>
+            <div class="resource-desc">Official Ruby quickstart. Interactive introduction to IRB, classes, and methods.</div>
+          </div>
         </a>
-  </nav>
 
-  <footer class="footer">
-    ILA (Iksha Learning Academy) &middot; Rails + React Foundations &middot; <a href="index.html">All Chapters</a>
+        <a class="resource-card" href="https://ruby-doc.org/core-3.3.0/" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Ruby Core API Documentation</div>
+            <div class="resource-desc">Complete reference for all built-in classes: String, Array, Hash, Enumerable, and more.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://rspec.info/documentation/" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">RSpec Documentation</div>
+            <div class="resource-desc">Official RSpec guides covering expectations, matchers, mocks, and configuration.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://bundler.io/guides/getting_started.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Bundler: Getting Started</div>
+            <div class="resource-desc">Official guide to Gemfiles, version constraints, and dependency resolution.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://poignant.guide/" target="_blank" rel="noopener">
+          <div class="resource-icon article">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Why's Poignant Guide to Ruby</div>
+            <div class="resource-desc">The most creative programming book ever written. Teaches Ruby through storytelling and cartoons.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://github.com/rubocop/ruby-style-guide" target="_blank" rel="noopener">
+          <div class="resource-icon github">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Ruby Style Guide</div>
+            <div class="resource-desc">Community-driven conventions for writing clean, idiomatic Ruby code. Used by RuboCop linter.</div>
+          </div>
+        </a>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 5: ASSIGNMENTS
+           ════════════════════════════════════════ -->
+      <h2 id="assignments">Assignments</h2>
+
+      <p>
+        Complete these in order. Each level builds on the previous one. All code should be tested
+        with RSpec and follow Ruby community style conventions.
+      </p>
+
+      <!-- Assignment 1: Level 1 -->
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 1
+          </div>
+          <span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span>
+        </div>
+        <h4>Ruby Data Structures and Iterators</h4>
+        <p>Build fluency with Ruby's core data types and enumerable methods by solving practical problems.</p>
+
+        <ul class="checklist">
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Create a Ruby file that defines an array of hashes representing 10 products with <code>name</code>, <code>price</code>, and <code>category</code> keys</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Use <code>select</code> to filter products over $50, <code>map</code> to extract names, and <code>reduce</code> to sum all prices</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Use <code>group_by</code> to organize products by category and <code>sort_by</code> to sort by price</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Write a method that accepts a block for custom filtering and demonstrate it with 3 different blocks</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Write RSpec tests for each method with at least 2 test cases each</span>
+          </li>
+        </ul>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            All RSpec tests pass with <code>bundle exec rspec --format documentation</code> showing
+            green output. You can chain at least 3 enumerable methods together fluently.
+          </p>
+        </div>
+      </div>
+
+      <!-- Assignment 2: Level 2 -->
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 2
+          </div>
+          <span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span>
+        </div>
+        <h4>OOP Class Hierarchy with Modules</h4>
+        <p>Design a class hierarchy for a library system that demonstrates inheritance, modules, and Ruby conventions.</p>
+
+        <ul class="checklist">
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Create a <code>LibraryItem</code> base class with <code>title</code>, <code>checked_out?</code>, <code>checkout!</code>, and <code>return!</code></span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Create <code>Book</code>, <code>DVD</code>, and <code>Magazine</code> subclasses with type-specific attributes</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Create a <code>Searchable</code> module with <code>matches?</code> method and include it in all item classes</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Create a <code>Library</code> class that holds items and supports <code>search</code>, <code>available_items</code>, and <code>overdue_items</code></span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Write comprehensive RSpec tests covering edge cases (empty library, duplicate checkouts, nil searches)</span>
+          </li>
+        </ul>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            Your class hierarchy uses inheritance for shared state, modules for shared behavior, and
+            demonstrates Ruby conventions like <code>?</code> for predicates and <code>!</code> for mutating methods.
+          </p>
+        </div>
+      </div>
+
+      <!-- Assignment 3: Level 3 -->
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 3
+          </div>
+          <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Production-Ready</span>
+        </div>
+        <h4>Gem-Based CLI Tool with Full Test Suite</h4>
+        <p>Build a command-line tool packaged as a Ruby gem with Bundler, demonstrating real-world Ruby project structure.</p>
+
+        <ul class="checklist">
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Use <code>bundle gem</code> to scaffold a new gem project with RSpec configured</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Implement a CLI that reads a CSV file and outputs formatted statistics (totals, averages, top-N)</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Use modules for CSV parsing, calculation logic, and output formatting as separate concerns</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Add error handling for missing files, malformed CSV, and invalid column references</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Achieve 100% test coverage with RSpec, including edge cases and error scenarios</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Add RuboCop and fix all linting warnings. Configure <code>.rubocop.yml</code> for your project</span>
+          </li>
+        </ul>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            Running <code>bundle exec rspec</code> shows all green. Running <code>bundle exec rubocop</code>
+            shows no offenses. A user can install and run your tool with clear error messages for bad input.
+          </p>
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 6: SELF-CHECK
+           ════════════════════════════════════════ -->
+      <h2 id="self-check">Self-Check</h2>
+
+      <p>Before moving to Chapter 02, honestly answer these questions. If any answer is "no", go back and practice more.</p>
+
+      <details>
+        <summary>Can you write a class with initialize, instance methods, and class methods from memory?</summary>
+        <div class="details-body">
+          <p>
+            Open a new file and write a <code>BankAccount</code> class without looking at notes. It should
+            have <code>initialize</code>, <code>deposit</code>, <code>withdraw</code>, <code>balance</code>,
+            and a class method <code>self.total_accounts</code>. If you cannot do this fluently, review the
+            OOP section and practice until the syntax is automatic.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Can you chain select, map, and reduce without consulting documentation?</summary>
+        <div class="details-body">
+          <p>
+            Given an array of hashes, can you filter, transform, and aggregate in a single chain? For example:
+            "Find all active users, extract their emails, and join them into a comma-separated string." If you
+            need to look up the method signatures, spend more time with the Enumerable module.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Can you explain when to use a module vs inheritance?</summary>
+        <div class="details-body">
+          <p>
+            Use <strong>inheritance</strong> when there is a genuine "is-a" relationship (an Admin is a User).
+            Use <strong>modules</strong> when you want to share behavior across unrelated classes (a User and
+            an Invoice can both be Searchable). If you are inheriting just to share code, use a module instead.
+            This distinction matters because Rails uses both patterns extensively.
+          </p>
+        </div>
+      </details>
+
+    </main>
+
+    <!-- Sidebar: Table of Contents -->
+    <aside class="sidebar">
+      <div class="sidebar-title">On this page</div>
+      <ul class="toc-list">
+        <li class="toc-item"><a href="#why-this-matters">Why This Matters</a></li>
+        <li class="toc-item"><a href="#key-concepts">Key Concepts</a></li>
+        <li class="toc-item"><a href="#ruby-syntax" style="padding-left: 28px; font-size: 12px;">Ruby Syntax &amp; Data Types</a></li>
+        <li class="toc-item"><a href="#oop-in-ruby" style="padding-left: 28px; font-size: 12px;">OOP in Ruby</a></li>
+        <li class="toc-item"><a href="#blocks-and-iterators" style="padding-left: 28px; font-size: 12px;">Blocks &amp; Iterators</a></li>
+        <li class="toc-item"><a href="#modules-and-mixins" style="padding-left: 28px; font-size: 12px;">Modules &amp; Mixins</a></li>
+        <li class="toc-item"><a href="#bundler" style="padding-left: 28px; font-size: 12px;">Bundler</a></li>
+        <li class="toc-item"><a href="#rspec-basics" style="padding-left: 28px; font-size: 12px;">RSpec Basics</a></li>
+        <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a></li>
+        <li class="toc-item"><a href="#further-reading">Further Reading</a></li>
+        <li class="toc-item"><a href="#assignments">Assignments</a></li>
+        <li class="toc-item"><a href="#self-check">Self-Check</a></li>
+      </ul>
+    </aside>
+  </div>
+
+  <!-- Footer Navigation -->
+  <footer class="chapter-footer">
+    <div class="chapter-footer-inner">
+      <nav class="footer-nav">
+        <div></div>
+        <a class="footer-nav-link" href="chapter-02.html">
+          <span class="footer-nav-label">Next Chapter &rarr;</span>
+          <span class="footer-nav-title">02: Rails MVC Architecture</span>
+        </a>
+      </nav>
+      <div class="footer-brand">
+        ILA (Iksha Learning Academy) &middot; Rails + React Engineering Certification &middot; Level 1
+      </div>
+    </div>
   </footer>
 
+  <!-- ════════════════════════════════════════
+       SCRIPTS
+       ════════════════════════════════════════ -->
   <script>
+    // ── Progress Bar ──
     window.addEventListener('scroll', () => {
-      const h = document.documentElement;
-      const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
-      document.getElementById('progressBar').style.width = Math.min(pct, 100) + '%';
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      document.getElementById('progressBar').style.width = progress + '%';
     });
+
+    // ── Active TOC ──
+    const tocLinks = document.querySelectorAll('.toc-item a');
+    const sections = [];
+
+    tocLinks.forEach(link => {
+      const id = link.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) sections.push({ id, el, link });
+    });
+
+    const observerOptions = {
+      rootMargin: '-80px 0px -60% 0px',
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const item = sections.find(s => s.el === entry.target);
+        if (item) {
+          if (entry.isIntersecting) {
+            tocLinks.forEach(l => l.classList.remove('active'));
+            item.link.classList.add('active');
+          }
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(s => observer.observe(s.el));
+
+    // ── Copy Code ──
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      const text = pre.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.classList.add('copied');
+        btn.textContent = 'Copied!';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.textContent = 'Copy';
+        }, 2000);
+      });
+    }
   </script>
 </body>
 </html>

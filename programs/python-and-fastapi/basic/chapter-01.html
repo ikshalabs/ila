@@ -3,12 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chapter 01: Python Language Fundamentals &mdash; ILA Python and FastAPI</title>
+  <title>Chapter 01: Python Core Fundamentals — ILA Python + FastAPI</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
+    /* ═══════════════════════════════════════════════
+       ILA DESIGN SYSTEM — v1.0
+       Iksha Learning Academy
+       ═══════════════════════════════════════════════ */
+
     :root {
+      /* Palette */
       --ink:        #0f172a;
       --ink-light:  #334155;
       --ink-muted:  #64748b;
@@ -17,6 +23,8 @@
       --surface-warm:#fffbeb;
       --border:     #e2e8f0;
       --border-light:#f1f5f9;
+
+      /* Brand */
       --teal-50:  #f0fdfa;
       --teal-100: #ccfbf1;
       --teal-200: #99f6e4;
@@ -25,36 +33,48 @@
       --teal-700: #0f766e;
       --teal-800: #115e59;
       --teal-900: #134e4a;
+
       --blue-50:  #eff6ff;
       --blue-100: #dbeafe;
       --blue-500: #3b82f6;
       --blue-600: #2563eb;
       --blue-700: #1d4ed8;
+
       --amber-50:  #fffbeb;
       --amber-100: #fef3c7;
       --amber-500: #f59e0b;
       --amber-600: #d97706;
+
       --red-50:   #fef2f2;
       --red-100:  #fee2e2;
       --red-500:  #ef4444;
       --red-600:  #dc2626;
+
       --purple-50:  #faf5ff;
       --purple-100: #f3e8ff;
       --purple-500: #a855f7;
       --purple-600: #9333ea;
-      --green-50:  #f0fdf4;
-      --green-100: #dcfce7;
-      --green-500: #22c55e;
-      --green-600: #16a34a;
+
+      /* Typography */
       --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       --font-serif: 'Instrument Serif', Georgia, serif;
       --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
+
+      /* Spacing */
       --content-max: 780px;
+      --sidebar-width: 280px;
+
+      /* Transitions */
       --ease: cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
 
     body {
       font-family: var(--font-sans);
@@ -64,6 +84,7 @@
       background: var(--surface);
     }
 
+    /* ── PROGRESS BAR ─────────────────────────── */
     .progress-bar {
       position: fixed;
       top: 0;
@@ -75,6 +96,7 @@
       transition: width 0.15s var(--ease);
     }
 
+    /* ── TOP NAV ──────────────────────────────── */
     .top-nav {
       position: sticky;
       top: 0;
@@ -162,6 +184,7 @@
       padding: 0 4px;
     }
 
+    /* ── HERO ─────────────────────────────────── */
     .hero {
       background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%);
       border-bottom: 1px solid var(--border);
@@ -222,33 +245,117 @@
       color: var(--ink-muted);
     }
 
-    .content {
-      max-width: var(--content-max);
-      margin: 0 auto;
-      padding: 3rem 2rem 6rem;
+    .hero-meta-item svg {
+      width: 16px;
+      height: 16px;
+      color: var(--teal-600);
     }
 
+    /* ── MAIN LAYOUT ──────────────────────────── */
+    .main-layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr var(--sidebar-width);
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .content {
+      padding: 3rem 0 6rem;
+      min-width: 0;
+    }
+
+    /* ── SIDEBAR TOC ──────────────────────────── */
+    .sidebar {
+      position: sticky;
+      top: 76px;
+      padding: 2rem 0;
+      max-height: calc(100vh - 76px);
+      overflow-y: auto;
+    }
+
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-muted);
+      margin-bottom: 1rem;
+      padding-left: 14px;
+    }
+
+    .toc-list {
+      list-style: none;
+    }
+
+    .toc-item a {
+      display: block;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--ink-muted);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: all 0.2s var(--ease);
+      line-height: 1.5;
+    }
+
+    .toc-item a:hover {
+      color: var(--ink);
+      background: var(--surface-alt);
+    }
+
+    .toc-item a.active {
+      color: var(--teal-700);
+      border-left-color: var(--teal-500);
+      background: var(--teal-50);
+      font-weight: 500;
+    }
+
+    /* ── TYPOGRAPHY ────────────────────────────── */
     .content h2 {
       font-family: var(--font-serif);
       font-size: 1.85rem;
       font-weight: 400;
       color: var(--ink);
       margin: 3rem 0 1rem;
+      padding-top: 1rem;
       scroll-margin-top: 80px;
     }
 
-    .content h2:first-child { margin-top: 0; }
+    .content h2:first-child {
+      margin-top: 0;
+    }
 
     .content h3 {
       font-size: 1.15rem;
       font-weight: 600;
       color: var(--ink);
       margin: 2rem 0 0.75rem;
+      scroll-margin-top: 80px;
     }
 
     .content p {
       margin-bottom: 1.25rem;
       color: var(--ink-light);
+    }
+
+    .content strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .content a {
+      color: var(--teal-700);
+      text-decoration: underline;
+      text-decoration-color: var(--teal-200);
+      text-underline-offset: 3px;
+      transition: text-decoration-color 0.2s;
+    }
+
+    .content a:hover {
+      text-decoration-color: var(--teal-600);
     }
 
     .content ul, .content ol {
@@ -261,13 +368,25 @@
       color: var(--ink-light);
     }
 
-    .content li::marker { color: var(--teal-500); }
+    .content li::marker {
+      color: var(--teal-500);
+    }
 
+    /* ── SECTION DIVIDER ──────────────────────── */
+    .section-divider {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 3rem 0;
+    }
+
+    /* ── CALLOUT BOXES ────────────────────────── */
     .callout {
       padding: 1.25rem 1.5rem;
       border-radius: 12px;
       margin-bottom: 1.5rem;
       border: 1px solid;
+      position: relative;
     }
 
     .callout-header {
@@ -277,6 +396,12 @@
       font-size: 14px;
       font-weight: 600;
       margin-bottom: 0.5rem;
+    }
+
+    .callout-header svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
     }
 
     .callout p:last-child { margin-bottom: 0; }
@@ -293,6 +418,12 @@
     }
     .callout.important .callout-header { color: var(--amber-600); }
 
+    .callout.danger {
+      background: var(--red-50);
+      border-color: var(--red-100);
+    }
+    .callout.danger .callout-header { color: var(--red-600); }
+
     .callout.tip {
       background: var(--purple-50);
       border-color: var(--purple-100);
@@ -305,93 +436,403 @@
     }
     .callout.success .callout-header { color: var(--teal-700); }
 
-    .section-divider {
-      border: none;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--border), transparent);
-      margin: 3rem 0;
-    }
-
-    .coming-soon-banner {
-      background: var(--amber-50);
-      border: 1px solid var(--amber-100);
+    /* ── CODE BLOCKS ──────────────────────────── */
+    .code-block {
+      position: relative;
+      margin-bottom: 1.5rem;
       border-radius: 12px;
-      padding: 2.5rem;
-      text-align: center;
-      margin: 2rem 0;
+      overflow: hidden;
+      border: 1px solid var(--border);
     }
 
-    .coming-soon-banner h3 {
-      color: var(--amber-600);
-      margin-bottom: 0.5rem;
-    }
-
-    .coming-soon-banner p {
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+      background: var(--surface-alt);
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
       color: var(--ink-muted);
-      margin-bottom: 0;
     }
 
-    .topics-preview {
+    .code-lang {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .code-copy {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: white;
+      font-size: 11px;
+      font-family: var(--font-sans);
+      color: var(--ink-muted);
+      cursor: pointer;
+      transition: all 0.2s var(--ease);
+    }
+
+    .code-copy:hover {
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    .code-copy.copied {
+      background: var(--teal-50);
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    pre {
+      margin: 0;
+      padding: 1.25rem 1.5rem;
+      overflow-x: auto;
+      background: #1e293b;
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: #e2e8f0;
+    }
+
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.88em;
+    }
+
+    p code, li code {
+      padding: 2px 7px;
       background: var(--surface-alt);
       border: 1px solid var(--border);
+      border-radius: 5px;
+      color: var(--teal-800);
+      font-size: 0.85em;
+    }
+
+    /* Syntax highlights (minimal) */
+    .hl-keyword  { color: #c084fc; }
+    .hl-string   { color: #86efac; }
+    .hl-comment  { color: #64748b; font-style: italic; }
+    .hl-function { color: #7dd3fc; }
+    .hl-number   { color: #fbbf24; }
+    .hl-flag     { color: #f472b6; }
+
+    /* ── COLLAPSIBLE (DETAILS) ────────────────── */
+    details {
+      margin-bottom: 1.25rem;
+      border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 1.5rem 2rem;
-      margin: 1.5rem 0;
+      overflow: hidden;
+      transition: border-color 0.2s var(--ease);
     }
 
-    .topics-preview h3 {
-      font-size: 0.95rem;
-      margin-bottom: 0.75rem;
+    details[open] {
+      border-color: var(--teal-200);
+    }
+
+    details summary {
+      padding: 1rem 1.25rem;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      background: var(--surface-alt);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.2s var(--ease);
+      user-select: none;
+    }
+
+    details summary::-webkit-details-marker { display: none; }
+
+    details summary::before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+      flex-shrink: 0;
+      transition: transform 0.2s var(--ease);
+    }
+
+    details[open] summary::before {
+      transform: rotate(90deg);
+    }
+
+    details summary:hover {
+      background: var(--teal-50);
+    }
+
+    .details-body {
+      padding: 1.25rem 1.5rem;
+    }
+
+    .details-body p:last-child { margin-bottom: 0; }
+
+    /* ── VIDEO EMBED ──────────────────────────── */
+    .video-card {
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      background: #0f172a;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .video-caption {
+      padding: 12px 16px;
+      background: var(--surface-alt);
+      font-size: 13px;
+      color: var(--ink-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .video-caption svg {
+      width: 14px;
+      height: 14px;
+      color: var(--red-500);
+    }
+
+    /* ── RESOURCE CARDS ───────────────────────── */
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .resource-card {
+      display: flex;
+      gap: 14px;
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      background: white;
+    }
+
+    .resource-card:hover {
+      border-color: var(--teal-300);
+      background: var(--teal-50);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .resource-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 18px;
+    }
+
+    .resource-icon.docs    { background: var(--blue-50);   color: var(--blue-600); }
+    .resource-icon.video   { background: var(--red-50);    color: var(--red-500); }
+    .resource-icon.github  { background: var(--ink);       color: white; }
+    .resource-icon.article { background: var(--amber-50);  color: var(--amber-600); }
+    .resource-icon.pdf     { background: var(--purple-50); color: var(--purple-600); }
+
+    .resource-info {
+      min-width: 0;
+    }
+
+    .resource-title {
+      font-size: 14px;
+      font-weight: 600;
       color: var(--ink);
+      margin-bottom: 2px;
+      line-height: 1.4;
     }
 
-    .topics-preview ul {
+    .resource-desc {
+      font-size: 12px;
+      color: var(--ink-muted);
+      line-height: 1.5;
+    }
+
+    /* ── ASSIGNMENT CARDS ─────────────────────── */
+    .assignment {
+      border: 2px solid var(--teal-200);
+      border-radius: 14px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--teal-50) 0%, white 100%);
+    }
+
+    .assignment-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .assignment-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--teal-700);
+    }
+
+    .assignment-difficulty {
+      display: inline-flex;
+      padding: 4px 10px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .difficulty-l1 { background: var(--teal-100); color: var(--teal-800); }
+    .difficulty-l2 { background: var(--amber-100); color: var(--amber-600); }
+    .difficulty-l3 { background: var(--red-100); color: var(--red-600); }
+
+    .assignment h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .assignment p {
+      font-size: 14px;
+    }
+
+    .checklist {
       list-style: none;
       padding: 0;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 0.5rem;
     }
 
-    .topics-preview li {
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-light);
       font-size: 14px;
-      color: var(--ink-light);
-      padding-left: 1.25rem;
-      position: relative;
     }
 
-    .topics-preview li::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 8px;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
+    .checklist li:last-child { border-bottom: none; }
+
+    .check-box {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      border: 2px solid var(--border);
+      flex-shrink: 0;
+      margin-top: 1px;
+      cursor: pointer;
+      transition: all 0.15s var(--ease);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .check-box:hover {
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked {
       background: var(--teal-500);
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+    }
+
+    /* ── ARCHITECTURE DIAGRAM ─────────────────── */
+    .diagram {
+      margin: 1.5rem 0;
+      padding: 2rem;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow-x: auto;
+    }
+
+    .diagram pre {
+      background: transparent;
+      color: var(--ink);
+      padding: 0;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .diagram-caption {
+      margin-top: 1rem;
+      font-size: 12px;
+      color: var(--ink-muted);
+      text-align: center;
+      font-style: italic;
+    }
+
+    /* ── FOOTER ───────────────────────────────── */
+    .chapter-footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      background: var(--surface-alt);
+    }
+
+    .chapter-footer-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
     }
 
     .footer-nav {
-      max-width: var(--content-max);
-      margin: 0 auto;
-      padding: 2rem;
       display: flex;
       justify-content: space-between;
-      border-top: 1px solid var(--border);
+      align-items: center;
+      gap: 1rem;
     }
 
     .footer-nav-link {
       display: flex;
       flex-direction: column;
-      text-decoration: none;
-      padding: 1rem;
+      gap: 4px;
+      padding: 1rem 1.5rem;
+      border: 1px solid var(--border);
       border-radius: 12px;
-      transition: background 0.2s var(--ease);
-      max-width: 45%;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      max-width: 320px;
+      background: white;
     }
 
     .footer-nav-link:hover {
-      background: var(--surface-alt);
+      border-color: var(--teal-300);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
     }
 
     .footer-nav-label {
@@ -399,46 +840,61 @@
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.06em;
-      color: var(--ink-muted);
-      margin-bottom: 4px;
+      color: var(--teal-600);
     }
 
     .footer-nav-title {
       font-size: 15px;
       font-weight: 600;
-      color: var(--teal-700);
+      color: var(--ink);
     }
 
-    .footer-nav-link.next { text-align: right; margin-left: auto; }
-
-    .footer {
+    .footer-brand {
       text-align: center;
-      padding: 2rem;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
       font-size: 13px;
       color: var(--ink-muted);
-      border-top: 1px solid var(--border);
     }
 
-    .footer a {
-      color: var(--teal-700);
-      text-decoration: none;
+    /* ── RESPONSIVE ───────────────────────────── */
+    @media (max-width: 960px) {
+      .main-layout {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        display: none;
+      }
+      .resource-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
-    .footer a:hover { text-decoration: underline; }
+    @media (max-width: 640px) {
+      .hero { padding: 2.5rem 1.25rem 2rem; }
+      .main-layout { padding: 0 1.25rem; }
+      .content { padding: 2rem 0 4rem; }
+      pre { padding: 1rem; font-size: 12.5px; }
+      .footer-nav { flex-direction: column; }
+      .footer-nav-link { max-width: 100%; width: 100%; }
+    }
 
-    @media (max-width: 768px) {
-      .hero { padding: 3rem 1.5rem 2.5rem; }
-      .content { padding: 2rem 1.5rem 4rem; }
-      .hero h1 { font-size: 2rem; }
-      .footer-nav { flex-direction: column; gap: 1rem; }
-      .footer-nav-link { max-width: 100%; }
-      .footer-nav-link.next { text-align: left; }
+    /* ── PRINT ────────────────────────────────── */
+    @media print {
+      .top-nav, .sidebar, .progress-bar { display: none; }
+      .main-layout { display: block; }
+      .content { padding: 0; }
+      .hero { background: white; border: none; }
+      pre { background: #f1f5f9; color: var(--ink); border: 1px solid var(--border); }
     }
   </style>
 </head>
 <body>
+  <!-- Progress Bar -->
   <div class="progress-bar" id="progressBar"></div>
 
+  <!-- Top Navigation -->
   <nav class="top-nav">
     <div class="top-nav-inner">
       <a class="nav-brand" href="index.html">
@@ -453,68 +909,926 @@
     </div>
   </nav>
 
+  <!-- Hero -->
   <header class="hero">
     <div class="hero-inner">
       <div class="hero-chapter-label">
-        <span>Chapter 01</span> 
+        <span>Chapter 01</span> &middot; Phase 1: Python Foundations
       </div>
-      <h1>Python Language Fundamentals</h1>
-      <p class="hero-subtitle">Variables, data types, control flow, functions, modules, virtual environments</p>
+      <h1>Python Core Fundamentals</h1>
+      <p class="hero-subtitle">
+        Master Python's core building blocks &mdash; variables, data types, control flow, functions, and modules.
+        These fundamentals are the bedrock of every FastAPI application you will build throughout this program.
+      </p>
       <div class="hero-meta">
-        <div class="hero-meta-item">3 Assignments</div>
-        <div class="hero-meta-item">~45 min read</div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Estimated: 3&ndash;4 days
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          3 Advancement Levels
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          3 Assignments
+        </div>
       </div>
     </div>
   </header>
 
-  <main class="content">
-    <h2>Overview</h2>
-    <p>This chapter covers <strong>python language fundamentals</strong> as part of the Python and FastAPI Foundations curriculum. You will build practical skills through guided explanations, code examples, and hands-on assignments.</p>
+  <!-- Main Content + Sidebar -->
+  <div class="main-layout">
+    <main class="content">
 
-    <div class="topics-preview">
-      <h3>Topics Covered</h3>
-      <ul>
-            <li>Variables</li>
-            <li>data types</li>
-            <li>control flow</li>
-            <li>functions</li>
-            <li>modules</li>
-            <li>virtual environments</li>
-      </ul>
-    </div>
+      <!-- ════════════════════════════════════════
+           SECTION 1: WHY THIS MATTERS
+           ════════════════════════════════════════ -->
+      <h2 id="why-this-matters">Why This Matters</h2>
 
-    <hr class="section-divider">
+      <p>
+        Python is the language behind FastAPI, machine learning pipelines, DevOps automation, and millions of
+        production web services. Before you can build robust APIs, you need to think in Python &mdash; understanding
+        how the language handles data, controls execution flow, and organizes code into reusable units.
+      </p>
 
-    <div class="coming-soon-banner">
-      <h3>Content In Development</h3>
-      <p>Full chapter content with detailed explanations, code examples, video walkthroughs, and assignments is being developed. Check back soon.</p>
-    </div>
+      <p>
+        Every bug you encounter in a FastAPI application traces back to a Python fundamental: a mutable default
+        argument that silently corrupts state, a variable scope issue that returns <code>None</code> instead of data,
+        or a missing <code>__init__.py</code> that breaks your import chain. Mastering these fundamentals now prevents
+        weeks of debugging later.
+      </p>
 
-    <div class="callout tip">
-      <div class="callout-header">What You Will Learn</div>
-      <p>By the end of this chapter, you will understand variables, data types, control flow, functions, modules, virtual environments and be able to apply these concepts in real-world scenarios.</p>
-    </div>
+      <div class="callout concept">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Key Insight
+        </div>
+        <p>
+          Python's philosophy is captured in the Zen of Python: <strong>"Explicit is better than implicit"</strong> and
+          <strong>"There should be one obvious way to do it."</strong> Understanding these principles is not academic &mdash;
+          they directly inform how FastAPI was designed and how you should structure your code.
+        </p>
+      </div>
 
-  </main>
+      <hr class="section-divider">
 
-  <nav class="footer-nav">
+      <!-- ════════════════════════════════════════
+           SECTION 2: KEY CONCEPTS
+           ════════════════════════════════════════ -->
+      <h2 id="key-concepts">Key Concepts</h2>
 
-        <a class="footer-nav-link next" href="chapter-02.html">
-          <span class="footer-nav-label">Next &rarr;</span>
-          <span class="footer-nav-title">Chapter 02: Object-Oriented Python</span>
+      <h3 id="variables-data-types">1. Variables and Data Types</h3>
+
+      <p>
+        Python is dynamically typed &mdash; you do not declare types when creating variables. However, Python is
+        also <strong>strongly typed</strong>, meaning it will not implicitly convert between incompatible types.
+        Understanding Python's type system is critical because FastAPI leverages type hints extensively for
+        request validation and documentation generation.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">python</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># ── Fundamental Data Types ──</span>
+
+<span class="hl-comment"># Integers and floats</span>
+<span class="hl-keyword">age</span> = <span class="hl-number">28</span>
+<span class="hl-keyword">price</span> = <span class="hl-number">19.99</span>
+<span class="hl-keyword">big_number</span> = <span class="hl-number">1_000_000</span>          <span class="hl-comment"># underscores for readability</span>
+
+<span class="hl-comment"># Strings — immutable sequences of Unicode</span>
+<span class="hl-keyword">name</span> = <span class="hl-string">"Alice"</span>
+<span class="hl-keyword">greeting</span> = <span class="hl-string">f"Hello, {name}!"</span>    <span class="hl-comment"># f-strings (Python 3.6+)</span>
+<span class="hl-keyword">multiline</span> = <span class="hl-string">"""
+This is a
+multiline string.
+"""</span>
+
+<span class="hl-comment"># Booleans</span>
+<span class="hl-keyword">is_active</span> = <span class="hl-keyword">True</span>
+<span class="hl-keyword">is_deleted</span> = <span class="hl-keyword">False</span>
+
+<span class="hl-comment"># None — Python's null equivalent</span>
+<span class="hl-keyword">result</span> = <span class="hl-keyword">None</span>
+
+<span class="hl-comment"># Type checking at runtime</span>
+<span class="hl-function">print</span>(<span class="hl-function">type</span>(age))        <span class="hl-comment"># &lt;class 'int'&gt;</span>
+<span class="hl-function">print</span>(<span class="hl-function">isinstance</span>(name, <span class="hl-function">str</span>))  <span class="hl-comment"># True</span>
+</pre>
+      </div>
+
+      <p>
+        Python's collection types are the workhorses of data manipulation. You will use them constantly
+        when processing API request bodies, database query results, and configuration data:
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">python</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># ── Collection Types ──</span>
+
+<span class="hl-comment"># Lists — ordered, mutable, allows duplicates</span>
+<span class="hl-keyword">users</span> = [<span class="hl-string">"alice"</span>, <span class="hl-string">"bob"</span>, <span class="hl-string">"charlie"</span>]
+users.<span class="hl-function">append</span>(<span class="hl-string">"diana"</span>)
+first_user = users[<span class="hl-number">0</span>]           <span class="hl-comment"># "alice"</span>
+last_two = users[<span class="hl-number">-2</span>:]            <span class="hl-comment"># ["charlie", "diana"]</span>
+
+<span class="hl-comment"># Dictionaries — key-value pairs, ordered (Python 3.7+)</span>
+<span class="hl-keyword">user</span> = {
+    <span class="hl-string">"name"</span>: <span class="hl-string">"Alice"</span>,
+    <span class="hl-string">"email"</span>: <span class="hl-string">"alice@example.com"</span>,
+    <span class="hl-string">"age"</span>: <span class="hl-number">28</span>,
+    <span class="hl-string">"roles"</span>: [<span class="hl-string">"admin"</span>, <span class="hl-string">"editor"</span>],
+}
+
+<span class="hl-comment"># Safe access with .get() — returns None instead of KeyError</span>
+<span class="hl-keyword">phone</span> = user.<span class="hl-function">get</span>(<span class="hl-string">"phone"</span>)         <span class="hl-comment"># None</span>
+<span class="hl-keyword">phone</span> = user.<span class="hl-function">get</span>(<span class="hl-string">"phone"</span>, <span class="hl-string">"N/A"</span>) <span class="hl-comment"># "N/A"</span>
+
+<span class="hl-comment"># Tuples — ordered, immutable</span>
+<span class="hl-keyword">coordinates</span> = (<span class="hl-number">40.7128</span>, <span class="hl-number">-74.0060</span>)
+<span class="hl-keyword">lat</span>, <span class="hl-keyword">lng</span> = coordinates           <span class="hl-comment"># tuple unpacking</span>
+
+<span class="hl-comment"># Sets — unordered, unique elements</span>
+<span class="hl-keyword">tags</span> = {<span class="hl-string">"python"</span>, <span class="hl-string">"fastapi"</span>, <span class="hl-string">"async"</span>}
+tags.<span class="hl-function">add</span>(<span class="hl-string">"python"</span>)               <span class="hl-comment"># no duplicate — still 3 items</span>
+</pre>
+      </div>
+
+      <div class="callout important">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Mutable Default Arguments Trap
+        </div>
+        <p>
+          Never use a mutable object (list, dict, set) as a default function argument. Python evaluates defaults
+          once at function definition, not at each call. This causes shared state between calls &mdash; a notorious
+          source of bugs. Use <code>None</code> as the default and create the mutable object inside the function body.
+        </p>
+      </div>
+
+      <h3 id="control-flow">2. Control Flow</h3>
+
+      <p>
+        Python uses indentation (not braces) to define code blocks. This enforced readability is a deliberate
+        design choice. Control flow in Python is straightforward but has nuances that affect how you write
+        API endpoint handlers, validation logic, and error handling.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">python</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># ── Conditionals ──</span>
+<span class="hl-keyword">def</span> <span class="hl-function">classify_status_code</span>(code: <span class="hl-function">int</span>) -> <span class="hl-function">str</span>:
+    <span class="hl-string">"""Classify an HTTP status code into its category."""</span>
+    <span class="hl-keyword">if</span> <span class="hl-number">200</span> <= code < <span class="hl-number">300</span>:
+        <span class="hl-keyword">return</span> <span class="hl-string">"success"</span>
+    <span class="hl-keyword">elif</span> <span class="hl-number">300</span> <= code < <span class="hl-number">400</span>:
+        <span class="hl-keyword">return</span> <span class="hl-string">"redirect"</span>
+    <span class="hl-keyword">elif</span> <span class="hl-number">400</span> <= code < <span class="hl-number">500</span>:
+        <span class="hl-keyword">return</span> <span class="hl-string">"client_error"</span>
+    <span class="hl-keyword">elif</span> <span class="hl-number">500</span> <= code < <span class="hl-number">600</span>:
+        <span class="hl-keyword">return</span> <span class="hl-string">"server_error"</span>
+    <span class="hl-keyword">else</span>:
+        <span class="hl-keyword">return</span> <span class="hl-string">"unknown"</span>
+
+<span class="hl-comment"># ── Match Statement (Python 3.10+) ──</span>
+<span class="hl-keyword">def</span> <span class="hl-function">handle_command</span>(command: <span class="hl-function">str</span>):
+    <span class="hl-keyword">match</span> command.<span class="hl-function">split</span>():
+        <span class="hl-keyword">case</span> [<span class="hl-string">"get"</span>, resource]:
+            <span class="hl-keyword">return</span> <span class="hl-string">f"Fetching {resource}"</span>
+        <span class="hl-keyword">case</span> [<span class="hl-string">"delete"</span>, resource, id]:
+            <span class="hl-keyword">return</span> <span class="hl-string">f"Deleting {resource} #{id}"</span>
+        <span class="hl-keyword">case</span> _:
+            <span class="hl-keyword">return</span> <span class="hl-string">"Unknown command"</span>
+
+<span class="hl-comment"># ── Loops with useful patterns ──</span>
+<span class="hl-keyword">items</span> = [<span class="hl-string">"apple"</span>, <span class="hl-string">"banana"</span>, <span class="hl-string">"cherry"</span>]
+
+<span class="hl-comment"># enumerate gives you index + value</span>
+<span class="hl-keyword">for</span> i, item <span class="hl-keyword">in</span> <span class="hl-function">enumerate</span>(items):
+    <span class="hl-function">print</span>(<span class="hl-string">f"{i}: {item}"</span>)
+
+<span class="hl-comment"># zip pairs up multiple iterables</span>
+<span class="hl-keyword">names</span> = [<span class="hl-string">"Alice"</span>, <span class="hl-string">"Bob"</span>]
+<span class="hl-keyword">scores</span> = [<span class="hl-number">95</span>, <span class="hl-number">87</span>]
+<span class="hl-keyword">for</span> name, score <span class="hl-keyword">in</span> <span class="hl-function">zip</span>(names, scores):
+    <span class="hl-function">print</span>(<span class="hl-string">f"{name}: {score}"</span>)
+
+<span class="hl-comment"># List comprehensions — the Pythonic way</span>
+<span class="hl-keyword">squares</span> = [x ** <span class="hl-number">2</span> <span class="hl-keyword">for</span> x <span class="hl-keyword">in</span> <span class="hl-function">range</span>(<span class="hl-number">10</span>)]
+<span class="hl-keyword">even_squares</span> = [x ** <span class="hl-number">2</span> <span class="hl-keyword">for</span> x <span class="hl-keyword">in</span> <span class="hl-function">range</span>(<span class="hl-number">10</span>) <span class="hl-keyword">if</span> x % <span class="hl-number">2</span> == <span class="hl-number">0</span>]
+
+<span class="hl-comment"># Dict comprehension</span>
+<span class="hl-keyword">user_map</span> = {user[<span class="hl-string">"id"</span>]: user <span class="hl-keyword">for</span> user <span class="hl-keyword">in</span> users_list}
+</pre>
+      </div>
+
+      <h3 id="functions">3. Functions and Closures</h3>
+
+      <p>
+        Functions in Python are first-class objects &mdash; they can be assigned to variables, passed as arguments,
+        and returned from other functions. This is foundational to FastAPI's dependency injection system and
+        middleware patterns.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">python</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># ── Function signatures with type hints ──</span>
+<span class="hl-keyword">def</span> <span class="hl-function">create_user</span>(
+    name: <span class="hl-function">str</span>,
+    email: <span class="hl-function">str</span>,
+    age: <span class="hl-function">int</span> = <span class="hl-number">0</span>,
+    *,                          <span class="hl-comment"># everything after * is keyword-only</span>
+    is_admin: <span class="hl-function">bool</span> = <span class="hl-keyword">False</span>,
+) -> <span class="hl-function">dict</span>:
+    <span class="hl-string">"""Create a new user dictionary.
+
+    Args:
+        name: The user's display name.
+        email: The user's email address.
+        age: The user's age (default 0).
+        is_admin: Whether the user has admin privileges.
+
+    Returns:
+        A dictionary representing the new user.
+    """</span>
+    <span class="hl-keyword">return</span> {
+        <span class="hl-string">"name"</span>: name,
+        <span class="hl-string">"email"</span>: email,
+        <span class="hl-string">"age"</span>: age,
+        <span class="hl-string">"is_admin"</span>: is_admin,
+    }
+
+<span class="hl-comment"># ── *args and **kwargs ──</span>
+<span class="hl-keyword">def</span> <span class="hl-function">log_event</span>(event: <span class="hl-function">str</span>, *tags: <span class="hl-function">str</span>, **metadata: <span class="hl-function">str</span>):
+    <span class="hl-string">"""Log an event with optional tags and metadata."""</span>
+    <span class="hl-function">print</span>(<span class="hl-string">f"Event: {event}"</span>)
+    <span class="hl-function">print</span>(<span class="hl-string">f"Tags: {tags}"</span>)
+    <span class="hl-function">print</span>(<span class="hl-string">f"Metadata: {metadata}"</span>)
+
+<span class="hl-function">log_event</span>(<span class="hl-string">"user_signup"</span>, <span class="hl-string">"auth"</span>, <span class="hl-string">"growth"</span>, source=<span class="hl-string">"web"</span>, plan=<span class="hl-string">"free"</span>)
+
+<span class="hl-comment"># ── Lambda functions ──</span>
+<span class="hl-keyword">sort_by_age</span> = <span class="hl-keyword">lambda</span> user: user[<span class="hl-string">"age"</span>]
+<span class="hl-keyword">sorted_users</span> = <span class="hl-function">sorted</span>(users_list, key=sort_by_age)
+
+<span class="hl-comment"># ── Closures — functions that capture outer state ──</span>
+<span class="hl-keyword">def</span> <span class="hl-function">make_multiplier</span>(factor: <span class="hl-function">int</span>):
+    <span class="hl-keyword">def</span> <span class="hl-function">multiply</span>(n: <span class="hl-function">int</span>) -> <span class="hl-function">int</span>:
+        <span class="hl-keyword">return</span> n * factor
+    <span class="hl-keyword">return</span> multiply
+
+<span class="hl-keyword">double</span> = <span class="hl-function">make_multiplier</span>(<span class="hl-number">2</span>)
+<span class="hl-function">print</span>(<span class="hl-function">double</span>(<span class="hl-number">5</span>))   <span class="hl-comment"># 10</span>
+</pre>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Pro Tip
+        </div>
+        <p>
+          Use keyword-only arguments (after the <code>*</code> separator) for boolean flags. Calling
+          <code>create_user("Alice", "a@b.com", 28, True)</code> is unclear &mdash; what is <code>True</code>?
+          Forcing <code>is_admin=True</code> makes the call self-documenting. FastAPI uses this pattern extensively.
+        </p>
+      </div>
+
+      <h3 id="error-handling">4. Error Handling</h3>
+
+      <p>
+        Robust error handling is the difference between an API that returns helpful error messages and one
+        that crashes with a 500 Internal Server Error. Python's exception hierarchy is rich and extensible.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">python</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># ── Try/Except/Else/Finally ──</span>
+<span class="hl-keyword">def</span> <span class="hl-function">safe_divide</span>(a: <span class="hl-function">float</span>, b: <span class="hl-function">float</span>) -> <span class="hl-function">float</span> | <span class="hl-keyword">None</span>:
+    <span class="hl-keyword">try</span>:
+        result = a / b
+    <span class="hl-keyword">except</span> <span class="hl-function">ZeroDivisionError</span>:
+        <span class="hl-function">print</span>(<span class="hl-string">"Cannot divide by zero"</span>)
+        <span class="hl-keyword">return</span> <span class="hl-keyword">None</span>
+    <span class="hl-keyword">except</span> <span class="hl-function">TypeError</span> <span class="hl-keyword">as</span> e:
+        <span class="hl-function">print</span>(<span class="hl-string">f"Type error: {e}"</span>)
+        <span class="hl-keyword">return</span> <span class="hl-keyword">None</span>
+    <span class="hl-keyword">else</span>:
+        <span class="hl-comment"># Runs only if no exception occurred</span>
+        <span class="hl-function">print</span>(<span class="hl-string">f"Result: {result}"</span>)
+        <span class="hl-keyword">return</span> result
+    <span class="hl-keyword">finally</span>:
+        <span class="hl-comment"># Always runs — cleanup code goes here</span>
+        <span class="hl-function">print</span>(<span class="hl-string">"Division attempted"</span>)
+
+<span class="hl-comment"># ── Custom Exceptions ──</span>
+<span class="hl-keyword">class</span> <span class="hl-function">UserNotFoundError</span>(<span class="hl-function">Exception</span>):
+    <span class="hl-string">"""Raised when a user lookup fails."""</span>
+    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, user_id: <span class="hl-function">int</span>):
+        self.user_id = user_id
+        <span class="hl-function">super</span>().<span class="hl-function">__init__</span>(<span class="hl-string">f"User {user_id} not found"</span>)
+
+<span class="hl-keyword">class</span> <span class="hl-function">ValidationError</span>(<span class="hl-function">Exception</span>):
+    <span class="hl-string">"""Raised when input validation fails."""</span>
+    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, field: <span class="hl-function">str</span>, message: <span class="hl-function">str</span>):
+        self.field = field
+        self.message = message
+        <span class="hl-function">super</span>().<span class="hl-function">__init__</span>(<span class="hl-string">f"{field}: {message}"</span>)
+
+<span class="hl-comment"># Using custom exceptions</span>
+<span class="hl-keyword">def</span> <span class="hl-function">get_user</span>(user_id: <span class="hl-function">int</span>) -> <span class="hl-function">dict</span>:
+    user = database.<span class="hl-function">find</span>(user_id)
+    <span class="hl-keyword">if</span> user <span class="hl-keyword">is</span> <span class="hl-keyword">None</span>:
+        <span class="hl-keyword">raise</span> <span class="hl-function">UserNotFoundError</span>(user_id)
+    <span class="hl-keyword">return</span> user
+</pre>
+      </div>
+
+      <h3 id="modules-packages">5. Modules, Packages, and pip</h3>
+
+      <p>
+        Python organizes code into modules (single files) and packages (directories with an <code>__init__.py</code>).
+        Understanding this structure is essential because every FastAPI project is organized as a Python package
+        with routers, models, and services split across modules.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">python</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># ── Project Structure ──</span>
+<span class="hl-comment"># my_project/</span>
+<span class="hl-comment">#   __init__.py</span>
+<span class="hl-comment">#   main.py</span>
+<span class="hl-comment">#   models/</span>
+<span class="hl-comment">#     __init__.py</span>
+<span class="hl-comment">#     user.py</span>
+<span class="hl-comment">#     product.py</span>
+<span class="hl-comment">#   services/</span>
+<span class="hl-comment">#     __init__.py</span>
+<span class="hl-comment">#     auth.py</span>
+
+<span class="hl-comment"># ── Import Patterns ──</span>
+<span class="hl-keyword">import</span> json                           <span class="hl-comment"># import entire module</span>
+<span class="hl-keyword">from</span> pathlib <span class="hl-keyword">import</span> Path             <span class="hl-comment"># import specific item</span>
+<span class="hl-keyword">from</span> datetime <span class="hl-keyword">import</span> datetime, timedelta
+<span class="hl-keyword">from</span> typing <span class="hl-keyword">import</span> Optional, List
+
+<span class="hl-comment"># Relative imports (within a package)</span>
+<span class="hl-keyword">from</span> .models.user <span class="hl-keyword">import</span> User
+<span class="hl-keyword">from</span> ..config <span class="hl-keyword">import</span> settings
+
+<span class="hl-comment"># ── The __name__ guard ──</span>
+<span class="hl-keyword">if</span> __name__ == <span class="hl-string">"__main__"</span>:
+    <span class="hl-comment"># Only runs when this file is executed directly</span>
+    <span class="hl-comment"># Not when imported as a module</span>
+    <span class="hl-function">main</span>()
+</pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">bash</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># ── pip and Virtual Environments ──</span>
+
+<span class="hl-comment"># Create a virtual environment</span>
+python <span class="hl-flag">-m</span> venv .venv
+<span class="hl-keyword">source</span> .venv/bin/activate      <span class="hl-comment"># Linux/macOS</span>
+
+<span class="hl-comment"># Install packages</span>
+pip install fastapi uvicorn sqlalchemy
+
+<span class="hl-comment"># Freeze dependencies to a requirements file</span>
+pip freeze > requirements.txt
+
+<span class="hl-comment"># Install from requirements file</span>
+pip install <span class="hl-flag">-r</span> requirements.txt
+
+<span class="hl-comment"># Modern alternative: use pyproject.toml with pip</span>
+pip install <span class="hl-flag">-e</span> <span class="hl-string">".[dev]"</span>
+</pre>
+      </div>
+
+      <div class="callout danger">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Never install globally
+        </div>
+        <p>
+          Always use a virtual environment. Installing packages globally leads to version conflicts between
+          projects. If project A needs <code>SQLAlchemy 1.4</code> and project B needs <code>SQLAlchemy 2.0</code>,
+          global installs will break one of them. Virtual environments isolate each project's dependencies completely.
+        </p>
+      </div>
+
+      <h3 id="decorators-generators">6. Decorators and Generators</h3>
+
+      <p>
+        Decorators modify or extend functions without changing their source code. FastAPI routes are defined
+        using decorators (<code>@app.get</code>, <code>@app.post</code>). Generators produce values lazily,
+        which is essential for memory-efficient data processing.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">python</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># ── Decorators ──</span>
+<span class="hl-keyword">import</span> time
+<span class="hl-keyword">from</span> functools <span class="hl-keyword">import</span> wraps
+
+<span class="hl-keyword">def</span> <span class="hl-function">timer</span>(func):
+    <span class="hl-string">"""Measure execution time of a function."""</span>
+    <span class="hl-keyword">@wraps</span>(func)
+    <span class="hl-keyword">def</span> <span class="hl-function">wrapper</span>(*args, **kwargs):
+        start = time.<span class="hl-function">perf_counter</span>()
+        result = <span class="hl-function">func</span>(*args, **kwargs)
+        elapsed = time.<span class="hl-function">perf_counter</span>() - start
+        <span class="hl-function">print</span>(<span class="hl-string">f"{func.__name__} took {elapsed:.4f}s"</span>)
+        <span class="hl-keyword">return</span> result
+    <span class="hl-keyword">return</span> wrapper
+
+<span class="hl-keyword">@timer</span>
+<span class="hl-keyword">def</span> <span class="hl-function">slow_operation</span>():
+    time.<span class="hl-function">sleep</span>(<span class="hl-number">1</span>)
+    <span class="hl-keyword">return</span> <span class="hl-string">"done"</span>
+
+<span class="hl-comment"># ── Generators ──</span>
+<span class="hl-keyword">def</span> <span class="hl-function">read_large_file</span>(path: <span class="hl-function">str</span>):
+    <span class="hl-string">"""Read a file line-by-line without loading it all into memory."""</span>
+    <span class="hl-keyword">with</span> <span class="hl-function">open</span>(path) <span class="hl-keyword">as</span> f:
+        <span class="hl-keyword">for</span> line <span class="hl-keyword">in</span> f:
+            <span class="hl-keyword">yield</span> line.<span class="hl-function">strip</span>()
+
+<span class="hl-comment"># Generator expressions — like list comprehensions but lazy</span>
+<span class="hl-keyword">total</span> = <span class="hl-function">sum</span>(x ** <span class="hl-number">2</span> <span class="hl-keyword">for</span> x <span class="hl-keyword">in</span> <span class="hl-function">range</span>(<span class="hl-number">1_000_000</span>))
+<span class="hl-comment"># Uses constant memory, not a 1M-element list</span>
+</pre>
+      </div>
+
+      <details>
+        <summary>How decorators work under the hood</summary>
+        <div class="details-body">
+          <p>
+            A decorator is syntactic sugar for wrapping a function. When you write <code>@timer</code> above a
+            function definition, Python executes <code>slow_operation = timer(slow_operation)</code>. The
+            <code>@wraps(func)</code> decorator from <code>functools</code> preserves the original function's
+            name and docstring, which matters for debugging and for FastAPI's automatic documentation generation.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>When to use generators vs. lists</summary>
+        <div class="details-body">
+          <p>
+            Use generators when you are processing data sequentially and do not need random access. If you are
+            iterating over database rows, reading log files, or streaming API responses, generators keep memory
+            usage constant regardless of data size. Use lists when you need to access elements by index, sort them,
+            or iterate multiple times.
+          </p>
+        </div>
+      </details>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 3: WATCH & LEARN
+           ════════════════════════════════════════ -->
+      <h2 id="watch-learn">Watch &amp; Learn</h2>
+
+      <p>
+        These videos cover the core Python concepts in this chapter. Watch them before starting the assignments
+        to build a solid mental model of how Python works.
+      </p>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/rfscVS0vtbw?rel=0&amp;modestbranding=1"
+            title="Learn Python - Full Course for Beginners"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          freeCodeCamp — Learn Python Full Course for Beginners (covers variables, data types, loops, and functions)
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/HGOBQPFzWKo?rel=0&amp;modestbranding=1"
+            title="Intermediate Python Programming Course"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          freeCodeCamp — Intermediate Python (covers decorators, generators, closures, and error handling)
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 4: FURTHER READING
+           ════════════════════════════════════════ -->
+      <h2 id="further-reading">Further Reading</h2>
+
+      <p>Deep-dive into the official documentation and reference material for Python fundamentals.</p>
+
+      <div class="resource-grid">
+        <a class="resource-card" href="https://docs.python.org/3/tutorial/" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">The Python Tutorial (Official)</div>
+            <div class="resource-desc">The definitive starting point. Covers all language fundamentals from the Python core team.</div>
+          </div>
         </a>
-  </nav>
 
-  <footer class="footer">
-    ILA (Iksha Learning Academy) &middot; Python and FastAPI Foundations &middot; <a href="index.html">All Chapters</a>
+        <a class="resource-card" href="https://realpython.com/python-data-types/" target="_blank" rel="noopener">
+          <div class="resource-icon article">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Real Python: Basic Data Types</div>
+            <div class="resource-desc">Deep dive into integers, floats, strings, and booleans with practical examples.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://docs.python.org/3/reference/datamodel.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Python Data Model Reference</div>
+            <div class="resource-desc">How Python objects, types, and special methods work internally. Essential for OOP mastery.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://realpython.com/python-virtual-environments-a-primer/" target="_blank" rel="noopener">
+          <div class="resource-icon article">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Real Python: Virtual Environments Primer</div>
+            <div class="resource-desc">Everything about venv, pip, and dependency isolation for Python projects.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://peps.python.org/pep-0008/" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">PEP 8 — Style Guide for Python Code</div>
+            <div class="resource-desc">The official Python style guide. Naming conventions, formatting rules, and best practices.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://github.com/charlax/professional-programming" target="_blank" rel="noopener">
+          <div class="resource-icon github">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Professional Programming Resources</div>
+            <div class="resource-desc">Curated list of resources for becoming a better programmer. Python-specific section included.</div>
+          </div>
+        </a>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 5: ASSIGNMENTS
+           ════════════════════════════════════════ -->
+      <h2 id="assignments">Assignments</h2>
+
+      <p>
+        Complete these in order. Each level builds on the previous one. Submit your work as a GitHub PR
+        with clean, well-documented code following PEP 8 conventions.
+      </p>
+
+      <!-- Assignment 1: Level 1 -->
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 1
+          </div>
+          <span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span>
+        </div>
+        <h4>Python Data Processing CLI</h4>
+        <p>Build a command-line tool that reads a CSV file, processes the data, and outputs a summary report. This exercises variables, data types, control flow, and file I/O.</p>
+
+        <ul class="checklist">
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Create a virtual environment and <code>requirements.txt</code> with any dependencies</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Read a CSV file using the built-in <code>csv</code> module (not pandas)</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Calculate statistics: count, min, max, average for numeric columns</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Handle errors gracefully: missing file, malformed data, empty columns</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Output results as formatted text and as a JSON file</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Use type hints on all function signatures</span>
+          </li>
+        </ul>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            Running <code>python main.py data.csv</code> produces a clean summary report and a <code>report.json</code>
+            file. Invalid input produces helpful error messages, not stack traces.
+          </p>
+        </div>
+      </div>
+
+      <!-- Assignment 2: Level 2 -->
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 2
+          </div>
+          <span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span>
+        </div>
+        <h4>Multi-Module Task Manager</h4>
+        <p>Build a task management application organized as a proper Python package with multiple modules, demonstrating clean architecture and code reuse.</p>
+
+        <ul class="checklist">
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Organize code into a package: <code>taskmanager/models.py</code>, <code>taskmanager/storage.py</code>, <code>taskmanager/cli.py</code></span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Use a decorator to log all function calls with arguments and return values</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Implement CRUD operations: create, read, update, delete tasks</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Store tasks in a JSON file with proper serialization/deserialization</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Add filtering: by status, priority, and date range using generator functions</span>
+          </li>
+        </ul>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            The package can be imported and used from another script. All modules have clear responsibilities
+            and the CLI provides a complete user experience for managing tasks.
+          </p>
+        </div>
+      </div>
+
+      <!-- Assignment 3: Level 3 -->
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 3
+          </div>
+          <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Production-Ready</span>
+        </div>
+        <h4>Plugin-Based Data Pipeline</h4>
+        <p>Build an extensible data pipeline that uses decorators, generators, and dynamic module loading to process data through configurable transformation steps.</p>
+
+        <ul class="checklist">
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Create a pipeline framework that discovers and loads transform plugins from a directory</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Use generators for memory-efficient streaming of large datasets</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Implement a <code>@transform</code> decorator that registers functions as pipeline steps</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Add error handling with custom exceptions and a retry mechanism</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Write a <code>pyproject.toml</code> that makes your pipeline installable with <code>pip install -e .</code></span>
+          </li>
+        </ul>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            Adding a new transform step requires only creating a new Python file in the plugins directory with
+            a decorated function. No changes to the core pipeline code. The pipeline processes a 100MB+ file
+            without memory issues.
+          </p>
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 6: SELF-CHECK
+           ════════════════════════════════════════ -->
+      <h2 id="self-check">Self-Check</h2>
+
+      <p>Before moving to Chapter 02, honestly answer these questions. If any answer is "no", go back and review.</p>
+
+      <details>
+        <summary>Can you explain the difference between mutable and immutable types?</summary>
+        <div class="details-body">
+          <p>
+            Lists, dictionaries, and sets are mutable &mdash; they can be changed in place. Strings, tuples,
+            integers, and frozensets are immutable &mdash; any "modification" creates a new object. This matters
+            for function arguments (mutable default arguments are shared), dictionary keys (must be immutable),
+            and understanding when Python copies data vs. creates a reference.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Can you write a decorator that accepts arguments?</summary>
+        <div class="details-body">
+          <p>
+            A parameterized decorator is a function that returns a decorator. The pattern is three nested functions:
+            the outer function takes the decorator's arguments, the middle function takes the wrapped function,
+            and the inner function replaces the wrapped function. If you can write
+            <code>@retry(max_attempts=3)</code>, you understand closures, higher-order functions, and decorators.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Can you explain when and why to use virtual environments?</summary>
+        <div class="details-body">
+          <p>
+            Virtual environments isolate project dependencies. Without them, installing a package for one project
+            could break another. You should create a virtual environment for every project, activate it before
+            working, and never install project dependencies globally. The <code>venv</code> module is built into
+            Python 3.3+ and is the recommended approach.
+          </p>
+        </div>
+      </details>
+
+    </main>
+
+    <!-- Sidebar: Table of Contents -->
+    <aside class="sidebar">
+      <div class="sidebar-title">On this page</div>
+      <ul class="toc-list">
+        <li class="toc-item"><a href="#why-this-matters">Why This Matters</a></li>
+        <li class="toc-item"><a href="#key-concepts">Key Concepts</a></li>
+        <li class="toc-item"><a href="#variables-data-types" style="padding-left: 28px; font-size: 12px;">Variables &amp; Data Types</a></li>
+        <li class="toc-item"><a href="#control-flow" style="padding-left: 28px; font-size: 12px;">Control Flow</a></li>
+        <li class="toc-item"><a href="#functions" style="padding-left: 28px; font-size: 12px;">Functions &amp; Closures</a></li>
+        <li class="toc-item"><a href="#error-handling" style="padding-left: 28px; font-size: 12px;">Error Handling</a></li>
+        <li class="toc-item"><a href="#modules-packages" style="padding-left: 28px; font-size: 12px;">Modules &amp; Packages</a></li>
+        <li class="toc-item"><a href="#decorators-generators" style="padding-left: 28px; font-size: 12px;">Decorators &amp; Generators</a></li>
+        <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a></li>
+        <li class="toc-item"><a href="#further-reading">Further Reading</a></li>
+        <li class="toc-item"><a href="#assignments">Assignments</a></li>
+        <li class="toc-item"><a href="#self-check">Self-Check</a></li>
+      </ul>
+    </aside>
+  </div>
+
+  <!-- Footer Navigation -->
+  <footer class="chapter-footer">
+    <div class="chapter-footer-inner">
+      <nav class="footer-nav">
+        <div></div>
+        <a class="footer-nav-link" href="chapter-02.html">
+          <span class="footer-nav-label">Next Chapter &rarr;</span>
+          <span class="footer-nav-title">02: Object-Oriented Python</span>
+        </a>
+      </nav>
+      <div class="footer-brand">
+        ILA (Iksha Learning Academy) &middot; Python + FastAPI Engineering Certification &middot; Basic Track
+      </div>
+    </div>
   </footer>
 
+  <!-- ════════════════════════════════════════
+       SCRIPTS
+       ════════════════════════════════════════ -->
   <script>
+    // ── Progress Bar ──
     window.addEventListener('scroll', () => {
-      const h = document.documentElement;
-      const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
-      document.getElementById('progressBar').style.width = Math.min(pct, 100) + '%';
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      document.getElementById('progressBar').style.width = progress + '%';
     });
+
+    // ── Active TOC ──
+    const tocLinks = document.querySelectorAll('.toc-item a');
+    const sections = [];
+
+    tocLinks.forEach(link => {
+      const id = link.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) sections.push({ id, el, link });
+    });
+
+    const observerOptions = {
+      rootMargin: '-80px 0px -60% 0px',
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const item = sections.find(s => s.el === entry.target);
+        if (item) {
+          if (entry.isIntersecting) {
+            tocLinks.forEach(l => l.classList.remove('active'));
+            item.link.classList.add('active');
+          }
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(s => observer.observe(s.el));
+
+    // ── Copy Code ──
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      const text = pre.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.classList.add('copied');
+        btn.textContent = 'Copied!';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.textContent = 'Copy';
+        }, 2000);
+      });
+    }
   </script>
 </body>
 </html>

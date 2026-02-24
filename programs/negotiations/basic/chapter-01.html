@@ -3,12 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chapter 01: The Negotiation Mindset &mdash; ILA Negotiations</title>
+  <title>Chapter 01: Negotiation Fundamentals &mdash; ILA Negotiations</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
+    /* ═══════════════════════════════════════════════
+       ILA DESIGN SYSTEM — v1.0
+       Iksha Learning Academy
+       ═══════════════════════════════════════════════ */
+
     :root {
+      /* Palette */
       --ink:        #0f172a;
       --ink-light:  #334155;
       --ink-muted:  #64748b;
@@ -17,6 +23,8 @@
       --surface-warm:#fffbeb;
       --border:     #e2e8f0;
       --border-light:#f1f5f9;
+
+      /* Brand */
       --teal-50:  #f0fdfa;
       --teal-100: #ccfbf1;
       --teal-200: #99f6e4;
@@ -25,36 +33,48 @@
       --teal-700: #0f766e;
       --teal-800: #115e59;
       --teal-900: #134e4a;
+
       --blue-50:  #eff6ff;
       --blue-100: #dbeafe;
       --blue-500: #3b82f6;
       --blue-600: #2563eb;
       --blue-700: #1d4ed8;
+
       --amber-50:  #fffbeb;
       --amber-100: #fef3c7;
       --amber-500: #f59e0b;
       --amber-600: #d97706;
+
       --red-50:   #fef2f2;
       --red-100:  #fee2e2;
       --red-500:  #ef4444;
       --red-600:  #dc2626;
+
       --purple-50:  #faf5ff;
       --purple-100: #f3e8ff;
       --purple-500: #a855f7;
       --purple-600: #9333ea;
-      --green-50:  #f0fdf4;
-      --green-100: #dcfce7;
-      --green-500: #22c55e;
-      --green-600: #16a34a;
+
+      /* Typography */
       --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       --font-serif: 'Instrument Serif', Georgia, serif;
       --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
+
+      /* Spacing */
       --content-max: 780px;
+      --sidebar-width: 280px;
+
+      /* Transitions */
       --ease: cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
 
     body {
       font-family: var(--font-sans);
@@ -64,6 +84,7 @@
       background: var(--surface);
     }
 
+    /* ── PROGRESS BAR ─────────────────────────── */
     .progress-bar {
       position: fixed;
       top: 0;
@@ -75,6 +96,7 @@
       transition: width 0.15s var(--ease);
     }
 
+    /* ── TOP NAV ──────────────────────────────── */
     .top-nav {
       position: sticky;
       top: 0;
@@ -162,6 +184,7 @@
       padding: 0 4px;
     }
 
+    /* ── HERO ─────────────────────────────────── */
     .hero {
       background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%);
       border-bottom: 1px solid var(--border);
@@ -222,33 +245,117 @@
       color: var(--ink-muted);
     }
 
-    .content {
-      max-width: var(--content-max);
-      margin: 0 auto;
-      padding: 3rem 2rem 6rem;
+    .hero-meta-item svg {
+      width: 16px;
+      height: 16px;
+      color: var(--teal-600);
     }
 
+    /* ── MAIN LAYOUT ──────────────────────────── */
+    .main-layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr var(--sidebar-width);
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .content {
+      padding: 3rem 0 6rem;
+      min-width: 0;
+    }
+
+    /* ── SIDEBAR TOC ──────────────────────────── */
+    .sidebar {
+      position: sticky;
+      top: 76px;
+      padding: 2rem 0;
+      max-height: calc(100vh - 76px);
+      overflow-y: auto;
+    }
+
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-muted);
+      margin-bottom: 1rem;
+      padding-left: 14px;
+    }
+
+    .toc-list {
+      list-style: none;
+    }
+
+    .toc-item a {
+      display: block;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--ink-muted);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: all 0.2s var(--ease);
+      line-height: 1.5;
+    }
+
+    .toc-item a:hover {
+      color: var(--ink);
+      background: var(--surface-alt);
+    }
+
+    .toc-item a.active {
+      color: var(--teal-700);
+      border-left-color: var(--teal-500);
+      background: var(--teal-50);
+      font-weight: 500;
+    }
+
+    /* ── TYPOGRAPHY ────────────────────────────── */
     .content h2 {
       font-family: var(--font-serif);
       font-size: 1.85rem;
       font-weight: 400;
       color: var(--ink);
       margin: 3rem 0 1rem;
+      padding-top: 1rem;
       scroll-margin-top: 80px;
     }
 
-    .content h2:first-child { margin-top: 0; }
+    .content h2:first-child {
+      margin-top: 0;
+    }
 
     .content h3 {
       font-size: 1.15rem;
       font-weight: 600;
       color: var(--ink);
       margin: 2rem 0 0.75rem;
+      scroll-margin-top: 80px;
     }
 
     .content p {
       margin-bottom: 1.25rem;
       color: var(--ink-light);
+    }
+
+    .content strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .content a {
+      color: var(--teal-700);
+      text-decoration: underline;
+      text-decoration-color: var(--teal-200);
+      text-underline-offset: 3px;
+      transition: text-decoration-color 0.2s;
+    }
+
+    .content a:hover {
+      text-decoration-color: var(--teal-600);
     }
 
     .content ul, .content ol {
@@ -261,13 +368,25 @@
       color: var(--ink-light);
     }
 
-    .content li::marker { color: var(--teal-500); }
+    .content li::marker {
+      color: var(--teal-500);
+    }
 
+    /* ── SECTION DIVIDER ──────────────────────── */
+    .section-divider {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 3rem 0;
+    }
+
+    /* ── CALLOUT BOXES ────────────────────────── */
     .callout {
       padding: 1.25rem 1.5rem;
       border-radius: 12px;
       margin-bottom: 1.5rem;
       border: 1px solid;
+      position: relative;
     }
 
     .callout-header {
@@ -277,6 +396,12 @@
       font-size: 14px;
       font-weight: 600;
       margin-bottom: 0.5rem;
+    }
+
+    .callout-header svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
     }
 
     .callout p:last-child { margin-bottom: 0; }
@@ -293,6 +418,12 @@
     }
     .callout.important .callout-header { color: var(--amber-600); }
 
+    .callout.danger {
+      background: var(--red-50);
+      border-color: var(--red-100);
+    }
+    .callout.danger .callout-header { color: var(--red-600); }
+
     .callout.tip {
       background: var(--purple-50);
       border-color: var(--purple-100);
@@ -305,93 +436,403 @@
     }
     .callout.success .callout-header { color: var(--teal-700); }
 
-    .section-divider {
-      border: none;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--border), transparent);
-      margin: 3rem 0;
-    }
-
-    .coming-soon-banner {
-      background: var(--amber-50);
-      border: 1px solid var(--amber-100);
+    /* ── CODE BLOCKS ──────────────────────────── */
+    .code-block {
+      position: relative;
+      margin-bottom: 1.5rem;
       border-radius: 12px;
-      padding: 2.5rem;
-      text-align: center;
-      margin: 2rem 0;
+      overflow: hidden;
+      border: 1px solid var(--border);
     }
 
-    .coming-soon-banner h3 {
-      color: var(--amber-600);
-      margin-bottom: 0.5rem;
-    }
-
-    .coming-soon-banner p {
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+      background: var(--surface-alt);
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
       color: var(--ink-muted);
-      margin-bottom: 0;
     }
 
-    .topics-preview {
+    .code-lang {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .code-copy {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: white;
+      font-size: 11px;
+      font-family: var(--font-sans);
+      color: var(--ink-muted);
+      cursor: pointer;
+      transition: all 0.2s var(--ease);
+    }
+
+    .code-copy:hover {
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    .code-copy.copied {
+      background: var(--teal-50);
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    pre {
+      margin: 0;
+      padding: 1.25rem 1.5rem;
+      overflow-x: auto;
+      background: #1e293b;
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: #e2e8f0;
+    }
+
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.88em;
+    }
+
+    p code, li code {
+      padding: 2px 7px;
       background: var(--surface-alt);
       border: 1px solid var(--border);
+      border-radius: 5px;
+      color: var(--teal-800);
+      font-size: 0.85em;
+    }
+
+    /* Syntax highlights (minimal) */
+    .hl-keyword  { color: #c084fc; }
+    .hl-string   { color: #86efac; }
+    .hl-comment  { color: #64748b; font-style: italic; }
+    .hl-function { color: #7dd3fc; }
+    .hl-number   { color: #fbbf24; }
+    .hl-flag     { color: #f472b6; }
+
+    /* ── COLLAPSIBLE (DETAILS) ────────────────── */
+    details {
+      margin-bottom: 1.25rem;
+      border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 1.5rem 2rem;
-      margin: 1.5rem 0;
+      overflow: hidden;
+      transition: border-color 0.2s var(--ease);
     }
 
-    .topics-preview h3 {
-      font-size: 0.95rem;
-      margin-bottom: 0.75rem;
+    details[open] {
+      border-color: var(--teal-200);
+    }
+
+    details summary {
+      padding: 1rem 1.25rem;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      background: var(--surface-alt);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.2s var(--ease);
+      user-select: none;
+    }
+
+    details summary::-webkit-details-marker { display: none; }
+
+    details summary::before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+      flex-shrink: 0;
+      transition: transform 0.2s var(--ease);
+    }
+
+    details[open] summary::before {
+      transform: rotate(90deg);
+    }
+
+    details summary:hover {
+      background: var(--teal-50);
+    }
+
+    .details-body {
+      padding: 1.25rem 1.5rem;
+    }
+
+    .details-body p:last-child { margin-bottom: 0; }
+
+    /* ── VIDEO EMBED ──────────────────────────── */
+    .video-card {
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      background: #0f172a;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .video-caption {
+      padding: 12px 16px;
+      background: var(--surface-alt);
+      font-size: 13px;
+      color: var(--ink-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .video-caption svg {
+      width: 14px;
+      height: 14px;
+      color: var(--red-500);
+    }
+
+    /* ── RESOURCE CARDS ───────────────────────── */
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .resource-card {
+      display: flex;
+      gap: 14px;
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      background: white;
+    }
+
+    .resource-card:hover {
+      border-color: var(--teal-300);
+      background: var(--teal-50);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .resource-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 18px;
+    }
+
+    .resource-icon.docs    { background: var(--blue-50);   color: var(--blue-600); }
+    .resource-icon.video   { background: var(--red-50);    color: var(--red-500); }
+    .resource-icon.github  { background: var(--ink);       color: white; }
+    .resource-icon.article { background: var(--amber-50);  color: var(--amber-600); }
+    .resource-icon.pdf     { background: var(--purple-50); color: var(--purple-600); }
+
+    .resource-info {
+      min-width: 0;
+    }
+
+    .resource-title {
+      font-size: 14px;
+      font-weight: 600;
       color: var(--ink);
+      margin-bottom: 2px;
+      line-height: 1.4;
     }
 
-    .topics-preview ul {
+    .resource-desc {
+      font-size: 12px;
+      color: var(--ink-muted);
+      line-height: 1.5;
+    }
+
+    /* ── ASSIGNMENT CARDS ─────────────────────── */
+    .assignment {
+      border: 2px solid var(--teal-200);
+      border-radius: 14px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--teal-50) 0%, white 100%);
+    }
+
+    .assignment-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .assignment-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--teal-700);
+    }
+
+    .assignment-difficulty {
+      display: inline-flex;
+      padding: 4px 10px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .difficulty-l1 { background: var(--teal-100); color: var(--teal-800); }
+    .difficulty-l2 { background: var(--amber-100); color: var(--amber-600); }
+    .difficulty-l3 { background: var(--red-100); color: var(--red-600); }
+
+    .assignment h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .assignment p {
+      font-size: 14px;
+    }
+
+    .checklist {
       list-style: none;
       padding: 0;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 0.5rem;
     }
 
-    .topics-preview li {
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-light);
       font-size: 14px;
-      color: var(--ink-light);
-      padding-left: 1.25rem;
-      position: relative;
     }
 
-    .topics-preview li::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 8px;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
+    .checklist li:last-child { border-bottom: none; }
+
+    .check-box {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      border: 2px solid var(--border);
+      flex-shrink: 0;
+      margin-top: 1px;
+      cursor: pointer;
+      transition: all 0.15s var(--ease);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .check-box:hover {
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked {
       background: var(--teal-500);
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+    }
+
+    /* ── DIAGRAM ──────────────────────────────── */
+    .diagram {
+      margin: 1.5rem 0;
+      padding: 2rem;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow-x: auto;
+    }
+
+    .diagram pre {
+      background: transparent;
+      color: var(--ink);
+      padding: 0;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .diagram-caption {
+      margin-top: 1rem;
+      font-size: 12px;
+      color: var(--ink-muted);
+      text-align: center;
+      font-style: italic;
+    }
+
+    /* ── FOOTER ───────────────────────────────── */
+    .chapter-footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      background: var(--surface-alt);
+    }
+
+    .chapter-footer-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
     }
 
     .footer-nav {
-      max-width: var(--content-max);
-      margin: 0 auto;
-      padding: 2rem;
       display: flex;
       justify-content: space-between;
-      border-top: 1px solid var(--border);
+      align-items: center;
+      gap: 1rem;
     }
 
     .footer-nav-link {
       display: flex;
       flex-direction: column;
-      text-decoration: none;
-      padding: 1rem;
+      gap: 4px;
+      padding: 1rem 1.5rem;
+      border: 1px solid var(--border);
       border-radius: 12px;
-      transition: background 0.2s var(--ease);
-      max-width: 45%;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      max-width: 320px;
+      background: white;
     }
 
     .footer-nav-link:hover {
-      background: var(--surface-alt);
+      border-color: var(--teal-300);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
     }
 
     .footer-nav-label {
@@ -399,46 +840,61 @@
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.06em;
-      color: var(--ink-muted);
-      margin-bottom: 4px;
+      color: var(--teal-600);
     }
 
     .footer-nav-title {
       font-size: 15px;
       font-weight: 600;
-      color: var(--teal-700);
+      color: var(--ink);
     }
 
-    .footer-nav-link.next { text-align: right; margin-left: auto; }
-
-    .footer {
+    .footer-brand {
       text-align: center;
-      padding: 2rem;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
       font-size: 13px;
       color: var(--ink-muted);
-      border-top: 1px solid var(--border);
     }
 
-    .footer a {
-      color: var(--teal-700);
-      text-decoration: none;
+    /* ── RESPONSIVE ───────────────────────────── */
+    @media (max-width: 960px) {
+      .main-layout {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        display: none;
+      }
+      .resource-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
-    .footer a:hover { text-decoration: underline; }
+    @media (max-width: 640px) {
+      .hero { padding: 2.5rem 1.25rem 2rem; }
+      .main-layout { padding: 0 1.25rem; }
+      .content { padding: 2rem 0 4rem; }
+      pre { padding: 1rem; font-size: 12.5px; }
+      .footer-nav { flex-direction: column; }
+      .footer-nav-link { max-width: 100%; width: 100%; }
+    }
 
-    @media (max-width: 768px) {
-      .hero { padding: 3rem 1.5rem 2.5rem; }
-      .content { padding: 2rem 1.5rem 4rem; }
-      .hero h1 { font-size: 2rem; }
-      .footer-nav { flex-direction: column; gap: 1rem; }
-      .footer-nav-link { max-width: 100%; }
-      .footer-nav-link.next { text-align: left; }
+    /* ── PRINT ────────────────────────────────── */
+    @media print {
+      .top-nav, .sidebar, .progress-bar { display: none; }
+      .main-layout { display: block; }
+      .content { padding: 0; }
+      .hero { background: white; border: none; }
+      pre { background: #f1f5f9; color: var(--ink); border: 1px solid var(--border); }
     }
   </style>
 </head>
 <body>
+  <!-- Progress Bar -->
   <div class="progress-bar" id="progressBar"></div>
 
+  <!-- Top Navigation -->
   <nav class="top-nav">
     <div class="top-nav-inner">
       <a class="nav-brand" href="index.html">
@@ -453,68 +909,740 @@
     </div>
   </nav>
 
+  <!-- Hero -->
   <header class="hero">
     <div class="hero-inner">
       <div class="hero-chapter-label">
-        <span>Chapter 01</span> 
+        <span>Chapter 01</span> &middot; Negotiation Foundations
       </div>
-      <h1>The Negotiation Mindset</h1>
-      <p class="hero-subtitle">Win-win vs zero-sum, BATNA, reservation price, ZOPA, anchoring, negotiation styles</p>
+      <h1>Negotiation Fundamentals</h1>
+      <p class="hero-subtitle">
+        Every startup interaction is a negotiation &mdash; from co-founder equity splits to vendor pricing to feature prioritization with stakeholders. Master the foundational vocabulary, mental models, and strategic frameworks that separate prepared negotiators from those who leave value on the table.
+      </p>
       <div class="hero-meta">
-        <div class="hero-meta-item">3 Assignments</div>
-        <div class="hero-meta-item">~45 min read</div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Estimated: 45&ndash;60 min
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          6 Key Concepts
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          3 Assignments
+        </div>
       </div>
     </div>
   </header>
 
-  <main class="content">
-    <h2>Overview</h2>
-    <p>This chapter covers <strong>the negotiation mindset</strong> as part of the Negotiation Foundations curriculum. You will build practical skills through guided explanations, code examples, and hands-on assignments.</p>
+  <!-- Main Content + Sidebar -->
+  <div class="main-layout">
+    <main class="content">
 
-    <div class="topics-preview">
-      <h3>Topics Covered</h3>
+      <!-- ════════════════════════════════════════
+           SECTION 1: WHY THIS MATTERS
+           ════════════════════════════════════════ -->
+      <h2 id="why-this-matters">Why This Matters</h2>
+
+      <p>
+        If you work at a startup, you negotiate every single day &mdash; even when you don't realize it. The term sheet your founders signed, the deadline your PM agreed to, the cloud credits your DevOps lead secured, the salary your first engineering hire accepted &mdash; every one of these outcomes was shaped by someone's negotiation skill (or lack thereof).
+      </p>
+
+      <p>
+        According to research from Harvard Business School, professionals who receive even basic negotiation training capture, on average, <strong>42% more value</strong> in deals than untrained counterparts. In a startup context, where every dollar of runway matters and every partnership can make or break your trajectory, that difference is existential.
+      </p>
+
+      <p>
+        This chapter gives you the foundational vocabulary and mental models that every subsequent chapter builds upon. You will learn to distinguish between negotiations that divide a fixed pie and those that expand it, identify your alternatives before you sit down at the table, and map the zone where deals actually happen.
+      </p>
+
+      <div class="callout concept">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Key Insight
+        </div>
+        <p>
+          Negotiation is not about winning arguments. It is about <strong>understanding what the other side values and finding creative ways to trade across differences</strong>. The best negotiators in startups aren't the loudest voices in the room &mdash; they're the ones who ask the best questions and listen the hardest.
+        </p>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 2: KEY CONCEPTS
+           ════════════════════════════════════════ -->
+      <h2 id="key-concepts">Key Concepts</h2>
+
+      <h3 id="what-is-negotiation">1. What Is Negotiation?</h3>
+
+      <p>
+        Negotiation is a dialogue between two or more parties aimed at reaching an agreement on matters of mutual interest. It sounds simple, but the definition reveals something important: <strong>both sides must have something the other wants</strong>. If there is no mutual interest, there is no negotiation &mdash; only dictation.
+      </p>
+
+      <p>
+        In a startup environment, negotiations take many forms:
+      </p>
+
       <ul>
-            <li>Win-win vs zero-sum</li>
-            <li>BATNA</li>
-            <li>reservation price</li>
-            <li>ZOPA</li>
-            <li>anchoring</li>
-            <li>negotiation styles</li>
+        <li><strong>External negotiations</strong> &mdash; Investor term sheets, customer contracts, vendor agreements, partnership deals, acquisition offers</li>
+        <li><strong>Internal negotiations</strong> &mdash; Headcount allocation, feature prioritization, equity splits, remote work policies, OKR targets</li>
+        <li><strong>Implicit negotiations</strong> &mdash; Deadline commitments, scope creep conversations, code review standards, on-call rotations</li>
       </ul>
-    </div>
 
-    <hr class="section-divider">
+      <div class="callout important">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Common Startup Mistake
+        </div>
+        <p>
+          Many technical founders treat negotiation as a "business person's skill" and avoid preparing for investor meetings, vendor conversations, and even salary discussions with early hires. This is a costly error. The decisions you negotiate in the first 18 months of a startup &mdash; equity splits, investor terms, early employee compensation &mdash; compound over the life of the company.
+        </p>
+      </div>
 
-    <div class="coming-soon-banner">
-      <h3>Content In Development</h3>
-      <p>Full chapter content with detailed explanations, code examples, video walkthroughs, and assignments is being developed. Check back soon.</p>
-    </div>
+      <h3 id="distributive-vs-integrative">2. Distributive vs. Integrative Negotiation</h3>
 
-    <div class="callout tip">
-      <div class="callout-header">What You Will Learn</div>
-      <p>By the end of this chapter, you will understand win-win vs zero-sum, batna, reservation price, zopa, anchoring, negotiation styles and be able to apply these concepts in real-world scenarios.</p>
-    </div>
+      <p>
+        Every negotiation falls somewhere on a spectrum between two fundamental approaches. Understanding where your current negotiation sits determines your entire strategy.
+      </p>
 
-  </main>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Framework</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── Distributive vs. Integrative Negotiation ─────────────── */</span>
 
-  <nav class="footer-nav">
+<span class="hl-keyword">DISTRIBUTIVE</span> (Zero-Sum / "Fixed Pie")
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Mindset:     "Your gain is my loss"
+  Goal:        Claim maximum value from a fixed resource
+  Relationship: Low priority (often one-time transactions)
+  Information:  Guard your limits, probe theirs
+  Tactics:      Anchoring, concession management, deadlines
 
-        <a class="footer-nav-link next" href="chapter-02.html">
-          <span class="footer-nav-label">Next &rarr;</span>
-          <span class="footer-nav-title">Chapter 02: Preparation and Research</span>
+  <span class="hl-function">Startup Examples:</span>
+  - Buying used office furniture from a liquidation sale
+  - Negotiating a one-time consulting rate
+  - Haggling over price with a contractor you won't use again
+
+<span class="hl-keyword">INTEGRATIVE</span> (Win-Win / "Expanding the Pie")
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Mindset:     "How do we create more value together?"
+  Goal:        Maximize joint value, then divide fairly
+  Relationship: High priority (ongoing partnerships)
+  Information:  Share interests openly to find trades
+  Tactics:      Interest mapping, creative options, objective criteria
+
+  <span class="hl-function">Startup Examples:</span>
+  - Negotiating a strategic partnership with a larger company
+  - Structuring co-founder equity and roles
+  - Building a long-term enterprise customer relationship
+  - Negotiating with an investor who will join your board
+
+<span class="hl-comment">/* Most real-world startup negotiations are MIXED: */</span>
+<span class="hl-comment">/* There are integrative opportunities (expand the pie) */</span>
+<span class="hl-comment">/* AND distributive moments (divide what you've created) */</span>
+</pre>
+      </div>
+
+      <p>
+        The mistake most people make is treating every negotiation as purely distributive. When you approach a vendor conversation as a zero-sum battle, you miss opportunities to structure deals that work better for both sides &mdash; volume commitments for lower unit prices, longer terms for better rates, referral partnerships for waived fees.
+      </p>
+
+      <h3 id="batna">3. BATNA: Your Most Powerful Lever</h3>
+
+      <p>
+        <strong>BATNA</strong> stands for <strong>Best Alternative To a Negotiated Agreement</strong>. It is the single most important concept in negotiation theory, developed by Roger Fisher and William Ury in their landmark book <em>Getting to Yes</em>.
+      </p>
+
+      <p>
+        Your BATNA is what you will do if the current negotiation fails. It is not a wish &mdash; it is a concrete, actionable alternative that you can execute unilaterally, without the other party's cooperation.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Scenario</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── BATNA Analysis: SaaS Vendor Negotiation ─────────────── */</span>
+
+<span class="hl-keyword">SITUATION:</span>
+  Your startup uses VendorA for error monitoring at $1,200/month.
+  Your contract renews in 30 days. You want a lower rate.
+
+<span class="hl-keyword">STEP 1: Identify your alternatives</span>
+  <span class="hl-function">Alternative A:</span> Switch to VendorB (comparable features, $900/mo)
+  <span class="hl-function">Alternative B:</span> Switch to open-source solution (free, but ~40 hrs setup)
+  <span class="hl-function">Alternative C:</span> Build a minimal in-house solution (free, ~80 hrs)
+  <span class="hl-function">Alternative D:</span> Do nothing (stay at current $1,200/mo)
+
+<span class="hl-keyword">STEP 2: Evaluate each alternative</span>
+  Alt A: $900/mo + ~16 hrs migration = <span class="hl-number">Best realistic option</span>
+  Alt B: $0/mo + 40 hrs setup + ongoing maintenance = Medium
+  Alt C: $0/mo + 80 hrs + significant opportunity cost = Worst
+  Alt D: $1,200/mo = Status quo (not really an "alternative")
+
+<span class="hl-keyword">STEP 3: Select your BATNA</span>
+  <span class="hl-string">BATNA = Alternative A (Switch to VendorB at $900/month)</span>
+
+<span class="hl-keyword">STEP 4: Use BATNA to set your reservation price</span>
+  You should not accept any deal worse than $900/mo from VendorA,
+  because you can get equivalent service at that price elsewhere.
+
+  <span class="hl-comment">/* Your opening ask should be BELOW $900 — e.g., $700/mo */</span>
+  <span class="hl-comment">/* This gives room to "concede" to $850, which still beats BATNA */</span>
+</pre>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Pro Tip
+        </div>
+        <p>
+          <strong>Never enter a negotiation without knowing your BATNA.</strong> If your BATNA is weak, spend time improving it before the negotiation starts. Getting a competing offer before a salary negotiation, lining up alternative vendors before a contract renewal, having a backup plan before an investor meeting &mdash; all of these strengthen your negotiating position before you say a single word.
+        </p>
+      </div>
+
+      <h3 id="reservation-price">4. Reservation Price (Walk-Away Point)</h3>
+
+      <p>
+        Your <strong>reservation price</strong> is the absolute worst deal you are willing to accept. It is derived directly from your BATNA, but it is not the same thing. Your BATNA is an alternative course of action; your reservation price is a number (or set of terms) that reflects the value of that alternative.
+      </p>
+
+      <p>
+        Think of it as a trip wire. If the negotiation crosses your reservation price in the wrong direction, you walk away and execute your BATNA. No exceptions, no "let me think about it," no emotional second-guessing.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Framework</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── Reservation Price Calculation ────────────────────────── */</span>
+
+<span class="hl-keyword">For a SELLER</span> (e.g., selling your SaaS product):
+  Reservation Price = BATNA value + switching costs to buyer
+
+  <span class="hl-function">Example:</span> You're selling annual SaaS licenses.
+  Your BATNA: sell to another customer at $40K/year
+  Switching costs for this buyer: ~$5K in migration effort
+  <span class="hl-string">Reservation Price = $40K</span> (you walk if they offer less)
+
+<span class="hl-keyword">For a BUYER</span> (e.g., hiring an engineering contractor):
+  Reservation Price = BATNA cost - transaction costs
+
+  <span class="hl-function">Example:</span> You need a React developer for 3 months.
+  BATNA: Hire from TopTal at $180/hr
+  Transaction costs of switching: ~$3K in ramp-up time
+  <span class="hl-string">Reservation Price = $185/hr</span> (you walk if they ask more)
+
+<span class="hl-keyword">CRITICAL RULES:</span>
+  <span class="hl-number">1.</span> Set your reservation price BEFORE the negotiation
+  <span class="hl-number">2.</span> Write it down and commit to it
+  <span class="hl-number">3.</span> Never reveal it to the other party
+  <span class="hl-number">4.</span> If you feel tempted to cross it, take a break first
+</pre>
+      </div>
+
+      <h3 id="zopa">5. ZOPA: Where Deals Happen</h3>
+
+      <p>
+        <strong>ZOPA</strong> stands for <strong>Zone of Possible Agreement</strong>. It is the range between the buyer's reservation price and the seller's reservation price. If a ZOPA exists, a deal is possible. If it doesn't, no amount of negotiation skill will produce an agreement.
+      </p>
+
+      <div class="diagram">
+<pre>
+  Seller's                                          Buyer's
+  Reservation                                       Reservation
+  Price                                             Price
+    |                                                 |
+    |     $50K          ZOPA           $80K           |
+    |       |◄══════════════════════════►|             |
+    |       |                           |             |
+    ▼       ▼                           ▼             ▼
+ ───┼───────┼───────────────────────────┼─────────────┼───►
+   $40K   $50K        $65K           $80K           $90K
+           │                           │
+           │    Deals happen here      │
+           │    Any price from $50K    │
+           │    to $80K is acceptable  │
+           │    to BOTH parties        │
+           └───────────────────────────┘
+
+  <span style="color: var(--teal-700)">If Buyer's RP ($80K) > Seller's RP ($50K) → ZOPA exists → Deal possible</span>
+  <span style="color: var(--red-600)">If Buyer's RP ($45K) < Seller's RP ($50K) → No ZOPA → No deal possible</span>
+</pre>
+        <div class="diagram-caption">Figure 1: The Zone of Possible Agreement between buyer and seller reservation prices</div>
+      </div>
+
+      <p>
+        In practice, you rarely know the other side's reservation price with certainty. Much of the art of negotiation is probing to estimate where their reservation price sits, while protecting information about your own. The party that better understands the ZOPA typically captures more value within it.
+      </p>
+
+      <h3 id="negotiation-types">6. Types of Negotiations in the Startup Lifecycle</h3>
+
+      <p>
+        Different stages of a startup present fundamentally different negotiation challenges. Understanding the type helps you choose the right approach.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Reference</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── Startup Negotiation Map ──────────────────────────────── */</span>
+
+<span class="hl-keyword">PRE-SEED / SEED STAGE</span>
+<span class="hl-string">────────────────────────</span>
+  Co-founder equity splits          → Integrative, high stakes
+  Angel investor terms              → Mixed, relationship-heavy
+  First customer pricing            → Distributive, sets precedent
+  Advisor equity grants (0.25-1%)   → Integrative, value exchange
+
+<span class="hl-keyword">SERIES A / GROWTH</span>
+<span class="hl-string">────────────────────────</span>
+  VC term sheets                    → Mixed, complex multi-issue
+  Enterprise sales contracts        → Mixed, recurring relationship
+  Key hire compensation packages    → Integrative, retention matters
+  Office lease negotiations         → Distributive, commodity market
+
+<span class="hl-keyword">SCALE / LATE STAGE</span>
+<span class="hl-string">────────────────────────</span>
+  M&A discussions                   → Mixed, highest stakes
+  Strategic partnership deals       → Integrative, long-term value
+  Vendor consolidation              → Distributive, leverage-heavy
+  Executive compensation            → Mixed, governance involved
+
+<span class="hl-keyword">THROUGHOUT ALL STAGES</span>
+<span class="hl-string">────────────────────────</span>
+  Salary negotiations with team     → Integrative, retention focus
+  Scope and deadline discussions    → Integrative, internal trust
+  Conflict resolution               → Integrative, relationship repair
+  Customer renewals and upsells     → Mixed, value demonstration
+</pre>
+      </div>
+
+      <div class="callout concept">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          The Negotiation Paradox
+        </div>
+        <p>
+          The negotiations that matter most in a startup &mdash; co-founder splits, early investor terms, first hires &mdash; happen when you have the least experience and the least leverage. This is why building negotiation skill early is so critical. By the time you "need" it for a Series B term sheet, the foundational habits should already be second nature.
+        </p>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 3: WATCH & LEARN
+           ════════════════════════════════════════ -->
+      <h2 id="watch-learn">Watch &amp; Learn</h2>
+
+      <p>
+        These videos cover the core concepts from this chapter. Watch them to see these frameworks applied in real conversations and case studies.
+      </p>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/guZa7mQV1l0?rel=0&amp;modestbranding=1"
+            title="Chris Voss - Never Split the Difference"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Chris Voss &mdash; "Never Split the Difference" (Talks at Google). FBI negotiator shares tactical frameworks for any negotiation.
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/RfTalFEeKKE?rel=0&amp;modestbranding=1"
+            title="Harvard Negotiation - William Ury - Getting to Yes"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          William Ury &mdash; "The Walk from No to Yes" (TEDx). Co-author of "Getting to Yes" on finding agreement in any situation.
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 4: FURTHER READING
+           ════════════════════════════════════════ -->
+      <h2 id="further-reading">Further Reading</h2>
+
+      <p>Deepen your understanding of negotiation fundamentals with these essential resources.</p>
+
+      <div class="resource-grid">
+        <a class="resource-card" href="https://www.amazon.com/Getting-Yes-Negotiating-Agreement-Without/dp/0143118757" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Getting to Yes &mdash; Fisher &amp; Ury</div>
+            <div class="resource-desc">The foundational text on principled negotiation. Introduces BATNA, interest-based bargaining, and objective criteria.</div>
+          </div>
         </a>
-  </nav>
 
-  <footer class="footer">
-    ILA (Iksha Learning Academy) &middot; Negotiation Foundations &middot; <a href="index.html">All Chapters</a>
+        <a class="resource-card" href="https://www.amazon.com/Never-Split-Difference-Negotiating-Depended/dp/0062407805" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Never Split the Difference &mdash; Chris Voss</div>
+            <div class="resource-desc">FBI hostage negotiator applies tactical empathy to business. Covers mirroring, labeling, and calibrated questions.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://hbr.org/2003/04/nice-girls-dont-ask" target="_blank" rel="noopener">
+          <div class="resource-icon article">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">HBR: Nice Girls Don't Ask</div>
+            <div class="resource-desc">Research on why many professionals leave value on the table by not negotiating, and how to overcome that.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://www.pon.harvard.edu/daily/negotiation-skills-daily/what-is-batna/" target="_blank" rel="noopener">
+          <div class="resource-icon article">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Harvard PON: What is BATNA?</div>
+            <div class="resource-desc">Harvard Program on Negotiation deep-dive into BATNA with examples, common mistakes, and improvement strategies.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://www.amazon.com/Bargaining-Advantage-Negotiation-Strategies-Reasonable/dp/0143036971" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Bargaining for Advantage &mdash; G. Richard Shell</div>
+            <div class="resource-desc">Wharton professor combines academic rigor with practical frameworks. Great section on ZOPA and negotiation styles.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://www.youtube.com/watch?v=MjhDkNmtjy0" target="_blank" rel="noopener">
+          <div class="resource-icon video">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Stanford GSB: Negotiation Fundamentals</div>
+            <div class="resource-desc">Stanford professor covers distributive vs. integrative bargaining with case studies from the tech industry.</div>
+          </div>
+        </a>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 5: ASSIGNMENTS
+           ════════════════════════════════════════ -->
+      <h2 id="assignments">Assignments</h2>
+
+      <p>
+        Complete these in order. Each level builds on the previous one. These are role-play exercises &mdash; practice with a partner whenever possible. Solo completion is acceptable but less effective.
+      </p>
+
+      <!-- Assignment 1: Level 1 -->
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 1
+          </div>
+          <span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span>
+        </div>
+        <h4>BATNA Mapping Exercise</h4>
+        <p>Choose a real negotiation you are currently facing (or will face soon) and complete a full BATNA analysis using the framework from this chapter.</p>
+
+        <ul class="checklist">
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Identify a real upcoming negotiation (vendor renewal, salary discussion, partnership, etc.)</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>List at least 4 alternatives if the negotiation fails</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Evaluate each alternative on cost, time, quality, and relationship impact</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Select your BATNA and calculate your reservation price</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Write down one action you can take to improve your BATNA before the negotiation</span>
+          </li>
+        </ul>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            You have a written BATNA analysis with a clear reservation price and at least one specific action to strengthen your position before the negotiation begins.
+          </p>
+        </div>
+      </div>
+
+      <!-- Assignment 2: Level 2 -->
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 2
+          </div>
+          <span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Applied</span>
+        </div>
+        <h4>ZOPA Role-Play: SaaS Pricing Negotiation</h4>
+        <p>With a partner, role-play a SaaS vendor/buyer negotiation. Each side receives confidential information about their BATNA and reservation price. The goal is to find an agreement within the ZOPA.</p>
+
+        <ul class="checklist">
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Partner A plays the SaaS vendor (reservation price: $800/mo, target: $1,200/mo)</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Partner B plays the startup buyer (reservation price: $1,100/mo, target: $700/mo)</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Negotiate for 15 minutes. Track every offer and counter-offer on paper</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>After reaching agreement (or impasse), reveal your BATNAs and discuss the ZOPA</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Swap roles and repeat. Compare how outcomes change when you play the other side</span>
+          </li>
+        </ul>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            You have completed both rounds of the role-play, documented the offers/counter-offers, and can explain where the ZOPA was and how the final price compared to each party's reservation price.
+          </p>
+        </div>
+      </div>
+
+      <!-- Assignment 3: Level 3 -->
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 3
+          </div>
+          <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Strategic</span>
+        </div>
+        <h4>Multi-Issue Integrative Negotiation Simulation</h4>
+        <p>Design and execute a multi-issue negotiation (price, payment terms, contract length, support level, exclusivity). Convert a distributive scenario into an integrative one by identifying trades across issues.</p>
+
+        <ul class="checklist">
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Create a negotiation brief with 5 issues, each with different priorities for each side</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Assign point values to each issue outcome (100 points total per side)</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Role-play the negotiation, attempting to maximize joint points (not just your own)</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Score the final agreement. Compare to the theoretical maximum joint score</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Write a post-mortem: What trades did you find? What trades did you miss?</span>
+          </li>
+        </ul>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            You have a scored negotiation result, a comparison to the theoretical maximum, and a written analysis of which trades created the most value and why they were (or were not) discovered during the negotiation.
+          </p>
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 6: SELF-CHECK
+           ════════════════════════════════════════ -->
+      <h2 id="self-check">Self-Check</h2>
+
+      <p>Before moving to Chapter 02, honestly answer these questions. If any answer is uncertain, revisit the relevant section.</p>
+
+      <details>
+        <summary>Can you explain the difference between distributive and integrative negotiation with a startup example?</summary>
+        <div class="details-body">
+          <p>
+            <strong>Distributive:</strong> You are buying a domain name from a squatter. There is one variable (price), one winner, one loser. The pie is fixed.
+          </p>
+          <p>
+            <strong>Integrative:</strong> You are negotiating a strategic partnership with a larger company. There are many variables &mdash; co-marketing, API access, revenue share, exclusivity, timeline. Each side values these differently, creating opportunities to trade low-cost concessions for high-value gains.
+          </p>
+          <p>
+            If you can give a similar pair of examples from your own work, you understand the distinction.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Could you calculate your BATNA for your next real negotiation right now?</summary>
+        <div class="details-body">
+          <p>
+            If yes, do it. Write it down. A BATNA that lives only in your head is dangerously malleable &mdash; you will rationalize crossing it in the heat of the moment. If no, go back to the BATNA section and work through the four-step process with a real scenario.
+          </p>
+          <p>
+            Remember: your BATNA is not your wish. It is your best <em>realistic</em> alternative that you can execute without the other party's cooperation.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Do you understand why knowing the ZOPA matters even when you can't calculate it precisely?</summary>
+        <div class="details-body">
+          <p>
+            Even a rough estimate of the ZOPA tells you whether a deal is possible at all and helps you calibrate your opening offer. If you believe the ZOPA is between $50K and $80K, you know that opening at $30K will seem absurd and opening at $75K leaves little room for the other side to feel they won something.
+          </p>
+          <p>
+            The goal is not precision. It is directional accuracy &mdash; knowing approximately where the boundaries are so you can navigate within them strategically.
+          </p>
+        </div>
+      </details>
+
+    </main>
+
+    <!-- Sidebar: Table of Contents -->
+    <aside class="sidebar">
+      <div class="sidebar-title">On this page</div>
+      <ul class="toc-list">
+        <li class="toc-item"><a href="#why-this-matters">Why This Matters</a></li>
+        <li class="toc-item"><a href="#key-concepts">Key Concepts</a></li>
+        <li class="toc-item"><a href="#what-is-negotiation" style="padding-left: 28px; font-size: 12px;">What Is Negotiation?</a></li>
+        <li class="toc-item"><a href="#distributive-vs-integrative" style="padding-left: 28px; font-size: 12px;">Distributive vs. Integrative</a></li>
+        <li class="toc-item"><a href="#batna" style="padding-left: 28px; font-size: 12px;">BATNA</a></li>
+        <li class="toc-item"><a href="#reservation-price" style="padding-left: 28px; font-size: 12px;">Reservation Price</a></li>
+        <li class="toc-item"><a href="#zopa" style="padding-left: 28px; font-size: 12px;">ZOPA</a></li>
+        <li class="toc-item"><a href="#negotiation-types" style="padding-left: 28px; font-size: 12px;">Negotiation Types</a></li>
+        <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a></li>
+        <li class="toc-item"><a href="#further-reading">Further Reading</a></li>
+        <li class="toc-item"><a href="#assignments">Assignments</a></li>
+        <li class="toc-item"><a href="#self-check">Self-Check</a></li>
+      </ul>
+    </aside>
+  </div>
+
+  <!-- Footer Navigation -->
+  <footer class="chapter-footer">
+    <div class="chapter-footer-inner">
+      <nav class="footer-nav">
+        <div></div>
+        <a class="footer-nav-link" href="chapter-02.html">
+          <span class="footer-nav-label">Next Chapter &rarr;</span>
+          <span class="footer-nav-title">02: Preparation and Research</span>
+        </a>
+      </nav>
+      <div class="footer-brand">
+        ILA (Iksha Learning Academy) &middot; Negotiation Foundations &middot; Basic Track
+      </div>
+    </div>
   </footer>
 
+  <!-- ════════════════════════════════════════
+       SCRIPTS
+       ════════════════════════════════════════ -->
   <script>
+    // ── Progress Bar ──
     window.addEventListener('scroll', () => {
-      const h = document.documentElement;
-      const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
-      document.getElementById('progressBar').style.width = Math.min(pct, 100) + '%';
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      document.getElementById('progressBar').style.width = progress + '%';
     });
+
+    // ── Active TOC ──
+    const tocLinks = document.querySelectorAll('.toc-item a');
+    const sections = [];
+
+    tocLinks.forEach(link => {
+      const id = link.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) sections.push({ id, el, link });
+    });
+
+    const observerOptions = {
+      rootMargin: '-80px 0px -60% 0px',
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const item = sections.find(s => s.el === entry.target);
+        if (item) {
+          if (entry.isIntersecting) {
+            tocLinks.forEach(l => l.classList.remove('active'));
+            item.link.classList.add('active');
+          }
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(s => observer.observe(s.el));
+
+    // ── Copy Code ──
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      const text = pre.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.classList.add('copied');
+        btn.textContent = 'Copied!';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.textContent = 'Copy';
+        }, 2000);
+      });
+    }
   </script>
 </body>
 </html>
