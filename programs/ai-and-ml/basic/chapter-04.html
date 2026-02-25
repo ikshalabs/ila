@@ -3,18 +3,233 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chapter 04: Unsupervised Learning &mdash; ILA AI &amp; Machine Learning</title>
+  <title>Chapter 04: Ensemble Methods and Model Selection &mdash; ILA AI &amp; Machine Learning</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
-    :root{--ink:#0f172a;--ink-light:#334155;--ink-muted:#64748b;--surface:#ffffff;--surface-alt:#f8fafc;--surface-warm:#fffbeb;--border:#e2e8f0;--border-light:#f1f5f9;--teal-50:#f0fdfa;--teal-100:#ccfbf1;--teal-200:#99f6e4;--teal-500:#14b8a6;--teal-600:#0d9488;--teal-700:#0f766e;--teal-800:#115e59;--teal-900:#134e4a;--blue-50:#eff6ff;--blue-100:#dbeafe;--blue-500:#3b82f6;--blue-600:#2563eb;--blue-700:#1d4ed8;--amber-50:#fffbeb;--amber-100:#fef3c7;--amber-500:#f59e0b;--amber-600:#d97706;--red-50:#fef2f2;--red-100:#fee2e2;--red-500:#ef4444;--red-600:#dc2626;--purple-50:#faf5ff;--purple-100:#f3e8ff;--purple-500:#a855f7;--purple-600:#9333ea;--font-sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;--font-serif:'Instrument Serif',Georgia,serif;--font-mono:'JetBrains Mono','Fira Code',monospace;--content-max:780px;--sidebar-width:280px;--ease:cubic-bezier(0.4,0,0.2,1)}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}body{font-family:var(--font-sans);font-size:16px;line-height:1.7;color:var(--ink);background:var(--surface)}.progress-bar{position:fixed;top:0;left:0;width:0%;height:3px;background:linear-gradient(90deg,var(--teal-500),var(--blue-500));z-index:1000;transition:width .15s var(--ease)}.top-nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem}.top-nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px}.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--teal-800)}.nav-brand-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--teal-600),var(--teal-800));border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px}.nav-brand-text{font-weight:700;font-size:15px;letter-spacing:-.02em}.nav-chapter-nav{display:flex;align-items:center;gap:8px}.nav-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;color:var(--ink-muted);border:1px solid var(--border);background:#fff;transition:all .2s var(--ease);cursor:pointer}.nav-btn:hover{color:var(--ink);border-color:var(--teal-500);background:var(--teal-50)}.nav-btn.disabled{opacity:.4;pointer-events:none}.nav-current{font-size:13px;font-weight:600;color:var(--ink-light);padding:0 4px}.hero{background:linear-gradient(170deg,var(--teal-50) 0%,var(--surface) 50%,var(--blue-50) 100%);border-bottom:1px solid var(--border);padding:4rem 2rem 3.5rem}.hero-inner{max-width:var(--content-max);margin:0 auto}.hero-chapter-label{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--teal-700);text-transform:uppercase;letter-spacing:.08em;margin-bottom:1rem}.hero-chapter-label span{background:var(--teal-100);padding:3px 10px;border-radius:100px}.hero h1{font-family:var(--font-serif);font-size:clamp(2.4rem,5vw,3.2rem);font-weight:400;line-height:1.15;color:var(--ink);margin-bottom:1rem}.hero-subtitle{font-size:1.15rem;color:var(--ink-light);line-height:1.65;max-width:640px}.hero-meta{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1.5rem}.hero-meta-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-muted)}.hero-meta-item svg{width:16px;height:16px;color:var(--teal-600)}.main-layout{max-width:1200px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:1fr var(--sidebar-width);gap:4rem;align-items:start}.content{padding:3rem 0 6rem;min-width:0}.sidebar{position:sticky;top:76px;padding:2rem 0;max-height:calc(100vh - 76px);overflow-y:auto}.sidebar-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-muted);margin-bottom:1rem;padding-left:14px}.toc-list{list-style:none}.toc-item a{display:block;padding:6px 14px;font-size:13px;color:var(--ink-muted);text-decoration:none;border-left:2px solid transparent;transition:all .2s var(--ease);line-height:1.5}.toc-item a:hover{color:var(--ink);background:var(--surface-alt)}.toc-item a.active{color:var(--teal-700);border-left-color:var(--teal-500);background:var(--teal-50);font-weight:500}.content h2{font-family:var(--font-serif);font-size:1.85rem;font-weight:400;color:var(--ink);margin:3rem 0 1rem;padding-top:1rem;scroll-margin-top:80px}.content h2:first-child{margin-top:0}.content h3{font-size:1.15rem;font-weight:600;color:var(--ink);margin:2rem 0 .75rem;scroll-margin-top:80px}.content p{margin-bottom:1.25rem;color:var(--ink-light)}.content strong{color:var(--ink);font-weight:600}.content a{color:var(--teal-700);text-decoration:underline;text-decoration-color:var(--teal-200);text-underline-offset:3px;transition:text-decoration-color .2s}.content a:hover{text-decoration-color:var(--teal-600)}.content ul,.content ol{margin-bottom:1.25rem;padding-left:1.5rem}.content li{margin-bottom:.5rem;color:var(--ink-light)}.content li::marker{color:var(--teal-500)}.section-divider{border:none;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:3rem 0}.callout{padding:1.25rem 1.5rem;border-radius:12px;margin-bottom:1.5rem;border:1px solid;position:relative}.callout-header{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;margin-bottom:.5rem}.callout-header svg{width:18px;height:18px;flex-shrink:0}.callout p:last-child{margin-bottom:0}.callout.concept{background:var(--blue-50);border-color:var(--blue-100)}.callout.concept .callout-header{color:var(--blue-700)}.callout.important{background:var(--amber-50);border-color:var(--amber-100)}.callout.important .callout-header{color:var(--amber-600)}.callout.danger{background:var(--red-50);border-color:var(--red-100)}.callout.danger .callout-header{color:var(--red-600)}.callout.tip{background:var(--purple-50);border-color:var(--purple-100)}.callout.tip .callout-header{color:var(--purple-600)}.callout.success{background:var(--teal-50);border-color:var(--teal-100)}.callout.success .callout-header{color:var(--teal-700)}.code-block{position:relative;margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}.code-header{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:var(--surface-alt);border-bottom:1px solid var(--border);font-size:12px;color:var(--ink-muted)}.code-lang{font-family:var(--font-mono);font-weight:600;text-transform:uppercase;letter-spacing:.05em}.code-copy{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:#fff;font-size:11px;font-family:var(--font-sans);color:var(--ink-muted);cursor:pointer;transition:all .2s var(--ease)}.code-copy:hover{border-color:var(--teal-500);color:var(--teal-700)}.code-copy.copied{background:var(--teal-50);border-color:var(--teal-500);color:var(--teal-700)}pre{margin:0;padding:1.25rem 1.5rem;overflow-x:auto;background:#1e293b;font-family:var(--font-mono);font-size:13.5px;line-height:1.7;color:#e2e8f0}code{font-family:var(--font-mono);font-size:.88em}p code,li code{padding:2px 7px;background:var(--surface-alt);border:1px solid var(--border);border-radius:5px;color:var(--teal-800);font-size:.85em}.hl-keyword{color:#c084fc}.hl-string{color:#86efac}.hl-comment{color:#64748b;font-style:italic}.hl-function{color:#7dd3fc}.hl-number{color:#fbbf24}.hl-flag{color:#f472b6}details{margin-bottom:1.25rem;border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .2s var(--ease)}details[open]{border-color:var(--teal-200)}details summary{padding:1rem 1.25rem;font-weight:600;font-size:15px;cursor:pointer;background:var(--surface-alt);list-style:none;display:flex;align-items:center;gap:10px;transition:background .2s var(--ease);user-select:none}details summary::-webkit-details-marker{display:none}details summary::before{content:'';width:20px;height:20px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain;flex-shrink:0;transition:transform .2s var(--ease)}details[open] summary::before{transform:rotate(90deg)}details summary:hover{background:var(--teal-50)}.details-body{padding:1.25rem 1.5rem}.details-body p:last-child{margin-bottom:0}.video-card{margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}.video-wrapper{position:relative;padding-bottom:56.25%;height:0;background:#0f172a}.video-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}.video-caption{padding:12px 16px;background:var(--surface-alt);font-size:13px;color:var(--ink-muted);display:flex;align-items:center;gap:6px}.video-caption svg{width:14px;height:14px;color:var(--red-500)}.resource-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1rem;margin-bottom:1.5rem}.resource-card{display:flex;gap:14px;padding:1rem 1.25rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all .2s var(--ease);background:#fff}.resource-card:hover{border-color:var(--teal-300);background:var(--teal-50);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.04)}.resource-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}.resource-icon.docs{background:var(--blue-50);color:var(--blue-600)}.resource-icon.video{background:var(--red-50);color:var(--red-500)}.resource-icon.github{background:var(--ink);color:#fff}.resource-icon.article{background:var(--amber-50);color:var(--amber-600)}.resource-icon.pdf{background:var(--purple-50);color:var(--purple-600)}.resource-info{min-width:0}.resource-title{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:2px;line-height:1.4}.resource-desc{font-size:12px;color:var(--ink-muted);line-height:1.5}.assignment{border:2px solid var(--teal-200);border-radius:14px;padding:1.5rem 1.75rem;margin-bottom:1.5rem;background:linear-gradient(135deg,var(--teal-50) 0%,#fff 100%)}.assignment-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}.assignment-label{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--teal-700)}.assignment-difficulty{display:inline-flex;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:600}.difficulty-l1{background:var(--teal-100);color:var(--teal-800)}.difficulty-l2{background:var(--amber-100);color:var(--amber-600)}.difficulty-l3{background:var(--red-100);color:var(--red-600)}.assignment h4{font-size:1.05rem;font-weight:700;margin-bottom:.75rem}.assignment p{font-size:14px}.checklist{list-style:none;padding:0}.checklist li{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border-light);font-size:14px}.checklist li:last-child{border-bottom:none}.check-box{width:20px;height:20px;border-radius:6px;border:2px solid var(--border);flex-shrink:0;margin-top:1px;cursor:pointer;transition:all .15s var(--ease);display:flex;align-items:center;justify-content:center}.check-box:hover{border-color:var(--teal-500)}.check-box.checked{background:var(--teal-500);border-color:var(--teal-500)}.check-box.checked::after{content:'';width:10px;height:10px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain}.diagram{margin:1.5rem 0;padding:2rem;background:var(--surface-alt);border:1px solid var(--border);border-radius:14px;overflow-x:auto}.diagram pre{background:transparent;color:var(--ink);padding:0;font-size:13px;line-height:1.6}.diagram-caption{margin-top:1rem;font-size:12px;color:var(--ink-muted);text-align:center;font-style:italic}.chapter-footer{border-top:1px solid var(--border);padding:3rem 2rem;background:var(--surface-alt)}.chapter-footer-inner{max-width:var(--content-max);margin:0 auto}.footer-nav{display:flex;justify-content:space-between;align-items:center;gap:1rem}.footer-nav-link{display:flex;flex-direction:column;gap:4px;padding:1rem 1.5rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all .2s var(--ease);max-width:320px;background:#fff}.footer-nav-link:hover{border-color:var(--teal-300);box-shadow:0 4px 12px rgba(0,0,0,.04)}.footer-nav-label{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--teal-600)}.footer-nav-title{font-size:15px;font-weight:600;color:var(--ink)}.footer-brand{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border);font-size:13px;color:var(--ink-muted)}@media(max-width:960px){.main-layout{grid-template-columns:1fr}.sidebar{display:none}.resource-grid{grid-template-columns:1fr}}@media(max-width:640px){.hero{padding:2.5rem 1.25rem 2rem}.main-layout{padding:0 1.25rem}.content{padding:2rem 0 4rem}pre{padding:1rem;font-size:12.5px}.footer-nav{flex-direction:column}.footer-nav-link{max-width:100%;width:100%}}@media print{.top-nav,.sidebar,.progress-bar{display:none}.main-layout{display:block}.content{padding:0}.hero{background:#fff;border:none}pre{background:#f1f5f9;color:var(--ink);border:1px solid var(--border)}}
+    /* ═══════════════════════════════════════════════
+       ILA DESIGN SYSTEM — v1.0
+       Iksha Learning Academy
+       ═══════════════════════════════════════════════ */
 
+    :root {
+      /* Palette */
+      --ink:        #0f172a;
+      --ink-light:  #334155;
+      --ink-muted:  #64748b;
+      --surface:    #ffffff;
+      --surface-alt:#f8fafc;
+      --surface-warm:#fffbeb;
+      --border:     #e2e8f0;
+      --border-light:#f1f5f9;
+
+      /* Brand */
+      --teal-50:  #f0fdfa;
+      --teal-100: #ccfbf1;
+      --teal-200: #99f6e4;
+      --teal-500: #14b8a6;
+      --teal-600: #0d9488;
+      --teal-700: #0f766e;
+      --teal-800: #115e59;
+      --teal-900: #134e4a;
+
+      --blue-50:  #eff6ff;
+      --blue-100: #dbeafe;
+      --blue-500: #3b82f6;
+      --blue-600: #2563eb;
+      --blue-700: #1d4ed8;
+
+      --amber-50:  #fffbeb;
+      --amber-100: #fef3c7;
+      --amber-500: #f59e0b;
+      --amber-600: #d97706;
+
+      --red-50:   #fef2f2;
+      --red-100:  #fee2e2;
+      --red-500:  #ef4444;
+      --red-600:  #dc2626;
+
+      --purple-50:  #faf5ff;
+      --purple-100: #f3e8ff;
+      --purple-500: #a855f7;
+      --purple-600: #9333ea;
+
+      /* Typography */
+      --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-serif: 'Instrument Serif', Georgia, serif;
+      --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
+
+      /* Spacing */
+      --content-max: 780px;
+      --sidebar-width: 280px;
+
+      /* Transitions */
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--ink);
+      background: var(--surface);
+    }
+
+    .progress-bar { position: fixed; top: 0; left: 0; width: 0%; height: 3px; background: linear-gradient(90deg, var(--teal-500), var(--blue-500)); z-index: 1000; transition: width 0.15s var(--ease); }
+
+    .top-nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 2rem; }
+    .top-nav-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 56px; }
+    .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--teal-800); }
+    .nav-brand-icon { width: 32px; height: 32px; background: linear-gradient(135deg, var(--teal-600), var(--teal-800)); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 14px; }
+    .nav-brand-text { font-weight: 700; font-size: 15px; letter-spacing: -0.02em; }
+    .nav-chapter-nav { display: flex; align-items: center; gap: 8px; }
+    .nav-btn { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 8px; font-size: 13px; font-weight: 500; text-decoration: none; color: var(--ink-muted); border: 1px solid var(--border); background: white; transition: all 0.2s var(--ease); cursor: pointer; }
+    .nav-btn:hover { color: var(--ink); border-color: var(--teal-500); background: var(--teal-50); }
+    .nav-btn.disabled { opacity: 0.4; pointer-events: none; }
+    .nav-current { font-size: 13px; font-weight: 600; color: var(--ink-light); padding: 0 4px; }
+
+    .hero { background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%); border-bottom: 1px solid var(--border); padding: 4rem 2rem 3.5rem; }
+    .hero-inner { max-width: var(--content-max); margin: 0 auto; }
+    .hero-chapter-label { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--teal-700); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1rem; }
+    .hero-chapter-label span { background: var(--teal-100); padding: 3px 10px; border-radius: 100px; }
+    .hero h1 { font-family: var(--font-serif); font-size: clamp(2.4rem, 5vw, 3.2rem); font-weight: 400; line-height: 1.15; color: var(--ink); margin-bottom: 1rem; }
+    .hero-subtitle { font-size: 1.15rem; color: var(--ink-light); line-height: 1.65; max-width: 640px; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.5rem; }
+    .hero-meta-item { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--ink-muted); }
+    .hero-meta-item svg { width: 16px; height: 16px; color: var(--teal-600); }
+
+    .main-layout { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: grid; grid-template-columns: 1fr var(--sidebar-width); gap: 4rem; align-items: start; }
+    .content { padding: 3rem 0 6rem; min-width: 0; }
+
+    .sidebar { position: sticky; top: 76px; padding: 2rem 0; max-height: calc(100vh - 76px); overflow-y: auto; }
+    .sidebar-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-muted); margin-bottom: 1rem; padding-left: 14px; }
+    .toc-list { list-style: none; }
+    .toc-item a { display: block; padding: 6px 14px; font-size: 13px; color: var(--ink-muted); text-decoration: none; border-left: 2px solid transparent; transition: all 0.2s var(--ease); line-height: 1.5; }
+    .toc-item a:hover { color: var(--ink); background: var(--surface-alt); }
+    .toc-item a.active { color: var(--teal-700); border-left-color: var(--teal-500); background: var(--teal-50); font-weight: 500; }
+
+    .content h2 { font-family: var(--font-serif); font-size: 1.85rem; font-weight: 400; color: var(--ink); margin: 3rem 0 1rem; padding-top: 1rem; scroll-margin-top: 80px; }
+    .content h2:first-child { margin-top: 0; }
+    .content h3 { font-size: 1.15rem; font-weight: 600; color: var(--ink); margin: 2rem 0 0.75rem; scroll-margin-top: 80px; }
+    .content p { margin-bottom: 1.25rem; color: var(--ink-light); }
+    .content strong { color: var(--ink); font-weight: 600; }
+    .content a { color: var(--teal-700); text-decoration: underline; text-decoration-color: var(--teal-200); text-underline-offset: 3px; transition: text-decoration-color 0.2s; }
+    .content a:hover { text-decoration-color: var(--teal-600); }
+    .content ul, .content ol { margin-bottom: 1.25rem; padding-left: 1.5rem; }
+    .content li { margin-bottom: 0.5rem; color: var(--ink-light); }
+    .content li::marker { color: var(--teal-500); }
+
+    .section-divider { border: none; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 3rem 0; }
+
+    .callout { padding: 1.25rem 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; border: 1px solid; position: relative; }
+    .callout-header { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; margin-bottom: 0.5rem; }
+    .callout-header svg { width: 18px; height: 18px; flex-shrink: 0; }
+    .callout p:last-child { margin-bottom: 0; }
+    .callout.concept { background: var(--blue-50); border-color: var(--blue-100); }
+    .callout.concept .callout-header { color: var(--blue-700); }
+    .callout.important { background: var(--amber-50); border-color: var(--amber-100); }
+    .callout.important .callout-header { color: var(--amber-600); }
+    .callout.danger { background: var(--red-50); border-color: var(--red-100); }
+    .callout.danger .callout-header { color: var(--red-600); }
+    .callout.tip { background: var(--purple-50); border-color: var(--purple-100); }
+    .callout.tip .callout-header { color: var(--purple-600); }
+    .callout.success { background: var(--teal-50); border-color: var(--teal-100); }
+    .callout.success .callout-header { color: var(--teal-700); }
+
+    .code-block { position: relative; margin-bottom: 1.5rem; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+    .code-header { display: flex; align-items: center; justify-content: space-between; padding: 8px 16px; background: var(--surface-alt); border-bottom: 1px solid var(--border); font-size: 12px; color: var(--ink-muted); }
+    .code-lang { font-family: var(--font-mono); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+    .code-copy { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border); background: white; font-size: 11px; font-family: var(--font-sans); color: var(--ink-muted); cursor: pointer; transition: all 0.2s var(--ease); }
+    .code-copy:hover { border-color: var(--teal-500); color: var(--teal-700); }
+    .code-copy.copied { background: var(--teal-50); border-color: var(--teal-500); color: var(--teal-700); }
+    pre { margin: 0; padding: 1.25rem 1.5rem; overflow-x: auto; background: #1e293b; font-family: var(--font-mono); font-size: 13.5px; line-height: 1.7; color: #e2e8f0; }
+    code { font-family: var(--font-mono); font-size: 0.88em; }
+    p code, li code { padding: 2px 7px; background: var(--surface-alt); border: 1px solid var(--border); border-radius: 5px; color: var(--teal-800); font-size: 0.85em; }
+    .hl-keyword { color: #c084fc; }
+    .hl-string { color: #86efac; }
+    .hl-comment { color: #64748b; font-style: italic; }
+    .hl-function { color: #7dd3fc; }
+    .hl-number { color: #fbbf24; }
+    .hl-flag { color: #f472b6; }
+
+    details { margin-bottom: 1.25rem; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; transition: border-color 0.2s var(--ease); }
+    details[open] { border-color: var(--teal-200); }
+    details summary { padding: 1rem 1.25rem; font-weight: 600; font-size: 15px; cursor: pointer; background: var(--surface-alt); list-style: none; display: flex; align-items: center; gap: 10px; transition: background 0.2s var(--ease); user-select: none; }
+    details summary::-webkit-details-marker { display: none; }
+    details summary::before { content: ''; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E"); background-size: contain; flex-shrink: 0; transition: transform 0.2s var(--ease); }
+    details[open] summary::before { transform: rotate(90deg); }
+    details summary:hover { background: var(--teal-50); }
+    .details-body { padding: 1.25rem 1.5rem; }
+    .details-body p:last-child { margin-bottom: 0; }
+
+    .video-card { margin-bottom: 1.5rem; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+    .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; background: #0f172a; }
+    .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+    .video-caption { padding: 12px 16px; background: var(--surface-alt); font-size: 13px; color: var(--ink-muted); display: flex; align-items: center; gap: 6px; }
+    .video-caption svg { width: 14px; height: 14px; color: var(--red-500); }
+
+    .resource-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+    .resource-card { display: flex; gap: 14px; padding: 1rem 1.25rem; border: 1px solid var(--border); border-radius: 12px; text-decoration: none; transition: all 0.2s var(--ease); background: white; }
+    .resource-card:hover { border-color: var(--teal-300); background: var(--teal-50); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+    .resource-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 18px; }
+    .resource-icon.docs { background: var(--blue-50); color: var(--blue-600); }
+    .resource-icon.video { background: var(--red-50); color: var(--red-500); }
+    .resource-icon.github { background: var(--ink); color: white; }
+    .resource-icon.article { background: var(--amber-50); color: var(--amber-600); }
+    .resource-icon.pdf { background: var(--purple-50); color: var(--purple-600); }
+    .resource-info { min-width: 0; }
+    .resource-title { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 2px; line-height: 1.4; }
+    .resource-desc { font-size: 12px; color: var(--ink-muted); line-height: 1.5; }
+
+    .assignment { border: 2px solid var(--teal-200); border-radius: 14px; padding: 1.5rem 1.75rem; margin-bottom: 1.5rem; background: linear-gradient(135deg, var(--teal-50) 0%, white 100%); }
+    .assignment-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+    .assignment-label { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--teal-700); }
+    .assignment-difficulty { display: inline-flex; padding: 4px 10px; border-radius: 100px; font-size: 11px; font-weight: 600; }
+    .difficulty-l1 { background: var(--teal-100); color: var(--teal-800); }
+    .difficulty-l2 { background: var(--amber-100); color: var(--amber-600); }
+    .difficulty-l3 { background: var(--red-100); color: var(--red-600); }
+    .assignment h4 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.75rem; }
+    .assignment p { font-size: 14px; }
+    .checklist { list-style: none; padding: 0; }
+    .checklist li { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border-light); font-size: 14px; }
+    .checklist li:last-child { border-bottom: none; }
+    .check-box { width: 20px; height: 20px; border-radius: 6px; border: 2px solid var(--border); flex-shrink: 0; margin-top: 1px; cursor: pointer; transition: all 0.15s var(--ease); display: flex; align-items: center; justify-content: center; }
+    .check-box:hover { border-color: var(--teal-500); }
+    .check-box.checked { background: var(--teal-500); border-color: var(--teal-500); }
+    .check-box.checked::after { content: ''; width: 10px; height: 10px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E"); background-size: contain; }
+
+    .diagram { margin: 1.5rem 0; padding: 2rem; background: var(--surface-alt); border: 1px solid var(--border); border-radius: 14px; overflow-x: auto; }
+    .diagram pre { background: transparent; color: var(--ink); padding: 0; font-size: 13px; line-height: 1.6; }
+    .diagram-caption { margin-top: 1rem; font-size: 12px; color: var(--ink-muted); text-align: center; font-style: italic; }
+
+    .chapter-footer { border-top: 1px solid var(--border); padding: 3rem 2rem; background: var(--surface-alt); }
+    .chapter-footer-inner { max-width: var(--content-max); margin: 0 auto; }
+    .footer-nav { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+    .footer-nav-link { display: flex; flex-direction: column; gap: 4px; padding: 1rem 1.5rem; border: 1px solid var(--border); border-radius: 12px; text-decoration: none; transition: all 0.2s var(--ease); max-width: 320px; background: white; }
+    .footer-nav-link:hover { border-color: var(--teal-300); box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+    .footer-nav-label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--teal-600); }
+    .footer-nav-title { font-size: 15px; font-weight: 600; color: var(--ink); }
+    .footer-brand { text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); font-size: 13px; color: var(--ink-muted); }
+
+    @media (max-width: 960px) { .main-layout { grid-template-columns: 1fr; } .sidebar { display: none; } .resource-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 640px) { .hero { padding: 2.5rem 1.25rem 2rem; } .main-layout { padding: 0 1.25rem; } .content { padding: 2rem 0 4rem; } pre { padding: 1rem; font-size: 12.5px; } .footer-nav { flex-direction: column; } .footer-nav-link { max-width: 100%; width: 100%; } }
+    @media print { .top-nav, .sidebar, .progress-bar { display: none; } .main-layout { display: block; } .content { padding: 0; } .hero { background: white; border: none; } pre { background: #f1f5f9; color: var(--ink); border: 1px solid var(--border); } }
   </style>
 </head>
 <body>
+  <!-- Progress Bar -->
   <div class="progress-bar" id="progressBar"></div>
 
+  <!-- Top Navigation -->
   <nav class="top-nav">
     <div class="top-nav-inner">
       <a class="nav-brand" href="index.html">
@@ -29,13 +244,17 @@
     </div>
   </nav>
 
+  <!-- Hero -->
   <header class="hero">
     <div class="hero-inner">
       <div class="hero-chapter-label">
-        <span>Chapter 04</span> &middot; Phase 2: Core Machine Learning
+        <span>Chapter 04</span> &middot; Phase 2: Classical ML
       </div>
-      <h1>Unsupervised Learning</h1>
-      <p class="hero-subtitle">Discover hidden structure in unlabeled data through clustering, dimensionality reduction, and anomaly detection &mdash; essential techniques for exploratory analysis and data preprocessing.</p>
+      <h1>Ensemble Methods and Model Selection</h1>
+      <p class="hero-subtitle">
+        Combine multiple weak learners into powerful ensembles with random forests and gradient boosting,
+        then systematically find the best model using cross-validation and hyperparameter tuning.
+      </p>
       <div class="hero-meta">
         <div class="hero-meta-item">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
@@ -43,7 +262,7 @@
         </div>
         <div class="hero-meta-item">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-          3 Advancement Levels
+          6 Core Concepts
         </div>
         <div class="hero-meta-item">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
@@ -53,40 +272,68 @@
     </div>
   </header>
 
+  <!-- Main Content + Sidebar -->
   <div class="main-layout">
     <main class="content">
 
       <h2 id="why-this-matters">Why This Matters</h2>
 
       <p>
-        Not all data comes with labels. In fact, most real-world data is unlabeled. Unsupervised learning discovers
-        hidden structure in data without guidance &mdash; finding customer segments, reducing dimensionality for
-        visualization, detecting anomalies, and compressing information. These techniques are essential for
-        exploratory analysis and often serve as preprocessing steps for supervised models.
+        Single models have inherent limitations &mdash; a decision tree overfits, a linear model underfits
+        complex patterns. Ensemble methods solve this by combining multiple models, each capturing different
+        aspects of the data. The result is almost always superior to any individual model. In practice,
+        gradient boosting frameworks like XGBoost and LightGBM dominate machine learning competitions and
+        production systems alike.
       </p>
 
       <p>
-        Companies use clustering to segment customers for targeted marketing, dimensionality reduction to visualize
-        high-dimensional data, and anomaly detection to identify fraud. Understanding these algorithms gives you
-        a complete ML toolkit.
+        But building powerful models is only half the battle. You also need systematic methods to
+        <strong>select</strong> the best model and <strong>tune</strong> its parameters without overfitting
+        to your validation set. Cross-validation and hyperparameter search are the tools that bridge the
+        gap between experimentation and production-ready ML.
       </p>
 
       <div class="callout concept">
-        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg> Key Insight</div>
-        <p>Unsupervised learning has no ground truth to evaluate against, making it fundamentally harder to validate than supervised learning. You must rely on domain knowledge, visual inspection, and internal metrics like silhouette scores. There is no single 'accuracy' number.</p>
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Key Insight
+        </div>
+        <p>
+          The "wisdom of crowds" principle applies to ML: a committee of diverse, independently-trained
+          models will outperform any single expert model. The key word is <strong>diverse</strong> &mdash;
+          if all models make the same errors, ensembling provides no benefit.
+        </p>
       </div>
 
       <hr class="section-divider">
 
       <h2 id="key-concepts">Key Concepts</h2>
 
-      <h3 id="kmeans">1. K-Means Clustering</h3>
+      <h3 id="bagging-random-forests">1. Bagging and Random Forests</h3>
 
       <p>
-        K-Means partitions data into K clusters by iteratively assigning points to the nearest centroid, then
-        recomputing centroids. It is fast, scalable, and works well when clusters are roughly spherical and
-        similarly sized. The main challenge: choosing K.
+        <strong>Bagging</strong> (Bootstrap Aggregating) trains multiple models on random subsets of the
+        training data, then averages their predictions (regression) or takes a majority vote (classification).
+        This reduces variance without increasing bias. <strong>Random Forests</strong> extend bagging by
+        adding feature randomness: at each split, only a random subset of features is considered. This
+        decorrelates the trees, making the ensemble more powerful.
       </p>
+
+      <div class="diagram">
+<pre>
+  Training Data
+       |
+       +-- Bootstrap Sample 1 --&gt; Tree 1 --+
+       +-- Bootstrap Sample 2 --&gt; Tree 2 --+
+       +-- Bootstrap Sample 3 --&gt; Tree 3 --+--&gt; Aggregate --&gt; Final Prediction
+       +-- Bootstrap Sample 4 --&gt; Tree 4 --+    (vote or
+       +-- Bootstrap Sample N --&gt; Tree N --+     average)
+
+  Each tree sees ~63.2% of samples (bootstrap)
+  Each split considers sqrt(n_features) features (random forest)
+</pre>
+        <div class="diagram-caption">Figure 1: Random Forest builds multiple trees on bootstrapped data and aggregates predictions</div>
+      </div>
 
       <div class="code-block">
         <div class="code-header">
@@ -94,55 +341,46 @@
           <button class="code-copy" onclick="copyCode(this)">Copy</button>
         </div>
 <pre>
-<span class="hl-keyword">from</span> sklearn.cluster <span class="hl-keyword">import</span> KMeans
-<span class="hl-keyword">from</span> sklearn.preprocessing <span class="hl-keyword">import</span> StandardScaler
-<span class="hl-keyword">from</span> sklearn.metrics <span class="hl-keyword">import</span> silhouette_score
-<span class="hl-keyword">import</span> matplotlib.pyplot <span class="hl-keyword">as</span> plt
+<span class="hl-keyword">from</span> sklearn.ensemble <span class="hl-keyword">import</span> RandomForestClassifier
+<span class="hl-keyword">from</span> sklearn.datasets <span class="hl-keyword">import</span> load_breast_cancer
+<span class="hl-keyword">from</span> sklearn.model_selection <span class="hl-keyword">import</span> train_test_split, cross_val_score
 <span class="hl-keyword">import</span> numpy <span class="hl-keyword">as</span> np
 
-<span class="hl-comment"># Generate sample customer data</span>
-np.random.seed(<span class="hl-number">42</span>)
-X = np.vstack([
-    np.random.randn(<span class="hl-number">100</span>, <span class="hl-number">2</span>) + [<span class="hl-number">2</span>, <span class="hl-number">2</span>],
-    np.random.randn(<span class="hl-number">100</span>, <span class="hl-number">2</span>) + [-<span class="hl-number">2</span>, -<span class="hl-number">2</span>],
-    np.random.randn(<span class="hl-number">100</span>, <span class="hl-number">2</span>) + [<span class="hl-number">2</span>, -<span class="hl-number">2</span>],
-])
+<span class="hl-comment"># Load data</span>
+data = <span class="hl-function">load_breast_cancer</span>()
+X_train, X_test, y_train, y_test = <span class="hl-function">train_test_split</span>(
+    data.data, data.target, test_size=<span class="hl-number">0.2</span>, random_state=<span class="hl-number">42</span>, stratify=data.target
+)
 
-<span class="hl-comment"># Elbow method to find optimal K</span>
-inertias = []
-silhouettes = []
-K_range = <span class="hl-function">range</span>(<span class="hl-number">2</span>, <span class="hl-number">11</span>)
+<span class="hl-comment"># Train a Random Forest</span>
+rf = <span class="hl-function">RandomForestClassifier</span>(
+    n_estimators=<span class="hl-number">200</span>,           <span class="hl-comment"># Number of trees</span>
+    max_depth=<span class="hl-number">10</span>,               <span class="hl-comment"># Limit depth per tree</span>
+    max_features=<span class="hl-string">'sqrt'</span>,        <span class="hl-comment"># Features per split</span>
+    min_samples_leaf=<span class="hl-number">5</span>,         <span class="hl-comment"># Min samples in leaf</span>
+    oob_score=<span class="hl-keyword">True</span>,             <span class="hl-comment"># Out-of-bag estimate</span>
+    n_jobs=-<span class="hl-number">1</span>,                  <span class="hl-comment"># Use all CPU cores</span>
+    random_state=<span class="hl-number">42</span>
+)
 
-<span class="hl-keyword">for</span> k <span class="hl-keyword">in</span> K_range:
-    km = KMeans(n_clusters=k, random_state=<span class="hl-number">42</span>, n_init=<span class="hl-number">10</span>)
-    km.fit(X)
-    inertias.append(km.inertia_)
-    silhouettes.append(silhouette_score(X, km.labels_))
+<span class="hl-comment"># Cross-validation for robust estimate</span>
+cv_scores = <span class="hl-function">cross_val_score</span>(rf, X_train, y_train, cv=<span class="hl-number">5</span>, scoring=<span class="hl-string">'accuracy'</span>)
+<span class="hl-function">print</span>(<span class="hl-string">f"CV Accuracy: {cv_scores.mean():.4f} (+/- {cv_scores.std():.4f})"</span>)
 
-fig, (ax1, ax2) = plt.subplots(<span class="hl-number">1</span>, <span class="hl-number">2</span>, figsize=(<span class="hl-number">12</span>, <span class="hl-number">4</span>))
-ax1.plot(K_range, inertias, <span class="hl-string">"bo-"</span>)
-ax1.set_title(<span class="hl-string">"Elbow Method"</span>)
-ax2.plot(K_range, silhouettes, <span class="hl-string">"ro-"</span>)
-ax2.set_title(<span class="hl-string">"Silhouette Score"</span>)
-plt.show()
-
-<span class="hl-comment"># Fit with best K and visualize</span>
-km = KMeans(n_clusters=<span class="hl-number">3</span>, random_state=<span class="hl-number">42</span>)
-labels = km.fit_predict(X)
-plt.scatter(X[:, <span class="hl-number">0</span>], X[:, <span class="hl-number">1</span>], c=labels, cmap=<span class="hl-string">"viridis"</span>, alpha=<span class="hl-number">0.6</span>)
-plt.scatter(km.cluster_centers_[:, <span class="hl-number">0</span>], km.cluster_centers_[:, <span class="hl-number">1</span>],
-            c=<span class="hl-string">"red"</span>, marker=<span class="hl-string">"x"</span>, s=<span class="hl-number">200</span>, linewidths=<span class="hl-number">3</span>)
-plt.title(<span class="hl-string">"K-Means Clustering (K=3)"</span>)
-plt.show()
+<span class="hl-comment"># Fit and evaluate</span>
+rf.<span class="hl-function">fit</span>(X_train, y_train)
+<span class="hl-function">print</span>(<span class="hl-string">f"OOB Score:   {rf.oob_score_:.4f}"</span>)
+<span class="hl-function">print</span>(<span class="hl-string">f"Test Acc:    {rf.score(X_test, y_test):.4f}"</span>)
 </pre>
       </div>
 
-      <h3 id="hierarchical">2. Hierarchical and DBSCAN Clustering</h3>
+      <h3 id="gradient-boosting">2. Gradient Boosting (XGBoost, LightGBM)</h3>
 
       <p>
-        Not all clusters are spherical. DBSCAN (Density-Based Spatial Clustering) finds clusters of arbitrary
-        shape based on point density and automatically identifies noise points. Hierarchical clustering builds
-        a tree (dendrogram) of nested clusters, giving you a multi-scale view of your data structure.
+        While bagging trains trees independently and averages them, <strong>boosting</strong> trains trees
+        sequentially, where each new tree corrects the errors of the previous ones. Gradient boosting
+        specifically fits each new tree to the <strong>residual errors</strong> (negative gradient of the
+        loss function) of the current ensemble.
       </p>
 
       <div class="code-block">
@@ -151,31 +389,71 @@ plt.show()
           <button class="code-copy" onclick="copyCode(this)">Copy</button>
         </div>
 <pre>
-<span class="hl-keyword">from</span> sklearn.cluster <span class="hl-keyword">import</span> DBSCAN, AgglomerativeClustering
-<span class="hl-keyword">from</span> scipy.cluster.hierarchy <span class="hl-keyword">import</span> dendrogram, linkage
+<span class="hl-keyword">import</span> xgboost <span class="hl-keyword">as</span> xgb
+<span class="hl-keyword">import</span> lightgbm <span class="hl-keyword">as</span> lgb
 
-<span class="hl-comment"># DBSCAN — finds clusters of arbitrary shape</span>
-db = DBSCAN(eps=<span class="hl-number">0.5</span>, min_samples=<span class="hl-number">5</span>)
-db_labels = db.fit_predict(X)
-n_clusters = len(<span class="hl-function">set</span>(db_labels)) - (<span class="hl-number">1</span> <span class="hl-keyword">if</span> -<span class="hl-number">1</span> <span class="hl-keyword">in</span> db_labels <span class="hl-keyword">else</span> <span class="hl-number">0</span>)
-n_noise = (db_labels == -<span class="hl-number">1</span>).sum()
-<span class="hl-function">print</span>(<span class="hl-string">f"DBSCAN found {n_clusters} clusters, {n_noise} noise points"</span>)
+<span class="hl-comment"># --- XGBoost with early stopping ---</span>
+xgb_model = xgb.<span class="hl-function">XGBClassifier</span>(
+    n_estimators=<span class="hl-number">500</span>,
+    learning_rate=<span class="hl-number">0.05</span>,
+    max_depth=<span class="hl-number">4</span>,
+    subsample=<span class="hl-number">0.8</span>,
+    colsample_bytree=<span class="hl-number">0.8</span>,
+    reg_alpha=<span class="hl-number">0.1</span>,
+    reg_lambda=<span class="hl-number">1.0</span>,
+    eval_metric=<span class="hl-string">'logloss'</span>,
+    early_stopping_rounds=<span class="hl-number">20</span>,
+    random_state=<span class="hl-number">42</span>
+)
 
-<span class="hl-comment"># Hierarchical clustering with dendrogram</span>
-Z = linkage(X[:<span class="hl-number">50</span>], method=<span class="hl-string">"ward"</span>)  <span class="hl-comment"># Subset for readability</span>
-plt.figure(figsize=(<span class="hl-number">12</span>, <span class="hl-number">5</span>))
-dendrogram(Z, truncate_mode=<span class="hl-string">"level"</span>, p=<span class="hl-number">5</span>)
-plt.title(<span class="hl-string">"Hierarchical Clustering Dendrogram"</span>)
-plt.show()
+xgb_model.<span class="hl-function">fit</span>(
+    X_train, y_train,
+    eval_set=[(X_test, y_test)],
+    verbose=<span class="hl-number">50</span>
+)
+<span class="hl-function">print</span>(<span class="hl-string">f"XGBoost best iteration: {xgb_model.best_iteration}"</span>)
+<span class="hl-function">print</span>(<span class="hl-string">f"XGBoost test accuracy:  {xgb_model.score(X_test, y_test):.4f}"</span>)
+
+<span class="hl-comment"># --- LightGBM ---</span>
+lgb_model = lgb.<span class="hl-function">LGBMClassifier</span>(
+    n_estimators=<span class="hl-number">500</span>,
+    learning_rate=<span class="hl-number">0.05</span>,
+    num_leaves=<span class="hl-number">31</span>,
+    subsample=<span class="hl-number">0.8</span>,
+    colsample_bytree=<span class="hl-number">0.8</span>,
+    reg_alpha=<span class="hl-number">0.1</span>,
+    reg_lambda=<span class="hl-number">1.0</span>,
+    random_state=<span class="hl-number">42</span>,
+    verbose=-<span class="hl-number">1</span>
+)
+
+lgb_model.<span class="hl-function">fit</span>(
+    X_train, y_train,
+    eval_set=[(X_test, y_test)],
+    callbacks=[lgb.<span class="hl-function">early_stopping</span>(<span class="hl-number">20</span>), lgb.<span class="hl-function">log_evaluation</span>(<span class="hl-number">50</span>)]
+)
+<span class="hl-function">print</span>(<span class="hl-string">f"LightGBM test accuracy: {lgb_model.score(X_test, y_test):.4f}"</span>)
 </pre>
       </div>
 
-      <h3 id="pca">3. Principal Component Analysis (PCA)</h3>
+      <div class="callout important">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Learning Rate and Number of Trees
+        </div>
+        <p>
+          There is a direct tradeoff between <code>learning_rate</code> and <code>n_estimators</code>.
+          A smaller learning rate requires more trees but typically produces better results. Use early
+          stopping to find the optimal number of trees automatically instead of tuning it manually.
+        </p>
+      </div>
+
+      <h3 id="cross-validation">3. Cross-Validation Strategies</h3>
 
       <p>
-        PCA is the most important dimensionality reduction technique. It finds the directions of maximum variance
-        in your data and projects it onto those directions. This is essential for visualization (projecting
-        high-dimensional data to 2D), noise reduction, and speeding up subsequent algorithms.
+        A single train-test split can give misleading results. <strong>K-fold cross-validation</strong>
+        rotates through K different splits, training on K-1 folds and validating on the remaining fold.
+        For classification, always use <strong>StratifiedKFold</strong> to preserve class ratios.
       </p>
 
       <div class="code-block">
@@ -184,40 +462,39 @@ plt.show()
           <button class="code-copy" onclick="copyCode(this)">Copy</button>
         </div>
 <pre>
-<span class="hl-keyword">from</span> sklearn.decomposition <span class="hl-keyword">import</span> PCA
-<span class="hl-keyword">from</span> sklearn.datasets <span class="hl-keyword">import</span> load_digits
+<span class="hl-keyword">from</span> sklearn.model_selection <span class="hl-keyword">import</span> (
+    StratifiedKFold, RepeatedStratifiedKFold, cross_validate
+)
 
-<span class="hl-comment"># Load high-dimensional data (64 features per image)</span>
-digits = load_digits()
-X_digits = digits.data  <span class="hl-comment"># Shape: (1797, 64)</span>
+<span class="hl-comment"># Stratified K-Fold preserves class ratios</span>
+skf = <span class="hl-function">StratifiedKFold</span>(n_splits=<span class="hl-number">5</span>, shuffle=<span class="hl-keyword">True</span>, random_state=<span class="hl-number">42</span>)
 
-<span class="hl-comment"># Fit PCA and examine explained variance</span>
-pca = PCA()
-pca.fit(X_digits)
+<span class="hl-comment"># Repeated CV for more robust estimates</span>
+rskf = <span class="hl-function">RepeatedStratifiedKFold</span>(n_splits=<span class="hl-number">5</span>, n_repeats=<span class="hl-number">3</span>, random_state=<span class="hl-number">42</span>)
 
-<span class="hl-comment"># How many components to keep?</span>
-cumulative_var = np.cumsum(pca.explained_variance_ratio_)
-n_95 = np.argmax(cumulative_var >= <span class="hl-number">0.95</span>) + <span class="hl-number">1</span>
-<span class="hl-function">print</span>(<span class="hl-string">f"Components for 95% variance: {n_95} out of {X_digits.shape[1]}"</span>)
+<span class="hl-comment"># cross_validate returns multiple metrics</span>
+results = <span class="hl-function">cross_validate</span>(
+    rf, X_train, y_train,
+    cv=skf,
+    scoring=[<span class="hl-string">'accuracy'</span>, <span class="hl-string">'f1'</span>, <span class="hl-string">'roc_auc'</span>],
+    return_train_score=<span class="hl-keyword">True</span>
+)
 
-<span class="hl-comment"># Reduce to 2D for visualization</span>
-pca_2d = PCA(n_components=<span class="hl-number">2</span>)
-X_2d = pca_2d.fit_transform(X_digits)
-
-plt.scatter(X_2d[:, <span class="hl-number">0</span>], X_2d[:, <span class="hl-number">1</span>], c=digits.target, cmap=<span class="hl-string">"tab10"</span>,
-            alpha=<span class="hl-number">0.5</span>, s=<span class="hl-number">10</span>)
-plt.colorbar(label=<span class="hl-string">"Digit"</span>)
-plt.title(<span class="hl-string">"Digits Dataset Projected to 2D with PCA"</span>)
-plt.show()
+<span class="hl-function">print</span>(<span class="hl-string">"Metric          | Train            | Validation"</span>)
+<span class="hl-function">print</span>(<span class="hl-string">"-"</span> * <span class="hl-number">55</span>)
+<span class="hl-keyword">for</span> metric <span class="hl-keyword">in</span> [<span class="hl-string">'accuracy'</span>, <span class="hl-string">'f1'</span>, <span class="hl-string">'roc_auc'</span>]:
+    tr = results[<span class="hl-string">f'train_{metric}'</span>]
+    va = results[<span class="hl-string">f'test_{metric}'</span>]
+    <span class="hl-function">print</span>(<span class="hl-string">f"{metric:16s}| {tr.mean():.4f} +/- {tr.std():.3f} | {va.mean():.4f} +/- {va.std():.3f}"</span>)
 </pre>
       </div>
 
-      <h3 id="tsne">4. t-SNE and UMAP for Visualization</h3>
+      <h3 id="hyperparameter-tuning">4. Hyperparameter Tuning (GridSearch, RandomSearch, Bayesian)</h3>
 
       <p>
-        While PCA preserves global structure, t-SNE and UMAP excel at preserving <strong>local structure</strong> &mdash;
-        nearby points in high-dimensional space stay nearby in the visualization. These are your go-to tools
-        for visualizing clusters in high-dimensional data like images and text embeddings.
+        Finding the right hyperparameter combination is critical. <strong>GridSearchCV</strong> tries all
+        combinations exhaustively. <strong>RandomizedSearchCV</strong> samples randomly and is faster for
+        large spaces. <strong>Optuna</strong> uses Bayesian optimization to focus on promising regions.
       </p>
 
       <div class="code-block">
@@ -226,35 +503,61 @@ plt.show()
           <button class="code-copy" onclick="copyCode(this)">Copy</button>
         </div>
 <pre>
-<span class="hl-keyword">from</span> sklearn.manifold <span class="hl-keyword">import</span> TSNE
+<span class="hl-keyword">from</span> sklearn.model_selection <span class="hl-keyword">import</span> GridSearchCV, RandomizedSearchCV
+<span class="hl-keyword">from</span> scipy.stats <span class="hl-keyword">import</span> randint, uniform
 
-<span class="hl-comment"># t-SNE visualization of digits</span>
-tsne = TSNE(n_components=<span class="hl-number">2</span>, random_state=<span class="hl-number">42</span>, perplexity=<span class="hl-number">30</span>)
-X_tsne = tsne.fit_transform(X_digits)
+<span class="hl-comment"># GridSearchCV: Exhaustive but slow</span>
+param_grid = {
+    <span class="hl-string">'n_estimators'</span>: [<span class="hl-number">100</span>, <span class="hl-number">200</span>, <span class="hl-number">300</span>],
+    <span class="hl-string">'max_depth'</span>: [<span class="hl-number">3</span>, <span class="hl-number">5</span>, <span class="hl-number">7</span>, <span class="hl-number">10</span>],
+    <span class="hl-string">'min_samples_leaf'</span>: [<span class="hl-number">1</span>, <span class="hl-number">2</span>, <span class="hl-number">5</span>],
+}
 
-plt.figure(figsize=(<span class="hl-number">10</span>, <span class="hl-number">8</span>))
-scatter = plt.scatter(X_tsne[:, <span class="hl-number">0</span>], X_tsne[:, <span class="hl-number">1</span>], c=digits.target,
-                      cmap=<span class="hl-string">"tab10"</span>, alpha=<span class="hl-number">0.6</span>, s=<span class="hl-number">10</span>)
-plt.colorbar(scatter, label=<span class="hl-string">"Digit"</span>)
-plt.title(<span class="hl-string">"t-SNE Visualization of Handwritten Digits"</span>)
-plt.show()
-
-<span class="hl-comment"># Note: t-SNE is for visualization ONLY — do not use distances</span>
-<span class="hl-comment"># between clusters as meaningful. Use PCA for preprocessing.</span>
+grid_search = <span class="hl-function">GridSearchCV</span>(
+    <span class="hl-function">RandomForestClassifier</span>(random_state=<span class="hl-number">42</span>),
+    param_grid, cv=<span class="hl-number">5</span>, scoring=<span class="hl-string">'f1'</span>, n_jobs=-<span class="hl-number">1</span>
+)
+grid_search.<span class="hl-function">fit</span>(X_train, y_train)
+<span class="hl-function">print</span>(<span class="hl-string">f"Grid Best F1:  {grid_search.best_score_:.4f}"</span>)
+<span class="hl-function">print</span>(<span class="hl-string">f"Grid Params:   {grid_search.best_params_}"</span>)
 </pre>
       </div>
 
-      <div class="callout danger">
-        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> t-SNE Pitfalls</div>
-        <p>t-SNE cluster sizes and distances are NOT meaningful. The perplexity parameter drastically changes the visualization. Always try multiple perplexity values (5, 30, 50) and never draw conclusions from a single t-SNE plot. It is a visualization tool, not an analysis tool.</p>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">python</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># Bayesian Optimization with Optuna</span>
+<span class="hl-keyword">import</span> optuna
+
+<span class="hl-keyword">def</span> <span class="hl-function">objective</span>(trial):
+    params = {
+        <span class="hl-string">'n_estimators'</span>: trial.<span class="hl-function">suggest_int</span>(<span class="hl-string">'n_estimators'</span>, <span class="hl-number">50</span>, <span class="hl-number">500</span>),
+        <span class="hl-string">'max_depth'</span>: trial.<span class="hl-function">suggest_int</span>(<span class="hl-string">'max_depth'</span>, <span class="hl-number">2</span>, <span class="hl-number">15</span>),
+        <span class="hl-string">'learning_rate'</span>: trial.<span class="hl-function">suggest_float</span>(<span class="hl-string">'learning_rate'</span>, <span class="hl-number">0.01</span>, <span class="hl-number">0.3</span>, log=<span class="hl-keyword">True</span>),
+        <span class="hl-string">'subsample'</span>: trial.<span class="hl-function">suggest_float</span>(<span class="hl-string">'subsample'</span>, <span class="hl-number">0.5</span>, <span class="hl-number">1.0</span>),
+        <span class="hl-string">'colsample_bytree'</span>: trial.<span class="hl-function">suggest_float</span>(<span class="hl-string">'colsample_bytree'</span>, <span class="hl-number">0.5</span>, <span class="hl-number">1.0</span>),
+    }
+
+    model = xgb.<span class="hl-function">XGBClassifier</span>(**params, random_state=<span class="hl-number">42</span>, eval_metric=<span class="hl-string">'logloss'</span>)
+    scores = <span class="hl-function">cross_val_score</span>(model, X_train, y_train, cv=<span class="hl-number">5</span>, scoring=<span class="hl-string">'f1'</span>)
+    <span class="hl-keyword">return</span> scores.<span class="hl-function">mean</span>()
+
+study = optuna.<span class="hl-function">create_study</span>(direction=<span class="hl-string">'maximize'</span>)
+study.<span class="hl-function">optimize</span>(objective, n_trials=<span class="hl-number">50</span>, show_progress_bar=<span class="hl-keyword">True</span>)
+<span class="hl-function">print</span>(<span class="hl-string">f"Best F1:     {study.best_value:.4f}"</span>)
+<span class="hl-function">print</span>(<span class="hl-string">f"Best params: {study.best_params}"</span>)
+</pre>
       </div>
 
-      <h3 id="anomaly-detection">5. Anomaly Detection</h3>
+      <h3 id="model-comparison">5. Model Comparison and Selection</h3>
 
       <p>
-        Anomaly detection identifies data points that deviate significantly from the norm. This is critical
-        for fraud detection, network intrusion detection, manufacturing quality control, and health monitoring.
-        Common approaches include Isolation Forest, One-Class SVM, and statistical methods.
+        With multiple tuned models, run the same cross-validation procedure on each, collect the scores,
+        and compare. Always report confidence intervals, not just point estimates. A box plot makes
+        differences between models immediately visible.
       </p>
 
       <div class="code-block">
@@ -263,151 +566,302 @@ plt.show()
           <button class="code-copy" onclick="copyCode(this)">Copy</button>
         </div>
 <pre>
-<span class="hl-keyword">from</span> sklearn.ensemble <span class="hl-keyword">import</span> IsolationForest
+<span class="hl-keyword">import</span> pandas <span class="hl-keyword">as</span> pd
+<span class="hl-keyword">import</span> matplotlib.pyplot <span class="hl-keyword">as</span> plt
+<span class="hl-keyword">from</span> sklearn.linear_model <span class="hl-keyword">import</span> LogisticRegression
+<span class="hl-keyword">from</span> sklearn.svm <span class="hl-keyword">import</span> SVC
+<span class="hl-keyword">from</span> sklearn.preprocessing <span class="hl-keyword">import</span> StandardScaler
+<span class="hl-keyword">from</span> sklearn.pipeline <span class="hl-keyword">import</span> Pipeline
 
-<span class="hl-comment"># Generate normal data with some anomalies</span>
-np.random.seed(<span class="hl-number">42</span>)
-X_normal = np.random.randn(<span class="hl-number">300</span>, <span class="hl-number">2</span>)
-X_anomaly = np.random.uniform(-<span class="hl-number">6</span>, <span class="hl-number">6</span>, (<span class="hl-number">20</span>, <span class="hl-number">2</span>))
-X_all = np.vstack([X_normal, X_anomaly])
+models = {
+    <span class="hl-string">'LR'</span>: <span class="hl-function">Pipeline</span>([(<span class="hl-string">'s'</span>, <span class="hl-function">StandardScaler</span>()), (<span class="hl-string">'m'</span>, <span class="hl-function">LogisticRegression</span>(max_iter=<span class="hl-number">1000</span>))]),
+    <span class="hl-string">'SVM'</span>: <span class="hl-function">Pipeline</span>([(<span class="hl-string">'s'</span>, <span class="hl-function">StandardScaler</span>()), (<span class="hl-string">'m'</span>, <span class="hl-function">SVC</span>())]),
+    <span class="hl-string">'RF'</span>: <span class="hl-function">RandomForestClassifier</span>(n_estimators=<span class="hl-number">200</span>, random_state=<span class="hl-number">42</span>),
+    <span class="hl-string">'XGB'</span>: xgb.<span class="hl-function">XGBClassifier</span>(n_estimators=<span class="hl-number">200</span>, eval_metric=<span class="hl-string">'logloss'</span>, random_state=<span class="hl-number">42</span>),
+    <span class="hl-string">'LGBM'</span>: lgb.<span class="hl-function">LGBMClassifier</span>(n_estimators=<span class="hl-number">200</span>, random_state=<span class="hl-number">42</span>, verbose=-<span class="hl-number">1</span>),
+}
 
-<span class="hl-comment"># Isolation Forest</span>
-iso = IsolationForest(contamination=<span class="hl-number">0.06</span>, random_state=<span class="hl-number">42</span>)
-predictions = iso.fit_predict(X_all)  <span class="hl-comment"># 1=normal, -1=anomaly</span>
+results = {}
+<span class="hl-keyword">for</span> name, model <span class="hl-keyword">in</span> models.<span class="hl-function">items</span>():
+    scores = <span class="hl-function">cross_val_score</span>(model, X_train, y_train, cv=<span class="hl-number">5</span>, scoring=<span class="hl-string">'f1'</span>)
+    results[name] = scores
+    <span class="hl-function">print</span>(<span class="hl-string">f"{name:6s} | F1: {scores.mean():.4f} +/- {scores.std():.4f}"</span>)
 
-n_detected = (predictions == -<span class="hl-number">1</span>).sum()
-<span class="hl-function">print</span>(<span class="hl-string">f"Detected {n_detected} anomalies out of {len(X_all)} points"</span>)
-
-plt.scatter(X_all[predictions == <span class="hl-number">1</span>, <span class="hl-number">0</span>], X_all[predictions == <span class="hl-number">1</span>, <span class="hl-number">1</span>],
-            c=<span class="hl-string">"blue"</span>, label=<span class="hl-string">"Normal"</span>, alpha=<span class="hl-number">0.5</span>)
-plt.scatter(X_all[predictions == -<span class="hl-number">1</span>, <span class="hl-number">0</span>], X_all[predictions == -<span class="hl-number">1</span>, <span class="hl-number">1</span>],
-            c=<span class="hl-string">"red"</span>, label=<span class="hl-string">"Anomaly"</span>, marker=<span class="hl-string">"x"</span>, s=<span class="hl-number">100</span>)
-plt.legend()
-plt.title(<span class="hl-string">"Isolation Forest Anomaly Detection"</span>)
-plt.show()
+<span class="hl-comment"># Box plot comparison</span>
+fig, ax = plt.<span class="hl-function">subplots</span>(figsize=(<span class="hl-number">10</span>, <span class="hl-number">5</span>))
+ax.<span class="hl-function">boxplot</span>(results.<span class="hl-function">values</span>(), labels=results.<span class="hl-function">keys</span>())
+ax.<span class="hl-function">set_ylabel</span>(<span class="hl-string">'F1 Score'</span>)
+ax.<span class="hl-function">set_title</span>(<span class="hl-string">'Model Comparison: 5-Fold CV'</span>)
+plt.<span class="hl-function">tight_layout</span>()
+plt.<span class="hl-function">show</span>()
 </pre>
       </div>
+
+      <h3 id="feature-importance">6. Feature Importance and Interpretability</h3>
+
+      <p>
+        Understanding <strong>why</strong> a model makes predictions is critical. Tree-based models provide
+        built-in feature importance. For model-agnostic interpretability, <strong>permutation importance</strong>
+        measures how much performance drops when a feature's values are shuffled.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">python</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-keyword">from</span> sklearn.inspection <span class="hl-keyword">import</span> permutation_importance
+<span class="hl-keyword">import</span> pandas <span class="hl-keyword">as</span> pd
+
+rf.<span class="hl-function">fit</span>(X_train, y_train)
+
+<span class="hl-comment"># Built-in Gini importance</span>
+gini_imp = pd.<span class="hl-function">Series</span>(rf.feature_importances_, index=data.feature_names)
+gini_imp = gini_imp.<span class="hl-function">sort_values</span>(ascending=<span class="hl-keyword">False</span>)
+
+<span class="hl-comment"># Permutation importance (more reliable)</span>
+perm_result = <span class="hl-function">permutation_importance</span>(rf, X_test, y_test, n_repeats=<span class="hl-number">10</span>, random_state=<span class="hl-number">42</span>)
+perm_imp = pd.<span class="hl-function">Series</span>(perm_result.importances_mean, index=data.feature_names)
+perm_imp = perm_imp.<span class="hl-function">sort_values</span>(ascending=<span class="hl-keyword">False</span>)
+
+<span class="hl-comment"># Side-by-side comparison</span>
+fig, axes = plt.<span class="hl-function">subplots</span>(<span class="hl-number">1</span>, <span class="hl-number">2</span>, figsize=(<span class="hl-number">16</span>, <span class="hl-number">6</span>))
+gini_imp[:<span class="hl-number">15</span>].<span class="hl-function">plot</span>(kind=<span class="hl-string">'barh'</span>, ax=axes[<span class="hl-number">0</span>], color=<span class="hl-string">'teal'</span>)
+axes[<span class="hl-number">0</span>].<span class="hl-function">set_title</span>(<span class="hl-string">'Gini Importance (Top 15)'</span>)
+perm_imp[:<span class="hl-number">15</span>].<span class="hl-function">plot</span>(kind=<span class="hl-string">'barh'</span>, ax=axes[<span class="hl-number">1</span>], color=<span class="hl-string">'coral'</span>)
+axes[<span class="hl-number">1</span>].<span class="hl-function">set_title</span>(<span class="hl-string">'Permutation Importance (Top 15)'</span>)
+plt.<span class="hl-function">tight_layout</span>()
+plt.<span class="hl-function">show</span>()
+</pre>
+      </div>
+
+      <details>
+        <summary>Why does Gini importance disagree with permutation importance?</summary>
+        <div class="details-body">
+          <p>
+            Gini importance is biased toward high-cardinality features that offer more split opportunities.
+            Permutation importance measures actual predictive contribution on the test set. When they
+            disagree, trust permutation importance for feature selection decisions.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>How do I choose between XGBoost and LightGBM?</summary>
+        <div class="details-body">
+          <p>
+            <strong>LightGBM</strong> is typically faster on large datasets due to histogram-based binning.
+            <strong>XGBoost</strong> has a longer track record and more documentation. Performance is
+            often similar. Try both and let cross-validation decide.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>What about early stopping for gradient boosting?</summary>
+        <div class="details-body">
+          <p>
+            Early stopping monitors validation loss and stops when it stops improving. This prevents
+            overfitting and automatically selects the optimal number of trees. Far more efficient than
+            tuning <code>n_estimators</code> manually.
+          </p>
+        </div>
+      </details>
 
       <hr class="section-divider">
 
       <h2 id="watch-learn">Watch &amp; Learn</h2>
-      <p>These videos cover the core concepts in this chapter. Watch them before starting the assignments.</p>
+
+      <p>
+        These videos build intuition for ensemble methods and the mathematics behind gradient boosting.
+      </p>
 
       <div class="video-card">
         <div class="video-wrapper">
-          <iframe src="https://www.youtube.com/embed/4b5d3muPQmA?rel=0&amp;modestbranding=1" title="StatQuest &mdash; K-Means Clustering: how it works and when it fails" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+          <iframe
+            src="https://www.youtube.com/embed/GwIo3gDZCVQ?rel=0&amp;modestbranding=1"
+            title="Ensemble Methods and Random Forests"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
         </div>
-        <div class="video-caption"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg> StatQuest &mdash; K-Means Clustering: how it works and when it fails</div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Ensemble Methods &mdash; How random forests and boosting combine weak learners
+        </div>
       </div>
+
       <div class="video-card">
         <div class="video-wrapper">
-          <iframe src="https://www.youtube.com/embed/FgakZw6K1QQ?rel=0&amp;modestbranding=1" title="StatQuest &mdash; PCA: Principal Component Analysis step by step" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+          <iframe
+            src="https://www.youtube.com/embed/WbZyr4mDaRo?rel=0&amp;modestbranding=1"
+            title="Gradient Boosting Explained"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
         </div>
-        <div class="video-caption"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg> StatQuest &mdash; PCA: Principal Component Analysis step by step</div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Gradient Boosting &mdash; Step-by-step visual explanation of the boosting algorithm
+        </div>
       </div>
 
       <hr class="section-divider">
 
       <h2 id="further-reading">Further Reading</h2>
-      <p>Deep-dive into official documentation and reference material for this chapter.</p>
+
+      <p>Deep-dive into ensemble methods, XGBoost internals, and hyperparameter optimization strategies.</p>
+
       <div class="resource-grid">
-        <a class="resource-card" href="https://scikit-learn.org/stable/modules/clustering.html" target="_blank" rel="noopener">
-          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-          <div class="resource-info"><div class="resource-title">Scikit-Learn: Clustering Guide</div><div class="resource-desc">Comprehensive guide to all clustering algorithms with comparison charts.</div></div>
+        <a class="resource-card" href="https://scikit-learn.org/stable/modules/ensemble.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Scikit-learn: Ensemble Methods</div>
+            <div class="resource-desc">Official guide covering bagging, boosting, voting, and stacking ensembles.</div>
+          </div>
         </a>
-        <a class="resource-card" href="https://scikit-learn.org/stable/modules/decomposition.html" target="_blank" rel="noopener">
-          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-          <div class="resource-info"><div class="resource-title">Scikit-Learn: Decomposition</div><div class="resource-desc">PCA, NMF, and other dimensionality reduction techniques.</div></div>
+
+        <a class="resource-card" href="https://xgboost.readthedocs.io/" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">XGBoost Documentation</div>
+            <div class="resource-desc">Complete reference for XGBoost parameters, Python API, and tuning.</div>
+          </div>
         </a>
-        <a class="resource-card" href="https://distill.pub/2016/misread-tsne/" target="_blank" rel="noopener">
-          <div class="resource-icon article"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
-          <div class="resource-info"><div class="resource-title">How to Use t-SNE Effectively (Distill)</div><div class="resource-desc">Interactive article showing how t-SNE parameters affect results.</div></div>
+
+        <a class="resource-card" href="https://lightgbm.readthedocs.io/" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">LightGBM Documentation</div>
+            <div class="resource-desc">Microsoft's gradient boosting framework with histogram-based splitting.</div>
+          </div>
         </a>
-        <a class="resource-card" href="https://pair-code.github.io/understanding-umap/" target="_blank" rel="noopener">
-          <div class="resource-icon article"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
-          <div class="resource-info"><div class="resource-title">Understanding UMAP (Google PAIR)</div><div class="resource-desc">Visual explanation of UMAP and comparison with t-SNE.</div></div>
+
+        <a class="resource-card" href="https://optuna.readthedocs.io/" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Optuna: Hyperparameter Optimization</div>
+            <div class="resource-desc">Bayesian optimization using Tree-structured Parzen Estimators (TPE).</div>
+          </div>
         </a>
       </div>
 
       <hr class="section-divider">
 
       <h2 id="assignments">Assignments</h2>
-      <p>Complete these in order. Each level builds on the previous one.</p>
+
+      <p>
+        Complete these in order. Each level builds on the previous one. Submit your work as a Jupyter
+        notebook with clear markdown headings and printed evaluation metrics.
+      </p>
 
       <div class="assignment">
         <div class="assignment-header">
-          <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 1</div>
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 1
+          </div>
           <span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span>
         </div>
-        <h4>Customer Segmentation with K-Means</h4>
-        <p>Cluster a synthetic customer dataset and interpret the segments.</p>
+        <h4>Random Forest Basics and Feature Importance</h4>
+        <p>Train random forests, explore OOB scores, and analyze which features drive predictions.</p>
         <ul class="checklist">
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Generate customer data with 4 features (spending, frequency, recency, tenure)</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Use the Elbow method and Silhouette score to find optimal K</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Visualize clusters using PCA projection to 2D</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Compute cluster statistics (mean values per feature per cluster)</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Name each segment based on characteristics (e.g., 'High-Value Frequent Buyers')</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Train a <code>RandomForestClassifier</code> with <code>oob_score=True</code></span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Plot accuracy vs <code>n_estimators</code> (10 to 500) to show convergence</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Compare OOB score with 5-fold cross-validation score</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Plot both Gini and permutation importance for top 15 features</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write a paragraph explaining which features matter most</span></li>
         </ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0">
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
           <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div>
-          <p>Your analysis identifies 3-5 meaningful customer segments with distinct profiles.</p>
+          <p>Your notebook shows RF convergence, OOB vs CV comparison, and feature importance analysis.</p>
         </div>
       </div>
+
       <div class="assignment">
         <div class="assignment-header">
-          <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 2</div>
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 2
+          </div>
           <span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span>
         </div>
-        <h4>Dimensionality Reduction Pipeline</h4>
-        <p>Compare PCA, t-SNE, and UMAP on the MNIST digits dataset.</p>
+        <h4>Gradient Boosting Showdown with Hyperparameter Tuning</h4>
+        <p>Compare XGBoost and LightGBM with systematic hyperparameter optimization.</p>
         <ul class="checklist">
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Load MNIST with <code>sklearn.datasets.fetch_openml('mnist_784')</code></span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Apply PCA with varying n_components and plot explained variance</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create t-SNE visualizations with perplexity 5, 30, and 50</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Compare computation time of each method</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Use PCA as preprocessing before t-SNE and show the speedup</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Train XGBoost and LightGBM with early stopping and plot loss curves</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Use Optuna to tune each model with at least 50 trials</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Compare tuned models against RF and LR baselines</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a summary table: model, CV score, training time, best params</span></li>
         </ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0">
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
           <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div>
-          <p>You produce publication-quality visualizations showing clear digit clusters and document the tradeoffs.</p>
+          <p>Your notebook shows tuned boosting results with early stopping and a clear model recommendation.</p>
         </div>
       </div>
+
       <div class="assignment">
         <div class="assignment-header">
-          <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 3</div>
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 3
+          </div>
           <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Production-Ready</span>
         </div>
-        <h4>Anomaly Detection System</h4>
-        <p>Build an anomaly detection pipeline for credit card transaction data.</p>
+        <h4>Complete Model Selection Pipeline on Real-World Data</h4>
+        <p>Build a full pipeline that preprocesses data, compares ensembles, tunes the winner, and produces an interpretable report.</p>
         <ul class="checklist">
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Use the Kaggle Credit Card Fraud dataset or generate synthetic data</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Compare Isolation Forest, One-Class SVM, and Local Outlier Factor</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Evaluate with precision, recall at different contamination thresholds</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Implement an alerting function that flags suspicious transactions</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Visualize the decision boundary of each detector in 2D (using PCA)</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Download a Kaggle dataset with mixed feature types</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Build a <code>ColumnTransformer</code> + <code>Pipeline</code> with proper preprocessing</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Compare 5+ models using stratified 5-fold CV</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Tune top 2 models with Optuna (100+ trials)</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Final report: confusion matrix, ROC, feature importance, 2-paragraph summary</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Save final model with <code>joblib.dump</code></span></li>
         </ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0">
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
           <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div>
-          <p>Your system achieves > 80% recall on anomalies while keeping false positive rate below 5%.</p>
+          <p>Your pipeline handles real-world data end-to-end with a serialized model and interpretability report.</p>
         </div>
       </div>
 
       <hr class="section-divider">
 
       <h2 id="self-check">Self-Check</h2>
-      <p>Before moving on, honestly answer these questions. If any answer is "no," go back and practice.</p>
+
+      <p>Before moving to Chapter 05, honestly answer these questions. If any answer is "no," go back and practice.</p>
 
       <details>
-        <summary>Can you explain when to use K-Means vs DBSCAN?</summary>
-        <div class="details-body"><p>K-Means: spherical clusters, known K, fast. DBSCAN: arbitrary shapes, automatic K, handles noise, but sensitive to eps and min_samples. Use DBSCAN when clusters have irregular shapes or you don't know K.</p></div>
+        <summary>Can you explain the difference between bagging and boosting?</summary>
+        <div class="details-body">
+          <p>Bagging trains models independently on bootstrapped data and averages them (reduces variance). Boosting trains models sequentially, each correcting the previous one's errors (reduces bias). Random Forest = bagging. XGBoost/LightGBM = gradient boosting.</p>
+        </div>
       </details>
+
       <details>
-        <summary>Do you understand what PCA components represent?</summary>
-        <div class="details-body"><p>Each principal component is a linear combination of original features pointing in the direction of maximum variance. The first PC captures the most variance, the second captures the most remaining variance orthogonal to the first, and so on.</p></div>
+        <summary>Do you know when to use GridSearch vs RandomSearch vs Bayesian optimization?</summary>
+        <div class="details-body">
+          <p>GridSearch: small spaces, exhaustive. RandomSearch: larger spaces, limited budget. Bayesian (Optuna): large spaces with expensive evaluations, intelligently focuses on promising regions.</p>
+        </div>
       </details>
+
       <details>
-        <summary>Can you evaluate an unsupervised model without labels?</summary>
-        <div class="details-body"><p>Use internal metrics: silhouette score (clustering quality), inertia (within-cluster variance), explained variance ratio (PCA). Also use domain knowledge and visual inspection. There is no single 'accuracy' for unsupervised learning.</p></div>
+        <summary>Can you interpret feature importance and explain model predictions?</summary>
+        <div class="details-body">
+          <p>You should extract both Gini and permutation importance, understand their differences, and communicate which features matter most. Trust permutation importance when they disagree.</p>
+        </div>
       </details>
 
     </main>
@@ -417,12 +871,13 @@ plt.show()
       <ul class="toc-list">
         <li class="toc-item"><a href="#why-this-matters">Why This Matters</a></li>
         <li class="toc-item"><a href="#key-concepts">Key Concepts</a></li>
-        <li class="toc-item"><a href="#kmeans" style="padding-left:28px;font-size:12px">K-Means Clustering</a></li>
-        <li class="toc-item"><a href="#hierarchical" style="padding-left:28px;font-size:12px">DBSCAN & Hierarchical</a></li>
-        <li class="toc-item"><a href="#pca" style="padding-left:28px;font-size:12px">PCA</a></li>
-        <li class="toc-item"><a href="#tsne" style="padding-left:28px;font-size:12px">t-SNE & UMAP</a></li>
-        <li class="toc-item"><a href="#anomaly-detection" style="padding-left:28px;font-size:12px">Anomaly Detection</a></li>
-        <li class="toc-item"><a href="#watch-learn">Watch & Learn</a></li>
+        <li class="toc-item"><a href="#bagging-random-forests" style="padding-left: 28px; font-size: 12px;">Bagging and Random Forests</a></li>
+        <li class="toc-item"><a href="#gradient-boosting" style="padding-left: 28px; font-size: 12px;">Gradient Boosting</a></li>
+        <li class="toc-item"><a href="#cross-validation" style="padding-left: 28px; font-size: 12px;">Cross-Validation</a></li>
+        <li class="toc-item"><a href="#hyperparameter-tuning" style="padding-left: 28px; font-size: 12px;">Hyperparameter Tuning</a></li>
+        <li class="toc-item"><a href="#model-comparison" style="padding-left: 28px; font-size: 12px;">Model Comparison</a></li>
+        <li class="toc-item"><a href="#feature-importance" style="padding-left: 28px; font-size: 12px;">Feature Importance</a></li>
+        <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a></li>
         <li class="toc-item"><a href="#further-reading">Further Reading</a></li>
         <li class="toc-item"><a href="#assignments">Assignments</a></li>
         <li class="toc-item"><a href="#self-check">Self-Check</a></li>
@@ -433,20 +888,72 @@ plt.show()
   <footer class="chapter-footer">
     <div class="chapter-footer-inner">
       <nav class="footer-nav">
-        <a class="footer-nav-link" href="chapter-03.html"><span class="footer-nav-label">&larr; Previous Chapter</span><span class="footer-nav-title">03: Supervised Learning Fundamentals</span></a>
-        <a class="footer-nav-link" href="chapter-05.html"><span class="footer-nav-label">Next Chapter &rarr;</span><span class="footer-nav-title">05: Neural Network Foundations</span></a>
+        <a class="footer-nav-link" href="chapter-03.html">
+          <span class="footer-nav-label">&larr; Previous Chapter</span>
+          <span class="footer-nav-title">03: Supervised Learning Fundamentals</span>
+        </a>
+        <a class="footer-nav-link" href="chapter-05.html">
+          <span class="footer-nav-label">Next Chapter &rarr;</span>
+          <span class="footer-nav-title">05: Neural Network Fundamentals</span>
+        </a>
       </nav>
-      <div class="footer-brand">ILA (Iksha Learning Academy) &middot; AI &amp; Machine Learning Certification &middot; Basic Track</div>
+      <div class="footer-brand">
+        ILA (Iksha Learning Academy) &middot; AI &amp; ML Engineering Certification &middot; Level 1
+      </div>
     </div>
   </footer>
 
-
   <script>
-    window.addEventListener('scroll',()=>{const s=window.scrollY;const d=document.documentElement.scrollHeight-window.innerHeight;document.getElementById('progressBar').style.width=(d>0?(s/d)*100:0)+'%'});
-    const tocLinks=document.querySelectorAll('.toc-item a');const sections=[];tocLinks.forEach(l=>{const id=l.getAttribute('href').slice(1);const el=document.getElementById(id);if(el)sections.push({id,el,link:l})});
-    const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{const item=sections.find(s=>s.el===entry.target);if(item&&entry.isIntersecting){tocLinks.forEach(l=>l.classList.remove('active'));item.link.classList.add('active')}})},{rootMargin:'-80px 0px -60% 0px',threshold:0});
-    sections.forEach(s=>observer.observe(s.el));
-    function copyCode(btn){const pre=btn.closest('.code-block').querySelector('pre');navigator.clipboard.writeText(pre.textContent).then(()=>{btn.classList.add('copied');btn.textContent='Copied!';setTimeout(()=>{btn.classList.remove('copied');btn.textContent='Copy'},2000)})}
+    // ── Progress Bar ──
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      document.getElementById('progressBar').style.width = progress + '%';
+    });
+
+    // ── Active TOC ──
+    const tocLinks = document.querySelectorAll('.toc-item a');
+    const sections = [];
+
+    tocLinks.forEach(link => {
+      const id = link.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) sections.push({ id, el, link });
+    });
+
+    const observerOptions = {
+      rootMargin: '-80px 0px -60% 0px',
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const item = sections.find(s => s.el === entry.target);
+        if (item) {
+          if (entry.isIntersecting) {
+            tocLinks.forEach(l => l.classList.remove('active'));
+            item.link.classList.add('active');
+          }
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(s => observer.observe(s.el));
+
+    // ── Copy Code ──
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      const text = pre.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.classList.add('copied');
+        btn.textContent = 'Copied!';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.textContent = 'Copy';
+        }, 2000);
+      });
+    }
   </script>
 </body>
 </html>

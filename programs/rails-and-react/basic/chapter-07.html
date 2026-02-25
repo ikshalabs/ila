@@ -8,189 +8,383 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
-    :root{--ink:#0f172a;--ink-light:#334155;--ink-muted:#64748b;--surface:#ffffff;--surface-alt:#f8fafc;--surface-warm:#fffbeb;--border:#e2e8f0;--border-light:#f1f5f9;--teal-50:#f0fdfa;--teal-100:#ccfbf1;--teal-200:#99f6e4;--teal-500:#14b8a6;--teal-600:#0d9488;--teal-700:#0f766e;--teal-800:#115e59;--teal-900:#134e4a;--blue-50:#eff6ff;--blue-100:#dbeafe;--blue-500:#3b82f6;--blue-600:#2563eb;--blue-700:#1d4ed8;--amber-50:#fffbeb;--amber-100:#fef3c7;--amber-500:#f59e0b;--amber-600:#d97706;--red-50:#fef2f2;--red-100:#fee2e2;--red-500:#ef4444;--red-600:#dc2626;--purple-50:#faf5ff;--purple-100:#f3e8ff;--purple-500:#a855f7;--purple-600:#9333ea;--font-sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;--font-serif:'Instrument Serif',Georgia,serif;--font-mono:'JetBrains Mono','Fira Code',monospace;--content-max:780px;--sidebar-width:280px;--ease:cubic-bezier(0.4,0,0.2,1)}
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}body{font-family:var(--font-sans);font-size:16px;line-height:1.7;color:var(--ink);background:var(--surface)}
-    .progress-bar{position:fixed;top:0;left:0;width:0%;height:3px;background:linear-gradient(90deg,var(--teal-500),var(--blue-500));z-index:1000;transition:width .15s var(--ease)}.top-nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem}.top-nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px}.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--teal-800)}.nav-brand-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--teal-600),var(--teal-800));border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px}.nav-brand-text{font-weight:700;font-size:15px;letter-spacing:-.02em}.nav-chapter-nav{display:flex;align-items:center;gap:8px}.nav-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;color:var(--ink-muted);border:1px solid var(--border);background:#fff;transition:all .2s var(--ease);cursor:pointer}.nav-btn:hover{color:var(--ink);border-color:var(--teal-500);background:var(--teal-50)}.nav-btn.disabled{opacity:.4;pointer-events:none}.nav-current{font-size:13px;font-weight:600;color:var(--ink-light);padding:0 4px}
-    .hero{background:linear-gradient(170deg,var(--teal-50) 0%,var(--surface) 50%,var(--blue-50) 100%);border-bottom:1px solid var(--border);padding:4rem 2rem 3.5rem}.hero-inner{max-width:var(--content-max);margin:0 auto}.hero-chapter-label{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--teal-700);text-transform:uppercase;letter-spacing:.08em;margin-bottom:1rem}.hero-chapter-label span{background:var(--teal-100);padding:3px 10px;border-radius:100px}.hero h1{font-family:var(--font-serif);font-size:clamp(2.4rem,5vw,3.2rem);font-weight:400;line-height:1.15;color:var(--ink);margin-bottom:1rem}.hero-subtitle{font-size:1.15rem;color:var(--ink-light);line-height:1.65;max-width:640px}.hero-meta{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1.5rem}.hero-meta-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-muted)}.hero-meta-item svg{width:16px;height:16px;color:var(--teal-600)}
-    .main-layout{max-width:1200px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:1fr var(--sidebar-width);gap:4rem;align-items:start}.content{padding:3rem 0 6rem;min-width:0}.sidebar{position:sticky;top:76px;padding:2rem 0;max-height:calc(100vh - 76px);overflow-y:auto}.sidebar-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-muted);margin-bottom:1rem;padding-left:14px}.toc-list{list-style:none}.toc-item a{display:block;padding:6px 14px;font-size:13px;color:var(--ink-muted);text-decoration:none;border-left:2px solid transparent;transition:all .2s var(--ease);line-height:1.5}.toc-item a:hover{color:var(--ink);background:var(--surface-alt)}.toc-item a.active{color:var(--teal-700);border-left-color:var(--teal-500);background:var(--teal-50);font-weight:500}
-    .content h2{font-family:var(--font-serif);font-size:1.85rem;font-weight:400;color:var(--ink);margin:3rem 0 1rem;padding-top:1rem;scroll-margin-top:80px}.content h2:first-child{margin-top:0}.content h3{font-size:1.15rem;font-weight:600;color:var(--ink);margin:2rem 0 .75rem;scroll-margin-top:80px}.content p{margin-bottom:1.25rem;color:var(--ink-light)}.content strong{color:var(--ink);font-weight:600}.content a{color:var(--teal-700);text-decoration:underline;text-decoration-color:var(--teal-200);text-underline-offset:3px}.content ul,.content ol{margin-bottom:1.25rem;padding-left:1.5rem}.content li{margin-bottom:.5rem;color:var(--ink-light)}.content li::marker{color:var(--teal-500)}
-    .section-divider{border:none;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:3rem 0}
-    .callout{padding:1.25rem 1.5rem;border-radius:12px;margin-bottom:1.5rem;border:1px solid;position:relative}.callout-header{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;margin-bottom:.5rem}.callout-header svg{width:18px;height:18px;flex-shrink:0}.callout p:last-child{margin-bottom:0}.callout.concept{background:var(--blue-50);border-color:var(--blue-100)}.callout.concept .callout-header{color:var(--blue-700)}.callout.important{background:var(--amber-50);border-color:var(--amber-100)}.callout.important .callout-header{color:var(--amber-600)}.callout.danger{background:var(--red-50);border-color:var(--red-100)}.callout.danger .callout-header{color:var(--red-600)}.callout.tip{background:var(--purple-50);border-color:var(--purple-100)}.callout.tip .callout-header{color:var(--purple-600)}.callout.success{background:var(--teal-50);border-color:var(--teal-100)}.callout.success .callout-header{color:var(--teal-700)}
-    .code-block{position:relative;margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}.code-header{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:var(--surface-alt);border-bottom:1px solid var(--border);font-size:12px;color:var(--ink-muted)}.code-lang{font-family:var(--font-mono);font-weight:600;text-transform:uppercase;letter-spacing:.05em}.code-copy{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:#fff;font-size:11px;font-family:var(--font-sans);color:var(--ink-muted);cursor:pointer;transition:all .2s var(--ease)}.code-copy:hover{border-color:var(--teal-500);color:var(--teal-700)}.code-copy.copied{background:var(--teal-50);border-color:var(--teal-500);color:var(--teal-700)}
-    pre{margin:0;padding:1.25rem 1.5rem;overflow-x:auto;background:#1e293b;font-family:var(--font-mono);font-size:13.5px;line-height:1.7;color:#e2e8f0}code{font-family:var(--font-mono);font-size:.88em}p code,li code{padding:2px 7px;background:var(--surface-alt);border:1px solid var(--border);border-radius:5px;color:var(--teal-800);font-size:.85em}
-    .hl-keyword{color:#c084fc}.hl-string{color:#86efac}.hl-comment{color:#64748b;font-style:italic}.hl-function{color:#7dd3fc}.hl-number{color:#fbbf24}.hl-flag{color:#f472b6}
-    details{margin-bottom:1.25rem;border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .2s var(--ease)}details[open]{border-color:var(--teal-200)}details summary{padding:1rem 1.25rem;font-weight:600;font-size:15px;cursor:pointer;background:var(--surface-alt);list-style:none;display:flex;align-items:center;gap:10px;transition:background .2s var(--ease);user-select:none}details summary::-webkit-details-marker{display:none}details summary::before{content:'';width:20px;height:20px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain;flex-shrink:0;transition:transform .2s var(--ease)}details[open] summary::before{transform:rotate(90deg)}details summary:hover{background:var(--teal-50)}.details-body{padding:1.25rem 1.5rem}.details-body p:last-child{margin-bottom:0}
-    .video-card{margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}.video-wrapper{position:relative;padding-bottom:56.25%;height:0;background:#0f172a}.video-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}.video-caption{padding:12px 16px;background:var(--surface-alt);font-size:13px;color:var(--ink-muted);display:flex;align-items:center;gap:6px}.video-caption svg{width:14px;height:14px;color:var(--red-500)}
-    .resource-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1rem;margin-bottom:1.5rem}.resource-card{display:flex;gap:14px;padding:1rem 1.25rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all .2s var(--ease);background:#fff}.resource-card:hover{border-color:var(--teal-300);background:var(--teal-50);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.04)}.resource-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}.resource-icon.docs{background:var(--blue-50);color:var(--blue-600)}.resource-icon.video{background:var(--red-50);color:var(--red-500)}.resource-icon.github{background:var(--ink);color:#fff}.resource-icon.article{background:var(--amber-50);color:var(--amber-600)}.resource-info{min-width:0}.resource-title{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:2px;line-height:1.4}.resource-desc{font-size:12px;color:var(--ink-muted);line-height:1.5}
-    .assignment{border:2px solid var(--teal-200);border-radius:14px;padding:1.5rem 1.75rem;margin-bottom:1.5rem;background:linear-gradient(135deg,var(--teal-50) 0%,#fff 100%)}.assignment-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}.assignment-label{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--teal-700)}.assignment-difficulty{display:inline-flex;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:600}.difficulty-l1{background:var(--teal-100);color:var(--teal-800)}.difficulty-l2{background:var(--amber-100);color:var(--amber-600)}.difficulty-l3{background:var(--red-100);color:var(--red-600)}.assignment h4{font-size:1.05rem;font-weight:700;margin-bottom:.75rem}.assignment p{font-size:14px}
-    .checklist{list-style:none;padding:0}.checklist li{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border-light);font-size:14px}.checklist li:last-child{border-bottom:none}.check-box{width:20px;height:20px;border-radius:6px;border:2px solid var(--border);flex-shrink:0;margin-top:1px;cursor:pointer;transition:all .15s var(--ease);display:flex;align-items:center;justify-content:center}.check-box:hover{border-color:var(--teal-500)}.check-box.checked{background:var(--teal-500);border-color:var(--teal-500)}.check-box.checked::after{content:'';width:10px;height:10px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain}
-    .diagram{margin:1.5rem 0;padding:2rem;background:var(--surface-alt);border:1px solid var(--border);border-radius:14px;overflow-x:auto}.diagram pre{background:transparent;color:var(--ink);padding:0;font-size:13px;line-height:1.6}.diagram-caption{margin-top:1rem;font-size:12px;color:var(--ink-muted);text-align:center;font-style:italic}
-    .chapter-footer{border-top:1px solid var(--border);padding:3rem 2rem;background:var(--surface-alt)}.chapter-footer-inner{max-width:var(--content-max);margin:0 auto}.footer-nav{display:flex;justify-content:space-between;align-items:center;gap:1rem}.footer-nav-link{display:flex;flex-direction:column;gap:4px;padding:1rem 1.5rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all .2s var(--ease);max-width:320px;background:#fff}.footer-nav-link:hover{border-color:var(--teal-300);box-shadow:0 4px 12px rgba(0,0,0,.04)}.footer-nav-label{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--teal-600)}.footer-nav-title{font-size:15px;font-weight:600;color:var(--ink)}.footer-brand{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border);font-size:13px;color:var(--ink-muted)}
-    @media(max-width:960px){.main-layout{grid-template-columns:1fr}.sidebar{display:none}.resource-grid{grid-template-columns:1fr}}@media(max-width:640px){.hero{padding:2.5rem 1.25rem 2rem}.main-layout{padding:0 1.25rem}.content{padding:2rem 0 4rem}pre{padding:1rem;font-size:12.5px}.footer-nav{flex-direction:column}.footer-nav-link{max-width:100%;width:100%}}@media print{.top-nav,.sidebar,.progress-bar{display:none}.main-layout{display:block}.content{padding:0}.hero{background:#fff;border:none}pre{background:#f1f5f9;color:var(--ink);border:1px solid var(--border)}}
+    :root {
+      --ink: #0f172a; --ink-light: #334155; --ink-muted: #64748b;
+      --surface: #ffffff; --surface-alt: #f8fafc; --surface-warm: #fffbeb;
+      --border: #e2e8f0; --border-light: #f1f5f9;
+      --teal-50: #f0fdfa; --teal-100: #ccfbf1; --teal-200: #99f6e4;
+      --teal-500: #14b8a6; --teal-600: #0d9488; --teal-700: #0f766e;
+      --teal-800: #115e59; --teal-900: #134e4a;
+      --blue-50: #eff6ff; --blue-100: #dbeafe; --blue-500: #3b82f6;
+      --blue-600: #2563eb; --blue-700: #1d4ed8;
+      --amber-50: #fffbeb; --amber-100: #fef3c7; --amber-500: #f59e0b; --amber-600: #d97706;
+      --red-50: #fef2f2; --red-100: #fee2e2; --red-500: #ef4444; --red-600: #dc2626;
+      --purple-50: #faf5ff; --purple-100: #f3e8ff; --purple-500: #a855f7; --purple-600: #9333ea;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-serif: 'Instrument Serif', Georgia, serif;
+      --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+      --content-max: 780px; --sidebar-width: 280px;
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    body { font-family: var(--font-sans); font-size: 16px; line-height: 1.7; color: var(--ink); background: var(--surface); }
+    .progress-bar { position: fixed; top: 0; left: 0; width: 0%; height: 3px; background: linear-gradient(90deg, var(--teal-500), var(--blue-500)); z-index: 1000; transition: width 0.15s var(--ease); }
+    .top-nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 2rem; }
+    .top-nav-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 56px; }
+    .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--teal-800); }
+    .nav-brand-icon { width: 32px; height: 32px; background: linear-gradient(135deg, var(--teal-600), var(--teal-800)); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 14px; }
+    .nav-brand-text { font-weight: 700; font-size: 15px; letter-spacing: -0.02em; }
+    .nav-chapter-nav { display: flex; align-items: center; gap: 8px; }
+    .nav-btn { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 8px; font-size: 13px; font-weight: 500; text-decoration: none; color: var(--ink-muted); border: 1px solid var(--border); background: white; transition: all 0.2s var(--ease); cursor: pointer; }
+    .nav-btn:hover { color: var(--ink); border-color: var(--teal-500); background: var(--teal-50); }
+    .nav-btn.disabled { opacity: 0.4; pointer-events: none; }
+    .nav-current { font-size: 13px; font-weight: 600; color: var(--ink-light); padding: 0 4px; }
+    .hero { background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%); border-bottom: 1px solid var(--border); padding: 4rem 2rem 3.5rem; }
+    .hero-inner { max-width: var(--content-max); margin: 0 auto; }
+    .hero-chapter-label { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--teal-700); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1rem; }
+    .hero-chapter-label span { background: var(--teal-100); padding: 3px 10px; border-radius: 100px; }
+    .hero h1 { font-family: var(--font-serif); font-size: clamp(2.4rem, 5vw, 3.2rem); font-weight: 400; line-height: 1.15; color: var(--ink); margin-bottom: 1rem; }
+    .hero-subtitle { font-size: 1.15rem; color: var(--ink-light); line-height: 1.65; max-width: 640px; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.5rem; }
+    .hero-meta-item { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--ink-muted); }
+    .hero-meta-item svg { width: 16px; height: 16px; color: var(--teal-600); }
+    .main-layout { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: grid; grid-template-columns: 1fr var(--sidebar-width); gap: 4rem; align-items: start; }
+    .content { padding: 3rem 0 6rem; min-width: 0; }
+    .sidebar { position: sticky; top: 76px; padding: 2rem 0; max-height: calc(100vh - 76px); overflow-y: auto; }
+    .sidebar-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-muted); margin-bottom: 1rem; padding-left: 14px; }
+    .toc-list { list-style: none; }
+    .toc-item a { display: block; padding: 6px 14px; font-size: 13px; color: var(--ink-muted); text-decoration: none; border-left: 2px solid transparent; transition: all 0.2s var(--ease); line-height: 1.5; }
+    .toc-item a:hover { color: var(--ink); background: var(--surface-alt); }
+    .toc-item a.active { color: var(--teal-700); border-left-color: var(--teal-500); background: var(--teal-50); font-weight: 500; }
+    .content h2 { font-family: var(--font-serif); font-size: 1.85rem; font-weight: 400; color: var(--ink); margin: 3rem 0 1rem; padding-top: 1rem; scroll-margin-top: 80px; }
+    .content h2:first-child { margin-top: 0; }
+    .content h3 { font-size: 1.15rem; font-weight: 600; color: var(--ink); margin: 2rem 0 0.75rem; scroll-margin-top: 80px; }
+    .content p { margin-bottom: 1.25rem; color: var(--ink-light); }
+    .content strong { color: var(--ink); font-weight: 600; }
+    .content a { color: var(--teal-700); text-decoration: underline; text-decoration-color: var(--teal-200); text-underline-offset: 3px; transition: text-decoration-color 0.2s; }
+    .content a:hover { text-decoration-color: var(--teal-600); }
+    .content ul, .content ol { margin-bottom: 1.25rem; padding-left: 1.5rem; }
+    .content li { margin-bottom: 0.5rem; color: var(--ink-light); }
+    .content li::marker { color: var(--teal-500); }
+    .section-divider { border: none; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 3rem 0; }
+    .callout { padding: 1.25rem 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; border: 1px solid; position: relative; }
+    .callout-header { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; margin-bottom: 0.5rem; }
+    .callout-header svg { width: 18px; height: 18px; flex-shrink: 0; }
+    .callout p:last-child { margin-bottom: 0; }
+    .callout.concept { background: var(--blue-50); border-color: var(--blue-100); }
+    .callout.concept .callout-header { color: var(--blue-700); }
+    .callout.important { background: var(--amber-50); border-color: var(--amber-100); }
+    .callout.important .callout-header { color: var(--amber-600); }
+    .callout.danger { background: var(--red-50); border-color: var(--red-100); }
+    .callout.danger .callout-header { color: var(--red-600); }
+    .callout.tip { background: var(--purple-50); border-color: var(--purple-100); }
+    .callout.tip .callout-header { color: var(--purple-600); }
+    .callout.success { background: var(--teal-50); border-color: var(--teal-100); }
+    .callout.success .callout-header { color: var(--teal-700); }
+    .code-block { position: relative; margin-bottom: 1.5rem; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+    .code-header { display: flex; align-items: center; justify-content: space-between; padding: 8px 16px; background: var(--surface-alt); border-bottom: 1px solid var(--border); font-size: 12px; color: var(--ink-muted); }
+    .code-lang { font-family: var(--font-mono); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+    .code-copy { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border); background: white; font-size: 11px; font-family: var(--font-sans); color: var(--ink-muted); cursor: pointer; transition: all 0.2s var(--ease); }
+    .code-copy:hover { border-color: var(--teal-500); color: var(--teal-700); }
+    .code-copy.copied { background: var(--teal-50); border-color: var(--teal-500); color: var(--teal-700); }
+    pre { margin: 0; padding: 1.25rem 1.5rem; overflow-x: auto; background: #1e293b; font-family: var(--font-mono); font-size: 13.5px; line-height: 1.7; color: #e2e8f0; }
+    code { font-family: var(--font-mono); font-size: 0.88em; }
+    p code, li code { padding: 2px 7px; background: var(--surface-alt); border: 1px solid var(--border); border-radius: 5px; color: var(--teal-800); font-size: 0.85em; }
+    .hl-keyword { color: #c084fc; } .hl-string { color: #86efac; } .hl-comment { color: #64748b; font-style: italic; } .hl-function { color: #7dd3fc; } .hl-number { color: #fbbf24; } .hl-flag { color: #f472b6; }
+    details { margin-bottom: 1.25rem; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; transition: border-color 0.2s var(--ease); }
+    details[open] { border-color: var(--teal-200); }
+    details summary { padding: 1rem 1.25rem; font-weight: 600; font-size: 15px; cursor: pointer; background: var(--surface-alt); list-style: none; display: flex; align-items: center; gap: 10px; transition: background 0.2s var(--ease); user-select: none; }
+    details summary::-webkit-details-marker { display: none; }
+    details summary::before { content: ''; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E"); background-size: contain; flex-shrink: 0; transition: transform 0.2s var(--ease); }
+    details[open] summary::before { transform: rotate(90deg); }
+    details summary:hover { background: var(--teal-50); }
+    .details-body { padding: 1.25rem 1.5rem; }
+    .details-body p:last-child { margin-bottom: 0; }
+    .video-card { margin-bottom: 1.5rem; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+    .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; background: #0f172a; }
+    .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+    .video-caption { padding: 12px 16px; background: var(--surface-alt); font-size: 13px; color: var(--ink-muted); display: flex; align-items: center; gap: 6px; }
+    .video-caption svg { width: 14px; height: 14px; color: var(--red-500); }
+    .resource-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+    .resource-card { display: flex; gap: 14px; padding: 1rem 1.25rem; border: 1px solid var(--border); border-radius: 12px; text-decoration: none; transition: all 0.2s var(--ease); background: white; }
+    .resource-card:hover { border-color: var(--teal-300); background: var(--teal-50); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+    .resource-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 18px; }
+    .resource-icon.docs { background: var(--blue-50); color: var(--blue-600); }
+    .resource-icon.github { background: var(--ink); color: white; }
+    .resource-icon.article { background: var(--amber-50); color: var(--amber-600); }
+    .resource-info { min-width: 0; }
+    .resource-title { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 2px; line-height: 1.4; }
+    .resource-desc { font-size: 12px; color: var(--ink-muted); line-height: 1.5; }
+    .assignment { border: 2px solid var(--teal-200); border-radius: 14px; padding: 1.5rem 1.75rem; margin-bottom: 1.5rem; background: linear-gradient(135deg, var(--teal-50) 0%, white 100%); }
+    .assignment-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+    .assignment-label { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--teal-700); }
+    .assignment-difficulty { display: inline-flex; padding: 4px 10px; border-radius: 100px; font-size: 11px; font-weight: 600; }
+    .difficulty-l1 { background: var(--teal-100); color: var(--teal-800); }
+    .difficulty-l2 { background: var(--amber-100); color: var(--amber-600); }
+    .difficulty-l3 { background: var(--red-100); color: var(--red-600); }
+    .assignment h4 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.75rem; }
+    .assignment p { font-size: 14px; }
+    .checklist { list-style: none; padding: 0; }
+    .checklist li { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border-light); font-size: 14px; }
+    .checklist li:last-child { border-bottom: none; }
+    .check-box { width: 20px; height: 20px; border-radius: 6px; border: 2px solid var(--border); flex-shrink: 0; margin-top: 1px; cursor: pointer; transition: all 0.15s var(--ease); display: flex; align-items: center; justify-content: center; }
+    .check-box:hover { border-color: var(--teal-500); }
+    .check-box.checked { background: var(--teal-500); border-color: var(--teal-500); }
+    .check-box.checked::after { content: ''; width: 10px; height: 10px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E"); background-size: contain; }
+    .diagram { margin: 1.5rem 0; padding: 2rem; background: var(--surface-alt); border: 1px solid var(--border); border-radius: 14px; overflow-x: auto; }
+    .diagram pre { background: transparent; color: var(--ink); padding: 0; font-size: 13px; line-height: 1.6; }
+    .diagram-caption { margin-top: 1rem; font-size: 12px; color: var(--ink-muted); text-align: center; font-style: italic; }
+    .chapter-footer { border-top: 1px solid var(--border); padding: 3rem 2rem; background: var(--surface-alt); }
+    .chapter-footer-inner { max-width: var(--content-max); margin: 0 auto; }
+    .footer-nav { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+    .footer-nav-link { display: flex; flex-direction: column; gap: 4px; padding: 1rem 1.5rem; border: 1px solid var(--border); border-radius: 12px; text-decoration: none; transition: all 0.2s var(--ease); max-width: 320px; background: white; }
+    .footer-nav-link:hover { border-color: var(--teal-300); box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+    .footer-nav-label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--teal-600); }
+    .footer-nav-title { font-size: 15px; font-weight: 600; color: var(--ink); }
+    .footer-brand { text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); font-size: 13px; color: var(--ink-muted); }
+    @media (max-width: 960px) { .main-layout { grid-template-columns: 1fr; } .sidebar { display: none; } .resource-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 640px) { .hero { padding: 2.5rem 1.25rem 2rem; } .main-layout { padding: 0 1.25rem; } .content { padding: 2rem 0 4rem; } pre { padding: 1rem; font-size: 12.5px; } .footer-nav { flex-direction: column; } .footer-nav-link { max-width: 100%; width: 100%; } }
+    @media print { .top-nav, .sidebar, .progress-bar { display: none; } .main-layout { display: block; } .content { padding: 0; } .hero { background: white; border: none; } pre { background: #f1f5f9; color: var(--ink); border: 1px solid var(--border); } }
   </style>
 </head>
 <body>
   <div class="progress-bar" id="progressBar"></div>
-  <nav class="top-nav"><div class="top-nav-inner"><a class="nav-brand" href="index.html"><div class="nav-brand-icon">ILA</div><span class="nav-brand-text">Iksha Learning Academy</span></a><div class="nav-chapter-nav"><a class="nav-btn" href="chapter-06.html">&larr; Previous</a><span class="nav-current">07 / 08</span><a class="nav-btn" href="chapter-08.html">Next &rarr;</a></div></div></nav>
 
-  <header class="hero"><div class="hero-inner">
-    <div class="hero-chapter-label"><span>Chapter 07</span> &middot; Phase 4: Full-Stack Integration</div>
-    <h1>Connecting React to Rails</h1>
-    <p class="hero-subtitle">Bridge your frontend and backend. Learn to make HTTP requests from React to Rails APIs using fetch and Axios, configure CORS for cross-origin requests, implement JWT authentication flows, and build robust error handling with loading states.</p>
-    <div class="hero-meta">
-      <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Estimated: 5&ndash;6 days</div>
-      <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>3 Advancement Levels</div>
-      <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>3 Assignments</div>
+  <nav class="top-nav">
+    <div class="top-nav-inner">
+      <a class="nav-brand" href="index.html">
+        <div class="nav-brand-icon">ILA</div>
+        <span class="nav-brand-text">Iksha Learning Academy</span>
+      </a>
+      <div class="nav-chapter-nav">
+        <a class="nav-btn" href="chapter-06.html">&larr; Previous</a>
+        <span class="nav-current">07 / 08</span>
+        <a class="nav-btn" href="chapter-08.html">Next &rarr;</a>
+      </div>
     </div>
-  </div></header>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-chapter-label">
+        <span>Chapter 07</span> &middot; Phase 3: Full-Stack Integration
+      </div>
+      <h1>Connecting React to Rails</h1>
+      <p class="hero-subtitle">
+        Bridge the gap between your React front-end and Rails API &mdash; HTTP requests with fetch and axios,
+        CORS configuration, authentication tokens, loading and error states, and production-ready
+        API integration patterns.
+      </p>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Estimated: 4&ndash;5 days
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          3 Advancement Levels
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          3 Assignments
+        </div>
+      </div>
+    </div>
+  </header>
 
   <div class="main-layout">
     <main class="content">
 
       <h2 id="why-this-matters">Why This Matters</h2>
-      <p>You have built a Rails API (Chapters 3&ndash;4) and a React frontend (Chapters 5&ndash;6) as separate applications. Now they need to talk to each other. The connection between frontend and backend is where most full-stack bugs live: CORS failures that produce cryptic browser errors, authentication tokens that expire silently, network requests that leave users staring at infinite spinners.</p>
-      <p>This chapter teaches you to build the bridge correctly. You will learn two approaches for HTTP requests (the built-in <code>fetch</code> API and the popular Axios library), how to configure Rails for cross-origin requests, how to implement token-based authentication (JWT), and how to handle every edge case &mdash; loading states, error messages, request cancellation, and retry logic.</p>
+
+      <p>
+        Until now, your Rails API and React front-end have lived in separate worlds. Rails serves JSON
+        endpoints, and React renders components with hardcoded data. In production, these two halves must
+        communicate seamlessly over HTTP. This chapter is where your full-stack application comes together.
+        Every feature your users interact with &mdash; viewing a list of products, submitting a form,
+        logging in &mdash; requires a React component to make an HTTP request to a Rails endpoint and
+        handle the response.
+      </p>
+
+      <p>
+        The integration layer between React and Rails introduces real-world challenges that do not exist
+        when working with either technology alone. <strong>CORS</strong> (Cross-Origin Resource Sharing) will
+        block your requests if not configured correctly. Network requests are asynchronous, so your components
+        need to handle loading states, error states, and the possibility that data arrives after the component
+        unmounts. Authentication requires sending tokens with every request and handling token expiration
+        gracefully.
+      </p>
+
+      <p>
+        Getting this integration right is critical. A poorly designed API layer leads to duplicated fetch
+        logic scattered across components, inconsistent error handling, race conditions, and security
+        vulnerabilities. A well-designed API layer centralizes HTTP logic, provides consistent loading and
+        error patterns, and makes your application resilient to network failures. The patterns in this
+        chapter are what separate a demo project from a production application.
+      </p>
 
       <div class="callout concept">
-        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>Key Insight</div>
-        <p>In a decoupled architecture, the React app and Rails API are separate deployments. React runs in the browser and makes HTTP requests to Rails running on a server. They communicate exclusively through JSON over HTTP. Understanding this boundary is essential to debugging integration issues.</p>
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Key Insight
+        </div>
+        <p>
+          The React front-end and Rails API are separate applications that happen to work together. React
+          runs in the browser, Rails runs on a server. They communicate via HTTP, exchanging JSON. This
+          separation means you can deploy, scale, and test them independently &mdash; but you must
+          explicitly handle the boundary between them.
+        </p>
       </div>
 
       <hr class="section-divider">
 
       <h2 id="key-concepts">Key Concepts</h2>
 
-      <h3 id="fetch-api">1. The Fetch API &mdash; Built-in HTTP Requests</h3>
-      <p>Every modern browser includes the <code>fetch</code> function. It returns a Promise that resolves to a Response object. Unlike Axios, <code>fetch</code> does not throw on HTTP error status codes (404, 500) &mdash; you must check <code>response.ok</code> yourself.</p>
+      <h3 id="fetch-api">1. The Fetch API &mdash; Making HTTP Requests</h3>
+
+      <p>
+        The Fetch API is built into every modern browser. It provides a clean, promise-based interface for
+        making HTTP requests. Unlike older approaches like XMLHttpRequest, fetch uses Promises and integrates
+        naturally with <code>async/await</code>. One important quirk: <code>fetch</code> does not reject the
+        promise on HTTP error status codes (404, 500). You must check <code>response.ok</code> yourself.
+      </p>
 
       <div class="code-block">
-        <div class="code-header"><span class="code-lang">jsx</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <div class="code-header">
+          <span class="code-lang">jsx</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
 <pre>
-<span class="hl-comment">// GET request with fetch</span>
-<span class="hl-keyword">async function</span> <span class="hl-function">fetchArticles</span>() {
-  <span class="hl-keyword">const</span> response = <span class="hl-keyword">await</span> fetch(<span class="hl-string">"http://localhost:3000/api/v1/articles"</span>);
+<span class="hl-comment">// GET request — fetching data</span>
+<span class="hl-keyword">async</span> <span class="hl-keyword">function</span> <span class="hl-function">fetchUsers</span>() {
+  <span class="hl-keyword">const</span> response = <span class="hl-keyword">await</span> <span class="hl-function">fetch</span>(<span class="hl-string">"http://localhost:3000/api/v1/users"</span>);
 
-  <span class="hl-comment">// fetch does NOT throw on 404/500 — you must check manually</span>
   <span class="hl-keyword">if</span> (!response.ok) {
-    <span class="hl-keyword">throw new</span> Error(<span class="hl-string">`HTTP error! Status: ${response.status}`</span>);
+    <span class="hl-keyword">throw</span> <span class="hl-keyword">new</span> <span class="hl-function">Error</span>(<span class="hl-string">`HTTP error: </span>${response.status}<span class="hl-string">`</span>);
   }
 
-  <span class="hl-keyword">const</span> data = <span class="hl-keyword">await</span> response.json();
-  <span class="hl-keyword">return</span> data;
+  <span class="hl-keyword">const</span> users = <span class="hl-keyword">await</span> response.<span class="hl-function">json</span>();
+  <span class="hl-keyword">return</span> users;
 }
 
-<span class="hl-comment">// POST request with fetch</span>
-<span class="hl-keyword">async function</span> <span class="hl-function">createArticle</span>(article) {
-  <span class="hl-keyword">const</span> response = <span class="hl-keyword">await</span> fetch(<span class="hl-string">"http://localhost:3000/api/v1/articles"</span>, {
+<span class="hl-comment">// POST request — creating a resource</span>
+<span class="hl-keyword">async</span> <span class="hl-keyword">function</span> <span class="hl-function">createUser</span>(userData) {
+  <span class="hl-keyword">const</span> response = <span class="hl-keyword">await</span> <span class="hl-function">fetch</span>(<span class="hl-string">"http://localhost:3000/api/v1/users"</span>, {
     method: <span class="hl-string">"POST"</span>,
     headers: {
       <span class="hl-string">"Content-Type"</span>: <span class="hl-string">"application/json"</span>,
-      <span class="hl-string">"Authorization"</span>: <span class="hl-string">`Bearer ${localStorage.getItem("token")}`</span>,
+      <span class="hl-string">"Accept"</span>: <span class="hl-string">"application/json"</span>,
     },
-    body: JSON.stringify({ article }),
+    body: JSON.<span class="hl-function">stringify</span>({ user: userData }),
   });
 
   <span class="hl-keyword">if</span> (!response.ok) {
-    <span class="hl-keyword">const</span> errors = <span class="hl-keyword">await</span> response.json();
-    <span class="hl-keyword">throw new</span> Error(errors.message || <span class="hl-string">"Failed to create article"</span>);
+    <span class="hl-keyword">const</span> errors = <span class="hl-keyword">await</span> response.<span class="hl-function">json</span>();
+    <span class="hl-keyword">throw</span> <span class="hl-keyword">new</span> <span class="hl-function">Error</span>(errors.message || <span class="hl-string">"Failed to create user"</span>);
   }
 
-  <span class="hl-keyword">return</span> response.json();
+  <span class="hl-keyword">return</span> <span class="hl-keyword">await</span> response.<span class="hl-function">json</span>();
 }
 
-<span class="hl-comment">// DELETE request</span>
-<span class="hl-keyword">async function</span> <span class="hl-function">deleteArticle</span>(id) {
-  <span class="hl-keyword">const</span> response = <span class="hl-keyword">await</span> fetch(<span class="hl-string">`http://localhost:3000/api/v1/articles/${id}`</span>, {
-    method: <span class="hl-string">"DELETE"</span>,
-    headers: {
-      <span class="hl-string">"Authorization"</span>: <span class="hl-string">`Bearer ${localStorage.getItem("token")}`</span>,
-    },
+<span class="hl-comment">// PUT request — updating a resource</span>
+<span class="hl-keyword">async</span> <span class="hl-keyword">function</span> <span class="hl-function">updateUser</span>(id, updates) {
+  <span class="hl-keyword">const</span> response = <span class="hl-keyword">await</span> <span class="hl-function">fetch</span>(<span class="hl-string">`http://localhost:3000/api/v1/users/</span>${id}<span class="hl-string">`</span>, {
+    method: <span class="hl-string">"PATCH"</span>,
+    headers: { <span class="hl-string">"Content-Type"</span>: <span class="hl-string">"application/json"</span> },
+    body: JSON.<span class="hl-function">stringify</span>({ user: updates }),
   });
 
-  <span class="hl-keyword">if</span> (!response.ok) <span class="hl-keyword">throw new</span> Error(<span class="hl-string">"Failed to delete"</span>);
-  <span class="hl-keyword">return true</span>;
+  <span class="hl-keyword">if</span> (!response.ok) <span class="hl-keyword">throw</span> <span class="hl-keyword">new</span> <span class="hl-function">Error</span>(<span class="hl-string">`Update failed: </span>${response.status}<span class="hl-string">`</span>);
+  <span class="hl-keyword">return</span> <span class="hl-keyword">await</span> response.<span class="hl-function">json</span>();
+}
+
+<span class="hl-comment">// DELETE request — removing a resource</span>
+<span class="hl-keyword">async</span> <span class="hl-keyword">function</span> <span class="hl-function">deleteUser</span>(id) {
+  <span class="hl-keyword">const</span> response = <span class="hl-keyword">await</span> <span class="hl-function">fetch</span>(<span class="hl-string">`http://localhost:3000/api/v1/users/</span>${id}<span class="hl-string">`</span>, {
+    method: <span class="hl-string">"DELETE"</span>,
+  });
+
+  <span class="hl-keyword">if</span> (!response.ok) <span class="hl-keyword">throw</span> <span class="hl-keyword">new</span> <span class="hl-function">Error</span>(<span class="hl-string">`Delete failed: </span>${response.status}<span class="hl-string">`</span>);
 }
 </pre>
       </div>
 
-      <div class="callout important">
-        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Fetch Gotcha</div>
-        <p><code>fetch</code> only rejects on network errors (server unreachable, DNS failure). A 404 or 500 response is still a "successful" HTTP response from fetch's perspective. Always check <code>response.ok</code> or <code>response.status</code> before parsing the body.</p>
-      </div>
+      <h3 id="axios-setup">2. Axios &mdash; A Better HTTP Client</h3>
 
-      <h3 id="axios">2. Axios &mdash; A Better HTTP Client</h3>
-      <p>Axios is a popular third-party HTTP client that improves on fetch in several ways: it automatically throws on error status codes, transforms JSON automatically, supports request/response interceptors, and makes cancellation easier. Most production React+Rails apps use Axios.</p>
-
-      <div class="code-block">
-        <div class="code-header"><span class="code-lang">bash</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-<pre>
-<span class="hl-comment"># Install Axios in your React project</span>
-npm install axios
-</pre>
-      </div>
+      <p>
+        While <code>fetch</code> works well, many production applications use <strong>axios</strong> for HTTP
+        requests. Axios provides automatic JSON parsing, request/response interceptors (perfect for adding
+        auth tokens), timeout support, and better error handling. It also rejects the promise on HTTP error
+        codes, which eliminates the <code>response.ok</code> boilerplate.
+      </p>
 
       <div class="code-block">
-        <div class="code-header"><span class="code-lang">jsx</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <div class="code-header">
+          <span class="code-lang">jsx</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
 <pre>
-<span class="hl-comment">// api/client.js — Create a configured Axios instance</span>
 <span class="hl-keyword">import</span> axios <span class="hl-keyword">from</span> <span class="hl-string">"axios"</span>;
 
-<span class="hl-keyword">const</span> api = axios.create({
+<span class="hl-comment">// Create a configured instance for your Rails API</span>
+<span class="hl-keyword">const</span> api = axios.<span class="hl-function">create</span>({
   baseURL: <span class="hl-string">"http://localhost:3000/api/v1"</span>,
-  timeout: <span class="hl-number">10000</span>,  <span class="hl-comment">// 10 second timeout</span>
+  timeout: <span class="hl-number">10000</span>,  <span class="hl-comment">// 10 seconds</span>
   headers: {
     <span class="hl-string">"Content-Type"</span>: <span class="hl-string">"application/json"</span>,
     <span class="hl-string">"Accept"</span>: <span class="hl-string">"application/json"</span>,
   },
 });
 
-<span class="hl-comment">// Request interceptor — attach auth token to every request</span>
-api.interceptors.request.use((config) =&gt; {
-  <span class="hl-keyword">const</span> token = localStorage.getItem(<span class="hl-string">"token"</span>);
+<span class="hl-comment">// Request interceptor — add auth token to every request</span>
+api.interceptors.request.<span class="hl-function">use</span>((config) =&gt; {
+  <span class="hl-keyword">const</span> token = localStorage.<span class="hl-function">getItem</span>(<span class="hl-string">"authToken"</span>);
   <span class="hl-keyword">if</span> (token) {
-    config.headers.Authorization = <span class="hl-string">`Bearer ${token}`</span>;
+    config.headers.Authorization = <span class="hl-string">`Bearer </span>${token}<span class="hl-string">`</span>;
   }
   <span class="hl-keyword">return</span> config;
 });
 
 <span class="hl-comment">// Response interceptor — handle 401 globally</span>
-api.interceptors.response.use(
+api.interceptors.response.<span class="hl-function">use</span>(
   (response) =&gt; response,
   (error) =&gt; {
     <span class="hl-keyword">if</span> (error.response?.status === <span class="hl-number">401</span>) {
-      localStorage.removeItem(<span class="hl-string">"token"</span>);
+      localStorage.<span class="hl-function">removeItem</span>(<span class="hl-string">"authToken"</span>);
       window.location.href = <span class="hl-string">"/login"</span>;
     }
-    <span class="hl-keyword">return</span> Promise.reject(error);
+    <span class="hl-keyword">return</span> Promise.<span class="hl-function">reject</span>(error);
   }
 );
 
-<span class="hl-keyword">export default</span> api;
+<span class="hl-comment">// Clean API functions</span>
+<span class="hl-keyword">export</span> <span class="hl-keyword">const</span> usersApi = {
+  <span class="hl-function">getAll</span>: ()         =&gt; api.<span class="hl-function">get</span>(<span class="hl-string">"/users"</span>).<span class="hl-function">then</span>((r) =&gt; r.data),
+  <span class="hl-function">getOne</span>: (id)       =&gt; api.<span class="hl-function">get</span>(<span class="hl-string">`/users/</span>${id}<span class="hl-string">`</span>).<span class="hl-function">then</span>((r) =&gt; r.data),
+  <span class="hl-function">create</span>: (data)     =&gt; api.<span class="hl-function">post</span>(<span class="hl-string">"/users"</span>, { user: data }).<span class="hl-function">then</span>((r) =&gt; r.data),
+  <span class="hl-function">update</span>: (id, data) =&gt; api.<span class="hl-function">patch</span>(<span class="hl-string">`/users/</span>${id}<span class="hl-string">`</span>, { user: data }).<span class="hl-function">then</span>((r) =&gt; r.data),
+  <span class="hl-function">remove</span>: (id)       =&gt; api.<span class="hl-function">delete</span>(<span class="hl-string">`/users/</span>${id}<span class="hl-string">`</span>),
+};
 
-<span class="hl-comment">// Using the configured client</span>
-<span class="hl-keyword">import</span> api <span class="hl-keyword">from</span> <span class="hl-string">"./api/client"</span>;
-
-<span class="hl-comment">// GET — Axios auto-parses JSON</span>
-<span class="hl-keyword">const</span> { data } = <span class="hl-keyword">await</span> api.get(<span class="hl-string">"/articles"</span>);
-
-<span class="hl-comment">// POST — Axios auto-stringifies the body</span>
-<span class="hl-keyword">const</span> { data: newArticle } = <span class="hl-keyword">await</span> api.post(<span class="hl-string">"/articles"</span>, {
-  article: { title: <span class="hl-string">"Hello"</span>, body: <span class="hl-string">"World"</span> }
-});
-
-<span class="hl-comment">// PATCH</span>
-<span class="hl-keyword">await</span> api.patch(<span class="hl-string">`/articles/${id}`</span>, { article: { title: <span class="hl-string">"Updated"</span> } });
-
-<span class="hl-comment">// DELETE</span>
-<span class="hl-keyword">await</span> api.delete(<span class="hl-string">`/articles/${id}`</span>);
+<span class="hl-keyword">export</span> <span class="hl-keyword">default</span> api;
 </pre>
       </div>
 
-      <h3 id="cors">3. CORS &mdash; Cross-Origin Resource Sharing</h3>
-      <p>When your React app (running on <code>localhost:5173</code>) makes a request to your Rails API (running on <code>localhost:3000</code>), the browser blocks it by default. This is the Same-Origin Policy. CORS is the mechanism that allows your Rails server to tell the browser "yes, this origin is allowed to make requests to me."</p>
+      <h3 id="cors-config">3. CORS &mdash; Cross-Origin Resource Sharing</h3>
+
+      <p>
+        When your React app runs on <code>localhost:5173</code> (Vite) and your Rails API runs on
+        <code>localhost:3000</code>, the browser considers these different origins. By default, browsers
+        block cross-origin requests for security. CORS is the mechanism that allows your Rails server to
+        tell the browser which origins are permitted to make requests.
+      </p>
 
       <div class="code-block">
-        <div class="code-header"><span class="code-lang">ruby</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
 <pre>
 <span class="hl-comment"># Gemfile</span>
 gem <span class="hl-string">"rack-cors"</span>
@@ -198,483 +392,485 @@ gem <span class="hl-string">"rack-cors"</span>
 <span class="hl-comment"># config/initializers/cors.rb</span>
 Rails.application.config.middleware.insert_before <span class="hl-number">0</span>, Rack::Cors <span class="hl-keyword">do</span>
   allow <span class="hl-keyword">do</span>
-    <span class="hl-comment"># In development, allow your React dev server</span>
+    <span class="hl-comment"># Development: allow your React dev server</span>
     origins <span class="hl-string">"http://localhost:5173"</span>,
             <span class="hl-string">"http://localhost:3001"</span>
 
     resource <span class="hl-string">"/api/*"</span>,
-      headers: <span class="hl-flag">:any</span>,
-      methods: [<span class="hl-flag">:get</span>, <span class="hl-flag">:post</span>, <span class="hl-flag">:put</span>, <span class="hl-flag">:patch</span>, <span class="hl-flag">:delete</span>, <span class="hl-flag">:options</span>],
-      expose: [<span class="hl-string">"Authorization"</span>],
-      max_age: <span class="hl-number">600</span>
-  <span class="hl-keyword">end</span>
-<span class="hl-keyword">end</span>
-
-<span class="hl-comment"># In production, use environment variables for origins</span>
-Rails.application.config.middleware.insert_before <span class="hl-number">0</span>, Rack::Cors <span class="hl-keyword">do</span>
-  allow <span class="hl-keyword">do</span>
-    origins ENV.fetch(<span class="hl-string">"ALLOWED_ORIGINS"</span>, <span class="hl-string">""</span>).split(<span class="hl-string">","</span>)
-
-    resource <span class="hl-string">"/api/*"</span>,
-      headers: <span class="hl-flag">:any</span>,
-      methods: [<span class="hl-flag">:get</span>, <span class="hl-flag">:post</span>, <span class="hl-flag">:put</span>, <span class="hl-flag">:patch</span>, <span class="hl-flag">:delete</span>, <span class="hl-flag">:options</span>],
-      credentials: <span class="hl-keyword">true</span>
+      <span class="hl-string">headers:</span> <span class="hl-string">:any</span>,
+      <span class="hl-string">methods:</span> [<span class="hl-string">:get</span>, <span class="hl-string">:post</span>, <span class="hl-string">:put</span>, <span class="hl-string">:patch</span>, <span class="hl-string">:delete</span>, <span class="hl-string">:options</span>],
+      <span class="hl-string">expose:</span>  [<span class="hl-string">"Authorization"</span>],
+      <span class="hl-string">max_age:</span> <span class="hl-number">600</span>  <span class="hl-comment"># cache preflight for 10 minutes</span>
   <span class="hl-keyword">end</span>
 <span class="hl-keyword">end</span>
 </pre>
-      </div>
-
-      <div class="diagram">
-<pre>
-  CORS Preflight Flow
-  ════════════════════
-
-  Browser (React on :5173)              Rails API (:3000)
-  ────────────────────                  ─────────────────
-         │                                     │
-         │── OPTIONS /api/v1/articles ────────►│
-         │   Origin: http://localhost:5173     │
-         │   Access-Control-Request-Method:    │
-         │     POST                            │
-         │                                     │
-         │◄── 204 No Content ─────────────────│
-         │   Access-Control-Allow-Origin:      │
-         │     http://localhost:5173           │
-         │   Access-Control-Allow-Methods:     │
-         │     GET, POST, PUT, PATCH, DELETE   │
-         │                                     │
-         │── POST /api/v1/articles ───────────►│
-         │   Origin: http://localhost:5173     │
-         │   Content-Type: application/json    │
-         │   Authorization: Bearer eyJh...     │
-         │                                     │
-         │◄── 201 Created ────────────────────│
-         │   { "id": 1, "title": "Hello" }    │
-</pre>
-        <div class="diagram-caption">Figure 1: The browser sends an OPTIONS preflight before non-simple requests (POST with JSON). The server must respond with the correct CORS headers.</div>
       </div>
 
       <div class="callout danger">
-        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>Never Use origins "*" in Production</div>
-        <p>Setting <code>origins "*"</code> allows any website to make authenticated requests to your API. This is a serious security vulnerability. Always whitelist specific origins in production. In development, specify your exact dev server URLs.</p>
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Never use origins "*" in production
+        </div>
+        <p>
+          Setting <code>origins "*"</code> allows any website to make requests to your API. This is a
+          security risk. In production, always whitelist specific domains. Use environment variables to
+          configure allowed origins differently for development and production.
+        </p>
       </div>
 
-      <h3 id="jwt-auth">4. JWT Authentication Flow</h3>
-      <p>JSON Web Tokens (JWT) are the standard way to authenticate API requests in a decoupled architecture. The flow: user logs in, Rails returns a JWT, React stores it, and sends it with every subsequent request in the Authorization header.</p>
+      <h3 id="api-integration">4. API Integration Patterns in Components</h3>
+
+      <p>
+        The key to clean API integration is separating the HTTP logic from the component rendering logic.
+        Use custom hooks to encapsulate data fetching, and let your components focus on displaying data and
+        handling user interactions. This pattern makes your components testable (you can mock the hooks) and
+        your API logic reusable.
+      </p>
 
       <div class="code-block">
-        <div class="code-header"><span class="code-lang">ruby</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <div class="code-header">
+          <span class="code-lang">jsx</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
 <pre>
-<span class="hl-comment"># Gemfile</span>
-gem <span class="hl-string">"jwt"</span>
-gem <span class="hl-string">"bcrypt"</span>
+<span class="hl-comment">// hooks/useUsers.js — custom hook encapsulating all user API logic</span>
+<span class="hl-keyword">import</span> { useState, useEffect, useCallback } <span class="hl-keyword">from</span> <span class="hl-string">"react"</span>;
+<span class="hl-keyword">import</span> { usersApi } <span class="hl-keyword">from</span> <span class="hl-string">"../api/users"</span>;
 
-<span class="hl-comment"># app/models/user.rb</span>
-<span class="hl-keyword">class</span> <span class="hl-function">User</span> &lt; ApplicationRecord
-  has_secure_password
-  validates <span class="hl-flag">:email</span>, presence: <span class="hl-keyword">true</span>, uniqueness: <span class="hl-keyword">true</span>
-<span class="hl-keyword">end</span>
+<span class="hl-keyword">export</span> <span class="hl-keyword">function</span> <span class="hl-function">useUsers</span>() {
+  <span class="hl-keyword">const</span> [users, setUsers] = <span class="hl-function">useState</span>([]);
+  <span class="hl-keyword">const</span> [loading, setLoading] = <span class="hl-function">useState</span>(<span class="hl-keyword">true</span>);
+  <span class="hl-keyword">const</span> [error, setError] = <span class="hl-function">useState</span>(<span class="hl-keyword">null</span>);
 
-<span class="hl-comment"># app/lib/json_web_token.rb</span>
-<span class="hl-keyword">class</span> <span class="hl-function">JsonWebToken</span>
-  SECRET_KEY = Rails.application.credentials.secret_key_base
-
-  <span class="hl-keyword">def</span> <span class="hl-keyword">self</span>.<span class="hl-function">encode</span>(payload, exp = <span class="hl-number">24</span>.hours.from_now)
-    payload[<span class="hl-flag">:exp</span>] = exp.to_i
-    JWT.encode(payload, SECRET_KEY)
-  <span class="hl-keyword">end</span>
-
-  <span class="hl-keyword">def</span> <span class="hl-keyword">self</span>.<span class="hl-function">decode</span>(token)
-    body = JWT.decode(token, SECRET_KEY)[<span class="hl-number">0</span>]
-    HashWithIndifferentAccess.new(body)
-  <span class="hl-keyword">rescue</span> JWT::DecodeError, JWT::ExpiredSignature
-    <span class="hl-keyword">nil</span>
-  <span class="hl-keyword">end</span>
-<span class="hl-keyword">end</span>
-
-<span class="hl-comment"># app/controllers/api/v1/auth_controller.rb</span>
-<span class="hl-keyword">class</span> <span class="hl-function">Api::V1::AuthController</span> &lt; ApplicationController
-  <span class="hl-keyword">def</span> <span class="hl-function">login</span>
-    user = User.find_by(email: params[<span class="hl-flag">:email</span>])
-
-    <span class="hl-keyword">if</span> user&amp;.authenticate(params[<span class="hl-flag">:password</span>])
-      token = JsonWebToken.encode(user_id: user.id)
-      render json: {
-        token: token,
-        user: { id: user.id, email: user.email, name: user.name }
-      }
-    <span class="hl-keyword">else</span>
-      render json: { error: <span class="hl-string">"Invalid email or password"</span> },
-             status: <span class="hl-flag">:unauthorized</span>
-    <span class="hl-keyword">end</span>
-  <span class="hl-keyword">end</span>
-<span class="hl-keyword">end</span>
-
-<span class="hl-comment"># app/controllers/concerns/authenticatable.rb</span>
-<span class="hl-keyword">module</span> <span class="hl-function">Authenticatable</span>
-  <span class="hl-keyword">extend</span> ActiveSupport::Concern
-
-  <span class="hl-keyword">private</span>
-
-  <span class="hl-keyword">def</span> <span class="hl-function">current_user</span>
-    <span class="hl-keyword">return</span> <span class="hl-flag">@current_user</span> <span class="hl-keyword">if</span> defined?(<span class="hl-flag">@current_user</span>)
-    header = request.headers[<span class="hl-string">"Authorization"</span>]
-    token = header&amp;.split(<span class="hl-string">" "</span>)&amp;.last
-    decoded = JsonWebToken.decode(token)
-    <span class="hl-flag">@current_user</span> = User.find_by(id: decoded&amp;.dig(<span class="hl-flag">:user_id</span>))
-  <span class="hl-keyword">end</span>
-
-  <span class="hl-keyword">def</span> <span class="hl-function">authenticate_user!</span>
-    render json: { error: <span class="hl-string">"Not authorized"</span> }, status: <span class="hl-flag">:unauthorized</span> <span class="hl-keyword">unless</span> current_user
-  <span class="hl-keyword">end</span>
-<span class="hl-keyword">end</span>
-</pre>
-      </div>
-
-      <div class="code-block">
-        <div class="code-header"><span class="code-lang">jsx</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-<pre>
-<span class="hl-comment">// React: AuthContext with JWT</span>
-<span class="hl-keyword">import</span> { createContext, useContext, useState, useEffect } <span class="hl-keyword">from</span> <span class="hl-string">"react"</span>;
-<span class="hl-keyword">import</span> api <span class="hl-keyword">from</span> <span class="hl-string">"../api/client"</span>;
-
-<span class="hl-keyword">const</span> AuthContext = createContext(<span class="hl-keyword">null</span>);
-
-<span class="hl-keyword">export function</span> <span class="hl-function">AuthProvider</span>({ children }) {
-  <span class="hl-keyword">const</span> [user, setUser] = useState(<span class="hl-keyword">null</span>);
-  <span class="hl-keyword">const</span> [loading, setLoading] = useState(<span class="hl-keyword">true</span>);
-
-  <span class="hl-comment">// On mount, check if token exists and validate it</span>
-  useEffect(() =&gt; {
-    <span class="hl-keyword">const</span> token = localStorage.getItem(<span class="hl-string">"token"</span>);
-    <span class="hl-keyword">if</span> (token) {
-      api.get(<span class="hl-string">"/auth/me"</span>)
-        .then(({ data }) =&gt; setUser(data.user))
-        .catch(() =&gt; localStorage.removeItem(<span class="hl-string">"token"</span>))
-        .finally(() =&gt; setLoading(<span class="hl-keyword">false</span>));
-    } <span class="hl-keyword">else</span> {
-      setLoading(<span class="hl-keyword">false</span>);
+  <span class="hl-keyword">const</span> <span class="hl-function">fetchUsers</span> = <span class="hl-function">useCallback</span>(<span class="hl-keyword">async</span> () =&gt; {
+    <span class="hl-keyword">try</span> {
+      <span class="hl-function">setLoading</span>(<span class="hl-keyword">true</span>);
+      <span class="hl-function">setError</span>(<span class="hl-keyword">null</span>);
+      <span class="hl-keyword">const</span> data = <span class="hl-keyword">await</span> usersApi.<span class="hl-function">getAll</span>();
+      <span class="hl-function">setUsers</span>(data);
+    } <span class="hl-keyword">catch</span> (err) {
+      <span class="hl-function">setError</span>(err.message);
+    } <span class="hl-keyword">finally</span> {
+      <span class="hl-function">setLoading</span>(<span class="hl-keyword">false</span>);
     }
   }, []);
 
-  <span class="hl-keyword">const</span> <span class="hl-function">login</span> = <span class="hl-keyword">async</span> (email, password) =&gt; {
-    <span class="hl-keyword">const</span> { data } = <span class="hl-keyword">await</span> api.post(<span class="hl-string">"/auth/login"</span>, { email, password });
-    localStorage.setItem(<span class="hl-string">"token"</span>, data.token);
-    setUser(data.user);
-    <span class="hl-keyword">return</span> data.user;
+  <span class="hl-function">useEffect</span>(() =&gt; { <span class="hl-function">fetchUsers</span>(); }, [fetchUsers]);
+
+  <span class="hl-keyword">const</span> <span class="hl-function">createUser</span> = <span class="hl-keyword">async</span> (userData) =&gt; {
+    <span class="hl-keyword">const</span> newUser = <span class="hl-keyword">await</span> usersApi.<span class="hl-function">create</span>(userData);
+    <span class="hl-function">setUsers</span>((prev) =&gt; [...prev, newUser]);
+    <span class="hl-keyword">return</span> newUser;
   };
 
-  <span class="hl-keyword">const</span> <span class="hl-function">logout</span> = () =&gt; {
-    localStorage.removeItem(<span class="hl-string">"token"</span>);
-    setUser(<span class="hl-keyword">null</span>);
+  <span class="hl-keyword">const</span> <span class="hl-function">deleteUser</span> = <span class="hl-keyword">async</span> (id) =&gt; {
+    <span class="hl-keyword">await</span> usersApi.<span class="hl-function">remove</span>(id);
+    <span class="hl-function">setUsers</span>((prev) =&gt; prev.<span class="hl-function">filter</span>((u) =&gt; u.id !== id));
   };
 
-  <span class="hl-keyword">return</span> (
-    &lt;AuthContext.Provider value={{ user, login, logout, loading }}&gt;
-      {children}
-    &lt;/AuthContext.Provider&gt;
-  );
+  <span class="hl-keyword">return</span> { users, loading, error, createUser, deleteUser, refetch: fetchUsers };
 }
 
-<span class="hl-keyword">export const</span> <span class="hl-function">useAuth</span> = () =&gt; useContext(AuthContext);
+<span class="hl-comment">// components/UsersPage.jsx — clean component using the hook</span>
+<span class="hl-keyword">function</span> <span class="hl-function">UsersPage</span>() {
+  <span class="hl-keyword">const</span> { users, loading, error, createUser, deleteUser } = <span class="hl-function">useUsers</span>();
+
+  <span class="hl-keyword">if</span> (loading) <span class="hl-keyword">return</span> &lt;LoadingSpinner /&gt;;
+  <span class="hl-keyword">if</span> (error) <span class="hl-keyword">return</span> &lt;ErrorMessage message={error} /&gt;;
+
+  <span class="hl-keyword">return</span> (
+    &lt;div&gt;
+      &lt;h1&gt;Users ({users.length})&lt;/h1&gt;
+      &lt;CreateUserForm onSubmit={createUser} /&gt;
+      &lt;UserList users={users} onDelete={deleteUser} /&gt;
+    &lt;/div&gt;
+  );
+}
 </pre>
       </div>
 
-      <h3 id="loading-errors">5. Loading States and Error Handling</h3>
-      <p>Every network request has three states: loading, success, and error. Handling all three is what separates a professional application from a prototype. Users should always know what is happening &mdash; never leave them staring at a blank screen.</p>
+      <h3 id="loading-error-states">5. Loading and Error State Patterns</h3>
+
+      <p>
+        Every network request can be in one of three states: <strong>loading</strong>, <strong>success</strong>,
+        or <strong>error</strong>. Your UI must handle all three. Users should see a loading indicator while
+        data is being fetched, the actual content when it succeeds, and a helpful error message when it fails.
+        Ignoring any of these states leads to a poor user experience.
+      </p>
 
       <div class="code-block">
-        <div class="code-header"><span class="code-lang">jsx</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <div class="code-header">
+          <span class="code-lang">jsx</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
 <pre>
-<span class="hl-comment">// hooks/useApi.js — Complete data fetching hook</span>
-<span class="hl-keyword">import</span> { useState, useEffect, useCallback } <span class="hl-keyword">from</span> <span class="hl-string">"react"</span>;
-<span class="hl-keyword">import</span> api <span class="hl-keyword">from</span> <span class="hl-string">"../api/client"</span>;
-
-<span class="hl-keyword">export function</span> <span class="hl-function">useApi</span>(url, options = {}) {
-  <span class="hl-keyword">const</span> [data, setData] = useState(<span class="hl-keyword">null</span>);
-  <span class="hl-keyword">const</span> [loading, setLoading] = useState(<span class="hl-keyword">true</span>);
-  <span class="hl-keyword">const</span> [error, setError] = useState(<span class="hl-keyword">null</span>);
-
-  <span class="hl-keyword">const</span> <span class="hl-function">fetchData</span> = useCallback(<span class="hl-keyword">async</span> () =&gt; {
-    <span class="hl-keyword">const</span> controller = <span class="hl-keyword">new</span> AbortController();
-    setLoading(<span class="hl-keyword">true</span>);
-    setError(<span class="hl-keyword">null</span>);
-
-    <span class="hl-keyword">try</span> {
-      <span class="hl-keyword">const</span> { data } = <span class="hl-keyword">await</span> api.get(url, {
-        signal: controller.signal,
-        ...options,
-      });
-      setData(data);
-    } <span class="hl-keyword">catch</span> (err) {
-      <span class="hl-keyword">if</span> (!axios.isCancel(err)) {
-        setError(err.response?.data?.error || err.message);
-      }
-    } <span class="hl-keyword">finally</span> {
-      setLoading(<span class="hl-keyword">false</span>);
-    }
-
-    <span class="hl-keyword">return</span> () =&gt; controller.abort();
-  }, [url]);
-
-  useEffect(() =&gt; {
-    <span class="hl-keyword">const</span> cleanup = fetchData();
-    <span class="hl-keyword">return</span> () =&gt; cleanup.then(abort =&gt; abort());
-  }, [fetchData]);
-
-  <span class="hl-keyword">return</span> { data, loading, error, refetch: fetchData };
-}
-
-<span class="hl-comment">// Using the hook in a component</span>
-<span class="hl-keyword">function</span> <span class="hl-function">ArticlesPage</span>() {
-  <span class="hl-keyword">const</span> { data: articles, loading, error, refetch } = useApi(<span class="hl-string">"/articles"</span>);
-
+<span class="hl-comment">// Reusable loading/error wrapper component</span>
+<span class="hl-keyword">function</span> <span class="hl-function">AsyncContent</span>({ loading, error, onRetry, children }) {
   <span class="hl-keyword">if</span> (loading) {
     <span class="hl-keyword">return</span> (
-      &lt;div className=<span class="hl-string">"loading-skeleton"</span>&gt;
-        {[<span class="hl-number">1</span>, <span class="hl-number">2</span>, <span class="hl-number">3</span>].map(i =&gt; (
-          &lt;div key={i} className=<span class="hl-string">"skeleton-card"</span> /&gt;
-        ))}
+      &lt;div className=<span class="hl-string">"loading-container"</span>&gt;
+        &lt;div className=<span class="hl-string">"spinner"</span> /&gt;
+        &lt;p&gt;Loading...&lt;/p&gt;
       &lt;/div&gt;
     );
   }
 
   <span class="hl-keyword">if</span> (error) {
     <span class="hl-keyword">return</span> (
-      &lt;div className=<span class="hl-string">"error-banner"</span>&gt;
-        &lt;p&gt;Something went wrong: {error}&lt;/p&gt;
-        &lt;button onClick={refetch}&gt;Try Again&lt;/button&gt;
+      &lt;div className=<span class="hl-string">"error-container"</span>&gt;
+        &lt;p className=<span class="hl-string">"error-message"</span>&gt;{error}&lt;/p&gt;
+        {onRetry &amp;&amp; (
+          &lt;button onClick={onRetry} className=<span class="hl-string">"retry-button"</span>&gt;
+            Try Again
+          &lt;/button&gt;
+        )}
       &lt;/div&gt;
     );
   }
 
-  <span class="hl-keyword">if</span> (!articles?.length) {
-    <span class="hl-keyword">return</span> &lt;p&gt;No articles yet. Create your first one!&lt;/p&gt;;
-  }
+  <span class="hl-keyword">return</span> children;
+}
+
+<span class="hl-comment">// Usage</span>
+<span class="hl-keyword">function</span> <span class="hl-function">ProductsPage</span>() {
+  <span class="hl-keyword">const</span> { products, loading, error, refetch } = <span class="hl-function">useProducts</span>();
 
   <span class="hl-keyword">return</span> (
-    &lt;ul&gt;
-      {articles.map(article =&gt; (
-        &lt;li key={article.id}&gt;{article.title}&lt;/li&gt;
-      ))}
-    &lt;/ul&gt;
+    &lt;AsyncContent loading={loading} error={error} onRetry={refetch}&gt;
+      &lt;h1&gt;Products&lt;/h1&gt;
+      &lt;ProductGrid products={products} /&gt;
+    &lt;/AsyncContent&gt;
   );
 }
+
+<span class="hl-comment">// Optimistic updates pattern</span>
+<span class="hl-keyword">const</span> <span class="hl-function">handleToggleFavorite</span> = <span class="hl-keyword">async</span> (productId) =&gt; {
+  <span class="hl-comment">// Immediately update UI (optimistic)</span>
+  <span class="hl-function">setProducts</span>((prev) =&gt;
+    prev.<span class="hl-function">map</span>((p) =&gt; p.id === productId ? { ...p, favorited: !p.favorited } : p)
+  );
+
+  <span class="hl-keyword">try</span> {
+    <span class="hl-keyword">await</span> productsApi.<span class="hl-function">toggleFavorite</span>(productId);
+  } <span class="hl-keyword">catch</span> (err) {
+    <span class="hl-comment">// Revert on failure</span>
+    <span class="hl-function">setProducts</span>((prev) =&gt;
+      prev.<span class="hl-function">map</span>((p) =&gt; p.id === productId ? { ...p, favorited: !p.favorited } : p)
+    );
+    <span class="hl-function">showToast</span>(<span class="hl-string">"Failed to update favorite"</span>);
+  }
+};
 </pre>
       </div>
 
-      <div class="callout tip">
-        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>Pro Tip: Skeleton Loading</div>
-        <p>Instead of a spinner, use skeleton screens that match the shape of the content being loaded. They reduce perceived load time because users see the layout taking shape. Libraries like <code>react-loading-skeleton</code> make this easy.</p>
-      </div>
+      <h3 id="auth-tokens">6. Authentication Tokens and Protected Requests</h3>
 
-      <h3 id="api-service-layer">6. Organizing an API Service Layer</h3>
-      <p>As your application grows, raw API calls scattered across components become unmaintainable. Create a service layer that centralizes all API interactions. Each resource gets its own service file with methods for CRUD operations.</p>
+      <p>
+        Most Rails APIs use JWT (JSON Web Tokens) or session-based tokens for authentication. The React
+        client receives a token during login, stores it (typically in <code>localStorage</code> or an
+        HTTP-only cookie), and includes it in the <code>Authorization</code> header of every subsequent
+        request. Your API layer should handle token management transparently so individual components
+        never need to think about authentication.
+      </p>
 
       <div class="code-block">
-        <div class="code-header"><span class="code-lang">jsx</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <div class="code-header">
+          <span class="code-lang">jsx</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
 <pre>
-<span class="hl-comment">// services/articleService.js</span>
-<span class="hl-keyword">import</span> api <span class="hl-keyword">from</span> <span class="hl-string">"../api/client"</span>;
+<span class="hl-comment">// api/auth.js — authentication API functions</span>
+<span class="hl-keyword">import</span> api <span class="hl-keyword">from</span> <span class="hl-string">"./client"</span>;
 
-<span class="hl-keyword">const</span> ArticleService = {
-  <span class="hl-function">getAll</span>(params = {}) {
-    <span class="hl-keyword">return</span> api.get(<span class="hl-string">"/articles"</span>, { params });
-    <span class="hl-comment">// GET /api/v1/articles?page=1&amp;per_page=20</span>
+<span class="hl-keyword">export</span> <span class="hl-keyword">const</span> authApi = {
+  <span class="hl-function">login</span>: <span class="hl-keyword">async</span> (email, password) =&gt; {
+    <span class="hl-keyword">const</span> { data } = <span class="hl-keyword">await</span> api.<span class="hl-function">post</span>(<span class="hl-string">"/auth/login"</span>, { email, password });
+    localStorage.<span class="hl-function">setItem</span>(<span class="hl-string">"authToken"</span>, data.token);
+    <span class="hl-keyword">return</span> data.user;
   },
 
-  <span class="hl-function">getById</span>(id) {
-    <span class="hl-keyword">return</span> api.get(<span class="hl-string">`/articles/${id}`</span>);
+  <span class="hl-function">logout</span>: () =&gt; {
+    localStorage.<span class="hl-function">removeItem</span>(<span class="hl-string">"authToken"</span>);
   },
 
-  <span class="hl-function">create</span>(articleData) {
-    <span class="hl-keyword">return</span> api.post(<span class="hl-string">"/articles"</span>, { article: articleData });
+  <span class="hl-function">getCurrentUser</span>: <span class="hl-keyword">async</span> () =&gt; {
+    <span class="hl-keyword">const</span> { data } = <span class="hl-keyword">await</span> api.<span class="hl-function">get</span>(<span class="hl-string">"/auth/me"</span>);
+    <span class="hl-keyword">return</span> data;
   },
 
-  <span class="hl-function">update</span>(id, articleData) {
-    <span class="hl-keyword">return</span> api.patch(<span class="hl-string">`/articles/${id}`</span>, { article: articleData });
-  },
-
-  <span class="hl-function">delete</span>(id) {
-    <span class="hl-keyword">return</span> api.delete(<span class="hl-string">`/articles/${id}`</span>);
-  },
-
-  <span class="hl-function">search</span>(query) {
-    <span class="hl-keyword">return</span> api.get(<span class="hl-string">"/articles/search"</span>, { params: { q: query } });
+  <span class="hl-function">signup</span>: <span class="hl-keyword">async</span> (userData) =&gt; {
+    <span class="hl-keyword">const</span> { data } = <span class="hl-keyword">await</span> api.<span class="hl-function">post</span>(<span class="hl-string">"/auth/signup"</span>, { user: userData });
+    localStorage.<span class="hl-function">setItem</span>(<span class="hl-string">"authToken"</span>, data.token);
+    <span class="hl-keyword">return</span> data.user;
   },
 };
 
-<span class="hl-keyword">export default</span> ArticleService;
-
-<span class="hl-comment">// Usage in a component — clean and readable</span>
-<span class="hl-keyword">import</span> ArticleService <span class="hl-keyword">from</span> <span class="hl-string">"../services/articleService"</span>;
-
-<span class="hl-keyword">function</span> <span class="hl-function">CreateArticleForm</span>() {
-  <span class="hl-keyword">const</span> [title, setTitle] = useState(<span class="hl-string">""</span>);
-  <span class="hl-keyword">const</span> [body, setBody] = useState(<span class="hl-string">""</span>);
-  <span class="hl-keyword">const</span> [submitting, setSubmitting] = useState(<span class="hl-keyword">false</span>);
-  <span class="hl-keyword">const</span> [errors, setErrors] = useState({});
-
-  <span class="hl-keyword">const</span> <span class="hl-function">handleSubmit</span> = <span class="hl-keyword">async</span> (e) =&gt; {
-    e.preventDefault();
-    setSubmitting(<span class="hl-keyword">true</span>);
-    setErrors({});
-
-    <span class="hl-keyword">try</span> {
-      <span class="hl-keyword">const</span> { data } = <span class="hl-keyword">await</span> ArticleService.create({ title, body });
-      navigate(<span class="hl-string">`/articles/${data.id}`</span>);
-    } <span class="hl-keyword">catch</span> (err) {
-      <span class="hl-keyword">if</span> (err.response?.status === <span class="hl-number">422</span>) {
-        setErrors(err.response.data.errors);
-      } <span class="hl-keyword">else</span> {
-        setErrors({ base: <span class="hl-string">"Something went wrong. Please try again."</span> });
-      }
-    } <span class="hl-keyword">finally</span> {
-      setSubmitting(<span class="hl-keyword">false</span>);
-    }
-  };
-
-  <span class="hl-keyword">return</span> (
-    &lt;form onSubmit={handleSubmit}&gt;
-      {errors.base &amp;&amp; &lt;div className=<span class="hl-string">"error"</span>&gt;{errors.base}&lt;/div&gt;}
-      &lt;input
-        value={title}
-        onChange={(e) =&gt; setTitle(e.target.value)}
-        placeholder=<span class="hl-string">"Title"</span>
-      /&gt;
-      {errors.title &amp;&amp; &lt;span className=<span class="hl-string">"field-error"</span>&gt;{errors.title}&lt;/span&gt;}
-      &lt;textarea
-        value={body}
-        onChange={(e) =&gt; setBody(e.target.value)}
-        placeholder=<span class="hl-string">"Body"</span>
-      /&gt;
-      &lt;button type=<span class="hl-string">"submit"</span> disabled={submitting}&gt;
-        {submitting ? <span class="hl-string">"Creating..."</span> : <span class="hl-string">"Create Article"</span>}
-      &lt;/button&gt;
-    &lt;/form&gt;
-  );
-}
+<span class="hl-comment">// Rails controller for JWT authentication</span>
+<span class="hl-comment">// app/controllers/api/v1/auth_controller.rb</span>
+<span class="hl-comment">//</span>
+<span class="hl-comment">// class Api::V1::AuthController &lt; ApplicationController</span>
+<span class="hl-comment">//   def login</span>
+<span class="hl-comment">//     user = User.find_by(email: params[:email])</span>
+<span class="hl-comment">//     if user&amp;.authenticate(params[:password])</span>
+<span class="hl-comment">//       token = JWT.encode({ user_id: user.id, exp: 24.hours.from_now.to_i }, Rails.application.secret_key_base)</span>
+<span class="hl-comment">//       render json: { user: user, token: token }</span>
+<span class="hl-comment">//     else</span>
+<span class="hl-comment">//       render json: { error: "Invalid credentials" }, status: :unauthorized</span>
+<span class="hl-comment">//     end</span>
+<span class="hl-comment">//   end</span>
+<span class="hl-comment">// end</span>
 </pre>
       </div>
 
       <div class="diagram">
 <pre>
-  React + Rails Architecture
-  ═══════════════════════════
+  Full-Stack Authentication Flow
+  ═══════════════════════════════
 
-  React App (Browser)                    Rails API (Server)
-  ┌────────────────────┐                 ┌────────────────────┐
-  │  Components        │                 │  Routes            │
-  │  ├── Pages         │    HTTP/JSON    │  ├── api/v1/*      │
-  │  ├── Forms         │ ──────────────► │  Controllers       │
-  │  └── Layouts       │                 │  ├── AuthController│
-  │                    │                 │  ├── ArticlesCtrl  │
-  │  Services          │ ◄────────────── │  Models            │
-  │  ├── articleService│    JSON resp    │  ├── User          │
-  │  └── authService   │                 │  ├── Article       │
-  │                    │                 │  Serializers       │
-  │  API Client        │                 │  ├── ArticleSerializer
-  │  └── axios + interceptors            │  Database          │
-  │                    │                 │  └── PostgreSQL    │
-  │  Context           │                 └────────────────────┘
-  │  └── AuthProvider  │
-  └────────────────────┘
+  React (Browser)                    Rails API (Server)
+  ──────────────                     ──────────────────
 
-  Key: Components → Services → API Client → [Network] → Rails
+  1. User submits login form
+     POST /api/v1/auth/login  ──────&gt;  Verify credentials
+     { email, password }               Generate JWT token
+                              &lt;──────  { user, token }
+
+  2. Store token in localStorage
+     localStorage.setItem("authToken", token)
+
+  3. Subsequent requests include token
+     GET /api/v1/users  ────────────&gt;  Decode JWT token
+     Authorization: Bearer &lt;token&gt;     Find user from token
+                              &lt;──────  Return protected data
+
+  4. Token expired (401 response)
+     Interceptor catches 401  &lt;──────  { error: "Token expired" }
+     Remove token, redirect to /login
 </pre>
-        <div class="diagram-caption">Figure 2: The service layer pattern keeps API calls organized and components focused on rendering</div>
+        <div class="diagram-caption">Figure 1: JWT authentication flow between React and Rails</div>
       </div>
+
+      <div class="callout important">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          localStorage vs HTTP-only cookies
+        </div>
+        <p>
+          Storing tokens in <code>localStorage</code> is simple but vulnerable to XSS attacks. For higher
+          security, use HTTP-only cookies set by Rails (they cannot be read by JavaScript). The trade-off
+          is more complexity in CORS and CSRF configuration. For this course, <code>localStorage</code> is
+          acceptable, but production applications should evaluate their security requirements carefully.
+        </p>
+      </div>
+
+      <details>
+        <summary>How do I handle token refresh without logging the user out?</summary>
+        <div class="details-body">
+          <p>
+            Implement a refresh token pattern: when the access token expires, use a longer-lived refresh
+            token to obtain a new access token. In your axios interceptor, catch 401 responses, call the
+            refresh endpoint, update the stored token, and retry the original request. This provides a
+            seamless experience where the user never sees an unexpected logout.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Should I use fetch or axios in production?</summary>
+        <div class="details-body">
+          <p>
+            Both work. <code>fetch</code> has no dependencies and is built into browsers. <code>axios</code>
+            adds ~13KB but provides interceptors, automatic transforms, timeout support, and request
+            cancellation. For applications with authentication, pagination, and error handling, axios
+            interceptors save significant boilerplate. Choose based on your project's complexity.
+          </p>
+        </div>
+      </details>
 
       <hr class="section-divider">
 
       <h2 id="watch-learn">Watch &amp; Learn</h2>
+
+      <p>These videos cover React API integration and full-stack communication patterns.</p>
+
       <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/Fl_sCAOmHNg?rel=0&amp;modestbranding=1" title="React + Rails Full Stack" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-caption"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>Deanin &mdash; React + Rails 7 API Full Stack Build (fetch, CORS, authentication)</div>
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/bYFYF2GnMy8?rel=0&amp;modestbranding=1" title="React Fetch Data from API" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          PedroTech &mdash; How to Fetch Data from an API in React (fetch, useEffect, loading/error states)
+        </div>
       </div>
+
       <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/nQaEIRqmjCQ?rel=0&amp;modestbranding=1" title="JWT Authentication with Rails and React" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-caption"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>Traversy Media &mdash; JWT Authentication (tokens, interceptors, protected routes)</div>
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/Gl-vOU7ZU9A?rel=0&amp;modestbranding=1" title="Axios with React Tutorial" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Dave Gray &mdash; Axios with React Tutorial (setup, interceptors, instances, and CRUD operations)
+        </div>
       </div>
 
       <hr class="section-divider">
 
       <h2 id="further-reading">Further Reading</h2>
+
+      <p>Deep-dive into API integration, CORS, and authentication for full-stack applications.</p>
+
       <div class="resource-grid">
-        <a class="resource-card" href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch" target="_blank" rel="noopener"><div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><div class="resource-info"><div class="resource-title">MDN: Using the Fetch API</div><div class="resource-desc">Complete guide to the browser's built-in HTTP request API.</div></div></a>
-        <a class="resource-card" href="https://axios-http.com/docs/intro" target="_blank" rel="noopener"><div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><div class="resource-info"><div class="resource-title">Axios Documentation</div><div class="resource-desc">Official docs covering interceptors, instances, cancellation, and error handling.</div></div></a>
-        <a class="resource-card" href="https://github.com/cyu/rack-cors" target="_blank" rel="noopener"><div class="resource-icon github"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg></div><div class="resource-info"><div class="resource-title">rack-cors GitHub</div><div class="resource-desc">The standard gem for handling CORS in Rails applications.</div></div></a>
-        <a class="resource-card" href="https://jwt.io/introduction" target="_blank" rel="noopener"><div class="resource-icon article"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div><div class="resource-info"><div class="resource-title">JWT.io: Introduction</div><div class="resource-desc">Visual explanation of JSON Web Token structure, signing, and verification.</div></div></a>
-        <a class="resource-card" href="https://guides.rubyonrails.org/api_app.html" target="_blank" rel="noopener"><div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><div class="resource-info"><div class="resource-title">Rails Guides: API-Only Apps</div><div class="resource-desc">Official Rails guide for building API applications that serve frontend clients.</div></div></a>
+        <a class="resource-card" href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Using the Fetch API &mdash; MDN</div>
+            <div class="resource-desc">Comprehensive guide to fetch including headers, body, CORS, and error handling.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://axios-http.com/docs/intro" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Axios Documentation</div>
+            <div class="resource-desc">Official docs covering instances, interceptors, error handling, and cancellation.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://github.com/cyu/rack-cors" target="_blank" rel="noopener">
+          <div class="resource-icon github">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">rack-cors &mdash; GitHub</div>
+            <div class="resource-desc">Rails CORS middleware configuration guide with examples for API-only applications.</div>
+          </div>
+        </a>
       </div>
 
       <hr class="section-divider">
 
       <h2 id="assignments">Assignments</h2>
 
+      <p>Complete these in order. Each level builds on the previous one, culminating in a fully connected full-stack application.</p>
+
       <div class="assignment">
-        <div class="assignment-header"><div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Assignment 1</div><span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span></div>
-        <h4>Article Reader with Fetch</h4>
-        <p>Build a React app that reads data from a Rails API using the fetch API, with proper loading and error states.</p>
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 1
+          </div>
+          <span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span>
+        </div>
+        <h4>Fetch Data from a Public API</h4>
+        <p>Practice the fetch-display-handle pattern by consuming a public REST API.</p>
         <ul class="checklist">
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Set up a Rails API with an <code>Article</code> model and seed 10+ articles</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Configure <code>rack-cors</code> to allow requests from your React dev server</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Fetch and display a list of articles using the <code>fetch</code> API in a <code>useEffect</code></span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Show a loading skeleton while data is being fetched</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Display a user-friendly error message if the request fails, with a retry button</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a component that fetches data from JSONPlaceholder (<code>/users</code>) on mount using <code>useEffect</code></span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Display a loading spinner while the request is in progress</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Display an error message with a "Retry" button if the request fails</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Render the fetched data as a list of user cards</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Extract the fetch logic into a reusable <code>useFetch</code> custom hook</span></li>
         </ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Done when</div><p>Articles load from the Rails API. Loading skeleton appears during fetch. Error state works when the API is unreachable. No CORS errors in the browser console.</p></div>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div>
+          <p>Loading, success, and error states all render correctly. The custom hook can be reused with any URL. Simulating network failure (browser devtools offline mode) shows the error state with retry.</p>
+        </div>
       </div>
 
       <div class="assignment">
-        <div class="assignment-header"><div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Assignment 2</div><span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span></div>
-        <h4>Full CRUD with Axios and Service Layer</h4>
-        <p>Build a complete article management app with Axios, interceptors, and an organized service layer.</p>
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 2
+          </div>
+          <span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span>
+        </div>
+        <h4>Full CRUD with Rails API</h4>
+        <p>Connect your React front-end to a Rails API with complete create, read, update, and delete operations.</p>
         <ul class="checklist">
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Set up an Axios instance with <code>baseURL</code>, default headers, and timeout</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create an <code>articleService.js</code> with methods for all CRUD operations</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Build a form that creates new articles and displays validation errors from Rails</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Implement inline editing with PATCH requests</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Add delete with a confirmation dialog and optimistic UI update</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Handle 422 validation errors by displaying field-level error messages</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Configure CORS in your Rails API to allow requests from your React dev server</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Set up an axios instance with base URL, default headers, and error interceptor</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Build a resource list page that fetches and displays data from Rails using a custom hook</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Add a create form that POSTs to Rails and adds the new resource to the list without refetching</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Add inline edit and delete functionality with optimistic UI updates</span></li>
         </ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Done when</div><p>All CRUD operations work. Validation errors from Rails display next to the correct form fields. Service layer is reusable. Interceptors handle the auth token automatically.</p></div>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div>
+          <p>All CRUD operations work between React and Rails. CORS errors are resolved. The UI updates immediately on user actions (optimistic updates) and reverts on API failure.</p>
+        </div>
       </div>
 
       <div class="assignment">
-        <div class="assignment-header"><div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Assignment 3</div><span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Production-Ready</span></div>
-        <h4>Authenticated Blog Platform</h4>
-        <p>Build a complete authenticated blog where users sign up, log in, and manage their own articles with JWT tokens.</p>
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 3
+          </div>
+          <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Production-Ready</span>
+        </div>
+        <h4>Authenticated Full-Stack Application</h4>
+        <p>Build a complete authenticated application with JWT tokens, protected routes, and a production API layer.</p>
         <ul class="checklist">
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Implement JWT authentication on Rails with <code>bcrypt</code> and the <code>jwt</code> gem</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Build registration and login forms in React with proper error handling</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create an <code>AuthContext</code> that stores the token and provides login/logout functions</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Add Axios request interceptor to attach the JWT to every API call</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Add Axios response interceptor to redirect to login on 401 responses</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Implement protected routes that redirect unauthenticated users</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Ensure only article owners can edit/delete their own articles</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Implement JWT authentication on the Rails side with login, signup, and token validation endpoints</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Build login and signup forms in React that store the JWT token and user data</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Add an axios request interceptor that attaches the token and a response interceptor for 401 handling</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create an <code>AuthContext</code> provider with <code>useAuth</code> hook for app-wide auth state</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Build protected routes that redirect to login for unauthenticated users</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Handle token expiration gracefully &mdash; show a session expired message and redirect to login</span></li>
         </ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Done when</div><p>Full auth flow works: register, login, browse, create/edit/delete own articles, logout. Token persists across page refreshes. Expired tokens are handled gracefully. Unauthorized edits are blocked on both frontend and backend.</p></div>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div>
+          <p>Users can sign up, log in, view protected content, and log out. Session persists across page reloads. Expired tokens are handled without crashes. All API calls include the auth token automatically.</p>
+        </div>
       </div>
 
       <hr class="section-divider">
 
       <h2 id="self-check">Self-Check</h2>
-      <details><summary>Can you explain the difference between fetch and Axios?</summary><div class="details-body"><p><code>fetch</code> is built into the browser and does not throw on HTTP errors (you must check <code>response.ok</code>). It returns a Response object that requires <code>.json()</code> to parse. <strong>Axios</strong> throws on 4xx/5xx status codes, auto-parses JSON, supports interceptors and request cancellation out of the box, and has a simpler API. Use fetch for simple projects, Axios for anything with authentication or complex error handling.</p></div></details>
-      <details><summary>Do you know what CORS is and why the browser blocks cross-origin requests?</summary><div class="details-body"><p>CORS (Cross-Origin Resource Sharing) is a security mechanism. The <strong>Same-Origin Policy</strong> prevents a website on one origin (protocol + domain + port) from making requests to a different origin. Without this, any malicious website could make authenticated requests to your bank's API using your cookies. CORS allows the server to explicitly whitelist which origins are allowed by sending <code>Access-Control-Allow-Origin</code> headers. For non-simple requests (POST with JSON), the browser sends a preflight OPTIONS request first.</p></div></details>
-      <details><summary>Can you implement a JWT authentication flow from scratch?</summary><div class="details-body"><p>The flow: (1) User submits credentials to <code>POST /api/v1/auth/login</code>. (2) Rails verifies credentials with <code>bcrypt</code>, generates a JWT with <code>JWT.encode</code> containing the user_id and expiration. (3) React stores the token in <code>localStorage</code>. (4) Every subsequent request includes <code>Authorization: Bearer &lt;token&gt;</code> via an Axios interceptor. (5) Rails decodes the token, finds the user, and authorizes the request. (6) On 401, the interceptor clears the token and redirects to login.</p></div></details>
+
+      <p>Before moving to Chapter 08, honestly answer these questions. If any answer is "no", go back and practice more.</p>
+
+      <details>
+        <summary>Can you make a GET and POST request with fetch and handle the response?</summary>
+        <div class="details-body"><p>You should be able to write a <code>fetch</code> call with the correct method, headers, and body, check <code>response.ok</code>, parse the JSON, and handle errors in a <code>try/catch</code> block. If you forget the <code>Content-Type</code> header on POST requests or forget to call <code>response.json()</code>, practice more.</p></div>
+      </details>
+
+      <details>
+        <summary>Can you configure CORS in Rails to allow your React front-end?</summary>
+        <div class="details-body"><p>You should know which gem to use (<code>rack-cors</code>), where the initializer lives, and how to set allowed origins, methods, and headers. You should also understand why <code>origins "*"</code> is dangerous in production and how preflight OPTIONS requests work.</p></div>
+      </details>
+
+      <details>
+        <summary>Can you set up an axios instance with interceptors for auth tokens?</summary>
+        <div class="details-body"><p>You should be able to create an axios instance with <code>axios.create</code>, add a request interceptor that reads the token from storage and attaches it to headers, and add a response interceptor that catches 401 errors and redirects to login. This pattern is the foundation of every authenticated React application.</p></div>
+      </details>
+
+      <details>
+        <summary>Do you handle loading, success, and error states for every API call?</summary>
+        <div class="details-body"><p>Every component that fetches data must show a loading indicator during the request, the actual content on success, and a meaningful error message on failure (ideally with a retry button). If you have components that show a blank screen during loading or crash on errors, fix them before proceeding.</p></div>
+      </details>
+
+      <details>
+        <summary>Can you extract API logic into a custom hook that multiple components can reuse?</summary>
+        <div class="details-body"><p>Given a component with inline <code>fetch</code> calls, <code>useState</code>, and <code>useEffect</code>, you should be able to extract all the data-fetching logic into a <code>useXxx</code> hook that returns <code>{ data, loading, error }</code>. The component should become a pure rendering layer that calls the hook and displays the results.</p></div>
+      </details>
+
     </main>
 
-    <aside class="sidebar"><div class="sidebar-title">On this page</div>
+    <aside class="sidebar">
+      <div class="sidebar-title">On this page</div>
       <ul class="toc-list">
         <li class="toc-item"><a href="#why-this-matters">Why This Matters</a></li>
         <li class="toc-item"><a href="#key-concepts">Key Concepts</a></li>
-        <li class="toc-item"><a href="#fetch-api" style="padding-left:28px;font-size:12px">Fetch API</a></li>
-        <li class="toc-item"><a href="#axios" style="padding-left:28px;font-size:12px">Axios</a></li>
-        <li class="toc-item"><a href="#cors" style="padding-left:28px;font-size:12px">CORS</a></li>
-        <li class="toc-item"><a href="#jwt-auth" style="padding-left:28px;font-size:12px">JWT Authentication</a></li>
-        <li class="toc-item"><a href="#loading-errors" style="padding-left:28px;font-size:12px">Loading &amp; Errors</a></li>
-        <li class="toc-item"><a href="#api-service-layer" style="padding-left:28px;font-size:12px">Service Layer</a></li>
+        <li class="toc-item"><a href="#fetch-api" style="padding-left: 28px; font-size: 12px;">Fetch API</a></li>
+        <li class="toc-item"><a href="#axios-setup" style="padding-left: 28px; font-size: 12px;">Axios Setup</a></li>
+        <li class="toc-item"><a href="#cors-config" style="padding-left: 28px; font-size: 12px;">CORS Configuration</a></li>
+        <li class="toc-item"><a href="#api-integration" style="padding-left: 28px; font-size: 12px;">API Integration Patterns</a></li>
+        <li class="toc-item"><a href="#loading-error-states" style="padding-left: 28px; font-size: 12px;">Loading &amp; Error States</a></li>
+        <li class="toc-item"><a href="#auth-tokens" style="padding-left: 28px; font-size: 12px;">Authentication Tokens</a></li>
         <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a></li>
         <li class="toc-item"><a href="#further-reading">Further Reading</a></li>
         <li class="toc-item"><a href="#assignments">Assignments</a></li>
@@ -683,20 +879,39 @@ gem <span class="hl-string">"bcrypt"</span>
     </aside>
   </div>
 
-  <footer class="chapter-footer"><div class="chapter-footer-inner">
-    <nav class="footer-nav">
-      <a class="footer-nav-link" href="chapter-06.html"><span class="footer-nav-label">&larr; Previous Chapter</span><span class="footer-nav-title">06: State Management and Hooks</span></a>
-      <a class="footer-nav-link" href="chapter-08.html"><span class="footer-nav-label">Next Chapter &rarr;</span><span class="footer-nav-title">08: Testing Full-Stack Applications</span></a>
-    </nav>
-    <div class="footer-brand">ILA (Iksha Learning Academy) &middot; Rails + React Engineering Certification &middot; Level 1</div>
-  </div></footer>
+  <footer class="chapter-footer">
+    <div class="chapter-footer-inner">
+      <nav class="footer-nav">
+        <a class="footer-nav-link" href="chapter-06.html">
+          <span class="footer-nav-label">&larr; Previous Chapter</span>
+          <span class="footer-nav-title">06: State Management and Hooks</span>
+        </a>
+        <a class="footer-nav-link" href="chapter-08.html">
+          <span class="footer-nav-label">Next Chapter &rarr;</span>
+          <span class="footer-nav-title">08: Testing Full-Stack Applications</span>
+        </a>
+      </nav>
+      <div class="footer-brand">
+        ILA (Iksha Learning Academy) &middot; Rails + React Engineering Certification &middot; Level 1
+      </div>
+    </div>
+  </footer>
 
   <script>
-    window.addEventListener('scroll',()=>{const s=window.scrollY;const d=document.documentElement.scrollHeight-window.innerHeight;const p=d>0?(s/d)*100:0;document.getElementById('progressBar').style.width=p+'%'});
-    const tocLinks=document.querySelectorAll('.toc-item a');const sections=[];tocLinks.forEach(link=>{const id=link.getAttribute('href').slice(1);const el=document.getElementById(id);if(el)sections.push({id,el,link})});
-    const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{const item=sections.find(s=>s.el===entry.target);if(item&&entry.isIntersecting){tocLinks.forEach(l=>l.classList.remove('active'));item.link.classList.add('active')}})},{rootMargin:'-80px 0px -60% 0px',threshold:0});
-    sections.forEach(s=>observer.observe(s.el));
-    function copyCode(btn){const pre=btn.closest('.code-block').querySelector('pre');navigator.clipboard.writeText(pre.textContent).then(()=>{btn.classList.add('copied');btn.textContent='Copied!';setTimeout(()=>{btn.classList.remove('copied');btn.textContent='Copy'},2000)})}
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      document.getElementById('progressBar').style.width = progress + '%';
+    });
+
+    const tocLinks = document.querySelectorAll('.toc-item a');
+    const sections = [];
+    tocLinks.forEach(link => { const id = link.getAttribute('href').slice(1); const el = document.getElementById(id); if (el) sections.push({ id, el, link }); });
+    const observer = new IntersectionObserver(entries => { entries.forEach(entry => { const item = sections.find(s => s.el === entry.target); if (item && entry.isIntersecting) { tocLinks.forEach(l => l.classList.remove('active')); item.link.classList.add('active'); } }); }, { rootMargin: '-80px 0px -60% 0px', threshold: 0 });
+    sections.forEach(s => observer.observe(s.el));
+
+    function copyCode(btn) { const pre = btn.closest('.code-block').querySelector('pre'); navigator.clipboard.writeText(pre.textContent).then(() => { btn.classList.add('copied'); btn.textContent = 'Copied!'; setTimeout(() => { btn.classList.remove('copied'); btn.textContent = 'Copy'; }, 2000); }); }
   </script>
 </body>
 </html>

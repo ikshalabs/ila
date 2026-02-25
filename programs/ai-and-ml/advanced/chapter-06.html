@@ -3,11 +3,148 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chapter 06: MLOps Fundamentals &mdash; ILA AI &amp; Machine Learning</title>
+  <title>Chapter 06: Model Serving and Scaling &mdash; ILA AI &amp; Machine Learning</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-  <style>:root{--ink:#0f172a;--ink-light:#334155;--ink-muted:#64748b;--surface:#ffffff;--surface-alt:#f8fafc;--surface-warm:#fffbeb;--border:#e2e8f0;--border-light:#f1f5f9;--teal-50:#f0fdfa;--teal-100:#ccfbf1;--teal-200:#99f6e4;--teal-500:#14b8a6;--teal-600:#0d9488;--teal-700:#0f766e;--teal-800:#115e59;--teal-900:#134e4a;--blue-50:#eff6ff;--blue-100:#dbeafe;--blue-500:#3b82f6;--blue-600:#2563eb;--blue-700:#1d4ed8;--amber-50:#fffbeb;--amber-100:#fef3c7;--amber-500:#f59e0b;--amber-600:#d97706;--red-50:#fef2f2;--red-100:#fee2e2;--red-500:#ef4444;--red-600:#dc2626;--purple-50:#faf5ff;--purple-100:#f3e8ff;--purple-500:#a855f7;--purple-600:#9333ea;--font-sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;--font-serif:'Instrument Serif',Georgia,serif;--font-mono:'JetBrains Mono','Fira Code',monospace;--content-max:780px;--sidebar-width:280px;--ease:cubic-bezier(0.4,0,0.2,1)}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}body{font-family:var(--font-sans);font-size:16px;line-height:1.7;color:var(--ink);background:var(--surface)}.progress-bar{position:fixed;top:0;left:0;width:0%;height:3px;background:linear-gradient(90deg,var(--teal-500),var(--blue-500));z-index:1000;transition:width .15s var(--ease)}.top-nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem}.top-nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px}.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--teal-800)}.nav-brand-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--teal-600),var(--teal-800));border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px}.nav-brand-text{font-weight:700;font-size:15px;letter-spacing:-.02em}.nav-chapter-nav{display:flex;align-items:center;gap:8px}.nav-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;color:var(--ink-muted);border:1px solid var(--border);background:#fff;transition:all .2s var(--ease);cursor:pointer}.nav-btn:hover{color:var(--ink);border-color:var(--teal-500);background:var(--teal-50)}.nav-btn.disabled{opacity:.4;pointer-events:none}.nav-current{font-size:13px;font-weight:600;color:var(--ink-light);padding:0 4px}.hero{background:linear-gradient(170deg,var(--teal-50) 0%,var(--surface) 50%,var(--blue-50) 100%);border-bottom:1px solid var(--border);padding:4rem 2rem 3.5rem}.hero-inner{max-width:var(--content-max);margin:0 auto}.hero-chapter-label{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--teal-700);text-transform:uppercase;letter-spacing:.08em;margin-bottom:1rem}.hero-chapter-label span{background:var(--teal-100);padding:3px 10px;border-radius:100px}.hero h1{font-family:var(--font-serif);font-size:clamp(2.4rem,5vw,3.2rem);font-weight:400;line-height:1.15;color:var(--ink);margin-bottom:1rem}.hero-subtitle{font-size:1.15rem;color:var(--ink-light);line-height:1.65;max-width:640px}.hero-meta{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1.5rem}.hero-meta-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-muted)}.hero-meta-item svg{width:16px;height:16px;color:var(--teal-600)}.main-layout{max-width:1200px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:1fr var(--sidebar-width);gap:4rem;align-items:start}.content{padding:3rem 0 6rem;min-width:0}.sidebar{position:sticky;top:76px;padding:2rem 0;max-height:calc(100vh - 76px);overflow-y:auto}.sidebar-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-muted);margin-bottom:1rem;padding-left:14px}.toc-list{list-style:none}.toc-item a{display:block;padding:6px 14px;font-size:13px;color:var(--ink-muted);text-decoration:none;border-left:2px solid transparent;transition:all .2s var(--ease);line-height:1.5}.toc-item a:hover{color:var(--ink);background:var(--surface-alt)}.toc-item a.active{color:var(--teal-700);border-left-color:var(--teal-500);background:var(--teal-50);font-weight:500}.content h2{font-family:var(--font-serif);font-size:1.85rem;font-weight:400;color:var(--ink);margin:3rem 0 1rem;padding-top:1rem;scroll-margin-top:80px}.content h2:first-child{margin-top:0}.content h3{font-size:1.15rem;font-weight:600;color:var(--ink);margin:2rem 0 .75rem;scroll-margin-top:80px}.content p{margin-bottom:1.25rem;color:var(--ink-light)}.content strong{color:var(--ink);font-weight:600}.content a{color:var(--teal-700);text-decoration:underline;text-decoration-color:var(--teal-200);text-underline-offset:3px}.content ul,.content ol{margin-bottom:1.25rem;padding-left:1.5rem}.content li{margin-bottom:.5rem;color:var(--ink-light)}.content li::marker{color:var(--teal-500)}.section-divider{border:none;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:3rem 0}.callout{padding:1.25rem 1.5rem;border-radius:12px;margin-bottom:1.5rem;border:1px solid;position:relative}.callout-header{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;margin-bottom:.5rem}.callout-header svg{width:18px;height:18px;flex-shrink:0}.callout p:last-child{margin-bottom:0}.callout.concept{background:var(--blue-50);border-color:var(--blue-100)}.callout.concept .callout-header{color:var(--blue-700)}.callout.important{background:var(--amber-50);border-color:var(--amber-100)}.callout.important .callout-header{color:var(--amber-600)}.callout.danger{background:var(--red-50);border-color:var(--red-100)}.callout.danger .callout-header{color:var(--red-600)}.callout.tip{background:var(--purple-50);border-color:var(--purple-100)}.callout.tip .callout-header{color:var(--purple-600)}.callout.success{background:var(--teal-50);border-color:var(--teal-100)}.callout.success .callout-header{color:var(--teal-700)}.code-block{position:relative;margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}.code-header{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:var(--surface-alt);border-bottom:1px solid var(--border);font-size:12px;color:var(--ink-muted)}.code-lang{font-family:var(--font-mono);font-weight:600;text-transform:uppercase;letter-spacing:.05em}.code-copy{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:#fff;font-size:11px;font-family:var(--font-sans);color:var(--ink-muted);cursor:pointer;transition:all .2s var(--ease)}.code-copy:hover{border-color:var(--teal-500);color:var(--teal-700)}.code-copy.copied{background:var(--teal-50);border-color:var(--teal-500);color:var(--teal-700)}pre{margin:0;padding:1.25rem 1.5rem;overflow-x:auto;background:#1e293b;font-family:var(--font-mono);font-size:13.5px;line-height:1.7;color:#e2e8f0}code{font-family:var(--font-mono);font-size:.88em}p code,li code{padding:2px 7px;background:var(--surface-alt);border:1px solid var(--border);border-radius:5px;color:var(--teal-800);font-size:.85em}.hl-keyword{color:#c084fc}.hl-string{color:#86efac}.hl-comment{color:#64748b;font-style:italic}.hl-function{color:#7dd3fc}.hl-number{color:#fbbf24}.hl-flag{color:#f472b6}details{margin-bottom:1.25rem;border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .2s var(--ease)}details[open]{border-color:var(--teal-200)}details summary{padding:1rem 1.25rem;font-weight:600;font-size:15px;cursor:pointer;background:var(--surface-alt);list-style:none;display:flex;align-items:center;gap:10px;transition:background .2s var(--ease);user-select:none}details summary::-webkit-details-marker{display:none}details summary::before{content:'';width:20px;height:20px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain;flex-shrink:0;transition:transform .2s var(--ease)}details[open] summary::before{transform:rotate(90deg)}details summary:hover{background:var(--teal-50)}.details-body{padding:1.25rem 1.5rem}.details-body p:last-child{margin-bottom:0}.video-card{margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}.video-wrapper{position:relative;padding-bottom:56.25%;height:0;background:#0f172a}.video-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}.video-caption{padding:12px 16px;background:var(--surface-alt);font-size:13px;color:var(--ink-muted);display:flex;align-items:center;gap:6px}.video-caption svg{width:14px;height:14px;color:var(--red-500)}.resource-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1rem;margin-bottom:1.5rem}.resource-card{display:flex;gap:14px;padding:1rem 1.25rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all .2s var(--ease);background:#fff}.resource-card:hover{border-color:var(--teal-300);background:var(--teal-50);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.04)}.resource-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}.resource-icon.docs{background:var(--blue-50);color:var(--blue-600)}.resource-icon.video{background:var(--red-50);color:var(--red-500)}.resource-icon.github{background:var(--ink);color:#fff}.resource-icon.article{background:var(--amber-50);color:var(--amber-600)}.resource-icon.pdf{background:var(--purple-50);color:var(--purple-600)}.resource-info{min-width:0}.resource-title{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:2px;line-height:1.4}.resource-desc{font-size:12px;color:var(--ink-muted);line-height:1.5}.assignment{border:2px solid var(--teal-200);border-radius:14px;padding:1.5rem 1.75rem;margin-bottom:1.5rem;background:linear-gradient(135deg,var(--teal-50) 0%,#fff 100%)}.assignment-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}.assignment-label{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--teal-700)}.assignment-difficulty{display:inline-flex;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:600}.difficulty-l1{background:var(--teal-100);color:var(--teal-800)}.difficulty-l2{background:var(--amber-100);color:var(--amber-600)}.difficulty-l3{background:var(--red-100);color:var(--red-600)}.assignment h4{font-size:1.05rem;font-weight:700;margin-bottom:.75rem}.assignment p{font-size:14px}.checklist{list-style:none;padding:0}.checklist li{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border-light);font-size:14px}.checklist li:last-child{border-bottom:none}.check-box{width:20px;height:20px;border-radius:6px;border:2px solid var(--border);flex-shrink:0;margin-top:1px;cursor:pointer;transition:all .15s var(--ease);display:flex;align-items:center;justify-content:center}.check-box:hover{border-color:var(--teal-500)}.check-box.checked{background:var(--teal-500);border-color:var(--teal-500)}.check-box.checked::after{content:'';width:10px;height:10px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain}.diagram{margin:1.5rem 0;padding:2rem;background:var(--surface-alt);border:1px solid var(--border);border-radius:14px;overflow-x:auto}.diagram pre{background:transparent;color:var(--ink);padding:0;font-size:13px;line-height:1.6}.chapter-footer{border-top:1px solid var(--border);padding:3rem 2rem;background:var(--surface-alt)}.chapter-footer-inner{max-width:var(--content-max);margin:0 auto}.footer-nav{display:flex;justify-content:space-between;align-items:center;gap:1rem}.footer-nav-link{display:flex;flex-direction:column;gap:4px;padding:1rem 1.5rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all .2s var(--ease);max-width:320px;background:#fff}.footer-nav-link:hover{border-color:var(--teal-300);box-shadow:0 4px 12px rgba(0,0,0,.04)}.footer-nav-label{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--teal-600)}.footer-nav-title{font-size:15px;font-weight:600;color:var(--ink)}.footer-brand{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border);font-size:13px;color:var(--ink-muted)}@media(max-width:960px){.main-layout{grid-template-columns:1fr}.sidebar{display:none}.resource-grid{grid-template-columns:1fr}}@media(max-width:640px){.hero{padding:2.5rem 1.25rem 2rem}.main-layout{padding:0 1.25rem}.content{padding:2rem 0 4rem}pre{padding:1rem;font-size:12.5px}.footer-nav{flex-direction:column}.footer-nav-link{max-width:100%;width:100%}}@media print{.top-nav,.sidebar,.progress-bar{display:none}.main-layout{display:block}.content{padding:0}.hero{background:#fff;border:none}pre{background:#f1f5f9;color:var(--ink);border:1px solid var(--border)}}
+  <style>
+    :root {
+      --ink: #0f172a; --ink-light: #334155; --ink-muted: #64748b;
+      --surface: #ffffff; --surface-alt: #f8fafc; --surface-warm: #fffbeb;
+      --border: #e2e8f0; --border-light: #f1f5f9;
+      --teal-50: #f0fdfa; --teal-100: #ccfbf1; --teal-200: #99f6e4;
+      --teal-500: #14b8a6; --teal-600: #0d9488; --teal-700: #0f766e;
+      --teal-800: #115e59; --teal-900: #134e4a;
+      --blue-50: #eff6ff; --blue-100: #dbeafe; --blue-500: #3b82f6;
+      --blue-600: #2563eb; --blue-700: #1d4ed8;
+      --amber-50: #fffbeb; --amber-100: #fef3c7; --amber-500: #f59e0b; --amber-600: #d97706;
+      --red-50: #fef2f2; --red-100: #fee2e2; --red-500: #ef4444; --red-600: #dc2626;
+      --purple-50: #faf5ff; --purple-100: #f3e8ff; --purple-500: #a855f7; --purple-600: #9333ea;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-serif: 'Instrument Serif', Georgia, serif;
+      --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+      --content-max: 780px; --sidebar-width: 280px;
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body { font-family: var(--font-sans); font-size: 16px; line-height: 1.7; color: var(--ink); background: var(--surface); }
+    .progress-bar { position: fixed; top: 0; left: 0; width: 0%; height: 3px; background: linear-gradient(90deg, var(--teal-500), var(--blue-500)); z-index: 1000; transition: width 0.15s var(--ease); }
+    .top-nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 2rem; }
+    .top-nav-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 56px; }
+    .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--teal-800); }
+    .nav-brand-icon { width: 32px; height: 32px; background: linear-gradient(135deg, var(--teal-600), var(--teal-800)); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 14px; }
+    .nav-brand-text { font-weight: 700; font-size: 15px; letter-spacing: -0.02em; }
+    .nav-chapter-nav { display: flex; align-items: center; gap: 8px; }
+    .nav-btn { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 8px; font-size: 13px; font-weight: 500; text-decoration: none; color: var(--ink-muted); border: 1px solid var(--border); background: white; transition: all 0.2s var(--ease); cursor: pointer; }
+    .nav-btn:hover { color: var(--ink); border-color: var(--teal-500); background: var(--teal-50); }
+    .nav-btn.disabled { opacity: 0.4; pointer-events: none; }
+    .nav-current { font-size: 13px; font-weight: 600; color: var(--ink-light); padding: 0 4px; }
+    .hero { background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%); border-bottom: 1px solid var(--border); padding: 4rem 2rem 3.5rem; }
+    .hero-inner { max-width: var(--content-max); margin: 0 auto; }
+    .hero-chapter-label { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--teal-700); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1rem; }
+    .hero-chapter-label span { background: var(--teal-100); padding: 3px 10px; border-radius: 100px; }
+    .hero h1 { font-family: var(--font-serif); font-size: clamp(2.4rem, 5vw, 3.2rem); font-weight: 400; line-height: 1.15; color: var(--ink); margin-bottom: 1rem; }
+    .hero-subtitle { font-size: 1.15rem; color: var(--ink-light); line-height: 1.65; max-width: 640px; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.5rem; }
+    .hero-meta-item { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--ink-muted); }
+    .hero-meta-item svg { width: 16px; height: 16px; color: var(--teal-600); }
+    .main-layout { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: grid; grid-template-columns: 1fr var(--sidebar-width); gap: 4rem; align-items: start; }
+    .content { padding: 3rem 0 6rem; min-width: 0; }
+    .sidebar { position: sticky; top: 76px; padding: 2rem 0; max-height: calc(100vh - 76px); overflow-y: auto; }
+    .sidebar-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-muted); margin-bottom: 1rem; padding-left: 14px; }
+    .toc-list { list-style: none; }
+    .toc-item a { display: block; padding: 6px 14px; font-size: 13px; color: var(--ink-muted); text-decoration: none; border-left: 2px solid transparent; transition: all 0.2s var(--ease); line-height: 1.5; }
+    .toc-item a:hover { color: var(--ink); background: var(--surface-alt); }
+    .toc-item a.active { color: var(--teal-700); border-left-color: var(--teal-500); background: var(--teal-50); font-weight: 500; }
+    .content h2 { font-family: var(--font-serif); font-size: 1.85rem; font-weight: 400; color: var(--ink); margin: 3rem 0 1rem; padding-top: 1rem; scroll-margin-top: 80px; }
+    .content h2:first-child { margin-top: 0; }
+    .content h3 { font-size: 1.15rem; font-weight: 600; color: var(--ink); margin: 2rem 0 0.75rem; scroll-margin-top: 80px; }
+    .content p { margin-bottom: 1.25rem; color: var(--ink-light); }
+    .content strong { color: var(--ink); font-weight: 600; }
+    .content a { color: var(--teal-700); text-decoration: underline; text-decoration-color: var(--teal-200); text-underline-offset: 3px; }
+    .content a:hover { text-decoration-color: var(--teal-600); }
+    .content ul, .content ol { margin-bottom: 1.25rem; padding-left: 1.5rem; }
+    .content li { margin-bottom: 0.5rem; color: var(--ink-light); }
+    .content li::marker { color: var(--teal-500); }
+    .section-divider { border: none; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 3rem 0; }
+    .callout { padding: 1.25rem 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; border: 1px solid; position: relative; }
+    .callout-header { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; margin-bottom: 0.5rem; }
+    .callout-header svg { width: 18px; height: 18px; flex-shrink: 0; }
+    .callout p:last-child { margin-bottom: 0; }
+    .callout.concept { background: var(--blue-50); border-color: var(--blue-100); }
+    .callout.concept .callout-header { color: var(--blue-700); }
+    .callout.important { background: var(--amber-50); border-color: var(--amber-100); }
+    .callout.important .callout-header { color: var(--amber-600); }
+    .callout.danger { background: var(--red-50); border-color: var(--red-100); }
+    .callout.danger .callout-header { color: var(--red-600); }
+    .callout.tip { background: var(--purple-50); border-color: var(--purple-100); }
+    .callout.tip .callout-header { color: var(--purple-600); }
+    .callout.success { background: var(--teal-50); border-color: var(--teal-100); }
+    .callout.success .callout-header { color: var(--teal-700); }
+    .code-block { position: relative; margin-bottom: 1.5rem; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+    .code-header { display: flex; align-items: center; justify-content: space-between; padding: 8px 16px; background: var(--surface-alt); border-bottom: 1px solid var(--border); font-size: 12px; color: var(--ink-muted); }
+    .code-lang { font-family: var(--font-mono); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+    .code-copy { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border); background: white; font-size: 11px; font-family: var(--font-sans); color: var(--ink-muted); cursor: pointer; transition: all 0.2s var(--ease); }
+    .code-copy:hover { border-color: var(--teal-500); color: var(--teal-700); }
+    .code-copy.copied { background: var(--teal-50); border-color: var(--teal-500); color: var(--teal-700); }
+    pre { margin: 0; padding: 1.25rem 1.5rem; overflow-x: auto; background: #1e293b; font-family: var(--font-mono); font-size: 13.5px; line-height: 1.7; color: #e2e8f0; }
+    code { font-family: var(--font-mono); font-size: 0.88em; }
+    p code, li code { padding: 2px 7px; background: var(--surface-alt); border: 1px solid var(--border); border-radius: 5px; color: var(--teal-800); font-size: 0.85em; }
+    .hl-keyword { color: #c084fc; } .hl-string { color: #86efac; } .hl-comment { color: #64748b; font-style: italic; } .hl-function { color: #7dd3fc; } .hl-number { color: #fbbf24; } .hl-flag { color: #f472b6; }
+    details { margin-bottom: 1.25rem; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+    details[open] { border-color: var(--teal-200); }
+    details summary { padding: 1rem 1.25rem; font-weight: 600; font-size: 15px; cursor: pointer; background: var(--surface-alt); list-style: none; display: flex; align-items: center; gap: 10px; user-select: none; }
+    details summary::-webkit-details-marker { display: none; }
+    details summary::before { content: ''; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E"); background-size: contain; flex-shrink: 0; transition: transform 0.2s var(--ease); }
+    details[open] summary::before { transform: rotate(90deg); }
+    details summary:hover { background: var(--teal-50); }
+    .details-body { padding: 1.25rem 1.5rem; }
+    .details-body p:last-child { margin-bottom: 0; }
+    .video-card { margin-bottom: 1.5rem; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+    .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; background: #0f172a; }
+    .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+    .video-caption { padding: 12px 16px; background: var(--surface-alt); font-size: 13px; color: var(--ink-muted); display: flex; align-items: center; gap: 6px; }
+    .video-caption svg { width: 14px; height: 14px; color: var(--red-500); }
+    .resource-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+    .resource-card { display: flex; gap: 14px; padding: 1rem 1.25rem; border: 1px solid var(--border); border-radius: 12px; text-decoration: none; transition: all 0.2s var(--ease); background: white; }
+    .resource-card:hover { border-color: var(--teal-300); background: var(--teal-50); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+    .resource-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 18px; }
+    .resource-icon.docs { background: var(--blue-50); color: var(--blue-600); }
+    .resource-icon.video { background: var(--red-50); color: var(--red-500); }
+    .resource-icon.github { background: var(--ink); color: white; }
+    .resource-icon.article { background: var(--amber-50); color: var(--amber-600); }
+    .resource-info { min-width: 0; }
+    .resource-title { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 2px; line-height: 1.4; }
+    .resource-desc { font-size: 12px; color: var(--ink-muted); line-height: 1.5; }
+    .assignment { border: 2px solid var(--teal-200); border-radius: 14px; padding: 1.5rem 1.75rem; margin-bottom: 1.5rem; background: linear-gradient(135deg, var(--teal-50) 0%, white 100%); }
+    .assignment-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+    .assignment-label { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--teal-700); }
+    .assignment-difficulty { display: inline-flex; padding: 4px 10px; border-radius: 100px; font-size: 11px; font-weight: 600; }
+    .difficulty-l1 { background: var(--teal-100); color: var(--teal-800); } .difficulty-l2 { background: var(--amber-100); color: var(--amber-600); } .difficulty-l3 { background: var(--red-100); color: var(--red-600); }
+    .assignment h4 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.75rem; }
+    .assignment p { font-size: 14px; }
+    .checklist { list-style: none; padding: 0; }
+    .checklist li { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border-light); font-size: 14px; }
+    .checklist li:last-child { border-bottom: none; }
+    .check-box { width: 20px; height: 20px; border-radius: 6px; border: 2px solid var(--border); flex-shrink: 0; margin-top: 1px; cursor: pointer; transition: all 0.15s var(--ease); display: flex; align-items: center; justify-content: center; }
+    .check-box:hover { border-color: var(--teal-500); }
+    .check-box.checked { background: var(--teal-500); border-color: var(--teal-500); }
+    .check-box.checked::after { content: ''; width: 10px; height: 10px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E"); background-size: contain; }
+    .diagram { margin: 1.5rem 0; padding: 2rem; background: var(--surface-alt); border: 1px solid var(--border); border-radius: 14px; overflow-x: auto; }
+    .diagram pre { background: transparent; color: var(--ink); padding: 0; font-size: 13px; line-height: 1.6; }
+    .diagram-caption { margin-top: 1rem; font-size: 12px; color: var(--ink-muted); text-align: center; font-style: italic; }
+    .chapter-footer { border-top: 1px solid var(--border); padding: 3rem 2rem; background: var(--surface-alt); }
+    .chapter-footer-inner { max-width: var(--content-max); margin: 0 auto; }
+    .footer-nav { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+    .footer-nav-link { display: flex; flex-direction: column; gap: 4px; padding: 1rem 1.5rem; border: 1px solid var(--border); border-radius: 12px; text-decoration: none; transition: all 0.2s var(--ease); max-width: 320px; background: white; }
+    .footer-nav-link:hover { border-color: var(--teal-300); box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+    .footer-nav-label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--teal-600); }
+    .footer-nav-title { font-size: 15px; font-weight: 600; color: var(--ink); }
+    .footer-brand { text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); font-size: 13px; color: var(--ink-muted); }
+    @media (max-width: 960px) { .main-layout { grid-template-columns: 1fr; } .sidebar { display: none; } .resource-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 640px) { .hero { padding: 2.5rem 1.25rem 2rem; } .main-layout { padding: 0 1.25rem; } .content { padding: 2rem 0 4rem; } pre { padding: 1rem; font-size: 12.5px; } .footer-nav { flex-direction: column; } .footer-nav-link { max-width: 100%; width: 100%; } }
+    @media print { .top-nav, .sidebar, .progress-bar { display: none; } .main-layout { display: block; } .content { padding: 0; } .hero { background: white; border: none; } pre { background: #f1f5f9; color: var(--ink); border: 1px solid var(--border); } }
   </style>
 </head>
 <body>
@@ -15,14 +152,19 @@
   <nav class="top-nav">
     <div class="top-nav-inner">
       <a class="nav-brand" href="index.html"><div class="nav-brand-icon">ILA</div><span class="nav-brand-text">Iksha Learning Academy</span></a>
-      <div class="nav-chapter-nav"><a class="nav-btn" href="chapter-05.html">&larr; Previous</a><span class="nav-current">06 / 10</span><a class="nav-btn" href="chapter-07.html">Next &rarr;</a></div>
+      <div class="nav-chapter-nav">
+        <a class="nav-btn" href="chapter-05.html">&larr; Previous</a>
+        <span class="nav-current">06 / 10</span>
+        <a class="nav-btn" href="chapter-07.html">Next &rarr;</a>
+      </div>
     </div>
   </nav>
+
   <header class="hero">
     <div class="hero-inner">
-      <div class="hero-chapter-label"><span>Chapter 06</span> &middot; Phase 3: Infrastructure</div>
-      <h1>MLOps Fundamentals</h1>
-      <p class="hero-subtitle">Build production ML infrastructure: CI/CD pipelines for ML, model registries, feature stores, experiment tracking at scale, and automated retraining workflows.</p>
+      <div class="hero-chapter-label"><span>Chapter 06</span> &middot; Phase 3: MLOps and Infrastructure</div>
+      <h1>Model Serving and Scaling</h1>
+      <p class="hero-subtitle">Deploy trained models into production with TorchServe, TensorFlow Serving, and NVIDIA Triton. Implement A/B testing and canary deployment strategies to safely roll out model updates at scale.</p>
       <div class="hero-meta">
         <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Estimated: 3&ndash;4 days</div>
         <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>3 Advancement Levels</div>
@@ -30,378 +172,771 @@
       </div>
     </div>
   </header>
+
   <div class="main-layout">
     <main class="content">
+
       <h2 id="why-this-matters">Why This Matters</h2>
 
-      <p>MLOps bridges the gap between ML development and production deployment. CI/CD for ML, model registries, feature stores, and automated pipelines ensure your models are reliable, reproducible, and maintainable.</p>
+      <p>A model that lives only in a Jupyter notebook delivers zero business value. The gap between <code>model.predict(x)</code> in a notebook and a production endpoint serving thousands of requests per second is enormous &mdash; and it is where most ML projects fail. Model serving is the bridge between research and revenue.</p>
 
-      <p>The concepts in this chapter will be referenced throughout the rest of the course. Take the time to build deep understanding, not just surface-level familiarity.</p>
+      <p>Production serving demands more than wrapping a model in a Flask app. You need batching to maximize GPU utilization, versioning to roll back broken models, health checks to route traffic away from unhealthy replicas, and deployment strategies that let you test new models on real traffic without risking the entire user base.</p>
 
       <div class="callout concept">
         <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg> Key Insight</div>
-        <p>ML pipelines are not software pipelines. They have data dependencies, non-deterministic outputs, and require versioning of data, code, AND models simultaneously.</p>
+        <p>The best model serving architecture is one that lets you deploy a new model version in under 5 minutes and roll it back in under 30 seconds. Speed of iteration &mdash; not raw inference throughput &mdash; is the primary competitive advantage in production ML.</p>
       </div>
 
       <hr class="section-divider">
 
       <h2 id="key-concepts">Key Concepts</h2>
 
+      <h3 id="serving-architectures">1. Model Serving Architectures</h3>
 
-      <h3 id="cicd-ml">1. CI/CD for Machine Learning</h3>
+      <p>There are three primary patterns for serving ML models in production. Each makes different tradeoffs between latency, throughput, and operational complexity:</p>
 
-      <p>CI/CD for Machine Learning is a critical concept in this domain. Understanding it deeply will differentiate you from practitioners who only know the API calls. Let us explore the theory, the implementation, and the practical considerations.</p>
+      <ul>
+        <li><strong>Synchronous REST/gRPC</strong> &mdash; The client sends a request and waits for a prediction. Simple to implement, but latency-sensitive. Used for real-time recommendations, fraud detection, and chatbots.</li>
+        <li><strong>Asynchronous batch</strong> &mdash; Predictions are queued and processed in bulk. Higher throughput, but higher latency. Used for email classification, content moderation queues, and offline scoring.</li>
+        <li><strong>Streaming</strong> &mdash; Models consume from event streams (Kafka, Kinesis) and emit predictions in near-real-time. Used for IoT sensor processing, financial tick data, and real-time anomaly detection.</li>
+      </ul>
 
-      <p>In practice, ci/cd for machine learning requires careful attention to both theoretical foundations and engineering details. The code below demonstrates the core patterns you will use in production systems.</p>
+      <div class="diagram">
+<pre>
+ ┌─────────────┐     REST / gRPC     ┌──────────────────┐
+ │   Client     │────────────────────▶│  Model Server    │
+ │  (App/API)   │◀────────────────────│  (TorchServe /   │
+ └─────────────┘     prediction       │   Triton / TFS)  │
+                                      └────────┬─────────┘
+                                               │
+                    ┌──────────────────────────┼──────────────────┐
+                    │                          │                  │
+              ┌─────▼─────┐            ┌───────▼──────┐   ┌──────▼──────┐
+              │  Model v1  │            │  Model v2    │   │  Model v3   │
+              │ (primary)  │            │ (canary 10%) │   │ (shadow)    │
+              └────────────┘            └──────────────┘   └─────────────┘
+</pre>
+        <div class="diagram-caption">Figure 1: Model serving architecture with traffic splitting for canary and shadow deployments</div>
+      </div>
+
+      <p>The choice of architecture depends on your latency requirements. For P99 latency under 50ms, you need synchronous serving with GPU batching. For throughput over 10,000 predictions per second, you need horizontal scaling with a load balancer that understands model health.</p>
 
       <div class="code-block">
-        <div class="code-header">
-          <span class="code-lang">python</span>
-          <button class="code-copy" onclick="copyCode(this)">Copy</button>
-        </div>
+        <div class="code-header"><span class="code-lang">python</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
 <pre>
-<span class="hl-keyword">import</span> numpy <span class="hl-keyword">as</span> np
-<span class="hl-keyword">import</span> torch
-<span class="hl-keyword">import</span> torch.nn <span class="hl-keyword">as</span> nn
+<span class="hl-comment"># serving_config.py — Abstract serving configuration</span>
+<span class="hl-keyword">from</span> dataclasses <span class="hl-keyword">import</span> dataclass
+<span class="hl-keyword">from</span> enum <span class="hl-keyword">import</span> Enum
+<span class="hl-keyword">from</span> typing <span class="hl-keyword">import</span> Optional
 
-<span class="hl-comment"># CI/CD for Machine Learning — core implementation</span>
-<span class="hl-keyword">class</span> <span class="hl-function">CicdMl</span>:
-    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, config=<span class="hl-keyword">None</span>):
-        self.config = config or {}
-        self.model = <span class="hl-keyword">None</span>
-        self.history = []
+<span class="hl-keyword">class</span> <span class="hl-function">ServingMode</span>(Enum):
+    SYNC = <span class="hl-string">"synchronous"</span>
+    ASYNC = <span class="hl-string">"asynchronous"</span>
+    STREAMING = <span class="hl-string">"streaming"</span>
 
-    <span class="hl-keyword">def</span> <span class="hl-function">fit</span>(self, X, y):
-        <span class="hl-string">"""Train the model on input data."""</span>
-        <span class="hl-function">print</span>(<span class="hl-string">f"Training on {X.shape[0]} samples..."</span>)
-        <span class="hl-comment"># Implementation specific to CI/CD for Machine Learning</span>
+<span class="hl-flag">@dataclass</span>
+<span class="hl-keyword">class</span> <span class="hl-function">ServingConfig</span>:
+    model_name: <span class="hl-function">str</span>
+    model_version: <span class="hl-function">str</span>
+    mode: ServingMode = ServingMode.SYNC
+    max_batch_size: <span class="hl-function">int</span> = <span class="hl-number">32</span>
+    batch_timeout_ms: <span class="hl-function">int</span> = <span class="hl-number">100</span>
+    max_concurrent_requests: <span class="hl-function">int</span> = <span class="hl-number">128</span>
+    gpu_memory_fraction: <span class="hl-function">float</span> = <span class="hl-number">0.8</span>
+    health_check_interval_s: <span class="hl-function">int</span> = <span class="hl-number">10</span>
+    warmup_requests: <span class="hl-function">int</span> = <span class="hl-number">5</span>
+
+    <span class="hl-keyword">def</span> <span class="hl-function">validate</span>(self):
+        <span class="hl-keyword">assert</span> self.max_batch_size > <span class="hl-number">0</span>, <span class="hl-string">"Batch size must be positive"</span>
+        <span class="hl-keyword">assert</span> <span class="hl-number">0</span> &lt; self.gpu_memory_fraction &lt;= <span class="hl-number">1.0</span>
         <span class="hl-keyword">return</span> self
 
-    <span class="hl-keyword">def</span> <span class="hl-function">predict</span>(self, X):
-        <span class="hl-string">"""Generate predictions."""</span>
-        <span class="hl-keyword">return</span> self.model(X)
-
-    <span class="hl-keyword">def</span> <span class="hl-function">evaluate</span>(self, X, y):
-        <span class="hl-string">"""Evaluate model performance."""</span>
-        preds = self.predict(X)
-        accuracy = (preds == y).mean()
-        <span class="hl-function">print</span>(<span class="hl-string">f"Accuracy: {accuracy:.4f}"</span>)
-        <span class="hl-keyword">return</span> accuracy
+<span class="hl-comment"># Configure for a fraud detection model</span>
+config = ServingConfig(
+    model_name=<span class="hl-string">"fraud_detector"</span>,
+    model_version=<span class="hl-string">"v2.3.1"</span>,
+    max_batch_size=<span class="hl-number">64</span>,
+    batch_timeout_ms=<span class="hl-number">50</span>,
+).validate()
 </pre>
       </div>
 
+      <h3 id="torchserve-setup">2. TorchServe Setup and Configuration</h3>
 
-      <h3 id="model-registry">2. Model Registries</h3>
-
-      <p>Model Registries is a critical concept in this domain. Understanding it deeply will differentiate you from practitioners who only know the API calls. Let us explore the theory, the implementation, and the practical considerations.</p>
-
-      <p>In practice, model registries requires careful attention to both theoretical foundations and engineering details. The code below demonstrates the core patterns you will use in production systems.</p>
+      <p>TorchServe is the official model serving framework for PyTorch. It handles model loading, request batching, worker management, and provides REST and gRPC endpoints out of the box. The key abstraction is the <strong>handler</strong> &mdash; a Python class that defines how to preprocess inputs, run inference, and postprocess outputs.</p>
 
       <div class="code-block">
-        <div class="code-header">
-          <span class="code-lang">python</span>
-          <button class="code-copy" onclick="copyCode(this)">Copy</button>
-        </div>
+        <div class="code-header"><span class="code-lang">python</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
 <pre>
-<span class="hl-keyword">import</span> numpy <span class="hl-keyword">as</span> np
+<span class="hl-comment"># handler.py — Custom TorchServe handler for a text classifier</span>
+<span class="hl-keyword">import</span> json
+<span class="hl-keyword">import</span> logging
 <span class="hl-keyword">import</span> torch
-<span class="hl-keyword">import</span> torch.nn <span class="hl-keyword">as</span> nn
+<span class="hl-keyword">from</span> ts.torch_handler.base_handler <span class="hl-keyword">import</span> BaseHandler
+<span class="hl-keyword">from</span> transformers <span class="hl-keyword">import</span> AutoTokenizer, AutoModelForSequenceClassification
 
-<span class="hl-comment"># Model Registries — core implementation</span>
-<span class="hl-keyword">class</span> <span class="hl-function">ModelRegistry</span>:
-    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, config=<span class="hl-keyword">None</span>):
-        self.config = config or {}
-        self.model = <span class="hl-keyword">None</span>
-        self.history = []
+logger = logging.getLogger(__name__)
 
-    <span class="hl-keyword">def</span> <span class="hl-function">fit</span>(self, X, y):
-        <span class="hl-string">"""Train the model on input data."""</span>
-        <span class="hl-function">print</span>(<span class="hl-string">f"Training on {X.shape[0]} samples..."</span>)
-        <span class="hl-comment"># Implementation specific to Model Registries</span>
-        <span class="hl-keyword">return</span> self
+<span class="hl-keyword">class</span> <span class="hl-function">TextClassifierHandler</span>(BaseHandler):
+    <span class="hl-keyword">def</span> <span class="hl-function">initialize</span>(self, context):
+        <span class="hl-string">"""Load model and tokenizer from the model archive."""</span>
+        self.manifest = context.manifest
+        properties = context.system_properties
+        model_dir = properties.get(<span class="hl-string">"model_dir"</span>)
 
-    <span class="hl-keyword">def</span> <span class="hl-function">predict</span>(self, X):
-        <span class="hl-string">"""Generate predictions."""</span>
-        <span class="hl-keyword">return</span> self.model(X)
+        <span class="hl-comment"># Load the tokenizer and model</span>
+        self.tokenizer = AutoTokenizer.from_pretrained(model_dir)
+        self.model = AutoModelForSequenceClassification.from_pretrained(
+            model_dir
+        )
+        self.model.eval()
 
-    <span class="hl-keyword">def</span> <span class="hl-function">evaluate</span>(self, X, y):
-        <span class="hl-string">"""Evaluate model performance."""</span>
-        preds = self.predict(X)
-        accuracy = (preds == y).mean()
-        <span class="hl-function">print</span>(<span class="hl-string">f"Accuracy: {accuracy:.4f}"</span>)
-        <span class="hl-keyword">return</span> accuracy
+        <span class="hl-comment"># Move to GPU if available</span>
+        self.device = torch.device(
+            <span class="hl-string">"cuda"</span> <span class="hl-keyword">if</span> torch.cuda.is_available() <span class="hl-keyword">else</span> <span class="hl-string">"cpu"</span>
+        )
+        self.model.to(self.device)
+        self.label_map = {<span class="hl-number">0</span>: <span class="hl-string">"negative"</span>, <span class="hl-number">1</span>: <span class="hl-string">"positive"</span>}
+        logger.info(<span class="hl-string">"Model loaded on %s"</span>, self.device)
+
+    <span class="hl-keyword">def</span> <span class="hl-function">preprocess</span>(self, requests):
+        <span class="hl-string">"""Tokenize incoming text requests into model inputs."""</span>
+        texts = []
+        <span class="hl-keyword">for</span> request <span class="hl-keyword">in</span> requests:
+            data = request.get(<span class="hl-string">"data"</span>) <span class="hl-keyword">or</span> request.get(<span class="hl-string">"body"</span>)
+            <span class="hl-keyword">if</span> isinstance(data, (bytes, bytearray)):
+                data = data.decode(<span class="hl-string">"utf-8"</span>)
+            <span class="hl-keyword">if</span> isinstance(data, str):
+                data = json.loads(data)
+            texts.append(data[<span class="hl-string">"text"</span>])
+
+        inputs = self.tokenizer(
+            texts, padding=<span class="hl-keyword">True</span>, truncation=<span class="hl-keyword">True</span>,
+            max_length=<span class="hl-number">512</span>, return_tensors=<span class="hl-string">"pt"</span>,
+        )
+        <span class="hl-keyword">return</span> {k: v.to(self.device) <span class="hl-keyword">for</span> k, v <span class="hl-keyword">in</span> inputs.items()}
+
+    <span class="hl-keyword">def</span> <span class="hl-function">inference</span>(self, inputs):
+        <span class="hl-string">"""Run the model forward pass."""</span>
+        <span class="hl-keyword">with</span> torch.no_grad():
+            outputs = self.model(**inputs)
+        <span class="hl-keyword">return</span> outputs.logits
+
+    <span class="hl-keyword">def</span> <span class="hl-function">postprocess</span>(self, logits):
+        <span class="hl-string">"""Convert logits to human-readable predictions."""</span>
+        probabilities = torch.softmax(logits, dim=<span class="hl-number">-1</span>)
+        predictions = []
+        <span class="hl-keyword">for</span> prob <span class="hl-keyword">in</span> probabilities:
+            label_idx = prob.argmax().item()
+            predictions.append({
+                <span class="hl-string">"label"</span>: self.label_map[label_idx],
+                <span class="hl-string">"confidence"</span>: <span class="hl-function">round</span>(prob[label_idx].item(), <span class="hl-number">4</span>),
+            })
+        <span class="hl-keyword">return</span> predictions
 </pre>
       </div>
 
-
-      <h3 id="feature-stores">3. Feature Stores</h3>
-
-      <p>Feature Stores is a critical concept in this domain. Understanding it deeply will differentiate you from practitioners who only know the API calls. Let us explore the theory, the implementation, and the practical considerations.</p>
-
-      <p>In practice, feature stores requires careful attention to both theoretical foundations and engineering details. The code below demonstrates the core patterns you will use in production systems.</p>
-
       <div class="code-block">
-        <div class="code-header">
-          <span class="code-lang">python</span>
-          <button class="code-copy" onclick="copyCode(this)">Copy</button>
-        </div>
+        <div class="code-header"><span class="code-lang">python</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
 <pre>
-<span class="hl-keyword">import</span> numpy <span class="hl-keyword">as</span> np
-<span class="hl-keyword">import</span> torch
-<span class="hl-keyword">import</span> torch.nn <span class="hl-keyword">as</span> nn
+<span class="hl-comment"># package_model.py — Create a TorchServe model archive (.mar)</span>
+<span class="hl-keyword">import</span> subprocess
+<span class="hl-keyword">import</span> os
 
-<span class="hl-comment"># Feature Stores — core implementation</span>
-<span class="hl-keyword">class</span> <span class="hl-function">FeatureStores</span>:
-    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, config=<span class="hl-keyword">None</span>):
-        self.config = config or {}
-        self.model = <span class="hl-keyword">None</span>
-        self.history = []
+<span class="hl-keyword">def</span> <span class="hl-function">create_model_archive</span>(
+    model_name: <span class="hl-function">str</span>,
+    model_dir: <span class="hl-function">str</span>,
+    handler_path: <span class="hl-function">str</span>,
+    version: <span class="hl-function">str</span> = <span class="hl-string">"1.0"</span>,
+    export_path: <span class="hl-function">str</span> = <span class="hl-string">"./model_store"</span>,
+):
+    <span class="hl-string">"""Package model artifacts into a .mar archive."""</span>
+    os.makedirs(export_path, exist_ok=<span class="hl-keyword">True</span>)
 
-    <span class="hl-keyword">def</span> <span class="hl-function">fit</span>(self, X, y):
-        <span class="hl-string">"""Train the model on input data."""</span>
-        <span class="hl-function">print</span>(<span class="hl-string">f"Training on {X.shape[0]} samples..."</span>)
-        <span class="hl-comment"># Implementation specific to Feature Stores</span>
-        <span class="hl-keyword">return</span> self
+    cmd = [
+        <span class="hl-string">"torch-model-archiver"</span>,
+        <span class="hl-string">"--model-name"</span>, model_name,
+        <span class="hl-string">"--version"</span>, version,
+        <span class="hl-string">"--serialized-file"</span>, f<span class="hl-string">"{model_dir}/pytorch_model.bin"</span>,
+        <span class="hl-string">"--handler"</span>, handler_path,
+        <span class="hl-string">"--extra-files"</span>, (
+            f<span class="hl-string">"{model_dir}/config.json,"</span>
+            f<span class="hl-string">"{model_dir}/tokenizer_config.json,"</span>
+            f<span class="hl-string">"{model_dir}/vocab.txt"</span>
+        ),
+        <span class="hl-string">"--export-path"</span>, export_path,
+        <span class="hl-string">"--force"</span>,
+    ]
+    subprocess.run(cmd, check=<span class="hl-keyword">True</span>)
+    <span class="hl-keyword">print</span>(f<span class="hl-string">"Archive created: {export_path}/{model_name}.mar"</span>)
 
-    <span class="hl-keyword">def</span> <span class="hl-function">predict</span>(self, X):
-        <span class="hl-string">"""Generate predictions."""</span>
-        <span class="hl-keyword">return</span> self.model(X)
-
-    <span class="hl-keyword">def</span> <span class="hl-function">evaluate</span>(self, X, y):
-        <span class="hl-string">"""Evaluate model performance."""</span>
-        preds = self.predict(X)
-        accuracy = (preds == y).mean()
-        <span class="hl-function">print</span>(<span class="hl-string">f"Accuracy: {accuracy:.4f}"</span>)
-        <span class="hl-keyword">return</span> accuracy
+<span class="hl-comment"># Package the model</span>
+create_model_archive(
+    model_name=<span class="hl-string">"text_classifier"</span>,
+    model_dir=<span class="hl-string">"./trained_model"</span>,
+    handler_path=<span class="hl-string">"./handler.py"</span>,
+    version=<span class="hl-string">"2.0"</span>,
+)
 </pre>
       </div>
 
+      <div class="callout important">
+        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Batching Is Critical</div>
+        <p>Without dynamic batching, a GPU serving model will use only 5&ndash;10% of its capacity. TorchServe's <code>batch_size</code> and <code>max_batch_delay</code> in <code>config.properties</code> can increase throughput by 10&ndash;20x. Always measure P50 and P99 latency to find the sweet spot between throughput and tail latency.</p>
+      </div>
 
-      <h3 id="experiment-tracking">4. Experiment Tracking at Scale</h3>
+      <h3 id="tensorflow-serving">3. TensorFlow Serving</h3>
 
-      <p>Experiment Tracking at Scale is a critical concept in this domain. Understanding it deeply will differentiate you from practitioners who only know the API calls. Let us explore the theory, the implementation, and the practical considerations.</p>
-
-      <p>In practice, experiment tracking at scale requires careful attention to both theoretical foundations and engineering details. The code below demonstrates the core patterns you will use in production systems.</p>
+      <p>TensorFlow Serving is a high-performance serving system designed for production environments. It uses the SavedModel format and provides native support for model versioning, automatic model loading, and gRPC/REST APIs. The key advantage is its battle-tested gRPC implementation with sub-millisecond overhead.</p>
 
       <div class="code-block">
-        <div class="code-header">
-          <span class="code-lang">python</span>
-          <button class="code-copy" onclick="copyCode(this)">Copy</button>
-        </div>
+        <div class="code-header"><span class="code-lang">python</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
 <pre>
-<span class="hl-keyword">import</span> numpy <span class="hl-keyword">as</span> np
-<span class="hl-keyword">import</span> torch
-<span class="hl-keyword">import</span> torch.nn <span class="hl-keyword">as</span> nn
+<span class="hl-comment"># export_savedmodel.py — Export a Keras model for TF Serving</span>
+<span class="hl-keyword">import</span> tensorflow <span class="hl-keyword">as</span> tf
+<span class="hl-keyword">import</span> os
+<span class="hl-keyword">import</span> time
 
-<span class="hl-comment"># Experiment Tracking at Scale — core implementation</span>
-<span class="hl-keyword">class</span> <span class="hl-function">ExperimentTracking</span>:
-    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, config=<span class="hl-keyword">None</span>):
-        self.config = config or {}
-        self.model = <span class="hl-keyword">None</span>
-        self.history = []
+<span class="hl-keyword">def</span> <span class="hl-function">export_for_serving</span>(
+    model: tf.keras.Model,
+    export_dir: <span class="hl-function">str</span>,
+    version: <span class="hl-function">int</span> = <span class="hl-keyword">None</span>,
+):
+    <span class="hl-string">"""Export a Keras model in SavedModel format for TF Serving."""</span>
+    <span class="hl-keyword">if</span> version <span class="hl-keyword">is</span> <span class="hl-keyword">None</span>:
+        version = <span class="hl-function">int</span>(time.time())
 
-    <span class="hl-keyword">def</span> <span class="hl-function">fit</span>(self, X, y):
-        <span class="hl-string">"""Train the model on input data."""</span>
-        <span class="hl-function">print</span>(<span class="hl-string">f"Training on {X.shape[0]} samples..."</span>)
-        <span class="hl-comment"># Implementation specific to Experiment Tracking at Scale</span>
-        <span class="hl-keyword">return</span> self
+    versioned_path = os.path.join(export_dir, <span class="hl-function">str</span>(version))
 
-    <span class="hl-keyword">def</span> <span class="hl-function">predict</span>(self, X):
-        <span class="hl-string">"""Generate predictions."""</span>
-        <span class="hl-keyword">return</span> self.model(X)
+    <span class="hl-comment"># Define serving signatures with explicit shapes</span>
+    <span class="hl-flag">@tf.function</span>(input_signature=[
+        tf.TensorSpec(shape=[<span class="hl-keyword">None</span>, <span class="hl-number">224</span>, <span class="hl-number">224</span>, <span class="hl-number">3</span>], dtype=tf.float32)
+    ])
+    <span class="hl-keyword">def</span> <span class="hl-function">serve</span>(images):
+        predictions = model(images, training=<span class="hl-keyword">False</span>)
+        <span class="hl-keyword">return</span> {<span class="hl-string">"predictions"</span>: predictions}
 
-    <span class="hl-keyword">def</span> <span class="hl-function">evaluate</span>(self, X, y):
-        <span class="hl-string">"""Evaluate model performance."""</span>
-        preds = self.predict(X)
-        accuracy = (preds == y).mean()
-        <span class="hl-function">print</span>(<span class="hl-string">f"Accuracy: {accuracy:.4f}"</span>)
-        <span class="hl-keyword">return</span> accuracy
+    tf.saved_model.save(
+        model, versioned_path,
+        signatures={<span class="hl-string">"serving_default"</span>: serve},
+    )
+    <span class="hl-keyword">print</span>(f<span class="hl-string">"Model exported to {versioned_path}"</span>)
+    <span class="hl-keyword">return</span> versioned_path
+
+
+<span class="hl-comment"># Build and export</span>
+model = tf.keras.applications.ResNet50(weights=<span class="hl-string">"imagenet"</span>)
+export_for_serving(model, <span class="hl-string">"./models/image_classifier"</span>, version=<span class="hl-number">1</span>)
 </pre>
       </div>
 
-
-      <h3 id="pipeline-orchestration">5. Pipeline Orchestration</h3>
-
-      <p>Pipeline Orchestration is a critical concept in this domain. Understanding it deeply will differentiate you from practitioners who only know the API calls. Let us explore the theory, the implementation, and the practical considerations.</p>
-
-      <p>In practice, pipeline orchestration requires careful attention to both theoretical foundations and engineering details. The code below demonstrates the core patterns you will use in production systems.</p>
-
       <div class="code-block">
-        <div class="code-header">
-          <span class="code-lang">python</span>
-          <button class="code-copy" onclick="copyCode(this)">Copy</button>
-        </div>
+        <div class="code-header"><span class="code-lang">python</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
 <pre>
+<span class="hl-comment"># tf_serving_client.py — gRPC client for TF Serving</span>
+<span class="hl-keyword">import</span> grpc
 <span class="hl-keyword">import</span> numpy <span class="hl-keyword">as</span> np
-<span class="hl-keyword">import</span> torch
-<span class="hl-keyword">import</span> torch.nn <span class="hl-keyword">as</span> nn
+<span class="hl-keyword">import</span> tensorflow <span class="hl-keyword">as</span> tf
+<span class="hl-keyword">from</span> tensorflow_serving.apis <span class="hl-keyword">import</span> (
+    predict_pb2,
+    prediction_service_pb2_grpc,
+)
 
-<span class="hl-comment"># Pipeline Orchestration — core implementation</span>
-<span class="hl-keyword">class</span> <span class="hl-function">PipelineOrchestration</span>:
-    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, config=<span class="hl-keyword">None</span>):
-        self.config = config or {}
-        self.model = <span class="hl-keyword">None</span>
-        self.history = []
+<span class="hl-keyword">def</span> <span class="hl-function">predict_grpc</span>(
+    image: np.ndarray,
+    model_name: <span class="hl-function">str</span> = <span class="hl-string">"image_classifier"</span>,
+    host: <span class="hl-function">str</span> = <span class="hl-string">"localhost"</span>,
+    port: <span class="hl-function">int</span> = <span class="hl-number">8500</span>,
+    version: <span class="hl-function">int</span> = <span class="hl-keyword">None</span>,
+):
+    <span class="hl-string">"""Send a prediction request via gRPC to TF Serving."""</span>
+    channel = grpc.insecure_channel(f<span class="hl-string">"{host}:{port}"</span>)
+    stub = prediction_service_pb2_grpc.PredictionServiceStub(channel)
 
-    <span class="hl-keyword">def</span> <span class="hl-function">fit</span>(self, X, y):
-        <span class="hl-string">"""Train the model on input data."""</span>
-        <span class="hl-function">print</span>(<span class="hl-string">f"Training on {X.shape[0]} samples..."</span>)
-        <span class="hl-comment"># Implementation specific to Pipeline Orchestration</span>
-        <span class="hl-keyword">return</span> self
+    request = predict_pb2.PredictRequest()
+    request.model_spec.name = model_name
+    <span class="hl-keyword">if</span> version:
+        request.model_spec.version.value = version
 
-    <span class="hl-keyword">def</span> <span class="hl-function">predict</span>(self, X):
-        <span class="hl-string">"""Generate predictions."""</span>
-        <span class="hl-keyword">return</span> self.model(X)
+    request.inputs[<span class="hl-string">"images"</span>].CopyFrom(
+        tf.make_tensor_proto(image, dtype=tf.float32)
+    )
 
-    <span class="hl-keyword">def</span> <span class="hl-function">evaluate</span>(self, X, y):
-        <span class="hl-string">"""Evaluate model performance."""</span>
-        preds = self.predict(X)
-        accuracy = (preds == y).mean()
-        <span class="hl-function">print</span>(<span class="hl-string">f"Accuracy: {accuracy:.4f}"</span>)
-        <span class="hl-keyword">return</span> accuracy
+    response = stub.Predict(request, timeout=<span class="hl-number">10.0</span>)
+    predictions = tf.make_ndarray(response.outputs[<span class="hl-string">"predictions"</span>])
+    <span class="hl-keyword">return</span> predictions
+
+<span class="hl-comment"># Usage</span>
+image = np.random.rand(<span class="hl-number">1</span>, <span class="hl-number">224</span>, <span class="hl-number">224</span>, <span class="hl-number">3</span>).astype(np.float32)
+result = predict_grpc(image)
+<span class="hl-keyword">print</span>(f<span class="hl-string">"Top prediction: class {np.argmax(result)}"</span>)
 </pre>
       </div>
 
+      <h3 id="triton-inference">4. NVIDIA Triton Inference Server</h3>
 
-      <h3 id="infrastructure-code">6. Infrastructure as Code</h3>
-
-      <p>Infrastructure as Code is a critical concept in this domain. Understanding it deeply will differentiate you from practitioners who only know the API calls. Let us explore the theory, the implementation, and the practical considerations.</p>
-
-      <p>In practice, infrastructure as code requires careful attention to both theoretical foundations and engineering details. The code below demonstrates the core patterns you will use in production systems.</p>
+      <p>NVIDIA Triton is the most versatile inference server available. It supports TensorFlow, PyTorch, ONNX, TensorRT, and custom Python backends &mdash; all in a single server. Its killer feature is <strong>concurrent model execution</strong>: Triton can run multiple models on a single GPU simultaneously, and it supports dynamic batching, model ensembles, and model pipelines natively.</p>
 
       <div class="code-block">
-        <div class="code-header">
-          <span class="code-lang">python</span>
-          <button class="code-copy" onclick="copyCode(this)">Copy</button>
-        </div>
+        <div class="code-header"><span class="code-lang">python</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
 <pre>
-<span class="hl-keyword">import</span> numpy <span class="hl-keyword">as</span> np
-<span class="hl-keyword">import</span> torch
-<span class="hl-keyword">import</span> torch.nn <span class="hl-keyword">as</span> nn
+<span class="hl-comment"># triton_config.py — Generate Triton model repository config</span>
+<span class="hl-keyword">import</span> os
 
-<span class="hl-comment"># Infrastructure as Code — core implementation</span>
-<span class="hl-keyword">class</span> <span class="hl-function">InfrastructureCode</span>:
-    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, config=<span class="hl-keyword">None</span>):
-        self.config = config or {}
-        self.model = <span class="hl-keyword">None</span>
-        self.history = []
+<span class="hl-keyword">def</span> <span class="hl-function">create_triton_config</span>(
+    model_name: <span class="hl-function">str</span>,
+    platform: <span class="hl-function">str</span>,
+    input_dims: list,
+    output_dims: list,
+    max_batch_size: <span class="hl-function">int</span> = <span class="hl-number">32</span>,
+    instance_count: <span class="hl-function">int</span> = <span class="hl-number">1</span>,
+    repo_path: <span class="hl-function">str</span> = <span class="hl-string">"./model_repository"</span>,
+):
+    <span class="hl-string">"""Create Triton model repository structure and config."""</span>
+    model_dir = os.path.join(repo_path, model_name)
+    version_dir = os.path.join(model_dir, <span class="hl-string">"1"</span>)
+    os.makedirs(version_dir, exist_ok=<span class="hl-keyword">True</span>)
 
-    <span class="hl-keyword">def</span> <span class="hl-function">fit</span>(self, X, y):
-        <span class="hl-string">"""Train the model on input data."""</span>
-        <span class="hl-function">print</span>(<span class="hl-string">f"Training on {X.shape[0]} samples..."</span>)
-        <span class="hl-comment"># Implementation specific to Infrastructure as Code</span>
-        <span class="hl-keyword">return</span> self
+    config = f<span class="hl-string">"""name: "{model_name}"
+platform: "{platform}"
+max_batch_size: {max_batch_size}
 
-    <span class="hl-keyword">def</span> <span class="hl-function">predict</span>(self, X):
-        <span class="hl-string">"""Generate predictions."""</span>
-        <span class="hl-keyword">return</span> self.model(X)
+input [
+  {{
+    name: "input"
+    data_type: TYPE_FP32
+    dims: {input_dims}
+  }}
+]
+output [
+  {{
+    name: "output"
+    data_type: TYPE_FP32
+    dims: {output_dims}
+  }}
+]
+instance_group [
+  {{
+    count: {instance_count}
+    kind: KIND_GPU
+  }}
+]
+dynamic_batching {{
+  preferred_batch_size: [ 8, 16, 32 ]
+  max_queue_delay_microseconds: 100000
+}}"""</span>
 
-    <span class="hl-keyword">def</span> <span class="hl-function">evaluate</span>(self, X, y):
-        <span class="hl-string">"""Evaluate model performance."""</span>
-        preds = self.predict(X)
-        accuracy = (preds == y).mean()
-        <span class="hl-function">print</span>(<span class="hl-string">f"Accuracy: {accuracy:.4f}"</span>)
-        <span class="hl-keyword">return</span> accuracy
+    config_path = os.path.join(model_dir, <span class="hl-string">"config.pbtxt"</span>)
+    <span class="hl-keyword">with</span> <span class="hl-function">open</span>(config_path, <span class="hl-string">"w"</span>) <span class="hl-keyword">as</span> f:
+        f.write(config)
+    <span class="hl-keyword">print</span>(f<span class="hl-string">"Triton config: {config_path}"</span>)
+    <span class="hl-keyword">return</span> config_path
+
+create_triton_config(
+    model_name=<span class="hl-string">"resnet50"</span>,
+    platform=<span class="hl-string">"onnxruntime_onnx"</span>,
+    input_dims=[<span class="hl-number">3</span>, <span class="hl-number">224</span>, <span class="hl-number">224</span>],
+    output_dims=[<span class="hl-number">1000</span>],
+    max_batch_size=<span class="hl-number">64</span>,
+    instance_count=<span class="hl-number">2</span>,
+)
 </pre>
       </div>
+
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">python</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+<pre>
+<span class="hl-comment"># triton_client.py — Python client for Triton Inference Server</span>
+<span class="hl-keyword">import</span> numpy <span class="hl-keyword">as</span> np
+<span class="hl-keyword">import</span> tritonclient.http <span class="hl-keyword">as</span> httpclient
+<span class="hl-keyword">from</span> tritonclient.utils <span class="hl-keyword">import</span> InferenceServerException
+
+<span class="hl-keyword">class</span> <span class="hl-function">TritonModelClient</span>:
+    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, url: <span class="hl-function">str</span> = <span class="hl-string">"localhost:8000"</span>):
+        self.client = httpclient.InferenceServerClient(url=url)
+
+    <span class="hl-keyword">def</span> <span class="hl-function">check_health</span>(self) -> <span class="hl-function">bool</span>:
+        <span class="hl-string">"""Verify the server is live and ready."""</span>
+        <span class="hl-keyword">return</span> (
+            self.client.is_server_live()
+            <span class="hl-keyword">and</span> self.client.is_server_ready()
+        )
+
+    <span class="hl-keyword">def</span> <span class="hl-function">predict</span>(
+        self,
+        model_name: <span class="hl-function">str</span>,
+        input_data: np.ndarray,
+        input_name: <span class="hl-function">str</span> = <span class="hl-string">"input"</span>,
+        output_name: <span class="hl-function">str</span> = <span class="hl-string">"output"</span>,
+    ) -> np.ndarray:
+        <span class="hl-string">"""Send inference request to Triton."""</span>
+        inputs = [
+            httpclient.InferInput(input_name, input_data.shape, <span class="hl-string">"FP32"</span>)
+        ]
+        inputs[<span class="hl-number">0</span>].set_data_from_numpy(input_data)
+        outputs = [httpclient.InferRequestedOutput(output_name)]
+
+        <span class="hl-keyword">try</span>:
+            result = self.client.infer(
+                model_name=model_name,
+                inputs=inputs,
+                outputs=outputs,
+            )
+            <span class="hl-keyword">return</span> result.as_numpy(output_name)
+        <span class="hl-keyword">except</span> InferenceServerException <span class="hl-keyword">as</span> e:
+            <span class="hl-keyword">print</span>(f<span class="hl-string">"Inference failed: {e}"</span>)
+            <span class="hl-keyword">raise</span>
+
+    <span class="hl-keyword">def</span> <span class="hl-function">get_model_metadata</span>(self, model_name: <span class="hl-function">str</span>) -> <span class="hl-function">dict</span>:
+        <span class="hl-string">"""Get model metadata including input/output shapes."""</span>
+        metadata = self.client.get_model_metadata(model_name)
+        <span class="hl-keyword">return</span> {
+            <span class="hl-string">"name"</span>: metadata[<span class="hl-string">"name"</span>],
+            <span class="hl-string">"versions"</span>: metadata[<span class="hl-string">"versions"</span>],
+            <span class="hl-string">"inputs"</span>: metadata[<span class="hl-string">"inputs"</span>],
+            <span class="hl-string">"outputs"</span>: metadata[<span class="hl-string">"outputs"</span>],
+        }
+
+<span class="hl-comment"># Usage</span>
+client = TritonModelClient()
+<span class="hl-keyword">if</span> client.check_health():
+    image = np.random.rand(<span class="hl-number">1</span>, <span class="hl-number">3</span>, <span class="hl-number">224</span>, <span class="hl-number">224</span>).astype(np.float32)
+    preds = client.predict(<span class="hl-string">"resnet50"</span>, image)
+    <span class="hl-keyword">print</span>(f<span class="hl-string">"Top class: {np.argmax(preds)}"</span>)
+</pre>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg> Pro Tip</div>
+        <p>When choosing between TorchServe, TF Serving, and Triton: if your team uses a single framework, use its native server. If you have models across multiple frameworks, Triton is the clear winner &mdash; it can serve PyTorch, TensorFlow, ONNX, and TensorRT models from a single deployment.</p>
+      </div>
+
+      <h3 id="ab-testing">5. A/B Testing for Models</h3>
+
+      <p>A/B testing for ML models is fundamentally different from A/B testing for UI changes. Model A/B tests must account for prediction quality, latency impact, business metric movement, and the statistical challenges of measuring small improvements. The key principle: always test with a <strong>holdout group</strong> that receives the current production model.</p>
+
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">python</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+<pre>
+<span class="hl-comment"># ab_testing.py — A/B testing framework for model serving</span>
+<span class="hl-keyword">import</span> hashlib
+<span class="hl-keyword">import</span> time
+<span class="hl-keyword">from</span> dataclasses <span class="hl-keyword">import</span> dataclass, field
+<span class="hl-keyword">from</span> typing <span class="hl-keyword">import</span> Dict, Any
+<span class="hl-keyword">import</span> numpy <span class="hl-keyword">as</span> np
+<span class="hl-keyword">from</span> scipy <span class="hl-keyword">import</span> stats
+
+<span class="hl-flag">@dataclass</span>
+<span class="hl-keyword">class</span> <span class="hl-function">ModelVariant</span>:
+    name: <span class="hl-function">str</span>
+    model_version: <span class="hl-function">str</span>
+    traffic_weight: <span class="hl-function">float</span>  <span class="hl-comment"># 0.0 to 1.0</span>
+    predictions: list = field(default_factory=<span class="hl-function">list</span>)
+    latencies_ms: list = field(default_factory=<span class="hl-function">list</span>)
+    outcomes: list = field(default_factory=<span class="hl-function">list</span>)
+
+<span class="hl-keyword">class</span> <span class="hl-function">ABTestRouter</span>:
+    <span class="hl-string">"""Route requests to model variants based on user ID hash."""</span>
+
+    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, experiment_name: <span class="hl-function">str</span>):
+        self.experiment_name = experiment_name
+        self.variants: Dict[<span class="hl-function">str</span>, ModelVariant] = {}
+
+    <span class="hl-keyword">def</span> <span class="hl-function">add_variant</span>(self, variant: ModelVariant):
+        self.variants[variant.name] = variant
+
+    <span class="hl-keyword">def</span> <span class="hl-function">route</span>(self, user_id: <span class="hl-function">str</span>) -> ModelVariant:
+        <span class="hl-string">"""Deterministic routing based on user ID hash."""</span>
+        hash_val = hashlib.sha256(
+            f<span class="hl-string">"{self.experiment_name}:{user_id}"</span>.encode()
+        ).hexdigest()
+        bucket = <span class="hl-function">int</span>(hash_val[:8], <span class="hl-number">16</span>) / <span class="hl-number">0xFFFFFFFF</span>
+
+        cumulative = <span class="hl-number">0.0</span>
+        <span class="hl-keyword">for</span> variant <span class="hl-keyword">in</span> self.variants.values():
+            cumulative += variant.traffic_weight
+            <span class="hl-keyword">if</span> bucket &lt;= cumulative:
+                <span class="hl-keyword">return</span> variant
+        <span class="hl-keyword">return</span> <span class="hl-function">list</span>(self.variants.values())[<span class="hl-number">-1</span>]
+
+    <span class="hl-keyword">def</span> <span class="hl-function">record_outcome</span>(self, variant_name: <span class="hl-function">str</span>, outcome: <span class="hl-function">float</span>, latency_ms: <span class="hl-function">float</span>):
+        variant = self.variants[variant_name]
+        variant.outcomes.append(outcome)
+        variant.latencies_ms.append(latency_ms)
+
+    <span class="hl-keyword">def</span> <span class="hl-function">analyze</span>(self) -> Dict[<span class="hl-function">str</span>, Any]:
+        <span class="hl-string">"""Run statistical analysis on the experiment."""</span>
+        names = <span class="hl-function">list</span>(self.variants.keys())
+        control = self.variants[names[<span class="hl-number">0</span>]]
+        treatment = self.variants[names[<span class="hl-number">1</span>]]
+
+        t_stat, p_value = stats.ttest_ind(
+            control.outcomes, treatment.outcomes
+        )
+
+        <span class="hl-keyword">return</span> {
+            <span class="hl-string">"control_mean"</span>: np.mean(control.outcomes),
+            <span class="hl-string">"treatment_mean"</span>: np.mean(treatment.outcomes),
+            <span class="hl-string">"lift"</span>: (np.mean(treatment.outcomes) - np.mean(control.outcomes))
+                / np.mean(control.outcomes),
+            <span class="hl-string">"p_value"</span>: p_value,
+            <span class="hl-string">"significant"</span>: p_value &lt; <span class="hl-number">0.05</span>,
+            <span class="hl-string">"control_p99_latency"</span>: np.percentile(control.latencies_ms, <span class="hl-number">99</span>),
+            <span class="hl-string">"treatment_p99_latency"</span>: np.percentile(treatment.latencies_ms, <span class="hl-number">99</span>),
+        }
+
+<span class="hl-comment"># Setup experiment</span>
+router = ABTestRouter(<span class="hl-string">"recommender_v2_test"</span>)
+router.add_variant(ModelVariant(<span class="hl-string">"control"</span>, <span class="hl-string">"v1.0"</span>, <span class="hl-number">0.8</span>))
+router.add_variant(ModelVariant(<span class="hl-string">"treatment"</span>, <span class="hl-string">"v2.0"</span>, <span class="hl-number">0.2</span>))
+</pre>
+      </div>
+
+      <h3 id="canary-deployments">6. Canary Deployments and Rollback</h3>
+
+      <p>Canary deployments expose a new model version to a small fraction of traffic before full rollout. Unlike A/B tests (which run to statistical significance), canary deployments are safety mechanisms &mdash; they catch catastrophic failures like crashes, latency spikes, or wildly wrong predictions before they affect all users.</p>
+
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">python</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+<pre>
+<span class="hl-comment"># canary_deployer.py — Canary deployment with automatic rollback</span>
+<span class="hl-keyword">import</span> time
+<span class="hl-keyword">import</span> logging
+<span class="hl-keyword">from</span> dataclasses <span class="hl-keyword">import</span> dataclass
+<span class="hl-keyword">from</span> typing <span class="hl-keyword">import</span> Callable
+<span class="hl-keyword">import</span> numpy <span class="hl-keyword">as</span> np
+
+logger = logging.getLogger(__name__)
+
+<span class="hl-flag">@dataclass</span>
+<span class="hl-keyword">class</span> <span class="hl-function">CanaryConfig</span>:
+    model_name: <span class="hl-function">str</span>
+    new_version: <span class="hl-function">str</span>
+    old_version: <span class="hl-function">str</span>
+    initial_traffic_pct: <span class="hl-function">float</span> = <span class="hl-number">5.0</span>
+    increment_pct: <span class="hl-function">float</span> = <span class="hl-number">10.0</span>
+    max_traffic_pct: <span class="hl-function">float</span> = <span class="hl-number">100.0</span>
+    observation_window_s: <span class="hl-function">int</span> = <span class="hl-number">300</span>
+    error_rate_threshold: <span class="hl-function">float</span> = <span class="hl-number">0.01</span>
+    latency_p99_threshold_ms: <span class="hl-function">float</span> = <span class="hl-number">200.0</span>
+
+<span class="hl-keyword">class</span> <span class="hl-function">CanaryDeployer</span>:
+    <span class="hl-string">"""Progressive canary deployment with guardrails."""</span>
+
+    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, config: CanaryConfig, metrics_fn: Callable, set_traffic_fn: Callable):
+        self.config = config
+        self.get_metrics = metrics_fn
+        self.set_traffic = set_traffic_fn
+        self.current_pct = <span class="hl-number">0.0</span>
+        self.rolled_back = <span class="hl-keyword">False</span>
+
+    <span class="hl-keyword">def</span> <span class="hl-function">check_guardrails</span>(self) -> <span class="hl-function">bool</span>:
+        <span class="hl-string">"""Check if canary metrics are within thresholds."""</span>
+        metrics = self.get_metrics(self.config.model_name, self.config.new_version)
+        error_rate = metrics.get(<span class="hl-string">"error_rate"</span>, <span class="hl-number">0</span>)
+        p99_latency = metrics.get(<span class="hl-string">"p99_latency_ms"</span>, <span class="hl-number">0</span>)
+
+        <span class="hl-keyword">if</span> error_rate > self.config.error_rate_threshold:
+            logger.error(<span class="hl-string">"Error rate %.4f exceeds %.4f"</span>, error_rate, self.config.error_rate_threshold)
+            <span class="hl-keyword">return</span> <span class="hl-keyword">False</span>
+        <span class="hl-keyword">if</span> p99_latency > self.config.latency_p99_threshold_ms:
+            logger.error(<span class="hl-string">"P99 latency %.1fms exceeds %.1fms"</span>, p99_latency, self.config.latency_p99_threshold_ms)
+            <span class="hl-keyword">return</span> <span class="hl-keyword">False</span>
+        <span class="hl-keyword">return</span> <span class="hl-keyword">True</span>
+
+    <span class="hl-keyword">def</span> <span class="hl-function">rollback</span>(self):
+        <span class="hl-string">"""Immediately route all traffic to old version."""</span>
+        logger.warning(<span class="hl-string">"ROLLING BACK to %s"</span>, self.config.old_version)
+        self.set_traffic(self.config.new_version, <span class="hl-number">0.0</span>)
+        self.set_traffic(self.config.old_version, <span class="hl-number">100.0</span>)
+        self.rolled_back = <span class="hl-keyword">True</span>
+
+    <span class="hl-keyword">def</span> <span class="hl-function">deploy</span>(self):
+        <span class="hl-string">"""Execute the progressive canary deployment."""</span>
+        self.current_pct = self.config.initial_traffic_pct
+        logger.info(<span class="hl-string">"Starting canary: %s at %.1f%%"</span>, self.config.new_version, self.current_pct)
+
+        <span class="hl-keyword">while</span> self.current_pct &lt;= self.config.max_traffic_pct:
+            self.set_traffic(self.config.new_version, self.current_pct)
+            logger.info(<span class="hl-string">"Traffic at %.1f%%, observing %ds..."</span>, self.current_pct, self.config.observation_window_s)
+            time.sleep(self.config.observation_window_s)
+
+            <span class="hl-keyword">if</span> <span class="hl-keyword">not</span> self.check_guardrails():
+                self.rollback()
+                <span class="hl-keyword">return</span> <span class="hl-keyword">False</span>
+
+            self.current_pct += self.config.increment_pct
+
+        logger.info(<span class="hl-string">"Canary successful. Full rollout complete."</span>)
+        <span class="hl-keyword">return</span> <span class="hl-keyword">True</span>
+</pre>
+      </div>
+
+      <div class="callout danger">
+        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg> Common Mistake</div>
+        <p>Never canary on percentage of requests &mdash; always canary on percentage of <strong>users</strong>. If you split by requests, a single user might see predictions from two different model versions within the same session, creating an inconsistent experience and corrupting your metrics.</p>
+      </div>
+
+      <details>
+        <summary>Blue-green deployments for models</summary>
+        <div class="details-body">
+          <p>Blue-green deployment runs two complete environments (blue = current, green = new), tests the green environment thoroughly, then flips all traffic at once. This is useful when you cannot tolerate any period of mixed model versions. The tradeoff is that you lose the gradual rollout safety of canary deployments.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Shadow mode: testing without serving predictions</summary>
+        <div class="details-body">
+          <p>In shadow mode, the new model receives a copy of production traffic and generates predictions, but those predictions are never returned to the user. Instead, they are logged for offline comparison against the production model. This lets you evaluate real-world performance without any user impact. Shadow mode is expensive (double the compute) but invaluable for high-stakes models like fraud detection or medical diagnosis.</p>
+        </div>
+      </details>
 
       <hr class="section-divider">
+
       <h2 id="watch-learn">Watch &amp; Learn</h2>
-      <p>These videos cover core concepts. Watch before starting assignments.</p>
+
+      <p>These videos cover the core concepts in this chapter. Watch them before starting the assignments &mdash; they provide practical context for serving frameworks and deployment strategies.</p>
+
       <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/9BgIDqAzfuA?rel=0&amp;modestbranding=1" title="MLflow Tutorial &mdash; End-to-end ML lifecycle management" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-caption"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg> MLflow Tutorial &mdash; End-to-end ML lifecycle management</div>
-      </div>
-      <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/s8Jj-ZQFNWY?rel=0&amp;modestbranding=1" title="Google Cloud &mdash; MLOps: from model-centric to data-centric AI" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-caption"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg> Google Cloud &mdash; MLOps: from model-centric to data-centric AI</div>
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/VMj-3S1tku0?rel=0&amp;modestbranding=1" title="Model Serving and Deployment" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Model Serving Fundamentals &mdash; TorchServe, TF Serving, and Triton overview
+        </div>
       </div>
 
       <hr class="section-divider">
+
       <h2 id="further-reading">Further Reading</h2>
-      <p>Deep-dive into official documentation and reference material.</p>
-      <div class="resource-grid">
-        <a class="resource-card" href="https://mlflow.org/docs/latest/" target="_blank" rel="noopener">
-          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-          <div class="resource-info"><div class="resource-title">MLflow Documentation</div><div class="resource-desc">Complete MLOps platform documentation.</div></div>
-        </a>
-        <a class="resource-card" href="https://www.kubeflow.org/docs/" target="_blank" rel="noopener">
-          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-          <div class="resource-info"><div class="resource-title">Kubeflow Documentation</div><div class="resource-desc">ML toolkit for Kubernetes.</div></div>
-        </a>
-        <a class="resource-card" href="https://feast.dev/" target="_blank" rel="noopener">
-          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-          <div class="resource-info"><div class="resource-title">Feast: Feature Store</div><div class="resource-desc">Open-source feature store for ML.</div></div>
-        </a>
-        <a class="resource-card" href="https://dvc.org/doc" target="_blank" rel="noopener">
-          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-          <div class="resource-info"><div class="resource-title">DVC Documentation</div><div class="resource-desc">Data Version Control for ML projects.</div></div>
-        </a>
+      <p>Deep-dive into the official documentation and reference material for this chapter's tools.</p>
 
+      <div class="resource-grid">
+        <a class="resource-card" href="https://pytorch.org/serve/" target="_blank" rel="noopener">
+          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+          <div class="resource-info"><div class="resource-title">TorchServe Documentation</div><div class="resource-desc">Official PyTorch model serving framework. Handlers, model archiver, and configuration reference.</div></div>
+        </a>
+        <a class="resource-card" href="https://www.tensorflow.org/tfx/guide/serving" target="_blank" rel="noopener">
+          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+          <div class="resource-info"><div class="resource-title">TensorFlow Serving Guide</div><div class="resource-desc">SavedModel export, model versioning, gRPC/REST APIs, and batching configuration.</div></div>
+        </a>
+        <a class="resource-card" href="https://developer.nvidia.com/triton-inference-server" target="_blank" rel="noopener">
+          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+          <div class="resource-info"><div class="resource-title">NVIDIA Triton Inference Server</div><div class="resource-desc">Multi-framework serving, dynamic batching, model ensembles, and concurrent execution.</div></div>
+        </a>
+        <a class="resource-card" href="https://github.com/pytorch/serve" target="_blank" rel="noopener">
+          <div class="resource-icon github"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg></div>
+          <div class="resource-info"><div class="resource-title">TorchServe GitHub</div><div class="resource-desc">Source code, examples, and community contributions for TorchServe.</div></div>
+        </a>
+        <a class="resource-card" href="https://martinfowler.com/bliki/CanaryRelease.html" target="_blank" rel="noopener">
+          <div class="resource-icon article"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <div class="resource-info"><div class="resource-title">Canary Release (Martin Fowler)</div><div class="resource-desc">The canonical reference on canary deployment patterns and best practices.</div></div>
+        </a>
+        <a class="resource-card" href="https://mlops.community/" target="_blank" rel="noopener">
+          <div class="resource-icon article"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <div class="resource-info"><div class="resource-title">MLOps Community</div><div class="resource-desc">Community-driven resources on model deployment, monitoring, and production ML.</div></div>
+        </a>
       </div>
+
       <hr class="section-divider">
+
       <h2 id="assignments">Assignments</h2>
-      <p>Complete these in order. Each level builds on the previous one.</p>
+      <p>Complete these in order. Each level builds on the previous one. Submit your work as a GitHub PR with serving configurations, client code, and performance benchmarks.</p>
+
       <div class="assignment">
-        <div class="assignment-header"><div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 1</div><span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span></div>
-        <h4>Core Implementation: CI/CD for Machine Learning</h4>
-        <p>Build foundational understanding by implementing core concepts from scratch.</p>
-        <ul class="checklist">          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Implement the core concepts from CI/CD for Machine Learning</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a working example demonstrating Model Registries</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write comprehensive unit tests for your implementation</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Document your code with docstrings and comments</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Run benchmarks and record performance metrics</span></li></ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div><p>Your implementation passes all tests and you can explain every line of code.</p></div>
+        <div class="assignment-header">
+          <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 1</div>
+          <span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span>
+        </div>
+        <h4>Deploy a Model with TorchServe</h4>
+        <p>Package a pre-trained PyTorch model and serve it locally with TorchServe. Verify predictions work via REST API.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Train or download a PyTorch classifier (e.g., ResNet-18 on CIFAR-10)</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write a custom handler with <code>preprocess</code>, <code>inference</code>, and <code>postprocess</code></span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Package into a <code>.mar</code> archive using <code>torch-model-archiver</code></span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Start TorchServe and verify predictions via <code>curl</code></span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Configure batching (batch_size=8, max_batch_delay=200ms)</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Measure and document P50/P99 latency for single and batched requests</span></li>
+        </ul>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div>
+          <p>A colleague can POST to your TorchServe instance and receive a JSON prediction with class label and confidence in under 100ms.</p>
+        </div>
       </div>
+
       <div class="assignment">
-        <div class="assignment-header"><div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 2</div><span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span></div>
-        <h4>Applied Project: MLOps Fundamentals in Practice</h4>
-        <p>Apply the concepts to a real-world dataset and compare approaches systematically.</p>
-        <ul class="checklist">          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Build a complete pipeline integrating CI/CD for Machine Learning and Model Registries</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Apply Feature Stores on a real-world dataset</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Compare at least 3 different approaches and document tradeoffs</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create visualizations that tell a clear story about your results</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write a 200-word analysis of your findings</span></li></ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div><p>Your comparison clearly identifies the best approach with supporting evidence and visualizations.</p></div>
+        <div class="assignment-header">
+          <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 2</div>
+          <span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span>
+        </div>
+        <h4>Multi-Framework Serving with Triton</h4>
+        <p>Deploy models from two different frameworks on a single Triton server with dynamic batching.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Set up a Triton model repository with two models (one ONNX, one TF SavedModel)</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write <code>config.pbtxt</code> for each model with dynamic batching</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Launch Triton via Docker and verify both models are healthy</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write a Python client that queries both models and combines predictions</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Benchmark throughput under concurrent load using <code>perf_analyzer</code></span></li>
+        </ul>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div>
+          <p>Both models serve from one Triton instance, health endpoint confirms readiness, and dynamic batching gives 3x+ throughput improvement.</p>
+        </div>
       </div>
+
       <div class="assignment">
-        <div class="assignment-header"><div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 3</div><span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Production-Ready</span></div>
-        <h4>Production System: End-to-End MLOps Fundamentals</h4>
-        <p>Build a production-quality system that demonstrates mastery of all concepts in this chapter.</p>
-        <ul class="checklist">          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Design a production-ready system incorporating mlops fundamentals best practices</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Implement error handling, logging, and configuration management</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a comprehensive test suite with edge cases</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write documentation for future maintainers</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Deploy or package your solution for team use</span></li></ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div><p>Your system is documented, tested, and could be handed to a colleague for production use.</p></div>
+        <div class="assignment-header">
+          <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 3</div>
+          <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Production-Ready</span>
+        </div>
+        <h4>Canary Deployment Pipeline with Automatic Rollback</h4>
+        <p>Build a canary deployment system that progressively rolls out a new model version and automatically rolls back on quality degradation.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Implement deterministic user-based traffic routing (hash-based bucketing)</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Build a canary controller that increments traffic from 5% to 100%</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Implement guardrails checking error rate and P99 latency at each stage</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Add automatic rollback within 30 seconds when guardrails fail</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Test with a deliberately broken model to verify rollback works</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Document the deployment runbook</span></li>
+        </ul>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div>
+          <p>Deploy a bad model version, watch the canary detect the regression, and verify automatic rollback to stable &mdash; all within 60 seconds.</p>
+        </div>
       </div>
+
       <hr class="section-divider">
+
       <h2 id="self-check">Self-Check</h2>
-      <p>Before moving on, honestly answer these. If any answer is "no," go back and practice.</p>
+      <p>Before moving to Chapter 07, honestly answer these questions. If any answer is "no", go back and fix it.</p>
+
       <details>
-        <summary>Can you explain CI/CD for Machine Learning to a colleague without consulting notes?</summary>
-        <div class="details-body"><p>Try explaining the core concept, why it matters, and when to use it. If you need to look things up, spend more time with the material. True understanding means you can teach it.</p></div>
+        <summary>Can you explain the tradeoffs between TorchServe, TF Serving, and Triton?</summary>
+        <div class="details-body"><p>TorchServe is simplest for PyTorch-only teams. TF Serving has the lowest overhead for TensorFlow models. Triton supports all frameworks and has the best GPU utilization via concurrent model execution. Know when to use each.</p></div>
       </details>
       <details>
-        <summary>Can you implement Model Registries from memory?</summary>
-        <div class="details-body"><p>Open a blank notebook and try to implement the core algorithm without any reference. The act of writing code from memory reveals gaps in understanding that reading alone will not expose.</p></div>
+        <summary>Do you understand why dynamic batching matters for GPU inference?</summary>
+        <div class="details-body"><p>Without batching, each request uses only a fraction of GPU compute. Dynamic batching collects requests over a short window and processes them together, achieving near-linear throughput scaling. The tradeoff is slightly higher latency for individual requests.</p></div>
       </details>
       <details>
-        <summary>Do you understand when Feature Stores would fail?</summary>
-        <div class="details-body"><p>Knowing when a technique works is important, but knowing when it fails is more important. Every algorithm has assumptions and limitations. If you cannot list at least 3 failure modes, review the material.</p></div>
+        <summary>Can you design a canary deployment that detects a 2% accuracy regression?</summary>
+        <div class="details-body"><p>You need enough traffic to achieve statistical significance. For a 2% difference with 95% confidence, you need roughly 5,000 labeled outcomes per variant. If your labeling pipeline has a 24-hour delay, your canary observation window must be at least that long.</p></div>
       </details>
+
     </main>
+
     <aside class="sidebar">
       <div class="sidebar-title">On this page</div>
       <ul class="toc-list">
         <li class="toc-item"><a href="#why-this-matters">Why This Matters</a></li>
         <li class="toc-item"><a href="#key-concepts">Key Concepts</a></li>
-        <li class="toc-item"><a href="#cicd-ml" style="padding-left:28px;font-size:12px">CI/CD for Machine Learning</a></li>
-        <li class="toc-item"><a href="#model-registry" style="padding-left:28px;font-size:12px">Model Registries</a></li>
-        <li class="toc-item"><a href="#feature-stores" style="padding-left:28px;font-size:12px">Feature Stores</a></li>
-        <li class="toc-item"><a href="#experiment-tracking" style="padding-left:28px;font-size:12px">Experiment Tracking at Scale</a></li>
-        <li class="toc-item"><a href="#pipeline-orchestration" style="padding-left:28px;font-size:12px">Pipeline Orchestration</a></li>
-        <li class="toc-item"><a href="#infrastructure-code" style="padding-left:28px;font-size:12px">Infrastructure as Code</a></li>
+        <li class="toc-item"><a href="#serving-architectures" style="padding-left: 28px; font-size: 12px;">Model Serving Architectures</a></li>
+        <li class="toc-item"><a href="#torchserve-setup" style="padding-left: 28px; font-size: 12px;">TorchServe Setup</a></li>
+        <li class="toc-item"><a href="#tensorflow-serving" style="padding-left: 28px; font-size: 12px;">TensorFlow Serving</a></li>
+        <li class="toc-item"><a href="#triton-inference" style="padding-left: 28px; font-size: 12px;">NVIDIA Triton</a></li>
+        <li class="toc-item"><a href="#ab-testing" style="padding-left: 28px; font-size: 12px;">A/B Testing</a></li>
+        <li class="toc-item"><a href="#canary-deployments" style="padding-left: 28px; font-size: 12px;">Canary Deployments</a></li>
         <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a></li>
         <li class="toc-item"><a href="#further-reading">Further Reading</a></li>
         <li class="toc-item"><a href="#assignments">Assignments</a></li>
@@ -409,18 +944,38 @@
       </ul>
     </aside>
   </div>
+
   <footer class="chapter-footer">
     <div class="chapter-footer-inner">
-      <nav class="footer-nav"><a class="footer-nav-link" href="chapter-05.html"><span class="footer-nav-label">&larr; Previous Chapter</span><span class="footer-nav-title">05: Large Language Models</span></a><a class="footer-nav-link" href="chapter-07.html"><span class="footer-nav-label">Next Chapter &rarr;</span><span class="footer-nav-title">07: Scalable Training Infrastructure</span></a></nav>
-      <div class="footer-brand">ILA (Iksha Learning Academy) &middot; AI &amp; Machine Learning Certification &middot; Advanced Track</div>
+      <nav class="footer-nav">
+        <a class="footer-nav-link" href="chapter-05.html">
+          <span class="footer-nav-label">&larr; Previous Chapter</span>
+          <span class="footer-nav-title">05: ML Pipeline Orchestration</span>
+        </a>
+        <a class="footer-nav-link" href="chapter-07.html">
+          <span class="footer-nav-label">Next Chapter &rarr;</span>
+          <span class="footer-nav-title">07: Monitoring and Observability</span>
+        </a>
+      </nav>
+      <div class="footer-brand">
+        ILA (Iksha Learning Academy) &middot; AI &amp; ML Engineering Certification &middot; Level 2
+      </div>
     </div>
   </footer>
+
   <script>
-    window.addEventListener('scroll',()=>{const s=window.scrollY;const d=document.documentElement.scrollHeight-window.innerHeight;document.getElementById('progressBar').style.width=(d>0?(s/d)*100:0)+'%'});
-    const tocLinks=document.querySelectorAll('.toc-item a');const sections=[];tocLinks.forEach(l=>{const id=l.getAttribute('href').slice(1);const el=document.getElementById(id);if(el)sections.push({id,el,link:l})});
-    const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{const item=sections.find(s=>s.el===entry.target);if(item&&entry.isIntersecting){tocLinks.forEach(l=>l.classList.remove('active'));item.link.classList.add('active')}})},{rootMargin:'-80px 0px -60% 0px',threshold:0});
-    sections.forEach(s=>observer.observe(s.el));
-    function copyCode(btn){const pre=btn.closest('.code-block').querySelector('pre');navigator.clipboard.writeText(pre.textContent).then(()=>{btn.classList.add('copied');btn.textContent='Copied!';setTimeout(()=>{btn.classList.remove('copied');btn.textContent='Copy'},2000)})}
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      document.getElementById('progressBar').style.width = progress + '%';
+    });
+    const tocLinks = document.querySelectorAll('.toc-item a');
+    const sections = [];
+    tocLinks.forEach(link => { const id = link.getAttribute('href').slice(1); const el = document.getElementById(id); if (el) sections.push({ id, el, link }); });
+    const observer = new IntersectionObserver(entries => { entries.forEach(entry => { const item = sections.find(s => s.el === entry.target); if (item && entry.isIntersecting) { tocLinks.forEach(l => l.classList.remove('active')); item.link.classList.add('active'); } }); }, { rootMargin: '-80px 0px -60% 0px', threshold: 0 });
+    sections.forEach(s => observer.observe(s.el));
+    function copyCode(btn) { const pre = btn.closest('.code-block').querySelector('pre'); navigator.clipboard.writeText(pre.textContent).then(() => { btn.classList.add('copied'); btn.textContent = 'Copied!'; setTimeout(() => { btn.classList.remove('copied'); btn.textContent = 'Copy'; }, 2000); }); }
   </script>
 </body>
 </html>

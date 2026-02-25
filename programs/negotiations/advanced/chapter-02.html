@@ -42,403 +42,147 @@
       --purple-100: #f3e8ff;
       --purple-500: #a855f7;
       --purple-600: #9333ea;
-      --green-50:  #f0fdf4;
-      --green-100: #dcfce7;
-      --green-500: #22c55e;
-      --green-600: #16a34a;
       --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       --font-serif: 'Instrument Serif', Georgia, serif;
       --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
       --content-max: 780px;
+      --sidebar-width: 280px;
       --ease: cubic-bezier(0.4, 0, 0.2, 1);
     }
-
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
-
-    body {
-      font-family: var(--font-sans);
-      font-size: 16px;
-      line-height: 1.7;
-      color: var(--ink);
-      background: var(--surface);
-    }
-
-    .progress-bar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 0%;
-      height: 3px;
-      background: linear-gradient(90deg, var(--teal-500), var(--blue-500));
-      z-index: 1000;
-      transition: width 0.15s var(--ease);
-    }
-
-    .top-nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-      padding: 0 2rem;
-    }
-
-    .top-nav-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 56px;
-    }
-
-    .nav-brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-      color: var(--teal-800);
-    }
-
-    .nav-brand-icon {
-      width: 32px;
-      height: 32px;
-      background: linear-gradient(135deg, var(--teal-600), var(--teal-800));
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-weight: 800;
-      font-size: 14px;
-    }
-
-    .nav-brand-text {
-      font-weight: 700;
-      font-size: 15px;
-      letter-spacing: -0.02em;
-    }
-
-    .nav-chapter-nav {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .nav-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 14px;
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: 500;
-      text-decoration: none;
-      color: var(--ink-muted);
-      border: 1px solid var(--border);
-      background: white;
-      transition: all 0.2s var(--ease);
-      cursor: pointer;
-    }
-
-    .nav-btn:hover {
-      color: var(--ink);
-      border-color: var(--teal-500);
-      background: var(--teal-50);
-    }
-
-    .nav-btn.disabled {
-      opacity: 0.4;
-      pointer-events: none;
-    }
-
-    .nav-current {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--ink-light);
-      padding: 0 4px;
-    }
-
-    .hero {
-      background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%);
-      border-bottom: 1px solid var(--border);
-      padding: 4rem 2rem 3.5rem;
-    }
-
-    .hero-inner {
-      max-width: var(--content-max);
-      margin: 0 auto;
-    }
-
-    .hero-chapter-label {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--teal-700);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 1rem;
-    }
-
-    .hero-chapter-label span {
-      background: var(--teal-100);
-      padding: 3px 10px;
-      border-radius: 100px;
-    }
-
-    .hero h1 {
-      font-family: var(--font-serif);
-      font-size: clamp(2.4rem, 5vw, 3.2rem);
-      font-weight: 400;
-      line-height: 1.15;
-      color: var(--ink);
-      margin-bottom: 1rem;
-    }
-
-    .hero-subtitle {
-      font-size: 1.15rem;
-      color: var(--ink-light);
-      line-height: 1.65;
-      max-width: 640px;
-    }
-
-    .hero-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-top: 1.5rem;
-    }
-
-    .hero-meta-item {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 13px;
-      color: var(--ink-muted);
-    }
-
-    .content {
-      max-width: var(--content-max);
-      margin: 0 auto;
-      padding: 3rem 2rem 6rem;
-    }
-
-    .content h2 {
-      font-family: var(--font-serif);
-      font-size: 1.85rem;
-      font-weight: 400;
-      color: var(--ink);
-      margin: 3rem 0 1rem;
-      scroll-margin-top: 80px;
-    }
-
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    body { font-family: var(--font-sans); font-size: 16px; line-height: 1.7; color: var(--ink); background: var(--surface); }
+    .progress-bar { position: fixed; top: 0; left: 0; width: 0%; height: 3px; background: linear-gradient(90deg, var(--teal-500), var(--blue-500)); z-index: 1000; transition: width 0.15s var(--ease); }
+    .top-nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 2rem; }
+    .top-nav-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 56px; }
+    .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--teal-800); }
+    .nav-brand-icon { width: 32px; height: 32px; background: linear-gradient(135deg, var(--teal-600), var(--teal-800)); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 14px; }
+    .nav-brand-text { font-weight: 700; font-size: 15px; letter-spacing: -0.02em; }
+    .nav-chapter-nav { display: flex; align-items: center; gap: 8px; }
+    .nav-btn { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 8px; font-size: 13px; font-weight: 500; text-decoration: none; color: var(--ink-muted); border: 1px solid var(--border); background: white; transition: all 0.2s var(--ease); cursor: pointer; }
+    .nav-btn:hover { color: var(--ink); border-color: var(--teal-500); background: var(--teal-50); }
+    .nav-btn.disabled { opacity: 0.4; pointer-events: none; }
+    .nav-current { font-size: 13px; font-weight: 600; color: var(--ink-light); padding: 0 4px; }
+    .hero { background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%); border-bottom: 1px solid var(--border); padding: 4rem 2rem 3.5rem; }
+    .hero-inner { max-width: var(--content-max); margin: 0 auto; }
+    .hero-chapter-label { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--teal-700); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1rem; }
+    .hero-chapter-label span { background: var(--teal-100); padding: 3px 10px; border-radius: 100px; }
+    .hero h1 { font-family: var(--font-serif); font-size: clamp(2.4rem, 5vw, 3.2rem); font-weight: 400; line-height: 1.15; color: var(--ink); margin-bottom: 1rem; }
+    .hero-subtitle { font-size: 1.15rem; color: var(--ink-light); line-height: 1.65; max-width: 640px; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.5rem; }
+    .hero-meta-item { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--ink-muted); }
+    .hero-meta-item svg { width: 16px; height: 16px; color: var(--teal-600); }
+    .main-layout { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: grid; grid-template-columns: 1fr var(--sidebar-width); gap: 4rem; align-items: start; }
+    .content { padding: 3rem 0 6rem; min-width: 0; }
+    .sidebar { position: sticky; top: 76px; padding: 2rem 0; max-height: calc(100vh - 76px); overflow-y: auto; }
+    .sidebar-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-muted); margin-bottom: 1rem; padding-left: 14px; }
+    .toc-list { list-style: none; }
+    .toc-item a { display: block; padding: 6px 14px; font-size: 13px; color: var(--ink-muted); text-decoration: none; border-left: 2px solid transparent; transition: all 0.2s var(--ease); line-height: 1.5; }
+    .toc-item a:hover { color: var(--ink); background: var(--surface-alt); }
+    .toc-item a.active { color: var(--teal-700); border-left-color: var(--teal-500); background: var(--teal-50); font-weight: 500; }
+    .content h2 { font-family: var(--font-serif); font-size: 1.85rem; font-weight: 400; color: var(--ink); margin: 3rem 0 1rem; padding-top: 1rem; scroll-margin-top: 80px; }
     .content h2:first-child { margin-top: 0; }
-
-    .content h3 {
-      font-size: 1.15rem;
-      font-weight: 600;
-      color: var(--ink);
-      margin: 2rem 0 0.75rem;
-    }
-
-    .content p {
-      margin-bottom: 1.25rem;
-      color: var(--ink-light);
-    }
-
-    .content ul, .content ol {
-      margin-bottom: 1.25rem;
-      padding-left: 1.5rem;
-    }
-
-    .content li {
-      margin-bottom: 0.5rem;
-      color: var(--ink-light);
-    }
-
+    .content h3 { font-size: 1.15rem; font-weight: 600; color: var(--ink); margin: 2rem 0 0.75rem; scroll-margin-top: 80px; }
+    .content p { margin-bottom: 1.25rem; color: var(--ink-light); }
+    .content strong { color: var(--ink); font-weight: 600; }
+    .content a { color: var(--teal-700); text-decoration: underline; text-decoration-color: var(--teal-200); text-underline-offset: 3px; transition: text-decoration-color 0.2s; }
+    .content a:hover { text-decoration-color: var(--teal-600); }
+    .content ul, .content ol { margin-bottom: 1.25rem; padding-left: 1.5rem; }
+    .content li { margin-bottom: 0.5rem; color: var(--ink-light); }
     .content li::marker { color: var(--teal-500); }
-
-    .callout {
-      padding: 1.25rem 1.5rem;
-      border-radius: 12px;
-      margin-bottom: 1.5rem;
-      border: 1px solid;
-    }
-
-    .callout-header {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-    }
-
+    .section-divider { border: none; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 3rem 0; }
+    .callout { padding: 1.25rem 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; border: 1px solid; position: relative; }
+    .callout-header { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; margin-bottom: 0.5rem; }
+    .callout-header svg { width: 18px; height: 18px; flex-shrink: 0; }
     .callout p:last-child { margin-bottom: 0; }
-
-    .callout.concept {
-      background: var(--blue-50);
-      border-color: var(--blue-100);
-    }
+    .callout.concept { background: var(--blue-50); border-color: var(--blue-100); }
     .callout.concept .callout-header { color: var(--blue-700); }
-
-    .callout.important {
-      background: var(--amber-50);
-      border-color: var(--amber-100);
-    }
+    .callout.important { background: var(--amber-50); border-color: var(--amber-100); }
     .callout.important .callout-header { color: var(--amber-600); }
-
-    .callout.tip {
-      background: var(--purple-50);
-      border-color: var(--purple-100);
-    }
+    .callout.danger { background: var(--red-50); border-color: var(--red-100); }
+    .callout.danger .callout-header { color: var(--red-600); }
+    .callout.tip { background: var(--purple-50); border-color: var(--purple-100); }
     .callout.tip .callout-header { color: var(--purple-600); }
-
-    .callout.success {
-      background: var(--teal-50);
-      border-color: var(--teal-100);
-    }
+    .callout.success { background: var(--teal-50); border-color: var(--teal-100); }
     .callout.success .callout-header { color: var(--teal-700); }
-
-    .section-divider {
-      border: none;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--border), transparent);
-      margin: 3rem 0;
-    }
-
-    .coming-soon-banner {
-      background: var(--amber-50);
-      border: 1px solid var(--amber-100);
-      border-radius: 12px;
-      padding: 2.5rem;
-      text-align: center;
-      margin: 2rem 0;
-    }
-
-    .coming-soon-banner h3 {
-      color: var(--amber-600);
-      margin-bottom: 0.5rem;
-    }
-
-    .coming-soon-banner p {
-      color: var(--ink-muted);
-      margin-bottom: 0;
-    }
-
-    .topics-preview {
-      background: var(--surface-alt);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.5rem 2rem;
-      margin: 1.5rem 0;
-    }
-
-    .topics-preview h3 {
-      font-size: 0.95rem;
-      margin-bottom: 0.75rem;
-      color: var(--ink);
-    }
-
-    .topics-preview ul {
-      list-style: none;
-      padding: 0;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 0.5rem;
-    }
-
-    .topics-preview li {
-      font-size: 14px;
-      color: var(--ink-light);
-      padding-left: 1.25rem;
-      position: relative;
-    }
-
-    .topics-preview li::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 8px;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--teal-500);
-    }
-
-    .footer-nav {
-      max-width: var(--content-max);
-      margin: 0 auto;
-      padding: 2rem;
-      display: flex;
-      justify-content: space-between;
-      border-top: 1px solid var(--border);
-    }
-
-    .footer-nav-link {
-      display: flex;
-      flex-direction: column;
-      text-decoration: none;
-      padding: 1rem;
-      border-radius: 12px;
-      transition: background 0.2s var(--ease);
-      max-width: 45%;
-    }
-
-    .footer-nav-link:hover {
-      background: var(--surface-alt);
-    }
-
-    .footer-nav-label {
-      font-size: 12px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--ink-muted);
-      margin-bottom: 4px;
-    }
-
-    .footer-nav-title {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--teal-700);
-    }
-
-    .footer-nav-link.next { text-align: right; margin-left: auto; }
-
-    .footer {
-      text-align: center;
-      padding: 2rem;
-      font-size: 13px;
-      color: var(--ink-muted);
-      border-top: 1px solid var(--border);
-    }
-
-    .footer a {
-      color: var(--teal-700);
-      text-decoration: none;
-    }
-
-    .footer a:hover { text-decoration: underline; }
-
-    @media (max-width: 768px) {
-      .hero { padding: 3rem 1.5rem 2.5rem; }
-      .content { padding: 2rem 1.5rem 4rem; }
-      .hero h1 { font-size: 2rem; }
-      .footer-nav { flex-direction: column; gap: 1rem; }
-      .footer-nav-link { max-width: 100%; }
-      .footer-nav-link.next { text-align: left; }
-    }
+    .code-block { position: relative; margin-bottom: 1.5rem; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+    .code-header { display: flex; align-items: center; justify-content: space-between; padding: 8px 16px; background: var(--surface-alt); border-bottom: 1px solid var(--border); font-size: 12px; color: var(--ink-muted); }
+    .code-lang { font-family: var(--font-mono); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+    .code-copy { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border); background: white; font-size: 11px; font-family: var(--font-sans); color: var(--ink-muted); cursor: pointer; transition: all 0.2s var(--ease); }
+    .code-copy:hover { border-color: var(--teal-500); color: var(--teal-700); }
+    .code-copy.copied { background: var(--teal-50); border-color: var(--teal-500); color: var(--teal-700); }
+    pre { margin: 0; padding: 1.25rem 1.5rem; overflow-x: auto; background: #1e293b; font-family: var(--font-mono); font-size: 13.5px; line-height: 1.7; color: #e2e8f0; }
+    code { font-family: var(--font-mono); font-size: 0.88em; }
+    p code, li code { padding: 2px 7px; background: var(--surface-alt); border: 1px solid var(--border); border-radius: 5px; color: var(--teal-800); font-size: 0.85em; }
+    .hl-keyword  { color: #c084fc; }
+    .hl-string   { color: #86efac; }
+    .hl-comment  { color: #64748b; font-style: italic; }
+    .hl-function { color: #7dd3fc; }
+    .hl-number   { color: #fbbf24; }
+    .hl-flag     { color: #f472b6; }
+    details { margin-bottom: 1.25rem; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; transition: border-color 0.2s var(--ease); }
+    details[open] { border-color: var(--teal-200); }
+    details summary { padding: 1rem 1.25rem; font-weight: 600; font-size: 15px; cursor: pointer; background: var(--surface-alt); list-style: none; display: flex; align-items: center; gap: 10px; transition: background 0.2s var(--ease); user-select: none; }
+    details summary::-webkit-details-marker { display: none; }
+    details summary::before { content: ''; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E"); background-size: contain; flex-shrink: 0; transition: transform 0.2s var(--ease); }
+    details[open] summary::before { transform: rotate(90deg); }
+    details summary:hover { background: var(--teal-50); }
+    .details-body { padding: 1.25rem 1.5rem; }
+    .details-body p:last-child { margin-bottom: 0; }
+    .video-card { margin-bottom: 1.5rem; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+    .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; background: #0f172a; }
+    .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+    .video-caption { padding: 12px 16px; background: var(--surface-alt); font-size: 13px; color: var(--ink-muted); display: flex; align-items: center; gap: 6px; }
+    .video-caption svg { width: 14px; height: 14px; color: var(--red-500); }
+    .resource-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+    .resource-card { display: flex; gap: 14px; padding: 1rem 1.25rem; border: 1px solid var(--border); border-radius: 12px; text-decoration: none; transition: all 0.2s var(--ease); background: white; }
+    .resource-card:hover { border-color: var(--teal-300); background: var(--teal-50); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+    .resource-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 18px; }
+    .resource-icon.docs { background: var(--blue-50); color: var(--blue-600); }
+    .resource-icon.video { background: var(--red-50); color: var(--red-500); }
+    .resource-icon.github { background: var(--ink); color: white; }
+    .resource-icon.article { background: var(--amber-50); color: var(--amber-600); }
+    .resource-icon.pdf { background: var(--purple-50); color: var(--purple-600); }
+    .resource-info { min-width: 0; }
+    .resource-title { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 2px; line-height: 1.4; }
+    .resource-desc { font-size: 12px; color: var(--ink-muted); line-height: 1.5; }
+    .assignment { border: 2px solid var(--teal-200); border-radius: 14px; padding: 1.5rem 1.75rem; margin-bottom: 1.5rem; background: linear-gradient(135deg, var(--teal-50) 0%, white 100%); }
+    .assignment-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+    .assignment-label { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--teal-700); }
+    .assignment-difficulty { display: inline-flex; padding: 4px 10px; border-radius: 100px; font-size: 11px; font-weight: 600; }
+    .difficulty-l1 { background: var(--teal-100); color: var(--teal-800); }
+    .difficulty-l2 { background: var(--amber-100); color: var(--amber-600); }
+    .difficulty-l3 { background: var(--red-100); color: var(--red-600); }
+    .assignment h4 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.75rem; }
+    .assignment p { font-size: 14px; }
+    .checklist { list-style: none; padding: 0; }
+    .checklist li { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border-light); font-size: 14px; }
+    .checklist li:last-child { border-bottom: none; }
+    .check-box { width: 20px; height: 20px; border-radius: 6px; border: 2px solid var(--border); flex-shrink: 0; margin-top: 1px; cursor: pointer; transition: all 0.15s var(--ease); display: flex; align-items: center; justify-content: center; }
+    .check-box:hover { border-color: var(--teal-500); }
+    .check-box.checked { background: var(--teal-500); border-color: var(--teal-500); }
+    .check-box.checked::after { content: ''; width: 10px; height: 10px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E"); background-size: contain; }
+    .diagram { margin: 1.5rem 0; padding: 2rem; background: var(--surface-alt); border: 1px solid var(--border); border-radius: 14px; overflow-x: auto; }
+    .diagram pre { background: transparent; color: var(--ink); padding: 0; font-size: 13px; line-height: 1.6; }
+    .diagram-caption { margin-top: 1rem; font-size: 12px; color: var(--ink-muted); text-align: center; font-style: italic; }
+    .chapter-footer { border-top: 1px solid var(--border); padding: 3rem 2rem; background: var(--surface-alt); }
+    .chapter-footer-inner { max-width: var(--content-max); margin: 0 auto; }
+    .footer-nav { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+    .footer-nav-link { display: flex; flex-direction: column; gap: 4px; padding: 1rem 1.5rem; border: 1px solid var(--border); border-radius: 12px; text-decoration: none; transition: all 0.2s var(--ease); max-width: 320px; background: white; }
+    .footer-nav-link:hover { border-color: var(--teal-300); box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+    .footer-nav-label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--teal-600); }
+    .footer-nav-title { font-size: 15px; font-weight: 600; color: var(--ink); }
+    .footer-brand { text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); font-size: 13px; color: var(--ink-muted); }
+    @media (max-width: 960px) { .main-layout { grid-template-columns: 1fr; } .sidebar { display: none; } .resource-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 640px) { .hero { padding: 2.5rem 1.25rem 2rem; } .main-layout { padding: 0 1.25rem; } .content { padding: 2rem 0 4rem; } pre { padding: 1rem; font-size: 12.5px; } .footer-nav { flex-direction: column; } .footer-nav-link { max-width: 100%; width: 100%; } }
+    @media print { .top-nav, .sidebar, .progress-bar { display: none; } .main-layout { display: block; } .content { padding: 0; } .hero { background: white; border: none; } pre { background: #f1f5f9; color: var(--ink); border: 1px solid var(--border); } }
   </style>
 </head>
 <body>
+  <!-- Progress Bar -->
   <div class="progress-bar" id="progressBar"></div>
 
+  <!-- Top Navigation -->
   <nav class="top-nav">
     <div class="top-nav-inner">
       <a class="nav-brand" href="index.html">
@@ -453,70 +197,784 @@
     </div>
   </nav>
 
+  <!-- Hero -->
   <header class="hero">
     <div class="hero-inner">
       <div class="hero-chapter-label">
-        <span>Chapter 02</span> 
+        <span>Chapter 02</span> &middot; Advanced Negotiation Strategies
       </div>
       <h1>Game Theory for Negotiators</h1>
-      <p class="hero-subtitle">Nash equilibrium, prisoner's dilemma, sequential games, signaling, commitment devices</p>
+      <p class="hero-subtitle">
+        Game theory provides the mathematical foundation for understanding strategic interaction. Learn to recognize Prisoner's Dilemmas, coordinate on Nash Equilibria, and apply mechanism design thinking to structure deals that incentivize cooperation over defection.
+      </p>
       <div class="hero-meta">
-        <div class="hero-meta-item">3 Assignments</div>
-        <div class="hero-meta-item">~45 min read</div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Estimated: 60&ndash;90 min
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          6 Key Concepts
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          3 Assignments
+        </div>
       </div>
     </div>
   </header>
 
-  <main class="content">
-    <h2>Overview</h2>
-    <p>This chapter covers <strong>game theory for negotiators</strong> as part of the Advanced Negotiations curriculum. You will build practical skills through guided explanations, code examples, and hands-on assignments.</p>
+  <!-- Main Content + Sidebar -->
+  <div class="main-layout">
+    <main class="content">
 
-    <div class="topics-preview">
-      <h3>Topics Covered</h3>
-      <ul>
-            <li>Nash equilibrium</li>
-            <li>prisoner's dilemma</li>
-            <li>sequential games</li>
-            <li>signaling</li>
-            <li>commitment devices</li>
+      <!-- ════════════════════════════════════════
+           SECTION 1: WHY THIS MATTERS
+           ════════════════════════════════════════ -->
+      <h2 id="why-this-matters">Why This Matters</h2>
+
+      <p>
+        Every negotiation is a game &mdash; a strategic interaction where your outcome depends not just on your own choices, but on the choices of others. Game theory gives you a rigorous framework for predicting what the other side will do, understanding why certain negotiations produce suboptimal outcomes for everyone, and designing deal structures that make cooperation the rational choice.
+      </p>
+
+      <p>
+        In the startup world, game theory is not an abstract academic exercise. It explains why co-founders sometimes sabotage each other despite shared goals (the Prisoner's Dilemma), why VCs demand control provisions even when trust exists (credible commitment problems), why auction-style fundraising processes extract better terms for founders (competitive dynamics), and why some partnership agreements hold while others collapse within months (repeated game incentives).
+      </p>
+
+      <p>
+        You do not need a PhD in mathematics to apply game theory. You need to recognize the common game structures that appear in negotiations, understand the equilibrium outcomes they produce, and know how to <strong>change the game</strong> when the default structure leads to a bad result. This chapter gives you that toolkit.
+      </p>
+
+      <div class="callout concept">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Key Insight
+        </div>
+        <p>
+          The most powerful application of game theory in negotiation is not predicting outcomes &mdash; it is <strong>redesigning the game itself</strong>. When you recognize that a negotiation has a Prisoner's Dilemma structure, you do not just play the game better. You change the payoffs, add repetition, introduce enforcement mechanisms, or restructure the interaction so that cooperation becomes the dominant strategy.
+        </p>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 2: KEY CONCEPTS
+           ════════════════════════════════════════ -->
+      <h2 id="key-concepts">Key Concepts</h2>
+
+      <h3 id="prisoners-dilemma">1. The Prisoner's Dilemma in Startup Negotiations</h3>
+
+      <p>
+        The <strong>Prisoner's Dilemma</strong> is the most famous game in all of game theory, and it appears in startup negotiations with alarming frequency. It describes any situation where two parties would both benefit from cooperation, but each has a private incentive to defect &mdash; and mutual defection produces the worst outcome for everyone.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Payoff Matrix</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── The Prisoner's Dilemma: Co-Founder Information Sharing ── */</span>
+
+<span class="hl-keyword">SCENARIO:</span>
+  Two co-founders are negotiating with a potential acquirer.
+  Each can either share information honestly (Cooperate)
+  or withhold/spin information to look better (Defect).
+
+<span class="hl-keyword">PAYOFF MATRIX</span> (value to each co-founder)
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+                      Co-Founder B
+                   Cooperate    Defect
+              ┌────────────┬────────────┐
+  Co-       C │            │            │
+  Founder   o │  A: +8     │  A: +0     │
+  A         o │  B: +8     │  B: +10    │
+            p │ (Both win) │ (B wins,   │
+              │            │  A loses)  │
+              ├────────────┼────────────┤
+            D │            │            │
+            e │  A: +10    │  A: +2     │
+            f │  B: +0     │  B: +2     │
+            e │ (A wins,   │ (Both      │
+            c │  B loses)  │  lose)     │
+            t │            │            │
+              └────────────┴────────────┘
+
+<span class="hl-keyword">ANALYSIS:</span>
+  <span class="hl-function">Best joint outcome:</span>    Both Cooperate (+8, +8) = 16 total
+  <span class="hl-function">Nash Equilibrium:</span>      Both Defect (+2, +2)    = 4 total
+  <span class="hl-function">Individual incentive:</span>  Defect (regardless of what partner does)
+
+<span class="hl-comment">/* The tragedy: rational individual behavior produces */</span>
+<span class="hl-comment">/* the worst collective outcome. This is why trust   */</span>
+<span class="hl-comment">/* and enforcement mechanisms matter so much.         */</span>
+</pre>
+      </div>
+
+      <p>
+        The Prisoner's Dilemma appears in startup contexts constantly: co-founders withholding effort while expecting the other to carry the load, vendors and clients both inflating claims during contract negotiations, competitors in a market both engaging in unsustainable pricing wars that destroy margins for everyone. Recognizing this structure is the first step to escaping it.
+      </p>
+
+      <div class="callout important">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Escaping the Dilemma
+        </div>
+        <p>
+          There are four primary mechanisms for escaping the Prisoner's Dilemma: (1) <strong>Repetition</strong> &mdash; if you will interact again, defection today invites retaliation tomorrow; (2) <strong>Reputation</strong> &mdash; in tight-knit startup ecosystems, word travels fast; (3) <strong>Contracts</strong> &mdash; enforceable agreements with penalties for defection; (4) <strong>Transparency</strong> &mdash; making each party's actions visible to the other. The best negotiators deploy multiple mechanisms simultaneously.
+        </p>
+      </div>
+
+      <h3 id="nash-equilibrium">2. Nash Equilibrium: Predicting Stable Outcomes</h3>
+
+      <p>
+        A <strong>Nash Equilibrium</strong> is a situation where no party can improve their outcome by unilaterally changing their strategy, given what the other parties are doing. It is the predicted "resting point" of a strategic interaction &mdash; the outcome that will persist because no one has an incentive to deviate.
+      </p>
+
+      <p>
+        Understanding Nash Equilibria helps you predict where negotiations will end up and, more importantly, identify when the predicted equilibrium is bad for you &mdash; so you can change the structure of the game to shift the equilibrium in your favor.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Framework</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── Nash Equilibrium in Startup Hiring ──────────────────── */</span>
+
+<span class="hl-keyword">SCENARIO: COMPETING OFFERS</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Two startups (A and B) are competing for the same engineer.
+  Each can offer a High salary or a Low salary.
+
+                     Startup B
+                  Low Offer    High Offer
+             ┌────────────┬────────────────┐
+  Startup  L │ A: hire 50%│ A: hire 10%    │
+  A        o │ B: hire 50%│ B: hire 90%    │
+           w │ Cost: low  │ Cost: low/high │
+             ├────────────┼────────────────┤
+           H │ A: hire 90%│ A: hire 50%    │
+           i │ B: hire 10%│ B: hire 50%    │
+           g │ Cost: high │ Cost: high     │
+           h │            │                │
+             └────────────┴────────────────┘
+
+<span class="hl-keyword">NASH EQUILIBRIUM:</span> Both offer High
+  <span class="hl-function">Why?</span> If B offers High, A must offer High too (or lose).
+        If B offers Low, A should offer High (to win).
+        High is A's dominant strategy. Same logic for B.
+
+  <span class="hl-function">Result:</span> Both startups pay more, neither gains advantage.
+  This is a "race to the bottom" — both parties are worse
+  off than if they could both commit to Low offers.
+
+<span class="hl-keyword">HOW TO ESCAPE:</span>
+  - Compete on dimensions other than salary (mission, equity,
+    flexibility, team, growth opportunity)
+  - Differentiate so you are not in direct competition
+  - Move faster — the first offer with an exploding deadline
+    can preempt the bidding war entirely
+</pre>
+      </div>
+
+      <h3 id="repeated-games">3. Repeated Games and the Shadow of the Future</h3>
+
+      <p>
+        Most game theory examples involve one-shot games &mdash; play once and walk away. But most startup negotiations involve parties who will interact again: the investor who sits on your board, the customer who renews annually, the co-founder you work with every day. This repetition fundamentally changes the strategic landscape.
+      </p>
+
+      <p>
+        In a <strong>repeated game</strong>, the future casts a shadow over the present. If you defect today, your counterpart can punish you in the next round. This possibility of future retaliation makes cooperation sustainable even when it would not be rational in a one-shot game. The key factor is the <strong>discount rate</strong> &mdash; how much you value future interactions relative to present gains.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Strategy</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── Repeated Game Strategies for Negotiators ────────────── */</span>
+
+<span class="hl-keyword">STRATEGY 1: TIT-FOR-TAT</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Round 1: Cooperate
+  Round N: Do whatever your counterpart did in Round N-1
+
+  <span class="hl-function">Properties:</span>
+  + Nice (starts cooperative)
+  + Retaliatory (punishes defection immediately)
+  + Forgiving (returns to cooperation after punishment)
+  + Clear (counterpart can predict your behavior)
+
+  <span class="hl-function">Startup Application:</span>
+  In vendor relationships, start with generous terms.
+  If the vendor underdelivers, reduce scope next quarter.
+  If they correct, restore full engagement.
+
+<span class="hl-keyword">STRATEGY 2: GENEROUS TIT-FOR-TAT</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Same as Tit-for-Tat, but occasionally forgive
+  defections (10-20% of the time cooperate anyway).
+
+  <span class="hl-function">Why better?</span> Prevents escalation spirals caused by
+  misunderstandings or noise. In real negotiations,
+  perceived slights are often unintentional.
+
+<span class="hl-keyword">STRATEGY 3: GRIM TRIGGER</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Round 1: Cooperate
+  After first defection: Defect forever
+
+  <span class="hl-function">When to use:</span> Only for extremely high-stakes, long-term
+  relationships where one defection is catastrophic.
+  Example: Co-founder trust — once broken, the partnership
+  is effectively over.
+
+<span class="hl-keyword">THE SHADOW OF THE FUTURE</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Cooperation is sustainable when:
+  <span class="hl-number">Value of future cooperation &gt; Short-term gain from defection</span>
+
+  To increase cooperation, you can:
+  - Extend the relationship (longer contracts)
+  - Increase interaction frequency (weekly check-ins)
+  - Make the future more visible (shared roadmaps)
+  - Increase the cost of defection (reputation, penalties)
+</pre>
+      </div>
+
+      <h3 id="signaling">4. Signaling and Screening in Negotiations</h3>
+
+      <p>
+        In most negotiations, you do not have complete information about the other party. You do not know their true reservation price, their real alternatives, or how much they value different issues. <strong>Signaling theory</strong> explains how parties communicate private information through costly actions, and <strong>screening</strong> is the art of designing choices that reveal what the other party is trying to hide.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Signaling Framework</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── Signaling and Screening in Startup Deals ────────────── */</span>
+
+<span class="hl-keyword">CREDIBLE SIGNALS (Costly to Fake)</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  <span class="hl-function">Signal: Walking away from the table</span>
+  Cost:   Risk of losing the deal entirely
+  What it signals: Strong BATNA, genuine willingness to leave
+  Startup example: Founder pauses VC negotiations to pursue
+  another term sheet — signals real alternatives exist
+
+  <span class="hl-function">Signal: Making a large upfront commitment</span>
+  Cost:   Capital at risk if deal fails
+  What it signals: High confidence in the partnership
+  Startup example: Enterprise customer pre-paying for a year
+  instead of going month-to-month
+
+  <span class="hl-function">Signal: Accepting asymmetric risk</span>
+  Cost:   Downside exposure if things go wrong
+  What it signals: Genuine belief in projected outcomes
+  Startup example: Founder accepting ratchet provisions tied
+  to revenue milestones
+
+<span class="hl-keyword">SCREENING TECHNIQUES (Revealing Hidden Information)</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  <span class="hl-function">Technique: Offer multiple packages</span>
+  How it works: Present 3 options at different price/feature
+  combinations. The option they choose reveals their true
+  priorities (price-sensitive vs. feature-hungry).
+
+  <span class="hl-function">Technique: Contingent contracts</span>
+  How it works: Propose terms that vary based on outcomes.
+  A party confident in their projections will accept
+  performance-based terms; a bluffer will resist.
+
+  <span class="hl-function">Technique: Time-based reveals</span>
+  How it works: Observe how urgently they respond.
+  A party with a strong BATNA takes their time.
+  A party under pressure responds within hours.
+</pre>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Pro Tip
+        </div>
+        <p>
+          <strong>The most powerful signal is one that is costly for a weak player but cheap for a strong one.</strong> When a founder says "We have other term sheets," it is cheap talk &mdash; anyone can say it. When a founder actually pauses your negotiation to fly to Sand Hill Road for other meetings, the action itself is the signal. Design your signals so that only someone with a genuinely strong position would take that action.
+        </p>
+      </div>
+
+      <h3 id="mechanism-design">5. Mechanism Design: Structuring the Game</h3>
+
+      <p>
+        <strong>Mechanism design</strong> is "reverse game theory." Instead of analyzing a game to predict its outcome, you design the rules of the game to produce the outcome you want. This is perhaps the most powerful application of game theory for negotiators, because it shifts you from being a player to being the architect.
+      </p>
+
+      <p>
+        In practical terms, mechanism design means structuring incentives, information flows, and decision rules so that all parties are motivated to act in ways that produce good outcomes &mdash; even when each party is acting purely in their own self-interest.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Mechanism Design</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── Mechanism Design: Practical Startup Applications ────── */</span>
+
+<span class="hl-keyword">APPLICATION 1: VESTING SCHEDULES</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  <span class="hl-function">Problem:</span>  Co-founder might leave after getting equity
+  <span class="hl-function">Mechanism:</span> 4-year vesting with 1-year cliff
+  <span class="hl-function">How it works:</span>
+    - Incentive to stay aligned for at least 1 year (cliff)
+    - Gradual alignment over 4 years (monthly vesting)
+    - Departure penalty is proportional to time not served
+  <span class="hl-function">Game theory:</span> Makes "defection" (leaving early) costly,
+    shifting equilibrium toward cooperation (staying)
+
+<span class="hl-keyword">APPLICATION 2: EARNOUT STRUCTURES</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  <span class="hl-function">Problem:</span>  Buyer and seller disagree on valuation
+  <span class="hl-function">Mechanism:</span> Base price + earnout tied to milestones
+  <span class="hl-function">How it works:</span>
+    - Base: $30M (what buyer is willing to risk)
+    - Earnout: +$20M if revenue hits $10M in Year 2
+    - If seller is confident → accepts gladly (expects $50M)
+    - If seller is bluffing → reveals reluctance
+  <span class="hl-function">Game theory:</span> Creates a "screening mechanism" that
+    separates confident sellers from overbluffers
+
+<span class="hl-keyword">APPLICATION 3: AUCTION-STYLE FUNDRAISING</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  <span class="hl-function">Problem:</span>  Founder has asymmetric info disadvantage vs VC
+  <span class="hl-function">Mechanism:</span> Run parallel processes with multiple VCs
+  <span class="hl-function">How it works:</span>
+    - Create competitive tension (multiple bidders)
+    - Set a deadline (prevents foot-dragging)
+    - Let VCs' offers reveal their true valuations
+  <span class="hl-function">Game theory:</span> Transforms from bilateral negotiation
+    (where VC has leverage) into an auction (where
+    competition reveals true willingness to pay)
+</pre>
+      </div>
+
+      <h3 id="commitment-devices">6. Commitment Devices and Credible Threats</h3>
+
+      <p>
+        A <strong>commitment device</strong> is any mechanism that locks you into a course of action, making it impossible (or very expensive) to back down. Paradoxically, reducing your own flexibility can increase your negotiating power &mdash; because it makes your threats and promises credible.
+      </p>
+
+      <p>
+        The classic example is burning the boats: when Hernan Cortes landed in Mexico, he allegedly destroyed his own ships so his soldiers could not retreat. This insane act made his threat to fight to the death completely credible &mdash; because retreat was no longer an option.
+      </p>
+
+      <div class="diagram">
+<pre>
+  COMMITMENT SPECTRUM IN STARTUP NEGOTIATIONS
+
+  Weak ◄─────────────────────────────────────────► Strong
+  (Cheap Talk)                          (Irreversible Action)
+
+  ├─ "We won't         ├─ Written letter    ├─ Signed term sheet
+  │   accept less       │   of intent with   │   with break-up
+  │   than $5M"         │   exclusivity      │   fee of $500K
+  │                     │   clause           │
+  │  [Anyone can say]   │  [Reputation cost] │  [Financial cost]
+  │                     │                    │
+  ├─ "We have other     ├─ Public            ├─ Board resolution
+  │   offers"           │   announcement     │   authorizing only
+  │                     │   of partnership   │   specific terms
+  │  [Unverifiable]     │  [Career risk]     │  [Legal binding]
+  │                     │                    │
+  ├─ Verbal deadline    ├─ Calendar invite   ├─ Expiring offer
+  │                     │   for "decision    │   with signed
+  │  [Easy to extend]   │   meeting"         │   walk-away terms
+  │                     │  [Social pressure] │  [Contractual]
+</pre>
+        <div class="diagram-caption">Figure 1: Commitment devices range from cheap talk to legally binding irreversible actions</div>
+      </div>
+
+      <div class="callout danger">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Critical Warning
+        </div>
+        <p>
+          <strong>A commitment device that is not credible is worse than no commitment at all.</strong> If you set a deadline and then extend it, you have revealed that your deadlines are empty threats. If you say "this is our final offer" and then make another offer, you have taught the other side that your final offers are not final. Every failed commitment erodes your credibility for future interactions. Only commit to positions you are genuinely prepared to hold.
+        </p>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 3: WATCH & LEARN
+           ════════════════════════════════════════ -->
+      <h2 id="watch-learn">Watch &amp; Learn</h2>
+
+      <p>
+        These videos bring game theory to life with real-world examples and accessible explanations of strategic thinking in competitive environments.
+      </p>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/mScpHTIi-kM?rel=0&amp;modestbranding=1"
+            title="Game Theory - The Prisoner's Dilemma"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          "Game Theory and the Prisoner's Dilemma" &mdash; An accessible introduction to the core concepts with business applications and real-world case studies.
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/M3oWYHYoBvk?rel=0&amp;modestbranding=1"
+            title="Nash Equilibrium - Explained"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          "Nash Equilibrium Explained" &mdash; How to identify equilibrium outcomes in strategic interactions and why they matter for business negotiations.
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 4: FURTHER READING
+           ════════════════════════════════════════ -->
+      <h2 id="further-reading">Further Reading</h2>
+
+      <p>Deepen your understanding of game theory applied to negotiation with these essential resources.</p>
+
+      <div class="resource-grid">
+        <a class="resource-card" href="https://www.amazon.com/Art-Strategy-Theorists-Success-Business/dp/0393337170" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">The Art of Strategy &mdash; Dixit &amp; Nalebuff</div>
+            <div class="resource-desc">The best accessible introduction to game theory for business professionals. Covers all major concepts with rich real-world examples.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://www.amazon.com/Co-Opetition-Revolution-Combines-Competition-Cooperation/dp/0385479506" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Co-Opetition &mdash; Brandenburger &amp; Nalebuff</div>
+            <div class="resource-desc">Game theory applied to business strategy. Introduces the Value Net framework for understanding competitive and cooperative dynamics simultaneously.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://ncase.me/trust/" target="_blank" rel="noopener">
+          <div class="resource-icon article">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">The Evolution of Trust &mdash; Nicky Case</div>
+            <div class="resource-desc">An interactive guide to game theory and the Prisoner's Dilemma. Play through simulations to build intuition for repeated game dynamics.</div>
+          </div>
+        </a>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 5: ASSIGNMENTS
+           ════════════════════════════════════════ -->
+      <h2 id="assignments">Assignments</h2>
+
+      <p>
+        Complete these in order. Game theory is best learned by doing &mdash; working through payoff matrices and running simulations builds intuition that reading alone cannot.
+      </p>
+
+      <!-- Assignment 1: Level 1 -->
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 1
+          </div>
+          <span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span>
+        </div>
+        <h4>Build a Payoff Matrix</h4>
+        <p>Identify a real negotiation situation from your startup experience and model it as a 2x2 payoff matrix. Determine the Nash Equilibrium and evaluate whether it is the best possible outcome.</p>
+
+        <ul class="checklist">
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Choose a real strategic interaction (vendor negotiation, hiring competition, partnership decision)</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Define the two players and their two strategic choices (Cooperate/Defect or equivalent)</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Assign realistic payoff values to all four outcomes and construct the matrix</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Identify the Nash Equilibrium and compare it to the socially optimal outcome</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>If the equilibrium is suboptimal, propose a mechanism (repetition, contract, reputation) to shift it</span>
+          </li>
+        </ul>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            You have a completed payoff matrix with numerical payoffs, a clearly identified Nash Equilibrium, and a written proposal for how to improve the outcome through mechanism design.
+          </p>
+        </div>
+      </div>
+
+      <!-- Assignment 2: Level 2 -->
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 2
+          </div>
+          <span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Applied</span>
+        </div>
+        <h4>Repeated Game Simulation</h4>
+        <p>With a partner, play 20 rounds of a Prisoner's Dilemma game. Track all decisions and payoffs. Then switch to a Tit-for-Tat strategy and play 20 more rounds. Compare the total payoffs under each approach.</p>
+
+        <ul class="checklist">
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Set up a payoff matrix with your partner (agree on values for CC, CD, DC, DD outcomes)</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Play 20 rounds with free strategy choice &mdash; record every decision and running score</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Debrief: At what point did cooperation or defection patterns emerge? Why?</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Play 20 more rounds where both players commit to Tit-for-Tat. Compare total scores</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Write a reflection on how repeated interaction changed your strategic thinking</span>
+          </li>
+        </ul>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            You have documented data from both 20-round games, a comparison of total payoffs, and a written reflection connecting the results to real negotiation scenarios.
+          </p>
+        </div>
+      </div>
+
+      <!-- Assignment 3: Level 3 -->
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 3
+          </div>
+          <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Strategic</span>
+        </div>
+        <h4>Design a Mechanism for a Real Negotiation</h4>
+        <p>Take a real negotiation challenge from your company and redesign it using mechanism design principles. Structure the incentives, information flows, and decision rules to produce better outcomes for all parties.</p>
+
+        <ul class="checklist">
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Identify a recurring negotiation that consistently produces suboptimal outcomes (hiring, vendor selection, etc.)</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Model the current game: players, strategies, payoffs, and the Nash Equilibrium</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Design a new mechanism that changes at least two of: payoffs, information structure, timing, or decision rules</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Predict the Nash Equilibrium under your redesigned mechanism and verify it is better</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Present your mechanism design to a colleague and incorporate their feedback on feasibility</span>
+          </li>
+        </ul>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            You have a complete mechanism design document showing the current game model, the redesigned game, predicted equilibrium comparison, and peer feedback on implementation feasibility.
+          </p>
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 6: SELF-CHECK
+           ════════════════════════════════════════ -->
+      <h2 id="self-check">Self-Check</h2>
+
+      <p>Before moving to Chapter 03, honestly answer these questions. If any answer is uncertain, revisit the relevant section.</p>
+
+      <details>
+        <summary>Can you identify a Prisoner's Dilemma in your current work and explain why cooperation is hard?</summary>
+        <div class="details-body">
+          <p>
+            The key features are: (1) both parties benefit from mutual cooperation, (2) each party has a private incentive to defect, and (3) mutual defection is worse than mutual cooperation. Common startup examples include co-founder effort allocation, vendor-client information sharing, and competitive pricing in crowded markets. If you can map the payoffs for a real scenario, you understand the concept.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Can you explain Nash Equilibrium to a non-technical colleague using a startup example?</summary>
+        <div class="details-body">
+          <p>
+            A Nash Equilibrium is where everyone is doing the best they can, given what everyone else is doing, and no one has a reason to change. The hiring war example works well: if every startup offers high salaries, no single startup can cut salaries without losing candidates. Even though everyone paying high salaries is worse for all startups collectively, each one is stuck because changing alone would be worse.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Do you understand why repeated interactions make cooperation more likely?</summary>
+        <div class="details-body">
+          <p>
+            In a one-shot game, there is no tomorrow &mdash; so defection is "free." In a repeated game, defection today invites retaliation tomorrow. The shadow of the future makes cooperation rational when the expected value of future cooperation exceeds the one-time gain from defection. This is why long-term relationships (co-founders, board members, key customers) tend toward more cooperative behavior than one-time transactions.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Can you distinguish between a credible signal and cheap talk?</summary>
+        <div class="details-body">
+          <p>
+            A credible signal is costly to send &mdash; particularly costly for someone who does not actually have the quality they are claiming. "We have other offers" is cheap talk (anyone can say it). Walking away from the table is a credible signal (you risk losing the deal). A signed term sheet from another VC is the most credible signal of all (it cost significant time and effort to obtain). The test: would someone without the claimed advantage also take this action?
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Could you redesign a negotiation structure to produce better outcomes for all parties?</summary>
+        <div class="details-body">
+          <p>
+            Mechanism design starts with identifying why the current game produces bad outcomes (usually a Prisoner's Dilemma or information asymmetry). Then you change the rules: add reputation systems, introduce contingent contracts, create competitive processes, or restructure payoffs with penalties and bonuses. The vesting schedule is a perfect example &mdash; it transforms "I might leave with all the equity" into "leaving early is expensive." If you can apply this logic to a real scenario, you have the skill.
+          </p>
+        </div>
+      </details>
+
+    </main>
+
+    <!-- Sidebar: Table of Contents -->
+    <aside class="sidebar">
+      <div class="sidebar-title">On this page</div>
+      <ul class="toc-list">
+        <li class="toc-item"><a href="#why-this-matters">Why This Matters</a></li>
+        <li class="toc-item"><a href="#key-concepts">Key Concepts</a></li>
+        <li class="toc-item"><a href="#prisoners-dilemma" style="padding-left: 28px; font-size: 12px;">Prisoner's Dilemma</a></li>
+        <li class="toc-item"><a href="#nash-equilibrium" style="padding-left: 28px; font-size: 12px;">Nash Equilibrium</a></li>
+        <li class="toc-item"><a href="#repeated-games" style="padding-left: 28px; font-size: 12px;">Repeated Games</a></li>
+        <li class="toc-item"><a href="#signaling" style="padding-left: 28px; font-size: 12px;">Signaling &amp; Screening</a></li>
+        <li class="toc-item"><a href="#mechanism-design" style="padding-left: 28px; font-size: 12px;">Mechanism Design</a></li>
+        <li class="toc-item"><a href="#commitment-devices" style="padding-left: 28px; font-size: 12px;">Commitment Devices</a></li>
+        <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a></li>
+        <li class="toc-item"><a href="#further-reading">Further Reading</a></li>
+        <li class="toc-item"><a href="#assignments">Assignments</a></li>
+        <li class="toc-item"><a href="#self-check">Self-Check</a></li>
       </ul>
-    </div>
+    </aside>
+  </div>
 
-    <hr class="section-divider">
-
-    <div class="coming-soon-banner">
-      <h3>Content In Development</h3>
-      <p>Full chapter content with detailed explanations, code examples, video walkthroughs, and assignments is being developed. Check back soon.</p>
-    </div>
-
-    <div class="callout tip">
-      <div class="callout-header">What You Will Learn</div>
-      <p>By the end of this chapter, you will understand nash equilibrium, prisoner's dilemma, sequential games, signaling, commitment devices and be able to apply these concepts in real-world scenarios.</p>
-    </div>
-
-  </main>
-
-  <nav class="footer-nav">
-        <a class="footer-nav-link prev" href="chapter-01.html">
-          <span class="footer-nav-label">&larr; Previous</span>
-          <span class="footer-nav-title">Chapter 01: Multi-Party Negotiations</span>
+  <!-- Footer Navigation -->
+  <footer class="chapter-footer">
+    <div class="chapter-footer-inner">
+      <nav class="footer-nav">
+        <a class="footer-nav-link" href="chapter-01.html">
+          <span class="footer-nav-label">&larr; Previous Chapter</span>
+          <span class="footer-nav-title">01: Multi-Party Negotiations</span>
         </a>
-        <a class="footer-nav-link next" href="chapter-03.html">
-          <span class="footer-nav-label">Next &rarr;</span>
-          <span class="footer-nav-title">Chapter 03: Term Sheet Negotiations</span>
+        <a class="footer-nav-link" href="chapter-03.html">
+          <span class="footer-nav-label">Next Chapter &rarr;</span>
+          <span class="footer-nav-title">03: Term Sheet Negotiations</span>
         </a>
-  </nav>
-
-  <footer class="footer">
-    ILA (Iksha Learning Academy) &middot; Advanced Negotiations &middot; <a href="index.html">All Chapters</a>
+      </nav>
+      <div class="footer-brand">
+        ILA (Iksha Learning Academy) &middot; Advanced Negotiation Strategies &middot; Advanced Track
+      </div>
+    </div>
   </footer>
 
   <script>
     window.addEventListener('scroll', () => {
-      const h = document.documentElement;
-      const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
-      document.getElementById('progressBar').style.width = Math.min(pct, 100) + '%';
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      document.getElementById('progressBar').style.width = progress + '%';
     });
+    const tocLinks = document.querySelectorAll('.toc-item a');
+    const sections = [];
+    tocLinks.forEach(link => {
+      const id = link.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) sections.push({ id, el, link });
+    });
+    const observerOptions = { rootMargin: '-80px 0px -60% 0px', threshold: 0 };
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const item = sections.find(s => s.el === entry.target);
+        if (item) {
+          if (entry.isIntersecting) {
+            tocLinks.forEach(l => l.classList.remove('active'));
+            item.link.classList.add('active');
+          }
+        }
+      });
+    }, observerOptions);
+    sections.forEach(s => observer.observe(s.el));
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      const text = pre.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.classList.add('copied');
+        btn.textContent = 'Copied!';
+        setTimeout(() => { btn.classList.remove('copied'); btn.textContent = 'Copy'; }, 2000);
+      });
+    }
   </script>
 </body>
 </html>

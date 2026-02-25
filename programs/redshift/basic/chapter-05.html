@@ -3,340 +3,1587 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chapter 05: Schema Design for Analytics &mdash; ILA Redshift Foundations</title>
+  <title>Chapter 05: Distribution and Sort Keys &mdash; ILA Redshift Engineering</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
-    :root{--ink:#0f172a;--ink-light:#334155;--ink-muted:#64748b;--surface:#ffffff;--surface-alt:#f8fafc;--surface-warm:#fffbeb;--border:#e2e8f0;--border-light:#f1f5f9;--teal-50:#f0fdfa;--teal-100:#ccfbf1;--teal-200:#99f6e4;--teal-500:#14b8a6;--teal-600:#0d9488;--teal-700:#0f766e;--teal-800:#115e59;--teal-900:#134e4a;--blue-50:#eff6ff;--blue-100:#dbeafe;--blue-500:#3b82f6;--blue-600:#2563eb;--blue-700:#1d4ed8;--amber-50:#fffbeb;--amber-100:#fef3c7;--amber-500:#f59e0b;--amber-600:#d97706;--red-50:#fef2f2;--red-100:#fee2e2;--red-500:#ef4444;--red-600:#dc2626;--purple-50:#faf5ff;--purple-100:#f3e8ff;--purple-500:#a855f7;--purple-600:#9333ea;--font-sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;--font-serif:'Instrument Serif',Georgia,serif;--font-mono:'JetBrains Mono','Fira Code',monospace;--content-max:780px;--sidebar-width:280px;--ease:cubic-bezier(0.4,0,0.2,1)}
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
-    body{font-family:var(--font-sans);font-size:16px;line-height:1.7;color:var(--ink);background:var(--surface)}
-    .progress-bar{position:fixed;top:0;left:0;width:0%;height:3px;background:linear-gradient(90deg,var(--teal-500),var(--blue-500));z-index:1000;transition:width .15s var(--ease)}
-    .top-nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem}
-    .top-nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px}
-    .nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--teal-800)}
-    .nav-brand-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--teal-600),var(--teal-800));border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px}
-    .nav-brand-text{font-weight:700;font-size:15px;letter-spacing:-.02em}
-    .nav-chapter-nav{display:flex;align-items:center;gap:8px}
-    .nav-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;color:var(--ink-muted);border:1px solid var(--border);background:#fff;transition:all .2s var(--ease);cursor:pointer}
-    .nav-btn:hover{color:var(--ink);border-color:var(--teal-500);background:var(--teal-50)}
-    .nav-btn.disabled{opacity:.4;pointer-events:none}
-    .nav-current{font-size:13px;font-weight:600;color:var(--ink-light);padding:0 4px}
-    .hero{background:linear-gradient(170deg,var(--teal-50) 0%,var(--surface) 50%,var(--blue-50) 100%);border-bottom:1px solid var(--border);padding:4rem 2rem 3.5rem}
-    .hero-inner{max-width:var(--content-max);margin:0 auto}
-    .hero-chapter-label{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--teal-700);text-transform:uppercase;letter-spacing:.08em;margin-bottom:1rem}
-    .hero-chapter-label span{background:var(--teal-100);padding:3px 10px;border-radius:100px}
-    .hero h1{font-family:var(--font-serif);font-size:clamp(2.4rem,5vw,3.2rem);font-weight:400;line-height:1.15;color:var(--ink);margin-bottom:1rem}
-    .hero-subtitle{font-size:1.15rem;color:var(--ink-light);line-height:1.65;max-width:640px}
-    .hero-meta{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1.5rem}
-    .hero-meta-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-muted)}
-    .hero-meta-item svg{width:16px;height:16px;color:var(--teal-600)}
-    .main-layout{max-width:1200px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:1fr var(--sidebar-width);gap:4rem;align-items:start}
-    .content{padding:3rem 0 6rem;min-width:0}
-    .sidebar{position:sticky;top:76px;padding:2rem 0;max-height:calc(100vh - 76px);overflow-y:auto}
-    .sidebar-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-muted);margin-bottom:1rem;padding-left:14px}
-    .toc-list{list-style:none}
-    .toc-item a{display:block;padding:6px 14px;font-size:13px;color:var(--ink-muted);text-decoration:none;border-left:2px solid transparent;transition:all .2s var(--ease);line-height:1.5}
-    .toc-item a:hover{color:var(--ink);background:var(--surface-alt)}
-    .toc-item a.active{color:var(--teal-700);border-left-color:var(--teal-500);background:var(--teal-50);font-weight:500}
-    .content h2{font-family:var(--font-serif);font-size:1.85rem;font-weight:400;color:var(--ink);margin:3rem 0 1rem;padding-top:1rem;scroll-margin-top:80px}
-    .content h2:first-child{margin-top:0}
-    .content h3{font-size:1.15rem;font-weight:600;color:var(--ink);margin:2rem 0 .75rem;scroll-margin-top:80px}
-    .content p{margin-bottom:1.25rem;color:var(--ink-light)}
-    .content strong{color:var(--ink);font-weight:600}
-    .content a{color:var(--teal-700);text-decoration:underline;text-decoration-color:var(--teal-200);text-underline-offset:3px;transition:text-decoration-color .2s}
-    .content a:hover{text-decoration-color:var(--teal-600)}
-    .content ul,.content ol{margin-bottom:1.25rem;padding-left:1.5rem}
-    .content li{margin-bottom:.5rem;color:var(--ink-light)}
-    .content li::marker{color:var(--teal-500)}
-    .section-divider{border:none;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:3rem 0}
-    .callout{padding:1.25rem 1.5rem;border-radius:12px;margin-bottom:1.5rem;border:1px solid;position:relative}
-    .callout-header{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;margin-bottom:.5rem}
-    .callout-header svg{width:18px;height:18px;flex-shrink:0}
-    .callout p:last-child{margin-bottom:0}
-    .callout.concept{background:var(--blue-50);border-color:var(--blue-100)}
-    .callout.concept .callout-header{color:var(--blue-700)}
-    .callout.important{background:var(--amber-50);border-color:var(--amber-100)}
-    .callout.important .callout-header{color:var(--amber-600)}
-    .callout.danger{background:var(--red-50);border-color:var(--red-100)}
-    .callout.danger .callout-header{color:var(--red-600)}
-    .callout.tip{background:var(--purple-50);border-color:var(--purple-100)}
-    .callout.tip .callout-header{color:var(--purple-600)}
-    .callout.success{background:var(--teal-50);border-color:var(--teal-100)}
-    .callout.success .callout-header{color:var(--teal-700)}
-    .code-block{position:relative;margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}
-    .code-header{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:var(--surface-alt);border-bottom:1px solid var(--border);font-size:12px;color:var(--ink-muted)}
-    .code-lang{font-family:var(--font-mono);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
-    .code-copy{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:#fff;font-size:11px;font-family:var(--font-sans);color:var(--ink-muted);cursor:pointer;transition:all .2s var(--ease)}
-    .code-copy:hover{border-color:var(--teal-500);color:var(--teal-700)}
-    .code-copy.copied{background:var(--teal-50);border-color:var(--teal-500);color:var(--teal-700)}
-    pre{margin:0;padding:1.25rem 1.5rem;overflow-x:auto;background:#1e293b;font-family:var(--font-mono);font-size:13.5px;line-height:1.7;color:#e2e8f0}
-    code{font-family:var(--font-mono);font-size:.88em}
-    p code,li code{padding:2px 7px;background:var(--surface-alt);border:1px solid var(--border);border-radius:5px;color:var(--teal-800);font-size:.85em}
-    .hl-keyword{color:#c084fc}
-    .hl-string{color:#86efac}
-    .hl-comment{color:#64748b;font-style:italic}
-    .hl-function{color:#7dd3fc}
-    .hl-number{color:#fbbf24}
-    .hl-flag{color:#f472b6}
-    details{margin-bottom:1.25rem;border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .2s var(--ease)}
-    details[open]{border-color:var(--teal-200)}
-    details summary{padding:1rem 1.25rem;font-weight:600;font-size:15px;cursor:pointer;background:var(--surface-alt);list-style:none;display:flex;align-items:center;gap:10px;transition:background .2s var(--ease);user-select:none}
-    details summary::-webkit-details-marker{display:none}
-    details summary::before{content:'';width:20px;height:20px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain;flex-shrink:0;transition:transform .2s var(--ease)}
-    details[open] summary::before{transform:rotate(90deg)}
-    details summary:hover{background:var(--teal-50)}
-    .details-body{padding:1.25rem 1.5rem}
-    .details-body p:last-child{margin-bottom:0}
-    .video-card{margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}
-    .video-wrapper{position:relative;padding-bottom:56.25%;height:0;background:#0f172a}
-    .video-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
-    .video-caption{padding:12px 16px;background:var(--surface-alt);font-size:13px;color:var(--ink-muted);display:flex;align-items:center;gap:6px}
-    .video-caption svg{width:14px;height:14px;color:var(--red-500)}
-    .resource-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1rem;margin-bottom:1.5rem}
-    .resource-card{display:flex;gap:14px;padding:1rem 1.25rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all .2s var(--ease);background:#fff}
-    .resource-card:hover{border-color:var(--teal-300);background:var(--teal-50);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.04)}
-    .resource-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}
-    .resource-icon.docs{background:var(--blue-50);color:var(--blue-600)}
-    .resource-icon.video{background:var(--red-50);color:var(--red-500)}
-    .resource-icon.github{background:var(--ink);color:#fff}
-    .resource-icon.article{background:var(--amber-50);color:var(--amber-600)}
-    .resource-icon.pdf{background:var(--purple-50);color:var(--purple-600)}
-    .resource-info{min-width:0}
-    .resource-title{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:2px;line-height:1.4}
-    .resource-desc{font-size:12px;color:var(--ink-muted);line-height:1.5}
-    .assignment{border:2px solid var(--teal-200);border-radius:14px;padding:1.5rem 1.75rem;margin-bottom:1.5rem;background:linear-gradient(135deg,var(--teal-50) 0%,#fff 100%)}
-    .assignment-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
-    .assignment-label{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--teal-700)}
-    .assignment-difficulty{display:inline-flex;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:600}
-    .difficulty-l1{background:var(--teal-100);color:var(--teal-800)}
-    .difficulty-l2{background:var(--amber-100);color:var(--amber-600)}
-    .difficulty-l3{background:var(--red-100);color:var(--red-600)}
-    .assignment h4{font-size:1.05rem;font-weight:700;margin-bottom:.75rem}
-    .assignment p{font-size:14px}
-    .checklist{list-style:none;padding:0}
-    .checklist li{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border-light);font-size:14px}
-    .checklist li:last-child{border-bottom:none}
-    .check-box{width:20px;height:20px;border-radius:6px;border:2px solid var(--border);flex-shrink:0;margin-top:1px;cursor:pointer;transition:all .15s var(--ease);display:flex;align-items:center;justify-content:center}
-    .check-box:hover{border-color:var(--teal-500)}
-    .check-box.checked{background:var(--teal-500);border-color:var(--teal-500)}
-    .check-box.checked::after{content:'';width:10px;height:10px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain}
-    .diagram{margin:1.5rem 0;padding:2rem;background:var(--surface-alt);border:1px solid var(--border);border-radius:14px;overflow-x:auto}
-    .diagram pre{background:transparent;color:var(--ink);padding:0;font-size:13px;line-height:1.6}
-    .diagram-caption{margin-top:1rem;font-size:12px;color:var(--ink-muted);text-align:center;font-style:italic}
-    .chapter-footer{border-top:1px solid var(--border);padding:3rem 2rem;background:var(--surface-alt)}
-    .chapter-footer-inner{max-width:var(--content-max);margin:0 auto}
-    .footer-nav{display:flex;justify-content:space-between;align-items:center;gap:1rem}
-    .footer-nav-link{display:flex;flex-direction:column;gap:4px;padding:1rem 1.5rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all .2s var(--ease);max-width:320px;background:#fff}
-    .footer-nav-link:hover{border-color:var(--teal-300);box-shadow:0 4px 12px rgba(0,0,0,.04)}
-    .footer-nav-label{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--teal-600)}
-    .footer-nav-title{font-size:15px;font-weight:600;color:var(--ink)}
-    .footer-brand{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border);font-size:13px;color:var(--ink-muted)}
-    @media(max-width:960px){.main-layout{grid-template-columns:1fr}.sidebar{display:none}.resource-grid{grid-template-columns:1fr}}
-    @media(max-width:640px){.hero{padding:2.5rem 1.25rem 2rem}.main-layout{padding:0 1.25rem}.content{padding:2rem 0 4rem}pre{padding:1rem;font-size:12.5px}.footer-nav{flex-direction:column}.footer-nav-link{max-width:100%;width:100%}}
-    @media print{.top-nav,.sidebar,.progress-bar{display:none}.main-layout{display:block}.content{padding:0}.hero{background:#fff;border:none}pre{background:#f1f5f9;color:var(--ink);border:1px solid var(--border)}}
+    /* ═══════════════════════════════════════════════
+       ILA DESIGN SYSTEM — v1.0
+       Iksha Learning Academy
+       ═══════════════════════════════════════════════ */
+
+    :root {
+      /* Palette */
+      --ink:        #0f172a;
+      --ink-light:  #334155;
+      --ink-muted:  #64748b;
+      --surface:    #ffffff;
+      --surface-alt:#f8fafc;
+      --surface-warm:#fffbeb;
+      --border:     #e2e8f0;
+      --border-light:#f1f5f9;
+
+      /* Brand */
+      --teal-50:  #f0fdfa;
+      --teal-100: #ccfbf1;
+      --teal-200: #99f6e4;
+      --teal-500: #14b8a6;
+      --teal-600: #0d9488;
+      --teal-700: #0f766e;
+      --teal-800: #115e59;
+      --teal-900: #134e4a;
+
+      --blue-50:  #eff6ff;
+      --blue-100: #dbeafe;
+      --blue-500: #3b82f6;
+      --blue-600: #2563eb;
+      --blue-700: #1d4ed8;
+
+      --amber-50:  #fffbeb;
+      --amber-100: #fef3c7;
+      --amber-500: #f59e0b;
+      --amber-600: #d97706;
+
+      --red-50:   #fef2f2;
+      --red-100:  #fee2e2;
+      --red-500:  #ef4444;
+      --red-600:  #dc2626;
+
+      --purple-50:  #faf5ff;
+      --purple-100: #f3e8ff;
+      --purple-500: #a855f7;
+      --purple-600: #9333ea;
+
+      /* Typography */
+      --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-serif: 'Instrument Serif', Georgia, serif;
+      --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
+
+      /* Spacing */
+      --content-max: 780px;
+      --sidebar-width: 280px;
+
+      /* Transitions */
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--ink);
+      background: var(--surface);
+    }
+
+    /* ── PROGRESS BAR ─────────────────────────── */
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--teal-500), var(--blue-500));
+      z-index: 1000;
+      transition: width 0.15s var(--ease);
+    }
+
+    /* ── TOP NAV ──────────────────────────────── */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+    }
+
+    .top-nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--teal-800);
+    }
+
+    .nav-brand-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--teal-600), var(--teal-800));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .nav-brand-text {
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-chapter-nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      color: var(--ink-muted);
+      border: 1px solid var(--border);
+      background: white;
+      transition: all 0.2s var(--ease);
+      cursor: pointer;
+    }
+
+    .nav-btn:hover {
+      color: var(--ink);
+      border-color: var(--teal-500);
+      background: var(--teal-50);
+    }
+
+    .nav-btn.disabled {
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    .nav-current {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink-light);
+      padding: 0 4px;
+    }
+
+    /* ── HERO ─────────────────────────────────── */
+    .hero {
+      background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 4rem 2rem 3.5rem;
+    }
+
+    .hero-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
+    }
+
+    .hero-chapter-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--teal-700);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 1rem;
+    }
+
+    .hero-chapter-label span {
+      background: var(--teal-100);
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+
+    .hero h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(2.4rem, 5vw, 3.2rem);
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: 1rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: var(--ink-light);
+      line-height: 1.65;
+      max-width: 640px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .hero-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
+    .hero-meta-item svg {
+      width: 16px;
+      height: 16px;
+      color: var(--teal-600);
+    }
+
+    /* ── MAIN LAYOUT ──────────────────────────── */
+    .main-layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr var(--sidebar-width);
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .content {
+      padding: 3rem 0 6rem;
+      min-width: 0;
+    }
+
+    /* ── SIDEBAR TOC ──────────────────────────── */
+    .sidebar {
+      position: sticky;
+      top: 76px;
+      padding: 2rem 0;
+      max-height: calc(100vh - 76px);
+      overflow-y: auto;
+    }
+
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-muted);
+      margin-bottom: 1rem;
+      padding-left: 14px;
+    }
+
+    .toc-list {
+      list-style: none;
+    }
+
+    .toc-item a {
+      display: block;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--ink-muted);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: all 0.2s var(--ease);
+      line-height: 1.5;
+    }
+
+    .toc-item a:hover {
+      color: var(--ink);
+      background: var(--surface-alt);
+    }
+
+    .toc-item a.active {
+      color: var(--teal-700);
+      border-left-color: var(--teal-500);
+      background: var(--teal-50);
+      font-weight: 500;
+    }
+
+    /* ── TYPOGRAPHY ────────────────────────────── */
+    .content h2 {
+      font-family: var(--font-serif);
+      font-size: 1.85rem;
+      font-weight: 400;
+      color: var(--ink);
+      margin: 3rem 0 1rem;
+      padding-top: 1rem;
+      scroll-margin-top: 80px;
+    }
+
+    .content h2:first-child {
+      margin-top: 0;
+    }
+
+    .content h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 2rem 0 0.75rem;
+      scroll-margin-top: 80px;
+    }
+
+    .content p {
+      margin-bottom: 1.25rem;
+      color: var(--ink-light);
+    }
+
+    .content strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .content a {
+      color: var(--teal-700);
+      text-decoration: underline;
+      text-decoration-color: var(--teal-200);
+      text-underline-offset: 3px;
+      transition: text-decoration-color 0.2s;
+    }
+
+    .content a:hover {
+      text-decoration-color: var(--teal-600);
+    }
+
+    .content ul,
+    .content ol {
+      margin-bottom: 1.25rem;
+      padding-left: 1.5rem;
+    }
+
+    .content li {
+      margin-bottom: 0.5rem;
+      color: var(--ink-light);
+    }
+
+    .content li::marker {
+      color: var(--teal-500);
+    }
+
+    /* ── SECTION DIVIDER ──────────────────────── */
+    .section-divider {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 3rem 0;
+    }
+
+    /* ── CALLOUT BOXES ────────────────────────── */
+    .callout {
+      padding: 1.25rem 1.5rem;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+      border: 1px solid;
+      position: relative;
+    }
+
+    .callout-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .callout-header svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    .callout p:last-child {
+      margin-bottom: 0;
+    }
+
+    .callout.concept {
+      background: var(--blue-50);
+      border-color: var(--blue-100);
+    }
+
+    .callout.concept .callout-header {
+      color: var(--blue-700);
+    }
+
+    .callout.important {
+      background: var(--amber-50);
+      border-color: var(--amber-100);
+    }
+
+    .callout.important .callout-header {
+      color: var(--amber-600);
+    }
+
+    .callout.danger {
+      background: var(--red-50);
+      border-color: var(--red-100);
+    }
+
+    .callout.danger .callout-header {
+      color: var(--red-600);
+    }
+
+    .callout.tip {
+      background: var(--purple-50);
+      border-color: var(--purple-100);
+    }
+
+    .callout.tip .callout-header {
+      color: var(--purple-600);
+    }
+
+    .callout.success {
+      background: var(--teal-50);
+      border-color: var(--teal-100);
+    }
+
+    .callout.success .callout-header {
+      color: var(--teal-700);
+    }
+
+    /* ── CODE BLOCKS ──────────────────────────── */
+    .code-block {
+      position: relative;
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+      background: var(--surface-alt);
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--ink-muted);
+    }
+
+    .code-lang {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .code-copy {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: white;
+      font-size: 11px;
+      font-family: var(--font-sans);
+      color: var(--ink-muted);
+      cursor: pointer;
+      transition: all 0.2s var(--ease);
+    }
+
+    .code-copy:hover {
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    .code-copy.copied {
+      background: var(--teal-50);
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    pre {
+      margin: 0;
+      padding: 1.25rem 1.5rem;
+      overflow-x: auto;
+      background: #1e293b;
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: #e2e8f0;
+    }
+
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.88em;
+    }
+
+    p code,
+    li code {
+      padding: 2px 7px;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      color: var(--teal-800);
+      font-size: 0.85em;
+    }
+
+    /* Syntax highlights (minimal) */
+    .hl-keyword {
+      color: #c084fc;
+    }
+
+    .hl-string {
+      color: #86efac;
+    }
+
+    .hl-comment {
+      color: #64748b;
+      font-style: italic;
+    }
+
+    .hl-function {
+      color: #7dd3fc;
+    }
+
+    .hl-number {
+      color: #fbbf24;
+    }
+
+    .hl-flag {
+      color: #f472b6;
+    }
+
+    /* ── COLLAPSIBLE (DETAILS) ────────────────── */
+    details {
+      margin-bottom: 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.2s var(--ease);
+    }
+
+    details[open] {
+      border-color: var(--teal-200);
+    }
+
+    details summary {
+      padding: 1rem 1.25rem;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      background: var(--surface-alt);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.2s var(--ease);
+      user-select: none;
+    }
+
+    details summary::-webkit-details-marker {
+      display: none;
+    }
+
+    details summary::before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+      flex-shrink: 0;
+      transition: transform 0.2s var(--ease);
+    }
+
+    details[open] summary::before {
+      transform: rotate(90deg);
+    }
+
+    details summary:hover {
+      background: var(--teal-50);
+    }
+
+    .details-body {
+      padding: 1.25rem 1.5rem;
+    }
+
+    .details-body p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* ── VIDEO EMBED ──────────────────────────── */
+    .video-card {
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      background: #0f172a;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .video-caption {
+      padding: 12px 16px;
+      background: var(--surface-alt);
+      font-size: 13px;
+      color: var(--ink-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .video-caption svg {
+      width: 14px;
+      height: 14px;
+      color: var(--red-500);
+    }
+
+    /* ── RESOURCE CARDS ───────────────────────── */
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .resource-card {
+      display: flex;
+      gap: 14px;
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      background: white;
+    }
+
+    .resource-card:hover {
+      border-color: var(--teal-300);
+      background: var(--teal-50);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    }
+
+    .resource-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 18px;
+    }
+
+    .resource-icon.docs {
+      background: var(--blue-50);
+      color: var(--blue-600);
+    }
+
+    .resource-icon.video {
+      background: var(--red-50);
+      color: var(--red-500);
+    }
+
+    .resource-icon.github {
+      background: var(--ink);
+      color: white;
+    }
+
+    .resource-icon.article {
+      background: var(--amber-50);
+      color: var(--amber-600);
+    }
+
+    .resource-icon.pdf {
+      background: var(--purple-50);
+      color: var(--purple-600);
+    }
+
+    .resource-info {
+      min-width: 0;
+    }
+
+    .resource-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 2px;
+      line-height: 1.4;
+    }
+
+    .resource-desc {
+      font-size: 12px;
+      color: var(--ink-muted);
+      line-height: 1.5;
+    }
+
+    /* ── ASSIGNMENT CARDS ─────────────────────── */
+    .assignment {
+      border: 2px solid var(--teal-200);
+      border-radius: 14px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--teal-50) 0%, white 100%);
+    }
+
+    .assignment-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .assignment-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--teal-700);
+    }
+
+    .assignment-difficulty {
+      display: inline-flex;
+      padding: 4px 10px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .difficulty-l1 {
+      background: var(--teal-100);
+      color: var(--teal-800);
+    }
+
+    .difficulty-l2 {
+      background: var(--amber-100);
+      color: var(--amber-600);
+    }
+
+    .difficulty-l3 {
+      background: var(--red-100);
+      color: var(--red-600);
+    }
+
+    .assignment h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .assignment p {
+      font-size: 14px;
+    }
+
+    .checklist {
+      list-style: none;
+      padding: 0;
+    }
+
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-light);
+      font-size: 14px;
+    }
+
+    .checklist li:last-child {
+      border-bottom: none;
+    }
+
+    .check-box {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      border: 2px solid var(--border);
+      flex-shrink: 0;
+      margin-top: 1px;
+      cursor: pointer;
+      transition: all 0.15s var(--ease);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .check-box:hover {
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked {
+      background: var(--teal-500);
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+    }
+
+    /* ── ARCHITECTURE DIAGRAM ─────────────────── */
+    .diagram {
+      margin: 1.5rem 0;
+      padding: 2rem;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow-x: auto;
+    }
+
+    .diagram pre {
+      background: transparent;
+      color: var(--ink);
+      padding: 0;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .diagram-caption {
+      margin-top: 1rem;
+      font-size: 12px;
+      color: var(--ink-muted);
+      text-align: center;
+      font-style: italic;
+    }
+
+    /* ── FOOTER ───────────────────────────────── */
+    .chapter-footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      background: var(--surface-alt);
+    }
+
+    .chapter-footer-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
+    }
+
+    .footer-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .footer-nav-link {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 1rem 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      max-width: 320px;
+      background: white;
+    }
+
+    .footer-nav-link:hover {
+      border-color: var(--teal-300);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    }
+
+    .footer-nav-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--teal-600);
+    }
+
+    .footer-nav-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .footer-brand {
+      text-align: center;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
+    /* ── RESPONSIVE ───────────────────────────── */
+    @media (max-width: 960px) {
+      .main-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        display: none;
+      }
+
+      .resource-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero {
+        padding: 2.5rem 1.25rem 2rem;
+      }
+
+      .main-layout {
+        padding: 0 1.25rem;
+      }
+
+      .content {
+        padding: 2rem 0 4rem;
+      }
+
+      pre {
+        padding: 1rem;
+        font-size: 12.5px;
+      }
+
+      .footer-nav {
+        flex-direction: column;
+      }
+
+      .footer-nav-link {
+        max-width: 100%;
+        width: 100%;
+      }
+    }
+
+    /* ── PRINT ────────────────────────────────── */
+    @media print {
+      .top-nav,
+      .sidebar,
+      .progress-bar {
+        display: none;
+      }
+
+      .main-layout {
+        display: block;
+      }
+
+      .content {
+        padding: 0;
+      }
+
+      .hero {
+        background: white;
+        border: none;
+      }
+
+      pre {
+        background: #f1f5f9;
+        color: var(--ink);
+        border: 1px solid var(--border);
+      }
+    }
   </style>
 </head>
 <body>
   <div class="progress-bar" id="progressBar"></div>
-  <nav class="top-nav"><div class="top-nav-inner"><a class="nav-brand" href="index.html"><div class="nav-brand-icon">ILA</div><span class="nav-brand-text">Iksha Learning Academy</span></a><div class="nav-chapter-nav"><a class="nav-btn" href="chapter-04.html">&larr; Previous</a><span class="nav-current">05 / 08</span><a class="nav-btn" href="chapter-06.html">Next &rarr;</a></div></div></nav>
 
-  <header class="hero"><div class="hero-inner">
-    <div class="hero-chapter-label"><span>Chapter 05</span> &middot; Redshift Basic</div>
-    <h1>Schema Design for Analytics</h1>
-    <p class="hero-subtitle">Design star and snowflake schemas optimized for ad-tech analytics &mdash; fact tables for impressions, clicks, and conversions; dimension tables for campaigns, creatives, and publishers; and slowly changing dimension patterns for tracking changes over time.</p>
-    <div class="hero-meta">
-      <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Estimated: 60&ndash;90 min</div>
-      <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> Key Concepts</div>
-      <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> 3 Assignments</div>
+  <nav class="top-nav">
+    <div class="top-nav-inner">
+      <a class="nav-brand" href="index.html">
+        <div class="nav-brand-icon">ILA</div>
+        <span class="nav-brand-text">ILA (Iksha Learning Academy) &middot; Redshift Engineering Certification &middot; Level 1</span>
+      </a>
+      <div class="nav-chapter-nav">
+        <a class="nav-btn" href="chapter-04.html">&larr; Previous</a>
+        <span class="nav-current">05 / 08</span>
+        <a class="nav-btn" href="chapter-06.html">Next &rarr;</a>
+      </div>
     </div>
-  </div></header>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-chapter-label">
+        <span>Chapter 05</span> &middot; Phase 3: Performance
+      </div>
+      <h1>Distribution and Sort Keys</h1>
+      <p class="hero-subtitle">
+        Master the two most impactful physical design decisions in Redshift: distribution keys that control
+        how data is placed across slices, and sort keys that control the on-disk ordering for zone-map
+        pruning. These choices determine whether your queries scan megabytes or terabytes.
+      </p>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Estimated: 90&ndash;120 min
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          6 Key Concepts
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          3 Assignments
+        </div>
+      </div>
+    </div>
+  </header>
 
   <div class="main-layout">
     <main class="content">
 
       <h2 id="why-this-matters">Why This Matters</h2>
-      <p>Schema design is the architectural blueprint for your entire ad-tech analytics platform. A well-designed star schema makes queries intuitive for analysts, enables efficient joins through colocation, and supports the hierarchical drill-down patterns that campaign managers need: advertiser to campaign to ad group to creative to placement.</p>
-      <p>In ad-tech, your schema must handle three distinct types of facts: <strong>transactional facts</strong> (individual impressions, clicks, bids), <strong>periodic snapshot facts</strong> (daily campaign summaries), and <strong>accumulating snapshot facts</strong> (conversion funnels tracking impression-to-click-to-conversion lifecycles). Getting the grain right for each fact table is the most important design decision you will make.</p>
+
+      <p>
+        Distribution and sort keys are the two most impactful physical design decisions you make in Redshift.
+        A well-chosen distribution key ensures that JOINs between related tables happen locally on each slice
+        without expensive network redistribution. A well-chosen sort key ensures that range-filtered queries
+        (like "show me data from the last 7 days") skip 95% of the disk blocks via zone-map pruning.
+      </p>
+
+      <p>
+        Together, these two decisions can make the difference between a query that scans 50MB and one that
+        scans 500GB &mdash; a 10,000x difference in I/O. Getting them wrong does not produce errors; it
+        produces slow queries that you may not notice until your data volume grows and performance degrades
+        exponentially. This is why distribution and sort key design is the single most important performance
+        optimization in Redshift.
+      </p>
+
+      <p>
+        The challenge is that distribution and sort key choices are interdependent: the best DISTKEY for JOIN
+        performance may not produce even data distribution, and the best SORTKEY for one query pattern may
+        hurt another. This chapter teaches you a systematic approach to making these decisions based on your
+        actual query workload, not guesswork.
+      </p>
 
       <div class="callout concept">
-        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg> Key Insight</div>
-        <p>The grain of a fact table defines what one row represents. For <code>fact_impressions</code>, the grain is one impression event. For <code>fact_daily_campaign_summary</code>, the grain is one campaign per day. Never mix grains in the same table &mdash; it makes aggregation ambiguous and leads to double-counting bugs that are extremely difficult to diagnose in ad-tech billing.</p>
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Key Insight
+        </div>
+        <p>
+          Think of DISTKEY as answering "where does each row live?" and SORTKEY as answering "in what order
+          are rows stored on disk?" The DISTKEY determines which slice owns a row. The SORTKEY determines
+          which 1MB blocks within that slice contain the row. Together, they let Redshift find your data
+          with minimal I/O.
+        </p>
       </div>
 
       <hr class="section-divider">
 
       <h2 id="key-concepts">Key Concepts</h2>
 
-      <h3 id="star-schema">1. Star Schema for Ad-Tech</h3>
-      <p>A star schema places a central fact table surrounded by dimension tables. The fact table contains measurable events (impressions, clicks, spend) and foreign keys to dimensions. Dimensions contain descriptive attributes (campaign name, advertiser, creative size, publisher domain):</p>
+      <h3 id="distribution-styles">1. Distribution Styles: KEY, ALL, EVEN, AUTO</h3>
 
-      <div class="code-block"><div class="code-header"><span class="code-lang">sql</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-<pre>
-<span class="hl-comment">-- Central fact table: one row per impression event</span>
-<span class="hl-keyword">CREATE TABLE</span> analytics.fact_impressions (
-    impression_id     <span class="hl-function">BIGINT</span> <span class="hl-keyword">IDENTITY</span>(<span class="hl-number">1</span>,<span class="hl-number">1</span>),
-    event_timestamp   <span class="hl-function">TIMESTAMP</span> <span class="hl-keyword">NOT NULL</span>,
-    event_date        <span class="hl-function">DATE</span> <span class="hl-keyword">NOT NULL</span>,
-    campaign_id       <span class="hl-function">INTEGER</span> <span class="hl-keyword">NOT NULL REFERENCES</span> analytics.dim_campaign(campaign_id),
-    creative_id       <span class="hl-function">INTEGER</span> <span class="hl-keyword">REFERENCES</span> analytics.dim_creative(creative_id),
-    publisher_id      <span class="hl-function">INTEGER</span> <span class="hl-keyword">REFERENCES</span> analytics.dim_publisher(publisher_id),
-    geo_id            <span class="hl-function">INTEGER</span> <span class="hl-keyword">REFERENCES</span> analytics.dim_geo(geo_id),
-    device_type_id    <span class="hl-function">SMALLINT</span> <span class="hl-keyword">REFERENCES</span> analytics.dim_device(device_type_id),
-    bid_price_cpm     <span class="hl-function">DECIMAL</span>(<span class="hl-number">10</span>,<span class="hl-number">4</span>),
-    win_price_cpm     <span class="hl-function">DECIMAL</span>(<span class="hl-number">10</span>,<span class="hl-number">4</span>),
-    is_viewable       <span class="hl-function">BOOLEAN</span> <span class="hl-keyword">DEFAULT</span> <span class="hl-keyword">FALSE</span>,
-    is_clicked        <span class="hl-function">BOOLEAN</span> <span class="hl-keyword">DEFAULT</span> <span class="hl-keyword">FALSE</span>,
-    viewability_score <span class="hl-function">DECIMAL</span>(<span class="hl-number">5</span>,<span class="hl-number">2</span>)
-)
-<span class="hl-keyword">DISTSTYLE</span> KEY <span class="hl-keyword">DISTKEY</span>(campaign_id)
-<span class="hl-keyword">COMPOUND SORTKEY</span>(event_date, campaign_id);
-</pre></div>
+      <p>
+        Redshift offers four distribution styles that control how rows are assigned to slices. Each has
+        distinct trade-offs that depend on your table size and JOIN patterns:
+      </p>
 
-      <h3 id="dimension-tables">2. Dimension Tables for Ad-Tech Entities</h3>
-      <p>Each dimension table represents a business entity with descriptive attributes. In ad-tech, the key dimensions are campaigns, creatives, publishers, geography, devices, and time:</p>
-
-      <div class="code-block"><div class="code-header"><span class="code-lang">sql</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-<pre>
-<span class="hl-comment">-- Campaign dimension with advertiser hierarchy</span>
-<span class="hl-keyword">CREATE TABLE</span> analytics.dim_campaign (
-    campaign_id       <span class="hl-function">INTEGER</span> <span class="hl-keyword">PRIMARY KEY</span>,
-    campaign_name     <span class="hl-function">VARCHAR</span>(<span class="hl-number">256</span>),
-    advertiser_id     <span class="hl-function">INTEGER</span>,
-    advertiser_name   <span class="hl-function">VARCHAR</span>(<span class="hl-number">256</span>),
-    agency_id         <span class="hl-function">INTEGER</span>,
-    agency_name       <span class="hl-function">VARCHAR</span>(<span class="hl-number">256</span>),
-    campaign_type     <span class="hl-function">VARCHAR</span>(<span class="hl-number">50</span>),  <span class="hl-comment">-- 'brand', 'performance', 'retargeting'</span>
-    campaign_status   <span class="hl-function">VARCHAR</span>(<span class="hl-number">20</span>),  <span class="hl-comment">-- 'active', 'paused', 'completed'</span>
-    objective         <span class="hl-function">VARCHAR</span>(<span class="hl-number">50</span>),  <span class="hl-comment">-- 'awareness', 'clicks', 'conversions'</span>
-    start_date        <span class="hl-function">DATE</span>,
-    end_date          <span class="hl-function">DATE</span>,
-    daily_budget      <span class="hl-function">DECIMAL</span>(<span class="hl-number">12</span>,<span class="hl-number">2</span>),
-    total_budget      <span class="hl-function">DECIMAL</span>(<span class="hl-number">12</span>,<span class="hl-number">2</span>),
-    effective_from    <span class="hl-function">TIMESTAMP</span> <span class="hl-keyword">DEFAULT</span> <span class="hl-function">GETDATE</span>(),
-    effective_to      <span class="hl-function">TIMESTAMP</span> <span class="hl-keyword">DEFAULT</span> <span class="hl-string">'9999-12-31'</span>,
-    is_current        <span class="hl-function">BOOLEAN</span> <span class="hl-keyword">DEFAULT</span> <span class="hl-keyword">TRUE</span>
-)
-<span class="hl-keyword">DISTSTYLE</span> ALL;
-</pre></div>
-
-      <h3 id="fact-types">3. Fact Table Types</h3>
-      <p>Ad-tech data warehouses typically contain three types of fact tables:</p>
       <ul>
-        <li><strong>Transactional facts</strong> &mdash; One row per event (impression, click, bid request). Highest volume, finest grain. Use for detailed analysis and debugging.</li>
-        <li><strong>Periodic snapshots</strong> &mdash; One row per entity per time period (campaign per day, publisher per hour). Pre-aggregated for dashboard performance. Use for standard reporting.</li>
-        <li><strong>Accumulating snapshots</strong> &mdash; One row per lifecycle (impression-to-conversion funnel). Updated as events occur. Use for attribution and funnel analysis.</li>
+        <li><strong>DISTSTYLE KEY</strong> &mdash; Rows with the same DISTKEY value are co-located on the same slice. This enables collocated JOINs when two tables share the same DISTKEY column. Best for large fact tables.</li>
+        <li><strong>DISTSTYLE ALL</strong> &mdash; The entire table is replicated to every slice. JOINs are always collocated but storage and COPY time increase linearly with cluster size. Best for small dimension tables.</li>
+        <li><strong>DISTSTYLE EVEN</strong> &mdash; Rows are distributed round-robin across slices. Guarantees even distribution but all JOINs require redistribution. Use only when no good DISTKEY exists.</li>
+        <li><strong>DISTSTYLE AUTO</strong> &mdash; Redshift starts with ALL for small tables and switches to EVEN as they grow. A safe default but gives you less control.</li>
       </ul>
 
-      <h3 id="scd">4. Slowly Changing Dimensions (SCD Type 2)</h3>
-      <p>Campaign attributes change over time: budgets are adjusted, names are updated, statuses flip between active and paused. SCD Type 2 preserves history by creating a new row for each change with effective date ranges:</p>
-
-      <div class="code-block"><div class="code-header"><span class="code-lang">sql</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
 <pre>
-<span class="hl-comment">-- SCD Type 2 update: campaign budget changed</span>
-<span class="hl-comment">-- Step 1: Close the current record</span>
-<span class="hl-keyword">UPDATE</span> analytics.dim_campaign
-<span class="hl-keyword">SET</span> effective_to = <span class="hl-function">GETDATE</span>(), is_current = <span class="hl-keyword">FALSE</span>
-<span class="hl-keyword">WHERE</span> campaign_id = <span class="hl-number">42</span> <span class="hl-keyword">AND</span> is_current = <span class="hl-keyword">TRUE</span>;
+<span class="hl-comment">-- Check current distribution style for all tables</span>
+<span class="hl-keyword">SELECT</span>
+    <span class="hl-function">TRIM</span>(pgn.nspname) <span class="hl-keyword">AS</span> schema_name,
+    <span class="hl-function">TRIM</span>(pgc.relname) <span class="hl-keyword">AS</span> table_name,
+    <span class="hl-keyword">CASE</span> pgc.reldiststyle
+        <span class="hl-keyword">WHEN</span> <span class="hl-number">0</span> <span class="hl-keyword">THEN</span> <span class="hl-string">'EVEN'</span>
+        <span class="hl-keyword">WHEN</span> <span class="hl-number">1</span> <span class="hl-keyword">THEN</span> <span class="hl-string">'KEY'</span>
+        <span class="hl-keyword">WHEN</span> <span class="hl-number">8</span> <span class="hl-keyword">THEN</span> <span class="hl-string">'ALL'</span>
+        <span class="hl-keyword">WHEN</span> <span class="hl-number">10</span> <span class="hl-keyword">THEN</span> <span class="hl-string">'AUTO(ALL)'</span>
+        <span class="hl-keyword">WHEN</span> <span class="hl-number">11</span> <span class="hl-keyword">THEN</span> <span class="hl-string">'AUTO(EVEN)'</span>
+        <span class="hl-keyword">WHEN</span> <span class="hl-number">12</span> <span class="hl-keyword">THEN</span> <span class="hl-string">'AUTO(KEY)'</span>
+    <span class="hl-keyword">END AS</span> diststyle,
+    <span class="hl-function">TRIM</span>(pga.attname) <span class="hl-keyword">AS</span> distkey
+<span class="hl-keyword">FROM</span> pg_class pgc
+<span class="hl-keyword">JOIN</span> pg_namespace pgn <span class="hl-keyword">ON</span> pgc.relnamespace = pgn.oid
+<span class="hl-keyword">LEFT JOIN</span> pg_attribute pga <span class="hl-keyword">ON</span> pga.attrelid = pgc.oid <span class="hl-keyword">AND</span> pga.attisdistkey = <span class="hl-keyword">TRUE</span>
+<span class="hl-keyword">WHERE</span> pgn.nspname = <span class="hl-string">'analytics'</span>
+<span class="hl-keyword">ORDER BY</span> table_name;
 
-<span class="hl-comment">-- Step 2: Insert new record with updated budget</span>
-<span class="hl-keyword">INSERT INTO</span> analytics.dim_campaign
-    (campaign_id, campaign_name, advertiser_id, advertiser_name,
-     daily_budget, total_budget, effective_from, effective_to, is_current)
-<span class="hl-keyword">VALUES</span>
-    (<span class="hl-number">42</span>, <span class="hl-string">'Summer Sale 2025'</span>, <span class="hl-number">101</span>, <span class="hl-string">'Acme Corp'</span>,
-     <span class="hl-number">5000.00</span>, <span class="hl-number">150000.00</span>, <span class="hl-function">GETDATE</span>(), <span class="hl-string">'9999-12-31'</span>, <span class="hl-keyword">TRUE</span>);
-</pre></div>
+<span class="hl-comment">-- Check data distribution skew across slices</span>
+<span class="hl-keyword">SELECT</span>
+    <span class="hl-function">TRIM</span>(name) <span class="hl-keyword">AS</span> table_name,
+    slice,
+    <span class="hl-function">SUM</span>(num_values) <span class="hl-keyword">AS</span> row_count
+<span class="hl-keyword">FROM</span> STV_TBL_PERM
+<span class="hl-keyword">WHERE</span> name = <span class="hl-string">'fact_daily_metrics'</span>
+<span class="hl-keyword">GROUP BY</span> name, slice
+<span class="hl-keyword">ORDER BY</span> slice;
+</pre>
+      </div>
+
+      <div class="callout danger">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Distribution Skew is a Silent Killer
+        </div>
+        <p>
+          If you choose a DISTKEY column with low cardinality (e.g., <code>country_code</code> with only
+          10 distinct values), most rows end up on a few slices while others sit empty. Your query runs at
+          the speed of the slowest slice. Always check <code>STV_TBL_PERM</code> after COPY to verify
+          even distribution.
+        </p>
+      </div>
+
+      <h3 id="distkey-selection">2. Choosing the Right Distribution Key</h3>
+
+      <p>
+        The ideal DISTKEY column has three properties: (1) high cardinality (many unique values for even
+        distribution), (2) frequently used in JOIN conditions (for collocated JOINs), and (3) frequently
+        used in GROUP BY clauses (for local aggregation). In practice, you often must prioritize one
+        over the others.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- Analyze DISTKEY candidate: check cardinality and skew</span>
+<span class="hl-keyword">SELECT</span>
+    <span class="hl-string">'campaign_id'</span> <span class="hl-keyword">AS</span> candidate_column,
+    <span class="hl-function">COUNT</span>(<span class="hl-keyword">DISTINCT</span> campaign_id) <span class="hl-keyword">AS</span> distinct_values,
+    <span class="hl-function">COUNT</span>(*) <span class="hl-keyword">AS</span> total_rows,
+    <span class="hl-function">MAX</span>(freq) <span class="hl-keyword">AS</span> max_frequency,
+    <span class="hl-function">MIN</span>(freq) <span class="hl-keyword">AS</span> min_frequency,
+    <span class="hl-function">ROUND</span>(<span class="hl-function">STDDEV</span>(freq), <span class="hl-number">2</span>) <span class="hl-keyword">AS</span> frequency_stddev
+<span class="hl-keyword">FROM</span> (
+    <span class="hl-keyword">SELECT</span> campaign_id, <span class="hl-function">COUNT</span>(*) <span class="hl-keyword">AS</span> freq
+    <span class="hl-keyword">FROM</span> analytics.fact_daily_metrics
+    <span class="hl-keyword">GROUP BY</span> campaign_id
+) freq_dist;
+
+<span class="hl-comment">-- Collocated JOIN example: both tables use campaign_id as DISTKEY</span>
+<span class="hl-keyword">SELECT</span>
+    f.event_date,
+    c.campaign_name,
+    <span class="hl-function">SUM</span>(f.impressions) <span class="hl-keyword">AS</span> total_impressions,
+    <span class="hl-function">SUM</span>(f.spend) <span class="hl-keyword">AS</span> total_spend
+<span class="hl-keyword">FROM</span> analytics.fact_daily_metrics f  <span class="hl-comment">-- DISTKEY(campaign_id)</span>
+<span class="hl-keyword">JOIN</span> analytics.dim_campaign c         <span class="hl-comment">-- DISTSTYLE ALL (collocated)</span>
+    <span class="hl-keyword">ON</span> f.campaign_key = c.campaign_key
+<span class="hl-keyword">GROUP BY</span> f.event_date, c.campaign_name;
+</pre>
+      </div>
+
+      <h3 id="compound-sort-keys">3. Compound Sort Keys</h3>
+
+      <p>
+        A compound sort key defines the physical ordering of rows on disk. Redshift uses this ordering to
+        maintain <strong>zone maps</strong> &mdash; metadata that records the min/max values in each 1MB
+        block. When a query filters on a sort key column, Redshift skips blocks whose min/max range
+        does not overlap the filter, dramatically reducing I/O.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- Create table with compound sort key (date first, then campaign)</span>
+<span class="hl-keyword">CREATE TABLE</span> analytics.fact_events (
+    event_id         <span class="hl-function">BIGINT</span>        <span class="hl-keyword">ENCODE</span> az64,
+    event_date       <span class="hl-function">DATE</span>          <span class="hl-keyword">ENCODE</span> az64       <span class="hl-keyword">NOT NULL</span>,
+    campaign_id      <span class="hl-function">INTEGER</span>       <span class="hl-keyword">ENCODE</span> az64       <span class="hl-keyword">NOT NULL</span>,
+    event_type       <span class="hl-function">VARCHAR</span>(20)   <span class="hl-keyword">ENCODE</span> bytedict,
+    impressions      <span class="hl-function">BIGINT</span>        <span class="hl-keyword">ENCODE</span> az64,
+    clicks           <span class="hl-function">BIGINT</span>        <span class="hl-keyword">ENCODE</span> az64,
+    spend            <span class="hl-function">DECIMAL</span>(18,4) <span class="hl-keyword">ENCODE</span> az64
+)
+<span class="hl-keyword">DISTSTYLE</span> KEY
+<span class="hl-keyword">DISTKEY</span> (campaign_id)
+<span class="hl-keyword">COMPOUND SORTKEY</span> (event_date, campaign_id);
+
+<span class="hl-comment">-- This query benefits from sort key pruning (filters on leading column)</span>
+<span class="hl-keyword">SELECT</span> campaign_id, <span class="hl-function">SUM</span>(impressions), <span class="hl-function">SUM</span>(spend)
+<span class="hl-keyword">FROM</span> analytics.fact_events
+<span class="hl-keyword">WHERE</span> event_date <span class="hl-keyword">BETWEEN</span> <span class="hl-string">'2024-01-01'</span> <span class="hl-keyword">AND</span> <span class="hl-string">'2024-01-07'</span>
+<span class="hl-keyword">GROUP BY</span> campaign_id;
+
+<span class="hl-comment">-- Check zone map effectiveness: how many blocks were skipped?</span>
+<span class="hl-keyword">SELECT</span>
+    query,
+    <span class="hl-function">TRIM</span>(tbl_name) <span class="hl-keyword">AS</span> table_name,
+    rows_pre_filter,
+    rows_pre_user_filter,
+    rows,
+    <span class="hl-function">ROUND</span>((<span class="hl-number">1.0</span> - rows_pre_user_filter::FLOAT / <span class="hl-function">NULLIF</span>(rows_pre_filter, <span class="hl-number">0</span>)) * <span class="hl-number">100</span>, <span class="hl-number">1</span>) <span class="hl-keyword">AS</span> zone_map_skip_pct
+<span class="hl-keyword">FROM</span> SVL_QUERY_SUMMARY
+<span class="hl-keyword">WHERE</span> query = pg_last_query_id()
+  <span class="hl-keyword">AND</span> step_type = <span class="hl-string">'scan'</span>;
+</pre>
+      </div>
 
       <div class="callout important">
-        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Important</div>
-        <p>When joining fact tables to SCD Type 2 dimensions, always join on both the business key AND the date range: <code>WHERE fi.event_timestamp BETWEEN dc.effective_from AND dc.effective_to</code>. Joining only on campaign_id will produce duplicate rows because multiple historical records exist for the same campaign.</p>
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Sort Key Column Order Matters
+        </div>
+        <p>
+          In a compound sort key, zone-map pruning only works when you filter on the <strong>leading
+          columns</strong> of the sort key. A sort key of <code>(event_date, campaign_id)</code> benefits
+          queries that filter on <code>event_date</code> or <code>event_date AND campaign_id</code>, but
+          NOT queries that filter only on <code>campaign_id</code>. Put your most commonly filtered
+          column first.
+        </p>
       </div>
+
+      <h3 id="interleaved-sort-keys">4. Interleaved Sort Keys</h3>
+
+      <p>
+        Unlike compound sort keys which prioritize the leading column, interleaved sort keys give equal
+        weight to all included columns. This is useful when queries filter on different columns unpredictably.
+        However, interleaved sort keys have a significant cost: VACUUM REINDEX is much more expensive,
+        and they should not be used on columns with monotonically increasing values (like timestamps).
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- Interleaved sort key: equal pruning on any column combination</span>
+<span class="hl-keyword">CREATE TABLE</span> analytics.fact_ad_events (
+    event_id         <span class="hl-function">BIGINT</span>        <span class="hl-keyword">ENCODE</span> az64,
+    campaign_id      <span class="hl-function">INTEGER</span>       <span class="hl-keyword">ENCODE</span> az64,
+    creative_id      <span class="hl-function">INTEGER</span>       <span class="hl-keyword">ENCODE</span> az64,
+    device_type      <span class="hl-function">VARCHAR</span>(20)   <span class="hl-keyword">ENCODE</span> bytedict,
+    country_code     <span class="hl-function">CHAR</span>(2)       <span class="hl-keyword">ENCODE</span> bytedict,
+    impressions      <span class="hl-function">BIGINT</span>        <span class="hl-keyword">ENCODE</span> az64,
+    spend            <span class="hl-function">DECIMAL</span>(18,4) <span class="hl-keyword">ENCODE</span> az64
+)
+<span class="hl-keyword">DISTSTYLE</span> KEY
+<span class="hl-keyword">DISTKEY</span> (campaign_id)
+<span class="hl-keyword">INTERLEAVED SORTKEY</span> (campaign_id, creative_id, country_code);
+
+<span class="hl-comment">-- After loading data, VACUUM REINDEX to rebuild interleaved index</span>
+<span class="hl-keyword">VACUUM REINDEX</span> analytics.fact_ad_events;
+</pre>
+      </div>
+
+      <h3 id="vacuum-analyze">5. VACUUM and ANALYZE</h3>
+
+      <p>
+        When you DELETE or UPDATE rows in Redshift, the old rows are not physically removed &mdash; they
+        are marked as deleted ("ghost rows"). VACUUM reclaims this space and re-sorts data to maintain
+        sort key effectiveness. ANALYZE updates table statistics used by the query planner.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- Check tables that need VACUUM (high percentage of unsorted rows)</span>
+<span class="hl-keyword">SELECT</span>
+    <span class="hl-function">TRIM</span>(pgn.nspname) <span class="hl-keyword">AS</span> schema_name,
+    <span class="hl-function">TRIM</span>(a.name) <span class="hl-keyword">AS</span> table_name,
+    a.rows <span class="hl-keyword">AS</span> total_rows,
+    a.unsorted_rows,
+    <span class="hl-function">ROUND</span>(a.unsorted_rows::FLOAT / <span class="hl-function">NULLIF</span>(a.rows, <span class="hl-number">0</span>) * <span class="hl-number">100</span>, <span class="hl-number">2</span>) <span class="hl-keyword">AS</span> pct_unsorted,
+    a.tbl_rows_deleted <span class="hl-keyword">AS</span> ghost_rows
+<span class="hl-keyword">FROM</span> SVV_TABLE_INFO a
+<span class="hl-keyword">JOIN</span> pg_class pgc <span class="hl-keyword">ON</span> pgc.oid = a.table_id
+<span class="hl-keyword">JOIN</span> pg_namespace pgn <span class="hl-keyword">ON</span> pgn.oid = pgc.relnamespace
+<span class="hl-keyword">WHERE</span> a.unsorted_rows > <span class="hl-number">0</span>
+<span class="hl-keyword">ORDER BY</span> pct_unsorted <span class="hl-keyword">DESC</span>;
+
+<span class="hl-comment">-- Run VACUUM to reclaim space and re-sort</span>
+<span class="hl-keyword">VACUUM FULL</span> analytics.fact_daily_metrics;
+
+<span class="hl-comment">-- Update statistics for the query planner</span>
+<span class="hl-keyword">ANALYZE</span> analytics.fact_daily_metrics;
+</pre>
+      </div>
+
+      <h3 id="monitoring-distribution">6. Monitoring Distribution and Sort Key Effectiveness</h3>
+
+      <p>
+        Use Redshift system tables to monitor whether your distribution and sort key choices are effective.
+        The key metrics to track are: distribution skew (are rows evenly spread?), zone-map effectiveness
+        (are blocks being skipped?), and redistribution events (are JOINs causing network shuffles?).
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- Detect redistribution in query plans (DS_BCAST or DS_DIST)</span>
+<span class="hl-keyword">SELECT</span>
+    query,
+    segment,
+    step,
+    label,
+    rows,
+    bytes
+<span class="hl-keyword">FROM</span> SVL_QUERY_SUMMARY
+<span class="hl-keyword">WHERE</span> query = pg_last_query_id()
+  <span class="hl-keyword">AND</span> label <span class="hl-keyword">LIKE</span> <span class="hl-string">'%dist%'</span>
+<span class="hl-keyword">ORDER BY</span> segment, step;
+
+<span class="hl-comment">-- Check table skew: ratio of max to min rows per slice</span>
+<span class="hl-keyword">SELECT</span>
+    <span class="hl-function">TRIM</span>(name) <span class="hl-keyword">AS</span> table_name,
+    <span class="hl-function">MAX</span>(row_count) <span class="hl-keyword">AS</span> max_rows_per_slice,
+    <span class="hl-function">MIN</span>(row_count) <span class="hl-keyword">AS</span> min_rows_per_slice,
+    <span class="hl-function">ROUND</span>(<span class="hl-function">MAX</span>(row_count)::FLOAT / <span class="hl-function">NULLIF</span>(<span class="hl-function">MIN</span>(row_count), <span class="hl-number">0</span>), <span class="hl-number">2</span>) <span class="hl-keyword">AS</span> skew_ratio
+<span class="hl-keyword">FROM</span> (
+    <span class="hl-keyword">SELECT</span> name, slice, <span class="hl-function">SUM</span>(num_values) <span class="hl-keyword">AS</span> row_count
+    <span class="hl-keyword">FROM</span> STV_TBL_PERM
+    <span class="hl-keyword">WHERE</span> name <span class="hl-keyword">IN</span> (<span class="hl-string">'fact_daily_metrics'</span>, <span class="hl-string">'fact_events'</span>)
+    <span class="hl-keyword">GROUP BY</span> name, slice
+)
+<span class="hl-keyword">GROUP BY</span> name
+<span class="hl-keyword">ORDER BY</span> skew_ratio <span class="hl-keyword">DESC</span>;
+</pre>
+      </div>
+
+      <details>
+        <summary>How do I change a table's DISTKEY or SORTKEY after creation?</summary>
+        <div class="details-body">
+          <p>
+            Redshift supports <code>ALTER TABLE ... ALTER DISTSTYLE</code> and <code>ALTER TABLE ...
+            ALTER SORTKEY</code> for in-place changes. However, for large tables, this operation can
+            take hours because it requires physically redistributing or re-sorting all data. An alternative
+            is the deep-copy pattern: create a new table with the desired properties, insert data from
+            the old table, then rename.
+          </p>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">sql</span>
+              <button class="code-copy" onclick="copyCode(this)">Copy</button>
+            </div>
+<pre>
+<span class="hl-comment">-- Deep-copy pattern for changing table properties</span>
+<span class="hl-keyword">CREATE TABLE</span> analytics.fact_events_new (LIKE analytics.fact_events)
+    <span class="hl-keyword">DISTSTYLE</span> KEY <span class="hl-keyword">DISTKEY</span> (campaign_id)
+    <span class="hl-keyword">COMPOUND SORTKEY</span> (event_date, campaign_id);
+
+<span class="hl-keyword">INSERT INTO</span> analytics.fact_events_new
+<span class="hl-keyword">SELECT</span> * <span class="hl-keyword">FROM</span> analytics.fact_events;
+
+<span class="hl-keyword">ALTER TABLE</span> analytics.fact_events <span class="hl-keyword">RENAME TO</span> fact_events_old;
+<span class="hl-keyword">ALTER TABLE</span> analytics.fact_events_new <span class="hl-keyword">RENAME TO</span> fact_events;
+<span class="hl-keyword">DROP TABLE</span> analytics.fact_events_old;
+</pre>
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary>When should I use DISTSTYLE AUTO instead of explicit keys?</summary>
+        <div class="details-body">
+          <p>
+            Use AUTO when you are prototyping and do not yet know your query patterns. Redshift will
+            start with DISTSTYLE ALL for small tables and automatically switch to EVEN as they grow.
+            However, AUTO never chooses KEY distribution, so for production workloads where collocated
+            JOINs matter, always specify an explicit DISTKEY.
+          </p>
+        </div>
+      </details>
 
       <hr class="section-divider">
 
       <h2 id="watch-learn">Watch &amp; Learn</h2>
-      <p>These videos cover the core concepts in this chapter. Watch them before starting assignments.</p>
 
-      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/lWwFJV_9PoE?rel=0&amp;modestbranding=1" title="Data Warehouse Schema Design" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-caption"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg> AWS re:Invent &mdash; Data modeling best practices for Amazon Redshift</div></div>
-      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/Ro9idBUCBSk?rel=0&amp;modestbranding=1" title="Dimensional Modeling" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-caption"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg> Star schema and dimensional modeling for analytics workloads</div></div>
+      <p>These videos cover distribution strategies, sort key selection, and physical design optimization in Redshift.</p>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/AHiIevW1RxQ?rel=0&amp;modestbranding=1" title="Redshift Distribution and Sort Keys" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Amazon Redshift &mdash; Distribution Keys, Sort Keys, and Physical Design Best Practices
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/lWwFJV_9PoE?rel=0&amp;modestbranding=1" title="Redshift Performance Tuning" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Redshift Performance Tuning &mdash; VACUUM, ANALYZE, and Zone Map Optimization
+        </div>
+      </div>
 
       <hr class="section-divider">
 
       <h2 id="further-reading">Further Reading</h2>
-      <p>Deep-dive into the official documentation and reference material.</p>
+
+      <p>Reference material for distribution styles, sort keys, and physical design in Redshift.</p>
+
       <div class="resource-grid">
-        <a class="resource-card" href="https://docs.aws.amazon.com/redshift/latest/dg/c_best-practices-best-dist-key.html" target="_blank" rel="noopener"><div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><div class="resource-info"><div class="resource-title">Table Design Best Practices</div><div class="resource-desc">AWS guide on designing tables for optimal query performance in Redshift.</div></div></a>
-        <a class="resource-card" href="https://docs.aws.amazon.com/redshift/latest/dg/r_CREATE_TABLE_NEW.html" target="_blank" rel="noopener"><div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><div class="resource-info"><div class="resource-title">CREATE TABLE Reference</div><div class="resource-desc">Complete syntax for table creation including constraints, encoding, and distribution.</div></div></a>
-        <a class="resource-card" href="https://docs.aws.amazon.com/redshift/latest/dg/c_best-practices-sort-key.html" target="_blank" rel="noopener"><div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><div class="resource-info"><div class="resource-title">Sort Key Best Practices</div><div class="resource-desc">Choosing sort keys based on query filter patterns.</div></div></a>
-        <a class="resource-card" href="https://docs.aws.amazon.com/redshift/latest/dg/r_ALTER_TABLE.html" target="_blank" rel="noopener"><div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><div class="resource-info"><div class="resource-title">ALTER TABLE Reference</div><div class="resource-desc">Modifying table properties including adding columns and changing sort keys.</div></div></a>
+        <a class="resource-card" href="https://docs.aws.amazon.com/redshift/latest/dg/c_choosing_dist_sort.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+          <div class="resource-info"><div class="resource-title">AWS Docs: Choosing Distribution and Sort Keys</div><div class="resource-desc">Official decision framework for DISTKEY, DISTSTYLE, and SORTKEY selection.</div></div>
+        </a>
+        <a class="resource-card" href="https://docs.aws.amazon.com/redshift/latest/dg/c_best-practices-sort-key.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+          <div class="resource-info"><div class="resource-title">AWS Docs: Sort Key Best Practices</div><div class="resource-desc">When to use compound vs interleaved sort keys, and how zone maps interact with sort order.</div></div>
+        </a>
+        <a class="resource-card" href="https://docs.aws.amazon.com/redshift/latest/dg/r_VACUUM_command.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+          <div class="resource-info"><div class="resource-title">AWS Docs: VACUUM Command</div><div class="resource-desc">VACUUM FULL, VACUUM SORT ONLY, VACUUM DELETE ONLY, and VACUUM REINDEX explained.</div></div>
+        </a>
+        <a class="resource-card" href="https://docs.aws.amazon.com/redshift/latest/dg/r_SVV_TABLE_INFO.html" target="_blank" rel="noopener">
+          <div class="resource-icon article"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <div class="resource-info"><div class="resource-title">SVV_TABLE_INFO System View</div><div class="resource-desc">Monitor table size, distribution skew, unsorted percentage, and ghost rows.</div></div>
+        </a>
+        <a class="resource-card" href="https://docs.aws.amazon.com/redshift/latest/dg/r_STV_TBL_PERM.html" target="_blank" rel="noopener">
+          <div class="resource-icon article"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <div class="resource-info"><div class="resource-title">STV_TBL_PERM System Table</div><div class="resource-desc">Per-slice row counts for detecting distribution skew and verifying DISTKEY effectiveness.</div></div>
+        </a>
+        <a class="resource-card" href="https://docs.aws.amazon.com/redshift/latest/dg/r_SVL_QUERY_SUMMARY.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+          <div class="resource-info"><div class="resource-title">SVL_QUERY_SUMMARY System View</div><div class="resource-desc">Query execution details including scan rows, zone-map filtering, and redistribution steps.</div></div>
+        </a>
       </div>
 
       <hr class="section-divider">
 
       <h2 id="assignments">Assignments</h2>
-      <p>Complete these in order. Each level builds on the previous one.</p>
+
+      <p>Complete these in order. Document your distribution and sort key decisions with benchmarks in <code>docs/chapter-05.md</code>.</p>
 
       <div class="assignment">
-        <div class="assignment-header"><div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 1</div><span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span></div>
-        <h4>Build the Ad-Tech Star Schema</h4>
-        <p>Create the complete star schema for an ad-tech data warehouse.</p>
+        <div class="assignment-header">
+          <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 1</div>
+          <span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span>
+        </div>
+        <h4>Analyze Distribution Skew and Choose Optimal DISTKEY</h4>
+        <p>Evaluate DISTKEY candidates for your fact table, measure distribution skew, and select the optimal distribution key.</p>
         <ul class="checklist">
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create <code>dim_campaign</code>, <code>dim_creative</code>, <code>dim_publisher</code>, <code>dim_geo</code>, and <code>dim_date</code> tables</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create <code>fact_impressions</code> and <code>fact_clicks</code> tables with foreign keys to all dimensions</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Insert at least 50 rows into each dimension table with realistic ad-tech data</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Verify the schema using <code>SVV_TABLE_INFO</code> and document the distribution strategy</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Analyze cardinality and frequency distribution for 3 DISTKEY candidates</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create test tables with different DISTKEYs and load the same data</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Query <code>STV_TBL_PERM</code> to measure skew ratio for each candidate</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Run a JOIN query and check <code>SVL_QUERY_SUMMARY</code> for redistribution events</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Document your DISTKEY choice with data-backed justification</span></li>
         </ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div><p>All tables are created, populated, and you can run a query joining fact to all dimensions.</p></div>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div>
+          <p>Your fact table has a DISTKEY with a skew ratio under 1.5x, and JOIN queries with dimension tables show no redistribution in the query plan.</p>
+        </div>
       </div>
+
       <div class="assignment">
-        <div class="assignment-header"><div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 2</div><span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span></div>
-        <h4>Periodic Snapshot Fact Table</h4>
-        <p>Create and populate a daily campaign summary fact table for dashboard performance.</p>
+        <div class="assignment-header">
+          <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 2</div>
+          <span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span>
+        </div>
+        <h4>Compound vs Interleaved Sort Key Benchmark</h4>
+        <p>Create identical tables with compound and interleaved sort keys, then benchmark 5 query patterns to determine which is better for your workload.</p>
         <ul class="checklist">
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Design <code>fact_daily_campaign_summary</code> with pre-aggregated metrics (impressions, clicks, spend, CTR, viewability)</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write a SQL query that populates the summary from <code>fact_impressions</code> for a given date</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a stored procedure that runs this aggregation for any date parameter</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Compare query performance: ad-hoc aggregation on fact_impressions vs direct select on the summary table</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create table A with <code>COMPOUND SORTKEY (event_date, campaign_id)</code></span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create table B with <code>INTERLEAVED SORTKEY (event_date, campaign_id, country_code)</code></span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Load identical data into both tables and run VACUUM + ANALYZE</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Run 5 queries (date-only, campaign-only, combined, etc.) and record execution times</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Check zone-map skip percentages in <code>SVL_QUERY_SUMMARY</code> for each query</span></li>
         </ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div><p>You have a working two-tier fact architecture: detail for ad-hoc analysis, summary for dashboard performance.</p></div>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div>
+          <p>You have a benchmark spreadsheet showing execution time and zone-map effectiveness for each sort key type across 5 query patterns, with a clear recommendation.</p>
+        </div>
       </div>
+
       <div class="assignment">
-        <div class="assignment-header"><div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 3</div><span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Production-Ready</span></div>
-        <h4>SCD Type 2 Implementation</h4>
-        <p>Implement slowly changing dimensions for campaign and creative attribute tracking.</p>
+        <div class="assignment-header">
+          <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 3</div>
+          <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Production-Ready</span>
+        </div>
+        <h4>Automated VACUUM and Distribution Monitoring</h4>
+        <p>Build monitoring queries for sort key degradation and distribution skew, and implement a VACUUM schedule.</p>
         <ul class="checklist">
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Add SCD Type 2 columns (effective_from, effective_to, is_current) to dim_campaign</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write a stored procedure that handles SCD Type 2 updates (close old record, insert new)</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Test with 3 campaign budget changes and verify historical records are preserved</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write a query that correctly joins impressions to the campaign dimension version that was active at impression time</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Document the SCD Type 2 pattern with a process diagram</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a monitoring query that reports tables with &gt;20% unsorted rows</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a monitoring query that reports tables with skew ratio &gt;2.0</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Run VACUUM FULL on tables with high unsorted percentage and measure impact</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Document a weekly VACUUM schedule based on your findings</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Compare query performance before and after VACUUM with timing benchmarks</span></li>
         </ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div><p>You can track campaign attribute changes over time and correctly attribute impressions to the right campaign version.</p></div>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div>
+          <p>You have a documented VACUUM schedule, monitoring queries that flag problematic tables, and before/after benchmarks proving VACUUM improves query performance.</p>
+        </div>
       </div>
 
       <hr class="section-divider">
 
       <h2 id="self-check">Self-Check</h2>
-      <p>Before moving to the next chapter, honestly answer these questions.</p>
 
-      <details><summary>What is the grain of fact_impressions and why does it matter?</summary><div class="details-body"><p>The grain is one impression event &mdash; each row represents a single ad being served to a single user at a specific moment. The grain determines what COUNT(*) means: in fact_impressions it counts total impressions. If you accidentally stored one row per campaign-per-day, COUNT(*) would count days, not impressions, leading to incorrect billing and reporting.</p></div></details>
-      <details><summary>When should you use a periodic snapshot instead of a transactional fact?</summary><div class="details-body"><p>Use periodic snapshots when dashboards need fast access to pre-aggregated metrics. If your daily campaign report query scans 500M impression rows and takes 30 seconds, a pre-built summary table with one row per campaign per day scans 30K rows in under 1 second. The tradeoff is data freshness: summaries must be rebuilt when source data is corrected.</p></div></details>
-      <details><summary>Why use DISTSTYLE ALL for dimension tables in ad-tech?</summary><div class="details-body"><p>Dimension tables like dim_campaign, dim_creative, and dim_publisher are small (thousands to low millions of rows) but joined in virtually every query. DISTSTYLE ALL places a complete copy on every slice, ensuring that every join between a fact table and a dimension is local (no network redistribution). The storage overhead is minimal for small tables.</p></div></details>
+      <p>Before moving to Chapter 06, honestly answer these questions.</p>
+
+      <details>
+        <summary>Can you explain the difference between DISTSTYLE KEY, ALL, and EVEN?</summary>
+        <div class="details-body"><p>KEY distributes rows by hash of the DISTKEY column (co-locates matching values). ALL replicates the entire table to every slice (best for small dimensions). EVEN distributes rows round-robin (guarantees even distribution but all JOINs require redistribution).</p></div>
+      </details>
+
+      <details>
+        <summary>Do you know when compound sort keys beat interleaved sort keys?</summary>
+        <div class="details-body"><p>Compound wins when most queries filter on the same leading column (e.g., date). Interleaved wins when queries unpredictably filter on different columns. Compound is also much cheaper to maintain (VACUUM is faster). For time-series data with a dominant date filter, compound is almost always better.</p></div>
+      </details>
+
+      <details>
+        <summary>Can you detect and fix distribution skew using system tables?</summary>
+        <div class="details-body"><p>Query STV_TBL_PERM to get row counts per slice. Calculate the ratio of max to min rows. A ratio above 2.0 indicates significant skew. Fix by choosing a higher-cardinality DISTKEY or switching to DISTSTYLE EVEN. Use the deep-copy pattern to change the DISTKEY on an existing table.</p></div>
+      </details>
 
     </main>
+
     <aside class="sidebar">
       <div class="sidebar-title">On this page</div>
       <ul class="toc-list">
         <li class="toc-item"><a href="#why-this-matters">Why This Matters</a></li>
         <li class="toc-item"><a href="#key-concepts">Key Concepts</a></li>
-        <li class="toc-item"><a href="#star-schema" style="padding-left:28px;font-size:12px">Star Schema</a></li>
-        <li class="toc-item"><a href="#dimension-tables" style="padding-left:28px;font-size:12px">Dimension Tables</a></li>
-        <li class="toc-item"><a href="#fact-types" style="padding-left:28px;font-size:12px">Fact Table Types</a></li>
-        <li class="toc-item"><a href="#scd" style="padding-left:28px;font-size:12px">Slowly Changing Dims</a></li>
+        <li class="toc-item"><a href="#distribution-styles" style="padding-left: 28px; font-size: 12px;">Distribution Styles</a></li>
+        <li class="toc-item"><a href="#distkey-selection" style="padding-left: 28px; font-size: 12px;">DISTKEY Selection</a></li>
+        <li class="toc-item"><a href="#compound-sort-keys" style="padding-left: 28px; font-size: 12px;">Compound Sort Keys</a></li>
+        <li class="toc-item"><a href="#interleaved-sort-keys" style="padding-left: 28px; font-size: 12px;">Interleaved Sort Keys</a></li>
+        <li class="toc-item"><a href="#vacuum-analyze" style="padding-left: 28px; font-size: 12px;">VACUUM and ANALYZE</a></li>
+        <li class="toc-item"><a href="#monitoring-distribution" style="padding-left: 28px; font-size: 12px;">Monitoring</a></li>
         <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a></li>
         <li class="toc-item"><a href="#further-reading">Further Reading</a></li>
         <li class="toc-item"><a href="#assignments">Assignments</a></li>
@@ -345,19 +1592,37 @@
     </aside>
   </div>
 
-  <footer class="chapter-footer"><div class="chapter-footer-inner">
-    <nav class="footer-nav">
-      <a class="footer-nav-link" href="chapter-04.html"><span class="footer-nav-label">&larr; Previous Chapter</span><span class="footer-nav-title">04: Data Loading</span></a>
-      <a class="footer-nav-link" href="chapter-06.html"><span class="footer-nav-label">Next Chapter &rarr;</span><span class="footer-nav-title">06: Query Optimization</span></a>
-    </nav>
-    <div class="footer-brand">ILA (Iksha Learning Academy) &middot; Redshift Foundations &middot; Basic Track</div>
-  </div></footer>
+  <footer class="chapter-footer">
+    <div class="chapter-footer-inner">
+      <nav class="footer-nav">
+        <a class="footer-nav-link" href="chapter-04.html">
+          <span class="footer-nav-label">&larr; Previous Chapter</span>
+          <span class="footer-nav-title">04: Schema Design for Analytics</span>
+        </a>
+        <a class="footer-nav-link" href="chapter-06.html">
+          <span class="footer-nav-label">Next Chapter &rarr;</span>
+          <span class="footer-nav-title">06: Query Optimization</span>
+        </a>
+      </nav>
+      <div class="footer-brand">
+        ILA (Iksha Learning Academy) &middot; Redshift Engineering Certification &middot; Level 1
+      </div>
+    </div>
+  </footer>
 
   <script>
-    window.addEventListener('scroll',()=>{const s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight;document.getElementById('progressBar').style.width=(d>0?(s/d)*100:0)+'%'});
-    const tocLinks=document.querySelectorAll('.toc-item a'),sections=[];tocLinks.forEach(link=>{const id=link.getAttribute('href').slice(1),el=document.getElementById(id);if(el)sections.push({id,el,link})});
-    const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{const item=sections.find(s=>s.el===entry.target);if(item&&entry.isIntersecting){tocLinks.forEach(l=>l.classList.remove('active'));item.link.classList.add('active')}})},{rootMargin:'-80px 0px -60% 0px',threshold:0});sections.forEach(s=>observer.observe(s.el));
-    function copyCode(btn){const pre=btn.closest('.code-block').querySelector('pre');navigator.clipboard.writeText(pre.textContent).then(()=>{btn.classList.add('copied');btn.textContent='Copied!';setTimeout(()=>{btn.classList.remove('copied');btn.textContent='Copy'},2000)})}
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      document.getElementById('progressBar').style.width = progress + '%';
+    });
+    const tocLinks = document.querySelectorAll('.toc-item a');
+    const sections = [];
+    tocLinks.forEach(link => { const id = link.getAttribute('href').slice(1); const el = document.getElementById(id); if (el) sections.push({ id, el, link }); });
+    const observer = new IntersectionObserver(entries => { entries.forEach(entry => { const item = sections.find(s => s.el === entry.target); if (item && entry.isIntersecting) { tocLinks.forEach(l => l.classList.remove('active')); item.link.classList.add('active'); } }); }, { rootMargin: '-80px 0px -60% 0px', threshold: 0 });
+    sections.forEach(s => observer.observe(s.el));
+    function copyCode(btn) { const pre = btn.closest('.code-block').querySelector('pre'); navigator.clipboard.writeText(pre.textContent).then(() => { btn.classList.add('copied'); btn.textContent = 'Copied!'; setTimeout(() => { btn.classList.remove('copied'); btn.textContent = 'Copy'; }, 2000); }); }
   </script>
 </body>
 </html>

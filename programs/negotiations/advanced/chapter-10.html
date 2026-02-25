@@ -8,7 +8,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
+    /* ═══════════════════════════════════════════════
+       ILA DESIGN SYSTEM — v1.0
+       Iksha Learning Academy
+       ═══════════════════════════════════════════════ */
+
     :root {
+      /* Palette */
       --ink:        #0f172a;
       --ink-light:  #334155;
       --ink-muted:  #64748b;
@@ -17,6 +23,8 @@
       --surface-warm:#fffbeb;
       --border:     #e2e8f0;
       --border-light:#f1f5f9;
+
+      /* Brand */
       --teal-50:  #f0fdfa;
       --teal-100: #ccfbf1;
       --teal-200: #99f6e4;
@@ -25,36 +33,48 @@
       --teal-700: #0f766e;
       --teal-800: #115e59;
       --teal-900: #134e4a;
+
       --blue-50:  #eff6ff;
       --blue-100: #dbeafe;
       --blue-500: #3b82f6;
       --blue-600: #2563eb;
       --blue-700: #1d4ed8;
+
       --amber-50:  #fffbeb;
       --amber-100: #fef3c7;
       --amber-500: #f59e0b;
       --amber-600: #d97706;
+
       --red-50:   #fef2f2;
       --red-100:  #fee2e2;
       --red-500:  #ef4444;
       --red-600:  #dc2626;
+
       --purple-50:  #faf5ff;
       --purple-100: #f3e8ff;
       --purple-500: #a855f7;
       --purple-600: #9333ea;
-      --green-50:  #f0fdf4;
-      --green-100: #dcfce7;
-      --green-500: #22c55e;
-      --green-600: #16a34a;
+
+      /* Typography */
       --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       --font-serif: 'Instrument Serif', Georgia, serif;
       --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
+
+      /* Spacing */
       --content-max: 780px;
+      --sidebar-width: 280px;
+
+      /* Transitions */
       --ease: cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
 
     body {
       font-family: var(--font-sans);
@@ -64,6 +84,7 @@
       background: var(--surface);
     }
 
+    /* ── PROGRESS BAR ─────────────────────────── */
     .progress-bar {
       position: fixed;
       top: 0;
@@ -75,6 +96,7 @@
       transition: width 0.15s var(--ease);
     }
 
+    /* ── TOP NAV ──────────────────────────────── */
     .top-nav {
       position: sticky;
       top: 0;
@@ -162,6 +184,7 @@
       padding: 0 4px;
     }
 
+    /* ── HERO ─────────────────────────────────── */
     .hero {
       background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%);
       border-bottom: 1px solid var(--border);
@@ -222,18 +245,82 @@
       color: var(--ink-muted);
     }
 
-    .content {
-      max-width: var(--content-max);
-      margin: 0 auto;
-      padding: 3rem 2rem 6rem;
+    .hero-meta-item svg {
+      width: 16px;
+      height: 16px;
+      color: var(--teal-600);
     }
 
+    /* ── MAIN LAYOUT ──────────────────────────── */
+    .main-layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr var(--sidebar-width);
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .content {
+      padding: 3rem 0 6rem;
+      min-width: 0;
+    }
+
+    /* ── SIDEBAR TOC ──────────────────────────── */
+    .sidebar {
+      position: sticky;
+      top: 76px;
+      padding: 2rem 0;
+      max-height: calc(100vh - 76px);
+      overflow-y: auto;
+    }
+
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-muted);
+      margin-bottom: 1rem;
+      padding-left: 14px;
+    }
+
+    .toc-list {
+      list-style: none;
+    }
+
+    .toc-item a {
+      display: block;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--ink-muted);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: all 0.2s var(--ease);
+      line-height: 1.5;
+    }
+
+    .toc-item a:hover {
+      color: var(--ink);
+      background: var(--surface-alt);
+    }
+
+    .toc-item a.active {
+      color: var(--teal-700);
+      border-left-color: var(--teal-500);
+      background: var(--teal-50);
+      font-weight: 500;
+    }
+
+    /* ── TYPOGRAPHY ────────────────────────────── */
     .content h2 {
       font-family: var(--font-serif);
       font-size: 1.85rem;
       font-weight: 400;
       color: var(--ink);
       margin: 3rem 0 1rem;
+      padding-top: 1rem;
       scroll-margin-top: 80px;
     }
 
@@ -244,201 +331,159 @@
       font-weight: 600;
       color: var(--ink);
       margin: 2rem 0 0.75rem;
+      scroll-margin-top: 80px;
     }
 
-    .content p {
-      margin-bottom: 1.25rem;
-      color: var(--ink-light);
-    }
+    .content p { margin-bottom: 1.25rem; color: var(--ink-light); }
+    .content strong { color: var(--ink); font-weight: 600; }
 
-    .content ul, .content ol {
-      margin-bottom: 1.25rem;
-      padding-left: 1.5rem;
+    .content a {
+      color: var(--teal-700);
+      text-decoration: underline;
+      text-decoration-color: var(--teal-200);
+      text-underline-offset: 3px;
+      transition: text-decoration-color 0.2s;
     }
+    .content a:hover { text-decoration-color: var(--teal-600); }
 
-    .content li {
-      margin-bottom: 0.5rem;
-      color: var(--ink-light);
-    }
-
+    .content ul, .content ol { margin-bottom: 1.25rem; padding-left: 1.5rem; }
+    .content li { margin-bottom: 0.5rem; color: var(--ink-light); }
     .content li::marker { color: var(--teal-500); }
 
-    .callout {
-      padding: 1.25rem 1.5rem;
-      border-radius: 12px;
-      margin-bottom: 1.5rem;
-      border: 1px solid;
-    }
-
-    .callout-header {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-    }
-
-    .callout p:last-child { margin-bottom: 0; }
-
-    .callout.concept {
-      background: var(--blue-50);
-      border-color: var(--blue-100);
-    }
-    .callout.concept .callout-header { color: var(--blue-700); }
-
-    .callout.important {
-      background: var(--amber-50);
-      border-color: var(--amber-100);
-    }
-    .callout.important .callout-header { color: var(--amber-600); }
-
-    .callout.tip {
-      background: var(--purple-50);
-      border-color: var(--purple-100);
-    }
-    .callout.tip .callout-header { color: var(--purple-600); }
-
-    .callout.success {
-      background: var(--teal-50);
-      border-color: var(--teal-100);
-    }
-    .callout.success .callout-header { color: var(--teal-700); }
-
     .section-divider {
-      border: none;
-      height: 1px;
+      border: none; height: 1px;
       background: linear-gradient(90deg, transparent, var(--border), transparent);
       margin: 3rem 0;
     }
 
-    .coming-soon-banner {
-      background: var(--amber-50);
-      border: 1px solid var(--amber-100);
-      border-radius: 12px;
-      padding: 2.5rem;
-      text-align: center;
-      margin: 2rem 0;
+    /* ── CALLOUT BOXES ────────────────────────── */
+    .callout { padding: 1.25rem 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; border: 1px solid; position: relative; }
+    .callout-header { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; margin-bottom: 0.5rem; }
+    .callout-header svg { width: 18px; height: 18px; flex-shrink: 0; }
+    .callout p:last-child { margin-bottom: 0; }
+    .callout.concept { background: var(--blue-50); border-color: var(--blue-100); }
+    .callout.concept .callout-header { color: var(--blue-700); }
+    .callout.important { background: var(--amber-50); border-color: var(--amber-100); }
+    .callout.important .callout-header { color: var(--amber-600); }
+    .callout.danger { background: var(--red-50); border-color: var(--red-100); }
+    .callout.danger .callout-header { color: var(--red-600); }
+    .callout.tip { background: var(--purple-50); border-color: var(--purple-100); }
+    .callout.tip .callout-header { color: var(--purple-600); }
+    .callout.success { background: var(--teal-50); border-color: var(--teal-100); }
+    .callout.success .callout-header { color: var(--teal-700); }
+
+    /* ── CODE BLOCKS ──────────────────────────── */
+    .code-block { position: relative; margin-bottom: 1.5rem; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+    .code-header { display: flex; align-items: center; justify-content: space-between; padding: 8px 16px; background: var(--surface-alt); border-bottom: 1px solid var(--border); font-size: 12px; color: var(--ink-muted); }
+    .code-lang { font-family: var(--font-mono); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+    .code-copy { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border); background: white; font-size: 11px; font-family: var(--font-sans); color: var(--ink-muted); cursor: pointer; transition: all 0.2s var(--ease); }
+    .code-copy:hover { border-color: var(--teal-500); color: var(--teal-700); }
+    .code-copy.copied { background: var(--teal-50); border-color: var(--teal-500); color: var(--teal-700); }
+
+    pre { margin: 0; padding: 1.25rem 1.5rem; overflow-x: auto; background: #1e293b; font-family: var(--font-mono); font-size: 13.5px; line-height: 1.7; color: #e2e8f0; }
+    code { font-family: var(--font-mono); font-size: 0.88em; }
+    p code, li code { padding: 2px 7px; background: var(--surface-alt); border: 1px solid var(--border); border-radius: 5px; color: var(--teal-800); font-size: 0.85em; }
+
+    .hl-keyword  { color: #c084fc; }
+    .hl-string   { color: #86efac; }
+    .hl-comment  { color: #64748b; font-style: italic; }
+    .hl-function { color: #7dd3fc; }
+    .hl-number   { color: #fbbf24; }
+    .hl-flag     { color: #f472b6; }
+
+    /* ── COLLAPSIBLE ──────────────────────────── */
+    details { margin-bottom: 1.25rem; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; transition: border-color 0.2s var(--ease); }
+    details[open] { border-color: var(--teal-200); }
+    details summary { padding: 1rem 1.25rem; font-weight: 600; font-size: 15px; cursor: pointer; background: var(--surface-alt); list-style: none; display: flex; align-items: center; gap: 10px; transition: background 0.2s var(--ease); user-select: none; }
+    details summary::-webkit-details-marker { display: none; }
+    details summary::before { content: ''; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E"); background-size: contain; flex-shrink: 0; transition: transform 0.2s var(--ease); }
+    details[open] summary::before { transform: rotate(90deg); }
+    details summary:hover { background: var(--teal-50); }
+    .details-body { padding: 1.25rem 1.5rem; }
+    .details-body p:last-child { margin-bottom: 0; }
+
+    /* ── VIDEO EMBED ──────────────────────────── */
+    .video-card { margin-bottom: 1.5rem; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+    .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; background: #0f172a; }
+    .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+    .video-caption { padding: 12px 16px; background: var(--surface-alt); font-size: 13px; color: var(--ink-muted); display: flex; align-items: center; gap: 6px; }
+    .video-caption svg { width: 14px; height: 14px; color: var(--red-500); }
+
+    /* ── RESOURCE CARDS ───────────────────────── */
+    .resource-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+    .resource-card { display: flex; gap: 14px; padding: 1rem 1.25rem; border: 1px solid var(--border); border-radius: 12px; text-decoration: none; transition: all 0.2s var(--ease); background: white; }
+    .resource-card:hover { border-color: var(--teal-300); background: var(--teal-50); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+    .resource-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 18px; }
+    .resource-icon.docs    { background: var(--blue-50);   color: var(--blue-600); }
+    .resource-icon.video   { background: var(--red-50);    color: var(--red-500); }
+    .resource-icon.github  { background: var(--ink);       color: white; }
+    .resource-icon.article { background: var(--amber-50);  color: var(--amber-600); }
+    .resource-icon.pdf     { background: var(--purple-50); color: var(--purple-600); }
+    .resource-info { min-width: 0; }
+    .resource-title { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 2px; line-height: 1.4; }
+    .resource-desc { font-size: 12px; color: var(--ink-muted); line-height: 1.5; }
+
+    /* ── ASSIGNMENT CARDS ─────────────────────── */
+    .assignment { border: 2px solid var(--teal-200); border-radius: 14px; padding: 1.5rem 1.75rem; margin-bottom: 1.5rem; background: linear-gradient(135deg, var(--teal-50) 0%, white 100%); }
+    .assignment-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+    .assignment-label { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--teal-700); }
+    .assignment-difficulty { display: inline-flex; padding: 4px 10px; border-radius: 100px; font-size: 11px; font-weight: 600; }
+    .difficulty-l1 { background: var(--teal-100); color: var(--teal-800); }
+    .difficulty-l2 { background: var(--amber-100); color: var(--amber-600); }
+    .difficulty-l3 { background: var(--red-100); color: var(--red-600); }
+    .assignment h4 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.75rem; }
+    .assignment p { font-size: 14px; }
+    .checklist { list-style: none; padding: 0; }
+    .checklist li { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border-light); font-size: 14px; }
+    .checklist li:last-child { border-bottom: none; }
+    .check-box { width: 20px; height: 20px; border-radius: 6px; border: 2px solid var(--border); flex-shrink: 0; margin-top: 1px; cursor: pointer; transition: all 0.15s var(--ease); display: flex; align-items: center; justify-content: center; }
+    .check-box:hover { border-color: var(--teal-500); }
+    .check-box.checked { background: var(--teal-500); border-color: var(--teal-500); }
+    .check-box.checked::after { content: ''; width: 10px; height: 10px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E"); background-size: contain; }
+
+    /* ── DIAGRAM ──────────────────────────────── */
+    .diagram { margin: 1.5rem 0; padding: 2rem; background: var(--surface-alt); border: 1px solid var(--border); border-radius: 14px; overflow-x: auto; }
+    .diagram pre { background: transparent; color: var(--ink); padding: 0; font-size: 13px; line-height: 1.6; }
+    .diagram-caption { margin-top: 1rem; font-size: 12px; color: var(--ink-muted); text-align: center; font-style: italic; }
+
+    /* ── FOOTER ───────────────────────────────── */
+    .chapter-footer { border-top: 1px solid var(--border); padding: 3rem 2rem; background: var(--surface-alt); }
+    .chapter-footer-inner { max-width: var(--content-max); margin: 0 auto; }
+    .footer-nav { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+    .footer-nav-link { display: flex; flex-direction: column; gap: 4px; padding: 1rem 1.5rem; border: 1px solid var(--border); border-radius: 12px; text-decoration: none; transition: all 0.2s var(--ease); max-width: 320px; background: white; }
+    .footer-nav-link:hover { border-color: var(--teal-300); box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+    .footer-nav-label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--teal-600); }
+    .footer-nav-title { font-size: 15px; font-weight: 600; color: var(--ink); }
+    .footer-brand { text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); font-size: 13px; color: var(--ink-muted); }
+
+    /* ── RESPONSIVE ───────────────────────────── */
+    @media (max-width: 960px) {
+      .main-layout { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .resource-grid { grid-template-columns: 1fr; }
     }
-
-    .coming-soon-banner h3 {
-      color: var(--amber-600);
-      margin-bottom: 0.5rem;
+    @media (max-width: 640px) {
+      .hero { padding: 2.5rem 1.25rem 2rem; }
+      .main-layout { padding: 0 1.25rem; }
+      .content { padding: 2rem 0 4rem; }
+      pre { padding: 1rem; font-size: 12.5px; }
+      .footer-nav { flex-direction: column; }
+      .footer-nav-link { max-width: 100%; width: 100%; }
     }
-
-    .coming-soon-banner p {
-      color: var(--ink-muted);
-      margin-bottom: 0;
-    }
-
-    .topics-preview {
-      background: var(--surface-alt);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.5rem 2rem;
-      margin: 1.5rem 0;
-    }
-
-    .topics-preview h3 {
-      font-size: 0.95rem;
-      margin-bottom: 0.75rem;
-      color: var(--ink);
-    }
-
-    .topics-preview ul {
-      list-style: none;
-      padding: 0;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 0.5rem;
-    }
-
-    .topics-preview li {
-      font-size: 14px;
-      color: var(--ink-light);
-      padding-left: 1.25rem;
-      position: relative;
-    }
-
-    .topics-preview li::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 8px;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--teal-500);
-    }
-
-    .footer-nav {
-      max-width: var(--content-max);
-      margin: 0 auto;
-      padding: 2rem;
-      display: flex;
-      justify-content: space-between;
-      border-top: 1px solid var(--border);
-    }
-
-    .footer-nav-link {
-      display: flex;
-      flex-direction: column;
-      text-decoration: none;
-      padding: 1rem;
-      border-radius: 12px;
-      transition: background 0.2s var(--ease);
-      max-width: 45%;
-    }
-
-    .footer-nav-link:hover {
-      background: var(--surface-alt);
-    }
-
-    .footer-nav-label {
-      font-size: 12px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--ink-muted);
-      margin-bottom: 4px;
-    }
-
-    .footer-nav-title {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--teal-700);
-    }
-
-    .footer-nav-link.next { text-align: right; margin-left: auto; }
-
-    .footer {
-      text-align: center;
-      padding: 2rem;
-      font-size: 13px;
-      color: var(--ink-muted);
-      border-top: 1px solid var(--border);
-    }
-
-    .footer a {
-      color: var(--teal-700);
-      text-decoration: none;
-    }
-
-    .footer a:hover { text-decoration: underline; }
-
-    @media (max-width: 768px) {
-      .hero { padding: 3rem 1.5rem 2.5rem; }
-      .content { padding: 2rem 1.5rem 4rem; }
-      .hero h1 { font-size: 2rem; }
-      .footer-nav { flex-direction: column; gap: 1rem; }
-      .footer-nav-link { max-width: 100%; }
-      .footer-nav-link.next { text-align: left; }
+    @media print {
+      .top-nav, .sidebar, .progress-bar { display: none; }
+      .main-layout { display: block; }
+      .content { padding: 0; }
+      .hero { background: white; border: none; }
+      pre { background: #f1f5f9; color: var(--ink); border: 1px solid var(--border); }
     }
   </style>
 </head>
 <body>
+  <!-- Progress Bar -->
   <div class="progress-bar" id="progressBar"></div>
 
+  <!-- Top Navigation -->
   <nav class="top-nav">
     <div class="top-nav-inner">
       <a class="nav-brand" href="index.html">
@@ -448,74 +493,633 @@
       <div class="nav-chapter-nav">
         <a class="nav-btn" href="chapter-09.html">&larr; Previous</a>
         <span class="nav-current">10 / 10</span>
-        <a class="nav-btn" href="index.html">All Chapters</a>
+        <span class="nav-btn disabled">Next &rarr;</span>
       </div>
     </div>
   </nav>
 
+  <!-- Hero -->
   <header class="hero">
     <div class="hero-inner">
       <div class="hero-chapter-label">
-        <span>Chapter 10</span> 
+        <span>Chapter 10</span> &middot; Capstone
       </div>
       <h1>Master Simulation and Capstone</h1>
-      <p class="hero-subtitle">Complex multi-round simulation, peer evaluation, expert debrief, capstone defense</p>
+      <p class="hero-subtitle">
+        This final chapter of the Advanced Track is entirely experiential. You will design and execute a comprehensive negotiation simulation that integrates every concept from the program &mdash; game theory, term sheets, equity splits, enterprise sales, partnerships, international dynamics, crisis management, and leadership. This is your proving ground: demonstrate mastery through action.
+      </p>
       <div class="hero-meta">
-        <div class="hero-meta-item">3 Assignments</div>
-        <div class="hero-meta-item">~45 min read</div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Estimated: 120&ndash;180 min
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          6 Key Concepts
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          3 Assignments
+        </div>
       </div>
     </div>
   </header>
 
-  <main class="content">
-    <h2>Overview</h2>
-    <p>This chapter covers <strong>master simulation and capstone</strong> as part of the Advanced Negotiations curriculum. You will build practical skills through guided explanations, code examples, and hands-on assignments.</p>
+  <!-- Main Content + Sidebar -->
+  <div class="main-layout">
+    <main class="content">
 
-    <div class="topics-preview">
-      <h3>Topics Covered</h3>
-      <ul>
-            <li>Complex multi-round simulation</li>
-            <li>peer evaluation</li>
-            <li>expert debrief</li>
-            <li>capstone defense</li>
+      <h2 id="why-this-matters">Why This Matters</h2>
+
+      <p>
+        Knowledge without practice is theory. The previous nine chapters gave you frameworks, models, scripts, and strategies. This chapter gives you the opportunity to use all of them under pressure, in a realistic simulation that mirrors the complexity, ambiguity, and emotional intensity of real high-stakes negotiations. <strong>Negotiation is a performance skill, like playing an instrument or competing in a sport.</strong> You cannot master it by reading about it &mdash; you must practice it repeatedly, receive feedback, and iterate.
+      </p>
+
+      <p>
+        The capstone simulation is designed to test integration, not memorization. You will face situations where multiple frameworks apply simultaneously and you must choose which to prioritize. You will encounter counterparties whose behavior does not match the textbook patterns. You will be forced to make real-time decisions with incomplete information, manage your emotions under pressure, and adapt your strategy when circumstances change unexpectedly. These are the conditions you will face in every real negotiation for the rest of your career.
+      </p>
+
+      <p>
+        Think of this chapter as your negotiation final exam &mdash; but one where the exam itself is the learning experience. Research shows that simulation-based learning produces 3&ndash;5x better retention than lecture-based learning, and the lessons you learn from making mistakes in a simulation are far more durable than lessons learned from reading about others' mistakes. Whether you succeed brilliantly or stumble badly in the simulation, you will learn more in these hours than in any other chapter of the program.
+      </p>
+
+      <div class="callout important">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          How to Approach This Chapter
+        </div>
+        <p>
+          <strong>This chapter requires participation, not just reading.</strong> The simulations are designed to be conducted with 2&ndash;6 participants playing different roles. If you are studying independently, recruit colleagues, classmates, or friends to participate. The value is in the interaction, the pressure, the real-time decision-making, and the debrief conversations afterward. Reading the simulation scenarios without executing them will give you about 10% of the learning value.
+        </p>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="key-concepts">Key Concepts</h2>
+
+      <h3 id="simulation-design">1. Designing Effective Negotiation Simulations</h3>
+
+      <p>
+        A well-designed negotiation simulation creates a realistic environment where participants must apply multiple skills simultaneously. The best simulations have several key elements: asymmetric information (each party knows things the other does not), multiple issues that can be traded, time pressure, emotional stakes, and consequences for outcomes. Understanding these design principles helps you create simulations for your own team and evaluate the ones you participate in.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Design</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── Negotiation Simulation Design Elements ───────────────── */</span>
+
+<span class="hl-keyword">ELEMENT 1: ASYMMETRIC INFORMATION</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Each party receives a confidential role brief with information
+  the other side does not have. This forces participants to:
+  - Ask good questions to uncover hidden information
+  - Decide what to share and what to withhold
+  - Make judgments about the other side's true priorities
+  - Test assumptions rather than relying on guesses
+
+<span class="hl-keyword">ELEMENT 2: MULTIPLE TRADEABLE ISSUES</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  At least 5-7 negotiable issues with different value to each party.
+  This enables logrolling (trading low-value items for high-value ones)
+  and tests whether participants can expand the pie rather than just
+  fighting over a single number. Single-issue negotiations are too
+  simple for advanced-level simulations.
+
+<span class="hl-keyword">ELEMENT 3: TIME PRESSURE</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Set a firm deadline for the negotiation (60-90 minutes typically).
+  Time pressure forces prioritization, prevents perfectionism,
+  and creates the realistic cognitive load that negotiators face
+  in real deals. The best simulations have escalating pressure
+  (e.g., new information arrives at the 30-minute mark).
+
+<span class="hl-keyword">ELEMENT 4: EMOTIONAL COMPLEXITY</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Include elements that trigger real emotions:
+  - Fairness issues that feel personal
+  - Relationship dynamics between the parties
+  - Ethical dilemmas that have no clear right answer
+  - Competitive elements that activate ego and status concerns
+
+<span class="hl-keyword">ELEMENT 5: REALISTIC CONSEQUENCES</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Outcomes should be scored or evaluated. Participants should
+  know their score will be compared to others. This creates
+  accountability and makes the simulation feel meaningful.
+  Score on: economic outcome, relationship preservation,
+  creative problem-solving, and ethical behavior.
+</pre>
+      </div>
+
+      <h3 id="master-scenario">2. The Master Scenario: StrataTech Acquisition</h3>
+
+      <p>
+        The capstone simulation places you in the middle of a multi-party acquisition negotiation. StrataTech, a mid-stage SaaS startup (Series B, $15M ARR), has received acquisition interest from two potential buyers. The simulation involves 4&ndash;6 participants playing different roles, each with confidential information, hidden priorities, and conflicting incentives. This scenario integrates concepts from every chapter in the Advanced Track.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Scenario</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── Master Simulation: The StrataTech Acquisition ────────── */</span>
+
+<span class="hl-keyword">BACKGROUND</span>
+<span class="hl-string">━━━━━━━━━━</span>
+  StrataTech is a B2B SaaS company with $15M ARR, growing 80% YoY.
+  The company has 120 employees, $8M in remaining funding runway,
+  and a strong product but increasing competition. Two acquisition
+  offers have arrived simultaneously.
+
+<span class="hl-keyword">ROLES (4-6 participants)</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  <span class="hl-function">Role 1: StrataTech CEO/Co-Founder</span>
+  Priority: Maximum valuation, employee retention, personal role post-acq
+  Secret: Has a competing offer from a PE firm that expires in 14 days
+
+  <span class="hl-function">Role 2: StrataTech CTO/Co-Founder</span>
+  Priority: Technical team autonomy, IP recognition, earn-out structure
+  Secret: Has been approached for a CTO role at a public company
+
+  <span class="hl-function">Role 3: MegaCorp VP of Corporate Development</span>
+  Priority: Acquiring the technology and team, not the customer base
+  Secret: Board has approved up to $200M but prefers under $150M
+
+  <span class="hl-function">Role 4: NexGen Ventures Managing Partner</span>
+  Priority: Growth investment (not acquisition), maintain independence
+  Secret: Can offer $80M growth round at $400M valuation
+
+  <span class="hl-function">Role 5 (optional): StrataTech Lead Investor</span>
+  Priority: Maximum return on $25M invested, liquidation preference
+  Secret: Fund is in year 8 of 10 and needs liquidity events
+
+  <span class="hl-function">Role 6 (optional): StrataTech VP of Engineering</span>
+  Priority: Team retention packages, technical roadmap preservation
+  Secret: 5 key engineers have offers from FAANG companies
+
+<span class="hl-keyword">ISSUES TO NEGOTIATE</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━</span>
+  1. Valuation / investment amount
+  2. Deal structure (cash vs. stock vs. earn-out)
+  3. Employee retention packages
+  4. Founder roles and vesting post-deal
+  5. IP ownership and technology roadmap
+  6. Board composition post-deal
+  7. Non-compete terms for founders
+  8. Timeline and exclusivity
+</pre>
+      </div>
+
+      <h3 id="preparation">3. Simulation Preparation Framework</h3>
+
+      <p>
+        Success in the capstone simulation &mdash; and in any complex negotiation &mdash; depends on the quality of your preparation. The preparation framework below integrates concepts from every chapter in the program. Use it as both a checklist for the simulation and a template for preparing for real negotiations going forward.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Preparation</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── Comprehensive Negotiation Preparation Checklist ──────── */</span>
+
+<span class="hl-keyword">PART 1: SELF-ANALYSIS</span> (Chapters 1-2)
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  [ ] Define your 3 most important objectives (ranked)
+  [ ] Calculate your BATNA with specific numbers
+  [ ] Determine your reservation price (walk-away point)
+  [ ] Identify your aspiration point (best realistic outcome)
+  [ ] Assess your emotional triggers and plan for managing them
+
+<span class="hl-keyword">PART 2: COUNTERPARTY ANALYSIS</span> (Chapters 3-5)
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  [ ] Map all stakeholders and their priorities
+  [ ] Estimate the counterparty's BATNA
+  [ ] Identify what they value that costs you little to give
+  [ ] Research their negotiation style and history
+  [ ] Prepare for their likely opening position and tactics
+
+<span class="hl-keyword">PART 3: STRATEGY DESIGN</span> (Chapters 6-8)
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  [ ] Plan your opening: collaborative or competitive?
+  [ ] Design 3 package proposals (high/medium/fallback)
+  [ ] Identify 5 tradeable issues ranked by value to each side
+  [ ] Prepare 3 concession exchanges (give X, get Y)
+  [ ] Plan your anchoring strategy with justification
+
+<span class="hl-keyword">PART 4: CONTINGENCY PLANNING</span> (Chapters 8-9)
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  [ ] What if they walk away? Your response plan
+  [ ] What if they make an exploding offer? Your response plan
+  [ ] What if new information changes the dynamics? Your adaptation plan
+  [ ] What if the negotiation becomes adversarial? De-escalation plan
+  [ ] What is your "elegant exit" if no agreement is possible?
+</pre>
+      </div>
+
+      <h3 id="execution">4. Simulation Execution Guidelines</h3>
+
+      <p>
+        How you execute the simulation matters as much as how you prepare. The following guidelines help you get maximum learning value from the experience. Remember: the goal is not to "win" the simulation. The goal is to practice integrating multiple negotiation skills under realistic pressure and to learn from the experience.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Guidelines</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── Simulation Execution Guidelines ──────────────────────── */</span>
+
+<span class="hl-keyword">PHASE 1: OPENING (first 15 minutes)</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  - Establish rapport and set a collaborative tone
+  - Share your general objectives (not your specific limits)
+  - Ask open-ended questions to understand the other side
+  - Listen more than you talk (aim for 30/70 talk ratio)
+  - Take notes on what they reveal about their priorities
+
+<span class="hl-keyword">PHASE 2: EXPLORATION (minutes 15-40)</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  - Identify all the issues on the table
+  - Test hypotheses about the other side's priorities
+  - Float tentative proposals: "What if we structured it as..."
+  - Look for logrolling opportunities (trade issues)
+  - Be creative: suggest options neither side has considered
+
+<span class="hl-keyword">PHASE 3: BARGAINING (minutes 40-70)</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  - Present your package proposal (multiple issues bundled)
+  - Use conditional language: "If you can do X, we could do Y"
+  - Make concessions strategically (small, reciprocal, decreasing)
+  - Track all tentative agreements in writing
+  - If stuck, reframe: "Let's step back and look at the big picture"
+
+<span class="hl-keyword">PHASE 4: CLOSING (minutes 70-90)</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  - Summarize all agreed points
+  - Address any remaining open issues
+  - Use "nothing is agreed until everything is agreed" if needed
+  - Create a written summary of the deal terms
+  - End on a positive note regardless of outcome
+</pre>
+      </div>
+
+      <h3 id="debrief">5. The Art of the Negotiation Debrief</h3>
+
+      <p>
+        The debrief is where the real learning happens. Without a structured debrief, participants walk away with impressions and feelings but miss the deeper lessons. A good debrief transforms a 90-minute simulation into a lifetime of improved negotiation performance. The debrief should happen immediately after the simulation while emotions and details are fresh.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Debrief</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── Structured Negotiation Debrief Protocol ──────────────── */</span>
+
+<span class="hl-keyword">STEP 1: REVEAL AND COMPARE (15 minutes)</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  All participants share their confidential role briefs.
+  Compare: What did each side's instructions say?
+  Reveal: What information was hidden that would have changed things?
+  Score: How did the final deal compare to each party's ideal outcome?
+
+<span class="hl-keyword">STEP 2: PROCESS ANALYSIS (20 minutes)</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  For each participant:
+  - What was your strategy going in? Did it change?
+  - What was the turning point in the negotiation?
+  - What surprised you about the other side's behavior?
+  - What would you do differently if you could do it again?
+  - Which frameworks from the program did you use? Which helped most?
+
+<span class="hl-keyword">STEP 3: VALUE CREATION ANALYSIS (10 minutes)</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  - Was value left on the table? Where?
+  - Were there trades that could have made everyone better off?
+  - Did the negotiation expand the pie or just divide it?
+  - What creative solutions were found? What was missed?
+
+<span class="hl-keyword">STEP 4: PERSONAL INSIGHTS (10 minutes)</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Each participant writes down:
+  <span class="hl-number">1.</span> My biggest strength in this negotiation was...
+  <span class="hl-number">2.</span> My biggest area for improvement is...
+  <span class="hl-number">3.</span> The most important thing I learned today is...
+  <span class="hl-number">4.</span> One specific thing I will do differently in my next
+     real negotiation is...
+
+<span class="hl-keyword">STEP 5: CONNECTION TO REAL WORLD (5 minutes)</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  - What real negotiations in your life resemble this simulation?
+  - How will you apply today's lessons to your actual work?
+  - What preparation will you do differently for your next real deal?
+</pre>
+      </div>
+
+      <h3 id="portfolio">6. Building Your Negotiation Portfolio</h3>
+
+      <p>
+        The capstone portfolio is your tangible record of mastery. It documents your growth from the beginning of the program to this final simulation, captures your negotiation philosophy, and creates a resource you can reference for years to come. Think of it as both a graduation requirement and a personal reference library for every future negotiation you face.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Portfolio</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── Capstone Portfolio Requirements ──────────────────────── */</span>
+
+<span class="hl-keyword">SECTION 1: NEGOTIATION PHILOSOPHY (2-3 pages)</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Your personal negotiation philosophy statement that integrates
+  lessons from all 10 chapters. Address:
+  - Your approach to preparation and information gathering
+  - Your stance on value creation vs. value claiming
+  - How you handle ethical dilemmas in negotiation
+  - Your relationship-building philosophy
+  - How you plan to develop as a negotiation leader
+
+<span class="hl-keyword">SECTION 2: CASE STUDIES (3-5 cases)</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Documented negotiations (from simulations or real life) including:
+  - Context and objectives
+  - Preparation approach
+  - Key moments and decisions
+  - Outcome analysis (what worked, what did not)
+  - Frameworks applied and their effectiveness
+
+<span class="hl-keyword">SECTION 3: PERSONAL PREPARATION TEMPLATE</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  A customized negotiation preparation template that you will
+  use for all future negotiations. This should incorporate the
+  best elements from the program but be adapted to your personal
+  style, industry, and the types of negotiations you face most often.
+
+<span class="hl-keyword">SECTION 4: SKILL ASSESSMENT AND GROWTH PLAN</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Honest self-assessment of your negotiation capabilities:
+  - Rate yourself on 10 key skills (1-10 with evidence)
+  - Identify top 3 strengths with specific examples
+  - Identify top 3 growth areas with specific improvement plans
+  - Set 3 measurable negotiation goals for the next 12 months
+  - Define how you will continue learning and practicing
+
+<span class="hl-keyword">SECTION 5: CAPSTONE SIMULATION ANALYSIS</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Detailed analysis of your performance in the master simulation:
+  - Pre-negotiation strategy and how it evolved during the simulation
+  - Key decisions made and their rationale
+  - Moments of success and moments of failure
+  - What you learned about yourself as a negotiator
+  - How this simulation will change your approach going forward
+</pre>
+      </div>
+
+      <div class="callout concept">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          The Lifelong Practice
+        </div>
+        <p>
+          Completing this program does not make you a master negotiator. It gives you the <strong>tools, frameworks, and self-awareness to become one through deliberate practice over the next decade</strong>. The best negotiators in the world are still learning, still practicing, still seeking feedback. Your journey does not end here &mdash; it has just been given a powerful foundation. Keep preparing, keep practicing, keep debriefing, and keep improving.
+        </p>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="watch-learn">Watch &amp; Learn</h2>
+
+      <p>These videos showcase master-level negotiations, simulation-based learning, and reflections on lifelong negotiation development.</p>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/MjhDkNmtjy0?rel=0&amp;modestbranding=1" title="Chris Voss - Master Negotiation" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Chris Voss &mdash; Master negotiation techniques from a former FBI hostage negotiator. Tactical empathy, calibrated questions, and the power of "no."
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/WsBPgrJUNZI?rel=0&amp;modestbranding=1" title="William Ury - Getting Past No" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          William Ury &mdash; Co-author of "Getting to Yes" on the power of the positive no, the walk to the balcony, and building golden bridges in difficult negotiations.
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="further-reading">Further Reading</h2>
+
+      <p>These capstone resources represent the most advanced thinking on negotiation mastery and lifelong development.</p>
+
+      <div class="resource-grid">
+        <a class="resource-card" href="https://www.amazon.com/Never-Split-Difference-Negotiating-Depended/dp/0062407805" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Never Split the Difference &mdash; Chris Voss</div>
+            <div class="resource-desc">FBI hostage negotiator's techniques applied to business. Tactical empathy, mirroring, labeling, and calibrated questions.</div>
+          </div>
+        </a>
+        <a class="resource-card" href="https://www.amazon.com/Negotiation-Genius-Obstacles-Brilliant-Bargaining/dp/0553384112" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Negotiation Genius &mdash; Malhotra &amp; Bazerman</div>
+            <div class="resource-desc">Harvard Business School professors on advanced negotiation strategy. Covers complex deals, ethical dilemmas, and systemic negotiation improvement.</div>
+          </div>
+        </a>
+        <a class="resource-card" href="https://www.amazon.com/Getting-Yes-Negotiating-Agreement-Without/dp/0143118757" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Getting to Yes &mdash; Fisher, Ury &amp; Patton</div>
+            <div class="resource-desc">The foundational text on principled negotiation from the Harvard Negotiation Project. Separate people from problems, focus on interests, not positions.</div>
+          </div>
+        </a>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="assignments">Assignments</h2>
+
+      <p>The capstone assignments are the most comprehensive in the program. Each integrates concepts from multiple chapters and requires significant time and effort.</p>
+
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 1
+          </div>
+          <span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Preparation</span>
+        </div>
+        <h4>Master Simulation Preparation</h4>
+        <p>Complete the full preparation framework for your assigned role in the StrataTech Acquisition simulation. This is the foundation for the simulation itself.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Complete all 4 parts of the preparation checklist: self-analysis, counterparty analysis, strategy design, and contingency planning</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Prepare 3 package proposals (ideal, acceptable, minimum) with specific terms for all 8 negotiable issues</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write opening statements and key talking points for each phase of the negotiation</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Prepare responses for 5 likely moves by other parties based on their probable priorities</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a written strategy document that you will reference during the simulation</span></li>
+        </ul>
+        <div class="callout success" style="margin-top:1rem;margin-bottom:0">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>You have a comprehensive preparation document with objectives, BATNA, proposals, talking points, and contingency plans for your assigned role.</p>
+        </div>
+      </div>
+
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 2
+          </div>
+          <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Execution</span>
+        </div>
+        <h4>Execute the Master Simulation</h4>
+        <p>Conduct the full StrataTech Acquisition simulation with your team. Follow the execution guidelines and complete the structured debrief afterward.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Conduct the 90-minute StrataTech negotiation simulation with 4-6 participants</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Follow the 4-phase execution model: opening, exploration, bargaining, closing</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Produce a written agreement (even if partial) documenting all agreed terms</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Complete the full 5-step debrief protocol with all participants</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write individual personal insights including strengths, growth areas, and key lessons</span></li>
+        </ul>
+        <div class="callout success" style="margin-top:1rem;margin-bottom:0">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>You have completed the simulation, produced a deal document, completed the structured debrief, and written personal reflections.</p>
+        </div>
+      </div>
+
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 3
+          </div>
+          <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Capstone</span>
+        </div>
+        <h4>Complete Negotiation Portfolio</h4>
+        <p>Compile your comprehensive negotiation portfolio covering all 5 required sections. This is your graduation piece for the Advanced Track and a permanent reference for your career.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write a 2-3 page personal negotiation philosophy statement integrating concepts from all 10 chapters</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Document 3-5 case studies from simulations and real negotiations with detailed analysis</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create your personal negotiation preparation template customized for your industry and typical deals</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Complete an honest self-assessment rating yourself on 10 key skills with evidence and a 12-month growth plan</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write a detailed analysis of your capstone simulation performance including strategy, key decisions, and lessons learned</span></li>
+        </ul>
+        <div class="callout success" style="margin-top:1rem;margin-bottom:0">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>You have a complete portfolio with all 5 sections that demonstrates your growth, documents your approach, and sets a course for continued development. Congratulations on completing the Advanced Track.</p>
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="self-check">Self-Check</h2>
+
+      <p>Final self-check for the entire Advanced Track. These questions test your readiness for real-world advanced negotiations.</p>
+
+      <details>
+        <summary>Can you design a negotiation simulation with all 5 required elements?</summary>
+        <div class="details-body">
+          <p>The 5 elements are: (1) Asymmetric information &mdash; each party has confidential details, (2) Multiple tradeable issues &mdash; at least 5-7 issues with different values, (3) Time pressure &mdash; firm deadlines that force prioritization, (4) Emotional complexity &mdash; fairness issues, relationship dynamics, ethical dilemmas, (5) Realistic consequences &mdash; scored outcomes with accountability. A well-designed simulation balances all five elements to create a realistic learning experience.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Can you integrate frameworks from at least 5 chapters into a single negotiation preparation?</summary>
+        <div class="details-body">
+          <p>A comprehensive preparation integrates: BATNA analysis (Ch 1-2), stakeholder mapping (Ch 5), term sheet economics (Ch 3), equity/value calculations (Ch 4), pricing strategy (Ch 5), relationship strategy (Ch 8), cultural considerations (Ch 7), crisis contingencies (Ch 8), delegation decisions (Ch 9), and ethical boundaries (Ch 9). Master negotiators seamlessly combine these frameworks based on the specific situation.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>How do you conduct an effective post-negotiation debrief?</summary>
+        <div class="details-body">
+          <p>The 5-step debrief protocol: (1) Reveal and compare &mdash; share confidential information and compare outcomes to ideal, (2) Process analysis &mdash; examine strategy, turning points, and surprises for each participant, (3) Value creation analysis &mdash; identify whether value was left on the table, (4) Personal insights &mdash; each person documents strengths, growth areas, and key lessons, (5) Connection to real world &mdash; identify how lessons apply to actual upcoming negotiations.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>What are the 5 sections of a capstone negotiation portfolio?</summary>
+        <div class="details-body">
+          <p>The 5 sections are: (1) Negotiation philosophy statement integrating all chapters, (2) Case studies documenting 3-5 negotiations with analysis, (3) Personal preparation template customized for your context, (4) Skill self-assessment with evidence and a 12-month growth plan, (5) Capstone simulation analysis including strategy, decisions, and lessons learned. Together, these create a comprehensive record of your negotiation development.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Are you ready? What is your plan for continued negotiation development?</summary>
+        <div class="details-body">
+          <p>You are ready when you can prepare for any negotiation using a structured framework, adapt your strategy in real-time based on new information, manage your emotions under pressure, create value through creative problem-solving, and learn from every negotiation through structured debrief. Your plan should include: regular practice (simulations quarterly), continued reading, a coaching relationship (coach or be coached), and deliberate attention to every negotiation as a learning opportunity. The journey never ends &mdash; it only gets more rewarding.</p>
+        </div>
+      </details>
+
+    </main>
+
+    <aside class="sidebar">
+      <div class="sidebar-title">On this page</div>
+      <ul class="toc-list">
+        <li class="toc-item"><a href="#why-this-matters">Why This Matters</a></li>
+        <li class="toc-item"><a href="#key-concepts">Key Concepts</a></li>
+        <li class="toc-item"><a href="#simulation-design" style="padding-left:28px;font-size:12px">Simulation Design</a></li>
+        <li class="toc-item"><a href="#master-scenario" style="padding-left:28px;font-size:12px">Master Scenario</a></li>
+        <li class="toc-item"><a href="#preparation" style="padding-left:28px;font-size:12px">Preparation Framework</a></li>
+        <li class="toc-item"><a href="#execution" style="padding-left:28px;font-size:12px">Execution Guidelines</a></li>
+        <li class="toc-item"><a href="#debrief" style="padding-left:28px;font-size:12px">The Debrief</a></li>
+        <li class="toc-item"><a href="#portfolio" style="padding-left:28px;font-size:12px">Portfolio</a></li>
+        <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a></li>
+        <li class="toc-item"><a href="#further-reading">Further Reading</a></li>
+        <li class="toc-item"><a href="#assignments">Assignments</a></li>
+        <li class="toc-item"><a href="#self-check">Self-Check</a></li>
       </ul>
-    </div>
+    </aside>
+  </div>
 
-    <hr class="section-divider">
-
-    <div class="coming-soon-banner">
-      <h3>Content In Development</h3>
-      <p>Full chapter content with detailed explanations, code examples, video walkthroughs, and assignments is being developed. Check back soon.</p>
-    </div>
-
-    <div class="callout tip">
-      <div class="callout-header">What You Will Learn</div>
-      <p>By the end of this chapter, you will understand complex multi-round simulation, peer evaluation, expert debrief, capstone defense and be able to apply these concepts in real-world scenarios.</p>
-    </div>
-
-  </main>
-
-  <nav class="footer-nav">
-        <a class="footer-nav-link prev" href="chapter-09.html">
-          <span class="footer-nav-label">&larr; Previous</span>
-          <span class="footer-nav-title">Chapter 09: Negotiation Leadership</span>
+  <footer class="chapter-footer">
+    <div class="chapter-footer-inner">
+      <nav class="footer-nav">
+        <a class="footer-nav-link" href="chapter-09.html">
+          <span class="footer-nav-label">&larr; Previous Chapter</span>
+          <span class="footer-nav-title">09: Negotiation Leadership</span>
         </a>
-        <a class="footer-nav-link next" href="index.html">
-          <span class="footer-nav-label">Back to &rarr;</span>
-          <span class="footer-nav-title">Advanced Negotiations</span>
-        </a>
-  </nav>
-
-  <footer class="footer">
-    ILA (Iksha Learning Academy) &middot; Advanced Negotiations &middot; <a href="index.html">All Chapters</a>
+        <div></div>
+      </nav>
+      <div class="footer-brand">ILA (Iksha Learning Academy) &middot; Advanced Negotiations &middot; Advanced Track &middot; Complete</div>
+    </div>
   </footer>
 
   <script>
-    window.addEventListener('scroll', () => {
-      const h = document.documentElement;
-      const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
-      document.getElementById('progressBar').style.width = Math.min(pct, 100) + '%';
-    });
+    window.addEventListener('scroll',()=>{const s=window.scrollY;const d=document.documentElement.scrollHeight-window.innerHeight;document.getElementById('progressBar').style.width=(d>0?(s/d)*100:0)+'%'});
+    const tocLinks=document.querySelectorAll('.toc-item a');const secs=[];tocLinks.forEach(l=>{const id=l.getAttribute('href').slice(1);const el=document.getElementById(id);if(el)secs.push({id,el,link:l})});
+    const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{const it=secs.find(s=>s.el===e.target);if(it&&e.isIntersecting){tocLinks.forEach(l=>l.classList.remove('active'));it.link.classList.add('active')}})},{rootMargin:'-80px 0px -60% 0px',threshold:0});secs.forEach(s=>obs.observe(s.el));
+    function copyCode(btn){const pre=btn.closest('.code-block').querySelector('pre');navigator.clipboard.writeText(pre.textContent).then(()=>{btn.classList.add('copied');btn.textContent='Copied!';setTimeout(()=>{btn.classList.remove('copied');btn.textContent='Copy'},2000)})}
   </script>
 </body>
 </html>

@@ -3,17 +3,898 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chapter 02: Meeting Management — ILA Client Communication</title>
+  <title>Chapter 02: Technical Writing for Non-Technical Audiences &mdash; ILA Client Communication</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
-    :root{--ink:#0f172a;--ink-light:#334155;--ink-muted:#64748b;--surface:#ffffff;--surface-alt:#f8fafc;--surface-warm:#fffbeb;--border:#e2e8f0;--border-light:#f1f5f9;--teal-50:#f0fdfa;--teal-100:#ccfbf1;--teal-200:#99f6e4;--teal-500:#14b8a6;--teal-600:#0d9488;--teal-700:#0f766e;--teal-800:#115e59;--teal-900:#134e4a;--blue-50:#eff6ff;--blue-100:#dbeafe;--blue-500:#3b82f6;--blue-600:#2563eb;--blue-700:#1d4ed8;--amber-50:#fffbeb;--amber-100:#fef3c7;--amber-500:#f59e0b;--amber-600:#d97706;--red-50:#fef2f2;--red-100:#fee2e2;--red-500:#ef4444;--red-600:#dc2626;--purple-50:#faf5ff;--purple-100:#f3e8ff;--purple-500:#a855f7;--purple-600:#9333ea;--font-sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;--font-serif:'Instrument Serif',Georgia,serif;--font-mono:'JetBrains Mono','Fira Code',monospace;--content-max:780px;--sidebar-width:280px;--ease:cubic-bezier(0.4,0,0.2,1)}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}body{font-family:var(--font-sans);font-size:16px;line-height:1.7;color:var(--ink);background:var(--surface)}.progress-bar{position:fixed;top:0;left:0;width:0%;height:3px;background:linear-gradient(90deg,var(--teal-500),var(--blue-500));z-index:1000;transition:width .15s var(--ease)}.top-nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem}.top-nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px}.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--teal-800)}.nav-brand-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--teal-600),var(--teal-800));border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px}.nav-brand-text{font-weight:700;font-size:15px;letter-spacing:-.02em}.nav-chapter-nav{display:flex;align-items:center;gap:8px}.nav-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;color:var(--ink-muted);border:1px solid var(--border);background:#fff;transition:all .2s var(--ease);cursor:pointer}.nav-btn:hover{color:var(--ink);border-color:var(--teal-500);background:var(--teal-50)}.nav-btn.disabled{opacity:.4;pointer-events:none}.nav-current{font-size:13px;font-weight:600;color:var(--ink-light);padding:0 4px}.hero{background:linear-gradient(170deg,var(--teal-50) 0%,var(--surface) 50%,var(--blue-50) 100%);border-bottom:1px solid var(--border);padding:4rem 2rem 3.5rem}.hero-inner{max-width:var(--content-max);margin:0 auto}.hero-chapter-label{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--teal-700);text-transform:uppercase;letter-spacing:.08em;margin-bottom:1rem}.hero-chapter-label span{background:var(--teal-100);padding:3px 10px;border-radius:100px}.hero h1{font-family:var(--font-serif);font-size:clamp(2.4rem,5vw,3.2rem);font-weight:400;line-height:1.15;color:var(--ink);margin-bottom:1rem}.hero-subtitle{font-size:1.15rem;color:var(--ink-light);line-height:1.65;max-width:640px}.hero-meta{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1.5rem}.hero-meta-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-muted)}.hero-meta-item svg{width:16px;height:16px;color:var(--teal-600)}.main-layout{max-width:1200px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:1fr var(--sidebar-width);gap:4rem;align-items:start}.content{padding:3rem 0 6rem;min-width:0}.sidebar{position:sticky;top:76px;padding:2rem 0;max-height:calc(100vh - 76px);overflow-y:auto}.sidebar-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-muted);margin-bottom:1rem;padding-left:14px}.toc-list{list-style:none}.toc-item a{display:block;padding:6px 14px;font-size:13px;color:var(--ink-muted);text-decoration:none;border-left:2px solid transparent;transition:all .2s var(--ease);line-height:1.5}.toc-item a:hover{color:var(--ink);background:var(--surface-alt)}.toc-item a.active{color:var(--teal-700);border-left-color:var(--teal-500);background:var(--teal-50);font-weight:500}.content h2{font-family:var(--font-serif);font-size:1.85rem;font-weight:400;color:var(--ink);margin:3rem 0 1rem;padding-top:1rem;scroll-margin-top:80px}.content h2:first-child{margin-top:0}.content h3{font-size:1.15rem;font-weight:600;color:var(--ink);margin:2rem 0 .75rem;scroll-margin-top:80px}.content p{margin-bottom:1.25rem;color:var(--ink-light)}.content strong{color:var(--ink);font-weight:600}.content a{color:var(--teal-700);text-decoration:underline;text-decoration-color:var(--teal-200);text-underline-offset:3px;transition:text-decoration-color .2s}.content a:hover{text-decoration-color:var(--teal-600)}.content ul,.content ol{margin-bottom:1.25rem;padding-left:1.5rem}.content li{margin-bottom:.5rem;color:var(--ink-light)}.content li::marker{color:var(--teal-500)}.section-divider{border:none;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:3rem 0}.callout{padding:1.25rem 1.5rem;border-radius:12px;margin-bottom:1.5rem;border:1px solid;position:relative}.callout-header{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;margin-bottom:.5rem}.callout-header svg{width:18px;height:18px;flex-shrink:0}.callout p:last-child{margin-bottom:0}.callout.concept{background:var(--blue-50);border-color:var(--blue-100)}.callout.concept .callout-header{color:var(--blue-700)}.callout.important{background:var(--amber-50);border-color:var(--amber-100)}.callout.important .callout-header{color:var(--amber-600)}.callout.danger{background:var(--red-50);border-color:var(--red-100)}.callout.danger .callout-header{color:var(--red-600)}.callout.tip{background:var(--purple-50);border-color:var(--purple-100)}.callout.tip .callout-header{color:var(--purple-600)}.callout.success{background:var(--teal-50);border-color:var(--teal-100)}.callout.success .callout-header{color:var(--teal-700)}.code-block{position:relative;margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}.code-header{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:var(--surface-alt);border-bottom:1px solid var(--border);font-size:12px;color:var(--ink-muted)}.code-lang{font-family:var(--font-mono);font-weight:600;text-transform:uppercase;letter-spacing:.05em}.code-copy{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:#fff;font-size:11px;font-family:var(--font-sans);color:var(--ink-muted);cursor:pointer;transition:all .2s var(--ease)}.code-copy:hover{border-color:var(--teal-500);color:var(--teal-700)}.code-copy.copied{background:var(--teal-50);border-color:var(--teal-500);color:var(--teal-700)}pre{margin:0;padding:1.25rem 1.5rem;overflow-x:auto;background:#1e293b;font-family:var(--font-mono);font-size:13.5px;line-height:1.7;color:#e2e8f0}code{font-family:var(--font-mono);font-size:.88em}p code,li code{padding:2px 7px;background:var(--surface-alt);border:1px solid var(--border);border-radius:5px;color:var(--teal-800);font-size:.85em}.hl-keyword{color:#c084fc}.hl-string{color:#86efac}.hl-comment{color:#64748b;font-style:italic}.hl-function{color:#7dd3fc}.hl-number{color:#fbbf24}.hl-flag{color:#f472b6}details{margin-bottom:1.25rem;border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .2s var(--ease)}details[open]{border-color:var(--teal-200)}details summary{padding:1rem 1.25rem;font-weight:600;font-size:15px;cursor:pointer;background:var(--surface-alt);list-style:none;display:flex;align-items:center;gap:10px;transition:background .2s var(--ease);user-select:none}details summary::-webkit-details-marker{display:none}details summary::before{content:'';width:20px;height:20px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain;flex-shrink:0;transition:transform .2s var(--ease)}details[open] summary::before{transform:rotate(90deg)}details summary:hover{background:var(--teal-50)}.details-body{padding:1.25rem 1.5rem}.details-body p:last-child{margin-bottom:0}.video-card{margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}.video-wrapper{position:relative;padding-bottom:56.25%;height:0;background:#0f172a}.video-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}.video-caption{padding:12px 16px;background:var(--surface-alt);font-size:13px;color:var(--ink-muted);display:flex;align-items:center;gap:6px}.video-caption svg{width:14px;height:14px;color:var(--red-500)}.resource-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1rem;margin-bottom:1.5rem}.resource-card{display:flex;gap:14px;padding:1rem 1.25rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all .2s var(--ease);background:#fff}.resource-card:hover{border-color:var(--teal-300);background:var(--teal-50);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.04)}.resource-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}.resource-icon.docs{background:var(--blue-50);color:var(--blue-600)}.resource-icon.video{background:var(--red-50);color:var(--red-500)}.resource-icon.github{background:var(--ink);color:#fff}.resource-icon.article{background:var(--amber-50);color:var(--amber-600)}.resource-icon.pdf{background:var(--purple-50);color:var(--purple-600)}.resource-icon.book{background:var(--teal-50);color:var(--teal-700)}.resource-info{min-width:0}.resource-title{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:2px;line-height:1.4}.resource-desc{font-size:12px;color:var(--ink-muted);line-height:1.5}.assignment{border:2px solid var(--teal-200);border-radius:14px;padding:1.5rem 1.75rem;margin-bottom:1.5rem;background:linear-gradient(135deg,var(--teal-50) 0%,#fff 100%)}.assignment-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}.assignment-label{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--teal-700)}.assignment-difficulty{display:inline-flex;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:600}.difficulty-l1{background:var(--teal-100);color:var(--teal-800)}.difficulty-l2{background:var(--amber-100);color:var(--amber-600)}.difficulty-l3{background:var(--red-100);color:var(--red-600)}.assignment h4{font-size:1.05rem;font-weight:700;margin-bottom:.75rem}.assignment p{font-size:14px}.checklist{list-style:none;padding:0}.checklist li{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border-light);font-size:14px}.checklist li:last-child{border-bottom:none}.check-box{width:20px;height:20px;border-radius:6px;border:2px solid var(--border);flex-shrink:0;margin-top:1px;cursor:pointer;transition:all .15s var(--ease);display:flex;align-items:center;justify-content:center}.check-box:hover{border-color:var(--teal-500)}.check-box.checked{background:var(--teal-500);border-color:var(--teal-500)}.check-box.checked::after{content:'';width:10px;height:10px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain}.diagram{margin:1.5rem 0;padding:2rem;background:var(--surface-alt);border:1px solid var(--border);border-radius:14px;overflow-x:auto}.diagram pre{background:transparent;color:var(--ink);padding:0;font-size:13px;line-height:1.6}.diagram-caption{margin-top:1rem;font-size:12px;color:var(--ink-muted);text-align:center;font-style:italic}.chapter-footer{border-top:1px solid var(--border);padding:3rem 2rem;background:var(--surface-alt)}.chapter-footer-inner{max-width:var(--content-max);margin:0 auto}.footer-nav{display:flex;justify-content:space-between;align-items:center;gap:1rem}.footer-nav-link{display:flex;flex-direction:column;gap:4px;padding:1rem 1.5rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all .2s var(--ease);max-width:320px;background:#fff}.footer-nav-link:hover{border-color:var(--teal-300);box-shadow:0 4px 12px rgba(0,0,0,.04)}.footer-nav-label{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--teal-600)}.footer-nav-title{font-size:15px;font-weight:600;color:var(--ink)}.footer-brand{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border);font-size:13px;color:var(--ink-muted)}@media(max-width:960px){.main-layout{grid-template-columns:1fr}.sidebar{display:none}.resource-grid{grid-template-columns:1fr}}@media(max-width:640px){.hero{padding:2.5rem 1.25rem 2rem}.main-layout{padding:0 1.25rem}.content{padding:2rem 0 4rem}pre{padding:1rem;font-size:12.5px}.footer-nav{flex-direction:column}.footer-nav-link{max-width:100%;width:100%}}@media print{.top-nav,.sidebar,.progress-bar{display:none}.main-layout{display:block}.content{padding:0}.hero{background:#fff;border:none}pre{background:#f1f5f9;color:var(--ink);border:1px solid var(--border)}}
+    /* ═══════════════════════════════════════════════
+       ILA DESIGN SYSTEM — v1.0
+       Iksha Learning Academy
+       ═══════════════════════════════════════════════ */
+
+    :root {
+      /* Palette */
+      --ink:        #0f172a;
+      --ink-light:  #334155;
+      --ink-muted:  #64748b;
+      --surface:    #ffffff;
+      --surface-alt:#f8fafc;
+      --surface-warm:#fffbeb;
+      --border:     #e2e8f0;
+      --border-light:#f1f5f9;
+
+      /* Brand */
+      --teal-50:  #f0fdfa;
+      --teal-100: #ccfbf1;
+      --teal-200: #99f6e4;
+      --teal-500: #14b8a6;
+      --teal-600: #0d9488;
+      --teal-700: #0f766e;
+      --teal-800: #115e59;
+      --teal-900: #134e4a;
+
+      --blue-50:  #eff6ff;
+      --blue-100: #dbeafe;
+      --blue-500: #3b82f6;
+      --blue-600: #2563eb;
+      --blue-700: #1d4ed8;
+
+      --amber-50:  #fffbeb;
+      --amber-100: #fef3c7;
+      --amber-500: #f59e0b;
+      --amber-600: #d97706;
+
+      --red-50:   #fef2f2;
+      --red-100:  #fee2e2;
+      --red-500:  #ef4444;
+      --red-600:  #dc2626;
+
+      --purple-50:  #faf5ff;
+      --purple-100: #f3e8ff;
+      --purple-500: #a855f7;
+      --purple-600: #9333ea;
+
+      /* Typography */
+      --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-serif: 'Instrument Serif', Georgia, serif;
+      --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
+
+      /* Spacing */
+      --content-max: 780px;
+      --sidebar-width: 280px;
+
+      /* Transitions */
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--ink);
+      background: var(--surface);
+    }
+
+    /* ── PROGRESS BAR ─────────────────────────── */
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--teal-500), var(--blue-500));
+      z-index: 1000;
+      transition: width 0.15s var(--ease);
+    }
+
+    /* ── TOP NAV ──────────────────────────────── */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+    }
+
+    .top-nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--teal-800);
+    }
+
+    .nav-brand-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--teal-600), var(--teal-800));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .nav-brand-text {
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-chapter-nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      color: var(--ink-muted);
+      border: 1px solid var(--border);
+      background: white;
+      transition: all 0.2s var(--ease);
+      cursor: pointer;
+    }
+
+    .nav-btn:hover {
+      color: var(--ink);
+      border-color: var(--teal-500);
+      background: var(--teal-50);
+    }
+
+    .nav-btn.disabled {
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    .nav-current {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink-light);
+      padding: 0 4px;
+    }
+
+    /* ── HERO ─────────────────────────────────── */
+    .hero {
+      background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 4rem 2rem 3.5rem;
+    }
+
+    .hero-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
+    }
+
+    .hero-chapter-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--teal-700);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 1rem;
+    }
+
+    .hero-chapter-label span {
+      background: var(--teal-100);
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+
+    .hero h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(2.4rem, 5vw, 3.2rem);
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: 1rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: var(--ink-light);
+      line-height: 1.65;
+      max-width: 640px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .hero-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
+    .hero-meta-item svg {
+      width: 16px;
+      height: 16px;
+      color: var(--teal-600);
+    }
+
+    /* ── MAIN LAYOUT ──────────────────────────── */
+    .main-layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr var(--sidebar-width);
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .content {
+      padding: 3rem 0 6rem;
+      min-width: 0;
+    }
+
+    /* ── SIDEBAR TOC ──────────────────────────── */
+    .sidebar {
+      position: sticky;
+      top: 76px;
+      padding: 2rem 0;
+      max-height: calc(100vh - 76px);
+      overflow-y: auto;
+    }
+
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-muted);
+      margin-bottom: 1rem;
+      padding-left: 14px;
+    }
+
+    .toc-list {
+      list-style: none;
+    }
+
+    .toc-item a {
+      display: block;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--ink-muted);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: all 0.2s var(--ease);
+      line-height: 1.5;
+    }
+
+    .toc-item a:hover {
+      color: var(--ink);
+      background: var(--surface-alt);
+    }
+
+    .toc-item a.active {
+      color: var(--teal-700);
+      border-left-color: var(--teal-500);
+      background: var(--teal-50);
+      font-weight: 500;
+    }
+
+    /* ── TYPOGRAPHY ────────────────────────────── */
+    .content h2 {
+      font-family: var(--font-serif);
+      font-size: 1.85rem;
+      font-weight: 400;
+      color: var(--ink);
+      margin: 3rem 0 1rem;
+      padding-top: 1rem;
+      scroll-margin-top: 80px;
+    }
+
+    .content h2:first-child {
+      margin-top: 0;
+    }
+
+    .content h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 2rem 0 0.75rem;
+      scroll-margin-top: 80px;
+    }
+
+    .content p {
+      margin-bottom: 1.25rem;
+      color: var(--ink-light);
+    }
+
+    .content strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .content a {
+      color: var(--teal-700);
+      text-decoration: underline;
+      text-decoration-color: var(--teal-200);
+      text-underline-offset: 3px;
+      transition: text-decoration-color 0.2s;
+    }
+
+    .content a:hover {
+      text-decoration-color: var(--teal-600);
+    }
+
+    .content ul, .content ol {
+      margin-bottom: 1.25rem;
+      padding-left: 1.5rem;
+    }
+
+    .content li {
+      margin-bottom: 0.5rem;
+      color: var(--ink-light);
+    }
+
+    .content li::marker {
+      color: var(--teal-500);
+    }
+
+    /* ── SECTION DIVIDER ──────────────────────── */
+    .section-divider {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 3rem 0;
+    }
+
+    /* ── CALLOUT BOXES ────────────────────────── */
+    .callout {
+      padding: 1.25rem 1.5rem;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+      border: 1px solid;
+      position: relative;
+    }
+
+    .callout-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .callout-header svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    .callout p:last-child { margin-bottom: 0; }
+
+    .callout.concept {
+      background: var(--blue-50);
+      border-color: var(--blue-100);
+    }
+    .callout.concept .callout-header { color: var(--blue-700); }
+
+    .callout.important {
+      background: var(--amber-50);
+      border-color: var(--amber-100);
+    }
+    .callout.important .callout-header { color: var(--amber-600); }
+
+    .callout.danger {
+      background: var(--red-50);
+      border-color: var(--red-100);
+    }
+    .callout.danger .callout-header { color: var(--red-600); }
+
+    .callout.tip {
+      background: var(--purple-50);
+      border-color: var(--purple-100);
+    }
+    .callout.tip .callout-header { color: var(--purple-600); }
+
+    .callout.success {
+      background: var(--teal-50);
+      border-color: var(--teal-100);
+    }
+    .callout.success .callout-header { color: var(--teal-700); }
+
+    /* ── CODE BLOCKS ──────────────────────────── */
+    .code-block {
+      position: relative;
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+      background: var(--surface-alt);
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--ink-muted);
+    }
+
+    .code-lang {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .code-copy {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: white;
+      font-size: 11px;
+      font-family: var(--font-sans);
+      color: var(--ink-muted);
+      cursor: pointer;
+      transition: all 0.2s var(--ease);
+    }
+
+    .code-copy:hover {
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    .code-copy.copied {
+      background: var(--teal-50);
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    pre {
+      margin: 0;
+      padding: 1.25rem 1.5rem;
+      overflow-x: auto;
+      background: #1e293b;
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: #e2e8f0;
+    }
+
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.88em;
+    }
+
+    p code, li code {
+      padding: 2px 7px;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      color: var(--teal-800);
+      font-size: 0.85em;
+    }
+
+    /* Syntax highlights */
+    .hl-keyword  { color: #c084fc; }
+    .hl-string   { color: #86efac; }
+    .hl-comment  { color: #64748b; font-style: italic; }
+    .hl-function { color: #7dd3fc; }
+    .hl-number   { color: #fbbf24; }
+    .hl-flag     { color: #f472b6; }
+
+    /* ── COLLAPSIBLE (DETAILS) ────────────────── */
+    details {
+      margin-bottom: 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.2s var(--ease);
+    }
+
+    details[open] {
+      border-color: var(--teal-200);
+    }
+
+    details summary {
+      padding: 1rem 1.25rem;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      background: var(--surface-alt);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.2s var(--ease);
+      user-select: none;
+    }
+
+    details summary::-webkit-details-marker { display: none; }
+
+    details summary::before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+      flex-shrink: 0;
+      transition: transform 0.2s var(--ease);
+    }
+
+    details[open] summary::before {
+      transform: rotate(90deg);
+    }
+
+    details summary:hover {
+      background: var(--teal-50);
+    }
+
+    .details-body {
+      padding: 1.25rem 1.5rem;
+    }
+
+    .details-body p:last-child { margin-bottom: 0; }
+
+    /* ── VIDEO EMBED ──────────────────────────── */
+    .video-card {
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      background: #0f172a;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .video-caption {
+      padding: 12px 16px;
+      background: var(--surface-alt);
+      font-size: 13px;
+      color: var(--ink-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .video-caption svg {
+      width: 14px;
+      height: 14px;
+      color: var(--red-500);
+    }
+
+    /* ── RESOURCE CARDS ───────────────────────── */
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .resource-card {
+      display: flex;
+      gap: 14px;
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      background: white;
+    }
+
+    .resource-card:hover {
+      border-color: var(--teal-300);
+      background: var(--teal-50);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .resource-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 18px;
+    }
+
+    .resource-icon.docs    { background: var(--blue-50);   color: var(--blue-600); }
+    .resource-icon.video   { background: var(--red-50);    color: var(--red-500); }
+    .resource-icon.github  { background: var(--ink);       color: white; }
+    .resource-icon.article { background: var(--amber-50);  color: var(--amber-600); }
+    .resource-icon.pdf     { background: var(--purple-50); color: var(--purple-600); }
+
+    .resource-info {
+      min-width: 0;
+    }
+
+    .resource-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 2px;
+      line-height: 1.4;
+    }
+
+    .resource-desc {
+      font-size: 12px;
+      color: var(--ink-muted);
+      line-height: 1.5;
+    }
+
+    /* ── ASSIGNMENT CARDS ─────────────────────── */
+    .assignment {
+      border: 2px solid var(--teal-200);
+      border-radius: 14px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--teal-50) 0%, white 100%);
+    }
+
+    .assignment-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .assignment-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--teal-700);
+    }
+
+    .assignment-difficulty {
+      display: inline-flex;
+      padding: 4px 10px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .difficulty-l1 { background: var(--teal-100); color: var(--teal-800); }
+    .difficulty-l2 { background: var(--amber-100); color: var(--amber-600); }
+    .difficulty-l3 { background: var(--red-100); color: var(--red-600); }
+
+    .assignment h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .assignment p {
+      font-size: 14px;
+    }
+
+    .checklist {
+      list-style: none;
+      padding: 0;
+    }
+
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-light);
+      font-size: 14px;
+    }
+
+    .checklist li:last-child { border-bottom: none; }
+
+    .check-box {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      border: 2px solid var(--border);
+      flex-shrink: 0;
+      margin-top: 1px;
+      cursor: pointer;
+      transition: all 0.15s var(--ease);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .check-box:hover {
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked {
+      background: var(--teal-500);
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+    }
+
+    /* ── ARCHITECTURE DIAGRAM ─────────────────── */
+    .diagram {
+      margin: 1.5rem 0;
+      padding: 2rem;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow-x: auto;
+    }
+
+    .diagram pre {
+      background: transparent;
+      color: var(--ink);
+      padding: 0;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .diagram-caption {
+      margin-top: 1rem;
+      font-size: 12px;
+      color: var(--ink-muted);
+      text-align: center;
+      font-style: italic;
+    }
+
+    /* ── FOOTER ───────────────────────────────── */
+    .chapter-footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      background: var(--surface-alt);
+    }
+
+    .chapter-footer-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
+    }
+
+    .footer-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .footer-nav-link {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 1rem 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      max-width: 320px;
+      background: white;
+    }
+
+    .footer-nav-link:hover {
+      border-color: var(--teal-300);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .footer-nav-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--teal-600);
+    }
+
+    .footer-nav-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .footer-brand {
+      text-align: center;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
+    /* ── RESPONSIVE ───────────────────────────── */
+    @media (max-width: 960px) {
+      .main-layout {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        display: none;
+      }
+      .resource-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero { padding: 2.5rem 1.25rem 2rem; }
+      .main-layout { padding: 0 1.25rem; }
+      .content { padding: 2rem 0 4rem; }
+      pre { padding: 1rem; font-size: 12.5px; }
+      .footer-nav { flex-direction: column; }
+      .footer-nav-link { max-width: 100%; width: 100%; }
+    }
+
+    /* ── PRINT ────────────────────────────────── */
+    @media print {
+      .top-nav, .sidebar, .progress-bar { display: none; }
+      .main-layout { display: block; }
+      .content { padding: 0; }
+      .hero { background: white; border: none; }
+      pre { background: #f1f5f9; color: var(--ink); border: 1px solid var(--border); }
+    }
   </style>
 </head>
 <body>
+  <!-- Progress Bar -->
   <div class="progress-bar" id="progressBar"></div>
 
+  <!-- Top Navigation -->
   <nav class="top-nav">
     <div class="top-nav-inner">
       <a class="nav-brand" href="index.html">
@@ -28,16 +909,16 @@
     </div>
   </nav>
 
+  <!-- Hero -->
   <header class="hero">
     <div class="hero-inner">
       <div class="hero-chapter-label">
-        <span>Chapter 02</span> &middot; Communication Foundations
+        <span>Chapter 02</span> &middot; Phase 1: Written Communication
       </div>
-      <h1>Meeting Management</h1>
+      <h1>Technical Writing for Non-Technical Audiences</h1>
       <p class="hero-subtitle">
-        Learn to run meetings that produce decisions, not confusion. In startups where every hour of engineering
-        time is precious, the difference between a well-run meeting and a rambling one is measured in thousands
-        of dollars of lost productivity.
+        Learn to translate complex technical concepts into clear, actionable language that clients
+        understand, trust, and can act on &mdash; without dumbing down the content or losing accuracy.
       </p>
       <div class="hero-meta">
         <div class="hero-meta-item">
@@ -46,7 +927,7 @@
         </div>
         <div class="hero-meta-item">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-          5 Key Concepts
+          3 Advancement Levels
         </div>
         <div class="hero-meta-item">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
@@ -56,28 +937,28 @@
     </div>
   </header>
 
+  <!-- Main Content + Sidebar -->
   <div class="main-layout">
     <main class="content">
 
+      <!-- ════════════════════════════════════════
+           SECTION 1: WHY THIS MATTERS
+           ════════════════════════════════════════ -->
       <h2 id="why-this-matters">Why This Matters</h2>
 
       <p>
-        The average knowledge worker spends <strong>31 hours per month</strong> in unproductive meetings. At a startup
-        with a 15-person engineering team billing at $150/hour, that translates to roughly $70,000 per month in
-        wasted time. And that does not account for the context-switching cost &mdash; it takes an average of
-        23 minutes to regain deep focus after an interruption.
+        The single most common complaint clients have about technical teams is not about the quality of
+        the work &mdash; it is about the quality of the communication around the work. When a developer
+        writes "We refactored the authentication middleware to use JWT-based session tokens instead of
+        server-side sessions," the client hears noise. When the same developer writes "We improved login
+        security so your users stay signed in more reliably across devices," the client hears value.
       </p>
 
       <p>
-        Meetings are the most expensive communication tool you have. A one-hour meeting with 8 people is
-        not a one-hour investment &mdash; it is an eight-hour investment. If that meeting produces no clear
-        decisions or action items, you have burned an entire person-day of productivity.
-      </p>
-
-      <p>
-        The solution is not to eliminate meetings. Some conversations genuinely require real-time interaction.
-        The solution is to run meetings with the same discipline you apply to code: clear inputs, defined
-        processes, and measurable outputs.
+        Technical writing for non-technical audiences is not about simplifying. It is about
+        <strong>translating</strong>. You are converting implementation details into business outcomes,
+        converting risk factors into decisions that need to be made, and converting timelines into
+        expectations the client can plan around.
       </p>
 
       <div class="callout concept">
@@ -86,75 +967,178 @@
           Key Insight
         </div>
         <p>
-          Every meeting should pass the <strong>"email test"</strong>: Could this have been an email? If the
-          answer is yes, cancel the meeting and send the email. Meetings exist for two purposes: (1) making
-          decisions that require real-time discussion, and (2) building relationships that require human
-          connection. Everything else is a status update that belongs in writing.
+          The goal of client-facing technical writing is not to make the reader technically literate.
+          It is to give them exactly enough understanding to <strong>make good decisions</strong> about
+          their project. Every sentence should pass the test: "Does this help my client decide or act?"
         </p>
       </div>
 
-      <hr class="section-divider">
-
-      <h2 id="key-concepts">Key Concepts</h2>
-
-      <h3 id="agenda-design">1. Agenda Design That Drives Outcomes</h3>
-
       <p>
-        An agenda is not a list of topics &mdash; it is a contract between the meeting organizer and the
-        attendees. It tells people what to prepare, what to expect, and what they will walk away with.
-        A meeting without an agenda is a meeting that will waste everyone's time.
+        Studies consistently show that miscommunication costs organizations 25&ndash;40% of productive
+        time. In client services specifically, poorly written status updates and unclear technical
+        explanations are the number one driver of scope creep, missed deadlines, and eroded trust.
+        Master this skill and you eliminate an entire category of project failure.
       </p>
 
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 2: KEY CONCEPTS
+           ════════════════════════════════════════ -->
+      <h2 id="key-concepts">Key Concepts</h2>
+
+      <h3 id="audience-analysis">1. Audience Analysis: Know Your Reader</h3>
+
       <p>
-        The best agendas follow the <strong>PODA framework</strong>: Purpose, Outcomes, Duration, Assignments.
+        Before you write a single word, you need to understand who will read it. Client stakeholders
+        fall into predictable categories, and each category has different needs:
+      </p>
+
+      <div class="diagram">
+<pre>
+  ┌─────────────────────────────────────────────────────────────────────┐
+  │                    CLIENT AUDIENCE MAP                              │
+  ├─────────────────┬──────────────────┬────────────────────────────────┤
+  │  Audience        │  Cares About     │  Write For Them Like...       │
+  ├─────────────────┼──────────────────┼────────────────────────────────┤
+  │  CEO / Founder   │  ROI, timeline,  │  Executive summary: 3 bullets │
+  │                  │  strategic fit    │  max, outcome-focused         │
+  ├─────────────────┼──────────────────┼────────────────────────────────┤
+  │  Product Manager │  Features, user  │  Feature list with user       │
+  │                  │  impact, scope   │  stories and acceptance       │
+  ├─────────────────┼──────────────────┼────────────────────────────────┤
+  │  Project Manager │  Timeline, risks,│  Gantt-compatible milestones  │
+  │                  │  dependencies    │  with risk flags               │
+  ├─────────────────┼──────────────────┼────────────────────────────────┤
+  │  Marketing Lead  │  Launch dates,   │  Plain language features      │
+  │                  │  user-facing text│  they can put in press copy   │
+  ├─────────────────┼──────────────────┼────────────────────────────────┤
+  │  Tech Lead       │  Architecture,   │  Technical detail with        │
+  │  (their side)    │  integration pts │  integration instructions     │
+  └─────────────────┴──────────────────┴────────────────────────────────┘
+</pre>
+        <div class="diagram-caption">Figure 1: Client audience map &mdash; match your writing to the reader</div>
+      </div>
+
+      <p>
+        The most common mistake is writing one update for all audiences. A weekly status email that
+        tries to serve both the CEO and the product manager ends up serving neither. Instead, use
+        a layered structure: lead with the executive summary, then add detail sections that readers
+        can skip or dive into based on their role.
+      </p>
+
+      <h3 id="plain-language">2. The Plain Language Framework</h3>
+
+      <p>
+        Plain language does not mean dumbed-down language. It means language that the intended
+        audience can understand the first time they read it. The US government's Plain Writing Act
+        of 2010 mandates this for federal communications, and the same principles apply to client work.
+      </p>
+
+      <ul>
+        <li><strong>Use concrete nouns</strong> &mdash; "the login page" instead of "the authentication interface"</li>
+        <li><strong>Use active voice</strong> &mdash; "We deployed the fix" instead of "The fix was deployed"</li>
+        <li><strong>Front-load the key information</strong> &mdash; Lead with the conclusion, then provide supporting detail</li>
+        <li><strong>Use short sentences</strong> &mdash; 15&ndash;20 words average. Break complex ideas into multiple sentences</li>
+        <li><strong>Eliminate jargon or define it</strong> &mdash; If you must use a technical term, parenthetically define it on first use</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">template</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── BEFORE: Developer-speak ────────────────────── */</span>
+
+We refactored the API gateway to implement rate limiting
+via a token bucket algorithm with a configurable burst
+capacity of 100 req/s per tenant, backed by Redis-based
+distributed counters with eventual consistency guarantees.
+
+<span class="hl-comment">/* ── AFTER: Client-facing ───────────────────────── */</span>
+
+<span class="hl-keyword">What we did:</span> We added protection against traffic spikes
+to your application.
+
+<span class="hl-keyword">Why it matters:</span> If your app suddenly gets 10x normal
+traffic (from a marketing campaign, for example), it will
+now handle the load gracefully instead of crashing.
+
+<span class="hl-keyword">What you need to know:</span> Each user can make up to 100
+requests per second. This limit is adjustable if your
+needs change.
+</pre>
+      </div>
+
+      <div class="callout important">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Common Trap
+        </div>
+        <p>
+          Do not confuse "plain language" with "vague language." Saying "We made improvements to the
+          system" is vague and unhelpful. Saying "We reduced page load time from 4 seconds to 1.2
+          seconds" is plain, specific, and valuable. Always include measurable outcomes when available.
+        </p>
+      </div>
+
+      <h3 id="status-update-anatomy">3. Anatomy of a Status Update</h3>
+
+      <p>
+        The weekly status update is the single most important written artifact in client
+        communication. It is sent more often than any other document and read by the widest
+        audience. A well-structured status update prevents 80% of "just checking in" emails.
       </p>
 
       <div class="code-block">
         <div class="code-header">
-          <span class="code-lang">MEETING AGENDA TEMPLATE</span>
+          <span class="code-lang">template</span>
           <button class="code-copy" onclick="copyCode(this)">Copy</button>
         </div>
 <pre>
-<span class="hl-keyword">MEETING:</span> <span class="hl-string">Sprint 14 Planning</span>
-<span class="hl-keyword">DATE:</span>    Tuesday, March 4 at 10:00 AM ET
-<span class="hl-keyword">DURATION:</span> 60 minutes
-<span class="hl-keyword">ATTENDEES:</span> Engineering Team + Product Manager
+<span class="hl-comment">/* ── WEEKLY STATUS UPDATE TEMPLATE ──────────────── */</span>
 
-<span class="hl-function">PURPOSE:</span>
-Align on Sprint 14 scope and assign ownership
-for all committed stories.
+<span class="hl-keyword">Subject:</span> [Project Name] Weekly Update &mdash; Week of [Date]
 
-<span class="hl-function">DESIRED OUTCOMES:</span>
-1. Sprint backlog finalized and pointed
-2. Each story has a clear owner
-3. Blockers identified with mitigation plans
+<span class="hl-keyword">TL;DR (3 bullets max):</span>
+- Completed user authentication flow (on schedule)
+- Payment integration delayed 2 days (vendor API issue)
+- Need decision on dashboard layout by Friday
 
-<span class="hl-function">PRE-READ (required before the meeting):</span>
-- Sprint 13 velocity report (link)
-- Prioritized backlog in Jira (link)
-- Client feedback summary from QBR (link)
+<span class="hl-keyword">══ COMPLETED THIS WEEK ══</span>
+<span class="hl-function">1. User Authentication</span>
+   - Users can now sign up, log in, and reset passwords
+   - Tested with 500 concurrent users &mdash; no issues
+   - <span class="hl-string">Demo available:</span> [link]
 
-<span class="hl-function">AGENDA:</span>
-[10 min] Sprint 13 Retro Quick Hits
-         Owner: Scrum Master
+<span class="hl-function">2. Profile Settings Page</span>
+   - Users can update name, email, and notification prefs
+   - Matches approved design spec v2.3
 
-[15 min] Backlog Review and Prioritization
-         Decision: which stories make the cut
-         Owner: Product Manager
+<span class="hl-keyword">══ IN PROGRESS ══</span>
+<span class="hl-function">3. Payment Integration (Stripe)</span>
+   - <span class="hl-flag">Status: 2 days behind schedule</span>
+   - <span class="hl-flag">Reason:</span> Stripe webhook endpoint changed in their
+     latest API version; requires additional testing
+   - <span class="hl-flag">Recovery plan:</span> Will be complete by Wednesday.
+     No impact on the launch date.
 
-[20 min] Story Assignment and Estimation
-         Planning poker for unpointed stories
-         Owner: Tech Lead
+<span class="hl-keyword">══ BLOCKED / NEEDS INPUT ══</span>
+<span class="hl-function">4. Dashboard Layout</span>
+   - We have two options (see attached mockups)
+   - <span class="hl-flag">Need your decision by Friday</span> to stay on schedule
+   - If no preference, we will proceed with Option A
 
-[10 min] Blocker Discussion
-         Decision: escalation path for each
-         Owner: Engineering Manager
+<span class="hl-keyword">══ NEXT WEEK PLAN ══</span>
+- Complete payment integration and end-to-end testing
+- Begin notification system (email + in-app)
+- Deliver first draft of admin panel
 
-[5 min]  Action Items and Wrap-Up
-         Owner: Scrum Master
-
-<span class="hl-comment">Action items posted to #sprint-planning
-within 30 minutes of meeting end.</span>
+<span class="hl-keyword">══ METRICS ══</span>
+- Sprint velocity: 34 points (target: 30)
+- Open bugs: 3 (all low severity)
+- Test coverage: 87%
 </pre>
       </div>
 
@@ -164,371 +1148,532 @@ within 30 minutes of meeting end.</span>
           Pro Tip
         </div>
         <p>
-          Each agenda item has three elements: a <strong>time box</strong>, a <strong>decision</strong>
-          to be made, and an <strong>owner</strong> responsible for driving that segment. This structure prevents
-          the common failure mode where discussions meander without resolution.
+          Always include a "Needs Input" section, even if it is empty (write "None this week"). This
+          trains the client to look for it, which means they respond faster when you actually need
+          something. The "default action" pattern ("If no preference, we will proceed with Option A")
+          prevents stalls when the client is slow to respond.
         </p>
       </div>
 
-      <h3 id="facilitation">2. Meeting Facilitation Techniques</h3>
+      <h3 id="technical-explanations">4. Explaining Technical Concepts</h3>
 
       <p>
-        The facilitator's job is not to have the best ideas &mdash; it is to extract the best ideas from
-        everyone in the room. Good facilitation balances participation, manages time, and ensures the
-        meeting produces its intended outcomes. Here are the core techniques:
-      </p>
-
-      <ul>
-        <li><strong>The Parking Lot.</strong> When a topic comes up that is important but off-agenda, write it on a "parking lot" list. Acknowledge it and move on. Address parking lot items at the end or schedule them for follow-up.</li>
-        <li><strong>Round Robin.</strong> When a critical decision needs input from everyone, go around the room systematically. This prevents the loudest voice from dominating and surfaces perspectives that quiet team members would not volunteer.</li>
-        <li><strong>Timeboxing.</strong> Set a visible timer for each agenda item. When time is up, either make the decision with available information or explicitly agree to extend. Never let a discussion run over without a conscious choice.</li>
-        <li><strong>The Two-Minute Rule.</strong> If a topic can be resolved in under two minutes with the people in the room, handle it immediately. If it cannot, assign an owner and move on.</li>
-        <li><strong>Silence is Data.</strong> After asking a question, wait at least 5 seconds before filling the silence. Some people need processing time. If you immediately rephrase or answer your own question, you cut off the thinkers.</li>
-      </ul>
-
-      <div class="callout important">
-        <div class="callout-header">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-          Watch Out
-        </div>
-        <p>
-          The biggest facilitation mistake is allowing <strong>design-by-committee</strong>. Meetings are for
-          gathering input and making decisions, not for designing solutions in real time. If you find the group
-          writing code logic or drawing architecture diagrams with 8 people watching, stop. Assign the design
-          work to 1-2 people and schedule a review for the output.
-        </p>
-      </div>
-
-      <h3 id="action-items">3. Action Items That Actually Get Done</h3>
-
-      <p>
-        The single most important output of any meeting is the action item list. Without it, the meeting
-        was social, not productive. Most action items fail because they are vague. Compare:
+        There are times when the client genuinely needs to understand a technical concept &mdash;
+        for example, when choosing between two architecture approaches that have different cost and
+        performance tradeoffs. The key technique is <strong>analogy anchoring</strong>: connect the
+        unfamiliar concept to something in the client's domain.
       </p>
 
       <div class="code-block">
         <div class="code-header">
-          <span class="code-lang">ACTION ITEMS — GOOD VS. BAD</span>
+          <span class="code-lang">framework</span>
           <button class="code-copy" onclick="copyCode(this)">Copy</button>
         </div>
 <pre>
-<span class="hl-comment">/* BAD: Vague, no owner, no deadline */</span>
-<span class="hl-flag">- Look into the API issue</span>
-<span class="hl-flag">- Follow up with the client</span>
-<span class="hl-flag">- Update the docs</span>
+<span class="hl-comment">/* ── ANALOGY ANCHORING FRAMEWORK ────────────────── */</span>
 
-<span class="hl-comment">/* GOOD: Specific, owned, time-bound */</span>
-<span class="hl-string">- [Alex] Investigate Stripe webhook 500 errors
-  in production logs and post RCA to #engineering
-  by Wednesday 5 PM ET</span>
+<span class="hl-keyword">Step 1: State the concept in one sentence</span>
+"We need to decide between a monolithic architecture
+and a microservices architecture."
 
-<span class="hl-string">- [Priya] Send client updated Phase 2 timeline
-  with revised scope from today's discussion
-  by end of day Thursday</span>
+<span class="hl-keyword">Step 2: Anchor to something familiar</span>
+"Think of it like choosing between one large warehouse
+(monolith) or several specialized storage units
+(microservices)."
 
-<span class="hl-string">- [Marcus] Update API docs for the /campaigns
-  endpoint to reflect pagination changes
-  by Friday before sprint review</span>
+<span class="hl-keyword">Step 3: Map the tradeoffs to business terms</span>
+"The warehouse is cheaper to start with and simpler to
+manage, but harder to expand one section without
+disrupting the others. The storage units cost more
+upfront but let you scale individual pieces
+independently."
 
-<span class="hl-comment">/* Formula: [Owner] + Specific Task + Deadline */</span>
+<span class="hl-keyword">Step 4: Make a recommendation with rationale</span>
+"For your current size (500 users, 3 core features),
+we recommend starting with the warehouse approach.
+It will save approximately $2,000/month in hosting
+costs and 3 weeks of initial setup time. We can
+transition to storage units when you hit 10,000 users."
+
+<span class="hl-keyword">Step 5: State what you need from them</span>
+"Does this approach work for you? We need your
+approval by Thursday to stay on the sprint schedule."
 </pre>
       </div>
 
-      <p>
-        Every action item must pass the <strong>WHO-WHAT-WHEN test</strong>: Who is responsible? What specifically
-        do they need to deliver? When is it due? If any of these three elements is missing, the action item
-        will likely slip through the cracks.
-      </p>
-
-      <h3 id="standup-formats">4. Standup Meeting Formats</h3>
+      <h3 id="email-templates">5. Email Templates for Common Scenarios</h3>
 
       <p>
-        The daily standup is the most frequent meeting in most engineering teams. A bad standup is a
-        15-minute status report that nobody listens to. A good standup is a 10-minute coordination event
-        that unblocks the team for the day.
+        Most client emails fall into a handful of recurring patterns. Having templates for these
+        scenarios saves time and ensures consistent quality. Here are the patterns every developer
+        should have ready.
       </p>
 
       <div class="code-block">
         <div class="code-header">
-          <span class="code-lang">STANDUP FORMAT: CLASSIC THREE QUESTIONS</span>
+          <span class="code-lang">template</span>
           <button class="code-copy" onclick="copyCode(this)">Copy</button>
         </div>
 <pre>
-<span class="hl-keyword">Per person, 90 seconds max:</span>
+<span class="hl-comment">/* ── TEMPLATE: Scope Change Request ────────────── */</span>
 
-<span class="hl-function">1. What did I complete yesterday?</span>
-   Focus on outcomes, not activity.
-   BAD:  "I worked on the login page."
-   GOOD: "Login page is in QA — test credentials
-          are in the PR description."
+<span class="hl-keyword">Subject:</span> [Project] Scope Change &mdash; [Feature Name]
 
-<span class="hl-function">2. What am I working on today?</span>
-   Be specific enough that others can identify
-   dependencies or conflicts.
-   BAD:  "More work on the dashboard."
-   GOOD: "Starting the chart component. Will need
-          the API endpoint from Marcus."
+Hi [Client Name],
 
-<span class="hl-function">3. Any blockers?</span>
-   Only raise true blockers — things you cannot
-   resolve on your own.
-   BAD:  "I'm not sure about the design."
-   GOOD: "Blocked on Figma mockup for settings page.
-          Priya, can we sync after standup?"
+During development of [feature], we identified a change
+that affects the original scope:
+
+<span class="hl-function">What changed:</span> [1-2 sentences describing the change]
+
+<span class="hl-function">Why:</span> [1-2 sentences explaining the reason]
+
+<span class="hl-function">Impact on timeline:</span> [specific days/weeks]
+
+<span class="hl-function">Impact on budget:</span> [specific amount or "no change"]
+
+<span class="hl-function">Options:</span>
+A) [Proceed with change] &mdash; adds [X days], [Y cost]
+B) [Alternative approach] &mdash; adds [X days], [Y cost]
+C) [Skip this feature] &mdash; no impact
+
+<span class="hl-function">Our recommendation:</span> Option [X] because [reason].
+
+We need your decision by [date] to maintain the current
+schedule. Happy to jump on a quick call if you would
+like to discuss.
+
+Best,
+[Your name]
 </pre>
       </div>
 
       <div class="code-block">
         <div class="code-header">
-          <span class="code-lang">STANDUP FORMAT: WALK THE BOARD</span>
+          <span class="code-lang">template</span>
           <button class="code-copy" onclick="copyCode(this)">Copy</button>
         </div>
 <pre>
-<span class="hl-keyword">Walk through the board from right to left:</span>
+<span class="hl-comment">/* ── TEMPLATE: Bug Report to Client ────────────── */</span>
 
-<span class="hl-function">1. "In Review" column</span>
-   Which PRs need reviewers?
-   Any PRs stuck for more than 24 hours?
+<span class="hl-keyword">Subject:</span> [Project] Issue Found &mdash; [Brief Description]
 
-<span class="hl-function">2. "In Progress" column</span>
-   Any stories at risk of not completing?
-   Any stories that need pairing?
+Hi [Client Name],
 
-<span class="hl-function">3. "To Do" column</span>
-   What is being pulled next?
-   Any capacity issues?
+We discovered an issue and want to keep you informed:
 
-<span class="hl-keyword">Why this works:</span>
-- Focuses on flow, not individual status
-- Naturally surfaces bottlenecks
-- Keeps discussion work-centered
-- Takes 8-10 minutes for a team of 6-8
+<span class="hl-function">What happened:</span> [User-visible symptom, not technical cause]
+Example: "Some users are seeing a blank screen when they
+try to export reports."
+
+<span class="hl-function">Who is affected:</span> [Scope of impact]
+Example: "This affects roughly 5% of users, specifically
+those using Safari on iOS."
+
+<span class="hl-function">Current status:</span> [What you are doing right now]
+Example: "We have identified the root cause and a fix is
+being tested now."
+
+<span class="hl-function">Expected resolution:</span> [When it will be fixed]
+Example: "The fix will be deployed by 3pm ET today."
+
+<span class="hl-function">Do you need to do anything?</span> [Yes/No + what]
+Example: "No action needed. We will send a follow-up
+once the fix is live."
+
+We apologize for the inconvenience and will update you
+within [timeframe].
+
+Best,
+[Your name]
 </pre>
       </div>
 
-      <h3 id="remote-meetings">5. Remote and Hybrid Meeting Best Practices</h3>
+      <h3 id="writing-checklist">6. The Pre-Send Checklist</h3>
 
       <p>
-        Remote meetings have unique challenges: technical issues, camera fatigue, the temptation to multitask,
-        and the difficulty of reading the room. With distributed teams now the norm in tech, mastering remote
-        meeting facilitation is non-negotiable.
+        Before sending any client-facing written communication, run it through this checklist.
+        It takes 60 seconds and catches the most common problems:
       </p>
 
-      <ul>
-        <li><strong>Camera on by default.</strong> It is much harder to build trust and read reactions with cameras off. Make "cameras on" the team norm unless someone has a specific reason otherwise.</li>
-        <li><strong>Use the chat for parallel input.</strong> Instead of asking "Any questions?" type the question in chat and ask people to respond there. You get more input and quieter team members participate more.</li>
-        <li><strong>Record and summarize.</strong> Not everyone can attend every meeting. Record the session and post a 3-sentence summary plus action items in Slack within 30 minutes.</li>
-        <li><strong>The 25/50-minute rule.</strong> Schedule meetings for 25 or 50 minutes instead of 30 or 60. This gives everyone a buffer between back-to-back meetings.</li>
-        <li><strong>Mute by default, unmute to speak.</strong> Background noise from one person's open mic destroys concentration for everyone.</li>
-      </ul>
-
-      <div class="code-block">
-        <div class="code-header">
-          <span class="code-lang">MEETING NOTES TEMPLATE</span>
-          <button class="code-copy" onclick="copyCode(this)">Copy</button>
-        </div>
+      <div class="diagram">
 <pre>
-<span class="hl-keyword">MEETING NOTES:</span> <span class="hl-string">Sprint 14 Planning</span>
-<span class="hl-keyword">DATE:</span>    March 4, 2025
-<span class="hl-keyword">ATTENDEES:</span> Alex, Priya, Marcus, Sarah, Jordan
-<span class="hl-keyword">ABSENT:</span> Lee (on PTO — will review notes async)
-
-<span class="hl-function">DECISIONS MADE:</span>
-1. Sprint 14 scope: 8 stories, 34 story points
-2. Campaign analytics dashboard is top priority
-3. Defer SSO to Sprint 15 per client request
-
-<span class="hl-function">ACTION ITEMS:</span>
-- [Alex] Set up staging for dashboard QA
-  — by Wednesday March 5
-- [Priya] Share Figma mockups for settings page
-  — by end of day Tuesday March 4
-- [Marcus] Complete /campaigns API endpoint
-  — by Thursday March 6
-- [Sarah] Schedule mid-sprint check-in with client
-  — by Wednesday March 5
-
-<span class="hl-function">PARKING LOT:</span>
-- Database indexing strategy for large datasets
-  → Alex to schedule tech design session
-- Client onboarding flow redesign
-  → Jordan to add to product backlog
-
-<span class="hl-function">NEXT MEETING:</span>
-Thursday standup, March 6, 9:30 AM ET
+  ┌─────────────────────────────────────────────────────────┐
+  │            PRE-SEND WRITING CHECKLIST                    │
+  ├─────────────────────────────────────────────────────────┤
+  │                                                          │
+  │  [ ] Does the first sentence tell them what they         │
+  │      need to know?                                       │
+  │                                                          │
+  │  [ ] Would my non-technical friend understand             │
+  │      the main point?                                     │
+  │                                                          │
+  │  [ ] Have I replaced jargon with plain language           │
+  │      (or defined it)?                                    │
+  │                                                          │
+  │  [ ] Is there a clear action item or next step?          │
+  │                                                          │
+  │  [ ] Have I included a deadline for any decisions?       │
+  │                                                          │
+  │  [ ] Did I proofread for typos and formatting?           │
+  │                                                          │
+  │  [ ] Is the tone professional but human?                 │
+  │                                                          │
+  │  [ ] Would I be comfortable if this email were            │
+  │      forwarded to the client's CEO?                      │
+  │                                                          │
+  └─────────────────────────────────────────────────────────┘
 </pre>
+        <div class="diagram-caption">Figure 2: Pre-send checklist &mdash; run through this before every client email</div>
       </div>
 
       <details>
-        <summary>How to handle the person who always talks too much</summary>
+        <summary>Why "Would my non-technical friend understand?" matters</summary>
         <div class="details-body">
           <p>
-            Redirect without shutting them down. Try: "Great point, Marcus. I want to make sure we hear
-            from everyone — Priya, what is your take?" Use structured formats like Round Robin or written
-            input via chat to naturally distribute airtime. If the pattern persists, have a private
-            conversation about keeping initial comments to 2 minutes.
+            This is not about intelligence &mdash; it is about context. Your non-technical friend is
+            smart, they just do not have the same vocabulary you do. If you can explain your status
+            update to them, you can explain it to any client stakeholder. Try it out loud: read your
+            email to a roommate, partner, or friend who does not work in tech. If they look confused
+            at any point, that is where you need to rewrite.
           </p>
         </div>
       </details>
 
       <details>
-        <summary>When to cancel a meeting vs. keep it</summary>
+        <summary>Handling the "forwarded to the CEO" test</summary>
         <div class="details-body">
           <p>
-            Cancel if: the agenda is empty, the key decision-maker is absent, the pre-read was not completed
-            by most attendees, or the topic was already resolved async. Keep it if: there are genuine
-            decisions to make, the human interaction is valuable for team cohesion, or the topic is
-            sensitive enough to warrant real-time discussion.
+            This happens more often than you think. A product manager receives your update, finds it
+            useful, and forwards it to their CEO with "FYI." If your email contains sloppy formatting,
+            internal jokes, or unexplained acronyms, it reflects poorly on both you and your company.
+            Write every client email as if it will be forwarded two levels up.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Tone: Professional but human</summary>
+        <div class="details-body">
+          <p>
+            There is a spectrum between "Hey dude, stuff broke lol" and "Dear Sir/Madam, It has come
+            to our attention that a software deficiency has manifested." Neither extreme works. The
+            sweet spot is friendly, direct, and respectful. Use contractions ("we've" instead of "we
+            have"), first names, and conversational sentence structure &mdash; but avoid slang, emojis
+            in formal updates, and overly casual language.
           </p>
         </div>
       </details>
 
       <hr class="section-divider">
 
+      <!-- ════════════════════════════════════════
+           SECTION 3: WATCH & LEARN
+           ════════════════════════════════════════ -->
       <h2 id="watch-learn">Watch &amp; Learn</h2>
 
-      <p>These videos cover meeting facilitation and management techniques that complement this chapter.</p>
+      <p>
+        These videos cover technical writing principles and communication strategies that complement
+        this chapter's content. Watch them to reinforce the frameworks above.
+      </p>
 
       <div class="video-card">
         <div class="video-wrapper">
-          <iframe src="https://www.youtube.com/embed/dJMnJx_GCSA?rel=0&modestbranding=1" title="How to Run Effective Meetings" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+          <iframe
+            src="https://www.youtube.com/embed/Unzc731iCUY?rel=0&amp;modestbranding=1"
+            title="Technical Writing for Non-Technical Audiences"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
         </div>
         <div class="video-caption">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
-          Jeff Su — How to Run Effective Meetings (Practical tips for tech teams)
+          Technical Writing &mdash; Principles for writing clear, audience-aware documentation
         </div>
       </div>
 
       <div class="video-card">
         <div class="video-wrapper">
-          <iframe src="https://www.youtube.com/embed/v5VuB_bHmEE?rel=0&modestbranding=1" title="Agile Standup Best Practices" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+          <iframe
+            src="https://www.youtube.com/embed/eIho2S0ZahI?rel=0&amp;modestbranding=1"
+            title="Effective Communication in Client Services"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
         </div>
         <div class="video-caption">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
-          Atlassian — Stand-ups: Best Practices for Distributed Teams
+          Effective Client Communication &mdash; Building trust through transparent written updates
         </div>
       </div>
 
       <hr class="section-divider">
 
+      <!-- ════════════════════════════════════════
+           SECTION 4: FURTHER READING
+           ════════════════════════════════════════ -->
       <h2 id="further-reading">Further Reading</h2>
 
-      <p>Deepen your meeting management skills with these resources.</p>
+      <p>Deep-dive resources on technical writing, plain language, and client communication best practices.</p>
 
       <div class="resource-grid">
-        <a class="resource-card" href="https://www.amazon.com/Death-Meeting-Leadership-Business-Lencioni/dp/0787968056" target="_blank" rel="noopener">
-          <div class="resource-icon book"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-          <div class="resource-info"><div class="resource-title">Death by Meeting — Patrick Lencioni</div><div class="resource-desc">A leadership fable about making meetings engaging and productive. Introduces the four-meeting model.</div></div>
+        <a class="resource-card" href="https://developers.google.com/tech-writing" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Google Technical Writing Courses</div>
+            <div class="resource-desc">Free self-paced courses from Google on writing clear, concise technical documentation.</div>
+          </div>
         </a>
-        <a class="resource-card" href="https://hbr.org/2017/07/stop-the-meeting-madness" target="_blank" rel="noopener">
-          <div class="resource-icon article"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
-          <div class="resource-info"><div class="resource-title">Stop the Meeting Madness (HBR)</div><div class="resource-desc">Research-backed strategies for reducing meeting overload and reclaiming productive time.</div></div>
+
+        <a class="resource-card" href="https://www.plainlanguage.gov/guidelines/" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Plain Language Guidelines (plainlanguage.gov)</div>
+            <div class="resource-desc">Official US government guidelines for writing that your audience can understand and use.</div>
+          </div>
         </a>
-        <a class="resource-card" href="https://www.amazon.com/Facilitators-Guide-Participatory-Decision-Making/dp/1118404955" target="_blank" rel="noopener">
-          <div class="resource-icon book"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-          <div class="resource-info"><div class="resource-title">Facilitator's Guide to Participatory Decision-Making</div><div class="resource-desc">The definitive guide to facilitation techniques, consensus building, and group dynamics.</div></div>
+
+        <a class="resource-card" href="https://www.amazon.com/Writing-Well-Classic-Guide-Nonfiction/dp/0060891548" target="_blank" rel="noopener">
+          <div class="resource-icon article">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">On Writing Well &mdash; William Zinsser</div>
+            <div class="resource-desc">The classic guide to nonfiction writing. Essential reading for anyone writing client-facing content.</div>
+          </div>
         </a>
-        <a class="resource-card" href="https://www.atlassian.com/team-playbook/plays/standups" target="_blank" rel="noopener">
-          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-          <div class="resource-info"><div class="resource-title">Atlassian Team Playbook: Stand-ups</div><div class="resource-desc">Practical guide to running effective standups with templates and anti-patterns.</div></div>
-        </a>
-        <a class="resource-card" href="https://www.amazon.com/Surprising-Science-Meetings-Better-Transform/dp/0190689218" target="_blank" rel="noopener">
-          <div class="resource-icon book"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-          <div class="resource-info"><div class="resource-title">The Surprising Science of Meetings — Steven Rogelberg</div><div class="resource-desc">Evidence-based strategies for meeting design backed by organizational psychology research.</div></div>
+
+        <a class="resource-card" href="https://hemingwayapp.com/" target="_blank" rel="noopener">
+          <div class="resource-icon article">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Hemingway App</div>
+            <div class="resource-desc">Free tool that highlights complex sentences, passive voice, and readability issues in your writing.</div>
+          </div>
         </a>
       </div>
 
       <hr class="section-divider">
 
+      <!-- ════════════════════════════════════════
+           SECTION 5: ASSIGNMENTS
+           ════════════════════════════════════════ -->
       <h2 id="assignments">Assignments</h2>
 
-      <p>Complete these assignments in order. Each builds on the skills from the previous level.</p>
+      <p>
+        Complete these assignments in order. Each one builds on the previous level. Use real or
+        realistic project scenarios &mdash; the more authentic the context, the more useful the practice.
+      </p>
 
+      <!-- Assignment 1: Level 1 -->
       <div class="assignment">
         <div class="assignment-header">
-          <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Assignment 1</div>
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 1
+          </div>
           <span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span>
         </div>
-        <h4>Meeting Audit and Agenda Templates</h4>
-        <p>Audit your current meeting load and create reusable agenda templates for your team's recurring meetings.</p>
+        <h4>Translate a Technical Decision</h4>
+        <p>Take a recent technical decision from a real project and rewrite it for three different audiences.</p>
+
         <ul class="checklist">
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>List all recurring meetings you attend weekly with duration and attendee count</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Apply the "email test" to each: mark which could be replaced with async updates</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create PODA agenda templates for your top 3 recurring meetings</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Calculate total person-hours spent in meetings per week for your team</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Propose a plan to reduce meeting time by 20% and share with your manager</span></li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Choose a real technical decision (e.g., database choice, framework selection, API design)</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Write a 3-sentence explanation for a CEO (outcome-focused)</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Write a 1-paragraph explanation for a product manager (feature-focused)</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Write a 2-paragraph explanation for a technical lead (integration-focused)</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Run all three versions through the Hemingway App &mdash; target Grade 8 readability or lower</span>
+          </li>
         </ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Done when</div><p>You have a documented meeting audit, 3 reusable agenda templates, and a concrete proposal for reducing meeting overhead.</p></div>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            A peer reviews all three versions and confirms they accurately convey the same decision
+            at different levels of detail, without jargon in the CEO and PM versions.
+          </p>
+        </div>
       </div>
 
+      <!-- Assignment 2: Level 2 -->
       <div class="assignment">
         <div class="assignment-header">
-          <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Assignment 2</div>
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 2
+          </div>
           <span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span>
         </div>
-        <h4>Facilitate a Real Meeting End-to-End</h4>
-        <p>Take ownership of facilitating a real team meeting using the techniques from this chapter.</p>
+        <h4>Write a Complete Weekly Status Update</h4>
+        <p>Using the template from this chapter, write a full status update for a real or simulated project.</p>
+
         <ul class="checklist">
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Send the PODA agenda at least 24 hours before the meeting</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Open the meeting by stating purpose and desired outcomes</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Use at least 2 facilitation techniques (parking lot, round robin, timeboxing)</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>End with clear action items that pass the WHO-WHAT-WHEN test</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Post meeting notes to the team channel within 30 minutes</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Ask 2 attendees for private feedback on your facilitation</span></li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Include all sections: TL;DR, Completed, In Progress, Blocked, Next Week, Metrics</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Include at least one item that is behind schedule with a recovery plan</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Include at least one item that needs client input with a deadline and default action</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Run through the pre-send checklist and document any changes you made</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Have a non-technical person read it and rate their understanding (target: 8/10 or higher)</span>
+          </li>
         </ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Done when</div><p>You have facilitated a real meeting with documented agenda, notes, and action items. At least 2 attendees confirm it was well-run.</p></div>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            A mentor confirms the update is complete, clear, and actionable. The non-technical reviewer
+            rates their understanding 8/10 or higher without asking clarifying questions.
+          </p>
+        </div>
       </div>
 
+      <!-- Assignment 3: Level 3 -->
       <div class="assignment">
         <div class="assignment-header">
-          <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Assignment 3</div>
-          <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Leadership</span>
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 3
+          </div>
+          <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Production-Ready</span>
         </div>
-        <h4>Design a Meeting Culture Playbook</h4>
-        <p>Create a team-wide meeting culture document that establishes norms, templates, and accountability.</p>
+        <h4>Build a Client Communication Template Library</h4>
+        <p>Create a reusable library of email templates for your team, covering the most common client scenarios.</p>
+
         <ul class="checklist">
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Document meeting norms (agenda required, camera policy, notes expectations)</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create templates for 4 meeting types: standup, planning, decision, retrospective</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Define a "meeting-free" time block policy (e.g., no meetings Wednesday mornings)</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Establish an action item tracking system with weekly review</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Present the playbook to your team and get buy-in from leadership</span></li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Create templates for: scope change, bug report, delay notification, feature delivery, meeting recap</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Each template must have placeholder fields clearly marked with [brackets]</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Include a usage guide explaining when to use each template</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Write one filled-in example for each template using a realistic scenario</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Have two team members use the templates for one week and collect their feedback</span>
+          </li>
         </ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Done when</div><p>Your meeting culture playbook is adopted by the team, meeting-free blocks are on the calendar, and the tracking system is in use for 2+ weeks.</p></div>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            Two team members have used the template library for at least one week and report that it
+            saved them time and improved the consistency of their client communications.
+          </p>
+        </div>
       </div>
 
       <hr class="section-divider">
 
+      <!-- ════════════════════════════════════════
+           SECTION 6: SELF-CHECK
+           ════════════════════════════════════════ -->
       <h2 id="self-check">Self-Check</h2>
 
-      <p>Before moving to Chapter 03, honestly answer these questions.</p>
+      <p>Before moving to Chapter 03, honestly assess yourself against these criteria.</p>
 
       <details>
-        <summary>Can you write a PODA agenda for any meeting in under 5 minutes?</summary>
-        <div class="details-body"><p>Pick a random meeting from your calendar next week. Set a timer for 5 minutes and write a complete PODA agenda. If you struggle, practice with 3 more meetings until the format is automatic.</p></div>
+        <summary>Can you explain a technical concept to a non-technical person in under 60 seconds?</summary>
+        <div class="details-body">
+          <p>
+            Try it. Pick any concept from your current project &mdash; a database migration, an API
+            integration, a caching strategy &mdash; and explain it to someone non-technical. Time
+            yourself. If you go over 60 seconds, you are including too much detail. Start with the
+            "what it does for the user" and only add technical detail if they ask.
+          </p>
+        </div>
       </details>
 
       <details>
-        <summary>Do your meeting notes include decisions, action items, and parking lot items?</summary>
-        <div class="details-body"><p>Review your notes from the last 3 meetings. Do they clearly separate what was decided from what needs to happen next? Can someone who missed the meeting understand outcomes in 2 minutes?</p></div>
+        <summary>Do your status updates prevent "just checking in" emails?</summary>
+        <div class="details-body">
+          <p>
+            Look at your email history. If clients are sending "just wanted to check on the status of..."
+            emails between your updates, your updates are either too infrequent, missing key information,
+            or not clearly communicating blockers and timelines. A good status update answers every
+            question before it is asked.
+          </p>
+        </div>
       </details>
 
       <details>
-        <summary>Can you name the facilitation technique for every common meeting dysfunction?</summary>
-        <div class="details-body"><p>One person dominates? (Round Robin.) Discussion goes off-topic? (Parking Lot.) Decision drags on? (Timebox and force a decision or assign offline.) If you can name the technique, you can deploy it in real time.</p></div>
+        <summary>Do you habitually include deadlines and default actions in your communications?</summary>
+        <div class="details-body">
+          <p>
+            Review your last five client emails. Count how many include a specific deadline for a
+            decision and a default action if no response is received. If fewer than three out of five
+            include both, you need to make this a habit. Unstructured requests ("let us know what you
+            think") are the number one cause of communication stalls.
+          </p>
+        </div>
       </details>
 
     </main>
 
+    <!-- Sidebar: Table of Contents -->
     <aside class="sidebar">
       <div class="sidebar-title">On this page</div>
       <ul class="toc-list">
         <li class="toc-item"><a href="#why-this-matters">Why This Matters</a></li>
         <li class="toc-item"><a href="#key-concepts">Key Concepts</a></li>
-        <li class="toc-item"><a href="#agenda-design" style="padding-left:28px;font-size:12px">Agenda Design</a></li>
-        <li class="toc-item"><a href="#facilitation" style="padding-left:28px;font-size:12px">Facilitation Techniques</a></li>
-        <li class="toc-item"><a href="#action-items" style="padding-left:28px;font-size:12px">Action Items</a></li>
-        <li class="toc-item"><a href="#standup-formats" style="padding-left:28px;font-size:12px">Standup Formats</a></li>
-        <li class="toc-item"><a href="#remote-meetings" style="padding-left:28px;font-size:12px">Remote Meetings</a></li>
+        <li class="toc-item"><a href="#audience-analysis" style="padding-left: 28px; font-size: 12px;">Audience Analysis</a></li>
+        <li class="toc-item"><a href="#plain-language" style="padding-left: 28px; font-size: 12px;">Plain Language Framework</a></li>
+        <li class="toc-item"><a href="#status-update-anatomy" style="padding-left: 28px; font-size: 12px;">Status Update Anatomy</a></li>
+        <li class="toc-item"><a href="#technical-explanations" style="padding-left: 28px; font-size: 12px;">Technical Explanations</a></li>
+        <li class="toc-item"><a href="#email-templates" style="padding-left: 28px; font-size: 12px;">Email Templates</a></li>
+        <li class="toc-item"><a href="#writing-checklist" style="padding-left: 28px; font-size: 12px;">Pre-Send Checklist</a></li>
         <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a></li>
         <li class="toc-item"><a href="#further-reading">Further Reading</a></li>
         <li class="toc-item"><a href="#assignments">Assignments</a></li>
@@ -537,18 +1682,79 @@ Thursday standup, March 6, 9:30 AM ET
     </aside>
   </div>
 
+  <!-- Footer Navigation -->
   <footer class="chapter-footer">
     <div class="chapter-footer-inner">
       <nav class="footer-nav">
-        <a class="footer-nav-link" href="chapter-01.html"><span class="footer-nav-label">&larr; Previous Chapter</span><span class="footer-nav-title">01: Professional Email Communication</span></a>
-        <a class="footer-nav-link" href="chapter-03.html"><span class="footer-nav-label">Next Chapter &rarr;</span><span class="footer-nav-title">03: Giving and Receiving Feedback</span></a>
+        <a class="footer-nav-link" href="chapter-01.html">
+          <span class="footer-nav-label">&larr; Previous Chapter</span>
+          <span class="footer-nav-title">01: Structuring Client Emails</span>
+        </a>
+        <a class="footer-nav-link" href="chapter-03.html">
+          <span class="footer-nav-label">Next Chapter &rarr;</span>
+          <span class="footer-nav-title">03: Meeting Management</span>
+        </a>
       </nav>
-      <div class="footer-brand">ILA (Iksha Learning Academy) &middot; Client Communication &middot; Basic</div>
+      <div class="footer-brand">
+        ILA (Iksha Learning Academy) &middot; Client Communication Professional Certification &middot; Level 1
+      </div>
     </div>
   </footer>
 
+  <!-- ════════════════════════════════════════
+       SCRIPTS
+       ════════════════════════════════════════ -->
   <script>
-    window.addEventListener('scroll',()=>{const s=window.scrollY;const d=document.documentElement.scrollHeight-window.innerHeight;const p=d>0?(s/d)*100:0;document.getElementById('progressBar').style.width=p+'%'});const tocLinks=document.querySelectorAll('.toc-item a');const sections=[];tocLinks.forEach(link=>{const id=link.getAttribute('href').slice(1);const el=document.getElementById(id);if(el)sections.push({id,el,link})});const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{const item=sections.find(s=>s.el===entry.target);if(item&&entry.isIntersecting){tocLinks.forEach(l=>l.classList.remove('active'));item.link.classList.add('active')}})},{rootMargin:'-80px 0px -60% 0px',threshold:0});sections.forEach(s=>observer.observe(s.el));function copyCode(btn){const pre=btn.closest('.code-block').querySelector('pre');navigator.clipboard.writeText(pre.textContent).then(()=>{btn.classList.add('copied');btn.textContent='Copied!';setTimeout(()=>{btn.classList.remove('copied');btn.textContent='Copy'},2000)})}
+    // ── Progress Bar ──
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      document.getElementById('progressBar').style.width = progress + '%';
+    });
+
+    // ── Active TOC ──
+    const tocLinks = document.querySelectorAll('.toc-item a');
+    const sections = [];
+
+    tocLinks.forEach(link => {
+      const id = link.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) sections.push({ id, el, link });
+    });
+
+    const observerOptions = {
+      rootMargin: '-80px 0px -60% 0px',
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const item = sections.find(s => s.el === entry.target);
+        if (item) {
+          if (entry.isIntersecting) {
+            tocLinks.forEach(l => l.classList.remove('active'));
+            item.link.classList.add('active');
+          }
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(s => observer.observe(s.el));
+
+    // ── Copy Code ──
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      const text = pre.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.classList.add('copied');
+        btn.textContent = 'Copied!';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.textContent = 'Copy';
+        }, 2000);
+      });
+    }
   </script>
 </body>
 </html>

@@ -8,6 +8,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
+    /* ═══════════════════════════════════════════════
+       ILA DESIGN SYSTEM — v1.0
+       Iksha Learning Academy
+       ═══════════════════════════════════════════════ */
+
     :root {
       --ink:        #0f172a;
       --ink-light:  #334155;
@@ -42,398 +47,157 @@
       --purple-100: #f3e8ff;
       --purple-500: #a855f7;
       --purple-600: #9333ea;
-      --green-50:  #f0fdf4;
-      --green-100: #dcfce7;
-      --green-500: #22c55e;
-      --green-600: #16a34a;
       --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       --font-serif: 'Instrument Serif', Georgia, serif;
       --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
       --content-max: 780px;
+      --sidebar-width: 280px;
       --ease: cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    body { font-family: var(--font-sans); font-size: 16px; line-height: 1.7; color: var(--ink); background: var(--surface); }
 
-    body {
-      font-family: var(--font-sans);
-      font-size: 16px;
-      line-height: 1.7;
-      color: var(--ink);
-      background: var(--surface);
-    }
+    .progress-bar { position: fixed; top: 0; left: 0; width: 0%; height: 3px; background: linear-gradient(90deg, var(--teal-500), var(--blue-500)); z-index: 1000; transition: width 0.15s var(--ease); }
 
-    .progress-bar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 0%;
-      height: 3px;
-      background: linear-gradient(90deg, var(--teal-500), var(--blue-500));
-      z-index: 1000;
-      transition: width 0.15s var(--ease);
-    }
+    .top-nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 2rem; }
+    .top-nav-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 56px; }
+    .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--teal-800); }
+    .nav-brand-icon { width: 32px; height: 32px; background: linear-gradient(135deg, var(--teal-600), var(--teal-800)); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 14px; }
+    .nav-brand-text { font-weight: 700; font-size: 15px; letter-spacing: -0.02em; }
+    .nav-chapter-nav { display: flex; align-items: center; gap: 8px; }
+    .nav-btn { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 8px; font-size: 13px; font-weight: 500; text-decoration: none; color: var(--ink-muted); border: 1px solid var(--border); background: white; transition: all 0.2s var(--ease); cursor: pointer; }
+    .nav-btn:hover { color: var(--ink); border-color: var(--teal-500); background: var(--teal-50); }
+    .nav-btn.disabled { opacity: 0.4; pointer-events: none; }
+    .nav-current { font-size: 13px; font-weight: 600; color: var(--ink-light); padding: 0 4px; }
 
-    .top-nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-      padding: 0 2rem;
-    }
+    .hero { background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%); border-bottom: 1px solid var(--border); padding: 4rem 2rem 3.5rem; }
+    .hero-inner { max-width: var(--content-max); margin: 0 auto; }
+    .hero-chapter-label { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--teal-700); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1rem; }
+    .hero-chapter-label span { background: var(--teal-100); padding: 3px 10px; border-radius: 100px; }
+    .hero h1 { font-family: var(--font-serif); font-size: clamp(2.4rem, 5vw, 3.2rem); font-weight: 400; line-height: 1.15; color: var(--ink); margin-bottom: 1rem; }
+    .hero-subtitle { font-size: 1.15rem; color: var(--ink-light); line-height: 1.65; max-width: 640px; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.5rem; }
+    .hero-meta-item { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--ink-muted); }
+    .hero-meta-item svg { width: 16px; height: 16px; color: var(--teal-600); }
 
-    .top-nav-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 56px;
-    }
+    .main-layout { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: grid; grid-template-columns: 1fr var(--sidebar-width); gap: 4rem; align-items: start; }
+    .content { padding: 3rem 0 6rem; min-width: 0; }
 
-    .nav-brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-      color: var(--teal-800);
-    }
+    .sidebar { position: sticky; top: 76px; padding: 2rem 0; max-height: calc(100vh - 76px); overflow-y: auto; }
+    .sidebar-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-muted); margin-bottom: 1rem; padding-left: 14px; }
+    .toc-list { list-style: none; }
+    .toc-item a { display: block; padding: 6px 14px; font-size: 13px; color: var(--ink-muted); text-decoration: none; border-left: 2px solid transparent; transition: all 0.2s var(--ease); line-height: 1.5; }
+    .toc-item a:hover { color: var(--ink); background: var(--surface-alt); }
+    .toc-item a.active { color: var(--teal-700); border-left-color: var(--teal-500); background: var(--teal-50); font-weight: 500; }
 
-    .nav-brand-icon {
-      width: 32px;
-      height: 32px;
-      background: linear-gradient(135deg, var(--teal-600), var(--teal-800));
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-weight: 800;
-      font-size: 14px;
-    }
-
-    .nav-brand-text {
-      font-weight: 700;
-      font-size: 15px;
-      letter-spacing: -0.02em;
-    }
-
-    .nav-chapter-nav {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .nav-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 14px;
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: 500;
-      text-decoration: none;
-      color: var(--ink-muted);
-      border: 1px solid var(--border);
-      background: white;
-      transition: all 0.2s var(--ease);
-      cursor: pointer;
-    }
-
-    .nav-btn:hover {
-      color: var(--ink);
-      border-color: var(--teal-500);
-      background: var(--teal-50);
-    }
-
-    .nav-btn.disabled {
-      opacity: 0.4;
-      pointer-events: none;
-    }
-
-    .nav-current {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--ink-light);
-      padding: 0 4px;
-    }
-
-    .hero {
-      background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%);
-      border-bottom: 1px solid var(--border);
-      padding: 4rem 2rem 3.5rem;
-    }
-
-    .hero-inner {
-      max-width: var(--content-max);
-      margin: 0 auto;
-    }
-
-    .hero-chapter-label {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--teal-700);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 1rem;
-    }
-
-    .hero-chapter-label span {
-      background: var(--teal-100);
-      padding: 3px 10px;
-      border-radius: 100px;
-    }
-
-    .hero h1 {
-      font-family: var(--font-serif);
-      font-size: clamp(2.4rem, 5vw, 3.2rem);
-      font-weight: 400;
-      line-height: 1.15;
-      color: var(--ink);
-      margin-bottom: 1rem;
-    }
-
-    .hero-subtitle {
-      font-size: 1.15rem;
-      color: var(--ink-light);
-      line-height: 1.65;
-      max-width: 640px;
-    }
-
-    .hero-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-top: 1.5rem;
-    }
-
-    .hero-meta-item {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 13px;
-      color: var(--ink-muted);
-    }
-
-    .content {
-      max-width: var(--content-max);
-      margin: 0 auto;
-      padding: 3rem 2rem 6rem;
-    }
-
-    .content h2 {
-      font-family: var(--font-serif);
-      font-size: 1.85rem;
-      font-weight: 400;
-      color: var(--ink);
-      margin: 3rem 0 1rem;
-      scroll-margin-top: 80px;
-    }
-
+    .content h2 { font-family: var(--font-serif); font-size: 1.85rem; font-weight: 400; color: var(--ink); margin: 3rem 0 1rem; padding-top: 1rem; scroll-margin-top: 80px; }
     .content h2:first-child { margin-top: 0; }
-
-    .content h3 {
-      font-size: 1.15rem;
-      font-weight: 600;
-      color: var(--ink);
-      margin: 2rem 0 0.75rem;
-    }
-
-    .content p {
-      margin-bottom: 1.25rem;
-      color: var(--ink-light);
-    }
-
-    .content ul, .content ol {
-      margin-bottom: 1.25rem;
-      padding-left: 1.5rem;
-    }
-
-    .content li {
-      margin-bottom: 0.5rem;
-      color: var(--ink-light);
-    }
-
+    .content h3 { font-size: 1.15rem; font-weight: 600; color: var(--ink); margin: 2rem 0 0.75rem; scroll-margin-top: 80px; }
+    .content p { margin-bottom: 1.25rem; color: var(--ink-light); }
+    .content strong { color: var(--ink); font-weight: 600; }
+    .content a { color: var(--teal-700); text-decoration: underline; text-decoration-color: var(--teal-200); text-underline-offset: 3px; transition: text-decoration-color 0.2s; }
+    .content a:hover { text-decoration-color: var(--teal-600); }
+    .content ul, .content ol { margin-bottom: 1.25rem; padding-left: 1.5rem; }
+    .content li { margin-bottom: 0.5rem; color: var(--ink-light); }
     .content li::marker { color: var(--teal-500); }
 
-    .callout {
-      padding: 1.25rem 1.5rem;
-      border-radius: 12px;
-      margin-bottom: 1.5rem;
-      border: 1px solid;
-    }
+    .section-divider { border: none; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 3rem 0; }
 
-    .callout-header {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-    }
-
+    .callout { padding: 1.25rem 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; border: 1px solid; position: relative; }
+    .callout-header { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; margin-bottom: 0.5rem; }
+    .callout-header svg { width: 18px; height: 18px; flex-shrink: 0; }
     .callout p:last-child { margin-bottom: 0; }
-
-    .callout.concept {
-      background: var(--blue-50);
-      border-color: var(--blue-100);
-    }
+    .callout.concept { background: var(--blue-50); border-color: var(--blue-100); }
     .callout.concept .callout-header { color: var(--blue-700); }
-
-    .callout.important {
-      background: var(--amber-50);
-      border-color: var(--amber-100);
-    }
+    .callout.important { background: var(--amber-50); border-color: var(--amber-100); }
     .callout.important .callout-header { color: var(--amber-600); }
-
-    .callout.tip {
-      background: var(--purple-50);
-      border-color: var(--purple-100);
-    }
+    .callout.danger { background: var(--red-50); border-color: var(--red-100); }
+    .callout.danger .callout-header { color: var(--red-600); }
+    .callout.tip { background: var(--purple-50); border-color: var(--purple-100); }
     .callout.tip .callout-header { color: var(--purple-600); }
-
-    .callout.success {
-      background: var(--teal-50);
-      border-color: var(--teal-100);
-    }
+    .callout.success { background: var(--teal-50); border-color: var(--teal-100); }
     .callout.success .callout-header { color: var(--teal-700); }
 
-    .section-divider {
-      border: none;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--border), transparent);
-      margin: 3rem 0;
-    }
+    .code-block { position: relative; margin-bottom: 1.5rem; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+    .code-header { display: flex; align-items: center; justify-content: space-between; padding: 8px 16px; background: var(--surface-alt); border-bottom: 1px solid var(--border); font-size: 12px; color: var(--ink-muted); }
+    .code-lang { font-family: var(--font-mono); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+    .code-copy { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border); background: white; font-size: 11px; font-family: var(--font-sans); color: var(--ink-muted); cursor: pointer; transition: all 0.2s var(--ease); }
+    .code-copy:hover { border-color: var(--teal-500); color: var(--teal-700); }
+    .code-copy.copied { background: var(--teal-50); border-color: var(--teal-500); color: var(--teal-700); }
 
-    .coming-soon-banner {
-      background: var(--amber-50);
-      border: 1px solid var(--amber-100);
-      border-radius: 12px;
-      padding: 2.5rem;
-      text-align: center;
-      margin: 2rem 0;
-    }
+    pre { margin: 0; padding: 1.25rem 1.5rem; overflow-x: auto; background: #1e293b; font-family: var(--font-mono); font-size: 13.5px; line-height: 1.7; color: #e2e8f0; }
+    code { font-family: var(--font-mono); font-size: 0.88em; }
+    p code, li code { padding: 2px 7px; background: var(--surface-alt); border: 1px solid var(--border); border-radius: 5px; color: var(--teal-800); font-size: 0.85em; }
 
-    .coming-soon-banner h3 {
-      color: var(--amber-600);
-      margin-bottom: 0.5rem;
-    }
+    .hl-keyword  { color: #c084fc; }
+    .hl-string   { color: #86efac; }
+    .hl-comment  { color: #64748b; font-style: italic; }
+    .hl-function { color: #7dd3fc; }
+    .hl-number   { color: #fbbf24; }
+    .hl-flag     { color: #f472b6; }
 
-    .coming-soon-banner p {
-      color: var(--ink-muted);
-      margin-bottom: 0;
-    }
+    details { margin-bottom: 1.25rem; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; transition: border-color 0.2s var(--ease); }
+    details[open] { border-color: var(--teal-200); }
+    details summary { padding: 1rem 1.25rem; font-weight: 600; font-size: 15px; cursor: pointer; background: var(--surface-alt); list-style: none; display: flex; align-items: center; gap: 10px; transition: background 0.2s var(--ease); user-select: none; }
+    details summary::-webkit-details-marker { display: none; }
+    details summary::before { content: ''; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E"); background-size: contain; flex-shrink: 0; transition: transform 0.2s var(--ease); }
+    details[open] summary::before { transform: rotate(90deg); }
+    details summary:hover { background: var(--teal-50); }
+    .details-body { padding: 1.25rem 1.5rem; }
+    .details-body p:last-child { margin-bottom: 0; }
 
-    .topics-preview {
-      background: var(--surface-alt);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.5rem 2rem;
-      margin: 1.5rem 0;
-    }
+    .video-card { margin-bottom: 1.5rem; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+    .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; background: #0f172a; }
+    .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+    .video-caption { padding: 12px 16px; background: var(--surface-alt); font-size: 13px; color: var(--ink-muted); display: flex; align-items: center; gap: 6px; }
+    .video-caption svg { width: 14px; height: 14px; color: var(--red-500); }
 
-    .topics-preview h3 {
-      font-size: 0.95rem;
-      margin-bottom: 0.75rem;
-      color: var(--ink);
-    }
+    .resource-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+    .resource-card { display: flex; gap: 14px; padding: 1rem 1.25rem; border: 1px solid var(--border); border-radius: 12px; text-decoration: none; transition: all 0.2s var(--ease); background: white; }
+    .resource-card:hover { border-color: var(--teal-300); background: var(--teal-50); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+    .resource-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 18px; }
+    .resource-icon.docs { background: var(--blue-50); color: var(--blue-600); }
+    .resource-icon.article { background: var(--amber-50); color: var(--amber-600); }
+    .resource-icon.github { background: var(--ink); color: white; }
+    .resource-info { min-width: 0; }
+    .resource-title { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 2px; line-height: 1.4; }
+    .resource-desc { font-size: 12px; color: var(--ink-muted); line-height: 1.5; }
 
-    .topics-preview ul {
-      list-style: none;
-      padding: 0;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 0.5rem;
-    }
+    .assignment { border: 2px solid var(--teal-200); border-radius: 14px; padding: 1.5rem 1.75rem; margin-bottom: 1.5rem; background: linear-gradient(135deg, var(--teal-50) 0%, white 100%); }
+    .assignment-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+    .assignment-label { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--teal-700); }
+    .assignment-difficulty { display: inline-flex; padding: 4px 10px; border-radius: 100px; font-size: 11px; font-weight: 600; }
+    .difficulty-l1 { background: var(--teal-100); color: var(--teal-800); }
+    .difficulty-l2 { background: var(--amber-100); color: var(--amber-600); }
+    .difficulty-l3 { background: var(--red-100); color: var(--red-600); }
+    .assignment h4 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.75rem; }
+    .assignment p { font-size: 14px; }
+    .checklist { list-style: none; padding: 0; }
+    .checklist li { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border-light); font-size: 14px; }
+    .checklist li:last-child { border-bottom: none; }
+    .check-box { width: 20px; height: 20px; border-radius: 6px; border: 2px solid var(--border); flex-shrink: 0; margin-top: 1px; cursor: pointer; transition: all 0.15s var(--ease); display: flex; align-items: center; justify-content: center; }
+    .check-box:hover { border-color: var(--teal-500); }
+    .check-box.checked { background: var(--teal-500); border-color: var(--teal-500); }
+    .check-box.checked::after { content: ''; width: 10px; height: 10px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E"); background-size: contain; }
 
-    .topics-preview li {
-      font-size: 14px;
-      color: var(--ink-light);
-      padding-left: 1.25rem;
-      position: relative;
-    }
+    .diagram { margin: 1.5rem 0; padding: 2rem; background: var(--surface-alt); border: 1px solid var(--border); border-radius: 14px; overflow-x: auto; }
+    .diagram pre { background: transparent; color: var(--ink); padding: 0; font-size: 13px; line-height: 1.6; }
+    .diagram-caption { margin-top: 1rem; font-size: 12px; color: var(--ink-muted); text-align: center; font-style: italic; }
 
-    .topics-preview li::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 8px;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--teal-500);
-    }
+    .chapter-footer { border-top: 1px solid var(--border); padding: 3rem 2rem; background: var(--surface-alt); }
+    .chapter-footer-inner { max-width: var(--content-max); margin: 0 auto; }
+    .footer-nav { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+    .footer-nav-link { display: flex; flex-direction: column; gap: 4px; padding: 1rem 1.5rem; border: 1px solid var(--border); border-radius: 12px; text-decoration: none; transition: all 0.2s var(--ease); max-width: 320px; background: white; }
+    .footer-nav-link:hover { border-color: var(--teal-300); box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+    .footer-nav-label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--teal-600); }
+    .footer-nav-title { font-size: 15px; font-weight: 600; color: var(--ink); }
+    .footer-brand { text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); font-size: 13px; color: var(--ink-muted); }
 
-    .footer-nav {
-      max-width: var(--content-max);
-      margin: 0 auto;
-      padding: 2rem;
-      display: flex;
-      justify-content: space-between;
-      border-top: 1px solid var(--border);
-    }
-
-    .footer-nav-link {
-      display: flex;
-      flex-direction: column;
-      text-decoration: none;
-      padding: 1rem;
-      border-radius: 12px;
-      transition: background 0.2s var(--ease);
-      max-width: 45%;
-    }
-
-    .footer-nav-link:hover {
-      background: var(--surface-alt);
-    }
-
-    .footer-nav-label {
-      font-size: 12px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--ink-muted);
-      margin-bottom: 4px;
-    }
-
-    .footer-nav-title {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--teal-700);
-    }
-
-    .footer-nav-link.next { text-align: right; margin-left: auto; }
-
-    .footer {
-      text-align: center;
-      padding: 2rem;
-      font-size: 13px;
-      color: var(--ink-muted);
-      border-top: 1px solid var(--border);
-    }
-
-    .footer a {
-      color: var(--teal-700);
-      text-decoration: none;
-    }
-
-    .footer a:hover { text-decoration: underline; }
-
-    @media (max-width: 768px) {
-      .hero { padding: 3rem 1.5rem 2.5rem; }
-      .content { padding: 2rem 1.5rem 4rem; }
-      .hero h1 { font-size: 2rem; }
-      .footer-nav { flex-direction: column; gap: 1rem; }
-      .footer-nav-link { max-width: 100%; }
-      .footer-nav-link.next { text-align: left; }
-    }
+    @media (max-width: 960px) { .main-layout { grid-template-columns: 1fr; } .sidebar { display: none; } .resource-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 640px) { .hero { padding: 2.5rem 1.25rem 2rem; } .main-layout { padding: 0 1.25rem; } .content { padding: 2rem 0 4rem; } pre { padding: 1rem; font-size: 12.5px; } .footer-nav { flex-direction: column; } .footer-nav-link { max-width: 100%; width: 100%; } }
+    @media print { .top-nav, .sidebar, .progress-bar { display: none; } .main-layout { display: block; } .content { padding: 0; } .hero { background: white; border: none; } pre { background: #f1f5f9; color: var(--ink); border: 1px solid var(--border); } }
   </style>
 </head>
 <body>
@@ -456,67 +220,648 @@
   <header class="hero">
     <div class="hero-inner">
       <div class="hero-chapter-label">
-        <span>Chapter 04</span> 
+        <span>Chapter 04</span> &middot; Phase 2: Analytics Architecture
       </div>
       <h1>Fact Tables and Analytics Schemas</h1>
-      <p class="hero-subtitle">Star schemas, fact tables, dimension tables, materialized view refresh, ETL patterns</p>
+      <p class="hero-subtitle">
+        Design data warehouse schemas that power dashboards and reports. Learn star schemas, fact and dimension tables, slowly changing dimensions, and materialized views that make analytical queries fast.
+      </p>
       <div class="hero-meta">
-        <div class="hero-meta-item">3 Assignments</div>
-        <div class="hero-meta-item">~45 min read</div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Estimated: 4&ndash;5 days
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          3 Advancement Levels
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          3 Assignments
+        </div>
       </div>
     </div>
   </header>
 
-  <main class="content">
-    <h2>Overview</h2>
-    <p>This chapter covers <strong>fact tables and analytics schemas</strong> as part of the PostgreSQL Engineering curriculum. You will build practical skills through guided explanations, code examples, and hands-on assignments.</p>
+  <div class="main-layout">
+    <main class="content">
 
-    <div class="topics-preview">
-      <h3>Topics Covered</h3>
+      <h2 id="why-this-matters">Why This Matters</h2>
+
+      <p>
+        Transactional databases are optimized for fast reads and writes of individual rows &mdash; inserting an order, updating an account balance, fetching a user profile. But the moment someone asks "what were our sales by region last quarter?", the OLTP schema grinds to a halt. The joins are expensive, the aggregations scan millions of rows, and the report blocks live transactions.
+      </p>
+
+      <p>
+        This is why analytics engineering exists as a discipline. By separating analytical workloads into purpose-built schemas &mdash; star schemas with fact tables and dimension tables &mdash; you can serve business intelligence queries in seconds instead of minutes. PostgreSQL is perfectly capable of serving as both your OLTP and OLAP database when the schemas are designed correctly.
+      </p>
+
+      <p>
+        Understanding dimensional modeling is essential for any data engineer, analytics engineer, or backend developer who builds reporting systems. Every BI tool, every dashboard, and every data pipeline ultimately reads from schemas built on these principles.
+      </p>
+
+      <div class="callout concept">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Key Insight
+        </div>
+        <p>
+          The star schema is not old technology that has been replaced by NoSQL or data lakes. It is the foundation that modern tools like dbt, Looker, Metabase, and even Snowflake are built upon. Ralph Kimball's dimensional modeling techniques from the 1990s remain the gold standard because they solve a fundamental problem: humans think in dimensions (time, geography, product) and measures (revenue, count, average).
+        </p>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="key-concepts">Key Concepts</h2>
+
+      <h3 id="star-schema">1. Star Schema Fundamentals</h3>
+
+      <p>
+        A <strong>star schema</strong> organizes data into two types of tables: <strong>fact tables</strong> at the center that contain measurable events (sales, clicks, shipments) and <strong>dimension tables</strong> around them that describe the context of those events (who, what, when, where). The name "star" comes from the shape of the entity-relationship diagram &mdash; the fact table in the center with dimension tables radiating outward.
+      </p>
+
+      <div class="diagram">
+<pre>
+                      +----------------+
+                      |   dim_date     |
+                      |----------------|
+                      | date_key  (PK) |
+                      | full_date      |
+                      | year           |
+                      | quarter        |
+                      | month          |
+                      | day_of_week    |
+                      +-------+--------+
+                              |
+  +----------------+   +------+----------+   +------------------+
+  |  dim_product   |   |  fact_sales     |   |   dim_customer   |
+  |----------------|   |-----------------|   |------------------|
+  | product_key(PK)|---| sale_id    (PK) |---| customer_key(PK) |
+  | product_name   |   | date_key   (FK) |   | customer_name    |
+  | category       |   | product_key(FK) |   | email            |
+  | brand          |   | customer_key(FK)|   | segment          |
+  | unit_cost      |   | store_key  (FK) |   | city             |
+  +----------------+   | quantity        |   | state            |
+                      | unit_price      |   +------------------+
+                      | discount_pct    |
+                      | total_amount    |
+                      +-------+---------+
+                              |
+                      +-------+--------+
+                      |   dim_store    |
+                      |----------------|
+                      | store_key (PK) |
+                      | store_name     |
+                      | city           |
+                      | state          |
+                      | region         |
+                      +----------------+
+</pre>
+        <div class="diagram-caption">Figure 1: Star schema with a central fact_sales table and four dimension tables</div>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- Create the analytics schema</span>
+<span class="hl-keyword">CREATE SCHEMA</span> analytics;
+<span class="hl-keyword">SET</span> search_path <span class="hl-keyword">TO</span> analytics, public;
+
+<span class="hl-comment">-- Dimension: Date</span>
+<span class="hl-keyword">CREATE TABLE</span> dim_date (
+    date_key     <span class="hl-function">integer</span> <span class="hl-keyword">PRIMARY KEY</span>,  <span class="hl-comment">-- YYYYMMDD format</span>
+    full_date    <span class="hl-function">date</span> <span class="hl-keyword">NOT NULL UNIQUE</span>,
+    year         <span class="hl-function">smallint</span> <span class="hl-keyword">NOT NULL</span>,
+    quarter      <span class="hl-function">smallint</span> <span class="hl-keyword">NOT NULL</span>,
+    month        <span class="hl-function">smallint</span> <span class="hl-keyword">NOT NULL</span>,
+    month_name   <span class="hl-function">text</span> <span class="hl-keyword">NOT NULL</span>,
+    day_of_week  <span class="hl-function">smallint</span> <span class="hl-keyword">NOT NULL</span>,
+    day_name     <span class="hl-function">text</span> <span class="hl-keyword">NOT NULL</span>,
+    is_weekend   <span class="hl-function">boolean</span> <span class="hl-keyword">NOT NULL</span>,
+    fiscal_year  <span class="hl-function">smallint</span> <span class="hl-keyword">NOT NULL</span>
+);
+
+<span class="hl-comment">-- Dimension: Product</span>
+<span class="hl-keyword">CREATE TABLE</span> dim_product (
+    product_key   <span class="hl-function">serial</span> <span class="hl-keyword">PRIMARY KEY</span>,
+    product_id    <span class="hl-function">integer</span> <span class="hl-keyword">NOT NULL</span>,  <span class="hl-comment">-- natural key from OLTP</span>
+    product_name  <span class="hl-function">text</span> <span class="hl-keyword">NOT NULL</span>,
+    category      <span class="hl-function">text</span> <span class="hl-keyword">NOT NULL</span>,
+    subcategory   <span class="hl-function">text</span>,
+    brand         <span class="hl-function">text</span>,
+    unit_cost     <span class="hl-function">numeric</span>(<span class="hl-number">10</span>,<span class="hl-number">2</span>),
+    effective_from <span class="hl-function">date</span> <span class="hl-keyword">NOT NULL DEFAULT</span> <span class="hl-function">current_date</span>,
+    effective_to   <span class="hl-function">date</span> <span class="hl-keyword">DEFAULT</span> <span class="hl-string">'9999-12-31'</span>,
+    is_current    <span class="hl-function">boolean</span> <span class="hl-keyword">DEFAULT</span> <span class="hl-keyword">true</span>
+);
+
+<span class="hl-comment">-- Dimension: Customer</span>
+<span class="hl-keyword">CREATE TABLE</span> dim_customer (
+    customer_key  <span class="hl-function">serial</span> <span class="hl-keyword">PRIMARY KEY</span>,
+    customer_id   <span class="hl-function">integer</span> <span class="hl-keyword">NOT NULL</span>,
+    customer_name <span class="hl-function">text</span> <span class="hl-keyword">NOT NULL</span>,
+    email         <span class="hl-function">text</span>,
+    segment       <span class="hl-function">text</span> <span class="hl-keyword">NOT NULL</span>,  <span class="hl-comment">-- 'Enterprise', 'SMB', 'Consumer'</span>
+    city          <span class="hl-function">text</span>,
+    state         <span class="hl-function">text</span>,
+    country       <span class="hl-function">text</span> <span class="hl-keyword">DEFAULT</span> <span class="hl-string">'US'</span>
+);
+
+<span class="hl-comment">-- Dimension: Store</span>
+<span class="hl-keyword">CREATE TABLE</span> dim_store (
+    store_key   <span class="hl-function">serial</span> <span class="hl-keyword">PRIMARY KEY</span>,
+    store_id    <span class="hl-function">integer</span> <span class="hl-keyword">NOT NULL UNIQUE</span>,
+    store_name  <span class="hl-function">text</span> <span class="hl-keyword">NOT NULL</span>,
+    city        <span class="hl-function">text</span> <span class="hl-keyword">NOT NULL</span>,
+    state       <span class="hl-function">text</span> <span class="hl-keyword">NOT NULL</span>,
+    region      <span class="hl-function">text</span> <span class="hl-keyword">NOT NULL</span>
+);
+
+<span class="hl-comment">-- Fact: Sales</span>
+<span class="hl-keyword">CREATE TABLE</span> fact_sales (
+    sale_id       <span class="hl-function">bigserial</span> <span class="hl-keyword">PRIMARY KEY</span>,
+    date_key      <span class="hl-function">integer</span> <span class="hl-keyword">NOT NULL REFERENCES</span> dim_date(date_key),
+    product_key   <span class="hl-function">integer</span> <span class="hl-keyword">NOT NULL REFERENCES</span> dim_product(product_key),
+    customer_key  <span class="hl-function">integer</span> <span class="hl-keyword">NOT NULL REFERENCES</span> dim_customer(customer_key),
+    store_key     <span class="hl-function">integer</span> <span class="hl-keyword">NOT NULL REFERENCES</span> dim_store(store_key),
+    quantity      <span class="hl-function">integer</span> <span class="hl-keyword">NOT NULL</span>,
+    unit_price    <span class="hl-function">numeric</span>(<span class="hl-number">10</span>,<span class="hl-number">2</span>) <span class="hl-keyword">NOT NULL</span>,
+    discount_pct  <span class="hl-function">numeric</span>(<span class="hl-number">5</span>,<span class="hl-number">2</span>) <span class="hl-keyword">DEFAULT</span> <span class="hl-number">0</span>,
+    total_amount  <span class="hl-function">numeric</span>(<span class="hl-number">12</span>,<span class="hl-number">2</span>) <span class="hl-keyword">NOT NULL</span>
+);
+
+<span class="hl-comment">-- Create indexes for common join patterns</span>
+<span class="hl-keyword">CREATE INDEX</span> idx_fact_sales_date <span class="hl-keyword">ON</span> fact_sales(date_key);
+<span class="hl-keyword">CREATE INDEX</span> idx_fact_sales_product <span class="hl-keyword">ON</span> fact_sales(product_key);
+<span class="hl-keyword">CREATE INDEX</span> idx_fact_sales_customer <span class="hl-keyword">ON</span> fact_sales(customer_key);
+<span class="hl-keyword">CREATE INDEX</span> idx_fact_sales_store <span class="hl-keyword">ON</span> fact_sales(store_key);
+</pre>
+      </div>
+
+      <h3 id="fact-tables">2. Fact Table Design Principles</h3>
+
+      <p>
+        Fact tables are the engine of your analytics schema. They contain the <strong>measures</strong> &mdash; the numbers you aggregate (sum, count, average). Each row represents a single event or transaction. Fact tables are typically the largest tables in the warehouse, often containing billions of rows.
+      </p>
+
       <ul>
-            <li>Star schemas</li>
-            <li>fact tables</li>
-            <li>dimension tables</li>
-            <li>materialized view refresh</li>
-            <li>ETL patterns</li>
+        <li><strong>Grain</strong> &mdash; The level of detail for each row. A sales fact might be at "one row per line item" or "one row per transaction." Always define the grain before designing the table.</li>
+        <li><strong>Additive measures</strong> &mdash; Values that can be summed across all dimensions (revenue, quantity).</li>
+        <li><strong>Semi-additive measures</strong> &mdash; Values that can be summed across some dimensions but not others (account balance can be summed across customers but not across time).</li>
+        <li><strong>Non-additive measures</strong> &mdash; Values that cannot be summed at all (unit price, discount percentage). Compute them using averages or weighted averages.</li>
       </ul>
-    </div>
 
-    <hr class="section-divider">
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- Analytical queries become simple and fast with star schemas</span>
 
-    <div class="coming-soon-banner">
-      <h3>Content In Development</h3>
-      <p>Full chapter content with detailed explanations, code examples, video walkthroughs, and assignments is being developed. Check back soon.</p>
-    </div>
+<span class="hl-comment">-- Revenue by quarter and product category</span>
+<span class="hl-keyword">SELECT</span>
+    d.year,
+    d.quarter,
+    p.category,
+    <span class="hl-function">sum</span>(f.total_amount)   <span class="hl-keyword">AS</span> revenue,
+    <span class="hl-function">sum</span>(f.quantity)        <span class="hl-keyword">AS</span> units_sold,
+    <span class="hl-function">round</span>(<span class="hl-function">avg</span>(f.discount_pct), <span class="hl-number">2</span>) <span class="hl-keyword">AS</span> avg_discount
+<span class="hl-keyword">FROM</span> fact_sales f
+<span class="hl-keyword">JOIN</span> dim_date d    <span class="hl-keyword">ON</span> d.date_key = f.date_key
+<span class="hl-keyword">JOIN</span> dim_product p <span class="hl-keyword">ON</span> p.product_key = f.product_key
+<span class="hl-keyword">WHERE</span> d.year = <span class="hl-number">2024</span>
+<span class="hl-keyword">GROUP BY</span> d.year, d.quarter, p.category
+<span class="hl-keyword">ORDER BY</span> d.quarter, revenue <span class="hl-keyword">DESC</span>;
 
-    <div class="callout tip">
-      <div class="callout-header">What You Will Learn</div>
-      <p>By the end of this chapter, you will understand star schemas, fact tables, dimension tables, materialized view refresh, etl patterns and be able to apply these concepts in real-world scenarios.</p>
-    </div>
+<span class="hl-comment">-- Top 10 customers by lifetime value</span>
+<span class="hl-keyword">SELECT</span>
+    c.customer_name,
+    c.segment,
+    <span class="hl-function">sum</span>(f.total_amount) <span class="hl-keyword">AS</span> lifetime_value,
+    <span class="hl-function">count</span>(f.sale_id)    <span class="hl-keyword">AS</span> total_orders,
+    <span class="hl-function">min</span>(d.full_date)    <span class="hl-keyword">AS</span> first_purchase,
+    <span class="hl-function">max</span>(d.full_date)    <span class="hl-keyword">AS</span> last_purchase
+<span class="hl-keyword">FROM</span> fact_sales f
+<span class="hl-keyword">JOIN</span> dim_customer c <span class="hl-keyword">ON</span> c.customer_key = f.customer_key
+<span class="hl-keyword">JOIN</span> dim_date d     <span class="hl-keyword">ON</span> d.date_key = f.date_key
+<span class="hl-keyword">GROUP BY</span> c.customer_key, c.customer_name, c.segment
+<span class="hl-keyword">ORDER BY</span> lifetime_value <span class="hl-keyword">DESC</span>
+<span class="hl-keyword">LIMIT</span> <span class="hl-number">10</span>;
+</pre>
+      </div>
 
-  </main>
+      <h3 id="dimension-tables">3. Dimension Table Best Practices</h3>
 
-  <nav class="footer-nav">
-        <a class="footer-nav-link prev" href="chapter-03.html">
-          <span class="footer-nav-label">&larr; Previous</span>
-          <span class="footer-nav-title">Chapter 03: Table Partitioning</span>
+      <p>
+        Dimension tables are typically wide (many columns) and short (thousands to millions of rows, rarely billions). They provide the descriptive context that makes fact table data meaningful. Good dimension design uses <strong>surrogate keys</strong> (auto-incrementing integers) as primary keys, preserving the natural business key as a separate indexed column.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- Populate the date dimension for 10 years</span>
+<span class="hl-keyword">INSERT INTO</span> dim_date
+<span class="hl-keyword">SELECT</span>
+    <span class="hl-function">to_char</span>(d, <span class="hl-string">'YYYYMMDD'</span>)::<span class="hl-function">integer</span>  <span class="hl-keyword">AS</span> date_key,
+    d                                <span class="hl-keyword">AS</span> full_date,
+    <span class="hl-function">extract</span>(<span class="hl-keyword">year FROM</span> d)::<span class="hl-function">smallint</span>  <span class="hl-keyword">AS</span> year,
+    <span class="hl-function">extract</span>(<span class="hl-keyword">quarter FROM</span> d)::<span class="hl-function">smallint</span> <span class="hl-keyword">AS</span> quarter,
+    <span class="hl-function">extract</span>(<span class="hl-keyword">month FROM</span> d)::<span class="hl-function">smallint</span>  <span class="hl-keyword">AS</span> month,
+    <span class="hl-function">to_char</span>(d, <span class="hl-string">'Month'</span>)              <span class="hl-keyword">AS</span> month_name,
+    <span class="hl-function">extract</span>(<span class="hl-keyword">dow FROM</span> d)::<span class="hl-function">smallint</span>    <span class="hl-keyword">AS</span> day_of_week,
+    <span class="hl-function">to_char</span>(d, <span class="hl-string">'Day'</span>)                <span class="hl-keyword">AS</span> day_name,
+    <span class="hl-function">extract</span>(<span class="hl-keyword">dow FROM</span> d) <span class="hl-keyword">IN</span> (<span class="hl-number">0</span>, <span class="hl-number">6</span>)   <span class="hl-keyword">AS</span> is_weekend,
+    <span class="hl-keyword">CASE</span>
+        <span class="hl-keyword">WHEN</span> <span class="hl-function">extract</span>(<span class="hl-keyword">month FROM</span> d) &gt;= <span class="hl-number">7</span>
+        <span class="hl-keyword">THEN</span> <span class="hl-function">extract</span>(<span class="hl-keyword">year FROM</span> d)::<span class="hl-function">smallint</span> + <span class="hl-number">1</span>
+        <span class="hl-keyword">ELSE</span> <span class="hl-function">extract</span>(<span class="hl-keyword">year FROM</span> d)::<span class="hl-function">smallint</span>
+    <span class="hl-keyword">END</span>                              <span class="hl-keyword">AS</span> fiscal_year
+<span class="hl-keyword">FROM</span> <span class="hl-function">generate_series</span>(
+    <span class="hl-string">'2020-01-01'</span>::<span class="hl-function">date</span>,
+    <span class="hl-string">'2029-12-31'</span>::<span class="hl-function">date</span>,
+    <span class="hl-string">'1 day'</span>::<span class="hl-function">interval</span>
+) <span class="hl-keyword">AS</span> d;
+</pre>
+      </div>
+
+      <div class="callout important">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Always Pre-populate dim_date
+        </div>
+        <p>
+          The date dimension should be pre-populated for the full range of dates your warehouse will ever need. Generating it dynamically on each query wastes computation. Pre-populate 10+ years of dates including fiscal year mappings, holidays, and business day flags. This is a one-time operation that makes every time-based query trivially fast.
+        </p>
+      </div>
+
+      <h3 id="slowly-changing">4. Slowly Changing Dimensions (SCD)</h3>
+
+      <p>
+        Dimension data changes over time &mdash; a customer moves to a new city, a product's price changes, an employee transfers departments. <strong>Slowly Changing Dimensions</strong> (SCD) define strategies for handling these changes while preserving historical accuracy.
+      </p>
+
+      <ul>
+        <li><strong>SCD Type 1</strong> &mdash; Overwrite the old value. No history preserved. Simple but loses historical context.</li>
+        <li><strong>SCD Type 2</strong> &mdash; Add a new row with effective dates. Full history preserved. The most common approach for analytics.</li>
+        <li><strong>SCD Type 3</strong> &mdash; Add a "previous_value" column. Limited history (only one prior value).</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- SCD Type 2: Handle a product price change</span>
+<span class="hl-comment">-- Step 1: Close the current record</span>
+<span class="hl-keyword">UPDATE</span> dim_product
+<span class="hl-keyword">SET</span>
+    effective_to = <span class="hl-function">current_date</span> - <span class="hl-number">1</span>,
+    is_current = <span class="hl-keyword">false</span>
+<span class="hl-keyword">WHERE</span> product_id = <span class="hl-number">42</span>
+  <span class="hl-keyword">AND</span> is_current = <span class="hl-keyword">true</span>;
+
+<span class="hl-comment">-- Step 2: Insert the new version</span>
+<span class="hl-keyword">INSERT INTO</span> dim_product (
+    product_id, product_name, category, subcategory,
+    brand, unit_cost, effective_from, effective_to, is_current
+)
+<span class="hl-keyword">VALUES</span> (
+    <span class="hl-number">42</span>, <span class="hl-string">'Wireless Keyboard Pro'</span>, <span class="hl-string">'Electronics'</span>, <span class="hl-string">'Input Devices'</span>,
+    <span class="hl-string">'TechBrand'</span>, <span class="hl-number">35.00</span>, <span class="hl-function">current_date</span>, <span class="hl-string">'9999-12-31'</span>, <span class="hl-keyword">true</span>
+);
+
+<span class="hl-comment">-- Query: What was the product's cost when each sale happened?</span>
+<span class="hl-keyword">SELECT</span>
+    d.full_date,
+    p.product_name,
+    p.unit_cost  <span class="hl-keyword">AS</span> cost_at_time_of_sale,
+    f.unit_price <span class="hl-keyword">AS</span> sold_price,
+    f.total_amount
+<span class="hl-keyword">FROM</span> fact_sales f
+<span class="hl-keyword">JOIN</span> dim_product p <span class="hl-keyword">ON</span> p.product_key = f.product_key
+<span class="hl-keyword">JOIN</span> dim_date d    <span class="hl-keyword">ON</span> d.date_key = f.date_key
+<span class="hl-keyword">WHERE</span> p.product_id = <span class="hl-number">42</span>
+<span class="hl-keyword">ORDER BY</span> d.full_date;
+</pre>
+      </div>
+
+      <h3 id="materialized-analytics">5. Materialized Views for Analytics</h3>
+
+      <p>
+        Even with a well-designed star schema, aggregating millions of fact rows on every dashboard load is wasteful. <strong>Materialized views</strong> pre-compute common aggregations and store the results as physical tables, turning expensive scans into instant reads.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- Pre-compute monthly revenue by category and region</span>
+<span class="hl-keyword">CREATE MATERIALIZED VIEW</span> <span class="hl-function">mv_monthly_revenue</span> <span class="hl-keyword">AS</span>
+<span class="hl-keyword">SELECT</span>
+    d.year,
+    d.month,
+    d.month_name,
+    p.category,
+    s.region,
+    <span class="hl-function">sum</span>(f.total_amount)   <span class="hl-keyword">AS</span> revenue,
+    <span class="hl-function">sum</span>(f.quantity)        <span class="hl-keyword">AS</span> units_sold,
+    <span class="hl-function">count</span>(<span class="hl-keyword">DISTINCT</span> f.customer_key) <span class="hl-keyword">AS</span> unique_customers,
+    <span class="hl-function">round</span>(<span class="hl-function">avg</span>(f.total_amount), <span class="hl-number">2</span>) <span class="hl-keyword">AS</span> avg_order_value
+<span class="hl-keyword">FROM</span> fact_sales f
+<span class="hl-keyword">JOIN</span> dim_date d    <span class="hl-keyword">ON</span> d.date_key = f.date_key
+<span class="hl-keyword">JOIN</span> dim_product p <span class="hl-keyword">ON</span> p.product_key = f.product_key
+<span class="hl-keyword">JOIN</span> dim_store s   <span class="hl-keyword">ON</span> s.store_key = f.store_key
+<span class="hl-keyword">GROUP BY</span> d.year, d.month, d.month_name, p.category, s.region
+<span class="hl-keyword">WITH DATA</span>;
+
+<span class="hl-keyword">CREATE UNIQUE INDEX</span> idx_mv_monthly_rev
+<span class="hl-keyword">ON</span> mv_monthly_revenue (year, month, category, region);
+
+<span class="hl-comment">-- Dashboard query: instant results</span>
+<span class="hl-keyword">SELECT</span> category, region,
+    <span class="hl-function">sum</span>(revenue) <span class="hl-keyword">AS</span> total_revenue,
+    <span class="hl-function">sum</span>(units_sold) <span class="hl-keyword">AS</span> total_units
+<span class="hl-keyword">FROM</span> mv_monthly_revenue
+<span class="hl-keyword">WHERE</span> year = <span class="hl-number">2024</span>
+<span class="hl-keyword">GROUP BY</span> category, region
+<span class="hl-keyword">ORDER BY</span> total_revenue <span class="hl-keyword">DESC</span>;
+
+<span class="hl-comment">-- Refresh the materialized view (run from cron or scheduler)</span>
+<span class="hl-keyword">REFRESH MATERIALIZED VIEW CONCURRENTLY</span> mv_monthly_revenue;
+</pre>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Layered Materialized Views
+        </div>
+        <p>
+          Build a hierarchy of materialized views: a daily grain view refreshed every hour, a monthly grain view refreshed daily, and a yearly grain view refreshed weekly. Each layer reads from the one below it, reducing computation at every level. This is the same pattern that dbt uses with its "staging, intermediate, mart" model layers.
+        </p>
+      </div>
+
+      <h3 id="etl-patterns">6. ETL Patterns for Populating Analytics Tables</h3>
+
+      <p>
+        Getting data from your OLTP tables into your analytics schema requires an ETL (Extract, Transform, Load) process. In PostgreSQL, you can do this entirely with SQL &mdash; no external tools needed for simple cases.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- ETL: Load new sales from OLTP into the analytics fact table</span>
+<span class="hl-keyword">INSERT INTO</span> analytics.fact_sales (
+    date_key, product_key, customer_key, store_key,
+    quantity, unit_price, discount_pct, total_amount
+)
+<span class="hl-keyword">SELECT</span>
+    <span class="hl-function">to_char</span>(o.order_date, <span class="hl-string">'YYYYMMDD'</span>)::<span class="hl-function">integer</span>,
+    dp.product_key,
+    dc.customer_key,
+    ds.store_key,
+    oi.quantity,
+    oi.unit_price,
+    <span class="hl-keyword">COALESCE</span>(oi.discount_pct, <span class="hl-number">0</span>),
+    oi.quantity * oi.unit_price * (<span class="hl-number">1</span> - <span class="hl-keyword">COALESCE</span>(oi.discount_pct, <span class="hl-number">0</span>) / <span class="hl-number">100</span>)
+<span class="hl-keyword">FROM</span> public.orders o
+<span class="hl-keyword">JOIN</span> public.order_items oi <span class="hl-keyword">ON</span> oi.order_id = o.id
+<span class="hl-keyword">JOIN</span> analytics.dim_product dp
+    <span class="hl-keyword">ON</span> dp.product_id = oi.product_id <span class="hl-keyword">AND</span> dp.is_current = <span class="hl-keyword">true</span>
+<span class="hl-keyword">JOIN</span> analytics.dim_customer dc
+    <span class="hl-keyword">ON</span> dc.customer_id = o.customer_id
+<span class="hl-keyword">JOIN</span> analytics.dim_store ds
+    <span class="hl-keyword">ON</span> ds.store_id = o.store_id
+<span class="hl-keyword">WHERE</span> o.order_date &gt;= <span class="hl-function">current_date</span> - <span class="hl-keyword">interval</span> <span class="hl-string">'1 day'</span>
+  <span class="hl-keyword">AND</span> o.status = <span class="hl-string">'completed'</span>
+  <span class="hl-keyword">AND NOT EXISTS</span> (
+      <span class="hl-keyword">SELECT</span> <span class="hl-number">1</span> <span class="hl-keyword">FROM</span> analytics.fact_sales fs
+      <span class="hl-keyword">WHERE</span> fs.date_key = <span class="hl-function">to_char</span>(o.order_date, <span class="hl-string">'YYYYMMDD'</span>)::<span class="hl-function">integer</span>
+        <span class="hl-keyword">AND</span> fs.product_key = dp.product_key
+        <span class="hl-keyword">AND</span> fs.customer_key = dc.customer_key
+  );
+</pre>
+      </div>
+
+      <div class="callout danger">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+          Idempotent ETL
+        </div>
+        <p>
+          Always make your ETL processes idempotent &mdash; running them twice should produce the same result as running them once. Use <code>NOT EXISTS</code> checks, <code>ON CONFLICT</code> clauses, or date-range-based deletes followed by inserts. If your ETL fails halfway through, you should be able to safely re-run it without duplicating data.
+        </p>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="watch-learn">Watch &amp; Learn</h2>
+
+      <p>These videos cover dimensional modeling and analytics schema design patterns used in production data warehouses.</p>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/lWPiSZf7-uQ?rel=0&amp;modestbranding=1" title="Star Schema Design" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Star Schema and Dimensional Modeling &mdash; Fact tables, dimension tables, and warehouse design
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/Qq3IOgfmhBM?rel=0&amp;modestbranding=1" title="Slowly Changing Dimensions" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Slowly Changing Dimensions Explained &mdash; SCD Type 1, Type 2, and Type 3 with practical examples
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="further-reading">Further Reading</h2>
+      <p>Deep-dive into dimensional modeling theory and PostgreSQL analytics capabilities.</p>
+      <div class="resource-grid">
+        <a class="resource-card" href="https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/" target="_blank" rel="noopener">
+          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+          <div class="resource-info"><div class="resource-title">Kimball Dimensional Modeling Techniques</div><div class="resource-desc">The definitive guide to fact tables, dimension tables, SCDs, and star schema design from the Kimball Group.</div></div>
         </a>
-        <a class="footer-nav-link next" href="chapter-05.html">
-          <span class="footer-nav-label">Next &rarr;</span>
-          <span class="footer-nav-title">Chapter 05: Advanced PL/pgSQL</span>
+        <a class="resource-card" href="https://www.postgresql.org/docs/current/rules-materializedviews.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+          <div class="resource-info"><div class="resource-title">PostgreSQL Materialized Views</div><div class="resource-desc">Official documentation on creating, refreshing, and indexing materialized views for analytics workloads.</div></div>
         </a>
-  </nav>
+        <a class="resource-card" href="https://www.postgresql.org/docs/current/functions-aggregate.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+          <div class="resource-info"><div class="resource-title">Aggregate Functions Reference</div><div class="resource-desc">Complete reference for SUM, AVG, COUNT, and advanced aggregates including FILTER, WITHIN GROUP, and ordered-set aggregates.</div></div>
+        </a>
+      </div>
 
-  <footer class="footer">
-    ILA (Iksha Learning Academy) &middot; PostgreSQL Engineering &middot; <a href="index.html">All Chapters</a>
+      <hr class="section-divider">
+
+      <h2 id="assignments">Assignments</h2>
+      <p>Complete these in order. Each builds on the previous level and integrates concepts from earlier chapters.</p>
+
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 1</div>
+          <span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span>
+        </div>
+        <h4>Build a Star Schema for E-Commerce</h4>
+        <p>Design and populate a complete star schema with dimensions and a fact table for sales data.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create an <code>analytics</code> schema with dim_date, dim_product, dim_customer, dim_store, and fact_sales</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Populate dim_date for 2020-2029 using <code>generate_series</code></span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Insert at least 50 products, 100 customers, 10 stores, and 10,000 sales rows</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write 5 analytical queries: revenue by quarter, top customers, product category trends, regional comparisons, weekend vs weekday sales</span></li>
+        </ul>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div><p>Your star schema powers 5 distinct business intelligence queries, each joining the fact table with multiple dimensions.</p></div>
+      </div>
+
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 2</div>
+          <span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span>
+        </div>
+        <h4>Implement SCD Type 2 and Materialized View Layer</h4>
+        <p>Add slowly changing dimension support and pre-computed analytics layers.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Implement SCD Type 2 on dim_product with effective_from, effective_to, and is_current columns</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write a stored procedure that correctly handles product price changes as SCD Type 2 updates</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create materialized views: mv_daily_revenue, mv_monthly_revenue, mv_customer_lifetime_value</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Add unique indexes and verify <code>REFRESH ... CONCURRENTLY</code> works on all three</span></li>
+        </ul>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div><p>Product changes are tracked historically with SCD Type 2, and dashboard queries hit materialized views for sub-second results.</p></div>
+      </div>
+
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 3</div>
+          <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Production-Ready</span>
+        </div>
+        <h4>Full ETL Pipeline with Automated Refresh</h4>
+        <p>Build an idempotent ETL process that loads OLTP data into the analytics schema and automates materialized view refreshing.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write an ETL function that extracts new orders from OLTP tables and loads them into fact_sales</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Make the ETL idempotent using <code>NOT EXISTS</code> or <code>ON CONFLICT</code></span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write a master refresh function that updates all materialized views and logs execution time</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Use <code>EXPLAIN ANALYZE</code> to compare query performance on raw fact tables vs materialized views</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Document the full pipeline with a README explaining grain definitions and refresh schedules</span></li>
+        </ul>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div><p>Your ETL pipeline can be re-run safely, materialized views are refreshed automatically, and dashboard queries return in under 100ms.</p></div>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="self-check">Self-Check</h2>
+      <p>Before moving to Chapter 05, verify your understanding of these dimensional modeling concepts.</p>
+
+      <details>
+        <summary>What is the difference between a fact table and a dimension table?</summary>
+        <div class="details-body"><p>Fact tables contain measurable events (sales, clicks, shipments) with numeric values that you aggregate (sum, average, count). Dimension tables contain descriptive attributes that provide context (who, what, when, where). Fact tables are typically tall and narrow; dimension tables are wide and short.</p></div>
+      </details>
+      <details>
+        <summary>Why use surrogate keys instead of natural keys in dimension tables?</summary>
+        <div class="details-body"><p>Surrogate keys (auto-incrementing integers) decouple the warehouse from the source system. If the OLTP system changes its key format, the warehouse is unaffected. Surrogate keys also enable SCD Type 2 &mdash; the same natural key can have multiple rows (one per historical version) with different surrogate keys.</p></div>
+      </details>
+      <details>
+        <summary>When would you choose SCD Type 2 over Type 1?</summary>
+        <div class="details-body"><p>Use SCD Type 2 when you need to preserve history and answer questions like "what was the product's category when this sale happened?" Use Type 1 when history is irrelevant and you only care about the current value (e.g., fixing a typo in a customer name).</p></div>
+      </details>
+      <details>
+        <summary>What is the "grain" of a fact table and why does it matter?</summary>
+        <div class="details-body"><p>The grain defines what a single row in the fact table represents &mdash; "one row per line item per order" or "one row per daily page view per user." Defining the grain before designing the table prevents ambiguity, ensures measures are additive, and makes it clear which dimensions apply. Mixing grains in one fact table leads to double-counting and incorrect aggregations.</p></div>
+      </details>
+      <details>
+        <summary>How do materialized views improve analytics query performance?</summary>
+        <div class="details-body"><p>Materialized views pre-compute and store the results of expensive aggregation queries. Instead of scanning millions of fact rows and joining dimension tables on every dashboard load, the query reads from a small, pre-aggregated table. The trade-off is data staleness &mdash; you must refresh the view periodically. Using <code>REFRESH ... CONCURRENTLY</code> avoids blocking reads during the refresh.</p></div>
+      </details>
+
+    </main>
+
+    <aside class="sidebar">
+      <div class="sidebar-title">On this page</div>
+      <ul class="toc-list">
+        <li class="toc-item"><a href="#why-this-matters">Why This Matters</a></li>
+        <li class="toc-item"><a href="#key-concepts">Key Concepts</a></li>
+        <li class="toc-item"><a href="#star-schema" style="padding-left: 28px; font-size: 12px;">Star Schema</a></li>
+        <li class="toc-item"><a href="#fact-tables" style="padding-left: 28px; font-size: 12px;">Fact Table Design</a></li>
+        <li class="toc-item"><a href="#dimension-tables" style="padding-left: 28px; font-size: 12px;">Dimension Tables</a></li>
+        <li class="toc-item"><a href="#slowly-changing" style="padding-left: 28px; font-size: 12px;">Slowly Changing Dimensions</a></li>
+        <li class="toc-item"><a href="#materialized-analytics" style="padding-left: 28px; font-size: 12px;">Materialized Views</a></li>
+        <li class="toc-item"><a href="#etl-patterns" style="padding-left: 28px; font-size: 12px;">ETL Patterns</a></li>
+        <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a></li>
+        <li class="toc-item"><a href="#further-reading">Further Reading</a></li>
+        <li class="toc-item"><a href="#assignments">Assignments</a></li>
+        <li class="toc-item"><a href="#self-check">Self-Check</a></li>
+      </ul>
+    </aside>
+  </div>
+
+  <footer class="chapter-footer">
+    <div class="chapter-footer-inner">
+      <nav class="footer-nav">
+        <a class="footer-nav-link" href="chapter-03.html">
+          <span class="footer-nav-label">&larr; Previous Chapter</span>
+          <span class="footer-nav-title">03: Table Partitioning</span>
+        </a>
+        <a class="footer-nav-link" href="chapter-05.html">
+          <span class="footer-nav-label">Next Chapter &rarr;</span>
+          <span class="footer-nav-title">05: Advanced PL/pgSQL</span>
+        </a>
+      </nav>
+      <div class="footer-brand">ILA (Iksha Learning Academy) &middot; PostgreSQL Engineering Certification &middot; Level 2</div>
+    </div>
   </footer>
 
   <script>
     window.addEventListener('scroll', () => {
-      const h = document.documentElement;
-      const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
-      document.getElementById('progressBar').style.width = Math.min(pct, 100) + '%';
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      document.getElementById('progressBar').style.width = progress + '%';
     });
+
+    const tocLinks = document.querySelectorAll('.toc-item a');
+    const sections = [];
+    tocLinks.forEach(link => {
+      const id = link.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) sections.push({ id, el, link });
+    });
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const item = sections.find(s => s.el === entry.target);
+        if (item && entry.isIntersecting) {
+          tocLinks.forEach(l => l.classList.remove('active'));
+          item.link.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-80px 0px -60% 0px', threshold: 0 });
+    sections.forEach(s => observer.observe(s.el));
+
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      navigator.clipboard.writeText(pre.textContent).then(() => {
+        btn.classList.add('copied');
+        btn.textContent = 'Copied!';
+        setTimeout(() => { btn.classList.remove('copied'); btn.textContent = 'Copy'; }, 2000);
+      });
+    }
   </script>
 </body>
 </html>

@@ -8,14 +8,486 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
-    :root{--ink:#0f172a;--ink-light:#334155;--ink-muted:#64748b;--surface:#ffffff;--surface-alt:#f8fafc;--surface-warm:#fffbeb;--border:#e2e8f0;--border-light:#f1f5f9;--teal-50:#f0fdfa;--teal-100:#ccfbf1;--teal-200:#99f6e4;--teal-500:#14b8a6;--teal-600:#0d9488;--teal-700:#0f766e;--teal-800:#115e59;--teal-900:#134e4a;--blue-50:#eff6ff;--blue-100:#dbeafe;--blue-500:#3b82f6;--blue-600:#2563eb;--blue-700:#1d4ed8;--amber-50:#fffbeb;--amber-100:#fef3c7;--amber-500:#f59e0b;--amber-600:#d97706;--red-50:#fef2f2;--red-100:#fee2e2;--red-500:#ef4444;--red-600:#dc2626;--purple-50:#faf5ff;--purple-100:#f3e8ff;--purple-500:#a855f7;--purple-600:#9333ea;--font-sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;--font-serif:'Instrument Serif',Georgia,serif;--font-mono:'JetBrains Mono','Fira Code',monospace;--content-max:780px;--sidebar-width:280px;--ease:cubic-bezier(0.4,0,0.2,1)}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}body{font-family:var(--font-sans);font-size:16px;line-height:1.7;color:var(--ink);background:var(--surface)}.progress-bar{position:fixed;top:0;left:0;width:0%;height:3px;background:linear-gradient(90deg,var(--teal-500),var(--blue-500));z-index:1000;transition:width .15s var(--ease)}.top-nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem}.top-nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px}.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--teal-800)}.nav-brand-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--teal-600),var(--teal-800));border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px}.nav-brand-text{font-weight:700;font-size:15px;letter-spacing:-.02em}.nav-chapter-nav{display:flex;align-items:center;gap:8px}.nav-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;color:var(--ink-muted);border:1px solid var(--border);background:#fff;transition:all .2s var(--ease);cursor:pointer}.nav-btn:hover{color:var(--ink);border-color:var(--teal-500);background:var(--teal-50)}.nav-btn.disabled{opacity:.4;pointer-events:none}.nav-current{font-size:13px;font-weight:600;color:var(--ink-light);padding:0 4px}.hero{background:linear-gradient(170deg,var(--teal-50) 0%,var(--surface) 50%,var(--blue-50) 100%);border-bottom:1px solid var(--border);padding:4rem 2rem 3.5rem}.hero-inner{max-width:var(--content-max);margin:0 auto}.hero-chapter-label{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--teal-700);text-transform:uppercase;letter-spacing:.08em;margin-bottom:1rem}.hero-chapter-label span{background:var(--teal-100);padding:3px 10px;border-radius:100px}.hero h1{font-family:var(--font-serif);font-size:clamp(2.4rem,5vw,3.2rem);font-weight:400;line-height:1.15;color:var(--ink);margin-bottom:1rem}.hero-subtitle{font-size:1.15rem;color:var(--ink-light);line-height:1.65;max-width:640px}.hero-meta{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1.5rem}.hero-meta-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-muted)}.hero-meta-item svg{width:16px;height:16px;color:var(--teal-600)}.main-layout{max-width:1200px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:1fr var(--sidebar-width);gap:4rem;align-items:start}.content{padding:3rem 0 6rem;min-width:0}.sidebar{position:sticky;top:76px;padding:2rem 0;max-height:calc(100vh - 76px);overflow-y:auto}.sidebar-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-muted);margin-bottom:1rem;padding-left:14px}.toc-list{list-style:none}.toc-item a{display:block;padding:6px 14px;font-size:13px;color:var(--ink-muted);text-decoration:none;border-left:2px solid transparent;transition:all .2s var(--ease);line-height:1.5}.toc-item a:hover{color:var(--ink);background:var(--surface-alt)}.toc-item a.active{color:var(--teal-700);border-left-color:var(--teal-500);background:var(--teal-50);font-weight:500}.content h2{font-family:var(--font-serif);font-size:1.85rem;font-weight:400;color:var(--ink);margin:3rem 0 1rem;padding-top:1rem;scroll-margin-top:80px}.content h2:first-child{margin-top:0}.content h3{font-size:1.15rem;font-weight:600;color:var(--ink);margin:2rem 0 .75rem;scroll-margin-top:80px}.content p{margin-bottom:1.25rem;color:var(--ink-light)}.content strong{color:var(--ink);font-weight:600}.content a{color:var(--teal-700);text-decoration:underline;text-decoration-color:var(--teal-200);text-underline-offset:3px;transition:text-decoration-color .2s}.content a:hover{text-decoration-color:var(--teal-600)}.content ul,.content ol{margin-bottom:1.25rem;padding-left:1.5rem}.content li{margin-bottom:.5rem;color:var(--ink-light)}.content li::marker{color:var(--teal-500)}.section-divider{border:none;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:3rem 0}.callout{padding:1.25rem 1.5rem;border-radius:12px;margin-bottom:1.5rem;border:1px solid;position:relative}.callout-header{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;margin-bottom:.5rem}.callout-header svg{width:18px;height:18px;flex-shrink:0}.callout p:last-child{margin-bottom:0}.callout.concept{background:var(--blue-50);border-color:var(--blue-100)}.callout.concept .callout-header{color:var(--blue-700)}.callout.important{background:var(--amber-50);border-color:var(--amber-100)}.callout.important .callout-header{color:var(--amber-600)}.callout.danger{background:var(--red-50);border-color:var(--red-100)}.callout.danger .callout-header{color:var(--red-600)}.callout.tip{background:var(--purple-50);border-color:var(--purple-100)}.callout.tip .callout-header{color:var(--purple-600)}.callout.success{background:var(--teal-50);border-color:var(--teal-100)}.callout.success .callout-header{color:var(--teal-700)}.code-block{position:relative;margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}.code-header{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:var(--surface-alt);border-bottom:1px solid var(--border);font-size:12px;color:var(--ink-muted)}.code-lang{font-family:var(--font-mono);font-weight:600;text-transform:uppercase;letter-spacing:.05em}.code-copy{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:#fff;font-size:11px;font-family:var(--font-sans);color:var(--ink-muted);cursor:pointer;transition:all .2s var(--ease)}.code-copy:hover{border-color:var(--teal-500);color:var(--teal-700)}.code-copy.copied{background:var(--teal-50);border-color:var(--teal-500);color:var(--teal-700)}pre{margin:0;padding:1.25rem 1.5rem;overflow-x:auto;background:#1e293b;font-family:var(--font-mono);font-size:13.5px;line-height:1.7;color:#e2e8f0}code{font-family:var(--font-mono);font-size:.88em}p code,li code{padding:2px 7px;background:var(--surface-alt);border:1px solid var(--border);border-radius:5px;color:var(--teal-800);font-size:.85em}.hl-keyword{color:#c084fc}.hl-string{color:#86efac}.hl-comment{color:#64748b;font-style:italic}.hl-function{color:#7dd3fc}.hl-number{color:#fbbf24}.hl-flag{color:#f472b6}details{margin-bottom:1.25rem;border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .2s var(--ease)}details[open]{border-color:var(--teal-200)}details summary{padding:1rem 1.25rem;font-weight:600;font-size:15px;cursor:pointer;background:var(--surface-alt);list-style:none;display:flex;align-items:center;gap:10px;transition:background .2s var(--ease);user-select:none}details summary::-webkit-details-marker{display:none}details summary::before{content:'';width:20px;height:20px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain;flex-shrink:0;transition:transform .2s var(--ease)}details[open] summary::before{transform:rotate(90deg)}details summary:hover{background:var(--teal-50)}.details-body{padding:1.25rem 1.5rem}.details-body p:last-child{margin-bottom:0}.video-card{margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}.video-wrapper{position:relative;padding-bottom:56.25%;height:0;background:#0f172a}.video-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}.video-caption{padding:12px 16px;background:var(--surface-alt);font-size:13px;color:var(--ink-muted);display:flex;align-items:center;gap:6px}.video-caption svg{width:14px;height:14px;color:var(--red-500)}.resource-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1rem;margin-bottom:1.5rem}.resource-card{display:flex;gap:14px;padding:1rem 1.25rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all .2s var(--ease);background:#fff}.resource-card:hover{border-color:var(--teal-300);background:var(--teal-50);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.04)}.resource-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}.resource-icon.docs{background:var(--blue-50);color:var(--blue-600)}.resource-icon.video{background:var(--red-50);color:var(--red-500)}.resource-icon.article{background:var(--amber-50);color:var(--amber-600)}.resource-icon.pdf{background:var(--purple-50);color:var(--purple-600)}.resource-info{min-width:0}.resource-title{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:2px;line-height:1.4}.resource-desc{font-size:12px;color:var(--ink-muted);line-height:1.5}.assignment{border:2px solid var(--teal-200);border-radius:14px;padding:1.5rem 1.75rem;margin-bottom:1.5rem;background:linear-gradient(135deg,var(--teal-50) 0%,#fff 100%)}.assignment-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}.assignment-label{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--teal-700)}.assignment-difficulty{display:inline-flex;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:600}.difficulty-l1{background:var(--teal-100);color:var(--teal-800)}.difficulty-l2{background:var(--amber-100);color:var(--amber-600)}.difficulty-l3{background:var(--red-100);color:var(--red-600)}.assignment h4{font-size:1.05rem;font-weight:700;margin-bottom:.75rem}.assignment p{font-size:14px}.checklist{list-style:none;padding:0}.checklist li{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border-light);font-size:14px}.checklist li:last-child{border-bottom:none}.check-box{width:20px;height:20px;border-radius:6px;border:2px solid var(--border);flex-shrink:0;margin-top:1px;cursor:pointer;transition:all .15s var(--ease);display:flex;align-items:center;justify-content:center}.check-box:hover{border-color:var(--teal-500)}.check-box.checked{background:var(--teal-500);border-color:var(--teal-500)}.check-box.checked::after{content:'';width:10px;height:10px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain}.diagram{margin:1.5rem 0;padding:2rem;background:var(--surface-alt);border:1px solid var(--border);border-radius:14px;overflow-x:auto}.diagram pre{background:transparent;color:var(--ink);padding:0;font-size:13px;line-height:1.6}.diagram-caption{margin-top:1rem;font-size:12px;color:var(--ink-muted);text-align:center;font-style:italic}.chapter-footer{border-top:1px solid var(--border);padding:3rem 2rem;background:var(--surface-alt)}.chapter-footer-inner{max-width:var(--content-max);margin:0 auto}.footer-nav{display:flex;justify-content:space-between;align-items:center;gap:1rem}.footer-nav-link{display:flex;flex-direction:column;gap:4px;padding:1rem 1.5rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all .2s var(--ease);max-width:320px;background:#fff}.footer-nav-link:hover{border-color:var(--teal-300);box-shadow:0 4px 12px rgba(0,0,0,.04)}.footer-nav-label{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--teal-600)}.footer-nav-title{font-size:15px;font-weight:600;color:var(--ink)}.footer-brand{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border);font-size:13px;color:var(--ink-muted)}@media(max-width:960px){.main-layout{grid-template-columns:1fr}.sidebar{display:none}.resource-grid{grid-template-columns:1fr}}@media(max-width:640px){.hero{padding:2.5rem 1.25rem 2rem}.main-layout{padding:0 1.25rem}.content{padding:2rem 0 4rem}pre{padding:1rem;font-size:12.5px}.footer-nav{flex-direction:column}.footer-nav-link{max-width:100%;width:100%}}@media print{.top-nav,.sidebar,.progress-bar{display:none}.main-layout{display:block}.content{padding:0}.hero{background:#fff;border:none}pre{background:#f1f5f9;color:var(--ink);border:1px solid var(--border)}}
+    /* ═══════════════════════════════════════════════
+       ILA DESIGN SYSTEM — v1.0
+       Iksha Learning Academy
+       ═══════════════════════════════════════════════ */
+
+    :root {
+      /* Palette */
+      --ink:        #0f172a;
+      --ink-light:  #334155;
+      --ink-muted:  #64748b;
+      --surface:    #ffffff;
+      --surface-alt:#f8fafc;
+      --surface-warm:#fffbeb;
+      --border:     #e2e8f0;
+      --border-light:#f1f5f9;
+
+      /* Brand */
+      --teal-50:  #f0fdfa;
+      --teal-100: #ccfbf1;
+      --teal-200: #99f6e4;
+      --teal-500: #14b8a6;
+      --teal-600: #0d9488;
+      --teal-700: #0f766e;
+      --teal-800: #115e59;
+      --teal-900: #134e4a;
+
+      --blue-50:  #eff6ff;
+      --blue-100: #dbeafe;
+      --blue-500: #3b82f6;
+      --blue-600: #2563eb;
+      --blue-700: #1d4ed8;
+
+      --amber-50:  #fffbeb;
+      --amber-100: #fef3c7;
+      --amber-500: #f59e0b;
+      --amber-600: #d97706;
+
+      --red-50:   #fef2f2;
+      --red-100:  #fee2e2;
+      --red-500:  #ef4444;
+      --red-600:  #dc2626;
+
+      --purple-50:  #faf5ff;
+      --purple-100: #f3e8ff;
+      --purple-500: #a855f7;
+      --purple-600: #9333ea;
+
+      /* Typography */
+      --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-serif: 'Instrument Serif', Georgia, serif;
+      --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
+
+      /* Spacing */
+      --content-max: 780px;
+      --sidebar-width: 280px;
+
+      /* Transitions */
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--ink);
+      background: var(--surface);
+    }
+
+    /* ── PROGRESS BAR ─────────────────────────── */
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--teal-500), var(--blue-500));
+      z-index: 1000;
+      transition: width 0.15s var(--ease);
+    }
+
+    /* ── TOP NAV ──────────────────────────────── */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+    }
+
+    .top-nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--teal-800);
+    }
+
+    .nav-brand-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--teal-600), var(--teal-800));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .nav-brand-text {
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-chapter-nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      color: var(--ink-muted);
+      border: 1px solid var(--border);
+      background: white;
+      transition: all 0.2s var(--ease);
+      cursor: pointer;
+    }
+
+    .nav-btn:hover {
+      color: var(--ink);
+      border-color: var(--teal-500);
+      background: var(--teal-50);
+    }
+
+    .nav-btn.disabled {
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    .nav-current {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink-light);
+      padding: 0 4px;
+    }
+
+    /* ── HERO ─────────────────────────────────── */
+    .hero {
+      background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 4rem 2rem 3.5rem;
+    }
+
+    .hero-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
+    }
+
+    .hero-chapter-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--teal-700);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 1rem;
+    }
+
+    .hero-chapter-label span {
+      background: var(--teal-100);
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+
+    .hero h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(2.4rem, 5vw, 3.2rem);
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: 1rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: var(--ink-light);
+      line-height: 1.65;
+      max-width: 640px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .hero-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
+    .hero-meta-item svg {
+      width: 16px;
+      height: 16px;
+      color: var(--teal-600);
+    }
+
+    /* ── MAIN LAYOUT ──────────────────────────── */
+    .main-layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr var(--sidebar-width);
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .content {
+      padding: 3rem 0 6rem;
+      min-width: 0;
+    }
+
+    /* ── SIDEBAR TOC ──────────────────────────── */
+    .sidebar {
+      position: sticky;
+      top: 76px;
+      padding: 2rem 0;
+      max-height: calc(100vh - 76px);
+      overflow-y: auto;
+    }
+
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-muted);
+      margin-bottom: 1rem;
+      padding-left: 14px;
+    }
+
+    .toc-list {
+      list-style: none;
+    }
+
+    .toc-item a {
+      display: block;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--ink-muted);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: all 0.2s var(--ease);
+      line-height: 1.5;
+    }
+
+    .toc-item a:hover {
+      color: var(--ink);
+      background: var(--surface-alt);
+    }
+
+    .toc-item a.active {
+      color: var(--teal-700);
+      border-left-color: var(--teal-500);
+      background: var(--teal-50);
+      font-weight: 500;
+    }
+
+    /* ── TYPOGRAPHY ────────────────────────────── */
+    .content h2 {
+      font-family: var(--font-serif);
+      font-size: 1.85rem;
+      font-weight: 400;
+      color: var(--ink);
+      margin: 3rem 0 1rem;
+      padding-top: 1rem;
+      scroll-margin-top: 80px;
+    }
+
+    .content h2:first-child { margin-top: 0; }
+
+    .content h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 2rem 0 0.75rem;
+      scroll-margin-top: 80px;
+    }
+
+    .content p { margin-bottom: 1.25rem; color: var(--ink-light); }
+    .content strong { color: var(--ink); font-weight: 600; }
+
+    .content a {
+      color: var(--teal-700);
+      text-decoration: underline;
+      text-decoration-color: var(--teal-200);
+      text-underline-offset: 3px;
+      transition: text-decoration-color 0.2s;
+    }
+    .content a:hover { text-decoration-color: var(--teal-600); }
+
+    .content ul, .content ol { margin-bottom: 1.25rem; padding-left: 1.5rem; }
+    .content li { margin-bottom: 0.5rem; color: var(--ink-light); }
+    .content li::marker { color: var(--teal-500); }
+
+    .section-divider {
+      border: none; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 3rem 0;
+    }
+
+    /* ── CALLOUT BOXES ────────────────────────── */
+    .callout { padding: 1.25rem 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; border: 1px solid; position: relative; }
+    .callout-header { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; margin-bottom: 0.5rem; }
+    .callout-header svg { width: 18px; height: 18px; flex-shrink: 0; }
+    .callout p:last-child { margin-bottom: 0; }
+    .callout.concept { background: var(--blue-50); border-color: var(--blue-100); }
+    .callout.concept .callout-header { color: var(--blue-700); }
+    .callout.important { background: var(--amber-50); border-color: var(--amber-100); }
+    .callout.important .callout-header { color: var(--amber-600); }
+    .callout.danger { background: var(--red-50); border-color: var(--red-100); }
+    .callout.danger .callout-header { color: var(--red-600); }
+    .callout.tip { background: var(--purple-50); border-color: var(--purple-100); }
+    .callout.tip .callout-header { color: var(--purple-600); }
+    .callout.success { background: var(--teal-50); border-color: var(--teal-100); }
+    .callout.success .callout-header { color: var(--teal-700); }
+
+    /* ── CODE BLOCKS ──────────────────────────── */
+    .code-block { position: relative; margin-bottom: 1.5rem; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+    .code-header { display: flex; align-items: center; justify-content: space-between; padding: 8px 16px; background: var(--surface-alt); border-bottom: 1px solid var(--border); font-size: 12px; color: var(--ink-muted); }
+    .code-lang { font-family: var(--font-mono); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+    .code-copy { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border); background: white; font-size: 11px; font-family: var(--font-sans); color: var(--ink-muted); cursor: pointer; transition: all 0.2s var(--ease); }
+    .code-copy:hover { border-color: var(--teal-500); color: var(--teal-700); }
+    .code-copy.copied { background: var(--teal-50); border-color: var(--teal-500); color: var(--teal-700); }
+
+    pre { margin: 0; padding: 1.25rem 1.5rem; overflow-x: auto; background: #1e293b; font-family: var(--font-mono); font-size: 13.5px; line-height: 1.7; color: #e2e8f0; }
+    code { font-family: var(--font-mono); font-size: 0.88em; }
+    p code, li code { padding: 2px 7px; background: var(--surface-alt); border: 1px solid var(--border); border-radius: 5px; color: var(--teal-800); font-size: 0.85em; }
+
+    .hl-keyword  { color: #c084fc; }
+    .hl-string   { color: #86efac; }
+    .hl-comment  { color: #64748b; font-style: italic; }
+    .hl-function { color: #7dd3fc; }
+    .hl-number   { color: #fbbf24; }
+    .hl-flag     { color: #f472b6; }
+
+    /* ── COLLAPSIBLE ──────────────────────────── */
+    details { margin-bottom: 1.25rem; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; transition: border-color 0.2s var(--ease); }
+    details[open] { border-color: var(--teal-200); }
+    details summary { padding: 1rem 1.25rem; font-weight: 600; font-size: 15px; cursor: pointer; background: var(--surface-alt); list-style: none; display: flex; align-items: center; gap: 10px; transition: background 0.2s var(--ease); user-select: none; }
+    details summary::-webkit-details-marker { display: none; }
+    details summary::before { content: ''; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E"); background-size: contain; flex-shrink: 0; transition: transform 0.2s var(--ease); }
+    details[open] summary::before { transform: rotate(90deg); }
+    details summary:hover { background: var(--teal-50); }
+    .details-body { padding: 1.25rem 1.5rem; }
+    .details-body p:last-child { margin-bottom: 0; }
+
+    /* ── VIDEO EMBED ──────────────────────────── */
+    .video-card { margin-bottom: 1.5rem; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+    .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; background: #0f172a; }
+    .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+    .video-caption { padding: 12px 16px; background: var(--surface-alt); font-size: 13px; color: var(--ink-muted); display: flex; align-items: center; gap: 6px; }
+    .video-caption svg { width: 14px; height: 14px; color: var(--red-500); }
+
+    /* ── RESOURCE CARDS ───────────────────────── */
+    .resource-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+    .resource-card { display: flex; gap: 14px; padding: 1rem 1.25rem; border: 1px solid var(--border); border-radius: 12px; text-decoration: none; transition: all 0.2s var(--ease); background: white; }
+    .resource-card:hover { border-color: var(--teal-300); background: var(--teal-50); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+    .resource-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 18px; }
+    .resource-icon.docs    { background: var(--blue-50);   color: var(--blue-600); }
+    .resource-icon.video   { background: var(--red-50);    color: var(--red-500); }
+    .resource-icon.github  { background: var(--ink);       color: white; }
+    .resource-icon.article { background: var(--amber-50);  color: var(--amber-600); }
+    .resource-icon.pdf     { background: var(--purple-50); color: var(--purple-600); }
+    .resource-info { min-width: 0; }
+    .resource-title { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 2px; line-height: 1.4; }
+    .resource-desc { font-size: 12px; color: var(--ink-muted); line-height: 1.5; }
+
+    /* ── ASSIGNMENT CARDS ─────────────────────── */
+    .assignment { border: 2px solid var(--teal-200); border-radius: 14px; padding: 1.5rem 1.75rem; margin-bottom: 1.5rem; background: linear-gradient(135deg, var(--teal-50) 0%, white 100%); }
+    .assignment-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+    .assignment-label { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--teal-700); }
+    .assignment-difficulty { display: inline-flex; padding: 4px 10px; border-radius: 100px; font-size: 11px; font-weight: 600; }
+    .difficulty-l1 { background: var(--teal-100); color: var(--teal-800); }
+    .difficulty-l2 { background: var(--amber-100); color: var(--amber-600); }
+    .difficulty-l3 { background: var(--red-100); color: var(--red-600); }
+    .assignment h4 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.75rem; }
+    .assignment p { font-size: 14px; }
+    .checklist { list-style: none; padding: 0; }
+    .checklist li { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border-light); font-size: 14px; }
+    .checklist li:last-child { border-bottom: none; }
+    .check-box { width: 20px; height: 20px; border-radius: 6px; border: 2px solid var(--border); flex-shrink: 0; margin-top: 1px; cursor: pointer; transition: all 0.15s var(--ease); display: flex; align-items: center; justify-content: center; }
+    .check-box:hover { border-color: var(--teal-500); }
+    .check-box.checked { background: var(--teal-500); border-color: var(--teal-500); }
+    .check-box.checked::after { content: ''; width: 10px; height: 10px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E"); background-size: contain; }
+
+    /* ── DIAGRAM ──────────────────────────────── */
+    .diagram { margin: 1.5rem 0; padding: 2rem; background: var(--surface-alt); border: 1px solid var(--border); border-radius: 14px; overflow-x: auto; }
+    .diagram pre { background: transparent; color: var(--ink); padding: 0; font-size: 13px; line-height: 1.6; }
+    .diagram-caption { margin-top: 1rem; font-size: 12px; color: var(--ink-muted); text-align: center; font-style: italic; }
+
+    /* ── FOOTER ───────────────────────────────── */
+    .chapter-footer { border-top: 1px solid var(--border); padding: 3rem 2rem; background: var(--surface-alt); }
+    .chapter-footer-inner { max-width: var(--content-max); margin: 0 auto; }
+    .footer-nav { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+    .footer-nav-link { display: flex; flex-direction: column; gap: 4px; padding: 1rem 1.5rem; border: 1px solid var(--border); border-radius: 12px; text-decoration: none; transition: all 0.2s var(--ease); max-width: 320px; background: white; }
+    .footer-nav-link:hover { border-color: var(--teal-300); box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+    .footer-nav-label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--teal-600); }
+    .footer-nav-title { font-size: 15px; font-weight: 600; color: var(--ink); }
+    .footer-brand { text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); font-size: 13px; color: var(--ink-muted); }
+
+    /* ── RESPONSIVE ───────────────────────────── */
+    @media (max-width: 960px) {
+      .main-layout { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .resource-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .hero { padding: 2.5rem 1.25rem 2rem; }
+      .main-layout { padding: 0 1.25rem; }
+      .content { padding: 2rem 0 4rem; }
+      pre { padding: 1rem; font-size: 12.5px; }
+      .footer-nav { flex-direction: column; }
+      .footer-nav-link { max-width: 100%; width: 100%; }
+    }
+    @media print {
+      .top-nav, .sidebar, .progress-bar { display: none; }
+      .main-layout { display: block; }
+      .content { padding: 0; }
+      .hero { background: white; border: none; }
+      pre { background: #f1f5f9; color: var(--ink); border: 1px solid var(--border); }
+    }
   </style>
 </head>
 <body>
   <div class="progress-bar" id="progressBar"></div>
+
   <nav class="top-nav">
     <div class="top-nav-inner">
-      <a class="nav-brand" href="index.html"><div class="nav-brand-icon">ILA</div><span class="nav-brand-text">Iksha Learning Academy</span></a>
+      <a class="nav-brand" href="index.html">
+        <div class="nav-brand-icon">ILA</div>
+        <span class="nav-brand-text">Iksha Learning Academy</span>
+      </a>
       <div class="nav-chapter-nav">
         <a class="nav-btn" href="chapter-07.html">&larr; Previous</a>
         <span class="nav-current">08 / 08</span>
@@ -26,13 +498,26 @@
 
   <header class="hero">
     <div class="hero-inner">
-      <div class="hero-chapter-label"><span>Chapter 08</span> &middot; Negotiation Foundations</div>
+      <div class="hero-chapter-label">
+        <span>Chapter 08</span> &middot; Capstone
+      </div>
       <h1>Building Long-Term Relationships</h1>
-      <p class="hero-subtitle">The best negotiations create value that lasts. Learn to build trust through consistent behavior, protect your reputation, follow through on commitments, and maintain professional relationships that compound over a career in the startup ecosystem.</p>
+      <p class="hero-subtitle">
+        The best negotiators do not win individual deals &mdash; they build networks of trust that generate value over decades. This final chapter of the Basic Track teaches you to shift from transactional thinking to relationship-building: creating reciprocity loops, maintaining professional networks, and turning one-time counterparties into long-term allies.
+      </p>
       <div class="hero-meta">
-        <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Estimated: 45&ndash;60 min</div>
-        <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> 4 Key Concepts</div>
-        <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> 3 Assignments</div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Estimated: 50&ndash;65 min
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          6 Key Concepts
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          3 Assignments
+        </div>
       </div>
     </div>
   </header>
@@ -42,234 +527,396 @@
 
       <h2 id="why-this-matters">Why This Matters</h2>
 
-      <p>The startup ecosystem is remarkably small. The investor who passes on your seed round may lead your Series B. The vendor you negotiated hard with may become your customer. The candidate who declined your offer may refer your next VP of Engineering. <strong>Every negotiation leaves a relationship residue</strong> &mdash; positive or negative &mdash; that follows you for years.</p>
+      <p>
+        In the startup world, your reputation travels faster than your resume. The investor you negotiate with today may sit on the board of the company that acquires you tomorrow. The vendor you treat fairly this quarter may introduce you to a customer that transforms your business next year. The employee whose salary negotiation you handle with respect and transparency may become the co-founder of your next venture. <strong>Every negotiation is also an audition for future relationships.</strong>
+      </p>
 
-      <p>Research by Wharton professor Adam Grant shows that 'givers' &mdash; people who approach relationships with generosity and long-term thinking &mdash; disproportionately occupy both the bottom AND the top of success metrics. The difference between givers who fail and givers who succeed is strategic relationship building: knowing when to invest in relationships, how to maintain them, and how to protect yourself from exploitation.</p>
+      <p>
+        Research from Adam Grant at Wharton demonstrates that professionals who adopt a "giver" orientation &mdash; those who contribute to others without immediate expectation of return &mdash; consistently outperform "takers" and "matchers" over the long term. This is not naivety; it is strategic generosity. Givers build networks of goodwill that compound over time, creating optionality, deal flow, and support systems that purely transactional operators never access. The catch is that givers must also be strategic about boundaries, or they burn out. This chapter teaches you how to be a strategic giver in your negotiation relationships.
+      </p>
+
+      <p>
+        This chapter synthesizes everything you have learned in the Basic Track. You will learn to evaluate relationships across time horizons, build trust through consistent behavior, create reciprocity dynamics that are genuine rather than manipulative, and maintain professional networks that generate negotiation opportunities naturally. These skills are the bridge between the Basic Track fundamentals and the advanced strategies you will encounter in later programs.
+      </p>
 
       <div class="callout concept">
-        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg> Key Insight</div>
-        <p><strong>Your negotiation reputation precedes you into every room.</strong> In a tight-knit startup ecosystem, word travels fast. Being known as fair, creative, and reliable in negotiations is one of the most valuable career assets you can build. Being known as adversarial, deceptive, or unreliable closes doors you didn't know existed.</p>
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Key Insight
+        </div>
+        <p>
+          <strong>The single best negotiation tactic is a great reputation.</strong> When people trust you, they share information more freely, are more willing to make concessions, propose creative solutions, and give you the benefit of the doubt when things go wrong. A reputation for fairness, reliability, and integrity is a negotiating asset that compounds forever and costs nothing to build.
+        </p>
       </div>
 
       <hr class="section-divider">
 
       <h2 id="key-concepts">Key Concepts</h2>
 
-      <h3 id="trust-building">1. Building Trust Through Negotiation</h3>
+      <h3 id="trust-equation">1. The Trust Equation</h3>
 
-      <p>Trust in negotiation is built through consistent, predictable behavior over time. It cannot be manufactured in a single conversation, but it can be destroyed in one.</p>
+      <p>
+        Trust is not a feeling &mdash; it is a calculation that people make (mostly unconsciously) about whether to rely on you. The Trust Equation, developed by David Maister, Charles Green, and Robert Galford, breaks trust into four measurable components. Understanding these components lets you diagnose trust deficits and build trust deliberately, not accidentally.
+      </p>
 
       <div class="code-block">
-        <div class="code-header"><span class="code-lang">Framework</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <div class="code-header">
+          <span class="code-lang">Framework</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
 <pre>
-<span class="hl-comment">/* ── Trust-Building Framework: The SWIFT Model ────────────── */</span>
+<span class="hl-comment">/* ── The Trust Equation ───────────────────────────────────── */</span>
 
-<span class="hl-keyword">S — SAY WHAT YOU'LL DO</span>
-  Be specific about commitments during negotiation.
-  Not: "I'll get back to you soon"
-  But: "I'll send the revised proposal by Thursday 5pm"
-  <span class="hl-function">→ Specificity creates accountability</span>
+                  Credibility + Reliability + Intimacy
+  <span class="hl-keyword">Trust</span>  =  ─────────────────────────────────────────
+                         Self-Orientation
 
-<span class="hl-keyword">W — WALK YOUR TALK</span>
-  Follow through on every commitment, no matter how small.
-  If you said Thursday 5pm, deliver Thursday 5pm or earlier.
-  If you can't, communicate proactively BEFORE the deadline.
-  <span class="hl-function">→ Reliability is trust's foundation</span>
+<span class="hl-function">CREDIBILITY</span> &mdash; "I believe what you say"
+  Built by: Domain expertise, accurate statements, credentials
+  Destroyed by: Exaggerating, bluffing, claiming expertise you lack
+  Startup example: Knowing your numbers cold in an investor meeting
 
-<span class="hl-keyword">I — INVEST IN THE RELATIONSHIP</span>
-  Share relevant information even when not asked.
-  Make introductions that benefit the other party.
-  Offer help without expecting immediate reciprocity.
-  <span class="hl-function">→ Generosity builds goodwill deposits</span>
+<span class="hl-function">RELIABILITY</span> &mdash; "I can depend on you to follow through"
+  Built by: Delivering on promises, meeting deadlines, consistency
+  Destroyed by: Over-committing, missing deadlines, inconsistency
+  Startup example: Sending the follow-up email you promised, every time
 
-<span class="hl-keyword">F — FAIR DEALING</span>
-  Never exploit asymmetric information for short-term gain.
-  If you discover the other side made an error, flag it.
-  Propose terms that you would accept if positions were reversed.
-  <span class="hl-function">→ Fairness is remembered and reciprocated</span>
+<span class="hl-function">INTIMACY</span> &mdash; "I feel safe sharing information with you"
+  Built by: Active listening, confidentiality, vulnerability, empathy
+  Destroyed by: Gossiping, using shared info against people, dismissiveness
+  Startup example: Keeping salary negotiation details truly confidential
 
-<span class="hl-keyword">T — TRANSPARENT ABOUT CONSTRAINTS</span>
-  Share your real constraints (budget, timeline, authority).
-  "I want to give you what you're asking for, but my board
-  has capped this budget at $X. Here's what I CAN do..."
-  <span class="hl-function">→ Honesty about limits builds more trust than vague promises</span>
+<span class="hl-function">SELF-ORIENTATION</span> (denominator) &mdash; "Are you focused on me or yourself?"
+  Low (good): You genuinely care about the other person's outcome
+  High (bad): You are clearly optimizing only for your own benefit
+  Startup example: Helping a candidate find the right role, even if
+  it's not at your company, because it's genuinely the best fit
+
+<span class="hl-comment">/* Self-Orientation is the denominator &mdash; it has the biggest */</span>
+<span class="hl-comment">/* impact. Even high credibility + reliability + intimacy     */</span>
+<span class="hl-comment">/* gets destroyed by obviously self-serving behavior.         */</span>
 </pre>
       </div>
 
-      <h3 id="reputation-management">2. Protecting Your Negotiation Reputation</h3>
+      <h3 id="reciprocity">2. The Science of Reciprocity in Negotiations</h3>
 
-      <p>In the startup world, your reputation is a compounding asset. Every negotiation either deposits into or withdraws from your reputation account.</p>
+      <p>
+        Reciprocity is one of the most powerful forces in human psychology. When someone does something for us, we feel a deep, almost involuntary urge to return the favor. Robert Cialdini's research on influence identified reciprocity as the single most powerful persuasion principle. In negotiations, understanding reciprocity lets you create virtuous cycles of generosity that benefit everyone involved.
+      </p>
 
       <div class="code-block">
-        <div class="code-header"><span class="code-lang">Reference</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <div class="code-header">
+          <span class="code-lang">Framework</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
 <pre>
-<span class="hl-comment">/* ── Reputation-Building Behaviors ─────────────────────────── */</span>
+<span class="hl-comment">/* ── Reciprocity Dynamics in Negotiations ─────────────────── */</span>
 
-<span class="hl-keyword">REPUTATION BUILDERS:</span>
-  <span class="hl-string">+</span> Following through on every commitment
-  <span class="hl-string">+</span> Being honest about what you can and can't do
-  <span class="hl-string">+</span> Acknowledging when you're wrong or made a mistake
-  <span class="hl-string">+</span> Sharing credit generously
-  <span class="hl-string">+</span> Making warm introductions without being asked
-  <span class="hl-string">+</span> Negotiating firmly but respectfully
-  <span class="hl-string">+</span> Leaving value on the table when appropriate
-  <span class="hl-string">+</span> Checking in after deals close to ensure satisfaction
+<span class="hl-keyword">POSITIVE RECIPROCITY</span> (virtuous cycle)
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━</span>
+  You give value first &rarr; Other person feels obligation to reciprocate
+  &rarr; They give value back &rarr; Relationship deepens &rarr; More trust
+  &rarr; Bigger opportunities &rarr; More value exchange &rarr; Compounding
 
-<span class="hl-keyword">REPUTATION DESTROYERS:</span>
-  <span class="hl-flag">-</span> Making commitments you can't keep
-  <span class="hl-flag">-</span> Using deceptive tactics (fake deadlines, phantom offers)
-  <span class="hl-flag">-</span> Renegotiating after agreement (nibbling)
-  <span class="hl-flag">-</span> Talking negatively about counterparts to others
-  <span class="hl-flag">-</span> Exploiting someone's mistake or weak position
-  <span class="hl-flag">-</span> Ghosting after a negotiation doesn't go your way
-  <span class="hl-flag">-</span> Taking credit for collaborative solutions
-  <span class="hl-flag">-</span> Burning bridges for small short-term gains
+  <span class="hl-function">Startup Examples:</span>
+  - Introduce a vendor to a potential customer (no strings attached)
+  - Share a useful article or resource with a negotiation counterpart
+  - Offer to extend a payment deadline when a partner is struggling
+  - Give genuine feedback on someone's pitch or product
 
-<span class="hl-keyword">THE STARTUP ECOSYSTEM TEST:</span>
-  Before any negotiation tactic, ask yourself:
-  "Would I be comfortable if every founder, investor,
-  and potential hire in my ecosystem knew I did this?"
-  If the answer is no, don't do it.
-  <span class="hl-comment">// In a small ecosystem, they will find out.</span>
+<span class="hl-keyword">NEGATIVE RECIPROCITY</span> (vicious cycle)
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━</span>
+  You act selfishly &rarr; Other person retaliates &rarr; You retaliate
+  &rarr; Relationship deteriorates &rarr; Less trust &rarr; Worse deals
+  &rarr; More adversarial behavior &rarr; Compounding damage
+
+  <span class="hl-flag">Startup Anti-Patterns:</span>
+  - Squeezing a vendor on price then demanding premium service
+  - Renegotiating a deal after the other side has already committed
+  - Using confidential information shared in good faith as leverage
+  - Taking credit for jointly created solutions
+
+<span class="hl-keyword">STRATEGIC GIVING</span> (the optimal approach)
+<span class="hl-string">━━━━━━━━━━━━━━━━━</span>
+  <span class="hl-number">1.</span> Give value that is LOW COST to you but HIGH VALUE to them
+  <span class="hl-number">2.</span> Give without explicit expectation of return (but track)
+  <span class="hl-number">3.</span> Give to many people, not just those who can help you today
+  <span class="hl-number">4.</span> Set boundaries: Don't let takers exploit your generosity
+  <span class="hl-number">5.</span> Trust the compounding: Returns come over years, not days
 </pre>
       </div>
 
-      <h3 id="follow-through">3. The Art of Follow-Through</h3>
+      <h3 id="relationship-mapping">3. Relationship Mapping for Negotiators</h3>
 
-      <p>The negotiation doesn't end when you shake hands. Implementation, follow-through, and post-deal relationship management determine whether the deal actually delivers value &mdash; and whether the relationship continues.</p>
+      <p>
+        Not all professional relationships require the same level of investment. Relationship mapping helps you allocate your limited time and energy to the relationships that will generate the most value over time. The goal is not to be calculating or transactional &mdash; it is to be intentional about where you invest your relationship-building energy so you can be generous where it matters most.
+      </p>
 
       <div class="code-block">
-        <div class="code-header"><span class="code-lang">Checklist</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <div class="code-header">
+          <span class="code-lang">Strategy</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
 <pre>
-<span class="hl-comment">/* ── Post-Negotiation Follow-Through Checklist ─────────────── */</span>
+<span class="hl-comment">/* ── Relationship Investment Framework ────────────────────── */</span>
 
-<span class="hl-keyword">IMMEDIATELY AFTER AGREEMENT:</span>
-  [ ] Send written summary of all agreed terms within 24 hours
-  [ ] Confirm next steps and deadlines for both sides
-  [ ] Thank the other party specifically for what they contributed
-  [ ] Introduce implementation contacts on both sides
+<span class="hl-keyword">TIER 1: STRATEGIC RELATIONSHIPS</span> (invest heavily)
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Who:    Key investors, strategic partners, board members, mentors
+  Cadence: Monthly check-ins, quarterly meetings, annual events
+  Actions: Share wins and challenges, ask for advice, reciprocate
+  Goal:   Deep mutual understanding, trust for high-stakes moments
 
-<span class="hl-keyword">WITHIN FIRST 30 DAYS:</span>
-  [ ] Execute on your first commitment ahead of schedule
-  [ ] Check in proactively: "Is everything going as expected?"
-  [ ] Flag any issues early (don't let problems fester)
-  [ ] Deliver a quick win to demonstrate value
+<span class="hl-keyword">TIER 2: ACTIVE PROFESSIONAL NETWORK</span> (invest regularly)
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Who:    Vendors, customers, peer founders, industry contacts
+  Cadence: Quarterly touchpoints, relevant forwards, event encounters
+  Actions: Share useful resources, make introductions, offer help
+  Goal:   Maintain warm relationships, be top-of-mind for opportunities
 
-<span class="hl-keyword">ONGOING RELATIONSHIP MAINTENANCE:</span>
-  [ ] Schedule quarterly check-ins (not just when you need something)
-  [ ] Share relevant articles, introductions, or opportunities
-  [ ] Provide feedback on what's working and what could improve
-  [ ] Celebrate milestones together (their wins matter too)
+<span class="hl-keyword">TIER 3: BROAD NETWORK</span> (invest opportunistically)
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Who:    Conference connections, online community members, alumni
+  Cadence: Annual touchpoints, social media engagement, events
+  Actions: Like/comment on updates, attend same events, group emails
+  Goal:   Maintain awareness, create serendipity opportunities
 
-<span class="hl-keyword">WHEN PROBLEMS ARISE:</span>
-  [ ] Address issues directly and early
-  [ ] Own your part of the problem
-  [ ] Propose solutions, not just complaints
-  [ ] Reference the spirit of the original agreement
-  [ ] Renegotiate if circumstances have genuinely changed
+<span class="hl-keyword">TIER 4: DORMANT CONNECTIONS</span> (reactivate as needed)
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Who:    Former colleagues, past negotiation counterparts, alumni
+  Cadence: Reactivate when relevant to a specific need
+  Actions: Warm reintroduction referencing shared history
+  Goal:   Have a broad base of people who remember you positively
 
-<span class="hl-keyword">THE COMPOUND EFFECT:</span>
-  Year 1: You negotiate fairly with 10 people
-  Year 3: Those 10 people each know 100 people
-  Year 5: You have 1,000+ indirect advocates
-  Year 10: Opportunities come to you without effort
-  <span class="hl-comment">// This is how relationship capital compounds</span>
+<span class="hl-comment">/* The key: give to ALL tiers, not just the ones you need now */</span>
 </pre>
       </div>
 
-      <h3 id="relationship-maintenance">4. Strategic Relationship Maintenance</h3>
+      <h3 id="reputation">4. Building and Protecting Your Negotiation Reputation</h3>
 
-      <p>Not all relationships require the same level of investment. Strategic relationship maintenance means allocating your limited time and energy to the relationships most likely to create mutual value over time.</p>
+      <p>
+        Your negotiation reputation precedes you into every room. In the startup ecosystem, where communities are tight-knit and information travels fast, your reputation is arguably your most valuable professional asset. It takes years to build and minutes to destroy. Understanding what drives reputation allows you to build it intentionally and protect it fiercely.
+      </p>
 
       <div class="code-block">
-        <div class="code-header"><span class="code-lang">Framework</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <div class="code-header">
+          <span class="code-lang">Framework</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
 <pre>
-<span class="hl-comment">/* ── Relationship Prioritization Matrix ────────────────────── */</span>
+<span class="hl-comment">/* ── Reputation-Building Behaviors for Negotiators ────────── */</span>
 
-<span class="hl-keyword">TIER 1: INNER CIRCLE (Monthly contact)</span>
-  Co-founders, key investors, closest advisors
-  Top 5 customers, most important vendors
-  Closest industry peers and mentors
-  <span class="hl-function">→ Personal check-ins, dinners, deep conversations</span>
+<span class="hl-keyword">BEHAVIORS THAT BUILD REPUTATION</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  <span class="hl-function">Fairness:</span> Propose terms you would accept if positions were reversed
+  <span class="hl-function">Transparency:</span> Share your constraints honestly (not your limits)
+  <span class="hl-function">Follow-through:</span> Do exactly what you say you will do, always
+  <span class="hl-function">Generosity:</span> Leave value on the table when the relationship matters
+  <span class="hl-function">Graciousness:</span> Win well &mdash; never gloat or make others feel defeated
+  <span class="hl-function">Accountability:</span> Own your mistakes quickly and make them right
 
-<span class="hl-keyword">TIER 2: ACTIVE NETWORK (Quarterly contact)</span>
-  Board members, regular investors and VCs
-  Top 20 customers and partners
-  Industry peers you admire and learn from
-  Key employees and alumni of your company
-  <span class="hl-function">→ Quick emails, coffee meetings, event interactions</span>
+<span class="hl-keyword">BEHAVIORS THAT DESTROY REPUTATION</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  <span class="hl-flag">Reneging:</span> Backing out of agreed terms after the handshake
+  <span class="hl-flag">Deception:</span> Lying about alternatives, timelines, or authority
+  <span class="hl-flag">Exploitation:</span> Using private information against someone
+  <span class="hl-flag">Arrogance:</span> Treating counterparts as adversaries to be defeated
+  <span class="hl-flag">Ghosting:</span> Disappearing instead of saying "no" directly
+  <span class="hl-flag">Blame-shifting:</span> Pointing fingers when deals go wrong
 
-<span class="hl-keyword">TIER 3: WARM NETWORK (Semi-annual contact)</span>
-  Former colleagues, conference connections
-  Industry contacts, journalists, analysts
-  Potential future customers or partners
-  <span class="hl-function">→ Forward relevant articles, comment on their posts</span>
-
-<span class="hl-keyword">MAINTENANCE TACTICS (low effort, high impact):</span>
-  <span class="hl-number">1.</span> The "saw this, thought of you" message
-     Forward an article relevant to their interests.
-     Takes 30 seconds. Keeps you top of mind.
-
-  <span class="hl-number">2.</span> The congratulation reach-out
-     New job, funding round, product launch, award —
-     send a genuine note within 24 hours.
-
-  <span class="hl-number">3.</span> The warm introduction
-     Connect two people in your network who should know
-     each other. Costs you nothing, creates enormous value.
-
-  <span class="hl-number">4.</span> The "how can I help?" check-in
-     Once per quarter, reach out to someone with:
-     "What's your biggest challenge right now?
-     I might know someone or something that could help."
-
-  <span class="hl-comment">// The most powerful networkers give first and
-  // keep score loosely, if at all.</span>
+<span class="hl-keyword">THE REPUTATION TEST</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━</span>
+  Before any negotiation action, ask yourself:
+  "If this became public knowledge in my industry, would I be
+  proud of how I handled it?"
+  If the answer is no, reconsider your approach.
 </pre>
       </div>
 
+      <div class="callout tip">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Pro Tip
+        </div>
+        <p>
+          <strong>The "Small World" Rule:</strong> In the startup ecosystem, assume everyone knows everyone. The person across the table from you today likely has mutual connections with people you will need to work with tomorrow. Treat every negotiation counterpart as someone you will encounter again &mdash; because in most cases, you will.
+        </p>
+      </div>
 
+      <h3 id="post-deal">5. Post-Deal Relationship Management</h3>
+
+      <p>
+        Most negotiation training ends when the deal is signed. But the real relationship begins after the agreement is reached. How you behave after a negotiation &mdash; whether you follow through on commitments, how you handle problems that arise, whether you check in proactively &mdash; determines whether this deal becomes the foundation for a lasting relationship or a one-time transaction that both parties want to forget.
+      </p>
+
+      <p>
+        Research from the Harvard Negotiation Project shows that 70% of the value in any business relationship is created <strong>after</strong> the initial agreement, not during it. The negotiation sets the stage, but the post-deal phase is where trust is tested and either reinforced or broken. This is particularly true in the startup ecosystem, where partnerships evolve rapidly, market conditions shift unexpectedly, and the ability to renegotiate in good faith becomes a core competitive advantage.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Process</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── Post-Deal Relationship Playbook ──────────────────────── */</span>
+
+<span class="hl-keyword">IMMEDIATELY AFTER SIGNING</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  [ ] Send a genuine thank-you (handwritten note for major deals)
+  [ ] Confirm next steps and timeline in writing
+  [ ] Introduce key team members who will manage the relationship
+  [ ] Set up the first check-in meeting (2-4 weeks out)
+  [ ] Deliver on any promises made during the negotiation
+
+<span class="hl-keyword">FIRST 90 DAYS</span>
+<span class="hl-string">━━━━━━━━━━━━━━</span>
+  [ ] Proactive check-ins: "How is everything going? Any issues?"
+  [ ] Address problems immediately &mdash; don't let them fester
+  [ ] Share relevant information that helps the other party succeed
+  [ ] Document wins and share them with the counterpart
+  [ ] Make an introduction that benefits the other party
+
+<span class="hl-keyword">ONGOING RELATIONSHIP</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━</span>
+  [ ] Quarterly business reviews (for significant relationships)
+  [ ] Annual relationship assessment (still the right partner?)
+  [ ] Regular value exchange (information, introductions, feedback)
+  [ ] Transparent communication about changes or challenges
+  [ ] Celebrate shared successes publicly (give credit generously)
+
+<span class="hl-keyword">WHEN THINGS GO WRONG</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━</span>
+  [ ] Acknowledge the problem immediately &mdash; don't wait for them to
+  [ ] Take ownership of your part (even if it's small)
+  [ ] Propose a solution, don't just report the problem
+  [ ] Follow up to confirm the resolution worked
+  [ ] Do a post-mortem together: "How do we prevent this?"
+</pre>
+      </div>
+
+      <div class="callout concept">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          The Compounding Effect
+        </div>
+        <p>
+          Relationships, like investments, compound over time. A relationship that generates $1,000 in value in year one may generate $10,000 in year three and $100,000 in year five &mdash; through referrals, partnerships, advice, deal flow, and opportunities that only come from deep trust. <strong>The most successful negotiators think in decades, not deals.</strong>
+        </p>
+      </div>
+
+      <h3 id="network-effects">6. Network Effects in Professional Relationships</h3>
+
+      <p>
+        Network effects &mdash; the phenomenon where a product or service becomes more valuable as more people use it &mdash; also apply to professional relationships. As your network grows and deepens, each new connection becomes more valuable because it can be combined with existing connections. A founder who knows 10 investors is not twice as valuable as one who knows 5 &mdash; they may be ten times as valuable, because they can create investor syndicates, competitive term sheets, and referral chains that smaller networks cannot support.
+      </p>
+
+      <p>
+        The key to creating network effects in your professional relationships is to be a <strong>connector</strong> &mdash; someone who introduces people who should know each other. Every high-value introduction you make strengthens your position at the center of the network, increases goodwill on both sides, and creates the possibility that those new connections will generate value that flows back to you in unexpected ways.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Framework</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── Network Effects Strategy for Negotiators ────────────── */</span>
+
+<span class="hl-keyword">THE CONNECTOR PLAYBOOK</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━</span>
+  <span class="hl-number">1.</span> <span class="hl-function">Identify Synergies:</span> Who in your network should know each other?
+     - Look for complementary skills, shared industries, mutual needs
+     - Consider timing: Is this the right moment for the introduction?
+
+  <span class="hl-number">2.</span> <span class="hl-function">Make Warm Introductions:</span> Always ask permission from both sides
+     - "I know someone who could really help with [specific problem]"
+     - Provide context: Why should they meet? What is the potential value?
+     - Follow up to see if the connection was useful
+
+  <span class="hl-number">3.</span> <span class="hl-function">Track Your Introductions:</span> Maintain a simple log
+     - Who did you introduce to whom?
+     - What was the context and intended value?
+     - What was the outcome? (follow up after 2-4 weeks)
+
+  <span class="hl-number">4.</span> <span class="hl-function">Create Group Experiences:</span> Dinners, events, mastermind groups
+     - Small group dinners (6-8 people) with a shared theme
+     - Monthly or quarterly cadence builds consistency
+     - You become the organizer = center of the network
+
+<span class="hl-keyword">THE NETWORK VALUE FORMULA</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Network Value = (Quality of Connections) x (Diversity of Domains)
+                  x (Frequency of Interaction) x (Generosity Factor)
+
+  <span class="hl-comment">/* A small, diverse, active, generous network beats a */</span>
+  <span class="hl-comment">/* large, homogeneous, dormant, transactional one.    */</span>
+</pre>
+      </div>
+
+      <div class="callout important">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Avoid the Networking Trap
+        </div>
+        <p>
+          Networking for the sake of networking is exhausting and ineffective. The goal is not to collect the most business cards or LinkedIn connections. It is to build a small number of <strong>deep, genuine, mutually valuable relationships</strong> and to be known as someone who gives value generously. Quality and authenticity always beat quantity and performative networking.
+        </p>
+      </div>
 
       <hr class="section-divider">
 
       <h2 id="watch-learn">Watch &amp; Learn</h2>
 
-      <p>These videos demonstrate the concepts from this chapter applied in real-world negotiation scenarios.</p>
+      <p>These videos explore relationship-building, trust dynamics, and the long-term perspective that separates good negotiators from great ones.</p>
 
       <div class="video-card">
         <div class="video-wrapper">
-          <iframe src="https://www.youtube.com/embed/BkEsDbLyvaE?rel=0&amp;modestbranding=1" title="Chris Voss &mdash; Building trust and long-term relationship" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+          <iframe src="https://www.youtube.com/embed/YyXRYgjQXX0?rel=0&amp;modestbranding=1" title="Adam Grant - Give and Take" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
         </div>
-        <div class="video-caption"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg> Chris Voss &mdash; Building trust and long-term relationships through negotiation. Why being likeable matters.</div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Adam Grant &mdash; "Give and Take" at Talks at Google. Why givers succeed in the long run and how to be generous without being exploited.
+        </div>
       </div>
 
       <div class="video-card">
         <div class="video-wrapper">
-          <iframe src="https://www.youtube.com/embed/9GlVMRGqN7k?rel=0&amp;modestbranding=1" title="Adam Grant &mdash; Give and Take: why helping others drives " allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+          <iframe src="https://www.youtube.com/embed/V9WbSwHFMvE?rel=0&amp;modestbranding=1" title="Building Trust in Business" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
         </div>
-        <div class="video-caption"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg> Adam Grant &mdash; Give and Take: why helping others drives our success, and how to be a smart giver.</div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Building trust in business relationships &mdash; the Trust Equation in practice, with case studies from consulting and entrepreneurship.
+        </div>
       </div>
 
       <hr class="section-divider">
 
       <h2 id="further-reading">Further Reading</h2>
 
+      <p>Deepen your understanding of relationship-building and long-term negotiation strategy.</p>
+
       <div class="resource-grid">
         <a class="resource-card" href="https://www.amazon.com/Give-Take-Helping-Others-Success/dp/0143124986" target="_blank" rel="noopener">
           <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-          <div class="resource-info"><div class="resource-title">Give and Take &mdash; Adam Grant</div><div class="resource-desc">Research on how generosity drives success. Essential reading on building reciprocal relationships.</div></div>
-        </a>
-        <a class="resource-card" href="https://www.amazon.com/Never-Eat-Alone-Expanded-Updated/dp/0385346654" target="_blank" rel="noopener">
-          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-          <div class="resource-info"><div class="resource-title">Never Eat Alone &mdash; Keith Ferrazzi</div><div class="resource-desc">Practical networking strategies for building genuine relationships that create mutual value.</div></div>
-        </a>
-        <a class="resource-card" href="https://hbr.org/2016/05/the-3-things-that-make-a-great-negotiator" target="_blank" rel="noopener">
-          <div class="resource-icon article"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
-          <div class="resource-info"><div class="resource-title">HBR: What Makes a Great Negotiator</div><div class="resource-desc">Research on the qualities that separate good negotiators from great ones: trust, empathy, and creativity.</div></div>
+          <div class="resource-info">
+            <div class="resource-title">Give and Take &mdash; Adam Grant</div>
+            <div class="resource-desc">Wharton research on why givers, takers, and matchers succeed differently. Essential for understanding long-term reciprocity.</div>
+          </div>
         </a>
         <a class="resource-card" href="https://www.amazon.com/Trusted-Advisor-David-H-Maister/dp/0743212347" target="_blank" rel="noopener">
           <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-          <div class="resource-info"><div class="resource-title">The Trusted Advisor &mdash; Maister, Green &amp; Galford</div><div class="resource-desc">How to build trust-based relationships in professional services. The trust equation framework.</div></div>
+          <div class="resource-info">
+            <div class="resource-title">The Trusted Advisor &mdash; Maister, Green &amp; Galford</div>
+            <div class="resource-desc">The original Trust Equation and deep frameworks for building advisory-level trust in professional relationships.</div>
+          </div>
+        </a>
+        <a class="resource-card" href="https://www.amazon.com/Never-Eat-Alone-Expanded-Updated/dp/0385346654" target="_blank" rel="noopener">
+          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+          <div class="resource-info">
+            <div class="resource-title">Never Eat Alone &mdash; Keith Ferrazzi</div>
+            <div class="resource-desc">Practical strategies for networking, relationship maintenance, and turning connections into genuine partnerships.</div>
+          </div>
         </a>
       </div>
 
@@ -277,25 +924,23 @@
 
       <h2 id="assignments">Assignments</h2>
 
-      <p>Complete these in order. Each level builds on the previous one. Practice with a partner whenever possible.</p>
+      <p>These final Basic Track assignments bring together everything you have learned across all eight chapters.</p>
 
       <div class="assignment">
         <div class="assignment-header">
           <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 1</div>
           <span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span>
         </div>
-        <h4>Relationship Audit</h4>
-        <p>Map your current professional network using the tiered framework and identify 3 relationships you've been neglecting.</p>
+        <h4>Trust Equation Self-Audit</h4>
+        <p>Apply the Trust Equation to yourself. Score your credibility, reliability, intimacy, and self-orientation with three different stakeholder groups and identify your biggest area for improvement.</p>
         <ul class="checklist">
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>List your Tier 1, Tier 2, and Tier 3 relationships</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Identify 3 relationships that should be higher-tier but have lapsed</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>For each lapsed relationship, design a re-engagement message</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Send all 3 messages within 48 hours and track responses</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Score yourself 1-10 on each Trust Equation component for three stakeholder groups (team, investors, vendors)</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Ask one trusted colleague to rate you on the same components (compare to self-assessment)</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Identify your weakest component and write three specific actions to improve it over the next 30 days</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Identify one relationship where trust has eroded and diagnose which component failed</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a 30-day trust-building plan with specific, measurable actions</span></li>
         </ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0">
-          <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div>
-          <p>You've sent 3 genuine re-engagement messages to lapsed professional relationships.</p>
-        </div>
+        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div><p>You have a trust profile across stakeholder groups, feedback from at least one colleague, and a specific 30-day improvement plan.</p></div>
       </div>
 
       <div class="assignment">
@@ -303,18 +948,16 @@
           <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 2</div>
           <span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Applied</span>
         </div>
-        <h4>Follow-Through Improvement Plan</h4>
-        <p>Review your last 5 negotiations or business conversations and assess your follow-through quality.</p>
+        <h4>Relationship Map and Reciprocity Plan</h4>
+        <p>Map your top 20 professional relationships into the four tiers from this chapter. Identify specific reciprocity actions for each tier.</p>
         <ul class="checklist">
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>List every commitment you made in the last 5 negotiations</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Score each on a 1-5 scale: 5=exceeded, 3=met, 1=missed</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Identify patterns: where do you consistently drop the ball?</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a personal follow-through system (calendar reminders, CRM, etc.)</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>List 20 key professional relationships and categorize them into Tier 1-4</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>For each Tier 1 relationship, plan a specific value-giving action this month</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>For each Tier 2 relationship, identify one introduction or resource to share this quarter</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Identify 3 dormant connections to reactivate with a genuine, non-transactional outreach</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Set up a recurring monthly reminder to execute one relationship-building action per week</span></li>
         </ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0">
-          <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div>
-          <p>You have a scored follow-through audit and a system to prevent missed commitments going forward.</p>
-        </div>
+        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div><p>You have a complete relationship map, specific reciprocity actions planned for each tier, and a recurring system to maintain these relationships.</p></div>
       </div>
 
       <div class="assignment">
@@ -322,40 +965,47 @@
           <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 3</div>
           <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Strategic</span>
         </div>
-        <h4>Trust-Building Negotiation</h4>
-        <p>Conduct a negotiation focused specifically on building long-term trust, even at the expense of short-term value capture.</p>
+        <h4>Basic Track Capstone: Full Negotiation Portfolio</h4>
+        <p>Compile a portfolio demonstrating mastery of all eight Basic Track chapters. This is your graduation piece for the Basic Track.</p>
         <ul class="checklist">
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Identify a negotiation where the relationship matters more than this single deal</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Deliberately leave value on the table to strengthen the relationship</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Use the SWIFT trust-building framework throughout the conversation</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Document: what short-term value did you sacrifice? What long-term value do you expect to gain?</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Follow up 30 days later to assess whether the trust investment paid off</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write a 2-page personal negotiation philosophy statement incorporating concepts from all 8 chapters</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Document 3 real negotiations you conducted during the course with analysis of what you did, what worked, and what you'd change</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a personal negotiation preparation template that you will use for all future negotiations</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Identify your top 3 strengths and top 3 areas for growth as a negotiator with evidence from your portfolio</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Set 3 specific negotiation skill goals for the next 6 months with measurable outcomes</span></li>
         </ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0">
-          <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div>
-          <p>You have a documented trust-building negotiation with 30-day follow-up assessment.</p>
-        </div>
+        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div><p>You have a complete negotiation portfolio with philosophy statement, documented real negotiations, preparation template, self-assessment, and forward-looking goals. Congratulations on completing the Basic Track.</p></div>
       </div>
 
       <hr class="section-divider">
 
       <h2 id="self-check">Self-Check</h2>
 
-      <p>Before moving to the next chapter, honestly answer these questions.</p>
+      <p>Final self-check for the Basic Track. These questions test your understanding of relationship-based negotiation.</p>
 
       <details>
-        <summary>Would your last 3 negotiation counterparts describe you as fair?</summary>
-        <div class="details-body"><p>Think honestly about your recent negotiations. Did you follow through on every commitment? Were you transparent about your constraints? Did you leave anything on the table that would have helped the relationship? If you're not sure, ask them for feedback.</p></div>
+        <summary>Can you calculate and explain the four components of the Trust Equation?</summary>
+        <div class="details-body"><p>Trust = (Credibility + Reliability + Intimacy) / Self-Orientation. Credibility is about expertise and accuracy. Reliability is about follow-through. Intimacy is about safety for sharing. Self-Orientation (the denominator) measures whether you are focused on the other person's needs or only your own. Low self-orientation dramatically increases trust.</p></div>
       </details>
 
       <details>
-        <summary>Do you have a system for maintaining professional relationships?</summary>
-        <div class="details-body"><p>It doesn't have to be fancy — a simple spreadsheet with names, last contact date, and a quarterly reminder works. The system matters less than the consistency. The best networkers in the startup world are simply the most reliable at staying in touch.</p></div>
+        <summary>How does strategic reciprocity differ from transactional "keeping score"?</summary>
+        <div class="details-body"><p>Strategic reciprocity means giving value first without demanding immediate return, trusting that the investment compounds over time. Transactional reciprocity means "I did X for you, so you owe me Y." The strategic approach builds genuine relationships; the transactional approach creates obligation-based interactions that feel manipulative and rarely produce lasting value.</p></div>
       </details>
 
       <details>
-        <summary>Can you name 5 people who would vouch for you as a negotiator?</summary>
-        <div class="details-body"><p>If you can, you've built relationship capital. If you can't, start investing now. Every fair deal, every followed commitment, every generous introduction builds this capital. It takes years to accumulate and seconds to destroy.</p></div>
+        <summary>Can you name three behaviors that build negotiation reputation and three that destroy it?</summary>
+        <div class="details-body"><p><strong>Builders:</strong> fairness (propose terms you'd accept in reverse), follow-through (do exactly what you said), and graciousness (win well, never gloat). <strong>Destroyers:</strong> reneging (backing out after handshake), exploitation (using shared information against people), and ghosting (disappearing instead of saying no directly).</p></div>
+      </details>
+
+      <details>
+        <summary>What should you do in the first 90 days after signing an important deal?</summary>
+        <div class="details-body"><p>Send a genuine thank-you, confirm next steps in writing, introduce key team members, set up the first check-in meeting, proactively ask about issues, address problems immediately, share information that helps the counterpart succeed, document wins together, and make at least one introduction that benefits the other party.</p></div>
+      </details>
+
+      <details>
+        <summary>Are you ready for the Advanced Track? Can you articulate what you hope to learn next?</summary>
+        <div class="details-body"><p>If you can comfortably apply the concepts from all 8 Basic Track chapters &mdash; BATNA analysis, preparation frameworks, communication tactics, persuasion techniques, salary negotiation, vendor contracts, conflict resolution, and relationship building &mdash; you are ready for the Advanced Track. The Advanced Track covers game theory, term sheets, equity negotiations, enterprise sales, strategic partnerships, international negotiations, crisis negotiation, and capstone simulations.</p></div>
       </details>
 
     </main>
@@ -365,10 +1015,12 @@
       <ul class="toc-list">
         <li class="toc-item"><a href="#why-this-matters">Why This Matters</a></li>
         <li class="toc-item"><a href="#key-concepts">Key Concepts</a></li>
-        <li class="toc-item"><a href="#trust-building" style="padding-left:28px;font-size:12px">Building Trust Through Negotiation</a></li>
-        <li class="toc-item"><a href="#reputation-management" style="padding-left:28px;font-size:12px">Protecting Your Negotiation Reputation</a></li>
-        <li class="toc-item"><a href="#follow-through" style="padding-left:28px;font-size:12px">The Art of Follow-Through</a></li>
-        <li class="toc-item"><a href="#relationship-maintenance" style="padding-left:28px;font-size:12px">Strategic Relationship Maintenance</a></li>
+        <li class="toc-item"><a href="#trust-equation" style="padding-left:28px;font-size:12px">Trust Equation</a></li>
+        <li class="toc-item"><a href="#reciprocity" style="padding-left:28px;font-size:12px">Reciprocity</a></li>
+        <li class="toc-item"><a href="#relationship-mapping" style="padding-left:28px;font-size:12px">Relationship Mapping</a></li>
+        <li class="toc-item"><a href="#reputation" style="padding-left:28px;font-size:12px">Reputation</a></li>
+        <li class="toc-item"><a href="#post-deal" style="padding-left:28px;font-size:12px">Post-Deal Management</a></li>
+        <li class="toc-item"><a href="#network-effects" style="padding-left:28px;font-size:12px">Network Effects</a></li>
         <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a></li>
         <li class="toc-item"><a href="#further-reading">Further Reading</a></li>
         <li class="toc-item"><a href="#assignments">Assignments</a></li>
@@ -380,15 +1032,21 @@
   <footer class="chapter-footer">
     <div class="chapter-footer-inner">
       <nav class="footer-nav">
-        <a class="footer-nav-link" href="chapter-07.html"><span class="footer-nav-label">&larr; Previous Chapter</span><span class="footer-nav-title">07: Conflict Resolution</span></a>
+        <a class="footer-nav-link" href="chapter-07.html">
+          <span class="footer-nav-label">&larr; Previous Chapter</span>
+          <span class="footer-nav-title">07: Conflict Resolution</span>
+        </a>
         <div></div>
       </nav>
-      <div class="footer-brand">ILA (Iksha Learning Academy) &middot; Negotiation Foundations &middot; Basic Track</div>
+      <div class="footer-brand">ILA (Iksha Learning Academy) &middot; Negotiation Foundations &middot; Basic Track &middot; Complete</div>
     </div>
   </footer>
 
   <script>
-    window.addEventListener('scroll',()=>{const s=window.scrollY;const d=document.documentElement.scrollHeight-window.innerHeight;const p=d>0?(s/d)*100:0;document.getElementById('progressBar').style.width=p+'%'});const tocLinks=document.querySelectorAll('.toc-item a');const sections=[];tocLinks.forEach(link=>{const id=link.getAttribute('href').slice(1);const el=document.getElementById(id);if(el)sections.push({id,el,link})});const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{const item=sections.find(s=>s.el===entry.target);if(item&&entry.isIntersecting){tocLinks.forEach(l=>l.classList.remove('active'));item.link.classList.add('active')}})},{rootMargin:'-80px 0px -60% 0px',threshold:0});sections.forEach(s=>observer.observe(s.el));function copyCode(btn){const pre=btn.closest('.code-block').querySelector('pre');navigator.clipboard.writeText(pre.textContent).then(()=>{btn.classList.add('copied');btn.textContent='Copied!';setTimeout(()=>{btn.classList.remove('copied');btn.textContent='Copy'},2000)})}
+    window.addEventListener('scroll',()=>{const s=window.scrollY;const d=document.documentElement.scrollHeight-window.innerHeight;document.getElementById('progressBar').style.width=(d>0?(s/d)*100:0)+'%'});
+    const tocLinks=document.querySelectorAll('.toc-item a');const secs=[];tocLinks.forEach(l=>{const id=l.getAttribute('href').slice(1);const el=document.getElementById(id);if(el)secs.push({id,el,link:l})});
+    const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{const it=secs.find(s=>s.el===e.target);if(it&&e.isIntersecting){tocLinks.forEach(l=>l.classList.remove('active'));it.link.classList.add('active')}})},{rootMargin:'-80px 0px -60% 0px',threshold:0});secs.forEach(s=>obs.observe(s.el));
+    function copyCode(btn){const pre=btn.closest('.code-block').querySelector('pre');navigator.clipboard.writeText(pre.textContent).then(()=>{btn.classList.add('copied');btn.textContent='Copied!';setTimeout(()=>{btn.classList.remove('copied');btn.textContent='Copy'},2000)})}
   </script>
 </body>
 </html>

@@ -3,295 +3,1757 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chapter 08: Views, Functions, and Triggers &mdash; ILA PostgreSQL Basic</title>
+  <title>Chapter 08: Views, Functions, and Triggers &mdash; ILA PostgreSQL</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
-    :root{--ink:#0f172a;--ink-light:#334155;--ink-muted:#64748b;--surface:#ffffff;--surface-alt:#f8fafc;--surface-warm:#fffbeb;--border:#e2e8f0;--border-light:#f1f5f9;--teal-50:#f0fdfa;--teal-100:#ccfbf1;--teal-200:#99f6e4;--teal-500:#14b8a6;--teal-600:#0d9488;--teal-700:#0f766e;--teal-800:#115e59;--teal-900:#134e4a;--blue-50:#eff6ff;--blue-100:#dbeafe;--blue-500:#3b82f6;--blue-600:#2563eb;--blue-700:#1d4ed8;--amber-50:#fffbeb;--amber-100:#fef3c7;--amber-500:#f59e0b;--amber-600:#d97706;--red-50:#fef2f2;--red-100:#fee2e2;--red-500:#ef4444;--red-600:#dc2626;--purple-50:#faf5ff;--purple-100:#f3e8ff;--purple-500:#a855f7;--purple-600:#9333ea;--font-sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;--font-serif:'Instrument Serif',Georgia,serif;--font-mono:'JetBrains Mono','Fira Code',monospace;--content-max:780px;--sidebar-width:280px;--ease:cubic-bezier(0.4,0,0.2,1)}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}body{font-family:var(--font-sans);font-size:16px;line-height:1.7;color:var(--ink);background:var(--surface)}.progress-bar{position:fixed;top:0;left:0;width:0%;height:3px;background:linear-gradient(90deg,var(--teal-500),var(--blue-500));z-index:1000;transition:width .15s var(--ease)}.top-nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem}.top-nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px}.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--teal-800)}.nav-brand-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--teal-600),var(--teal-800));border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px}.nav-brand-text{font-weight:700;font-size:15px;letter-spacing:-.02em}.nav-chapter-nav{display:flex;align-items:center;gap:8px}.nav-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;color:var(--ink-muted);border:1px solid var(--border);background:#fff;transition:all .2s var(--ease);cursor:pointer}.nav-btn:hover{color:var(--ink);border-color:var(--teal-500);background:var(--teal-50)}.nav-btn.disabled{opacity:.4;pointer-events:none}.nav-current{font-size:13px;font-weight:600;color:var(--ink-light);padding:0 4px}.hero{background:linear-gradient(170deg,var(--teal-50) 0%,var(--surface) 50%,var(--blue-50) 100%);border-bottom:1px solid var(--border);padding:4rem 2rem 3.5rem}.hero-inner{max-width:var(--content-max);margin:0 auto}.hero-chapter-label{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--teal-700);text-transform:uppercase;letter-spacing:.08em;margin-bottom:1rem}.hero-chapter-label span{background:var(--teal-100);padding:3px 10px;border-radius:100px}.hero h1{font-family:var(--font-serif);font-size:clamp(2.4rem,5vw,3.2rem);font-weight:400;line-height:1.15;color:var(--ink);margin-bottom:1rem}.hero-subtitle{font-size:1.15rem;color:var(--ink-light);line-height:1.65;max-width:640px}.hero-meta{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1.5rem}.hero-meta-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-muted)}.hero-meta-item svg{width:16px;height:16px;color:var(--teal-600)}.main-layout{max-width:1200px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:1fr var(--sidebar-width);gap:4rem;align-items:start}.content{padding:3rem 0 6rem;min-width:0}.sidebar{position:sticky;top:76px;padding:2rem 0;max-height:calc(100vh - 76px);overflow-y:auto}.sidebar-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-muted);margin-bottom:1rem;padding-left:14px}.toc-list{list-style:none}.toc-item a{display:block;padding:6px 14px;font-size:13px;color:var(--ink-muted);text-decoration:none;border-left:2px solid transparent;transition:all .2s var(--ease);line-height:1.5}.toc-item a:hover{color:var(--ink);background:var(--surface-alt)}.toc-item a.active{color:var(--teal-700);border-left-color:var(--teal-500);background:var(--teal-50);font-weight:500}.content h2{font-family:var(--font-serif);font-size:1.85rem;font-weight:400;color:var(--ink);margin:3rem 0 1rem;padding-top:1rem;scroll-margin-top:80px}.content h2:first-child{margin-top:0}.content h3{font-size:1.15rem;font-weight:600;color:var(--ink);margin:2rem 0 .75rem;scroll-margin-top:80px}.content p{margin-bottom:1.25rem;color:var(--ink-light)}.content strong{color:var(--ink);font-weight:600}.content a{color:var(--teal-700);text-decoration:underline;text-decoration-color:var(--teal-200);text-underline-offset:3px}.content ul,.content ol{margin-bottom:1.25rem;padding-left:1.5rem}.content li{margin-bottom:.5rem;color:var(--ink-light)}.content li::marker{color:var(--teal-500)}.section-divider{border:none;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:3rem 0}.callout{padding:1.25rem 1.5rem;border-radius:12px;margin-bottom:1.5rem;border:1px solid}.callout-header{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;margin-bottom:.5rem}.callout-header svg{width:18px;height:18px;flex-shrink:0}.callout p:last-child{margin-bottom:0}.callout.concept{background:var(--blue-50);border-color:var(--blue-100)}.callout.concept .callout-header{color:var(--blue-700)}.callout.important{background:var(--amber-50);border-color:var(--amber-100)}.callout.important .callout-header{color:var(--amber-600)}.callout.danger{background:var(--red-50);border-color:var(--red-100)}.callout.danger .callout-header{color:var(--red-600)}.callout.tip{background:var(--purple-50);border-color:var(--purple-100)}.callout.tip .callout-header{color:var(--purple-600)}.callout.success{background:var(--teal-50);border-color:var(--teal-100)}.callout.success .callout-header{color:var(--teal-700)}.code-block{position:relative;margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}.code-header{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:var(--surface-alt);border-bottom:1px solid var(--border);font-size:12px;color:var(--ink-muted)}.code-lang{font-family:var(--font-mono);font-weight:600;text-transform:uppercase;letter-spacing:.05em}.code-copy{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:#fff;font-size:11px;font-family:var(--font-sans);color:var(--ink-muted);cursor:pointer;transition:all .2s var(--ease)}.code-copy:hover{border-color:var(--teal-500);color:var(--teal-700)}.code-copy.copied{background:var(--teal-50);border-color:var(--teal-500);color:var(--teal-700)}pre{margin:0;padding:1.25rem 1.5rem;overflow-x:auto;background:#1e293b;font-family:var(--font-mono);font-size:13.5px;line-height:1.7;color:#e2e8f0}code{font-family:var(--font-mono);font-size:.88em}p code,li code{padding:2px 7px;background:var(--surface-alt);border:1px solid var(--border);border-radius:5px;color:var(--teal-800);font-size:.85em}.hl-keyword{color:#c084fc}.hl-string{color:#86efac}.hl-comment{color:#64748b;font-style:italic}.hl-function{color:#7dd3fc}.hl-number{color:#fbbf24}.hl-flag{color:#f472b6}details{margin-bottom:1.25rem;border:1px solid var(--border);border-radius:12px;overflow:hidden}details[open]{border-color:var(--teal-200)}details summary{padding:1rem 1.25rem;font-weight:600;font-size:15px;cursor:pointer;background:var(--surface-alt);list-style:none;display:flex;align-items:center;gap:10px;user-select:none}details summary::-webkit-details-marker{display:none}details summary::before{content:'';width:20px;height:20px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain;flex-shrink:0;transition:transform .2s var(--ease)}details[open] summary::before{transform:rotate(90deg)}details summary:hover{background:var(--teal-50)}.details-body{padding:1.25rem 1.5rem}.details-body p:last-child{margin-bottom:0}.video-card{margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}.video-wrapper{position:relative;padding-bottom:56.25%;height:0;background:#0f172a}.video-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}.video-caption{padding:12px 16px;background:var(--surface-alt);font-size:13px;color:var(--ink-muted);display:flex;align-items:center;gap:6px}.video-caption svg{width:14px;height:14px;color:var(--red-500)}.resource-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1rem;margin-bottom:1.5rem}.resource-card{display:flex;gap:14px;padding:1rem 1.25rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all .2s var(--ease);background:#fff}.resource-card:hover{border-color:var(--teal-300);background:var(--teal-50);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.04)}.resource-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}.resource-icon.docs{background:var(--blue-50);color:var(--blue-600)}.resource-icon.article{background:var(--amber-50);color:var(--amber-600)}.resource-info{min-width:0}.resource-title{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:2px;line-height:1.4}.resource-desc{font-size:12px;color:var(--ink-muted);line-height:1.5}.assignment{border:2px solid var(--teal-200);border-radius:14px;padding:1.5rem 1.75rem;margin-bottom:1.5rem;background:linear-gradient(135deg,var(--teal-50) 0%,#fff 100%)}.assignment-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}.assignment-label{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--teal-700)}.assignment-difficulty{display:inline-flex;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:600}.difficulty-l1{background:var(--teal-100);color:var(--teal-800)}.difficulty-l2{background:var(--amber-100);color:var(--amber-600)}.difficulty-l3{background:var(--red-100);color:var(--red-600)}.assignment h4{font-size:1.05rem;font-weight:700;margin-bottom:.75rem}.assignment p{font-size:14px}.checklist{list-style:none;padding:0}.checklist li{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border-light);font-size:14px}.checklist li:last-child{border-bottom:none}.check-box{width:20px;height:20px;border-radius:6px;border:2px solid var(--border);flex-shrink:0;margin-top:1px;cursor:pointer;transition:all .15s var(--ease);display:flex;align-items:center;justify-content:center}.check-box:hover{border-color:var(--teal-500)}.check-box.checked{background:var(--teal-500);border-color:var(--teal-500)}.check-box.checked::after{content:'';width:10px;height:10px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain}.diagram{margin:1.5rem 0;padding:2rem;background:var(--surface-alt);border:1px solid var(--border);border-radius:14px;overflow-x:auto}.diagram pre{background:transparent;color:var(--ink);padding:0;font-size:13px;line-height:1.6}.diagram-caption{margin-top:1rem;font-size:12px;color:var(--ink-muted);text-align:center;font-style:italic}.chapter-footer{border-top:1px solid var(--border);padding:3rem 2rem;background:var(--surface-alt)}.chapter-footer-inner{max-width:var(--content-max);margin:0 auto}.footer-nav{display:flex;justify-content:space-between;align-items:center;gap:1rem}.footer-nav-link{display:flex;flex-direction:column;gap:4px;padding:1rem 1.5rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all .2s var(--ease);max-width:320px;background:#fff}.footer-nav-link:hover{border-color:var(--teal-300);box-shadow:0 4px 12px rgba(0,0,0,.04)}.footer-nav-label{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--teal-600)}.footer-nav-title{font-size:15px;font-weight:600;color:var(--ink)}.footer-brand{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border);font-size:13px;color:var(--ink-muted)}@media(max-width:960px){.main-layout{grid-template-columns:1fr}.sidebar{display:none}.resource-grid{grid-template-columns:1fr}}@media(max-width:640px){.hero{padding:2.5rem 1.25rem 2rem}.main-layout{padding:0 1.25rem}.content{padding:2rem 0 4rem}pre{padding:1rem;font-size:12.5px}.footer-nav{flex-direction:column}.footer-nav-link{max-width:100%;width:100%}}@media print{.top-nav,.sidebar,.progress-bar{display:none}.main-layout{display:block}.content{padding:0}.hero{background:#fff;border:none}pre{background:#f1f5f9;color:var(--ink);border:1px solid var(--border)}}
+    /* ═══════════════════════════════════════════════
+       ILA DESIGN SYSTEM — v1.0
+       Iksha Learning Academy
+       ═══════════════════════════════════════════════ */
+
+    :root {
+      /* Palette */
+      --ink:        #0f172a;
+      --ink-light:  #334155;
+      --ink-muted:  #64748b;
+      --surface:    #ffffff;
+      --surface-alt:#f8fafc;
+      --surface-warm:#fffbeb;
+      --border:     #e2e8f0;
+      --border-light:#f1f5f9;
+
+      /* Brand */
+      --teal-50:  #f0fdfa;
+      --teal-100: #ccfbf1;
+      --teal-200: #99f6e4;
+      --teal-500: #14b8a6;
+      --teal-600: #0d9488;
+      --teal-700: #0f766e;
+      --teal-800: #115e59;
+      --teal-900: #134e4a;
+
+      --blue-50:  #eff6ff;
+      --blue-100: #dbeafe;
+      --blue-500: #3b82f6;
+      --blue-600: #2563eb;
+      --blue-700: #1d4ed8;
+
+      --amber-50:  #fffbeb;
+      --amber-100: #fef3c7;
+      --amber-500: #f59e0b;
+      --amber-600: #d97706;
+
+      --red-50:   #fef2f2;
+      --red-100:  #fee2e2;
+      --red-500:  #ef4444;
+      --red-600:  #dc2626;
+
+      --purple-50:  #faf5ff;
+      --purple-100: #f3e8ff;
+      --purple-500: #a855f7;
+      --purple-600: #9333ea;
+
+      /* Typography */
+      --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-serif: 'Instrument Serif', Georgia, serif;
+      --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
+
+      /* Spacing */
+      --content-max: 780px;
+      --sidebar-width: 280px;
+
+      /* Transitions */
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--ink);
+      background: var(--surface);
+    }
+
+    /* ── PROGRESS BAR ─────────────────────────── */
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--teal-500), var(--blue-500));
+      z-index: 1000;
+      transition: width 0.15s var(--ease);
+    }
+
+    /* ── TOP NAV ──────────────────────────────── */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+    }
+
+    .top-nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--teal-800);
+    }
+
+    .nav-brand-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--teal-600), var(--teal-800));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .nav-brand-text {
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-chapter-nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      color: var(--ink-muted);
+      border: 1px solid var(--border);
+      background: white;
+      transition: all 0.2s var(--ease);
+      cursor: pointer;
+    }
+
+    .nav-btn:hover {
+      color: var(--ink);
+      border-color: var(--teal-500);
+      background: var(--teal-50);
+    }
+
+    .nav-btn.disabled {
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    .nav-current {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink-light);
+      padding: 0 4px;
+    }
+
+    /* ── HERO ─────────────────────────────────── */
+    .hero {
+      background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 4rem 2rem 3.5rem;
+    }
+
+    .hero-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
+    }
+
+    .hero-chapter-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--teal-700);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 1rem;
+    }
+
+    .hero-chapter-label span {
+      background: var(--teal-100);
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+
+    .hero h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(2.4rem, 5vw, 3.2rem);
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: 1rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: var(--ink-light);
+      line-height: 1.65;
+      max-width: 640px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .hero-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
+    .hero-meta-item svg {
+      width: 16px;
+      height: 16px;
+      color: var(--teal-600);
+    }
+
+    /* ── MAIN LAYOUT ──────────────────────────── */
+    .main-layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr var(--sidebar-width);
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .content {
+      padding: 3rem 0 6rem;
+      min-width: 0;
+    }
+
+    /* ── SIDEBAR TOC ──────────────────────────── */
+    .sidebar {
+      position: sticky;
+      top: 76px;
+      padding: 2rem 0;
+      max-height: calc(100vh - 76px);
+      overflow-y: auto;
+    }
+
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-muted);
+      margin-bottom: 1rem;
+      padding-left: 14px;
+    }
+
+    .toc-list {
+      list-style: none;
+    }
+
+    .toc-item a {
+      display: block;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--ink-muted);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: all 0.2s var(--ease);
+      line-height: 1.5;
+    }
+
+    .toc-item a:hover {
+      color: var(--ink);
+      background: var(--surface-alt);
+    }
+
+    .toc-item a.active {
+      color: var(--teal-700);
+      border-left-color: var(--teal-500);
+      background: var(--teal-50);
+      font-weight: 500;
+    }
+
+    /* ── TYPOGRAPHY ────────────────────────────── */
+    .content h2 {
+      font-family: var(--font-serif);
+      font-size: 1.85rem;
+      font-weight: 400;
+      color: var(--ink);
+      margin: 3rem 0 1rem;
+      padding-top: 1rem;
+      scroll-margin-top: 80px;
+    }
+
+    .content h2:first-child {
+      margin-top: 0;
+    }
+
+    .content h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 2rem 0 0.75rem;
+      scroll-margin-top: 80px;
+    }
+
+    .content p {
+      margin-bottom: 1.25rem;
+      color: var(--ink-light);
+    }
+
+    .content strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .content a {
+      color: var(--teal-700);
+      text-decoration: underline;
+      text-decoration-color: var(--teal-200);
+      text-underline-offset: 3px;
+      transition: text-decoration-color 0.2s;
+    }
+
+    .content a:hover {
+      text-decoration-color: var(--teal-600);
+    }
+
+    .content ul, .content ol {
+      margin-bottom: 1.25rem;
+      padding-left: 1.5rem;
+    }
+
+    .content li {
+      margin-bottom: 0.5rem;
+      color: var(--ink-light);
+    }
+
+    .content li::marker {
+      color: var(--teal-500);
+    }
+
+    /* ── SECTION DIVIDER ──────────────────────── */
+    .section-divider {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 3rem 0;
+    }
+
+    /* ── CALLOUT BOXES ────────────────────────── */
+    .callout {
+      padding: 1.25rem 1.5rem;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+      border: 1px solid;
+      position: relative;
+    }
+
+    .callout-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .callout-header svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    .callout p:last-child { margin-bottom: 0; }
+
+    .callout.concept {
+      background: var(--blue-50);
+      border-color: var(--blue-100);
+    }
+    .callout.concept .callout-header { color: var(--blue-700); }
+
+    .callout.important {
+      background: var(--amber-50);
+      border-color: var(--amber-100);
+    }
+    .callout.important .callout-header { color: var(--amber-600); }
+
+    .callout.danger {
+      background: var(--red-50);
+      border-color: var(--red-100);
+    }
+    .callout.danger .callout-header { color: var(--red-600); }
+
+    .callout.tip {
+      background: var(--purple-50);
+      border-color: var(--purple-100);
+    }
+    .callout.tip .callout-header { color: var(--purple-600); }
+
+    .callout.success {
+      background: var(--teal-50);
+      border-color: var(--teal-100);
+    }
+    .callout.success .callout-header { color: var(--teal-700); }
+
+    /* ── CODE BLOCKS ──────────────────────────── */
+    .code-block {
+      position: relative;
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+      background: var(--surface-alt);
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--ink-muted);
+    }
+
+    .code-lang {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .code-copy {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: white;
+      font-size: 11px;
+      font-family: var(--font-sans);
+      color: var(--ink-muted);
+      cursor: pointer;
+      transition: all 0.2s var(--ease);
+    }
+
+    .code-copy:hover {
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    .code-copy.copied {
+      background: var(--teal-50);
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    pre {
+      margin: 0;
+      padding: 1.25rem 1.5rem;
+      overflow-x: auto;
+      background: #1e293b;
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: #e2e8f0;
+    }
+
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.88em;
+    }
+
+    p code, li code {
+      padding: 2px 7px;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      color: var(--teal-800);
+      font-size: 0.85em;
+    }
+
+    /* Syntax highlights (minimal) */
+    .hl-keyword  { color: #c084fc; }
+    .hl-string   { color: #86efac; }
+    .hl-comment  { color: #64748b; font-style: italic; }
+    .hl-function { color: #7dd3fc; }
+    .hl-number   { color: #fbbf24; }
+    .hl-flag     { color: #f472b6; }
+
+    /* ── COLLAPSIBLE (DETAILS) ────────────────── */
+    details {
+      margin-bottom: 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.2s var(--ease);
+    }
+
+    details[open] {
+      border-color: var(--teal-200);
+    }
+
+    details summary {
+      padding: 1rem 1.25rem;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      background: var(--surface-alt);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.2s var(--ease);
+      user-select: none;
+    }
+
+    details summary::-webkit-details-marker { display: none; }
+
+    details summary::before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+      flex-shrink: 0;
+      transition: transform 0.2s var(--ease);
+    }
+
+    details[open] summary::before {
+      transform: rotate(90deg);
+    }
+
+    details summary:hover {
+      background: var(--teal-50);
+    }
+
+    .details-body {
+      padding: 1.25rem 1.5rem;
+    }
+
+    .details-body p:last-child { margin-bottom: 0; }
+
+    /* ── VIDEO EMBED ──────────────────────────── */
+    .video-card {
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      background: #0f172a;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .video-caption {
+      padding: 12px 16px;
+      background: var(--surface-alt);
+      font-size: 13px;
+      color: var(--ink-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .video-caption svg {
+      width: 14px;
+      height: 14px;
+      color: var(--red-500);
+    }
+
+    /* ── RESOURCE CARDS ───────────────────────── */
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .resource-card {
+      display: flex;
+      gap: 14px;
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      background: white;
+    }
+
+    .resource-card:hover {
+      border-color: var(--teal-300);
+      background: var(--teal-50);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .resource-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 18px;
+    }
+
+    .resource-icon.docs    { background: var(--blue-50);   color: var(--blue-600); }
+    .resource-icon.video   { background: var(--red-50);    color: var(--red-500); }
+    .resource-icon.github  { background: var(--ink);       color: white; }
+    .resource-icon.article { background: var(--amber-50);  color: var(--amber-600); }
+    .resource-icon.pdf     { background: var(--purple-50); color: var(--purple-600); }
+
+    .resource-info {
+      min-width: 0;
+    }
+
+    .resource-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 2px;
+      line-height: 1.4;
+    }
+
+    .resource-desc {
+      font-size: 12px;
+      color: var(--ink-muted);
+      line-height: 1.5;
+    }
+
+    /* ── ASSIGNMENT CARDS ─────────────────────── */
+    .assignment {
+      border: 2px solid var(--teal-200);
+      border-radius: 14px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--teal-50) 0%, white 100%);
+    }
+
+    .assignment-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .assignment-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--teal-700);
+    }
+
+    .assignment-difficulty {
+      display: inline-flex;
+      padding: 4px 10px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .difficulty-l1 { background: var(--teal-100); color: var(--teal-800); }
+    .difficulty-l2 { background: var(--amber-100); color: var(--amber-600); }
+    .difficulty-l3 { background: var(--red-100); color: var(--red-600); }
+
+    .assignment h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .assignment p {
+      font-size: 14px;
+    }
+
+    .checklist {
+      list-style: none;
+      padding: 0;
+    }
+
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-light);
+      font-size: 14px;
+    }
+
+    .checklist li:last-child { border-bottom: none; }
+
+    .check-box {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      border: 2px solid var(--border);
+      flex-shrink: 0;
+      margin-top: 1px;
+      cursor: pointer;
+      transition: all 0.15s var(--ease);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .check-box:hover {
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked {
+      background: var(--teal-500);
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+    }
+
+    /* ── ARCHITECTURE DIAGRAM ─────────────────── */
+    .diagram {
+      margin: 1.5rem 0;
+      padding: 2rem;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow-x: auto;
+    }
+
+    .diagram pre {
+      background: transparent;
+      color: var(--ink);
+      padding: 0;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .diagram-caption {
+      margin-top: 1rem;
+      font-size: 12px;
+      color: var(--ink-muted);
+      text-align: center;
+      font-style: italic;
+    }
+
+    /* ── FOOTER ───────────────────────────────── */
+    .chapter-footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      background: var(--surface-alt);
+    }
+
+    .chapter-footer-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
+    }
+
+    .footer-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .footer-nav-link {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 1rem 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      max-width: 320px;
+      background: white;
+    }
+
+    .footer-nav-link:hover {
+      border-color: var(--teal-300);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .footer-nav-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--teal-600);
+    }
+
+    .footer-nav-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .footer-brand {
+      text-align: center;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
+    /* ── RESPONSIVE ───────────────────────────── */
+    @media (max-width: 960px) {
+      .main-layout {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        display: none;
+      }
+      .resource-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero { padding: 2.5rem 1.25rem 2rem; }
+      .main-layout { padding: 0 1.25rem; }
+      .content { padding: 2rem 0 4rem; }
+      pre { padding: 1rem; font-size: 12.5px; }
+      .footer-nav { flex-direction: column; }
+      .footer-nav-link { max-width: 100%; width: 100%; }
+    }
+
+    /* ── PRINT ────────────────────────────────── */
+    @media print {
+      .top-nav, .sidebar, .progress-bar { display: none; }
+      .main-layout { display: block; }
+      .content { padding: 0; }
+      .hero { background: white; border: none; }
+      pre { background: #f1f5f9; color: var(--ink); border: 1px solid var(--border); }
+    }
   </style>
 </head>
 <body>
+  <!-- Progress Bar -->
   <div class="progress-bar" id="progressBar"></div>
-  <nav class="top-nav"><div class="top-nav-inner"><a class="nav-brand" href="index.html"><div class="nav-brand-icon">ILA</div><span class="nav-brand-text">Iksha Learning Academy</span></a><div class="nav-chapter-nav"><a class="nav-btn" href="chapter-07.html">&larr; Previous</a><span class="nav-current">08 / 08</span><span class="nav-btn disabled">Next &rarr;</span></div></div></nav>
 
-  <header class="hero"><div class="hero-inner">
-    <div class="hero-chapter-label"><span>Chapter 08</span> &middot; PostgreSQL Basic</div>
-    <h1>Views, Functions, and Triggers</h1>
-    <p class="hero-subtitle">Encapsulate complex queries in views, build reusable PL/pgSQL functions for bid calculations, and automate audit trails with triggers that fire on every ad group bid change.</p>
-    <div class="hero-meta">
-      <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Estimated: 3&ndash;4 hours</div>
-      <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>4 Key Concepts</div>
-      <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>3 Assignments</div>
+  <!-- Top Navigation -->
+  <nav class="top-nav">
+    <div class="top-nav-inner">
+      <a class="nav-brand" href="index.html">
+        <div class="nav-brand-icon">ILA</div>
+        <span class="nav-brand-text">Iksha Learning Academy</span>
+      </a>
+      <div class="nav-chapter-nav">
+        <a class="nav-btn" href="chapter-07.html">&larr; Previous</a>
+        <span class="nav-current">08 / 08</span>
+        <span class="nav-btn disabled">Next &rarr;</span>
+      </div>
     </div>
-  </div></header>
+  </nav>
 
+  <!-- Hero -->
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-chapter-label">
+        <span>Chapter 08</span> &middot; Phase 4: Server-Side Logic
+      </div>
+      <h1>Views, Functions, and Triggers</h1>
+      <p class="hero-subtitle">
+        Move logic into the database layer with views that simplify queries, PL/pgSQL functions that encapsulate business rules, and triggers that enforce data integrity automatically &mdash; no application code required.
+      </p>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Estimated: 3&ndash;4 days
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          3 Advancement Levels
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          3 Assignments
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content + Sidebar -->
   <div class="main-layout">
     <main class="content">
 
+      <!-- ════════════════════════════════════════
+           SECTION 1: WHY THIS MATTERS
+           ════════════════════════════════════════ -->
       <h2 id="why-this-matters">Why This Matters</h2>
 
-      <p>Views, functions, and triggers let you encapsulate complex logic inside the database itself. In the ad portal, a view like <code>active_campaigns</code> eliminates the need to repeat <code>WHERE discarded_at IS NULL AND active = TRUE</code> in every query. Functions encapsulate business logic like bid price calculations. Triggers automatically maintain audit trails and enforce complex business rules.</p>
+      <p>
+        Every production database eventually needs logic that lives <em>inside</em> the database rather than in application code. Views abstract complex joins into simple table-like interfaces. Functions encapsulate calculations, validations, and multi-step operations into reusable units. Triggers respond automatically to data changes &mdash; enforcing audit trails, maintaining denormalized counters, and validating business rules that span multiple tables.
+      </p>
+
+      <p>
+        When you push the right logic into PostgreSQL, you get <strong>consistency guarantees</strong> that are impossible to achieve from application code alone. A trigger that records every row change into an audit table will fire regardless of whether the change came from your Rails app, a data migration script, or a DBA running a manual fix at 3 AM. No application middleware can provide that level of guarantee.
+      </p>
+
+      <p>
+        This is the final chapter of the PostgreSQL Fundamentals track. By the end, you will understand how to build database-layer abstractions that make your application code simpler, your data more consistent, and your system more resilient to bugs and operational mistakes.
+      </p>
 
       <div class="callout concept">
-        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>Key Insight</div>
-        <p>The ad portal uses materialized views for expensive analytical queries (refreshed periodically), PL/pgSQL functions for business logic that must be atomic with database operations, and triggers for automatically tracking bid change histories and updating timestamps.</p>
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Key Insight
+        </div>
+        <p>
+          The debate about "thin database vs. fat database" is a false dichotomy. The best systems use each layer for what it does best: the database enforces constraints, maintains audit trails, and provides pre-computed views. The application handles user interaction, business workflows, and orchestration. Learning where to draw that line is what separates senior engineers from juniors.
+        </p>
       </div>
 
       <hr class="section-divider">
 
+      <!-- ════════════════════════════════════════
+           SECTION 2: KEY CONCEPTS
+           ════════════════════════════════════════ -->
       <h2 id="key-concepts">Key Concepts</h2>
 
-      <h3 id="views">1. Views</h3>
+      <h3 id="create-view">1. CREATE VIEW &mdash; Virtual Tables</h3>
 
-      <div class="code-block"><div class="code-header"><span class="code-lang">sql</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+      <p>
+        A view is a named SQL query stored in the database catalog. When you <code>SELECT</code> from a view, PostgreSQL executes the underlying query and returns the results as if it were a real table. Views do not store data themselves &mdash; they are purely virtual. They are invaluable for simplifying complex joins, restricting access to sensitive columns, and providing stable interfaces even as underlying table structures change.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
 <pre>
-<span class="hl-comment">-- View: active campaigns (filters out soft-deleted and paused)</span>
-<span class="hl-keyword">CREATE VIEW</span> active_campaigns <span class="hl-keyword">AS</span>
+<span class="hl-comment">-- Create tables for our examples</span>
+<span class="hl-keyword">CREATE TABLE</span> departments (
+    id   <span class="hl-function">serial</span> <span class="hl-keyword">PRIMARY KEY</span>,
+    name <span class="hl-function">text</span> <span class="hl-keyword">UNIQUE NOT NULL</span>
+);
+
+<span class="hl-keyword">CREATE TABLE</span> employees (
+    id         <span class="hl-function">serial</span> <span class="hl-keyword">PRIMARY KEY</span>,
+    first_name <span class="hl-function">text</span> <span class="hl-keyword">NOT NULL</span>,
+    last_name  <span class="hl-function">text</span> <span class="hl-keyword">NOT NULL</span>,
+    email      <span class="hl-function">text</span> <span class="hl-keyword">UNIQUE NOT NULL</span>,
+    dept_id    <span class="hl-function">integer</span> <span class="hl-keyword">REFERENCES</span> departments(id),
+    salary     <span class="hl-function">numeric</span>(<span class="hl-number">10</span>,<span class="hl-number">2</span>) <span class="hl-keyword">NOT NULL</span>,
+    hired_at   <span class="hl-function">date</span> <span class="hl-keyword">NOT NULL DEFAULT</span> <span class="hl-function">current_date</span>
+);
+
+<span class="hl-comment">-- A simple view: employee directory with department names</span>
+<span class="hl-keyword">CREATE VIEW</span> <span class="hl-function">v_employee_directory</span> <span class="hl-keyword">AS</span>
 <span class="hl-keyword">SELECT</span>
-    c.id, c.name, c.account_id, c.monthly_budget,
-    c.base_price, c.active, c.created_at,
-    a.company_name
-<span class="hl-keyword">FROM</span> campaigns c
-<span class="hl-keyword">JOIN</span> accounts a <span class="hl-keyword">ON</span> a.id = c.account_id
-<span class="hl-keyword">WHERE</span> c.discarded_at <span class="hl-keyword">IS NULL</span>
-  <span class="hl-keyword">AND</span> c.active = <span class="hl-keyword">TRUE</span>
-  <span class="hl-keyword">AND</span> a.discarded_at <span class="hl-keyword">IS NULL</span>;
+    e.id,
+    e.first_name || <span class="hl-string">' '</span> || e.last_name <span class="hl-keyword">AS</span> full_name,
+    e.email,
+    d.name <span class="hl-keyword">AS</span> department,
+    e.hired_at
+<span class="hl-keyword">FROM</span> employees e
+<span class="hl-keyword">JOIN</span> departments d <span class="hl-keyword">ON</span> d.id = e.dept_id;
 
-<span class="hl-comment">-- Now queries are much simpler:</span>
-<span class="hl-keyword">SELECT</span> * <span class="hl-keyword">FROM</span> active_campaigns <span class="hl-keyword">WHERE</span> monthly_budget > <span class="hl-number">5000</span>;
+<span class="hl-comment">-- Use the view exactly like a table</span>
+<span class="hl-keyword">SELECT</span> * <span class="hl-keyword">FROM</span> v_employee_directory
+<span class="hl-keyword">WHERE</span> department = <span class="hl-string">'Engineering'</span>
+<span class="hl-keyword">ORDER BY</span> hired_at <span class="hl-keyword">DESC</span>;
+</pre>
+      </div>
 
-<span class="hl-comment">-- View: campaign performance summary</span>
-<span class="hl-keyword">CREATE VIEW</span> campaign_performance <span class="hl-keyword">AS</span>
-<span class="hl-keyword">SELECT</span>
-    c.id, c.name, c.monthly_budget,
-    <span class="hl-function">COUNT</span>(l.id) <span class="hl-keyword">AS</span> total_leads,
-    <span class="hl-function">COUNT</span>(ag.id) <span class="hl-keyword">AS</span> ad_group_count,
-    <span class="hl-function">AVG</span>(ag.base_bid_price) <span class="hl-keyword">AS</span> avg_bid_price
-<span class="hl-keyword">FROM</span> campaigns c
-<span class="hl-keyword">LEFT JOIN</span> leads l <span class="hl-keyword">ON</span> l.campaign_id = c.id
-<span class="hl-keyword">LEFT JOIN</span> ad_groups ag <span class="hl-keyword">ON</span> ag.campaign_id = c.id <span class="hl-keyword">AND</span> ag.discarded_at <span class="hl-keyword">IS NULL</span>
-<span class="hl-keyword">WHERE</span> c.discarded_at <span class="hl-keyword">IS NULL</span>
-<span class="hl-keyword">GROUP BY</span> c.id;
-</pre></div>
+      <p>
+        Views can reference other views, and PostgreSQL will inline and optimize the entire query chain. You can also create <strong>updatable views</strong> &mdash; simple views on a single table that allow <code>INSERT</code>, <code>UPDATE</code>, and <code>DELETE</code> operations to pass through to the underlying table automatically.
+      </p>
 
-      <h3 id="materialized-views">2. Materialized Views</h3>
-
-      <div class="code-block"><div class="code-header"><span class="code-lang">sql</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
 <pre>
-<span class="hl-comment">-- Materialized view: pre-computed, stored on disk</span>
-<span class="hl-keyword">CREATE MATERIALIZED VIEW</span> account_dashboard <span class="hl-keyword">AS</span>
+<span class="hl-comment">-- A view that hides salary data for non-HR users</span>
+<span class="hl-keyword">CREATE VIEW</span> <span class="hl-function">v_employee_public</span> <span class="hl-keyword">AS</span>
+<span class="hl-keyword">SELECT</span> id, first_name, last_name, email, dept_id, hired_at
+<span class="hl-keyword">FROM</span> employees;
+
+<span class="hl-comment">-- This view is auto-updatable (single table, no aggregation)</span>
+<span class="hl-keyword">INSERT INTO</span> v_employee_public (first_name, last_name, email, dept_id, hired_at)
+<span class="hl-keyword">VALUES</span> (<span class="hl-string">'Ada'</span>, <span class="hl-string">'Lovelace'</span>, <span class="hl-string">'ada@example.com'</span>, <span class="hl-number">1</span>, <span class="hl-string">'2024-01-15'</span>);
+
+<span class="hl-comment">-- Replace a view definition (can add columns but not remove)</span>
+<span class="hl-keyword">CREATE OR REPLACE VIEW</span> <span class="hl-function">v_employee_directory</span> <span class="hl-keyword">AS</span>
 <span class="hl-keyword">SELECT</span>
-    a.id, a.company_name,
-    <span class="hl-function">COUNT</span>(<span class="hl-keyword">DISTINCT</span> c.id) <span class="hl-keyword">AS</span> campaign_count,
-    <span class="hl-function">SUM</span>(c.monthly_budget) <span class="hl-keyword">AS</span> total_budget,
-    <span class="hl-function">COUNT</span>(<span class="hl-keyword">DISTINCT</span> l.id) <span class="hl-keyword">AS</span> total_leads,
-    ab.current_balance
-<span class="hl-keyword">FROM</span> accounts a
-<span class="hl-keyword">LEFT JOIN</span> campaigns c <span class="hl-keyword">ON</span> c.account_id = a.id <span class="hl-keyword">AND</span> c.discarded_at <span class="hl-keyword">IS NULL</span>
-<span class="hl-keyword">LEFT JOIN</span> leads l <span class="hl-keyword">ON</span> l.account_id = a.id
-<span class="hl-keyword">LEFT JOIN</span> account_balances ab <span class="hl-keyword">ON</span> ab.user_id = a.id
-<span class="hl-keyword">WHERE</span> a.discarded_at <span class="hl-keyword">IS NULL</span>
-<span class="hl-keyword">GROUP BY</span> a.id, a.company_name, ab.current_balance;
+    e.id,
+    e.first_name || <span class="hl-string">' '</span> || e.last_name <span class="hl-keyword">AS</span> full_name,
+    e.email,
+    d.name <span class="hl-keyword">AS</span> department,
+    e.hired_at,
+    <span class="hl-function">current_date</span> - e.hired_at <span class="hl-keyword">AS</span> days_employed
+<span class="hl-keyword">FROM</span> employees e
+<span class="hl-keyword">JOIN</span> departments d <span class="hl-keyword">ON</span> d.id = e.dept_id;
 
-<span class="hl-comment">-- Refresh the materialized view (e.g., every hour via cron)</span>
-<span class="hl-keyword">REFRESH MATERIALIZED VIEW CONCURRENTLY</span> account_dashboard;
-</pre></div>
+<span class="hl-comment">-- Drop a view safely</span>
+<span class="hl-keyword">DROP VIEW IF EXISTS</span> v_employee_public;
+</pre>
+      </div>
 
-      <h3 id="functions">3. PL/pgSQL Functions</h3>
+      <div class="callout important">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Views Are Not Caches
+        </div>
+        <p>
+          A regular view re-executes its query every time you select from it. If the underlying query is expensive (large joins, aggregations across millions of rows), the view will be slow every time. For caching behavior, use materialized views instead.
+        </p>
+      </div>
 
-      <div class="code-block"><div class="code-header"><span class="code-lang">sql</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+      <h3 id="materialized-views">2. Materialized Views &mdash; Cached Query Results</h3>
+
+      <p>
+        A <strong>materialized view</strong> stores the results of its query physically on disk, just like a real table. The first query populates the data, and subsequent reads are fast because they come from the stored snapshot. The trade-off is staleness &mdash; you must explicitly refresh the materialized view to pick up changes from the underlying tables.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
 <pre>
-<span class="hl-comment">-- Function: calculate effective bid price with margin</span>
-<span class="hl-keyword">CREATE OR REPLACE FUNCTION</span> <span class="hl-function">effective_bid</span>(
-    base_bid <span class="hl-function">NUMERIC</span>,
-    rtb_cm <span class="hl-function">NUMERIC</span> <span class="hl-keyword">DEFAULT</span> <span class="hl-number">0.30</span>
-) <span class="hl-keyword">RETURNS</span> <span class="hl-function">NUMERIC</span> <span class="hl-keyword">AS</span> $$
+<span class="hl-comment">-- Create a materialized view for department statistics</span>
+<span class="hl-keyword">CREATE MATERIALIZED VIEW</span> <span class="hl-function">mv_dept_stats</span> <span class="hl-keyword">AS</span>
+<span class="hl-keyword">SELECT</span>
+    d.name                              <span class="hl-keyword">AS</span> department,
+    <span class="hl-function">count</span>(e.id)                         <span class="hl-keyword">AS</span> employee_count,
+    <span class="hl-function">round</span>(<span class="hl-function">avg</span>(e.salary), <span class="hl-number">2</span>)              <span class="hl-keyword">AS</span> avg_salary,
+    <span class="hl-function">min</span>(e.salary)                        <span class="hl-keyword">AS</span> min_salary,
+    <span class="hl-function">max</span>(e.salary)                        <span class="hl-keyword">AS</span> max_salary,
+    <span class="hl-function">round</span>(<span class="hl-function">sum</span>(e.salary), <span class="hl-number">2</span>)              <span class="hl-keyword">AS</span> total_payroll
+<span class="hl-keyword">FROM</span> departments d
+<span class="hl-keyword">LEFT JOIN</span> employees e <span class="hl-keyword">ON</span> e.dept_id = d.id
+<span class="hl-keyword">GROUP BY</span> d.name
+<span class="hl-keyword">WITH DATA</span>;
+
+<span class="hl-comment">-- Query it like a regular table (reads from stored data)</span>
+<span class="hl-keyword">SELECT</span> * <span class="hl-keyword">FROM</span> mv_dept_stats
+<span class="hl-keyword">ORDER BY</span> total_payroll <span class="hl-keyword">DESC</span>;
+
+<span class="hl-comment">-- Create an index on the materialized view for fast lookups</span>
+<span class="hl-keyword">CREATE UNIQUE INDEX</span> idx_mv_dept_stats_name
+<span class="hl-keyword">ON</span> mv_dept_stats (department);
+
+<span class="hl-comment">-- Refresh the data (blocks reads during refresh)</span>
+<span class="hl-keyword">REFRESH MATERIALIZED VIEW</span> mv_dept_stats;
+
+<span class="hl-comment">-- Refresh CONCURRENTLY (allows reads during refresh)</span>
+<span class="hl-comment">-- Requires a unique index on the materialized view</span>
+<span class="hl-keyword">REFRESH MATERIALIZED VIEW CONCURRENTLY</span> mv_dept_stats;
+</pre>
+      </div>
+
+      <div class="diagram">
+<pre>
+  Regular View vs. Materialized View
+  ====================================
+
+  Regular View:
+  SELECT * FROM v_report
+       |
+       v
+  [Re-execute full query]  &lt;-- every single time
+       |
+       v
+  [Return results]
+
+  Materialized View:
+  SELECT * FROM mv_report
+       |
+       v
+  [Read stored snapshot]   &lt;-- fast, like a table
+       |
+       v
+  [Return results]
+
+  REFRESH MATERIALIZED VIEW mv_report;
+       |
+       v
+  [Re-execute query, replace stored data]
+</pre>
+        <div class="diagram-caption">Figure 1: Regular views re-execute on every read; materialized views serve cached snapshots</div>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Refreshing on a Schedule
+        </div>
+        <p>
+          Use <code>pg_cron</code> or your application's job scheduler (like Sidekiq or cron) to refresh materialized views periodically. A common pattern is to refresh analytics views every 15 minutes during business hours. <code>REFRESH MATERIALIZED VIEW CONCURRENTLY</code> is preferred in production because it does not block read queries during the refresh.
+        </p>
+      </div>
+
+      <h3 id="plpgsql-functions">3. PL/pgSQL Functions</h3>
+
+      <p>
+        PL/pgSQL is PostgreSQL's built-in procedural language. It extends SQL with variables, control flow (IF/ELSE, loops), exception handling, and the ability to return tables, records, or scalar values. Functions written in PL/pgSQL run inside the database server, eliminating network round-trips and enabling atomic multi-step operations.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- Simple scalar function: calculate annual bonus</span>
+<span class="hl-keyword">CREATE OR REPLACE FUNCTION</span> <span class="hl-function">calc_bonus</span>(
+    emp_salary <span class="hl-function">numeric</span>,
+    perf_rating <span class="hl-function">integer</span>  <span class="hl-comment">-- 1 to 5</span>
+)
+<span class="hl-keyword">RETURNS</span> <span class="hl-function">numeric</span> <span class="hl-keyword">AS</span> $$
+<span class="hl-keyword">DECLARE</span>
+    bonus_pct <span class="hl-function">numeric</span>;
 <span class="hl-keyword">BEGIN</span>
-    <span class="hl-keyword">RETURN</span> <span class="hl-function">ROUND</span>(base_bid * (<span class="hl-number">1</span> - rtb_cm), <span class="hl-number">2</span>);
+    <span class="hl-keyword">CASE</span> perf_rating
+        <span class="hl-keyword">WHEN</span> <span class="hl-number">5</span> <span class="hl-keyword">THEN</span> bonus_pct := <span class="hl-number">0.20</span>;
+        <span class="hl-keyword">WHEN</span> <span class="hl-number">4</span> <span class="hl-keyword">THEN</span> bonus_pct := <span class="hl-number">0.15</span>;
+        <span class="hl-keyword">WHEN</span> <span class="hl-number">3</span> <span class="hl-keyword">THEN</span> bonus_pct := <span class="hl-number">0.10</span>;
+        <span class="hl-keyword">WHEN</span> <span class="hl-number">2</span> <span class="hl-keyword">THEN</span> bonus_pct := <span class="hl-number">0.05</span>;
+        <span class="hl-keyword">ELSE</span>          bonus_pct := <span class="hl-number">0.00</span>;
+    <span class="hl-keyword">END CASE</span>;
+
+    <span class="hl-keyword">RETURN</span> <span class="hl-function">round</span>(emp_salary * bonus_pct, <span class="hl-number">2</span>);
 <span class="hl-keyword">END</span>;
 $$ <span class="hl-keyword">LANGUAGE</span> plpgsql <span class="hl-keyword">IMMUTABLE</span>;
 
 <span class="hl-comment">-- Use the function in queries</span>
 <span class="hl-keyword">SELECT</span>
-    ad_group_name,
-    base_bid_price,
-    <span class="hl-function">effective_bid</span>(base_bid_price, rtb_cm) <span class="hl-keyword">AS</span> net_bid
-<span class="hl-keyword">FROM</span> ad_groups
-<span class="hl-keyword">WHERE</span> active = <span class="hl-keyword">TRUE</span>;
+    first_name,
+    salary,
+    <span class="hl-function">calc_bonus</span>(salary, <span class="hl-number">4</span>) <span class="hl-keyword">AS</span> bonus
+<span class="hl-keyword">FROM</span> employees;
+</pre>
+      </div>
 
-<span class="hl-comment">-- Function: safely update bid with validation</span>
-<span class="hl-keyword">CREATE OR REPLACE FUNCTION</span> <span class="hl-function">update_bid</span>(
-    p_ad_group_id <span class="hl-function">BIGINT</span>,
-    p_new_bid <span class="hl-function">NUMERIC</span>
-) <span class="hl-keyword">RETURNS VOID AS</span> $$
-<span class="hl-keyword">DECLARE</span>
-    v_old_bid <span class="hl-function">NUMERIC</span>;
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- Function returning a table (set-returning function)</span>
+<span class="hl-keyword">CREATE OR REPLACE FUNCTION</span> <span class="hl-function">get_dept_employees</span>(
+    dept_name <span class="hl-function">text</span>
+)
+<span class="hl-keyword">RETURNS TABLE</span> (
+    employee_id   <span class="hl-function">integer</span>,
+    full_name     <span class="hl-function">text</span>,
+    salary        <span class="hl-function">numeric</span>,
+    tenure_years  <span class="hl-function">numeric</span>
+) <span class="hl-keyword">AS</span> $$
 <span class="hl-keyword">BEGIN</span>
-    <span class="hl-keyword">SELECT</span> base_bid_price <span class="hl-keyword">INTO</span> v_old_bid
-    <span class="hl-keyword">FROM</span> ad_groups <span class="hl-keyword">WHERE</span> id = p_ad_group_id;
+    <span class="hl-keyword">RETURN QUERY</span>
+    <span class="hl-keyword">SELECT</span>
+        e.id,
+        e.first_name || <span class="hl-string">' '</span> || e.last_name,
+        e.salary,
+        <span class="hl-function">round</span>(
+            <span class="hl-function">extract</span>(<span class="hl-keyword">epoch FROM</span> <span class="hl-function">age</span>(e.hired_at)) / <span class="hl-number">31557600</span>, <span class="hl-number">1</span>
+        )
+    <span class="hl-keyword">FROM</span> employees e
+    <span class="hl-keyword">JOIN</span> departments d <span class="hl-keyword">ON</span> d.id = e.dept_id
+    <span class="hl-keyword">WHERE</span> d.name = dept_name
+    <span class="hl-keyword">ORDER BY</span> e.salary <span class="hl-keyword">DESC</span>;
+<span class="hl-keyword">END</span>;
+$$ <span class="hl-keyword">LANGUAGE</span> plpgsql <span class="hl-keyword">STABLE</span>;
 
-    <span class="hl-comment">-- Record the change</span>
-    <span class="hl-keyword">INSERT INTO</span> ad_group_bid_change_histories (ad_group_id, old_bid, new_bid, created_at, updated_at)
-    <span class="hl-keyword">VALUES</span> (p_ad_group_id, v_old_bid, p_new_bid, <span class="hl-function">NOW</span>(), <span class="hl-function">NOW</span>());
+<span class="hl-comment">-- Call the function like a table in FROM clause</span>
+<span class="hl-keyword">SELECT</span> * <span class="hl-keyword">FROM</span> <span class="hl-function">get_dept_employees</span>(<span class="hl-string">'Engineering'</span>);
 
-    <span class="hl-comment">-- Apply the change</span>
-    <span class="hl-keyword">UPDATE</span> ad_groups <span class="hl-keyword">SET</span> base_bid_price = p_new_bid, updated_at = <span class="hl-function">NOW</span>()
-    <span class="hl-keyword">WHERE</span> id = p_ad_group_id;
+<span class="hl-comment">-- Join function results with other tables</span>
+<span class="hl-keyword">SELECT</span> de.full_name, de.salary, p.project_name
+<span class="hl-keyword">FROM</span> <span class="hl-function">get_dept_employees</span>(<span class="hl-string">'Engineering'</span>) de
+<span class="hl-keyword">JOIN</span> project_assignments pa <span class="hl-keyword">ON</span> pa.employee_id = de.employee_id
+<span class="hl-keyword">JOIN</span> projects p <span class="hl-keyword">ON</span> p.id = pa.project_id;
+</pre>
+      </div>
+
+      <div class="callout concept">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Volatility Categories
+        </div>
+        <p>
+          Every function has a volatility: <code>IMMUTABLE</code> (always returns the same result for the same inputs &mdash; can be constant-folded), <code>STABLE</code> (returns consistent results within a single query &mdash; safe for index scans), or <code>VOLATILE</code> (default &mdash; can return different results on each call). Setting the correct volatility allows the query planner to optimize more aggressively. Marking a function <code>IMMUTABLE</code> when it is not can produce incorrect query results.
+        </p>
+      </div>
+
+      <h3 id="triggers-basics">4. Triggers &mdash; Automatic Reactions to Data Changes</h3>
+
+      <p>
+        A <strong>trigger</strong> is a function that PostgreSQL executes automatically in response to <code>INSERT</code>, <code>UPDATE</code>, or <code>DELETE</code> events on a table. Triggers are the most powerful way to enforce complex business rules, maintain audit logs, synchronize denormalized data, and validate constraints that span multiple tables.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- Step 1: Create the audit log table</span>
+<span class="hl-keyword">CREATE TABLE</span> employee_audit (
+    id          <span class="hl-function">bigserial</span> <span class="hl-keyword">PRIMARY KEY</span>,
+    employee_id <span class="hl-function">integer</span> <span class="hl-keyword">NOT NULL</span>,
+    action      <span class="hl-function">text</span> <span class="hl-keyword">NOT NULL</span>,
+    old_data    <span class="hl-function">jsonb</span>,
+    new_data    <span class="hl-function">jsonb</span>,
+    changed_at  <span class="hl-function">timestamptz</span> <span class="hl-keyword">DEFAULT</span> <span class="hl-function">now</span>(),
+    changed_by  <span class="hl-function">text</span> <span class="hl-keyword">DEFAULT</span> <span class="hl-function">current_user</span>
+);
+
+<span class="hl-comment">-- Step 2: Create the trigger function</span>
+<span class="hl-keyword">CREATE OR REPLACE FUNCTION</span> <span class="hl-function">fn_employee_audit</span>()
+<span class="hl-keyword">RETURNS</span> <span class="hl-function">trigger</span> <span class="hl-keyword">AS</span> $$
+<span class="hl-keyword">BEGIN</span>
+    <span class="hl-keyword">IF</span> TG_OP = <span class="hl-string">'INSERT'</span> <span class="hl-keyword">THEN</span>
+        <span class="hl-keyword">INSERT INTO</span> employee_audit (employee_id, action, new_data)
+        <span class="hl-keyword">VALUES</span> (NEW.id, <span class="hl-string">'INSERT'</span>, <span class="hl-function">to_jsonb</span>(NEW));
+        <span class="hl-keyword">RETURN</span> NEW;
+
+    <span class="hl-keyword">ELSIF</span> TG_OP = <span class="hl-string">'UPDATE'</span> <span class="hl-keyword">THEN</span>
+        <span class="hl-keyword">INSERT INTO</span> employee_audit (employee_id, action, old_data, new_data)
+        <span class="hl-keyword">VALUES</span> (NEW.id, <span class="hl-string">'UPDATE'</span>, <span class="hl-function">to_jsonb</span>(OLD), <span class="hl-function">to_jsonb</span>(NEW));
+        <span class="hl-keyword">RETURN</span> NEW;
+
+    <span class="hl-keyword">ELSIF</span> TG_OP = <span class="hl-string">'DELETE'</span> <span class="hl-keyword">THEN</span>
+        <span class="hl-keyword">INSERT INTO</span> employee_audit (employee_id, action, old_data)
+        <span class="hl-keyword">VALUES</span> (OLD.id, <span class="hl-string">'DELETE'</span>, <span class="hl-function">to_jsonb</span>(OLD));
+        <span class="hl-keyword">RETURN</span> OLD;
+    <span class="hl-keyword">END IF</span>;
 <span class="hl-keyword">END</span>;
 $$ <span class="hl-keyword">LANGUAGE</span> plpgsql;
-</pre></div>
 
-      <h3 id="triggers">4. Triggers</h3>
+<span class="hl-comment">-- Step 3: Attach the trigger to the employees table</span>
+<span class="hl-keyword">CREATE TRIGGER</span> trg_employee_audit
+    <span class="hl-keyword">AFTER INSERT OR UPDATE OR DELETE</span> <span class="hl-keyword">ON</span> employees
+    <span class="hl-keyword">FOR EACH ROW</span>
+    <span class="hl-keyword">EXECUTE FUNCTION</span> <span class="hl-function">fn_employee_audit</span>();
+</pre>
+      </div>
 
-      <div class="code-block"><div class="code-header"><span class="code-lang">sql</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+      <p>
+        Now every change to the <code>employees</code> table is automatically recorded in <code>employee_audit</code> with the full before-and-after state as JSON. No application code is required &mdash; even raw SQL updates from psql will be audited.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
 <pre>
-<span class="hl-comment">-- Trigger function: auto-update the updated_at timestamp</span>
-<span class="hl-keyword">CREATE OR REPLACE FUNCTION</span> <span class="hl-function">set_updated_at</span>()
-<span class="hl-keyword">RETURNS TRIGGER AS</span> $$
+<span class="hl-comment">-- Test the trigger: update a salary</span>
+<span class="hl-keyword">UPDATE</span> employees
+<span class="hl-keyword">SET</span> salary = salary * <span class="hl-number">1.10</span>
+<span class="hl-keyword">WHERE</span> email = <span class="hl-string">'ada@example.com'</span>;
+
+<span class="hl-comment">-- Check the audit log</span>
+<span class="hl-keyword">SELECT</span>
+    action,
+    old_data-&gt;&gt;<span class="hl-string">'salary'</span> <span class="hl-keyword">AS</span> old_salary,
+    new_data-&gt;&gt;<span class="hl-string">'salary'</span> <span class="hl-keyword">AS</span> new_salary,
+    changed_at,
+    changed_by
+<span class="hl-keyword">FROM</span> employee_audit
+<span class="hl-keyword">WHERE</span> employee_id = <span class="hl-number">1</span>
+<span class="hl-keyword">ORDER BY</span> changed_at <span class="hl-keyword">DESC</span>;
+</pre>
+      </div>
+
+      <h3 id="trigger-patterns">5. Common Trigger Patterns</h3>
+
+      <p>
+        Beyond audit logging, triggers are used extensively for maintaining timestamps, enforcing soft deletes, and keeping denormalized counters in sync. Here are production-tested patterns you will use repeatedly throughout your career.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- Pattern 1: Auto-update updated_at timestamp</span>
+<span class="hl-keyword">CREATE OR REPLACE FUNCTION</span> <span class="hl-function">fn_set_updated_at</span>()
+<span class="hl-keyword">RETURNS</span> <span class="hl-function">trigger</span> <span class="hl-keyword">AS</span> $$
 <span class="hl-keyword">BEGIN</span>
-    NEW.updated_at = <span class="hl-function">NOW</span>();
+    NEW.updated_at := <span class="hl-function">now</span>();
     <span class="hl-keyword">RETURN</span> NEW;
 <span class="hl-keyword">END</span>;
 $$ <span class="hl-keyword">LANGUAGE</span> plpgsql;
 
-<span class="hl-comment">-- Attach trigger to campaigns table</span>
-<span class="hl-keyword">CREATE TRIGGER</span> campaigns_updated_at
-    <span class="hl-keyword">BEFORE UPDATE ON</span> campaigns
+<span class="hl-keyword">CREATE TRIGGER</span> trg_employees_updated_at
+    <span class="hl-keyword">BEFORE UPDATE ON</span> employees
     <span class="hl-keyword">FOR EACH ROW</span>
-    <span class="hl-keyword">EXECUTE FUNCTION</span> <span class="hl-function">set_updated_at</span>();
+    <span class="hl-keyword">EXECUTE FUNCTION</span> <span class="hl-function">fn_set_updated_at</span>();
 
-<span class="hl-comment">-- Trigger: log bid changes automatically</span>
-<span class="hl-keyword">CREATE OR REPLACE FUNCTION</span> <span class="hl-function">log_bid_change</span>()
-<span class="hl-keyword">RETURNS TRIGGER AS</span> $$
+
+<span class="hl-comment">-- Pattern 2: Prevent salary decreases</span>
+<span class="hl-keyword">CREATE OR REPLACE FUNCTION</span> <span class="hl-function">fn_prevent_salary_decrease</span>()
+<span class="hl-keyword">RETURNS</span> <span class="hl-function">trigger</span> <span class="hl-keyword">AS</span> $$
 <span class="hl-keyword">BEGIN</span>
-    <span class="hl-keyword">IF</span> OLD.base_bid_price <span class="hl-keyword">IS DISTINCT FROM</span> NEW.base_bid_price <span class="hl-keyword">THEN</span>
-        <span class="hl-keyword">INSERT INTO</span> ad_group_bid_change_histories
-            (ad_group_id, old_bid, new_bid, created_at, updated_at)
-        <span class="hl-keyword">VALUES</span>
-            (NEW.id, OLD.base_bid_price, NEW.base_bid_price, <span class="hl-function">NOW</span>(), <span class="hl-function">NOW</span>());
+    <span class="hl-keyword">IF</span> NEW.salary &lt; OLD.salary <span class="hl-keyword">THEN</span>
+        <span class="hl-keyword">RAISE EXCEPTION</span> <span class="hl-string">'Salary cannot be decreased from % to %'</span>,
+            OLD.salary, NEW.salary;
     <span class="hl-keyword">END IF</span>;
     <span class="hl-keyword">RETURN</span> NEW;
 <span class="hl-keyword">END</span>;
 $$ <span class="hl-keyword">LANGUAGE</span> plpgsql;
 
-<span class="hl-keyword">CREATE TRIGGER</span> ad_groups_bid_audit
-    <span class="hl-keyword">AFTER UPDATE ON</span> ad_groups
+<span class="hl-keyword">CREATE TRIGGER</span> trg_no_salary_decrease
+    <span class="hl-keyword">BEFORE UPDATE OF</span> salary <span class="hl-keyword">ON</span> employees
     <span class="hl-keyword">FOR EACH ROW</span>
-    <span class="hl-keyword">EXECUTE FUNCTION</span> <span class="hl-function">log_bid_change</span>();
-</pre></div>
+    <span class="hl-keyword">EXECUTE FUNCTION</span> <span class="hl-function">fn_prevent_salary_decrease</span>();
+
+
+<span class="hl-comment">-- Pattern 3: Maintain denormalized employee count</span>
+<span class="hl-keyword">ALTER TABLE</span> departments <span class="hl-keyword">ADD COLUMN</span> employee_count <span class="hl-function">integer</span> <span class="hl-keyword">DEFAULT</span> <span class="hl-number">0</span>;
+
+<span class="hl-keyword">CREATE OR REPLACE FUNCTION</span> <span class="hl-function">fn_update_dept_count</span>()
+<span class="hl-keyword">RETURNS</span> <span class="hl-function">trigger</span> <span class="hl-keyword">AS</span> $$
+<span class="hl-keyword">BEGIN</span>
+    <span class="hl-keyword">IF</span> TG_OP = <span class="hl-string">'INSERT'</span> <span class="hl-keyword">THEN</span>
+        <span class="hl-keyword">UPDATE</span> departments
+        <span class="hl-keyword">SET</span> employee_count = employee_count + <span class="hl-number">1</span>
+        <span class="hl-keyword">WHERE</span> id = NEW.dept_id;
+    <span class="hl-keyword">ELSIF</span> TG_OP = <span class="hl-string">'DELETE'</span> <span class="hl-keyword">THEN</span>
+        <span class="hl-keyword">UPDATE</span> departments
+        <span class="hl-keyword">SET</span> employee_count = employee_count - <span class="hl-number">1</span>
+        <span class="hl-keyword">WHERE</span> id = OLD.dept_id;
+    <span class="hl-keyword">ELSIF</span> TG_OP = <span class="hl-string">'UPDATE'</span> <span class="hl-keyword">AND</span> OLD.dept_id &lt;&gt; NEW.dept_id <span class="hl-keyword">THEN</span>
+        <span class="hl-keyword">UPDATE</span> departments
+        <span class="hl-keyword">SET</span> employee_count = employee_count - <span class="hl-number">1</span>
+        <span class="hl-keyword">WHERE</span> id = OLD.dept_id;
+        <span class="hl-keyword">UPDATE</span> departments
+        <span class="hl-keyword">SET</span> employee_count = employee_count + <span class="hl-number">1</span>
+        <span class="hl-keyword">WHERE</span> id = NEW.dept_id;
+    <span class="hl-keyword">END IF</span>;
+    <span class="hl-keyword">RETURN</span> <span class="hl-keyword">COALESCE</span>(NEW, OLD);
+<span class="hl-keyword">END</span>;
+$$ <span class="hl-keyword">LANGUAGE</span> plpgsql;
+
+<span class="hl-keyword">CREATE TRIGGER</span> trg_dept_employee_count
+    <span class="hl-keyword">AFTER INSERT OR UPDATE OR DELETE ON</span> employees
+    <span class="hl-keyword">FOR EACH ROW</span>
+    <span class="hl-keyword">EXECUTE FUNCTION</span> <span class="hl-function">fn_update_dept_count</span>();
+</pre>
+      </div>
+
+      <div class="callout danger">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+          Trigger Performance Warning
+        </div>
+        <p>
+          Every trigger adds overhead to the triggering operation. An <code>AFTER INSERT</code> trigger on a high-write table can significantly slow down bulk inserts. Audit triggers that write to another table double the write I/O. Profile your triggers under realistic load and consider disabling them during large data migrations with <code>ALTER TABLE ... DISABLE TRIGGER ALL</code>.
+        </p>
+      </div>
+
+      <h3 id="event-triggers">6. Event Triggers &mdash; DDL Governance</h3>
+
+      <p>
+        While regular triggers respond to DML (data manipulation: INSERT/UPDATE/DELETE), <strong>event triggers</strong> respond to DDL (data definition: CREATE, ALTER, DROP). They fire on schema-level changes and are used for governance, compliance logging, and preventing accidental schema modifications in production environments.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- Log all DDL operations</span>
+<span class="hl-keyword">CREATE TABLE</span> ddl_log (
+    id          <span class="hl-function">bigserial</span> <span class="hl-keyword">PRIMARY KEY</span>,
+    event       <span class="hl-function">text</span> <span class="hl-keyword">NOT NULL</span>,
+    object_type <span class="hl-function">text</span>,
+    object_name <span class="hl-function">text</span>,
+    executed_by <span class="hl-function">text</span> <span class="hl-keyword">DEFAULT</span> <span class="hl-function">current_user</span>,
+    executed_at <span class="hl-function">timestamptz</span> <span class="hl-keyword">DEFAULT</span> <span class="hl-function">now</span>(),
+    command_tag <span class="hl-function">text</span>
+);
+
+<span class="hl-comment">-- Create the event trigger function</span>
+<span class="hl-keyword">CREATE OR REPLACE FUNCTION</span> <span class="hl-function">fn_log_ddl</span>()
+<span class="hl-keyword">RETURNS</span> <span class="hl-function">event_trigger</span> <span class="hl-keyword">AS</span> $$
+<span class="hl-keyword">DECLARE</span>
+    obj record;
+<span class="hl-keyword">BEGIN</span>
+    <span class="hl-keyword">FOR</span> obj <span class="hl-keyword">IN</span>
+        <span class="hl-keyword">SELECT</span> * <span class="hl-keyword">FROM</span> <span class="hl-function">pg_event_trigger_ddl_commands</span>()
+    <span class="hl-keyword">LOOP</span>
+        <span class="hl-keyword">INSERT INTO</span> ddl_log (event, object_type, object_name, command_tag)
+        <span class="hl-keyword">VALUES</span> (
+            TG_EVENT,
+            obj.object_type,
+            obj.object_identity,
+            obj.command_tag
+        );
+    <span class="hl-keyword">END LOOP</span>;
+<span class="hl-keyword">END</span>;
+$$ <span class="hl-keyword">LANGUAGE</span> plpgsql;
+
+<span class="hl-comment">-- Attach to ddl_command_end events</span>
+<span class="hl-keyword">CREATE EVENT TRIGGER</span> trg_log_ddl
+    <span class="hl-keyword">ON</span> ddl_command_end
+    <span class="hl-keyword">EXECUTE FUNCTION</span> <span class="hl-function">fn_log_ddl</span>();
+</pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- Prevent DROP TABLE in production</span>
+<span class="hl-keyword">CREATE OR REPLACE FUNCTION</span> <span class="hl-function">fn_prevent_drop</span>()
+<span class="hl-keyword">RETURNS</span> <span class="hl-function">event_trigger</span> <span class="hl-keyword">AS</span> $$
+<span class="hl-keyword">DECLARE</span>
+    obj record;
+<span class="hl-keyword">BEGIN</span>
+    <span class="hl-keyword">FOR</span> obj <span class="hl-keyword">IN</span>
+        <span class="hl-keyword">SELECT</span> * <span class="hl-keyword">FROM</span> <span class="hl-function">pg_event_trigger_dropped_objects</span>()
+    <span class="hl-keyword">LOOP</span>
+        <span class="hl-keyword">IF</span> obj.object_type = <span class="hl-string">'table'</span> <span class="hl-keyword">THEN</span>
+            <span class="hl-keyword">RAISE EXCEPTION</span>
+                <span class="hl-string">'DROP TABLE is disabled in production. Contact the DBA team.'</span>;
+        <span class="hl-keyword">END IF</span>;
+    <span class="hl-keyword">END LOOP</span>;
+<span class="hl-keyword">END</span>;
+$$ <span class="hl-keyword">LANGUAGE</span> plpgsql;
+
+<span class="hl-keyword">CREATE EVENT TRIGGER</span> trg_prevent_drop
+    <span class="hl-keyword">ON</span> sql_drop
+    <span class="hl-keyword">EXECUTE FUNCTION</span> <span class="hl-function">fn_prevent_drop</span>();
+
+<span class="hl-comment">-- Check the DDL log</span>
+<span class="hl-keyword">SELECT</span> * <span class="hl-keyword">FROM</span> ddl_log
+<span class="hl-keyword">ORDER BY</span> executed_at <span class="hl-keyword">DESC</span>
+<span class="hl-keyword">LIMIT</span> <span class="hl-number">10</span>;
+</pre>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Event Trigger Events
+        </div>
+        <p>
+          PostgreSQL supports four event trigger events: <code>ddl_command_start</code> (before DDL runs), <code>ddl_command_end</code> (after DDL completes), <code>sql_drop</code> (when objects are dropped), and <code>table_rewrite</code> (when a table is rewritten by ALTER COLUMN TYPE). Use <code>ddl_command_start</code> to prevent operations and <code>ddl_command_end</code> to log completed changes.
+        </p>
+      </div>
 
       <hr class="section-divider">
 
+      <!-- ════════════════════════════════════════
+           SECTION 3: WATCH & LEARN
+           ════════════════════════════════════════ -->
       <h2 id="watch-learn">Watch &amp; Learn</h2>
+
+      <p>
+        These videos cover views, functions, and triggers in depth. Watch them to reinforce the patterns discussed above and see demonstrations of real-world usage.
+      </p>
+
       <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/IBgWKTaG_Bs?rel=0&amp;modestbranding=1" title="PostgreSQL Views and Materialized Views" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-caption"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>Hussein Nasser &mdash; Views, materialized views, and when to use each</div>
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/vNfSYMC2vNE?rel=0&amp;modestbranding=1"
+            title="PostgreSQL Views Tutorial"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          PostgreSQL Views &mdash; Regular views, materialized views, and updatable views explained
+        </div>
       </div>
+
       <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/5QP5jeMFoGE?rel=0&amp;modestbranding=1" title="PostgreSQL Functions and Triggers" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-caption"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>Amigoscode &mdash; PL/pgSQL functions, triggers, and stored procedures</div>
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/QXJwELmLQAo?rel=0&amp;modestbranding=1"
+            title="PostgreSQL Triggers and Functions"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          PL/pgSQL Functions and Triggers &mdash; Audit trails, validation, and procedural logic in PostgreSQL
+        </div>
       </div>
 
       <hr class="section-divider">
 
+      <!-- ════════════════════════════════════════
+           SECTION 4: FURTHER READING
+           ════════════════════════════════════════ -->
       <h2 id="further-reading">Further Reading</h2>
+
+      <p>Deep-dive into the official documentation and reference material for this chapter's topics.</p>
+
       <div class="resource-grid">
         <a class="resource-card" href="https://www.postgresql.org/docs/current/sql-createview.html" target="_blank" rel="noopener">
-          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-          <div class="resource-info"><div class="resource-title">PostgreSQL Docs: CREATE VIEW</div><div class="resource-desc">View creation syntax and updatable views.</div></div>
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">CREATE VIEW Documentation</div>
+            <div class="resource-desc">Complete syntax reference for views including updatable views, security barriers, and recursive views.</div>
+          </div>
         </a>
-        <a class="resource-card" href="https://www.postgresql.org/docs/current/sql-creatematerializedview.html" target="_blank" rel="noopener">
-          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-          <div class="resource-info"><div class="resource-title">PostgreSQL Docs: Materialized Views</div><div class="resource-desc">Creating and refreshing materialized views.</div></div>
-        </a>
+
         <a class="resource-card" href="https://www.postgresql.org/docs/current/plpgsql.html" target="_blank" rel="noopener">
-          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-          <div class="resource-info"><div class="resource-title">PostgreSQL Docs: PL/pgSQL</div><div class="resource-desc">Complete PL/pgSQL language reference.</div></div>
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">PL/pgSQL Language Reference</div>
+            <div class="resource-desc">The full PL/pgSQL manual covering variables, control flow, cursors, exception handling, and dynamic SQL.</div>
+          </div>
         </a>
-        <a class="resource-card" href="https://www.postgresql.org/docs/current/sql-createtrigger.html" target="_blank" rel="noopener">
-          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-          <div class="resource-info"><div class="resource-title">PostgreSQL Docs: CREATE TRIGGER</div><div class="resource-desc">Trigger syntax, BEFORE/AFTER, and trigger functions.</div></div>
+
+        <a class="resource-card" href="https://www.postgresql.org/docs/current/trigger-definition.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Trigger System Reference</div>
+            <div class="resource-desc">How triggers work internally, BEFORE vs AFTER, FOR EACH ROW vs STATEMENT, and trigger ordering.</div>
+          </div>
         </a>
       </div>
 
       <hr class="section-divider">
 
+      <!-- ════════════════════════════════════════
+           SECTION 5: ASSIGNMENTS
+           ════════════════════════════════════════ -->
       <h2 id="assignments">Assignments</h2>
+
+      <p>
+        Complete these in order. Each level builds on the previous one. This is the capstone chapter &mdash; these assignments integrate everything you have learned across all eight chapters.
+      </p>
+
+      <!-- Assignment 1 -->
       <div class="assignment">
         <div class="assignment-header">
-          <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 1</div>
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 1
+          </div>
           <span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span>
         </div>
-        <h4>Create Views for Common Queries</h4>
-        <p>Simplify repetitive queries with views.</p>
+        <h4>Views for a Product Catalog</h4>
+        <p>Create views that simplify common queries against a multi-table product database.</p>
         <ul class="checklist">
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create an active_campaigns view that filters discarded and inactive campaigns</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a campaign_performance view with lead count and ad group count</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Query both views to verify they return correct results</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Drop and recreate a view with CREATE OR REPLACE</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Explain the difference between a view and a materialized view</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create tables: <code>categories</code>, <code>products</code>, <code>reviews</code></span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Insert at least 20 products across 5 categories with 50+ reviews</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create <code>v_product_summary</code> joining products with categories and average rating</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create <code>mv_category_stats</code> with product counts and average prices per category</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Add an index and demonstrate <code>REFRESH MATERIALIZED VIEW CONCURRENTLY</code></span></li>
         </ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div><p>Your views simplify complex queries into single-table SELECTs. Results match the raw queries.</p></div>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>You can query <code>v_product_summary</code> for product details and <code>mv_category_stats</code> returns pre-computed analytics instantly.</p>
+        </div>
       </div>
+
+      <!-- Assignment 2 -->
       <div class="assignment">
         <div class="assignment-header">
-          <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 2</div>
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 2
+          </div>
           <span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span>
         </div>
-        <h4>Functions and Triggers</h4>
-        <p>Write PL/pgSQL functions and triggers for business logic.</p>
+        <h4>PL/pgSQL Functions for Business Logic</h4>
+        <p>Encapsulate pricing, discount calculations, and inventory management into reusable database functions.</p>
         <ul class="checklist">
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create an effective_bid(base, margin) function and use it in a query</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a set_updated_at() trigger function and attach to campaigns table</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Verify the trigger fires by updating a campaign and checking updated_at</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a log_bid_change trigger on ad_groups</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a materialized view for account dashboard with REFRESH CONCURRENTLY</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write <code>apply_discount(product_id, pct)</code> that validates the percentage and updates the price</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write a set-returning function <code>get_top_products(category_name, limit_n)</code></span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Add proper error handling with <code>RAISE EXCEPTION</code> for invalid inputs</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write a function returning a JSON summary of any product by ID</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Mark functions with correct volatility labels</span></li>
         </ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div><p>Triggers fire automatically. The bid audit trail is populated without manual INSERT.</p></div>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>Your functions handle edge cases, return meaningful errors, and work in SELECT and FROM clauses.</p>
+        </div>
       </div>
+
+      <!-- Assignment 3 -->
       <div class="assignment">
         <div class="assignment-header">
-          <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 3</div>
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 3
+          </div>
           <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Production-Ready</span>
         </div>
-        <h4>Advanced Functions and Automation</h4>
-        <p>Build production-quality database automation.</p>
+        <h4>Complete Audit and Governance System</h4>
+        <p>Build a production-grade audit trail with row-level triggers, DDL logging via event triggers, and automated materialized view refreshing.</p>
         <ul class="checklist">
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a function that atomically accepts a bid: insert lead + decrement balance + log history</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a trigger that prevents negative account balances (BEFORE UPDATE)</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Set up a materialized view refresh schedule concept (document cron approach)</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write a function that returns a TABLE type for campaign dashboard data</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a generic audit trigger function that works on any table using <code>TG_TABLE_NAME</code></span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Attach the audit trigger to at least 3 tables and verify all changes are logged</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create an event trigger that logs all DDL operations with user and timestamp</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create an event trigger that prevents <code>DROP TABLE</code> unless a session variable is set</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write a function that refreshes all materialized views in a schema and logs timing</span></li>
         </ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div><p>Your bid acceptance function is atomic. The balance check trigger prevents overspending. Materialized view refresh is documented.</p></div>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>Every data change is audited, all DDL is logged, accidental table drops are blocked, and materialized views refresh with a single function call.</p>
+        </div>
       </div>
 
       <hr class="section-divider">
 
+      <!-- ════════════════════════════════════════
+           SECTION 6: SELF-CHECK
+           ════════════════════════════════════════ -->
       <h2 id="self-check">Self-Check</h2>
+
+      <p>This is the final self-check of the PostgreSQL Fundamentals track. Answer honestly &mdash; if anything is unclear, revisit the relevant section before moving to the Advanced track.</p>
+
       <details>
-        <summary>When should you use a view vs a materialized view?</summary>
-        <div class="details-body"><p>Use a regular view when you need always-current data and the underlying query is fast. Use a materialized view when the query is expensive (aggregating millions of rows) and slightly stale data is acceptable. The ad portal uses materialized views for dashboard summaries refreshed hourly.</p></div>
+        <summary>What is the difference between a regular view and a materialized view?</summary>
+        <div class="details-body">
+          <p>
+            A regular view is a stored query that re-executes every time you select from it &mdash; it stores no data. A materialized view executes the query once and stores the results on disk like a table. Subsequent reads are fast because they read stored data, but the data can become stale. You must explicitly call <code>REFRESH MATERIALIZED VIEW</code> to update it.
+          </p>
+        </div>
       </details>
+
       <details>
-        <summary>What is the difference between BEFORE and AFTER triggers?</summary>
-        <div class="details-body"><p>BEFORE triggers run before the row is modified and can change the NEW values (e.g., setting updated_at). AFTER triggers run after the modification and are used for logging/auditing (e.g., recording bid changes). BEFORE triggers can prevent the operation by returning NULL.</p></div>
+        <summary>When should you use <code>BEFORE</code> vs <code>AFTER</code> triggers?</summary>
+        <div class="details-body">
+          <p>
+            Use <code>BEFORE</code> triggers to modify or validate the incoming row before it is written &mdash; for example, setting <code>updated_at</code> or rejecting invalid changes. Use <code>AFTER</code> triggers to react to completed changes &mdash; for example, writing audit logs or updating counters. <code>BEFORE</code> triggers can modify <code>NEW</code>; <code>AFTER</code> triggers cannot change the already-written row.
+          </p>
+        </div>
       </details>
+
       <details>
-        <summary>Why use IMMUTABLE vs VOLATILE function volatility?</summary>
-        <div class="details-body"><p>IMMUTABLE means the function always returns the same result for the same inputs (like effective_bid). PostgreSQL can cache results and use it in indexes. VOLATILE (default) means results may change (like functions using NOW()). Mislabeling a function as IMMUTABLE when it is not causes incorrect cached results.</p></div>
+        <summary>What are the three volatility levels for PostgreSQL functions?</summary>
+        <div class="details-body">
+          <p>
+            <code>IMMUTABLE</code>: always returns the same result for the same arguments (can be constant-folded). <code>STABLE</code>: consistent results within a single SQL statement (safe for index scans). <code>VOLATILE</code> (default): can return different results on each call. Setting the correct volatility lets the planner optimize more aggressively.
+          </p>
+        </div>
       </details>
+
+      <details>
+        <summary>How do event triggers differ from regular triggers?</summary>
+        <div class="details-body">
+          <p>
+            Regular triggers fire on DML (INSERT, UPDATE, DELETE) against a specific table. Event triggers fire on DDL (CREATE, ALTER, DROP) at the database level. Event triggers use <code>event_trigger</code> as their return type and access special functions like <code>pg_event_trigger_ddl_commands()</code> to inspect the DDL that was executed.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>When is <code>REFRESH MATERIALIZED VIEW CONCURRENTLY</code> needed?</summary>
+        <div class="details-body">
+          <p>
+            A normal <code>REFRESH</code> takes an exclusive lock, blocking all reads until complete. <code>CONCURRENTLY</code> builds new data alongside the old and swaps them atomically, allowing uninterrupted reads. It requires a unique index on the materialized view and is slightly slower, but is essential in production where queries cannot be blocked during refresh windows.
+          </p>
+        </div>
+      </details>
+
     </main>
 
+    <!-- Sidebar: Table of Contents -->
     <aside class="sidebar">
       <div class="sidebar-title">On this page</div>
       <ul class="toc-list">
         <li class="toc-item"><a href="#why-this-matters">Why This Matters</a></li>
         <li class="toc-item"><a href="#key-concepts">Key Concepts</a></li>
-        <li class="toc-item"><a href="#views" style="padding-left:28px;font-size:12px">Views</a></li>
-        <li class="toc-item"><a href="#materialized-views" style="padding-left:28px;font-size:12px">Materialized Views</a></li>
-        <li class="toc-item"><a href="#functions" style="padding-left:28px;font-size:12px">PL/pgSQL Functions</a></li>
-        <li class="toc-item"><a href="#triggers" style="padding-left:28px;font-size:12px">Triggers</a></li>
+        <li class="toc-item"><a href="#create-view" style="padding-left: 28px; font-size: 12px;">CREATE VIEW</a></li>
+        <li class="toc-item"><a href="#materialized-views" style="padding-left: 28px; font-size: 12px;">Materialized Views</a></li>
+        <li class="toc-item"><a href="#plpgsql-functions" style="padding-left: 28px; font-size: 12px;">PL/pgSQL Functions</a></li>
+        <li class="toc-item"><a href="#triggers-basics" style="padding-left: 28px; font-size: 12px;">Triggers</a></li>
+        <li class="toc-item"><a href="#trigger-patterns" style="padding-left: 28px; font-size: 12px;">Trigger Patterns</a></li>
+        <li class="toc-item"><a href="#event-triggers" style="padding-left: 28px; font-size: 12px;">Event Triggers</a></li>
         <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a></li>
         <li class="toc-item"><a href="#further-reading">Further Reading</a></li>
         <li class="toc-item"><a href="#assignments">Assignments</a></li>
@@ -300,20 +1762,76 @@ $$ <span class="hl-keyword">LANGUAGE</span> plpgsql;
     </aside>
   </div>
 
-  <footer class="chapter-footer"><div class="chapter-footer-inner">
-    <nav class="footer-nav">
-      <a class="footer-nav-link" href="chapter-07.html"><span class="footer-nav-label">&larr; Previous Chapter</span><span class="footer-nav-title">07: Transactions and Concurrency</span></a>
-      <div></div>
-    </nav>
-    <div class="footer-brand">ILA (Iksha Learning Academy) &middot; PostgreSQL Engineering Certification &middot; Basic</div>
-  </div></footer>
+  <!-- Footer Navigation -->
+  <footer class="chapter-footer">
+    <div class="chapter-footer-inner">
+      <nav class="footer-nav">
+        <a class="footer-nav-link" href="chapter-07.html">
+          <span class="footer-nav-label">&larr; Previous Chapter</span>
+          <span class="footer-nav-title">07: Transactions and Concurrency</span>
+        </a>
+        <div></div>
+      </nav>
+      <div class="footer-brand">
+        ILA (Iksha Learning Academy) &middot; PostgreSQL Engineering Certification &middot; Level 1
+      </div>
+    </div>
+  </footer>
 
+  <!-- ════════════════════════════════════════
+       SCRIPTS
+       ════════════════════════════════════════ -->
   <script>
-    window.addEventListener('scroll',()=>{const s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight;document.getElementById('progressBar').style.width=(d>0?(s/d)*100:0)+'%'});
-    const tocLinks=document.querySelectorAll('.toc-item a'),sections=[];tocLinks.forEach(link=>{const id=link.getAttribute('href').slice(1),el=document.getElementById(id);if(el)sections.push({id,el,link})});
-    const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{const item=sections.find(s=>s.el===entry.target);if(item&&entry.isIntersecting){tocLinks.forEach(l=>l.classList.remove('active'));item.link.classList.add('active')}})},{rootMargin:'-80px 0px -60% 0px',threshold:0});
-    sections.forEach(s=>observer.observe(s.el));
-    function copyCode(btn){const pre=btn.closest('.code-block').querySelector('pre');navigator.clipboard.writeText(pre.textContent).then(()=>{btn.classList.add('copied');btn.textContent='Copied!';setTimeout(()=>{btn.classList.remove('copied');btn.textContent='Copy'},2000)})}
+    // ── Progress Bar ──
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      document.getElementById('progressBar').style.width = progress + '%';
+    });
+
+    // ── Active TOC ──
+    const tocLinks = document.querySelectorAll('.toc-item a');
+    const sections = [];
+
+    tocLinks.forEach(link => {
+      const id = link.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) sections.push({ id, el, link });
+    });
+
+    const observerOptions = {
+      rootMargin: '-80px 0px -60% 0px',
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const item = sections.find(s => s.el === entry.target);
+        if (item) {
+          if (entry.isIntersecting) {
+            tocLinks.forEach(l => l.classList.remove('active'));
+            item.link.classList.add('active');
+          }
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(s => observer.observe(s.el));
+
+    // ── Copy Code ──
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      const text = pre.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.classList.add('copied');
+        btn.textContent = 'Copied!';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.textContent = 'Copy';
+        }, 2000);
+      });
+    }
   </script>
 </body>
 </html>

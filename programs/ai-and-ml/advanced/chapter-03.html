@@ -3,405 +3,1437 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chapter 03: Natural Language Processing &mdash; ILA AI &amp; Machine Learning</title>
+  <title>Chapter 03: Generative Models — ILA AI & ML</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-  <style>:root{--ink:#0f172a;--ink-light:#334155;--ink-muted:#64748b;--surface:#ffffff;--surface-alt:#f8fafc;--surface-warm:#fffbeb;--border:#e2e8f0;--border-light:#f1f5f9;--teal-50:#f0fdfa;--teal-100:#ccfbf1;--teal-200:#99f6e4;--teal-500:#14b8a6;--teal-600:#0d9488;--teal-700:#0f766e;--teal-800:#115e59;--teal-900:#134e4a;--blue-50:#eff6ff;--blue-100:#dbeafe;--blue-500:#3b82f6;--blue-600:#2563eb;--blue-700:#1d4ed8;--amber-50:#fffbeb;--amber-100:#fef3c7;--amber-500:#f59e0b;--amber-600:#d97706;--red-50:#fef2f2;--red-100:#fee2e2;--red-500:#ef4444;--red-600:#dc2626;--purple-50:#faf5ff;--purple-100:#f3e8ff;--purple-500:#a855f7;--purple-600:#9333ea;--font-sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;--font-serif:'Instrument Serif',Georgia,serif;--font-mono:'JetBrains Mono','Fira Code',monospace;--content-max:780px;--sidebar-width:280px;--ease:cubic-bezier(0.4,0,0.2,1)}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}body{font-family:var(--font-sans);font-size:16px;line-height:1.7;color:var(--ink);background:var(--surface)}.progress-bar{position:fixed;top:0;left:0;width:0%;height:3px;background:linear-gradient(90deg,var(--teal-500),var(--blue-500));z-index:1000;transition:width .15s var(--ease)}.top-nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem}.top-nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px}.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--teal-800)}.nav-brand-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--teal-600),var(--teal-800));border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px}.nav-brand-text{font-weight:700;font-size:15px;letter-spacing:-.02em}.nav-chapter-nav{display:flex;align-items:center;gap:8px}.nav-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;color:var(--ink-muted);border:1px solid var(--border);background:#fff;transition:all .2s var(--ease);cursor:pointer}.nav-btn:hover{color:var(--ink);border-color:var(--teal-500);background:var(--teal-50)}.nav-btn.disabled{opacity:.4;pointer-events:none}.nav-current{font-size:13px;font-weight:600;color:var(--ink-light);padding:0 4px}.hero{background:linear-gradient(170deg,var(--teal-50) 0%,var(--surface) 50%,var(--blue-50) 100%);border-bottom:1px solid var(--border);padding:4rem 2rem 3.5rem}.hero-inner{max-width:var(--content-max);margin:0 auto}.hero-chapter-label{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--teal-700);text-transform:uppercase;letter-spacing:.08em;margin-bottom:1rem}.hero-chapter-label span{background:var(--teal-100);padding:3px 10px;border-radius:100px}.hero h1{font-family:var(--font-serif);font-size:clamp(2.4rem,5vw,3.2rem);font-weight:400;line-height:1.15;color:var(--ink);margin-bottom:1rem}.hero-subtitle{font-size:1.15rem;color:var(--ink-light);line-height:1.65;max-width:640px}.hero-meta{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1.5rem}.hero-meta-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-muted)}.hero-meta-item svg{width:16px;height:16px;color:var(--teal-600)}.main-layout{max-width:1200px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:1fr var(--sidebar-width);gap:4rem;align-items:start}.content{padding:3rem 0 6rem;min-width:0}.sidebar{position:sticky;top:76px;padding:2rem 0;max-height:calc(100vh - 76px);overflow-y:auto}.sidebar-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-muted);margin-bottom:1rem;padding-left:14px}.toc-list{list-style:none}.toc-item a{display:block;padding:6px 14px;font-size:13px;color:var(--ink-muted);text-decoration:none;border-left:2px solid transparent;transition:all .2s var(--ease);line-height:1.5}.toc-item a:hover{color:var(--ink);background:var(--surface-alt)}.toc-item a.active{color:var(--teal-700);border-left-color:var(--teal-500);background:var(--teal-50);font-weight:500}.content h2{font-family:var(--font-serif);font-size:1.85rem;font-weight:400;color:var(--ink);margin:3rem 0 1rem;padding-top:1rem;scroll-margin-top:80px}.content h2:first-child{margin-top:0}.content h3{font-size:1.15rem;font-weight:600;color:var(--ink);margin:2rem 0 .75rem;scroll-margin-top:80px}.content p{margin-bottom:1.25rem;color:var(--ink-light)}.content strong{color:var(--ink);font-weight:600}.content a{color:var(--teal-700);text-decoration:underline;text-decoration-color:var(--teal-200);text-underline-offset:3px}.content ul,.content ol{margin-bottom:1.25rem;padding-left:1.5rem}.content li{margin-bottom:.5rem;color:var(--ink-light)}.content li::marker{color:var(--teal-500)}.section-divider{border:none;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:3rem 0}.callout{padding:1.25rem 1.5rem;border-radius:12px;margin-bottom:1.5rem;border:1px solid;position:relative}.callout-header{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;margin-bottom:.5rem}.callout-header svg{width:18px;height:18px;flex-shrink:0}.callout p:last-child{margin-bottom:0}.callout.concept{background:var(--blue-50);border-color:var(--blue-100)}.callout.concept .callout-header{color:var(--blue-700)}.callout.important{background:var(--amber-50);border-color:var(--amber-100)}.callout.important .callout-header{color:var(--amber-600)}.callout.danger{background:var(--red-50);border-color:var(--red-100)}.callout.danger .callout-header{color:var(--red-600)}.callout.tip{background:var(--purple-50);border-color:var(--purple-100)}.callout.tip .callout-header{color:var(--purple-600)}.callout.success{background:var(--teal-50);border-color:var(--teal-100)}.callout.success .callout-header{color:var(--teal-700)}.code-block{position:relative;margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}.code-header{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:var(--surface-alt);border-bottom:1px solid var(--border);font-size:12px;color:var(--ink-muted)}.code-lang{font-family:var(--font-mono);font-weight:600;text-transform:uppercase;letter-spacing:.05em}.code-copy{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:#fff;font-size:11px;font-family:var(--font-sans);color:var(--ink-muted);cursor:pointer;transition:all .2s var(--ease)}.code-copy:hover{border-color:var(--teal-500);color:var(--teal-700)}.code-copy.copied{background:var(--teal-50);border-color:var(--teal-500);color:var(--teal-700)}pre{margin:0;padding:1.25rem 1.5rem;overflow-x:auto;background:#1e293b;font-family:var(--font-mono);font-size:13.5px;line-height:1.7;color:#e2e8f0}code{font-family:var(--font-mono);font-size:.88em}p code,li code{padding:2px 7px;background:var(--surface-alt);border:1px solid var(--border);border-radius:5px;color:var(--teal-800);font-size:.85em}.hl-keyword{color:#c084fc}.hl-string{color:#86efac}.hl-comment{color:#64748b;font-style:italic}.hl-function{color:#7dd3fc}.hl-number{color:#fbbf24}.hl-flag{color:#f472b6}details{margin-bottom:1.25rem;border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .2s var(--ease)}details[open]{border-color:var(--teal-200)}details summary{padding:1rem 1.25rem;font-weight:600;font-size:15px;cursor:pointer;background:var(--surface-alt);list-style:none;display:flex;align-items:center;gap:10px;transition:background .2s var(--ease);user-select:none}details summary::-webkit-details-marker{display:none}details summary::before{content:'';width:20px;height:20px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain;flex-shrink:0;transition:transform .2s var(--ease)}details[open] summary::before{transform:rotate(90deg)}details summary:hover{background:var(--teal-50)}.details-body{padding:1.25rem 1.5rem}.details-body p:last-child{margin-bottom:0}.video-card{margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}.video-wrapper{position:relative;padding-bottom:56.25%;height:0;background:#0f172a}.video-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}.video-caption{padding:12px 16px;background:var(--surface-alt);font-size:13px;color:var(--ink-muted);display:flex;align-items:center;gap:6px}.video-caption svg{width:14px;height:14px;color:var(--red-500)}.resource-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1rem;margin-bottom:1.5rem}.resource-card{display:flex;gap:14px;padding:1rem 1.25rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all .2s var(--ease);background:#fff}.resource-card:hover{border-color:var(--teal-300);background:var(--teal-50);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.04)}.resource-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}.resource-icon.docs{background:var(--blue-50);color:var(--blue-600)}.resource-icon.video{background:var(--red-50);color:var(--red-500)}.resource-icon.github{background:var(--ink);color:#fff}.resource-icon.article{background:var(--amber-50);color:var(--amber-600)}.resource-icon.pdf{background:var(--purple-50);color:var(--purple-600)}.resource-info{min-width:0}.resource-title{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:2px;line-height:1.4}.resource-desc{font-size:12px;color:var(--ink-muted);line-height:1.5}.assignment{border:2px solid var(--teal-200);border-radius:14px;padding:1.5rem 1.75rem;margin-bottom:1.5rem;background:linear-gradient(135deg,var(--teal-50) 0%,#fff 100%)}.assignment-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}.assignment-label{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--teal-700)}.assignment-difficulty{display:inline-flex;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:600}.difficulty-l1{background:var(--teal-100);color:var(--teal-800)}.difficulty-l2{background:var(--amber-100);color:var(--amber-600)}.difficulty-l3{background:var(--red-100);color:var(--red-600)}.assignment h4{font-size:1.05rem;font-weight:700;margin-bottom:.75rem}.assignment p{font-size:14px}.checklist{list-style:none;padding:0}.checklist li{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border-light);font-size:14px}.checklist li:last-child{border-bottom:none}.check-box{width:20px;height:20px;border-radius:6px;border:2px solid var(--border);flex-shrink:0;margin-top:1px;cursor:pointer;transition:all .15s var(--ease);display:flex;align-items:center;justify-content:center}.check-box:hover{border-color:var(--teal-500)}.check-box.checked{background:var(--teal-500);border-color:var(--teal-500)}.check-box.checked::after{content:'';width:10px;height:10px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain}.diagram{margin:1.5rem 0;padding:2rem;background:var(--surface-alt);border:1px solid var(--border);border-radius:14px;overflow-x:auto}.diagram pre{background:transparent;color:var(--ink);padding:0;font-size:13px;line-height:1.6}.chapter-footer{border-top:1px solid var(--border);padding:3rem 2rem;background:var(--surface-alt)}.chapter-footer-inner{max-width:var(--content-max);margin:0 auto}.footer-nav{display:flex;justify-content:space-between;align-items:center;gap:1rem}.footer-nav-link{display:flex;flex-direction:column;gap:4px;padding:1rem 1.5rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all .2s var(--ease);max-width:320px;background:#fff}.footer-nav-link:hover{border-color:var(--teal-300);box-shadow:0 4px 12px rgba(0,0,0,.04)}.footer-nav-label{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--teal-600)}.footer-nav-title{font-size:15px;font-weight:600;color:var(--ink)}.footer-brand{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border);font-size:13px;color:var(--ink-muted)}@media(max-width:960px){.main-layout{grid-template-columns:1fr}.sidebar{display:none}.resource-grid{grid-template-columns:1fr}}@media(max-width:640px){.hero{padding:2.5rem 1.25rem 2rem}.main-layout{padding:0 1.25rem}.content{padding:2rem 0 4rem}pre{padding:1rem;font-size:12.5px}.footer-nav{flex-direction:column}.footer-nav-link{max-width:100%;width:100%}}@media print{.top-nav,.sidebar,.progress-bar{display:none}.main-layout{display:block}.content{padding:0}.hero{background:#fff;border:none}pre{background:#f1f5f9;color:var(--ink);border:1px solid var(--border)}}
+  <style>
+    /* ═══════════════════════════════════════════════
+       ILA DESIGN SYSTEM — v1.0
+       Iksha Learning Academy
+       ═══════════════════════════════════════════════ */
+
+    :root {
+      /* Palette */
+      --ink:        #0f172a;
+      --ink-light:  #334155;
+      --ink-muted:  #64748b;
+      --surface:    #ffffff;
+      --surface-alt:#f8fafc;
+      --surface-warm:#fffbeb;
+      --border:     #e2e8f0;
+      --border-light:#f1f5f9;
+
+      /* Brand */
+      --teal-50:  #f0fdfa;
+      --teal-100: #ccfbf1;
+      --teal-200: #99f6e4;
+      --teal-500: #14b8a6;
+      --teal-600: #0d9488;
+      --teal-700: #0f766e;
+      --teal-800: #115e59;
+      --teal-900: #134e4a;
+
+      --blue-50:  #eff6ff;
+      --blue-100: #dbeafe;
+      --blue-500: #3b82f6;
+      --blue-600: #2563eb;
+      --blue-700: #1d4ed8;
+
+      --amber-50:  #fffbeb;
+      --amber-100: #fef3c7;
+      --amber-500: #f59e0b;
+      --amber-600: #d97706;
+
+      --red-50:   #fef2f2;
+      --red-100:  #fee2e2;
+      --red-500:  #ef4444;
+      --red-600:  #dc2626;
+
+      --purple-50:  #faf5ff;
+      --purple-100: #f3e8ff;
+      --purple-500: #a855f7;
+      --purple-600: #9333ea;
+
+      /* Typography */
+      --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-serif: 'Instrument Serif', Georgia, serif;
+      --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
+
+      /* Spacing */
+      --content-max: 780px;
+      --sidebar-width: 280px;
+
+      /* Transitions */
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--ink);
+      background: var(--surface);
+    }
+
+    /* ── PROGRESS BAR ─────────────────────────── */
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--teal-500), var(--blue-500));
+      z-index: 1000;
+      transition: width 0.15s var(--ease);
+    }
+
+    /* ── TOP NAV ──────────────────────────────── */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+    }
+
+    .top-nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--teal-800);
+    }
+
+    .nav-brand-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--teal-600), var(--teal-800));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .nav-brand-text {
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-chapter-nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      color: var(--ink-muted);
+      border: 1px solid var(--border);
+      background: white;
+      transition: all 0.2s var(--ease);
+      cursor: pointer;
+    }
+
+    .nav-btn:hover {
+      color: var(--ink);
+      border-color: var(--teal-500);
+      background: var(--teal-50);
+    }
+
+    .nav-btn.disabled {
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    .nav-current {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink-light);
+      padding: 0 4px;
+    }
+
+    /* ── HERO ─────────────────────────────────── */
+    .hero {
+      background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 4rem 2rem 3.5rem;
+    }
+
+    .hero-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
+    }
+
+    .hero-chapter-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--teal-700);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 1rem;
+    }
+
+    .hero-chapter-label span {
+      background: var(--teal-100);
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+
+    .hero h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(2.4rem, 5vw, 3.2rem);
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: 1rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: var(--ink-light);
+      line-height: 1.65;
+      max-width: 640px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .hero-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
+    .hero-meta-item svg {
+      width: 16px;
+      height: 16px;
+      color: var(--teal-600);
+    }
+
+    /* ── MAIN LAYOUT ──────────────────────────── */
+    .main-layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr var(--sidebar-width);
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .content {
+      padding: 3rem 0 6rem;
+      min-width: 0;
+    }
+
+    /* ── SIDEBAR TOC ──────────────────────────── */
+    .sidebar {
+      position: sticky;
+      top: 76px;
+      padding: 2rem 0;
+      max-height: calc(100vh - 76px);
+      overflow-y: auto;
+    }
+
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-muted);
+      margin-bottom: 1rem;
+      padding-left: 14px;
+    }
+
+    .toc-list {
+      list-style: none;
+    }
+
+    .toc-item a {
+      display: block;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--ink-muted);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: all 0.2s var(--ease);
+      line-height: 1.5;
+    }
+
+    .toc-item a:hover {
+      color: var(--ink);
+      background: var(--surface-alt);
+    }
+
+    .toc-item a.active {
+      color: var(--teal-700);
+      border-left-color: var(--teal-500);
+      background: var(--teal-50);
+      font-weight: 500;
+    }
+
+    /* ── TYPOGRAPHY ────────────────────────────── */
+    .content h2 {
+      font-family: var(--font-serif);
+      font-size: 1.85rem;
+      font-weight: 400;
+      color: var(--ink);
+      margin: 3rem 0 1rem;
+      padding-top: 1rem;
+      scroll-margin-top: 80px;
+    }
+
+    .content h2:first-child {
+      margin-top: 0;
+    }
+
+    .content h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 2rem 0 0.75rem;
+      scroll-margin-top: 80px;
+    }
+
+    .content p {
+      margin-bottom: 1.25rem;
+      color: var(--ink-light);
+    }
+
+    .content strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .content a {
+      color: var(--teal-700);
+      text-decoration: underline;
+      text-decoration-color: var(--teal-200);
+      text-underline-offset: 3px;
+      transition: text-decoration-color 0.2s;
+    }
+
+    .content a:hover {
+      text-decoration-color: var(--teal-600);
+    }
+
+    .content ul, .content ol {
+      margin-bottom: 1.25rem;
+      padding-left: 1.5rem;
+    }
+
+    .content li {
+      margin-bottom: 0.5rem;
+      color: var(--ink-light);
+    }
+
+    .content li::marker {
+      color: var(--teal-500);
+    }
+
+    /* ── SECTION DIVIDER ──────────────────────── */
+    .section-divider {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 3rem 0;
+    }
+
+    /* ── CALLOUT BOXES ────────────────────────── */
+    .callout {
+      padding: 1.25rem 1.5rem;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+      border: 1px solid;
+      position: relative;
+    }
+
+    .callout-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .callout-header svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    .callout p:last-child { margin-bottom: 0; }
+
+    .callout.concept {
+      background: var(--blue-50);
+      border-color: var(--blue-100);
+    }
+    .callout.concept .callout-header { color: var(--blue-700); }
+
+    .callout.important {
+      background: var(--amber-50);
+      border-color: var(--amber-100);
+    }
+    .callout.important .callout-header { color: var(--amber-600); }
+
+    .callout.danger {
+      background: var(--red-50);
+      border-color: var(--red-100);
+    }
+    .callout.danger .callout-header { color: var(--red-600); }
+
+    .callout.tip {
+      background: var(--purple-50);
+      border-color: var(--purple-100);
+    }
+    .callout.tip .callout-header { color: var(--purple-600); }
+
+    .callout.success {
+      background: var(--teal-50);
+      border-color: var(--teal-100);
+    }
+    .callout.success .callout-header { color: var(--teal-700); }
+
+    /* ── CODE BLOCKS ──────────────────────────── */
+    .code-block {
+      position: relative;
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+      background: var(--surface-alt);
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--ink-muted);
+    }
+
+    .code-lang {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .code-copy {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: white;
+      font-size: 11px;
+      font-family: var(--font-sans);
+      color: var(--ink-muted);
+      cursor: pointer;
+      transition: all 0.2s var(--ease);
+    }
+
+    .code-copy:hover {
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    .code-copy.copied {
+      background: var(--teal-50);
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    pre {
+      margin: 0;
+      padding: 1.25rem 1.5rem;
+      overflow-x: auto;
+      background: #1e293b;
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: #e2e8f0;
+    }
+
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.88em;
+    }
+
+    p code, li code {
+      padding: 2px 7px;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      color: var(--teal-800);
+      font-size: 0.85em;
+    }
+
+    /* Syntax highlights (minimal) */
+    .hl-keyword  { color: #c084fc; }
+    .hl-string   { color: #86efac; }
+    .hl-comment  { color: #64748b; font-style: italic; }
+    .hl-function { color: #7dd3fc; }
+    .hl-number   { color: #fbbf24; }
+    .hl-flag     { color: #f472b6; }
+
+    /* ── COLLAPSIBLE (DETAILS) ────────────────── */
+    details {
+      margin-bottom: 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.2s var(--ease);
+    }
+
+    details[open] {
+      border-color: var(--teal-200);
+    }
+
+    details summary {
+      padding: 1rem 1.25rem;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      background: var(--surface-alt);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.2s var(--ease);
+      user-select: none;
+    }
+
+    details summary::-webkit-details-marker { display: none; }
+
+    details summary::before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+      flex-shrink: 0;
+      transition: transform 0.2s var(--ease);
+    }
+
+    details[open] summary::before {
+      transform: rotate(90deg);
+    }
+
+    details summary:hover {
+      background: var(--teal-50);
+    }
+
+    .details-body {
+      padding: 1.25rem 1.5rem;
+    }
+
+    .details-body p:last-child { margin-bottom: 0; }
+
+    /* ── VIDEO EMBED ──────────────────────────── */
+    .video-card {
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      background: #0f172a;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .video-caption {
+      padding: 12px 16px;
+      background: var(--surface-alt);
+      font-size: 13px;
+      color: var(--ink-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .video-caption svg {
+      width: 14px;
+      height: 14px;
+      color: var(--red-500);
+    }
+
+    /* ── RESOURCE CARDS ───────────────────────── */
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .resource-card {
+      display: flex;
+      gap: 14px;
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      background: white;
+    }
+
+    .resource-card:hover {
+      border-color: var(--teal-300);
+      background: var(--teal-50);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .resource-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 18px;
+    }
+
+    .resource-icon.docs    { background: var(--blue-50);   color: var(--blue-600); }
+    .resource-icon.video   { background: var(--red-50);    color: var(--red-500); }
+    .resource-icon.github  { background: var(--ink);       color: white; }
+    .resource-icon.article { background: var(--amber-50);  color: var(--amber-600); }
+    .resource-icon.pdf     { background: var(--purple-50); color: var(--purple-600); }
+
+    .resource-info {
+      min-width: 0;
+    }
+
+    .resource-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 2px;
+      line-height: 1.4;
+    }
+
+    .resource-desc {
+      font-size: 12px;
+      color: var(--ink-muted);
+      line-height: 1.5;
+    }
+
+    /* ── ASSIGNMENT CARDS ─────────────────────── */
+    .assignment {
+      border: 2px solid var(--teal-200);
+      border-radius: 14px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--teal-50) 0%, white 100%);
+    }
+
+    .assignment-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .assignment-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--teal-700);
+    }
+
+    .assignment-difficulty {
+      display: inline-flex;
+      padding: 4px 10px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .difficulty-l1 { background: var(--teal-100); color: var(--teal-800); }
+    .difficulty-l2 { background: var(--amber-100); color: var(--amber-600); }
+    .difficulty-l3 { background: var(--red-100); color: var(--red-600); }
+
+    .assignment h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .assignment p {
+      font-size: 14px;
+    }
+
+    .checklist {
+      list-style: none;
+      padding: 0;
+    }
+
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-light);
+      font-size: 14px;
+    }
+
+    .checklist li:last-child { border-bottom: none; }
+
+    .check-box {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      border: 2px solid var(--border);
+      flex-shrink: 0;
+      margin-top: 1px;
+      cursor: pointer;
+      transition: all 0.15s var(--ease);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .check-box:hover {
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked {
+      background: var(--teal-500);
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+    }
+
+    /* ── ARCHITECTURE DIAGRAM ─────────────────── */
+    .diagram {
+      margin: 1.5rem 0;
+      padding: 2rem;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow-x: auto;
+    }
+
+    .diagram pre {
+      background: transparent;
+      color: var(--ink);
+      padding: 0;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .diagram-caption {
+      margin-top: 1rem;
+      font-size: 12px;
+      color: var(--ink-muted);
+      text-align: center;
+      font-style: italic;
+    }
+
+    /* ── FOOTER ───────────────────────────────── */
+    .chapter-footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      background: var(--surface-alt);
+    }
+
+    .chapter-footer-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
+    }
+
+    .footer-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .footer-nav-link {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 1rem 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      max-width: 320px;
+      background: white;
+    }
+
+    .footer-nav-link:hover {
+      border-color: var(--teal-300);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .footer-nav-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--teal-600);
+    }
+
+    .footer-nav-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .footer-brand {
+      text-align: center;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
+    /* ── RESPONSIVE ───────────────────────────── */
+    @media (max-width: 960px) {
+      .main-layout {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        display: none;
+      }
+      .resource-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero { padding: 2.5rem 1.25rem 2rem; }
+      .main-layout { padding: 0 1.25rem; }
+      .content { padding: 2rem 0 4rem; }
+      pre { padding: 1rem; font-size: 12.5px; }
+      .footer-nav { flex-direction: column; }
+      .footer-nav-link { max-width: 100%; width: 100%; }
+    }
+
+    /* ── PRINT ────────────────────────────────── */
+    @media print {
+      .top-nav, .sidebar, .progress-bar { display: none; }
+      .main-layout { display: block; }
+      .content { padding: 0; }
+      .hero { background: white; border: none; }
+      pre { background: #f1f5f9; color: var(--ink); border: 1px solid var(--border); }
+    }
   </style>
 </head>
 <body>
   <div class="progress-bar" id="progressBar"></div>
+
   <nav class="top-nav">
     <div class="top-nav-inner">
       <a class="nav-brand" href="index.html"><div class="nav-brand-icon">ILA</div><span class="nav-brand-text">Iksha Learning Academy</span></a>
-      <div class="nav-chapter-nav"><a class="nav-btn" href="chapter-02.html">&larr; Previous</a><span class="nav-current">03 / 10</span><a class="nav-btn" href="chapter-04.html">Next &rarr;</a></div>
+      <div class="nav-chapter-nav">
+        <a class="nav-btn" href="chapter-02.html">&larr; Previous</a>
+        <span class="nav-current">03 / 10</span>
+        <a class="nav-btn" href="chapter-04.html">Next &rarr;</a>
+      </div>
     </div>
   </nav>
+
   <header class="hero">
     <div class="hero-inner">
       <div class="hero-chapter-label"><span>Chapter 03</span> &middot; Phase 2: Generative AI</div>
-      <h1>Natural Language Processing</h1>
-      <p class="hero-subtitle">Process and understand human language: tokenization, word embeddings, sequence models, BERT and its variants, and practical text classification and NER systems.</p>
+      <h1>Generative Models</h1>
+      <p class="hero-subtitle">
+        From Variational Autoencoders to Diffusion Models, learn the theory and implementation of systems
+        that create realistic images, audio, and video. Understand the training dynamics, failure modes,
+        and evaluation metrics that separate toy demos from production-quality generation.
+      </p>
       <div class="hero-meta">
-        <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Estimated: 3&ndash;4 days</div>
-        <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>3 Advancement Levels</div>
+        <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Estimated: 4&ndash;5 days</div>
+        <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>6 Core Concepts</div>
         <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>3 Assignments</div>
       </div>
     </div>
   </header>
+
   <div class="main-layout">
     <main class="content">
+
       <h2 id="why-this-matters">Why This Matters</h2>
 
-      <p>Natural language processing enables computers to understand and generate human language. From search engines to chatbots, NLP powers the AI applications people interact with daily. Modern NLP is built on tokenization, embeddings, and transformer models.</p>
+      <p>
+        Generative AI has moved from a research curiosity to a multi-billion dollar industry in under five
+        years. Models that generate photorealistic images (Stable Diffusion, DALL-E), coherent long-form
+        text (GPT-4), and realistic video (Sora) are reshaping creative industries, software development,
+        and scientific research. Understanding how these models work &mdash; not just what they produce &mdash;
+        is essential for building, evaluating, and deploying generative systems responsibly.
+      </p>
 
-      <p>The concepts in this chapter will be referenced throughout the rest of the course. Take the time to build deep understanding, not just surface-level familiarity.</p>
+      <p>
+        This chapter covers the three dominant paradigms: <strong>Variational Autoencoders</strong> (principled
+        probabilistic generation), <strong>GANs</strong> (adversarial training for sharp outputs), and
+        <strong>Diffusion Models</strong> (iterative denoising for state-of-the-art quality). Each has distinct
+        trade-offs in training stability, output quality, diversity, and computational cost.
+      </p>
 
       <div class="callout concept">
-        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg> Key Insight</div>
-        <p>Modern NLP treats language as sequences of tokens, not words. Subword tokenization (BPE, WordPiece) handles any vocabulary, including misspellings and new words, by breaking text into meaningful subunits.</p>
+        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>Key Insight</div>
+        <p>
+          All generative models solve the same fundamental problem: learning to sample from an unknown data
+          distribution p(x). They differ in <strong>how</strong> they model that distribution &mdash; explicit
+          density estimation (VAEs), implicit density via adversarial training (GANs), or score-based iterative
+          refinement (diffusion). Your choice depends on whether you need diversity, quality, controllability,
+          or training stability.
+        </p>
       </div>
 
       <hr class="section-divider">
 
       <h2 id="key-concepts">Key Concepts</h2>
 
+      <h3 id="vaes">1. Variational Autoencoders (VAEs)</h3>
 
-      <h3 id="tokenization">1. Tokenization and Preprocessing</h3>
+      <p>
+        A VAE learns a compressed latent representation of data by training an <strong>encoder</strong>
+        (maps input to a distribution in latent space) and a <strong>decoder</strong> (maps latent samples
+        back to data space). The key innovation is the <em>reparameterization trick</em>, which allows
+        backpropagation through the stochastic sampling step.
+      </p>
 
-      <p>Tokenization and Preprocessing is a critical concept in this domain. Understanding it deeply will differentiate you from practitioners who only know the API calls. Let us explore the theory, the implementation, and the practical considerations.</p>
+      <p>
+        The loss function combines reconstruction quality (how well the decoder recreates the input) with a
+        KL divergence term (how close the latent distribution is to a standard Gaussian). This regularization
+        ensures the latent space is smooth and interpolable.
+      </p>
 
-      <p>In practice, tokenization and preprocessing requires careful attention to both theoretical foundations and engineering details. The code below demonstrates the core patterns you will use in production systems.</p>
+      <div class="diagram">
+<pre>
+  ┌──────────┐    ┌──────────┐    ┌──────────┐    ┌──────────┐
+  │  Input x │──▶│ Encoder  │──▶│  z ~ N(  │──▶│ Decoder  │──▶ x_hat
+  │          │    │ q(z|x)   │    │  mu, sig)│    │ p(x|z)   │
+  └──────────┘    └──────────┘    └──────────┘    └──────────┘
+                        │                               │
+                        │       KL Divergence            │  Reconstruction
+                        └───────────┬───────────────────┘  Loss
+                                    │
+                              Total Loss = Recon + beta * KL
+
+  Reparameterization trick: z = mu + sigma * epsilon,  epsilon ~ N(0, I)
+</pre>
+        <div class="diagram-caption">Figure 1: VAE architecture with the reparameterization trick</div>
+      </div>
 
       <div class="code-block">
-        <div class="code-header">
-          <span class="code-lang">python</span>
-          <button class="code-copy" onclick="copyCode(this)">Copy</button>
-        </div>
+        <div class="code-header"><span class="code-lang">python</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
 <pre>
-<span class="hl-keyword">import</span> numpy <span class="hl-keyword">as</span> np
 <span class="hl-keyword">import</span> torch
 <span class="hl-keyword">import</span> torch.nn <span class="hl-keyword">as</span> nn
+<span class="hl-keyword">import</span> torch.nn.functional <span class="hl-keyword">as</span> F
 
-<span class="hl-comment"># Tokenization and Preprocessing — core implementation</span>
-<span class="hl-keyword">class</span> <span class="hl-function">Tokenization</span>:
-    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, config=<span class="hl-keyword">None</span>):
-        self.config = config or {}
-        self.model = <span class="hl-keyword">None</span>
-        self.history = []
+<span class="hl-keyword">class</span> <span class="hl-function">VAE</span>(nn.Module):
+    <span class="hl-string">"""Variational Autoencoder for image generation."""</span>
 
-    <span class="hl-keyword">def</span> <span class="hl-function">fit</span>(self, X, y):
-        <span class="hl-string">"""Train the model on input data."""</span>
-        <span class="hl-function">print</span>(<span class="hl-string">f"Training on {X.shape[0]} samples..."</span>)
-        <span class="hl-comment"># Implementation specific to Tokenization and Preprocessing</span>
-        <span class="hl-keyword">return</span> self
+    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, latent_dim=<span class="hl-number">128</span>, img_channels=<span class="hl-number">3</span>):
+        <span class="hl-function">super</span>().__init__()
+        self.latent_dim = latent_dim
 
-    <span class="hl-keyword">def</span> <span class="hl-function">predict</span>(self, X):
-        <span class="hl-string">"""Generate predictions."""</span>
-        <span class="hl-keyword">return</span> self.model(X)
+        <span class="hl-comment"># Encoder: image -> (mu, log_var)</span>
+        self.encoder = nn.Sequential(
+            nn.Conv2d(img_channels, <span class="hl-number">32</span>, <span class="hl-number">4</span>, stride=<span class="hl-number">2</span>, padding=<span class="hl-number">1</span>),
+            nn.ReLU(),
+            nn.Conv2d(<span class="hl-number">32</span>, <span class="hl-number">64</span>, <span class="hl-number">4</span>, stride=<span class="hl-number">2</span>, padding=<span class="hl-number">1</span>),
+            nn.ReLU(),
+            nn.Conv2d(<span class="hl-number">64</span>, <span class="hl-number">128</span>, <span class="hl-number">4</span>, stride=<span class="hl-number">2</span>, padding=<span class="hl-number">1</span>),
+            nn.ReLU(),
+            nn.Flatten(),
+        )
+        self.fc_mu = nn.Linear(<span class="hl-number">128</span> * <span class="hl-number">4</span> * <span class="hl-number">4</span>, latent_dim)
+        self.fc_var = nn.Linear(<span class="hl-number">128</span> * <span class="hl-number">4</span> * <span class="hl-number">4</span>, latent_dim)
 
-    <span class="hl-keyword">def</span> <span class="hl-function">evaluate</span>(self, X, y):
-        <span class="hl-string">"""Evaluate model performance."""</span>
-        preds = self.predict(X)
-        accuracy = (preds == y).mean()
-        <span class="hl-function">print</span>(<span class="hl-string">f"Accuracy: {accuracy:.4f}"</span>)
-        <span class="hl-keyword">return</span> accuracy
+        <span class="hl-comment"># Decoder: z -> image</span>
+        self.fc_decode = nn.Linear(latent_dim, <span class="hl-number">128</span> * <span class="hl-number">4</span> * <span class="hl-number">4</span>)
+        self.decoder = nn.Sequential(
+            nn.ConvTranspose2d(<span class="hl-number">128</span>, <span class="hl-number">64</span>, <span class="hl-number">4</span>, stride=<span class="hl-number">2</span>, padding=<span class="hl-number">1</span>),
+            nn.ReLU(),
+            nn.ConvTranspose2d(<span class="hl-number">64</span>, <span class="hl-number">32</span>, <span class="hl-number">4</span>, stride=<span class="hl-number">2</span>, padding=<span class="hl-number">1</span>),
+            nn.ReLU(),
+            nn.ConvTranspose2d(<span class="hl-number">32</span>, img_channels, <span class="hl-number">4</span>, stride=<span class="hl-number">2</span>, padding=<span class="hl-number">1</span>),
+            nn.Sigmoid(),
+        )
+
+    <span class="hl-keyword">def</span> <span class="hl-function">reparameterize</span>(self, mu, log_var):
+        <span class="hl-string">"""Sample z using the reparameterization trick."""</span>
+        std = torch.exp(<span class="hl-number">0.5</span> * log_var)
+        eps = torch.randn_like(std)
+        <span class="hl-keyword">return</span> mu + eps * std
+
+    <span class="hl-keyword">def</span> <span class="hl-function">forward</span>(self, x):
+        h = self.encoder(x)
+        mu, log_var = self.fc_mu(h), self.fc_var(h)
+        z = self.reparameterize(mu, log_var)
+        decoded = self.fc_decode(z).view(-<span class="hl-number">1</span>, <span class="hl-number">128</span>, <span class="hl-number">4</span>, <span class="hl-number">4</span>)
+        recon = self.decoder(decoded)
+        <span class="hl-keyword">return</span> recon, mu, log_var
+
+    <span class="hl-keyword">def</span> <span class="hl-function">loss_function</span>(self, recon_x, x, mu, log_var, beta=<span class="hl-number">1.0</span>):
+        recon_loss = F.mse_loss(recon_x, x, reduction=<span class="hl-string">'sum'</span>)
+        kl_loss = -<span class="hl-number">0.5</span> * torch.sum(<span class="hl-number">1</span> + log_var - mu.pow(<span class="hl-number">2</span>) - log_var.exp())
+        <span class="hl-keyword">return</span> recon_loss + beta * kl_loss
 </pre>
       </div>
 
+      <h3 id="gans">2. GANs &mdash; Architecture and Training</h3>
 
-      <h3 id="embeddings">2. Word Embeddings</h3>
+      <p>
+        Generative Adversarial Networks pit two networks against each other: a <strong>generator</strong>
+        that creates fake samples and a <strong>discriminator</strong> that tries to distinguish real from
+        fake. The generator improves by learning to fool the discriminator, while the discriminator improves
+        by getting better at detection. This adversarial dynamic produces strikingly sharp outputs.
+      </p>
 
-      <p>Word Embeddings is a critical concept in this domain. Understanding it deeply will differentiate you from practitioners who only know the API calls. Let us explore the theory, the implementation, and the practical considerations.</p>
-
-      <p>In practice, word embeddings requires careful attention to both theoretical foundations and engineering details. The code below demonstrates the core patterns you will use in production systems.</p>
+      <p>
+        Training GANs is notoriously difficult. Common failure modes include <strong>mode collapse</strong>
+        (generator produces only a few distinct outputs), <strong>training instability</strong> (oscillating
+        losses), and <strong>vanishing gradients</strong> (discriminator becomes too strong). Techniques like
+        spectral normalization, progressive growing, and Wasserstein loss have made training more stable.
+      </p>
 
       <div class="code-block">
-        <div class="code-header">
-          <span class="code-lang">python</span>
-          <button class="code-copy" onclick="copyCode(this)">Copy</button>
-        </div>
+        <div class="code-header"><span class="code-lang">python</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
 <pre>
-<span class="hl-keyword">import</span> numpy <span class="hl-keyword">as</span> np
 <span class="hl-keyword">import</span> torch
 <span class="hl-keyword">import</span> torch.nn <span class="hl-keyword">as</span> nn
 
-<span class="hl-comment"># Word Embeddings — core implementation</span>
-<span class="hl-keyword">class</span> <span class="hl-function">Embeddings</span>:
-    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, config=<span class="hl-keyword">None</span>):
-        self.config = config or {}
-        self.model = <span class="hl-keyword">None</span>
-        self.history = []
+<span class="hl-keyword">class</span> <span class="hl-function">Generator</span>(nn.Module):
+    <span class="hl-string">"""DCGAN-style generator: latent vector -> image."""</span>
 
-    <span class="hl-keyword">def</span> <span class="hl-function">fit</span>(self, X, y):
-        <span class="hl-string">"""Train the model on input data."""</span>
-        <span class="hl-function">print</span>(<span class="hl-string">f"Training on {X.shape[0]} samples..."</span>)
-        <span class="hl-comment"># Implementation specific to Word Embeddings</span>
-        <span class="hl-keyword">return</span> self
+    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, latent_dim=<span class="hl-number">100</span>, img_channels=<span class="hl-number">3</span>):
+        <span class="hl-function">super</span>().__init__()
+        self.net = nn.Sequential(
+            <span class="hl-comment"># latent_dim -> 512 x 4 x 4</span>
+            nn.ConvTranspose2d(latent_dim, <span class="hl-number">512</span>, <span class="hl-number">4</span>, <span class="hl-number">1</span>, <span class="hl-number">0</span>, bias=<span class="hl-keyword">False</span>),
+            nn.BatchNorm2d(<span class="hl-number">512</span>), nn.ReLU(<span class="hl-keyword">True</span>),
+            <span class="hl-comment"># 512 x 4 x 4 -> 256 x 8 x 8</span>
+            nn.ConvTranspose2d(<span class="hl-number">512</span>, <span class="hl-number">256</span>, <span class="hl-number">4</span>, <span class="hl-number">2</span>, <span class="hl-number">1</span>, bias=<span class="hl-keyword">False</span>),
+            nn.BatchNorm2d(<span class="hl-number">256</span>), nn.ReLU(<span class="hl-keyword">True</span>),
+            <span class="hl-comment"># 256 x 8 x 8 -> 128 x 16 x 16</span>
+            nn.ConvTranspose2d(<span class="hl-number">256</span>, <span class="hl-number">128</span>, <span class="hl-number">4</span>, <span class="hl-number">2</span>, <span class="hl-number">1</span>, bias=<span class="hl-keyword">False</span>),
+            nn.BatchNorm2d(<span class="hl-number">128</span>), nn.ReLU(<span class="hl-keyword">True</span>),
+            <span class="hl-comment"># 128 x 16 x 16 -> 3 x 32 x 32</span>
+            nn.ConvTranspose2d(<span class="hl-number">128</span>, img_channels, <span class="hl-number">4</span>, <span class="hl-number">2</span>, <span class="hl-number">1</span>, bias=<span class="hl-keyword">False</span>),
+            nn.Tanh(),
+        )
 
-    <span class="hl-keyword">def</span> <span class="hl-function">predict</span>(self, X):
-        <span class="hl-string">"""Generate predictions."""</span>
-        <span class="hl-keyword">return</span> self.model(X)
+    <span class="hl-keyword">def</span> <span class="hl-function">forward</span>(self, z):
+        <span class="hl-keyword">return</span> self.net(z.view(z.size(<span class="hl-number">0</span>), -<span class="hl-number">1</span>, <span class="hl-number">1</span>, <span class="hl-number">1</span>))
 
-    <span class="hl-keyword">def</span> <span class="hl-function">evaluate</span>(self, X, y):
-        <span class="hl-string">"""Evaluate model performance."""</span>
-        preds = self.predict(X)
-        accuracy = (preds == y).mean()
-        <span class="hl-function">print</span>(<span class="hl-string">f"Accuracy: {accuracy:.4f}"</span>)
-        <span class="hl-keyword">return</span> accuracy
+
+<span class="hl-keyword">class</span> <span class="hl-function">Discriminator</span>(nn.Module):
+    <span class="hl-string">"""DCGAN-style discriminator with spectral normalization."""</span>
+
+    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, img_channels=<span class="hl-number">3</span>):
+        <span class="hl-function">super</span>().__init__()
+        self.net = nn.Sequential(
+            nn.utils.spectral_norm(nn.Conv2d(img_channels, <span class="hl-number">128</span>, <span class="hl-number">4</span>, <span class="hl-number">2</span>, <span class="hl-number">1</span>)),
+            nn.LeakyReLU(<span class="hl-number">0.2</span>),
+            nn.utils.spectral_norm(nn.Conv2d(<span class="hl-number">128</span>, <span class="hl-number">256</span>, <span class="hl-number">4</span>, <span class="hl-number">2</span>, <span class="hl-number">1</span>)),
+            nn.LeakyReLU(<span class="hl-number">0.2</span>),
+            nn.utils.spectral_norm(nn.Conv2d(<span class="hl-number">256</span>, <span class="hl-number">512</span>, <span class="hl-number">4</span>, <span class="hl-number">2</span>, <span class="hl-number">1</span>)),
+            nn.LeakyReLU(<span class="hl-number">0.2</span>),
+            nn.Conv2d(<span class="hl-number">512</span>, <span class="hl-number">1</span>, <span class="hl-number">4</span>, <span class="hl-number">1</span>, <span class="hl-number">0</span>),
+        )
+
+    <span class="hl-keyword">def</span> <span class="hl-function">forward</span>(self, x):
+        <span class="hl-keyword">return</span> self.net(x).view(-<span class="hl-number">1</span>)
+
+
+<span class="hl-comment"># Training loop with Wasserstein loss + gradient penalty</span>
+<span class="hl-keyword">def</span> <span class="hl-function">train_wgan_gp</span>(gen, disc, dataloader, epochs, device):
+    opt_g = torch.optim.Adam(gen.parameters(), lr=<span class="hl-number">1e-4</span>, betas=(<span class="hl-number">0.0</span>, <span class="hl-number">0.9</span>))
+    opt_d = torch.optim.Adam(disc.parameters(), lr=<span class="hl-number">1e-4</span>, betas=(<span class="hl-number">0.0</span>, <span class="hl-number">0.9</span>))
+
+    <span class="hl-keyword">for</span> epoch <span class="hl-keyword">in</span> <span class="hl-function">range</span>(epochs):
+        <span class="hl-keyword">for</span> real_imgs, _ <span class="hl-keyword">in</span> dataloader:
+            real_imgs = real_imgs.to(device)
+            batch_size = real_imgs.size(<span class="hl-number">0</span>)
+
+            <span class="hl-comment"># Train discriminator (critic) 5x per generator update</span>
+            <span class="hl-keyword">for</span> _ <span class="hl-keyword">in</span> <span class="hl-function">range</span>(<span class="hl-number">5</span>):
+                z = torch.randn(batch_size, <span class="hl-number">100</span>, device=device)
+                fake_imgs = gen(z).detach()
+
+                d_real = disc(real_imgs).mean()
+                d_fake = disc(fake_imgs).mean()
+
+                <span class="hl-comment"># Gradient penalty</span>
+                gp = gradient_penalty(disc, real_imgs, fake_imgs, device)
+                d_loss = d_fake - d_real + <span class="hl-number">10</span> * gp
+
+                opt_d.zero_grad()
+                d_loss.backward()
+                opt_d.step()
+
+            <span class="hl-comment"># Train generator</span>
+            z = torch.randn(batch_size, <span class="hl-number">100</span>, device=device)
+            fake_imgs = gen(z)
+            g_loss = -disc(fake_imgs).mean()
+
+            opt_g.zero_grad()
+            g_loss.backward()
+            opt_g.step()
 </pre>
       </div>
 
+      <h3 id="diffusion-models">3. Diffusion Models</h3>
 
-      <h3 id="sequence-models">3. Sequence Models (RNNs and LSTMs)</h3>
+      <p>
+        Diffusion models generate data by <strong>learning to reverse a noise process</strong>. The forward
+        process gradually adds Gaussian noise to data over T timesteps until the signal is completely
+        destroyed. The reverse process trains a neural network to predict and remove the noise at each
+        step, starting from pure noise and iteratively refining toward a clean sample.
+      </p>
 
-      <p>Sequence Models (RNNs and LSTMs) is a critical concept in this domain. Understanding it deeply will differentiate you from practitioners who only know the API calls. Let us explore the theory, the implementation, and the practical considerations.</p>
-
-      <p>In practice, sequence models (rnns and lstms) requires careful attention to both theoretical foundations and engineering details. The code below demonstrates the core patterns you will use in production systems.</p>
+      <p>
+        This approach produces state-of-the-art image quality and diversity, surpassing GANs on most benchmarks.
+        The key breakthrough was realizing that the denoising network can be trained with a simple MSE loss to
+        predict the noise added at each step, making training far more stable than GANs.
+      </p>
 
       <div class="code-block">
-        <div class="code-header">
-          <span class="code-lang">python</span>
-          <button class="code-copy" onclick="copyCode(this)">Copy</button>
-        </div>
+        <div class="code-header"><span class="code-lang">python</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
 <pre>
-<span class="hl-keyword">import</span> numpy <span class="hl-keyword">as</span> np
 <span class="hl-keyword">import</span> torch
 <span class="hl-keyword">import</span> torch.nn <span class="hl-keyword">as</span> nn
 
-<span class="hl-comment"># Sequence Models (RNNs and LSTMs) — core implementation</span>
-<span class="hl-keyword">class</span> <span class="hl-function">SequenceModels</span>:
-    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, config=<span class="hl-keyword">None</span>):
-        self.config = config or {}
-        self.model = <span class="hl-keyword">None</span>
-        self.history = []
+<span class="hl-keyword">class</span> <span class="hl-function">SimpleDiffusion</span>(nn.Module):
+    <span class="hl-string">"""Simplified DDPM (Denoising Diffusion Probabilistic Model)."""</span>
 
-    <span class="hl-keyword">def</span> <span class="hl-function">fit</span>(self, X, y):
-        <span class="hl-string">"""Train the model on input data."""</span>
-        <span class="hl-function">print</span>(<span class="hl-string">f"Training on {X.shape[0]} samples..."</span>)
-        <span class="hl-comment"># Implementation specific to Sequence Models (RNNs and LSTMs)</span>
-        <span class="hl-keyword">return</span> self
+    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, denoise_model, T=<span class="hl-number">1000</span>, beta_start=<span class="hl-number">1e-4</span>, beta_end=<span class="hl-number">0.02</span>):
+        <span class="hl-function">super</span>().__init__()
+        self.model = denoise_model
+        self.T = T
 
-    <span class="hl-keyword">def</span> <span class="hl-function">predict</span>(self, X):
-        <span class="hl-string">"""Generate predictions."""</span>
-        <span class="hl-keyword">return</span> self.model(X)
+        <span class="hl-comment"># Linear noise schedule</span>
+        betas = torch.linspace(beta_start, beta_end, T)
+        alphas = <span class="hl-number">1.0</span> - betas
+        alphas_cumprod = torch.cumprod(alphas, dim=<span class="hl-number">0</span>)
 
-    <span class="hl-keyword">def</span> <span class="hl-function">evaluate</span>(self, X, y):
-        <span class="hl-string">"""Evaluate model performance."""</span>
-        preds = self.predict(X)
-        accuracy = (preds == y).mean()
-        <span class="hl-function">print</span>(<span class="hl-string">f"Accuracy: {accuracy:.4f}"</span>)
-        <span class="hl-keyword">return</span> accuracy
+        self.register_buffer(<span class="hl-string">'betas'</span>, betas)
+        self.register_buffer(<span class="hl-string">'sqrt_alphas_cumprod'</span>, torch.sqrt(alphas_cumprod))
+        self.register_buffer(<span class="hl-string">'sqrt_one_minus_alphas_cumprod'</span>,
+                             torch.sqrt(<span class="hl-number">1.0</span> - alphas_cumprod))
+
+    <span class="hl-keyword">def</span> <span class="hl-function">forward_process</span>(self, x0, t, noise=<span class="hl-keyword">None</span>):
+        <span class="hl-string">"""Add noise to x0 at timestep t."""</span>
+        <span class="hl-keyword">if</span> noise <span class="hl-keyword">is None</span>:
+            noise = torch.randn_like(x0)
+
+        sqrt_alpha = self.sqrt_alphas_cumprod[t].view(-<span class="hl-number">1</span>, <span class="hl-number">1</span>, <span class="hl-number">1</span>, <span class="hl-number">1</span>)
+        sqrt_one_minus = self.sqrt_one_minus_alphas_cumprod[t].view(-<span class="hl-number">1</span>, <span class="hl-number">1</span>, <span class="hl-number">1</span>, <span class="hl-number">1</span>)
+        <span class="hl-keyword">return</span> sqrt_alpha * x0 + sqrt_one_minus * noise
+
+    <span class="hl-keyword">def</span> <span class="hl-function">training_loss</span>(self, x0):
+        <span class="hl-string">"""Simple noise prediction loss."""</span>
+        t = torch.randint(<span class="hl-number">0</span>, self.T, (x0.size(<span class="hl-number">0</span>),), device=x0.device)
+        noise = torch.randn_like(x0)
+        x_noisy = self.forward_process(x0, t, noise)
+        predicted_noise = self.model(x_noisy, t)
+        <span class="hl-keyword">return</span> nn.functional.mse_loss(predicted_noise, noise)
+
+    @torch.no_grad()
+    <span class="hl-keyword">def</span> <span class="hl-function">sample</span>(self, shape, device):
+        <span class="hl-string">"""Generate samples via iterative denoising."""</span>
+        x = torch.randn(shape, device=device)
+        <span class="hl-keyword">for</span> t <span class="hl-keyword">in</span> <span class="hl-function">reversed</span>(<span class="hl-function">range</span>(self.T)):
+            t_batch = torch.full((shape[<span class="hl-number">0</span>],), t, device=device, dtype=torch.long)
+            predicted_noise = self.model(x, t_batch)
+            x = self.denoise_step(x, predicted_noise, t)
+        <span class="hl-keyword">return</span> x
 </pre>
       </div>
 
+      <h3 id="image-generation">4. Image Generation Pipelines</h3>
 
-      <h3 id="bert">4. BERT and Transformer Encoders</h3>
-
-      <p>BERT and Transformer Encoders is a critical concept in this domain. Understanding it deeply will differentiate you from practitioners who only know the API calls. Let us explore the theory, the implementation, and the practical considerations.</p>
-
-      <p>In practice, bert and transformer encoders requires careful attention to both theoretical foundations and engineering details. The code below demonstrates the core patterns you will use in production systems.</p>
+      <p>
+        Modern image generation systems like Stable Diffusion operate in a <strong>latent space</strong>
+        rather than pixel space. An image encoder compresses the input into a lower-dimensional latent
+        representation, the diffusion process operates in this compact space, and a decoder maps the
+        denoised latent back to pixel space. This dramatically reduces computational cost.
+      </p>
 
       <div class="code-block">
-        <div class="code-header">
-          <span class="code-lang">python</span>
-          <button class="code-copy" onclick="copyCode(this)">Copy</button>
-        </div>
+        <div class="code-header"><span class="code-lang">python</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
 <pre>
-<span class="hl-keyword">import</span> numpy <span class="hl-keyword">as</span> np
+<span class="hl-keyword">from</span> diffusers <span class="hl-keyword">import</span> StableDiffusionPipeline, DPMSolverMultistepScheduler
 <span class="hl-keyword">import</span> torch
-<span class="hl-keyword">import</span> torch.nn <span class="hl-keyword">as</span> nn
 
-<span class="hl-comment"># BERT and Transformer Encoders — core implementation</span>
-<span class="hl-keyword">class</span> <span class="hl-function">Bert</span>:
-    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, config=<span class="hl-keyword">None</span>):
-        self.config = config or {}
-        self.model = <span class="hl-keyword">None</span>
-        self.history = []
+<span class="hl-comment"># Load Stable Diffusion with an efficient scheduler</span>
+pipe = StableDiffusionPipeline.from_pretrained(
+    <span class="hl-string">"stabilityai/stable-diffusion-2-1"</span>,
+    torch_dtype=torch.float16,
+)
+pipe.scheduler = DPMSolverMultistepScheduler.from_config(pipe.scheduler.config)
+pipe = pipe.to(<span class="hl-string">"cuda"</span>)
 
-    <span class="hl-keyword">def</span> <span class="hl-function">fit</span>(self, X, y):
-        <span class="hl-string">"""Train the model on input data."""</span>
-        <span class="hl-function">print</span>(<span class="hl-string">f"Training on {X.shape[0]} samples..."</span>)
-        <span class="hl-comment"># Implementation specific to BERT and Transformer Encoders</span>
-        <span class="hl-keyword">return</span> self
+<span class="hl-comment"># Text-to-image generation</span>
+prompt = <span class="hl-string">"A photorealistic landscape of mountains at sunset, 4k, detailed"</span>
+negative_prompt = <span class="hl-string">"blurry, low quality, watermark, text"</span>
 
-    <span class="hl-keyword">def</span> <span class="hl-function">predict</span>(self, X):
-        <span class="hl-string">"""Generate predictions."""</span>
-        <span class="hl-keyword">return</span> self.model(X)
+image = pipe(
+    prompt=prompt,
+    negative_prompt=negative_prompt,
+    num_inference_steps=<span class="hl-number">25</span>,     <span class="hl-comment"># DPM-Solver needs fewer steps</span>
+    guidance_scale=<span class="hl-number">7.5</span>,          <span class="hl-comment"># classifier-free guidance strength</span>
+    width=<span class="hl-number">768</span>, height=<span class="hl-number">512</span>,
+).images[<span class="hl-number">0</span>]
 
-    <span class="hl-keyword">def</span> <span class="hl-function">evaluate</span>(self, X, y):
-        <span class="hl-string">"""Evaluate model performance."""</span>
-        preds = self.predict(X)
-        accuracy = (preds == y).mean()
-        <span class="hl-function">print</span>(<span class="hl-string">f"Accuracy: {accuracy:.4f}"</span>)
-        <span class="hl-keyword">return</span> accuracy
+image.save(<span class="hl-string">"generated_landscape.png"</span>)
 </pre>
       </div>
 
+      <h3 id="evaluation-metrics">5. Evaluation Metrics (FID, IS, CLIP)</h3>
 
-      <h3 id="text-classification">5. Text Classification Pipeline</h3>
+      <p>
+        Evaluating generative models is notoriously difficult because "quality" is subjective. The field
+        relies on automated metrics that correlate with human judgment, each measuring a different aspect:
+      </p>
 
-      <p>Text Classification Pipeline is a critical concept in this domain. Understanding it deeply will differentiate you from practitioners who only know the API calls. Let us explore the theory, the implementation, and the practical considerations.</p>
-
-      <p>In practice, text classification pipeline requires careful attention to both theoretical foundations and engineering details. The code below demonstrates the core patterns you will use in production systems.</p>
+      <ul>
+        <li><strong>FID (Frechet Inception Distance)</strong> &mdash; measures the distance between feature distributions of real and generated images. Lower is better. The gold standard for image quality + diversity.</li>
+        <li><strong>IS (Inception Score)</strong> &mdash; measures both quality (confident classifications) and diversity (uniform class distribution). Higher is better, but has known blind spots.</li>
+        <li><strong>CLIP Score</strong> &mdash; measures alignment between generated images and text prompts using CLIP embeddings. Essential for text-to-image models.</li>
+        <li><strong>LPIPS</strong> &mdash; measures perceptual similarity between images using deep features. Useful for evaluating reconstruction quality.</li>
+      </ul>
 
       <div class="code-block">
-        <div class="code-header">
-          <span class="code-lang">python</span>
-          <button class="code-copy" onclick="copyCode(this)">Copy</button>
-        </div>
+        <div class="code-header"><span class="code-lang">python</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
 <pre>
-<span class="hl-keyword">import</span> numpy <span class="hl-keyword">as</span> np
+<span class="hl-keyword">from</span> torchmetrics.image.fid <span class="hl-keyword">import</span> FrechetInceptionDistance
+<span class="hl-keyword">from</span> torchmetrics.image.inception <span class="hl-keyword">import</span> InceptionScore
 <span class="hl-keyword">import</span> torch
-<span class="hl-keyword">import</span> torch.nn <span class="hl-keyword">as</span> nn
 
-<span class="hl-comment"># Text Classification Pipeline — core implementation</span>
-<span class="hl-keyword">class</span> <span class="hl-function">TextClassification</span>:
-    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, config=<span class="hl-keyword">None</span>):
-        self.config = config or {}
-        self.model = <span class="hl-keyword">None</span>
-        self.history = []
+<span class="hl-comment"># FID: compare real vs generated distributions</span>
+fid = FrechetInceptionDistance(feature=<span class="hl-number">2048</span>, normalize=<span class="hl-keyword">True</span>)
 
-    <span class="hl-keyword">def</span> <span class="hl-function">fit</span>(self, X, y):
-        <span class="hl-string">"""Train the model on input data."""</span>
-        <span class="hl-function">print</span>(<span class="hl-string">f"Training on {X.shape[0]} samples..."</span>)
-        <span class="hl-comment"># Implementation specific to Text Classification Pipeline</span>
-        <span class="hl-keyword">return</span> self
+<span class="hl-comment"># Add real images (batch of uint8 tensors, shape [N, 3, H, W])</span>
+fid.update(real_images, real=<span class="hl-keyword">True</span>)
 
-    <span class="hl-keyword">def</span> <span class="hl-function">predict</span>(self, X):
-        <span class="hl-string">"""Generate predictions."""</span>
-        <span class="hl-keyword">return</span> self.model(X)
+<span class="hl-comment"># Add generated images</span>
+fid.update(generated_images, real=<span class="hl-keyword">False</span>)
 
-    <span class="hl-keyword">def</span> <span class="hl-function">evaluate</span>(self, X, y):
-        <span class="hl-string">"""Evaluate model performance."""</span>
-        preds = self.predict(X)
-        accuracy = (preds == y).mean()
-        <span class="hl-function">print</span>(<span class="hl-string">f"Accuracy: {accuracy:.4f}"</span>)
-        <span class="hl-keyword">return</span> accuracy
+<span class="hl-comment"># Compute FID score (lower = better)</span>
+fid_score = fid.compute()
+<span class="hl-function">print</span>(<span class="hl-string">f"FID: </span>{fid_score:.2f}<span class="hl-string">"</span>)
+<span class="hl-comment"># Good models: FID < 10, State-of-art: FID < 3</span>
+
+<span class="hl-comment"># Inception Score</span>
+inception = InceptionScore(normalize=<span class="hl-keyword">True</span>)
+inception.update(generated_images)
+is_mean, is_std = inception.compute()
+<span class="hl-function">print</span>(<span class="hl-string">f"IS: </span>{is_mean:.2f}<span class="hl-string"> +/- </span>{is_std:.2f}<span class="hl-string">"</span>)
+
+<span class="hl-comment"># CLIP Score for text-image alignment</span>
+<span class="hl-keyword">from</span> torchmetrics.multimodal <span class="hl-keyword">import</span> CLIPScore
+clip_metric = CLIPScore(model_name_or_path=<span class="hl-string">"openai/clip-vit-base-patch16"</span>)
+score = clip_metric(generated_images, [<span class="hl-string">"a cat sitting on a chair"</span>] * <span class="hl-function">len</span>(generated_images))
+<span class="hl-function">print</span>(<span class="hl-string">f"CLIP Score: </span>{score:.2f}<span class="hl-string">"</span>)
 </pre>
       </div>
 
+      <h3 id="ethical-considerations">6. Ethical Considerations</h3>
 
-      <h3 id="ner">6. Named Entity Recognition</h3>
+      <p>
+        Generative models raise significant ethical concerns that every practitioner must understand and address:
+      </p>
 
-      <p>Named Entity Recognition is a critical concept in this domain. Understanding it deeply will differentiate you from practitioners who only know the API calls. Let us explore the theory, the implementation, and the practical considerations.</p>
+      <ul>
+        <li><strong>Deepfakes and misinformation</strong> &mdash; Photorealistic generation enables creation of convincing fake images and videos. Always implement watermarking and provenance tracking.</li>
+        <li><strong>Training data consent</strong> &mdash; Models trained on web-scraped data may contain copyrighted work or images of identifiable individuals without their consent.</li>
+        <li><strong>Bias amplification</strong> &mdash; Models reproduce and amplify biases present in training data, including racial, gender, and cultural stereotypes.</li>
+        <li><strong>Environmental cost</strong> &mdash; Training large generative models requires enormous compute, with significant carbon footprint. Document and minimize this cost.</li>
+        <li><strong>Dual-use risk</strong> &mdash; The same technology that creates art can create harassment material. Build safety filters and abuse detection into production systems.</li>
+      </ul>
 
-      <p>In practice, named entity recognition requires careful attention to both theoretical foundations and engineering details. The code below demonstrates the core patterns you will use in production systems.</p>
-
-      <div class="code-block">
-        <div class="code-header">
-          <span class="code-lang">python</span>
-          <button class="code-copy" onclick="copyCode(this)">Copy</button>
-        </div>
-<pre>
-<span class="hl-keyword">import</span> numpy <span class="hl-keyword">as</span> np
-<span class="hl-keyword">import</span> torch
-<span class="hl-keyword">import</span> torch.nn <span class="hl-keyword">as</span> nn
-
-<span class="hl-comment"># Named Entity Recognition — core implementation</span>
-<span class="hl-keyword">class</span> <span class="hl-function">Ner</span>:
-    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, config=<span class="hl-keyword">None</span>):
-        self.config = config or {}
-        self.model = <span class="hl-keyword">None</span>
-        self.history = []
-
-    <span class="hl-keyword">def</span> <span class="hl-function">fit</span>(self, X, y):
-        <span class="hl-string">"""Train the model on input data."""</span>
-        <span class="hl-function">print</span>(<span class="hl-string">f"Training on {X.shape[0]} samples..."</span>)
-        <span class="hl-comment"># Implementation specific to Named Entity Recognition</span>
-        <span class="hl-keyword">return</span> self
-
-    <span class="hl-keyword">def</span> <span class="hl-function">predict</span>(self, X):
-        <span class="hl-string">"""Generate predictions."""</span>
-        <span class="hl-keyword">return</span> self.model(X)
-
-    <span class="hl-keyword">def</span> <span class="hl-function">evaluate</span>(self, X, y):
-        <span class="hl-string">"""Evaluate model performance."""</span>
-        preds = self.predict(X)
-        accuracy = (preds == y).mean()
-        <span class="hl-function">print</span>(<span class="hl-string">f"Accuracy: {accuracy:.4f}"</span>)
-        <span class="hl-keyword">return</span> accuracy
-</pre>
+      <div class="callout danger">
+        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Critical Responsibility</div>
+        <p>
+          If you deploy a generative model, you are responsible for its outputs. Implement content safety
+          classifiers, user reporting mechanisms, and audit logs. "The model did it" is not an acceptable
+          response when harmful content is generated.
+        </p>
       </div>
+
+      <details>
+        <summary>What is classifier-free guidance and why does it improve image quality?</summary>
+        <div class="details-body"><p>Classifier-free guidance trains the diffusion model to denoise both with and without the text condition. At inference, the model's prediction is pushed away from the unconditional output and toward the conditional output by a guidance scale factor. Higher guidance scale produces images more aligned with the prompt but with less diversity. A scale of 7&ndash;8 is typical for Stable Diffusion.</p></div>
+      </details>
+
+      <details>
+        <summary>Why do VAE outputs look blurry compared to GANs?</summary>
+        <div class="details-body"><p>VAEs optimize a pixel-level reconstruction loss (MSE or BCE), which penalizes all errors equally. This produces outputs that are the <em>average</em> of all plausible reconstructions, resulting in blurriness. GANs use a discriminator that penalizes unrealistic textures, producing sharper but potentially less diverse outputs. Diffusion models avoid both problems by operating iteratively.</p></div>
+      </details>
 
       <hr class="section-divider">
+
       <h2 id="watch-learn">Watch &amp; Learn</h2>
-      <p>These videos cover core concepts. Watch before starting assignments.</p>
+      <p>This video covers the fundamentals of generative models from VAEs to diffusion models.</p>
       <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/fNxaJsNG3-s?rel=0&amp;modestbranding=1" title="Stanford CS224N &mdash; Word Vectors and Word Senses lecture" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-caption"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg> Stanford CS224N &mdash; Word Vectors and Word Senses lecture</div>
-      </div>
-      <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/xI0HHN5XKDo?rel=0&amp;modestbranding=1" title="CodeEmporium &mdash; BERT Explained: state of the art NLP model" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-caption"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg> CodeEmporium &mdash; BERT Explained: state of the art NLP model</div>
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/8L11aMN5KY8?rel=0&amp;modestbranding=1" title="Generative Models Explained" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Generative Models &mdash; VAEs, GANs, and Diffusion models explained with code
+        </div>
       </div>
 
       <hr class="section-divider">
+
       <h2 id="further-reading">Further Reading</h2>
-      <p>Deep-dive into official documentation and reference material.</p>
+      <p>Foundational papers and practical resources for generative model development.</p>
       <div class="resource-grid">
-        <a class="resource-card" href="https://huggingface.co/docs/transformers/model_doc/bert" target="_blank" rel="noopener">
-          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-          <div class="resource-info"><div class="resource-title">HuggingFace BERT Documentation</div><div class="resource-desc">Complete reference for BERT models and tokenizers.</div></div>
-        </a>
-        <a class="resource-card" href="https://web.stanford.edu/class/cs224n/" target="_blank" rel="noopener">
-          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-          <div class="resource-info"><div class="resource-title">Stanford CS224N: NLP with Deep Learning</div><div class="resource-desc">Course materials for advanced NLP.</div></div>
-        </a>
-        <a class="resource-card" href="https://jalammar.github.io/illustrated-bert/" target="_blank" rel="noopener">
-          <div class="resource-icon article"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
-          <div class="resource-info"><div class="resource-title">The Illustrated BERT</div><div class="resource-desc">Visual guide to BERT architecture and training.</div></div>
-        </a>
-        <a class="resource-card" href="https://github.com/huggingface/tokenizers" target="_blank" rel="noopener">
-          <div class="resource-icon github"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
-          <div class="resource-info"><div class="resource-title">HuggingFace Tokenizers</div><div class="resource-desc">Fast tokenization library for NLP.</div></div>
-        </a>
-
+        <a class="resource-card" href="https://arxiv.org/abs/2006.11239" target="_blank" rel="noopener"><div class="resource-icon pdf"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div class="resource-info"><div class="resource-title">Denoising Diffusion Probabilistic Models (Ho et al.)</div><div class="resource-desc">The DDPM paper that made diffusion models practical. Clear mathematical framework with strong results.</div></div></a>
+        <a class="resource-card" href="https://arxiv.org/abs/1406.2661" target="_blank" rel="noopener"><div class="resource-icon pdf"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div class="resource-info"><div class="resource-title">Generative Adversarial Networks (Goodfellow et al.)</div><div class="resource-desc">The original GAN paper. Introduced the adversarial training framework.</div></div></a>
+        <a class="resource-card" href="https://arxiv.org/abs/2112.10752" target="_blank" rel="noopener"><div class="resource-icon pdf"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div class="resource-info"><div class="resource-title">Latent Diffusion Models (Rombach et al.)</div><div class="resource-desc">The paper behind Stable Diffusion. Diffusion in latent space for efficient high-resolution generation.</div></div></a>
+        <a class="resource-card" href="https://huggingface.co/docs/diffusers/" target="_blank" rel="noopener"><div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><div class="resource-info"><div class="resource-title">Hugging Face Diffusers Library</div><div class="resource-desc">Production-ready diffusion model library with pipelines for Stable Diffusion and beyond.</div></div></a>
+        <a class="resource-card" href="https://arxiv.org/abs/1312.6114" target="_blank" rel="noopener"><div class="resource-icon pdf"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div class="resource-info"><div class="resource-title">Auto-Encoding Variational Bayes (Kingma & Welling)</div><div class="resource-desc">The original VAE paper. Introduced the reparameterization trick and variational inference for generation.</div></div></a>
+        <a class="resource-card" href="https://lilianweng.github.io/posts/2021-07-11-diffusion-models/" target="_blank" rel="noopener"><div class="resource-icon article"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div class="resource-info"><div class="resource-title">What are Diffusion Models? (Lilian Weng)</div><div class="resource-desc">Exceptional blog post covering diffusion models from first principles with detailed math.</div></div></a>
       </div>
+
       <hr class="section-divider">
+
       <h2 id="assignments">Assignments</h2>
       <p>Complete these in order. Each level builds on the previous one.</p>
+
       <div class="assignment">
         <div class="assignment-header"><div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 1</div><span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span></div>
-        <h4>Core Implementation: Tokenization and Preprocessing</h4>
-        <p>Build foundational understanding by implementing core concepts from scratch.</p>
-        <ul class="checklist">          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Implement the core concepts from Tokenization and Preprocessing</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a working example demonstrating Word Embeddings</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write comprehensive unit tests for your implementation</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Document your code with docstrings and comments</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Run benchmarks and record performance metrics</span></li></ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div><p>Your implementation passes all tests and you can explain every line of code.</p></div>
+        <h4>Implement and Compare VAE vs GAN on MNIST</h4>
+        <p>Build both a VAE and a GAN from scratch, train on MNIST, and compare output quality.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Implement a convolutional VAE with reparameterization trick</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Implement a DCGAN with spectral normalization on the discriminator</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Train both on MNIST for 50 epochs with proper loss logging</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Generate a grid of 64 samples from each model and compare visually</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Compute and compare FID scores for both models</span></li>
+        </ul>
+        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div><p>Both models generate recognizable digits. You can articulate why one produces sharper outputs than the other.</p></div>
       </div>
+
       <div class="assignment">
         <div class="assignment-header"><div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 2</div><span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span></div>
-        <h4>Applied Project: Natural Language Processing in Practice</h4>
-        <p>Apply the concepts to a real-world dataset and compare approaches systematically.</p>
-        <ul class="checklist">          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Build a complete pipeline integrating Tokenization and Preprocessing and Word Embeddings</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Apply Sequence Models (RNNs and LSTMs) on a real-world dataset</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Compare at least 3 different approaches and document tradeoffs</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create visualizations that tell a clear story about your results</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write a 200-word analysis of your findings</span></li></ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div><p>Your comparison clearly identifies the best approach with supporting evidence and visualizations.</p></div>
+        <h4>Build a Diffusion Model for CIFAR-10</h4>
+        <p>Implement a DDPM from scratch and train it to generate color images on CIFAR-10.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Implement the forward noise process with a linear beta schedule</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Build a U-Net denoising network with timestep conditioning</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Implement the reverse sampling process (DDPM sampling)</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Train on CIFAR-10 and track FID score throughout training</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Experiment with cosine noise schedule and compare to linear</span></li>
+        </ul>
+        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div><p>Your diffusion model generates recognizable CIFAR-10 images with FID below 50.</p></div>
       </div>
+
       <div class="assignment">
         <div class="assignment-header"><div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 3</div><span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Production-Ready</span></div>
-        <h4>Production System: End-to-End Natural Language Processing</h4>
-        <p>Build a production-quality system that demonstrates mastery of all concepts in this chapter.</p>
-        <ul class="checklist">          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Design a production-ready system incorporating natural language processing best practices</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Implement error handling, logging, and configuration management</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a comprehensive test suite with edge cases</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write documentation for future maintainers</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Deploy or package your solution for team use</span></li></ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div><p>Your system is documented, tested, and could be handed to a colleague for production use.</p></div>
+        <h4>Text-to-Image Pipeline with Safety Filters</h4>
+        <p>Build an end-to-end text-to-image generation pipeline with content safety and quality evaluation.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Set up Stable Diffusion with the Diffusers library and optimized scheduler</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Implement a content safety classifier that filters unsafe prompts and outputs</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Build an automated evaluation pipeline with FID, IS, and CLIP scores</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Add invisible watermarking to all generated images</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write a responsible use policy document for your generation system</span></li>
+        </ul>
+        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div><p>Your pipeline generates high-quality images with safety guardrails and comprehensive evaluation metrics.</p></div>
       </div>
+
       <hr class="section-divider">
+
       <h2 id="self-check">Self-Check</h2>
-      <p>Before moving on, honestly answer these. If any answer is "no," go back and practice.</p>
-      <details>
-        <summary>Can you explain Tokenization and Preprocessing to a colleague without consulting notes?</summary>
-        <div class="details-body"><p>Try explaining the core concept, why it matters, and when to use it. If you need to look things up, spend more time with the material. True understanding means you can teach it.</p></div>
-      </details>
-      <details>
-        <summary>Can you implement Word Embeddings from memory?</summary>
-        <div class="details-body"><p>Open a blank notebook and try to implement the core algorithm without any reference. The act of writing code from memory reveals gaps in understanding that reading alone will not expose.</p></div>
-      </details>
-      <details>
-        <summary>Do you understand when Sequence Models (RNNs and LSTMs) would fail?</summary>
-        <div class="details-body"><p>Knowing when a technique works is important, but knowing when it fails is more important. Every algorithm has assumptions and limitations. If you cannot list at least 3 failure modes, review the material.</p></div>
-      </details>
+      <p>Before moving to Chapter 04, honestly answer these questions.</p>
+      <details><summary>Can you explain the reparameterization trick and why it is necessary?</summary><div class="details-body"><p>Sampling z ~ N(mu, sigma) is not differentiable. The reparameterization trick rewrites z = mu + sigma * epsilon (where epsilon ~ N(0,1)), which moves the stochasticity to a parameter-free noise term. This makes the path from encoder to decoder fully differentiable.</p></div></details>
+      <details><summary>What causes mode collapse in GANs and how do you detect it?</summary><div class="details-body"><p>Mode collapse occurs when the generator learns to produce only a few distinct outputs. Detect it by: (1) inspecting generated samples for low diversity, (2) measuring FID (high FID with visually ok samples suggests missing modes), (3) computing the truncation curve. Solutions include Wasserstein loss, spectral normalization, and diversity-promoting regularization.</p></div></details>
+      <details><summary>Why are diffusion models better than GANs for most image generation tasks?</summary><div class="details-body"><p>Diffusion models are more stable to train (simple MSE loss), produce higher diversity (no mode collapse), have better FID scores on most benchmarks, and support easier conditioning (classifier-free guidance). GANs are faster at inference (single forward pass vs. many denoising steps) and can be better for real-time applications.</p></div></details>
+      <details><summary>Can you evaluate a generative model beyond just looking at samples?</summary><div class="details-body"><p>You should compute FID (quality + diversity), IS (quality + class coverage), CLIP score (text alignment for conditioned models), and LPIPS (perceptual similarity for reconstruction tasks). Always compute on at least 10,000 samples and report confidence intervals.</p></div></details>
+
     </main>
+
     <aside class="sidebar">
       <div class="sidebar-title">On this page</div>
       <ul class="toc-list">
         <li class="toc-item"><a href="#why-this-matters">Why This Matters</a></li>
         <li class="toc-item"><a href="#key-concepts">Key Concepts</a></li>
-        <li class="toc-item"><a href="#tokenization" style="padding-left:28px;font-size:12px">Tokenization and Preprocessing</a></li>
-        <li class="toc-item"><a href="#embeddings" style="padding-left:28px;font-size:12px">Word Embeddings</a></li>
-        <li class="toc-item"><a href="#sequence-models" style="padding-left:28px;font-size:12px">Sequence Models (RNNs and LSTMs)</a></li>
-        <li class="toc-item"><a href="#bert" style="padding-left:28px;font-size:12px">BERT and Transformer Encoders</a></li>
-        <li class="toc-item"><a href="#text-classification" style="padding-left:28px;font-size:12px">Text Classification Pipeline</a></li>
-        <li class="toc-item"><a href="#ner" style="padding-left:28px;font-size:12px">Named Entity Recognition</a></li>
+        <li class="toc-item"><a href="#vaes" style="padding-left:28px;font-size:12px">Variational Autoencoders</a></li>
+        <li class="toc-item"><a href="#gans" style="padding-left:28px;font-size:12px">GANs</a></li>
+        <li class="toc-item"><a href="#diffusion-models" style="padding-left:28px;font-size:12px">Diffusion Models</a></li>
+        <li class="toc-item"><a href="#image-generation" style="padding-left:28px;font-size:12px">Image Generation Pipelines</a></li>
+        <li class="toc-item"><a href="#evaluation-metrics" style="padding-left:28px;font-size:12px">Evaluation Metrics</a></li>
+        <li class="toc-item"><a href="#ethical-considerations" style="padding-left:28px;font-size:12px">Ethical Considerations</a></li>
         <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a></li>
         <li class="toc-item"><a href="#further-reading">Further Reading</a></li>
         <li class="toc-item"><a href="#assignments">Assignments</a></li>
@@ -409,17 +1441,21 @@
       </ul>
     </aside>
   </div>
+
   <footer class="chapter-footer">
     <div class="chapter-footer-inner">
-      <nav class="footer-nav"><a class="footer-nav-link" href="chapter-02.html"><span class="footer-nav-label">&larr; Previous Chapter</span><span class="footer-nav-title">02: Transfer Learning and Fine-Tuning</span></a><a class="footer-nav-link" href="chapter-04.html"><span class="footer-nav-label">Next Chapter &rarr;</span><span class="footer-nav-title">04: Generative AI Foundations</span></a></nav>
-      <div class="footer-brand">ILA (Iksha Learning Academy) &middot; AI &amp; Machine Learning Certification &middot; Advanced Track</div>
+      <nav class="footer-nav">
+        <a class="footer-nav-link" href="chapter-02.html"><span class="footer-nav-label">&larr; Previous Chapter</span><span class="footer-nav-title">02: Transformers and Large Language Models</span></a>
+        <a class="footer-nav-link" href="chapter-04.html"><span class="footer-nav-label">Next Chapter &rarr;</span><span class="footer-nav-title">04: RAG and AI Applications</span></a>
+      </nav>
+      <div class="footer-brand">ILA (Iksha Learning Academy) &middot; AI &amp; ML Engineering Certification &middot; Level 2</div>
     </div>
   </footer>
+
   <script>
-    window.addEventListener('scroll',()=>{const s=window.scrollY;const d=document.documentElement.scrollHeight-window.innerHeight;document.getElementById('progressBar').style.width=(d>0?(s/d)*100:0)+'%'});
-    const tocLinks=document.querySelectorAll('.toc-item a');const sections=[];tocLinks.forEach(l=>{const id=l.getAttribute('href').slice(1);const el=document.getElementById(id);if(el)sections.push({id,el,link:l})});
-    const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{const item=sections.find(s=>s.el===entry.target);if(item&&entry.isIntersecting){tocLinks.forEach(l=>l.classList.remove('active'));item.link.classList.add('active')}})},{rootMargin:'-80px 0px -60% 0px',threshold:0});
-    sections.forEach(s=>observer.observe(s.el));
+    window.addEventListener('scroll',()=>{const s=window.scrollY;const d=document.documentElement.scrollHeight-window.innerHeight;const p=d>0?(s/d)*100:0;document.getElementById('progressBar').style.width=p+'%'});
+    const tocLinks=document.querySelectorAll('.toc-item a');const sections=[];tocLinks.forEach(link=>{const id=link.getAttribute('href').slice(1);const el=document.getElementById(id);if(el)sections.push({id,el,link})});
+    const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{const item=sections.find(s=>s.el===entry.target);if(item&&entry.isIntersecting){tocLinks.forEach(l=>l.classList.remove('active'));item.link.classList.add('active')}})},{rootMargin:'-80px 0px -60% 0px',threshold:0});sections.forEach(s=>observer.observe(s.el));
     function copyCode(btn){const pre=btn.closest('.code-block').querySelector('pre');navigator.clipboard.writeText(pre.textContent).then(()=>{btn.classList.add('copied');btn.textContent='Copied!';setTimeout(()=>{btn.classList.remove('copied');btn.textContent='Copy'},2000)})}
   </script>
 </body>

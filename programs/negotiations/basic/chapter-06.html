@@ -8,14 +8,488 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
-    :root{--ink:#0f172a;--ink-light:#334155;--ink-muted:#64748b;--surface:#ffffff;--surface-alt:#f8fafc;--surface-warm:#fffbeb;--border:#e2e8f0;--border-light:#f1f5f9;--teal-50:#f0fdfa;--teal-100:#ccfbf1;--teal-200:#99f6e4;--teal-500:#14b8a6;--teal-600:#0d9488;--teal-700:#0f766e;--teal-800:#115e59;--teal-900:#134e4a;--blue-50:#eff6ff;--blue-100:#dbeafe;--blue-500:#3b82f6;--blue-600:#2563eb;--blue-700:#1d4ed8;--amber-50:#fffbeb;--amber-100:#fef3c7;--amber-500:#f59e0b;--amber-600:#d97706;--red-50:#fef2f2;--red-100:#fee2e2;--red-500:#ef4444;--red-600:#dc2626;--purple-50:#faf5ff;--purple-100:#f3e8ff;--purple-500:#a855f7;--purple-600:#9333ea;--font-sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;--font-serif:'Instrument Serif',Georgia,serif;--font-mono:'JetBrains Mono','Fira Code',monospace;--content-max:780px;--sidebar-width:280px;--ease:cubic-bezier(0.4,0,0.2,1)}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}body{font-family:var(--font-sans);font-size:16px;line-height:1.7;color:var(--ink);background:var(--surface)}.progress-bar{position:fixed;top:0;left:0;width:0%;height:3px;background:linear-gradient(90deg,var(--teal-500),var(--blue-500));z-index:1000;transition:width .15s var(--ease)}.top-nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem}.top-nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px}.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--teal-800)}.nav-brand-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--teal-600),var(--teal-800));border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px}.nav-brand-text{font-weight:700;font-size:15px;letter-spacing:-.02em}.nav-chapter-nav{display:flex;align-items:center;gap:8px}.nav-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;color:var(--ink-muted);border:1px solid var(--border);background:#fff;transition:all .2s var(--ease);cursor:pointer}.nav-btn:hover{color:var(--ink);border-color:var(--teal-500);background:var(--teal-50)}.nav-btn.disabled{opacity:.4;pointer-events:none}.nav-current{font-size:13px;font-weight:600;color:var(--ink-light);padding:0 4px}.hero{background:linear-gradient(170deg,var(--teal-50) 0%,var(--surface) 50%,var(--blue-50) 100%);border-bottom:1px solid var(--border);padding:4rem 2rem 3.5rem}.hero-inner{max-width:var(--content-max);margin:0 auto}.hero-chapter-label{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--teal-700);text-transform:uppercase;letter-spacing:.08em;margin-bottom:1rem}.hero-chapter-label span{background:var(--teal-100);padding:3px 10px;border-radius:100px}.hero h1{font-family:var(--font-serif);font-size:clamp(2.4rem,5vw,3.2rem);font-weight:400;line-height:1.15;color:var(--ink);margin-bottom:1rem}.hero-subtitle{font-size:1.15rem;color:var(--ink-light);line-height:1.65;max-width:640px}.hero-meta{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1.5rem}.hero-meta-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-muted)}.hero-meta-item svg{width:16px;height:16px;color:var(--teal-600)}.main-layout{max-width:1200px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:1fr var(--sidebar-width);gap:4rem;align-items:start}.content{padding:3rem 0 6rem;min-width:0}.sidebar{position:sticky;top:76px;padding:2rem 0;max-height:calc(100vh - 76px);overflow-y:auto}.sidebar-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-muted);margin-bottom:1rem;padding-left:14px}.toc-list{list-style:none}.toc-item a{display:block;padding:6px 14px;font-size:13px;color:var(--ink-muted);text-decoration:none;border-left:2px solid transparent;transition:all .2s var(--ease);line-height:1.5}.toc-item a:hover{color:var(--ink);background:var(--surface-alt)}.toc-item a.active{color:var(--teal-700);border-left-color:var(--teal-500);background:var(--teal-50);font-weight:500}.content h2{font-family:var(--font-serif);font-size:1.85rem;font-weight:400;color:var(--ink);margin:3rem 0 1rem;padding-top:1rem;scroll-margin-top:80px}.content h2:first-child{margin-top:0}.content h3{font-size:1.15rem;font-weight:600;color:var(--ink);margin:2rem 0 .75rem;scroll-margin-top:80px}.content p{margin-bottom:1.25rem;color:var(--ink-light)}.content strong{color:var(--ink);font-weight:600}.content a{color:var(--teal-700);text-decoration:underline;text-decoration-color:var(--teal-200);text-underline-offset:3px;transition:text-decoration-color .2s}.content a:hover{text-decoration-color:var(--teal-600)}.content ul,.content ol{margin-bottom:1.25rem;padding-left:1.5rem}.content li{margin-bottom:.5rem;color:var(--ink-light)}.content li::marker{color:var(--teal-500)}.section-divider{border:none;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:3rem 0}.callout{padding:1.25rem 1.5rem;border-radius:12px;margin-bottom:1.5rem;border:1px solid;position:relative}.callout-header{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;margin-bottom:.5rem}.callout-header svg{width:18px;height:18px;flex-shrink:0}.callout p:last-child{margin-bottom:0}.callout.concept{background:var(--blue-50);border-color:var(--blue-100)}.callout.concept .callout-header{color:var(--blue-700)}.callout.important{background:var(--amber-50);border-color:var(--amber-100)}.callout.important .callout-header{color:var(--amber-600)}.callout.danger{background:var(--red-50);border-color:var(--red-100)}.callout.danger .callout-header{color:var(--red-600)}.callout.tip{background:var(--purple-50);border-color:var(--purple-100)}.callout.tip .callout-header{color:var(--purple-600)}.callout.success{background:var(--teal-50);border-color:var(--teal-100)}.callout.success .callout-header{color:var(--teal-700)}.code-block{position:relative;margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}.code-header{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:var(--surface-alt);border-bottom:1px solid var(--border);font-size:12px;color:var(--ink-muted)}.code-lang{font-family:var(--font-mono);font-weight:600;text-transform:uppercase;letter-spacing:.05em}.code-copy{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:#fff;font-size:11px;font-family:var(--font-sans);color:var(--ink-muted);cursor:pointer;transition:all .2s var(--ease)}.code-copy:hover{border-color:var(--teal-500);color:var(--teal-700)}.code-copy.copied{background:var(--teal-50);border-color:var(--teal-500);color:var(--teal-700)}pre{margin:0;padding:1.25rem 1.5rem;overflow-x:auto;background:#1e293b;font-family:var(--font-mono);font-size:13.5px;line-height:1.7;color:#e2e8f0}code{font-family:var(--font-mono);font-size:.88em}p code,li code{padding:2px 7px;background:var(--surface-alt);border:1px solid var(--border);border-radius:5px;color:var(--teal-800);font-size:.85em}.hl-keyword{color:#c084fc}.hl-string{color:#86efac}.hl-comment{color:#64748b;font-style:italic}.hl-function{color:#7dd3fc}.hl-number{color:#fbbf24}.hl-flag{color:#f472b6}details{margin-bottom:1.25rem;border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .2s var(--ease)}details[open]{border-color:var(--teal-200)}details summary{padding:1rem 1.25rem;font-weight:600;font-size:15px;cursor:pointer;background:var(--surface-alt);list-style:none;display:flex;align-items:center;gap:10px;transition:background .2s var(--ease);user-select:none}details summary::-webkit-details-marker{display:none}details summary::before{content:'';width:20px;height:20px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain;flex-shrink:0;transition:transform .2s var(--ease)}details[open] summary::before{transform:rotate(90deg)}details summary:hover{background:var(--teal-50)}.details-body{padding:1.25rem 1.5rem}.details-body p:last-child{margin-bottom:0}.video-card{margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}.video-wrapper{position:relative;padding-bottom:56.25%;height:0;background:#0f172a}.video-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}.video-caption{padding:12px 16px;background:var(--surface-alt);font-size:13px;color:var(--ink-muted);display:flex;align-items:center;gap:6px}.video-caption svg{width:14px;height:14px;color:var(--red-500)}.resource-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1rem;margin-bottom:1.5rem}.resource-card{display:flex;gap:14px;padding:1rem 1.25rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all .2s var(--ease);background:#fff}.resource-card:hover{border-color:var(--teal-300);background:var(--teal-50);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.04)}.resource-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}.resource-icon.docs{background:var(--blue-50);color:var(--blue-600)}.resource-icon.video{background:var(--red-50);color:var(--red-500)}.resource-icon.article{background:var(--amber-50);color:var(--amber-600)}.resource-icon.pdf{background:var(--purple-50);color:var(--purple-600)}.resource-info{min-width:0}.resource-title{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:2px;line-height:1.4}.resource-desc{font-size:12px;color:var(--ink-muted);line-height:1.5}.assignment{border:2px solid var(--teal-200);border-radius:14px;padding:1.5rem 1.75rem;margin-bottom:1.5rem;background:linear-gradient(135deg,var(--teal-50) 0%,#fff 100%)}.assignment-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}.assignment-label{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--teal-700)}.assignment-difficulty{display:inline-flex;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:600}.difficulty-l1{background:var(--teal-100);color:var(--teal-800)}.difficulty-l2{background:var(--amber-100);color:var(--amber-600)}.difficulty-l3{background:var(--red-100);color:var(--red-600)}.assignment h4{font-size:1.05rem;font-weight:700;margin-bottom:.75rem}.assignment p{font-size:14px}.checklist{list-style:none;padding:0}.checklist li{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border-light);font-size:14px}.checklist li:last-child{border-bottom:none}.check-box{width:20px;height:20px;border-radius:6px;border:2px solid var(--border);flex-shrink:0;margin-top:1px;cursor:pointer;transition:all .15s var(--ease);display:flex;align-items:center;justify-content:center}.check-box:hover{border-color:var(--teal-500)}.check-box.checked{background:var(--teal-500);border-color:var(--teal-500)}.check-box.checked::after{content:'';width:10px;height:10px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain}.diagram{margin:1.5rem 0;padding:2rem;background:var(--surface-alt);border:1px solid var(--border);border-radius:14px;overflow-x:auto}.diagram pre{background:transparent;color:var(--ink);padding:0;font-size:13px;line-height:1.6}.diagram-caption{margin-top:1rem;font-size:12px;color:var(--ink-muted);text-align:center;font-style:italic}.chapter-footer{border-top:1px solid var(--border);padding:3rem 2rem;background:var(--surface-alt)}.chapter-footer-inner{max-width:var(--content-max);margin:0 auto}.footer-nav{display:flex;justify-content:space-between;align-items:center;gap:1rem}.footer-nav-link{display:flex;flex-direction:column;gap:4px;padding:1rem 1.5rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all .2s var(--ease);max-width:320px;background:#fff}.footer-nav-link:hover{border-color:var(--teal-300);box-shadow:0 4px 12px rgba(0,0,0,.04)}.footer-nav-label{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--teal-600)}.footer-nav-title{font-size:15px;font-weight:600;color:var(--ink)}.footer-brand{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border);font-size:13px;color:var(--ink-muted)}@media(max-width:960px){.main-layout{grid-template-columns:1fr}.sidebar{display:none}.resource-grid{grid-template-columns:1fr}}@media(max-width:640px){.hero{padding:2.5rem 1.25rem 2rem}.main-layout{padding:0 1.25rem}.content{padding:2rem 0 4rem}pre{padding:1rem;font-size:12.5px}.footer-nav{flex-direction:column}.footer-nav-link{max-width:100%;width:100%}}@media print{.top-nav,.sidebar,.progress-bar{display:none}.main-layout{display:block}.content{padding:0}.hero{background:#fff;border:none}pre{background:#f1f5f9;color:var(--ink);border:1px solid var(--border)}}
+    /* ═══════════════════════════════════════════════
+       ILA DESIGN SYSTEM — v1.0
+       Iksha Learning Academy
+       ═══════════════════════════════════════════════ */
+
+    :root {
+      /* Palette */
+      --ink:        #0f172a;
+      --ink-light:  #334155;
+      --ink-muted:  #64748b;
+      --surface:    #ffffff;
+      --surface-alt:#f8fafc;
+      --surface-warm:#fffbeb;
+      --border:     #e2e8f0;
+      --border-light:#f1f5f9;
+
+      /* Brand */
+      --teal-50:  #f0fdfa;
+      --teal-100: #ccfbf1;
+      --teal-200: #99f6e4;
+      --teal-500: #14b8a6;
+      --teal-600: #0d9488;
+      --teal-700: #0f766e;
+      --teal-800: #115e59;
+      --teal-900: #134e4a;
+
+      --blue-50:  #eff6ff;
+      --blue-100: #dbeafe;
+      --blue-500: #3b82f6;
+      --blue-600: #2563eb;
+      --blue-700: #1d4ed8;
+
+      --amber-50:  #fffbeb;
+      --amber-100: #fef3c7;
+      --amber-500: #f59e0b;
+      --amber-600: #d97706;
+
+      --red-50:   #fef2f2;
+      --red-100:  #fee2e2;
+      --red-500:  #ef4444;
+      --red-600:  #dc2626;
+
+      --purple-50:  #faf5ff;
+      --purple-100: #f3e8ff;
+      --purple-500: #a855f7;
+      --purple-600: #9333ea;
+
+      /* Typography */
+      --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-serif: 'Instrument Serif', Georgia, serif;
+      --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
+
+      /* Spacing */
+      --content-max: 780px;
+      --sidebar-width: 280px;
+
+      /* Transitions */
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--ink);
+      background: var(--surface);
+    }
+
+    /* ── PROGRESS BAR ─────────────────────────── */
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--teal-500), var(--blue-500));
+      z-index: 1000;
+      transition: width 0.15s var(--ease);
+    }
+
+    /* ── TOP NAV ──────────────────────────────── */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+    }
+
+    .top-nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--teal-800);
+    }
+
+    .nav-brand-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--teal-600), var(--teal-800));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .nav-brand-text {
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-chapter-nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      color: var(--ink-muted);
+      border: 1px solid var(--border);
+      background: white;
+      transition: all 0.2s var(--ease);
+      cursor: pointer;
+    }
+
+    .nav-btn:hover {
+      color: var(--ink);
+      border-color: var(--teal-500);
+      background: var(--teal-50);
+    }
+
+    .nav-btn.disabled {
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    .nav-current {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink-light);
+      padding: 0 4px;
+    }
+
+    /* ── HERO ─────────────────────────────────── */
+    .hero {
+      background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 4rem 2rem 3.5rem;
+    }
+
+    .hero-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
+    }
+
+    .hero-chapter-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--teal-700);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 1rem;
+    }
+
+    .hero-chapter-label span {
+      background: var(--teal-100);
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+
+    .hero h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(2.4rem, 5vw, 3.2rem);
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: 1rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: var(--ink-light);
+      line-height: 1.65;
+      max-width: 640px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .hero-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
+    .hero-meta-item svg {
+      width: 16px;
+      height: 16px;
+      color: var(--teal-600);
+    }
+
+    /* ── MAIN LAYOUT ──────────────────────────── */
+    .main-layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr var(--sidebar-width);
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .content {
+      padding: 3rem 0 6rem;
+      min-width: 0;
+    }
+
+    /* ── SIDEBAR TOC ──────────────────────────── */
+    .sidebar {
+      position: sticky;
+      top: 76px;
+      padding: 2rem 0;
+      max-height: calc(100vh - 76px);
+      overflow-y: auto;
+    }
+
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-muted);
+      margin-bottom: 1rem;
+      padding-left: 14px;
+    }
+
+    .toc-list {
+      list-style: none;
+    }
+
+    .toc-item a {
+      display: block;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--ink-muted);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: all 0.2s var(--ease);
+      line-height: 1.5;
+    }
+
+    .toc-item a:hover {
+      color: var(--ink);
+      background: var(--surface-alt);
+    }
+
+    .toc-item a.active {
+      color: var(--teal-700);
+      border-left-color: var(--teal-500);
+      background: var(--teal-50);
+      font-weight: 500;
+    }
+
+    /* ── TYPOGRAPHY ────────────────────────────── */
+    .content h2 {
+      font-family: var(--font-serif);
+      font-size: 1.85rem;
+      font-weight: 400;
+      color: var(--ink);
+      margin: 3rem 0 1rem;
+      padding-top: 1rem;
+      scroll-margin-top: 80px;
+    }
+
+    .content h2:first-child { margin-top: 0; }
+
+    .content h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 2rem 0 0.75rem;
+      scroll-margin-top: 80px;
+    }
+
+    .content p { margin-bottom: 1.25rem; color: var(--ink-light); }
+    .content strong { color: var(--ink); font-weight: 600; }
+
+    .content a {
+      color: var(--teal-700);
+      text-decoration: underline;
+      text-decoration-color: var(--teal-200);
+      text-underline-offset: 3px;
+      transition: text-decoration-color 0.2s;
+    }
+    .content a:hover { text-decoration-color: var(--teal-600); }
+
+    .content ul, .content ol { margin-bottom: 1.25rem; padding-left: 1.5rem; }
+    .content li { margin-bottom: 0.5rem; color: var(--ink-light); }
+    .content li::marker { color: var(--teal-500); }
+
+    .section-divider {
+      border: none; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 3rem 0;
+    }
+
+    /* ── CALLOUT BOXES ────────────────────────── */
+    .callout { padding: 1.25rem 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; border: 1px solid; position: relative; }
+    .callout-header { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; margin-bottom: 0.5rem; }
+    .callout-header svg { width: 18px; height: 18px; flex-shrink: 0; }
+    .callout p:last-child { margin-bottom: 0; }
+    .callout.concept { background: var(--blue-50); border-color: var(--blue-100); }
+    .callout.concept .callout-header { color: var(--blue-700); }
+    .callout.important { background: var(--amber-50); border-color: var(--amber-100); }
+    .callout.important .callout-header { color: var(--amber-600); }
+    .callout.danger { background: var(--red-50); border-color: var(--red-100); }
+    .callout.danger .callout-header { color: var(--red-600); }
+    .callout.tip { background: var(--purple-50); border-color: var(--purple-100); }
+    .callout.tip .callout-header { color: var(--purple-600); }
+    .callout.success { background: var(--teal-50); border-color: var(--teal-100); }
+    .callout.success .callout-header { color: var(--teal-700); }
+
+    /* ── CODE BLOCKS ──────────────────────────── */
+    .code-block { position: relative; margin-bottom: 1.5rem; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+    .code-header { display: flex; align-items: center; justify-content: space-between; padding: 8px 16px; background: var(--surface-alt); border-bottom: 1px solid var(--border); font-size: 12px; color: var(--ink-muted); }
+    .code-lang { font-family: var(--font-mono); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+    .code-copy { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border); background: white; font-size: 11px; font-family: var(--font-sans); color: var(--ink-muted); cursor: pointer; transition: all 0.2s var(--ease); }
+    .code-copy:hover { border-color: var(--teal-500); color: var(--teal-700); }
+    .code-copy.copied { background: var(--teal-50); border-color: var(--teal-500); color: var(--teal-700); }
+
+    pre { margin: 0; padding: 1.25rem 1.5rem; overflow-x: auto; background: #1e293b; font-family: var(--font-mono); font-size: 13.5px; line-height: 1.7; color: #e2e8f0; }
+    code { font-family: var(--font-mono); font-size: 0.88em; }
+    p code, li code { padding: 2px 7px; background: var(--surface-alt); border: 1px solid var(--border); border-radius: 5px; color: var(--teal-800); font-size: 0.85em; }
+
+    .hl-keyword  { color: #c084fc; }
+    .hl-string   { color: #86efac; }
+    .hl-comment  { color: #64748b; font-style: italic; }
+    .hl-function { color: #7dd3fc; }
+    .hl-number   { color: #fbbf24; }
+    .hl-flag     { color: #f472b6; }
+
+    /* ── COLLAPSIBLE ──────────────────────────── */
+    details { margin-bottom: 1.25rem; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; transition: border-color 0.2s var(--ease); }
+    details[open] { border-color: var(--teal-200); }
+    details summary { padding: 1rem 1.25rem; font-weight: 600; font-size: 15px; cursor: pointer; background: var(--surface-alt); list-style: none; display: flex; align-items: center; gap: 10px; transition: background 0.2s var(--ease); user-select: none; }
+    details summary::-webkit-details-marker { display: none; }
+    details summary::before { content: ''; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E"); background-size: contain; flex-shrink: 0; transition: transform 0.2s var(--ease); }
+    details[open] summary::before { transform: rotate(90deg); }
+    details summary:hover { background: var(--teal-50); }
+    .details-body { padding: 1.25rem 1.5rem; }
+    .details-body p:last-child { margin-bottom: 0; }
+
+    /* ── VIDEO EMBED ──────────────────────────── */
+    .video-card { margin-bottom: 1.5rem; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+    .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; background: #0f172a; }
+    .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+    .video-caption { padding: 12px 16px; background: var(--surface-alt); font-size: 13px; color: var(--ink-muted); display: flex; align-items: center; gap: 6px; }
+    .video-caption svg { width: 14px; height: 14px; color: var(--red-500); }
+
+    /* ── RESOURCE CARDS ───────────────────────── */
+    .resource-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+    .resource-card { display: flex; gap: 14px; padding: 1rem 1.25rem; border: 1px solid var(--border); border-radius: 12px; text-decoration: none; transition: all 0.2s var(--ease); background: white; }
+    .resource-card:hover { border-color: var(--teal-300); background: var(--teal-50); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+    .resource-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 18px; }
+    .resource-icon.docs    { background: var(--blue-50);   color: var(--blue-600); }
+    .resource-icon.video   { background: var(--red-50);    color: var(--red-500); }
+    .resource-icon.github  { background: var(--ink);       color: white; }
+    .resource-icon.article { background: var(--amber-50);  color: var(--amber-600); }
+    .resource-icon.pdf     { background: var(--purple-50); color: var(--purple-600); }
+    .resource-info { min-width: 0; }
+    .resource-title { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 2px; line-height: 1.4; }
+    .resource-desc { font-size: 12px; color: var(--ink-muted); line-height: 1.5; }
+
+    /* ── ASSIGNMENT CARDS ─────────────────────── */
+    .assignment { border: 2px solid var(--teal-200); border-radius: 14px; padding: 1.5rem 1.75rem; margin-bottom: 1.5rem; background: linear-gradient(135deg, var(--teal-50) 0%, white 100%); }
+    .assignment-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+    .assignment-label { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--teal-700); }
+    .assignment-difficulty { display: inline-flex; padding: 4px 10px; border-radius: 100px; font-size: 11px; font-weight: 600; }
+    .difficulty-l1 { background: var(--teal-100); color: var(--teal-800); }
+    .difficulty-l2 { background: var(--amber-100); color: var(--amber-600); }
+    .difficulty-l3 { background: var(--red-100); color: var(--red-600); }
+    .assignment h4 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.75rem; }
+    .assignment p { font-size: 14px; }
+    .checklist { list-style: none; padding: 0; }
+    .checklist li { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border-light); font-size: 14px; }
+    .checklist li:last-child { border-bottom: none; }
+    .check-box { width: 20px; height: 20px; border-radius: 6px; border: 2px solid var(--border); flex-shrink: 0; margin-top: 1px; cursor: pointer; transition: all 0.15s var(--ease); display: flex; align-items: center; justify-content: center; }
+    .check-box:hover { border-color: var(--teal-500); }
+    .check-box.checked { background: var(--teal-500); border-color: var(--teal-500); }
+    .check-box.checked::after { content: ''; width: 10px; height: 10px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E"); background-size: contain; }
+
+    /* ── DIAGRAM ──────────────────────────────── */
+    .diagram { margin: 1.5rem 0; padding: 2rem; background: var(--surface-alt); border: 1px solid var(--border); border-radius: 14px; overflow-x: auto; }
+    .diagram pre { background: transparent; color: var(--ink); padding: 0; font-size: 13px; line-height: 1.6; }
+    .diagram-caption { margin-top: 1rem; font-size: 12px; color: var(--ink-muted); text-align: center; font-style: italic; }
+
+    /* ── FOOTER ───────────────────────────────── */
+    .chapter-footer { border-top: 1px solid var(--border); padding: 3rem 2rem; background: var(--surface-alt); }
+    .chapter-footer-inner { max-width: var(--content-max); margin: 0 auto; }
+    .footer-nav { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+    .footer-nav-link { display: flex; flex-direction: column; gap: 4px; padding: 1rem 1.5rem; border: 1px solid var(--border); border-radius: 12px; text-decoration: none; transition: all 0.2s var(--ease); max-width: 320px; background: white; }
+    .footer-nav-link:hover { border-color: var(--teal-300); box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+    .footer-nav-label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--teal-600); }
+    .footer-nav-title { font-size: 15px; font-weight: 600; color: var(--ink); }
+    .footer-brand { text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); font-size: 13px; color: var(--ink-muted); }
+
+    /* ── RESPONSIVE ───────────────────────────── */
+    @media (max-width: 960px) {
+      .main-layout { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .resource-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .hero { padding: 2.5rem 1.25rem 2rem; }
+      .main-layout { padding: 0 1.25rem; }
+      .content { padding: 2rem 0 4rem; }
+      pre { padding: 1rem; font-size: 12.5px; }
+      .footer-nav { flex-direction: column; }
+      .footer-nav-link { max-width: 100%; width: 100%; }
+    }
+    @media print {
+      .top-nav, .sidebar, .progress-bar { display: none; }
+      .main-layout { display: block; }
+      .content { padding: 0; }
+      .hero { background: white; border: none; }
+      pre { background: #f1f5f9; color: var(--ink); border: 1px solid var(--border); }
+    }
   </style>
 </head>
 <body>
+  <!-- Progress Bar -->
   <div class="progress-bar" id="progressBar"></div>
+
+  <!-- Top Navigation -->
   <nav class="top-nav">
     <div class="top-nav-inner">
-      <a class="nav-brand" href="index.html"><div class="nav-brand-icon">ILA</div><span class="nav-brand-text">Iksha Learning Academy</span></a>
+      <a class="nav-brand" href="index.html">
+        <div class="nav-brand-icon">ILA</div>
+        <span class="nav-brand-text">Iksha Learning Academy</span>
+      </a>
       <div class="nav-chapter-nav">
         <a class="nav-btn" href="chapter-05.html">&larr; Previous</a>
         <span class="nav-current">06 / 08</span>
@@ -24,335 +498,641 @@
     </div>
   </nav>
 
+  <!-- Hero -->
   <header class="hero">
     <div class="hero-inner">
-      <div class="hero-chapter-label"><span>Chapter 06</span> &middot; Negotiation Foundations</div>
+      <div class="hero-chapter-label">
+        <span>Chapter 06</span> &middot; Applied Negotiation
+      </div>
       <h1>Vendor and Contract Negotiations</h1>
-      <p class="hero-subtitle">From cloud infrastructure to office leases, startups negotiate with vendors constantly. Learn to structure RFPs, negotiate SLAs, manage pricing models, secure favorable payment terms, and control scope creep in every vendor relationship.</p>
+      <p class="hero-subtitle">
+        Every startup bleeds cash through poorly negotiated vendor contracts. From cloud infrastructure to legal services and office leases, the terms you lock in today compound across the life of your company. Learn to structure contracts that protect your interests, negotiate pricing that scales, and build vendor relationships that deliver strategic value.
+      </p>
       <div class="hero-meta">
-        <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Estimated: 45&ndash;60 min</div>
-        <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> 4 Key Concepts</div>
-        <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> 3 Assignments</div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Estimated: 55&ndash;70 min
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          6 Key Concepts
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          3 Assignments
+        </div>
       </div>
     </div>
   </header>
 
+  <!-- Main Content + Sidebar -->
   <div class="main-layout">
     <main class="content">
 
+      <!-- ════════════════════════════════════════
+           SECTION 1: WHY THIS MATTERS
+           ════════════════════════════════════════ -->
       <h2 id="why-this-matters">Why This Matters</h2>
 
-      <p>Startups typically work with 20-50 vendors by the time they reach Series A &mdash; cloud providers, payment processors, legal firms, recruiting agencies, marketing tools, office providers, and more. Each vendor relationship is a negotiation that directly impacts your burn rate. A 15% reduction in vendor costs across the board can extend your runway by months.</p>
+      <p>
+        A typical Series A startup manages between 15 and 40 vendor relationships &mdash; from AWS and Stripe to law firms, recruiting agencies, insurance brokers, and office landlords. Each vendor contract represents a recurring financial commitment, a set of terms that constrain your operational flexibility, and a relationship that can either accelerate or impede your growth. Yet most startup teams approach vendor negotiations reactively, signing contracts under time pressure with minimal preparation and virtually no understanding of what is actually negotiable.
+      </p>
 
-      <p>Yet most startup teams accept vendor pricing at face value, sign contracts without reading indemnification clauses, and agree to auto-renewal terms that lock them in for years. This chapter teaches you the systematic approach to vendor negotiations that procurement professionals use &mdash; adapted for the speed and scrappiness of startup life.</p>
+      <p>
+        The financial impact is substantial. Research from Gartner consistently shows that organizations with structured procurement negotiation processes achieve <strong>12&ndash;18% cost savings</strong> compared to those that accept initial quotes. For a startup spending $50,000 per month on vendors, that represents $72,000&ndash;$108,000 in annual savings &mdash; money that flows directly to runway extension. But the value of good vendor negotiation extends far beyond price. The right contract terms protect you when things go wrong, give you flexibility to scale up or pivot, and create alignment between your vendor's incentives and your success.
+      </p>
+
+      <p>
+        This chapter teaches you the complete vendor negotiation lifecycle: from initial vendor evaluation and RFP processes through pricing structure analysis, contract term review, and ongoing relationship management. You will learn to read contracts like a business operator (not just a legal document), identify the terms that actually matter for startups, and negotiate from a position of informed confidence rather than anxiety or ignorance.
+      </p>
 
       <div class="callout concept">
-        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg> Key Insight</div>
-        <p><strong>Every vendor contract is negotiable.</strong> Published prices are starting points, not final offers. Annual commitments, volume discounts, startup programs, competitive leverage, and creative payment structures can reduce vendor costs by 20-40% with nothing more than a well-prepared conversation.</p>
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Key Insight
+        </div>
+        <p>
+          The best vendor negotiations do not feel like negotiations at all. They feel like collaborative problem-solving sessions where both sides work to structure a deal that makes the vendor eager to serve you well and makes your CFO comfortable with the commitment. <strong>Adversarial vendor relationships produce adversarial outcomes</strong> &mdash; cutting corners on service, slow response times, and aggressive renewal tactics.
+        </p>
       </div>
 
       <hr class="section-divider">
 
+      <!-- ════════════════════════════════════════
+           SECTION 2: KEY CONCEPTS
+           ════════════════════════════════════════ -->
       <h2 id="key-concepts">Key Concepts</h2>
 
-      <h3 id="rfp-process">1. Structuring the RFP Process</h3>
+      <h3 id="vendor-evaluation">1. Vendor Evaluation and Selection Framework</h3>
 
-      <p>A Request for Proposal (RFP) is your most powerful tool for vendor negotiations. Even an informal RFP &mdash; reaching out to 3+ vendors simultaneously &mdash; creates competitive dynamics that drive better pricing and terms for you.</p>
+      <p>
+        Before you can negotiate with a vendor, you need to know who your options are and what differentiates them. A structured evaluation process does three things: it ensures you consider alternatives (strengthening your BATNA), it forces you to articulate your actual requirements (preventing over-buying), and it signals to vendors that they are competing for your business (creating leverage). Many startups skip evaluation entirely and go with "whatever the last company I worked at used." This is a costly mistake because your needs at a 10-person startup are fundamentally different from what a 500-person enterprise requires.
+      </p>
 
       <div class="code-block">
-        <div class="code-header"><span class="code-lang">Template</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <div class="code-header">
+          <span class="code-lang">Framework</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
 <pre>
-<span class="hl-comment">/* ── Startup-Friendly RFP Framework ───────────────────────── */</span>
+<span class="hl-comment">/* ── Vendor Evaluation Scorecard ──────────────────────────── */</span>
 
-<span class="hl-keyword">STEP 1: Define Requirements (Before Talking to Vendors)</span>
-<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
-  [ ] Must-have features (non-negotiable)
-  [ ] Nice-to-have features (tradeable)
-  [ ] Budget range (internal only — never share with vendors)
-  [ ] Timeline for decision
-  [ ] Technical requirements (integrations, security, compliance)
-  [ ] Support requirements (SLA, response time, dedicated CSM)
+<span class="hl-keyword">EVALUATION CRITERIA</span> (Weight each 1-5 based on your priorities)
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
 
-<span class="hl-keyword">STEP 2: Contact 3-5 Vendors Simultaneously</span>
-  "We're evaluating solutions in [category] and would like
-  to include [VendorName] in our process. We plan to make
-  a decision by [date]. Can you provide pricing for [scope]?"
+<span class="hl-function">Category 1: Product Fit (30%)</span>
+  - Feature coverage vs. requirements checklist
+  - Integration with existing stack (APIs, SSO, webhooks)
+  - Scalability path (can it grow 10x with you?)
+  - User experience and learning curve for your team
 
-  <span class="hl-function">Key: Let each vendor know others are being evaluated.</span>
-  <span class="hl-function">This single sentence changes the pricing dynamic entirely.</span>
+<span class="hl-function">Category 2: Pricing &amp; Terms (25%)</span>
+  - Total cost of ownership (not just sticker price)
+  - Pricing model fit (per-seat, usage, flat, tiered)
+  - Contract flexibility (monthly vs. annual, exit terms)
+  - Hidden costs (implementation, training, overages)
 
-<span class="hl-keyword">STEP 3: Create a Comparison Matrix</span>
-  Feature          | Vendor A | Vendor B | Vendor C
-  ─────────────────┼──────────┼──────────┼──────────
-  Core features    |   9/10   |   8/10   |   7/10
-  Price/month      |  $1,200  |    $900  |    $750
-  SLA guarantee    |  99.9%   |  99.5%   |  99.0%
-  Contract length  |  Annual  |  Monthly |  Annual
-  Support tier     | Premium  |  Basic   | Standard
+<span class="hl-function">Category 3: Vendor Viability (20%)</span>
+  - Financial stability (funding stage, revenue, burn rate)
+  - Customer base size and composition
+  - Product roadmap alignment with your needs
+  - Industry reputation and third-party reviews
 
-<span class="hl-keyword">STEP 4: Negotiate with Data</span>
-  "VendorB is offering comparable features at $900/month.
-  We prefer your product, but we need to close the gap
-  on pricing to justify the decision internally."
-  <span class="hl-comment">// Always use competitor data — it's your strongest lever</span>
+<span class="hl-function">Category 4: Support &amp; Service (15%)</span>
+  - SLA guarantees (uptime %, response time commitments)
+  - Support channels and hours of operation
+  - Dedicated account management at your spending tier
+  - Documentation quality and self-service resources
+
+<span class="hl-function">Category 5: Security &amp; Compliance (10%)</span>
+  - SOC 2 Type II certification status
+  - Data handling and privacy practices (GDPR, CCPA)
+  - Compliance with your industry requirements
+  - Data portability and export capabilities
 </pre>
       </div>
 
-      <h3 id="sla-negotiation">2. Negotiating SLAs and Service Terms</h3>
-
-      <p>A Service Level Agreement (SLA) defines the vendor's commitments around uptime, performance, and support response times. Most startups accept default SLAs, but these are negotiable &mdash; especially for larger contracts.</p>
-
-      <div class="code-block">
-        <div class="code-header"><span class="code-lang">Framework</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-<pre>
-<span class="hl-comment">/* ── SLA Negotiation Checklist ─────────────────────────────── */</span>
-
-<span class="hl-keyword">UPTIME COMMITMENTS:</span>
-  99.0% = 87.6 hours of downtime per year (unacceptable)
-  99.9% = 8.76 hours of downtime per year (standard)
-  99.95% = 4.38 hours of downtime per year (good)
-  99.99% = 52.6 minutes of downtime per year (premium)
-
-  <span class="hl-function">Ask for:</span>
-  [ ] Uptime measured monthly (not annually — hides outages)
-  [ ] Credits calculated automatically (not requiring a claim)
-  [ ] Meaningful credits (25-100% of monthly fee, not 5%)
-
-<span class="hl-keyword">SUPPORT RESPONSE TIMES:</span>
-  Severity 1 (production down):  &lt; 15 minutes
-  Severity 2 (major feature broken): &lt; 1 hour
-  Severity 3 (minor issue):      &lt; 4 hours
-  Severity 4 (feature request):  &lt; 24 hours
-
-<span class="hl-keyword">NEGOTIABLE TERMS MOST PEOPLE MISS:</span>
-  [ ] Data portability clause (export your data anytime)
-  [ ] Termination for convenience (exit without penalty)
-  [ ] Price lock for renewal period (no surprise increases)
-  [ ] Dedicated account manager or support channel
-  [ ] Custom integration support at no additional cost
-  [ ] Security incident notification timeline (&lt; 24 hours)
-</pre>
+      <div class="callout important">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Common Startup Mistake
+        </div>
+        <p>
+          Never tell a vendor they are your only option, even if they are. Always maintain at least one credible alternative. If you truly cannot find a second vendor, consider an in-house build or an open-source alternative &mdash; even an imperfect one. The moment a vendor knows you have no alternative, their incentive to offer competitive terms disappears.
+        </p>
       </div>
 
-      <h3 id="pricing-models">3. Pricing Models and Payment Terms</h3>
+      <h3 id="pricing-structures">2. Decoding Vendor Pricing Structures</h3>
 
-      <p>Understanding different pricing models helps you choose the structure that gives your startup the most flexibility and the best unit economics as you scale.</p>
+      <p>
+        Vendor pricing is never as simple as a single number. Understanding the structure behind the price is essential because it determines not just what you pay today, but how costs scale as you grow. A pricing model that looks cheap at 10 users can become ruinously expensive at 500. Always calculate Total Cost of Ownership (TCO) over 12 and 24 months, including base price, overages, implementation, training, and admin overhead.
+      </p>
 
       <div class="code-block">
-        <div class="code-header"><span class="code-lang">Reference</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <div class="code-header">
+          <span class="code-lang">Analysis</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
 <pre>
-<span class="hl-comment">/* ── Vendor Pricing Models Comparison ──────────────────────── */</span>
+<span class="hl-comment">/* ── Common SaaS Pricing Models Decoded ───────────────────── */</span>
 
 <span class="hl-keyword">PER-SEAT PRICING</span>
-  Best for: Teams with stable headcount
-  Risk: Cost grows linearly with team size
-  Negotiate: Volume discounts at seat thresholds
-  Example: "At 50+ seats, we need enterprise pricing"
+<span class="hl-string">━━━━━━━━━━━━━━━━</span>
+  Model:    $X per user per month
+  Example:  Slack ($8.75/user), Jira ($7.75/user), Notion ($10/user)
+  Scales:   Linearly with headcount
+  Negotiate: Volume tiers, admin-only seats, annual prepay discounts
+  <span class="hl-flag">Watch for:</span> "Active user" vs "provisioned user" definitions
+  <span class="hl-function">Startup play:</span> Ask for startup tier with gradual ramp-up pricing
 
 <span class="hl-keyword">USAGE-BASED PRICING</span>
-  Best for: Variable workloads, early-stage startups
-  Risk: Unpredictable bills; can spike unexpectedly
-  Negotiate: Committed use discounts, spend caps
-  Example: "We'll commit to $X/month for a lower rate"
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━</span>
+  Model:    $X per API call / GB stored / transaction processed
+  Example:  AWS, Twilio ($0.0079/SMS), Stripe (2.9% + $0.30)
+  Scales:   With product usage (can spike unpredictably)
+  Negotiate: Committed-use discounts, volume tiers, spend caps
+  <span class="hl-flag">Watch for:</span> Overage charges, egress fees, minimum commitments
+  <span class="hl-function">Startup play:</span> Negotiate reserved capacity + burst pricing tiers
 
-<span class="hl-keyword">FLAT-RATE / TIER PRICING</span>
-  Best for: Predictable budgeting
-  Risk: May pay for capacity you don't use
-  Negotiate: Custom tier between standard offerings
-  Example: "Your Pro plan is too small, Enterprise too big"
+<span class="hl-keyword">TIERED / PACKAGE PRICING</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Model:    Starter / Professional / Enterprise bundles
+  Example:  HubSpot, Figma, Airtable
+  Scales:   In jumps (you over-pay between tier boundaries)
+  Negotiate: Custom bundles, cherry-pick features across tiers
+  <span class="hl-flag">Watch for:</span> Features locked behind enterprise tier you don't need
+  <span class="hl-function">Startup play:</span> Ask for Pro features at Starter price with case study
 
-<span class="hl-keyword">PAYMENT TERMS TO NEGOTIATE:</span>
-  <span class="hl-string">Annual prepay:</span>  Ask for 15-25% discount (standard)
-  <span class="hl-string">Net-60 or Net-90:</span>  Better for cash flow than Net-30
-  <span class="hl-string">Quarterly billing:</span>  Compromise between monthly/annual
-  <span class="hl-string">Startup credits:</span>  Many vendors offer $5K-100K free credits
-  <span class="hl-string">Payment holiday:</span>  Free months at start during implementation
+<span class="hl-keyword">FLAT-RATE PRICING</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━</span>
+  Model:    $X per month regardless of usage volume
+  Example:  Basecamp ($349/mo unlimited), some hosting plans
+  Scales:   Not at all (great for high-growth, risky for vendor)
+  Negotiate: Multi-year commits for lower monthly rates
+  <span class="hl-flag">Watch for:</span> Fair-use policies, hidden limits, sunset clauses
+  <span class="hl-function">Startup play:</span> Lock in flat rates early before you outgrow them
+
+<span class="hl-keyword">HYBRID / PLATFORM PRICING</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Model:    Platform fee + per-seat + usage overages
+  Example:  Salesforce, Datadog, Snowflake
+  Scales:   On multiple dimensions simultaneously
+  Negotiate: Consolidated pricing, usage credits, growth ramps
+  <span class="hl-flag">Watch for:</span> Compounding costs across all pricing axes
+  <span class="hl-function">Startup play:</span> Negotiate caps on each pricing dimension independently
 </pre>
       </div>
 
-      <h3 id="contract-terms">4. Critical Contract Terms</h3>
+      <h3 id="contract-terms">3. Critical Contract Terms for Startups</h3>
 
-      <p>The most expensive mistakes in vendor negotiations happen in the fine print. These are the contract clauses that matter most for startups and the positions you should negotiate.</p>
+      <p>
+        Price is only one dimension of a vendor contract. The non-price terms often matter more in practice, especially when things go wrong. A contract with a great monthly rate but a 36-month lock-in, auto-renewal clause, and no termination for convenience can become an anchor around your neck if your needs change or the vendor underperforms. Here is every critical term you should review and negotiate before signing.
+      </p>
 
       <div class="code-block">
-        <div class="code-header"><span class="code-lang">Checklist</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <div class="code-header">
+          <span class="code-lang">Contract Checklist</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
 <pre>
-<span class="hl-comment">/* ── Contract Terms Red/Green Flags ───────────────────────── */</span>
+<span class="hl-comment">/* ── Contract Terms Checklist for Startups ────────────────── */</span>
 
-<span class="hl-keyword">AUTO-RENEWAL CLAUSES</span>
-  <span class="hl-flag">RED:</span> Auto-renews for 12+ months with 90-day notice
-  <span class="hl-string">GREEN:</span> Auto-renews monthly, or annual with 30-day notice
-  <span class="hl-function">Negotiate:</span> "We need 30-day cancellation notice, not 90"
+<span class="hl-keyword">TERM LENGTH &amp; FLEXIBILITY</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Ideal:   12 months with option to extend at same rate
+  Avoid:   36+ months without termination for convenience
+  Ask for: "Ramp period" with reduced commitment for first 3 months
+  Ask for: Right to downgrade tier mid-contract if needs change
+  Ask for: 60-day termination for convenience with prorated refund
 
-<span class="hl-keyword">INDEMNIFICATION</span>
-  <span class="hl-flag">RED:</span> You indemnify vendor against all claims
-  <span class="hl-string">GREEN:</span> Mutual indemnification with reasonable caps
-  <span class="hl-function">Negotiate:</span> "Indemnification should be mutual and capped"
+<span class="hl-keyword">AUTO-RENEWAL PROTECTION</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Ideal:   Opt-in renewal (you actively choose to continue)
+  Avoid:   Auto-renewal with 90-day notice window you will forget
+  Ask for: Written renewal notice from vendor 60 days before expiry
+  Ask for: Cap on renewal price increase (e.g., max 5% per year)
 
-<span class="hl-keyword">LIMITATION OF LIABILITY</span>
-  <span class="hl-flag">RED:</span> Vendor liability capped at 1 month of fees
-  <span class="hl-string">GREEN:</span> Vendor liability capped at 12 months of fees
-  <span class="hl-function">Negotiate:</span> "Cap should be annual contract value minimum"
+<span class="hl-keyword">SERVICE LEVEL AGREEMENTS (SLAs)</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Ideal:   99.9%+ uptime with service credits for violations
+  Avoid:   "Commercially reasonable efforts" language with no teeth
+  Ask for: Specific P1/P2/P3 response time commitments
+  Ask for: Escalation path with named contacts
+  Ask for: Right to terminate if SLA violated 3+ times in 6 months
 
-<span class="hl-keyword">DATA OWNERSHIP AND PORTABILITY</span>
-  <span class="hl-flag">RED:</span> Vendor retains rights to your data / no export
-  <span class="hl-string">GREEN:</span> You own all data, export available anytime
-  <span class="hl-function">Negotiate:</span> "We need data export in standard formats"
+<span class="hl-keyword">DATA &amp; EXIT TERMS</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━</span>
+  Ideal:   Full data export in standard formats (CSV, JSON, API)
+  Avoid:   Proprietary formats, export fees, instant deletion
+  Ask for: 90-day post-termination data access period
+  Ask for: API access for data migration
+  Ask for: Vendor-assisted migration (even if at additional cost)
 
-<span class="hl-keyword">PRICE ESCALATION</span>
-  <span class="hl-flag">RED:</span> Vendor can increase price at any time
-  <span class="hl-string">GREEN:</span> Price locked for contract term, max 5% annual increase
-  <span class="hl-function">Negotiate:</span> "Price lock for 2 years, then max 5% annually"
-
-<span class="hl-keyword">SCOPE CHANGE PROCESS</span>
-  <span class="hl-flag">RED:</span> No defined process for scope changes
-  <span class="hl-string">GREEN:</span> Written change order process with mutual agreement
-  <span class="hl-function">Negotiate:</span> "All scope changes require written approval"
-  <span class="hl-comment">// This prevents scope creep charges</span>
+<span class="hl-keyword">LIABILITY &amp; INDEMNIFICATION</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Ideal:   Mutual indemnification, vendor covers their breaches
+  Avoid:   One-sided liability (vendor capped at 1 month fees)
+  Ask for: Uncapped liability for data breaches and IP infringement
+  Ask for: Cyber insurance certificate from vendor
 </pre>
       </div>
 
+      <div class="callout tip">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Pro Tip
+        </div>
+        <p>
+          <strong>The best time to negotiate contract terms is before you sign the initial agreement.</strong> Once you are locked in, your leverage drops dramatically at renewal. Invest the extra 2&ndash;3 hours upfront to negotiate termination rights, data portability, and pricing caps &mdash; you will thank yourself for years.
+        </p>
+      </div>
 
+      <h3 id="negotiation-scripts">4. Vendor Negotiation Scripts and Tactics</h3>
+
+      <p>
+        Knowing what to negotiate is important, but knowing <em>how</em> to say it is what produces results. Here are battle-tested scripts for common vendor negotiation scenarios that maintain a professional, collaborative tone while securing better terms. Adapt the specific product names, numbers, and context to your situation while preserving the underlying approach.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Scripts</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── Vendor Negotiation Scripts ───────────────────────────── */</span>
+
+<span class="hl-keyword">SCRIPT 1: Opening a Price Negotiation</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  "We really like [Product] and can see it being a long-term
+  fit for our team. We're evaluating a couple of options and
+  I want to be transparent: pricing is a factor in our decision.
+  Our budget for this category is [X]. Is there flexibility on
+  your end, especially given our growth trajectory?"
+
+  <span class="hl-function">Why it works:</span> Shows genuine interest, creates urgency via
+  competition, anchors with a budget number, invites collaboration.
+
+<span class="hl-keyword">SCRIPT 2: Asking for Startup Pricing</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  "We're a [stage] startup with [X] team members, growing to [Y]
+  within 18 months. Do you offer startup-friendly pricing or a
+  ramp-up program? We'd love to grow with you rather than start
+  with a cheaper alternative and migrate later."
+
+  <span class="hl-function">Why it works:</span> Positions future growth as the vendor's reward.
+  Makes the risk of losing you to a competitor tangible.
+
+<span class="hl-keyword">SCRIPT 3: Pushing Back on Contract Length</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  "We understand the value of a longer commitment. Here's our
+  concern: as a startup, our needs can change rapidly. Could we
+  start with a 12-month term with an option to extend at the
+  discounted rate? That way you get the longer commitment and
+  we get the flexibility we need."
+
+  <span class="hl-function">Why it works:</span> Acknowledges vendor's preference, offers a
+  compromise that addresses both sides' core interests.
+
+<span class="hl-keyword">SCRIPT 4: Renewal Negotiation with Leverage</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  "Before we discuss renewal, I want to share some context.
+  We've been happy with [Product] overall, but [Competitor]
+  approached us with an aggressive offer. I'd rather stay &mdash;
+  switching costs are real &mdash; but I need to make a financially
+  sound decision. What can we do to make renewal work?"
+
+  <span class="hl-function">Why it works:</span> Honest about switching costs (builds trust),
+  but makes the competitive threat credible and specific.
+
+<span class="hl-keyword">SCRIPT 5: Escalating Past the Sales Rep</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  "I appreciate your work on this. I understand you may have
+  limits on what you can approve. Would it make sense to bring
+  your manager into our next call? I want to make sure we're
+  exploring every option before making our final decision."
+
+  <span class="hl-function">Why it works:</span> Respectful to the rep, implies the deal is
+  important enough for management attention, unlocks higher
+  discount authority.
+</pre>
+      </div>
+
+      <h3 id="multi-vendor">5. Multi-Vendor Strategy and Consolidation</h3>
+
+      <p>
+        As your startup scales, vendor relationships multiply. Managing 40+ vendors creates operational overhead, security surface area, and negotiation fatigue. A deliberate multi-vendor strategy helps you consolidate where it makes sense while maintaining competitive tension where it matters. The principle is: <strong>consolidate commodity services, diversify critical infrastructure</strong>. You do not need three project management tools, but you probably should not run 100% of your infrastructure on a single cloud provider with no exit strategy.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Strategy</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── Vendor Consolidation Decision Matrix ─────────────────── */</span>
+
+<span class="hl-keyword">CONSOLIDATE</span> (single vendor, negotiate volume discounts)
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  When:     Service is commoditized, switching costs are low
+  Examples: Office supplies, travel booking, expense management
+  Benefit:  Volume discounts, simpler ops, fewer invoices
+  Risk:     Mild lock-in (acceptable for non-critical services)
+  Tactic:   Aggregate annual spend for volume-tier pricing
+
+<span class="hl-keyword">DUAL-SOURCE</span> (two vendors, keep both competitive)
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  When:     Service is important, you want negotiation leverage
+  Examples: Cloud hosting (primary + fallback), legal counsel
+  Benefit:  Built-in BATNA, risk mitigation, ongoing price pressure
+  Risk:     Higher admin overhead, potential inconsistency
+  Tactic:   Primary gets 80% of spend, secondary gets 20%
+
+<span class="hl-keyword">DIVERSIFY</span> (multiple vendors, spread existential risk)
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  When:     Single point of failure is an existential risk
+  Examples: Payment processors, CDN, data storage, DNS
+  Benefit:  Resilience, negotiation leverage, no single dependency
+  Risk:     Complexity, integration overhead, higher total spend
+  Tactic:   Architect for portability from day one
+
+<span class="hl-comment">/* Review vendor categories annually as company scales */</span>
+<span class="hl-comment">/* What was critical at 10 people may be commodity at 100 */</span>
+</pre>
+      </div>
+
+      <h3 id="renewal-management">6. Contract Renewal Lifecycle Management</h3>
+
+      <p>
+        Most startups lose money at contract renewal because they do not prepare. Auto-renewal clauses trigger, notice windows pass, and by the time someone realizes the contract is up, it has already renewed at a higher rate with no opportunity to renegotiate. A simple contract management practice &mdash; starting the renewal evaluation 90 days before expiration and treating every renewal as a fresh negotiation &mdash; can save tens of thousands annually.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Process</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── Contract Renewal Playbook ────────────────────────────── */</span>
+
+<span class="hl-keyword">DAY -90: EVALUATION KICKOFF</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  [ ] Pull usage data for the current contract period
+  [ ] Survey internal stakeholders on satisfaction and pain points
+  [ ] Identify feature gaps and unresolved support tickets
+  [ ] Research current market pricing for comparable alternatives
+  [ ] Flag any contract terms that caused friction this cycle
+
+<span class="hl-keyword">DAY -60: MARKET INTELLIGENCE</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  [ ] Request quotes from 2-3 alternative vendors
+  [ ] Calculate switching costs (migration, retraining, downtime)
+  [ ] Build your BATNA with specific costs and timelines
+  [ ] Set your reservation price for renewal terms
+  [ ] Prepare a one-page negotiation brief with data
+
+<span class="hl-keyword">DAY -45: VENDOR ENGAGEMENT</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  [ ] Schedule renewal discussion with account manager
+  [ ] Present your usage data and satisfaction assessment
+  [ ] Share your requirements for the next contract period
+  [ ] Request their renewal proposal in writing
+  [ ] Ask about new features, pricing tiers, or programs
+
+<span class="hl-keyword">DAY -30: ACTIVE NEGOTIATION</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  [ ] Compare vendor proposal against alternatives
+  [ ] Negotiate price, terms, SLAs, and any new requirements
+  [ ] Request redlines to the contract for legal review
+  [ ] Escalate to vendor management if sales rep is at limit
+  [ ] Document all agreed changes in writing before signing
+
+<span class="hl-keyword">DAY -14: DECISION &amp; CLOSE</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  [ ] Final internal approval on negotiated terms
+  [ ] Execute renewal or begin migration to alternative
+  [ ] Set calendar reminders for next renewal cycle (Day -90)
+  [ ] Archive negotiation notes for institutional memory
+</pre>
+      </div>
+
+      <div class="callout concept">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          The Vendor's Perspective
+        </div>
+        <p>
+          Vendors know that switching costs work in their favor at renewal time. Their account managers are trained to offer just enough discount to prevent you from leaving while maximizing revenue. Understanding this dynamic helps you calibrate your approach. <strong>The vendor's cost of retaining you is almost always less than their cost of acquiring a new customer</strong> &mdash; which means there is always margin for a better deal.
+        </p>
+      </div>
 
       <hr class="section-divider">
 
+      <!-- ════════════════════════════════════════
+           SECTION 3: WATCH & LEARN
+           ════════════════════════════════════════ -->
       <h2 id="watch-learn">Watch &amp; Learn</h2>
 
-      <p>These videos demonstrate the concepts from this chapter applied in real-world negotiation scenarios.</p>
+      <p>
+        These videos cover practical strategies for negotiating with vendors, managing contracts, and building procurement skills in a startup context.
+      </p>
 
       <div class="video-card">
         <div class="video-wrapper">
-          <iframe src="https://www.youtube.com/embed/wB4Hxpaf3Gk?rel=0&amp;modestbranding=1" title="Y Combinator &mdash; How to negotiate with vendors as a star" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+          <iframe src="https://www.youtube.com/embed/2oKRRkR1JJM?rel=0&amp;modestbranding=1" title="Vendor Negotiation Strategies" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
         </div>
-        <div class="video-caption"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg> Y Combinator &mdash; How to negotiate with vendors as a startup: leverage, timing, and creative deal structures.</div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Procurement and vendor negotiation strategies &mdash; how to maximize value in B2B contracts and recurring service agreements.
+        </div>
       </div>
 
       <div class="video-card">
         <div class="video-wrapper">
-          <iframe src="https://www.youtube.com/embed/dLkCEviXDVk?rel=0&amp;modestbranding=1" title="SaaStr &mdash; Enterprise procurement and contract negotiati" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+          <iframe src="https://www.youtube.com/embed/s5MDvFT-FBg?rel=0&amp;modestbranding=1" title="Contract Negotiation Tips" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
         </div>
-        <div class="video-caption"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg> SaaStr &mdash; Enterprise procurement and contract negotiation from the vendor and buyer perspective.</div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Essential contract negotiation techniques &mdash; terms, liability clauses, SLAs, and protecting your company in vendor agreements.
+        </div>
       </div>
 
       <hr class="section-divider">
 
+      <!-- ════════════════════════════════════════
+           SECTION 4: FURTHER READING
+           ════════════════════════════════════════ -->
       <h2 id="further-reading">Further Reading</h2>
 
+      <p>Deepen your understanding of vendor negotiations and contract management with these resources.</p>
+
       <div class="resource-grid">
-        <a class="resource-card" href="https://www.ycombinator.com/library/4S-how-to-work-with-service-providers" target="_blank" rel="noopener">
-          <div class="resource-icon article"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
-          <div class="resource-info"><div class="resource-title">YC: How to Work with Service Providers</div><div class="resource-desc">Y Combinator's guide to negotiating with vendors, agencies, and service providers as a startup.</div></div>
+        <a class="resource-card" href="https://www.amazon.com/Negotiation-Genius-Obstacles-Brilliant-Bargaining/dp/0553384112" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Negotiation Genius &mdash; Malhotra &amp; Bazerman</div>
+            <div class="resource-desc">Harvard professors cover advanced deal-making including vendor negotiations, contract design, and multi-party deals.</div>
+          </div>
         </a>
-        <a class="resource-card" href="https://www.amazon.com/Getting-More-Negotiate-Succeed-Work/dp/0307716902" target="_blank" rel="noopener">
-          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-          <div class="resource-info"><div class="resource-title">Getting More &mdash; Stuart Diamond</div><div class="resource-desc">Wharton's top negotiation professor on finding hidden value in every business relationship.</div></div>
+
+        <a class="resource-card" href="https://hbr.org/2015/12/getting-to-si-ja-oui-hai-and-da" target="_blank" rel="noopener">
+          <div class="resource-icon article">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">HBR: Cross-Cultural B2B Negotiations</div>
+            <div class="resource-desc">Navigating cultural differences and institutional resistance in procurement and vendor negotiations.</div>
+          </div>
         </a>
-        <a class="resource-card" href="https://saastr.com/how-to-negotiate-a-saas-contract/" target="_blank" rel="noopener">
-          <div class="resource-icon article"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
-          <div class="resource-info"><div class="resource-title">SaaStr: How to Negotiate a SaaS Contract</div><div class="resource-desc">Practical SaaS contract negotiation tactics from both the buyer and seller side.</div></div>
-        </a>
-        <a class="resource-card" href="https://www.startupschool.org/" target="_blank" rel="noopener">
-          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-          <div class="resource-info"><div class="resource-title">YC Startup School &mdash; Free Resources</div><div class="resource-desc">Free startup education including vendor management, legal templates, and procurement strategies.</div></div>
+
+        <a class="resource-card" href="https://www.amazon.com/3-D-Negotiation-Powerful-Tools-Change/dp/1591397995" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">3-D Negotiation &mdash; Lax &amp; Sebenius</div>
+            <div class="resource-desc">Beyond table tactics: deal design and setup for structuring multi-year vendor partnerships strategically.</div>
+          </div>
         </a>
       </div>
 
       <hr class="section-divider">
 
+      <!-- ════════════════════════════════════════
+           SECTION 5: ASSIGNMENTS
+           ════════════════════════════════════════ -->
       <h2 id="assignments">Assignments</h2>
 
-      <p>Complete these in order. Each level builds on the previous one. Practice with a partner whenever possible.</p>
+      <p>Complete these in order. Each level builds on the previous one. Use real vendor relationships whenever possible.</p>
 
       <div class="assignment">
         <div class="assignment-header">
-          <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 1</div>
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 1
+          </div>
           <span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span>
         </div>
-        <h4>Vendor Audit and Savings Opportunity Map</h4>
-        <p>Audit your current vendor relationships and identify at least 3 savings opportunities.</p>
+        <h4>Vendor Audit and Scorecard</h4>
+        <p>Catalog all current vendor relationships for your team or company. Build a scorecard for the top 5 vendors by annual spend and identify renegotiation opportunities.</p>
         <ul class="checklist">
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>List all current vendor contracts with monthly/annual costs</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Identify which contracts are up for renewal in the next 6 months</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Research competitive alternatives for your top 3 vendors by spend</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Calculate potential savings if you negotiated 15% reduction across the board</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>List all active vendor contracts with monthly/annual costs</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Identify the top 5 vendors by total annual spend</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Score each using the Vendor Evaluation Scorecard from this chapter</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Note renewal dates and auto-renewal terms for each contract</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Identify at least 2 vendors where renegotiation could yield savings</span></li>
         </ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0">
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
           <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div>
-          <p>You have a vendor audit document with specific dollar amounts for 3+ savings opportunities.</p>
+          <p>You have a complete vendor inventory with scorecards, renewal dates on your calendar, and a prioritized list of contracts to renegotiate.</p>
         </div>
       </div>
 
       <div class="assignment">
         <div class="assignment-header">
-          <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 2</div>
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 2
+          </div>
           <span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Applied</span>
         </div>
-        <h4>Vendor Negotiation Role-Play</h4>
-        <p>Practice a vendor renewal negotiation using competitive data and creative deal structures.</p>
+        <h4>Contract Redline Exercise</h4>
+        <p>Take a real vendor contract (or use a sample SaaS agreement) and redline it using the Critical Contract Terms checklist. Prepare your negotiation brief with specific asks and justifications.</p>
         <ul class="checklist">
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Gather real pricing from 2 competitors for your most expensive vendor</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Prepare a negotiation brief using the 30-minute prep framework from Chapter 02</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Role-play the negotiation with a colleague playing the vendor account manager</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Practice asking for: lower rate, better SLA, longer payment terms, and contract flexibility</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Read the entire contract and highlight all terms from the checklist</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Identify the 5 most critical terms to negotiate for your situation</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Draft specific alternative language for each flagged term</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Prepare a one-page negotiation brief with your BATNA, reservation price, and target terms</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Practice delivering your requests using the scripts from this chapter</span></li>
         </ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0">
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
           <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div>
-          <p>You've completed a negotiation role-play with documented competitive data and outcome.</p>
+          <p>You have a redlined contract with specific proposed changes, a negotiation brief, and you can articulate each ask with a business justification.</p>
         </div>
       </div>
 
       <div class="assignment">
         <div class="assignment-header">
-          <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 3</div>
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 3
+          </div>
           <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Strategic</span>
         </div>
-        <h4>Contract Red-Line Exercise</h4>
-        <p>Take a real vendor contract (or template) and red-line every clause using the checklist from this chapter.</p>
+        <h4>Full Vendor Negotiation Simulation</h4>
+        <p>With a partner, simulate a complete vendor negotiation from initial outreach through contract signing. One person plays the startup buyer, the other plays the vendor account executive.</p>
         <ul class="checklist">
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Review auto-renewal, indemnification, liability cap, data ownership, and price escalation clauses</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Draft counter-proposals for every unfavorable term with specific alternative language</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Prioritize your asks: which 3 changes are non-negotiable vs. nice-to-have?</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Practice explaining each counter-proposal to a partner playing the vendor's legal team</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a one-page 'standard terms' document your startup can use for all vendor contracts</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create detailed role briefs with budget, requirements, BATNA (buyer) and pricing flexibility, discount authority, quotas (vendor)</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Conduct a 30-minute negotiation covering price, term length, SLAs, and data portability</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Draft a term sheet summarizing all agreed deal points</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Debrief: What worked? What would you change? Where was value left on the table?</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Swap roles and repeat. Compare how outcomes differ when you play vendor vs. buyer</span></li>
         </ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0">
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
           <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div>
-          <p>You have a red-lined contract with prioritized counter-proposals and a reusable terms template.</p>
+          <p>You have completed both rounds of the simulation, produced two term sheets, and written a comparative analysis from both buyer and vendor perspectives.</p>
         </div>
       </div>
 
       <hr class="section-divider">
 
+      <!-- ════════════════════════════════════════
+           SECTION 6: SELF-CHECK
+           ════════════════════════════════════════ -->
       <h2 id="self-check">Self-Check</h2>
 
-      <p>Before moving to the next chapter, honestly answer these questions.</p>
+      <p>Before moving to Chapter 07, honestly answer these questions. If any answer is uncertain, revisit the relevant section.</p>
 
       <details>
-        <summary>Can you identify the 5 most important clauses in a vendor contract?</summary>
-        <div class="details-body"><p>Auto-renewal, indemnification, liability cap, data portability, and price escalation. If you can explain what each means and what 'good' looks like for a startup, you understand contract fundamentals.</p></div>
+        <summary>Can you name the 5 critical contract terms every startup should negotiate before signing?</summary>
+        <div class="details-body">
+          <p><strong>(1) Term length and flexibility</strong> &mdash; including termination for convenience; <strong>(2) Auto-renewal protection</strong> &mdash; notice requirements and price caps; <strong>(3) SLAs with teeth</strong> &mdash; specific response times and service credits; <strong>(4) Data and exit terms</strong> &mdash; export rights and post-termination access; <strong>(5) Pricing protection</strong> &mdash; caps on renewal increases and volume discount commitments.</p>
+        </div>
       </details>
 
       <details>
-        <summary>Do you know how to create competitive leverage even with a single vendor?</summary>
-        <div class="details-body"><p>Get competing quotes before your renewal conversation. Even if you prefer your current vendor, having alternatives gives you data and leverage. The phrase 'we're evaluating alternatives' immediately changes the dynamic.</p></div>
+        <summary>How would you prepare for a vendor renewal that begins in 90 days?</summary>
+        <div class="details-body">
+          <p>Start at Day -90 with usage data and stakeholder surveys. By Day -60, have quotes from 2&ndash;3 alternatives and a clear BATNA. Engage the vendor at Day -45 with your requirements. Negotiate actively at Day -30. Decide and close at Day -14. The key: never arrive at a renewal without market intelligence and a credible alternative.</p>
+        </div>
       </details>
 
       <details>
-        <summary>Can you calculate the ROI of negotiating a 15% vendor discount?</summary>
-        <div class="details-body"><p>List your top 5 vendors by annual spend. Multiply total by 0.15. That number is the value of one afternoon of preparation and a few phone calls. For most startups, this exceeds $20,000 per year.</p></div>
+        <summary>What is the difference between per-seat, usage-based, and tiered pricing models?</summary>
+        <div class="details-body">
+          <p><strong>Per-seat</strong> is predictable but scales linearly with headcount. <strong>Usage-based</strong> aligns cost with consumption but can spike unpredictably. <strong>Tiered</strong> bundles features into packages &mdash; you overpay between tier boundaries. Each favors the buyer in different situations based on team size stability, usage predictability, and feature requirements.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Why should you never tell a vendor they are your only option?</summary>
+        <div class="details-body">
+          <p>Because it eliminates your negotiating leverage entirely. Even if the vendor truly is your best option, maintaining the perception of alternatives &mdash; another vendor, an open-source solution, or an in-house build &mdash; preserves the competitive pressure that drives better pricing and terms.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Can you adapt the vendor negotiation scripts from this chapter to your own situation?</summary>
+        <div class="details-body">
+          <p>If you can adjust the product names, numbers, and context while preserving the collaborative-but-firm tone, you are ready. If the scripts feel foreign, practice them out loud with a colleague. The words matter less than the approach: transparent about constraints, clear about alternatives, focused on mutual value.</p>
+        </div>
       </details>
 
     </main>
 
+    <!-- Sidebar -->
     <aside class="sidebar">
       <div class="sidebar-title">On this page</div>
       <ul class="toc-list">
         <li class="toc-item"><a href="#why-this-matters">Why This Matters</a></li>
         <li class="toc-item"><a href="#key-concepts">Key Concepts</a></li>
-        <li class="toc-item"><a href="#rfp-process" style="padding-left:28px;font-size:12px">Structuring the RFP Process</a></li>
-        <li class="toc-item"><a href="#sla-negotiation" style="padding-left:28px;font-size:12px">Negotiating SLAs and Service Terms</a></li>
-        <li class="toc-item"><a href="#pricing-models" style="padding-left:28px;font-size:12px">Pricing Models and Payment Terms</a></li>
-        <li class="toc-item"><a href="#contract-terms" style="padding-left:28px;font-size:12px">Critical Contract Terms</a></li>
+        <li class="toc-item"><a href="#vendor-evaluation" style="padding-left: 28px; font-size: 12px;">Vendor Evaluation</a></li>
+        <li class="toc-item"><a href="#pricing-structures" style="padding-left: 28px; font-size: 12px;">Pricing Structures</a></li>
+        <li class="toc-item"><a href="#contract-terms" style="padding-left: 28px; font-size: 12px;">Contract Terms</a></li>
+        <li class="toc-item"><a href="#negotiation-scripts" style="padding-left: 28px; font-size: 12px;">Negotiation Scripts</a></li>
+        <li class="toc-item"><a href="#multi-vendor" style="padding-left: 28px; font-size: 12px;">Multi-Vendor Strategy</a></li>
+        <li class="toc-item"><a href="#renewal-management" style="padding-left: 28px; font-size: 12px;">Renewal Management</a></li>
         <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a></li>
         <li class="toc-item"><a href="#further-reading">Further Reading</a></li>
         <li class="toc-item"><a href="#assignments">Assignments</a></li>
@@ -361,18 +1141,61 @@
     </aside>
   </div>
 
+  <!-- Footer Navigation -->
   <footer class="chapter-footer">
     <div class="chapter-footer-inner">
       <nav class="footer-nav">
-        <a class="footer-nav-link" href="chapter-05.html"><span class="footer-nav-label">&larr; Previous Chapter</span><span class="footer-nav-title">05: Salary and Compensation</span></a>
-        <a class="footer-nav-link" href="chapter-07.html"><span class="footer-nav-label">Next Chapter &rarr;</span><span class="footer-nav-title">07: Conflict Resolution</span></a>
+        <a class="footer-nav-link" href="chapter-05.html">
+          <span class="footer-nav-label">&larr; Previous Chapter</span>
+          <span class="footer-nav-title">05: Salary and Compensation</span>
+        </a>
+        <a class="footer-nav-link" href="chapter-07.html">
+          <span class="footer-nav-label">Next Chapter &rarr;</span>
+          <span class="footer-nav-title">07: Conflict Resolution</span>
+        </a>
       </nav>
-      <div class="footer-brand">ILA (Iksha Learning Academy) &middot; Negotiation Foundations &middot; Basic Track</div>
+      <div class="footer-brand">
+        ILA (Iksha Learning Academy) &middot; Negotiation Foundations &middot; Basic Track
+      </div>
     </div>
   </footer>
 
   <script>
-    window.addEventListener('scroll',()=>{const s=window.scrollY;const d=document.documentElement.scrollHeight-window.innerHeight;const p=d>0?(s/d)*100:0;document.getElementById('progressBar').style.width=p+'%'});const tocLinks=document.querySelectorAll('.toc-item a');const sections=[];tocLinks.forEach(link=>{const id=link.getAttribute('href').slice(1);const el=document.getElementById(id);if(el)sections.push({id,el,link})});const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{const item=sections.find(s=>s.el===entry.target);if(item&&entry.isIntersecting){tocLinks.forEach(l=>l.classList.remove('active'));item.link.classList.add('active')}})},{rootMargin:'-80px 0px -60% 0px',threshold:0});sections.forEach(s=>observer.observe(s.el));function copyCode(btn){const pre=btn.closest('.code-block').querySelector('pre');navigator.clipboard.writeText(pre.textContent).then(()=>{btn.classList.add('copied');btn.textContent='Copied!';setTimeout(()=>{btn.classList.remove('copied');btn.textContent='Copy'},2000)})}
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      document.getElementById('progressBar').style.width = progress + '%';
+    });
+
+    const tocLinks = document.querySelectorAll('.toc-item a');
+    const defined_sections = [];
+    tocLinks.forEach(link => {
+      const id = link.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) defined_sections.push({ id, el, link });
+    });
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const item = defined_sections.find(s => s.el === entry.target);
+        if (item && entry.isIntersecting) {
+          tocLinks.forEach(l => l.classList.remove('active'));
+          item.link.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-80px 0px -60% 0px', threshold: 0 });
+
+    defined_sections.forEach(s => observer.observe(s.el));
+
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      navigator.clipboard.writeText(pre.textContent).then(() => {
+        btn.classList.add('copied');
+        btn.textContent = 'Copied!';
+        setTimeout(() => { btn.classList.remove('copied'); btn.textContent = 'Copy'; }, 2000);
+      });
+    }
   </script>
 </body>
 </html>

@@ -8,261 +8,655 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
-    :root{--ink:#0f172a;--ink-light:#334155;--ink-muted:#64748b;--surface:#ffffff;--surface-alt:#f8fafc;--surface-warm:#fffbeb;--border:#e2e8f0;--border-light:#f1f5f9;--teal-50:#f0fdfa;--teal-100:#ccfbf1;--teal-200:#99f6e4;--teal-500:#14b8a6;--teal-600:#0d9488;--teal-700:#0f766e;--teal-800:#115e59;--teal-900:#134e4a;--blue-50:#eff6ff;--blue-100:#dbeafe;--blue-500:#3b82f6;--blue-600:#2563eb;--blue-700:#1d4ed8;--amber-50:#fffbeb;--amber-100:#fef3c7;--amber-500:#f59e0b;--amber-600:#d97706;--red-50:#fef2f2;--red-100:#fee2e2;--red-500:#ef4444;--red-600:#dc2626;--purple-50:#faf5ff;--purple-100:#f3e8ff;--purple-500:#a855f7;--purple-600:#9333ea;--font-sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;--font-serif:'Instrument Serif',Georgia,serif;--font-mono:'JetBrains Mono','Fira Code',monospace;--content-max:780px;--sidebar-width:280px;--ease:cubic-bezier(0.4,0,0.2,1)}
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}body{font-family:var(--font-sans);font-size:16px;line-height:1.7;color:var(--ink);background:var(--surface)}
-    .progress-bar{position:fixed;top:0;left:0;width:0%;height:3px;background:linear-gradient(90deg,var(--teal-500),var(--blue-500));z-index:1000;transition:width .15s var(--ease)}
-    .top-nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem}.top-nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px}.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--teal-800)}.nav-brand-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--teal-600),var(--teal-800));border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px}.nav-brand-text{font-weight:700;font-size:15px;letter-spacing:-.02em}.nav-chapter-nav{display:flex;align-items:center;gap:8px}.nav-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;color:var(--ink-muted);border:1px solid var(--border);background:#fff;transition:all .2s var(--ease);cursor:pointer}.nav-btn:hover{color:var(--ink);border-color:var(--teal-500);background:var(--teal-50)}.nav-btn.disabled{opacity:.4;pointer-events:none}.nav-current{font-size:13px;font-weight:600;color:var(--ink-light);padding:0 4px}
-    .hero{background:linear-gradient(170deg,var(--teal-50) 0%,var(--surface) 50%,var(--blue-50) 100%);border-bottom:1px solid var(--border);padding:4rem 2rem 3.5rem}.hero-inner{max-width:var(--content-max);margin:0 auto}.hero-chapter-label{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--teal-700);text-transform:uppercase;letter-spacing:.08em;margin-bottom:1rem}.hero-chapter-label span{background:var(--teal-100);padding:3px 10px;border-radius:100px}.hero h1{font-family:var(--font-serif);font-size:clamp(2.4rem,5vw,3.2rem);font-weight:400;line-height:1.15;color:var(--ink);margin-bottom:1rem}.hero-subtitle{font-size:1.15rem;color:var(--ink-light);line-height:1.65;max-width:640px}.hero-meta{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1.5rem}.hero-meta-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-muted)}.hero-meta-item svg{width:16px;height:16px;color:var(--teal-600)}
-    .main-layout{max-width:1200px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:1fr var(--sidebar-width);gap:4rem;align-items:start}.content{padding:3rem 0 6rem;min-width:0}
-    .sidebar{position:sticky;top:76px;padding:2rem 0;max-height:calc(100vh - 76px);overflow-y:auto}.sidebar-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-muted);margin-bottom:1rem;padding-left:14px}.toc-list{list-style:none}.toc-item a{display:block;padding:6px 14px;font-size:13px;color:var(--ink-muted);text-decoration:none;border-left:2px solid transparent;transition:all .2s var(--ease);line-height:1.5}.toc-item a:hover{color:var(--ink);background:var(--surface-alt)}.toc-item a.active{color:var(--teal-700);border-left-color:var(--teal-500);background:var(--teal-50);font-weight:500}
-    .content h2{font-family:var(--font-serif);font-size:1.85rem;font-weight:400;color:var(--ink);margin:3rem 0 1rem;padding-top:1rem;scroll-margin-top:80px}.content h2:first-child{margin-top:0}.content h3{font-size:1.15rem;font-weight:600;color:var(--ink);margin:2rem 0 .75rem;scroll-margin-top:80px}.content p{margin-bottom:1.25rem;color:var(--ink-light)}.content strong{color:var(--ink);font-weight:600}.content a{color:var(--teal-700);text-decoration:underline;text-decoration-color:var(--teal-200);text-underline-offset:3px;transition:text-decoration-color .2s}.content a:hover{text-decoration-color:var(--teal-600)}.content ul,.content ol{margin-bottom:1.25rem;padding-left:1.5rem}.content li{margin-bottom:.5rem;color:var(--ink-light)}.content li::marker{color:var(--teal-500)}
-    .section-divider{border:none;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:3rem 0}
-    .callout{padding:1.25rem 1.5rem;border-radius:12px;margin-bottom:1.5rem;border:1px solid;position:relative}.callout-header{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;margin-bottom:.5rem}.callout-header svg{width:18px;height:18px;flex-shrink:0}.callout p:last-child{margin-bottom:0}.callout.concept{background:var(--blue-50);border-color:var(--blue-100)}.callout.concept .callout-header{color:var(--blue-700)}.callout.important{background:var(--amber-50);border-color:var(--amber-100)}.callout.important .callout-header{color:var(--amber-600)}.callout.danger{background:var(--red-50);border-color:var(--red-100)}.callout.danger .callout-header{color:var(--red-600)}.callout.tip{background:var(--purple-50);border-color:var(--purple-100)}.callout.tip .callout-header{color:var(--purple-600)}.callout.success{background:var(--teal-50);border-color:var(--teal-100)}.callout.success .callout-header{color:var(--teal-700)}
-    .code-block{position:relative;margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}.code-header{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:var(--surface-alt);border-bottom:1px solid var(--border);font-size:12px;color:var(--ink-muted)}.code-lang{font-family:var(--font-mono);font-weight:600;text-transform:uppercase;letter-spacing:.05em}.code-copy{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:#fff;font-size:11px;font-family:var(--font-sans);color:var(--ink-muted);cursor:pointer;transition:all .2s var(--ease)}.code-copy:hover{border-color:var(--teal-500);color:var(--teal-700)}.code-copy.copied{background:var(--teal-50);border-color:var(--teal-500);color:var(--teal-700)}
-    pre{margin:0;padding:1.25rem 1.5rem;overflow-x:auto;background:#1e293b;font-family:var(--font-mono);font-size:13.5px;line-height:1.7;color:#e2e8f0}code{font-family:var(--font-mono);font-size:.88em}p code,li code{padding:2px 7px;background:var(--surface-alt);border:1px solid var(--border);border-radius:5px;color:var(--teal-800);font-size:.85em}
-    .hl-keyword{color:#c084fc}.hl-string{color:#86efac}.hl-comment{color:#64748b;font-style:italic}.hl-function{color:#7dd3fc}.hl-number{color:#fbbf24}.hl-flag{color:#f472b6}
-    details{margin-bottom:1.25rem;border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .2s var(--ease)}details[open]{border-color:var(--teal-200)}details summary{padding:1rem 1.25rem;font-weight:600;font-size:15px;cursor:pointer;background:var(--surface-alt);list-style:none;display:flex;align-items:center;gap:10px;transition:background .2s var(--ease);user-select:none}details summary::-webkit-details-marker{display:none}details summary::before{content:'';width:20px;height:20px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain;flex-shrink:0;transition:transform .2s var(--ease)}details[open] summary::before{transform:rotate(90deg)}details summary:hover{background:var(--teal-50)}.details-body{padding:1.25rem 1.5rem}.details-body p:last-child{margin-bottom:0}
-    .video-card{margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}.video-wrapper{position:relative;padding-bottom:56.25%;height:0;background:#0f172a}.video-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}.video-caption{padding:12px 16px;background:var(--surface-alt);font-size:13px;color:var(--ink-muted);display:flex;align-items:center;gap:6px}.video-caption svg{width:14px;height:14px;color:var(--red-500)}
-    .resource-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1rem;margin-bottom:1.5rem}.resource-card{display:flex;gap:14px;padding:1rem 1.25rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all .2s var(--ease);background:#fff}.resource-card:hover{border-color:var(--teal-300);background:var(--teal-50);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.04)}.resource-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}.resource-icon.docs{background:var(--blue-50);color:var(--blue-600)}.resource-icon.video{background:var(--red-50);color:var(--red-500)}.resource-icon.github{background:var(--ink);color:#fff}.resource-icon.article{background:var(--amber-50);color:var(--amber-600)}.resource-info{min-width:0}.resource-title{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:2px;line-height:1.4}.resource-desc{font-size:12px;color:var(--ink-muted);line-height:1.5}
-    .assignment{border:2px solid var(--teal-200);border-radius:14px;padding:1.5rem 1.75rem;margin-bottom:1.5rem;background:linear-gradient(135deg,var(--teal-50) 0%,#fff 100%)}.assignment-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}.assignment-label{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--teal-700)}.assignment-difficulty{display:inline-flex;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:600}.difficulty-l1{background:var(--teal-100);color:var(--teal-800)}.difficulty-l2{background:var(--amber-100);color:var(--amber-600)}.difficulty-l3{background:var(--red-100);color:var(--red-600)}.assignment h4{font-size:1.05rem;font-weight:700;margin-bottom:.75rem}.assignment p{font-size:14px}
-    .checklist{list-style:none;padding:0}.checklist li{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border-light);font-size:14px}.checklist li:last-child{border-bottom:none}.check-box{width:20px;height:20px;border-radius:6px;border:2px solid var(--border);flex-shrink:0;margin-top:1px;cursor:pointer;transition:all .15s var(--ease);display:flex;align-items:center;justify-content:center}.check-box:hover{border-color:var(--teal-500)}.check-box.checked{background:var(--teal-500);border-color:var(--teal-500)}.check-box.checked::after{content:'';width:10px;height:10px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain}
-    .diagram{margin:1.5rem 0;padding:2rem;background:var(--surface-alt);border:1px solid var(--border);border-radius:14px;overflow-x:auto}.diagram pre{background:transparent;color:var(--ink);padding:0;font-size:13px;line-height:1.6}.diagram-caption{margin-top:1rem;font-size:12px;color:var(--ink-muted);text-align:center;font-style:italic}
-    .chapter-footer{border-top:1px solid var(--border);padding:3rem 2rem;background:var(--surface-alt)}.chapter-footer-inner{max-width:var(--content-max);margin:0 auto}.footer-nav{display:flex;justify-content:space-between;align-items:center;gap:1rem}.footer-nav-link{display:flex;flex-direction:column;gap:4px;padding:1rem 1.5rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all .2s var(--ease);max-width:320px;background:#fff}.footer-nav-link:hover{border-color:var(--teal-300);box-shadow:0 4px 12px rgba(0,0,0,.04)}.footer-nav-label{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--teal-600)}.footer-nav-title{font-size:15px;font-weight:600;color:var(--ink)}.footer-brand{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border);font-size:13px;color:var(--ink-muted)}
-    @media(max-width:960px){.main-layout{grid-template-columns:1fr}.sidebar{display:none}.resource-grid{grid-template-columns:1fr}}@media(max-width:640px){.hero{padding:2.5rem 1.25rem 2rem}.main-layout{padding:0 1.25rem}.content{padding:2rem 0 4rem}pre{padding:1rem;font-size:12.5px}.footer-nav{flex-direction:column}.footer-nav-link{max-width:100%;width:100%}}@media print{.top-nav,.sidebar,.progress-bar{display:none}.main-layout{display:block}.content{padding:0}.hero{background:#fff;border:none}pre{background:#f1f5f9;color:var(--ink);border:1px solid var(--border)}}
+    /* ═══════════════════════════════════════════════
+       ILA DESIGN SYSTEM — v1.0
+       Iksha Learning Academy
+       ═══════════════════════════════════════════════ */
+
+    :root {
+      /* Palette */
+      --ink:        #0f172a;
+      --ink-light:  #334155;
+      --ink-muted:  #64748b;
+      --surface:    #ffffff;
+      --surface-alt:#f8fafc;
+      --surface-warm:#fffbeb;
+      --border:     #e2e8f0;
+      --border-light:#f1f5f9;
+
+      /* Brand */
+      --teal-50:  #f0fdfa;
+      --teal-100: #ccfbf1;
+      --teal-200: #99f6e4;
+      --teal-500: #14b8a6;
+      --teal-600: #0d9488;
+      --teal-700: #0f766e;
+      --teal-800: #115e59;
+      --teal-900: #134e4a;
+
+      --blue-50:  #eff6ff;
+      --blue-100: #dbeafe;
+      --blue-500: #3b82f6;
+      --blue-600: #2563eb;
+      --blue-700: #1d4ed8;
+
+      --amber-50:  #fffbeb;
+      --amber-100: #fef3c7;
+      --amber-500: #f59e0b;
+      --amber-600: #d97706;
+
+      --red-50:   #fef2f2;
+      --red-100:  #fee2e2;
+      --red-500:  #ef4444;
+      --red-600:  #dc2626;
+
+      --purple-50:  #faf5ff;
+      --purple-100: #f3e8ff;
+      --purple-500: #a855f7;
+      --purple-600: #9333ea;
+
+      /* Typography */
+      --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-serif: 'Instrument Serif', Georgia, serif;
+      --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
+
+      /* Spacing */
+      --content-max: 780px;
+      --sidebar-width: 280px;
+
+      /* Transitions */
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--ink);
+      background: var(--surface);
+    }
+
+    /* ── PROGRESS BAR ─────────────────────────── */
+    .progress-bar { position: fixed; top: 0; left: 0; width: 0%; height: 3px; background: linear-gradient(90deg, var(--teal-500), var(--blue-500)); z-index: 1000; transition: width 0.15s var(--ease); }
+
+    /* ── TOP NAV ──────────────────────────────── */
+    .top-nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 2rem; }
+    .top-nav-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 56px; }
+    .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--teal-800); }
+    .nav-brand-icon { width: 32px; height: 32px; background: linear-gradient(135deg, var(--teal-600), var(--teal-800)); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 14px; }
+    .nav-brand-text { font-weight: 700; font-size: 15px; letter-spacing: -0.02em; }
+    .nav-chapter-nav { display: flex; align-items: center; gap: 8px; }
+    .nav-btn { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 8px; font-size: 13px; font-weight: 500; text-decoration: none; color: var(--ink-muted); border: 1px solid var(--border); background: white; transition: all 0.2s var(--ease); cursor: pointer; }
+    .nav-btn:hover { color: var(--ink); border-color: var(--teal-500); background: var(--teal-50); }
+    .nav-btn.disabled { opacity: 0.4; pointer-events: none; }
+    .nav-current { font-size: 13px; font-weight: 600; color: var(--ink-light); padding: 0 4px; }
+
+    /* ── HERO ─────────────────────────────────── */
+    .hero { background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%); border-bottom: 1px solid var(--border); padding: 4rem 2rem 3.5rem; }
+    .hero-inner { max-width: var(--content-max); margin: 0 auto; }
+    .hero-chapter-label { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--teal-700); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1rem; }
+    .hero-chapter-label span { background: var(--teal-100); padding: 3px 10px; border-radius: 100px; }
+    .hero h1 { font-family: var(--font-serif); font-size: clamp(2.4rem, 5vw, 3.2rem); font-weight: 400; line-height: 1.15; color: var(--ink); margin-bottom: 1rem; }
+    .hero-subtitle { font-size: 1.15rem; color: var(--ink-light); line-height: 1.65; max-width: 640px; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.5rem; }
+    .hero-meta-item { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--ink-muted); }
+    .hero-meta-item svg { width: 16px; height: 16px; color: var(--teal-600); }
+
+    /* ── MAIN LAYOUT ──────────────────────────── */
+    .main-layout { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: grid; grid-template-columns: 1fr var(--sidebar-width); gap: 4rem; align-items: start; }
+    .content { padding: 3rem 0 6rem; min-width: 0; }
+
+    /* ── SIDEBAR TOC ──────────────────────────── */
+    .sidebar { position: sticky; top: 76px; padding: 2rem 0; max-height: calc(100vh - 76px); overflow-y: auto; }
+    .sidebar-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-muted); margin-bottom: 1rem; padding-left: 14px; }
+    .toc-list { list-style: none; }
+    .toc-item a { display: block; padding: 6px 14px; font-size: 13px; color: var(--ink-muted); text-decoration: none; border-left: 2px solid transparent; transition: all 0.2s var(--ease); line-height: 1.5; }
+    .toc-item a:hover { color: var(--ink); background: var(--surface-alt); }
+    .toc-item a.active { color: var(--teal-700); border-left-color: var(--teal-500); background: var(--teal-50); font-weight: 500; }
+
+    /* ── TYPOGRAPHY ────────────────────────────── */
+    .content h2 { font-family: var(--font-serif); font-size: 1.85rem; font-weight: 400; color: var(--ink); margin: 3rem 0 1rem; padding-top: 1rem; scroll-margin-top: 80px; }
+    .content h2:first-child { margin-top: 0; }
+    .content h3 { font-size: 1.15rem; font-weight: 600; color: var(--ink); margin: 2rem 0 0.75rem; scroll-margin-top: 80px; }
+    .content p { margin-bottom: 1.25rem; color: var(--ink-light); }
+    .content strong { color: var(--ink); font-weight: 600; }
+    .content a { color: var(--teal-700); text-decoration: underline; text-decoration-color: var(--teal-200); text-underline-offset: 3px; transition: text-decoration-color 0.2s; }
+    .content a:hover { text-decoration-color: var(--teal-600); }
+    .content ul, .content ol { margin-bottom: 1.25rem; padding-left: 1.5rem; }
+    .content li { margin-bottom: 0.5rem; color: var(--ink-light); }
+    .content li::marker { color: var(--teal-500); }
+
+    /* ── SECTION DIVIDER ──────────────────────── */
+    .section-divider { border: none; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 3rem 0; }
+
+    /* ── CALLOUT BOXES ────────────────────────── */
+    .callout { padding: 1.25rem 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; border: 1px solid; position: relative; }
+    .callout-header { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; margin-bottom: 0.5rem; }
+    .callout-header svg { width: 18px; height: 18px; flex-shrink: 0; }
+    .callout p:last-child { margin-bottom: 0; }
+    .callout.concept { background: var(--blue-50); border-color: var(--blue-100); }
+    .callout.concept .callout-header { color: var(--blue-700); }
+    .callout.important { background: var(--amber-50); border-color: var(--amber-100); }
+    .callout.important .callout-header { color: var(--amber-600); }
+    .callout.danger { background: var(--red-50); border-color: var(--red-100); }
+    .callout.danger .callout-header { color: var(--red-600); }
+    .callout.tip { background: var(--purple-50); border-color: var(--purple-100); }
+    .callout.tip .callout-header { color: var(--purple-600); }
+    .callout.success { background: var(--teal-50); border-color: var(--teal-100); }
+    .callout.success .callout-header { color: var(--teal-700); }
+
+    /* ── CODE BLOCKS ──────────────────────────── */
+    .code-block { position: relative; margin-bottom: 1.5rem; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+    .code-header { display: flex; align-items: center; justify-content: space-between; padding: 8px 16px; background: var(--surface-alt); border-bottom: 1px solid var(--border); font-size: 12px; color: var(--ink-muted); }
+    .code-lang { font-family: var(--font-mono); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+    .code-copy { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border); background: white; font-size: 11px; font-family: var(--font-sans); color: var(--ink-muted); cursor: pointer; transition: all 0.2s var(--ease); }
+    .code-copy:hover { border-color: var(--teal-500); color: var(--teal-700); }
+    .code-copy.copied { background: var(--teal-50); border-color: var(--teal-500); color: var(--teal-700); }
+    pre { margin: 0; padding: 1.25rem 1.5rem; overflow-x: auto; background: #1e293b; font-family: var(--font-mono); font-size: 13.5px; line-height: 1.7; color: #e2e8f0; }
+    code { font-family: var(--font-mono); font-size: 0.88em; }
+    p code, li code { padding: 2px 7px; background: var(--surface-alt); border: 1px solid var(--border); border-radius: 5px; color: var(--teal-800); font-size: 0.85em; }
+
+    /* Syntax highlights */
+    .hl-keyword  { color: #c084fc; }
+    .hl-string   { color: #86efac; }
+    .hl-comment  { color: #64748b; font-style: italic; }
+    .hl-function { color: #7dd3fc; }
+    .hl-number   { color: #fbbf24; }
+    .hl-flag     { color: #f472b6; }
+
+    /* ── COLLAPSIBLE (DETAILS) ────────────────── */
+    details { margin-bottom: 1.25rem; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; transition: border-color 0.2s var(--ease); }
+    details[open] { border-color: var(--teal-200); }
+    details summary { padding: 1rem 1.25rem; font-weight: 600; font-size: 15px; cursor: pointer; background: var(--surface-alt); list-style: none; display: flex; align-items: center; gap: 10px; transition: background 0.2s var(--ease); user-select: none; }
+    details summary::-webkit-details-marker { display: none; }
+    details summary::before { content: ''; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E"); background-size: contain; flex-shrink: 0; transition: transform 0.2s var(--ease); }
+    details[open] summary::before { transform: rotate(90deg); }
+    details summary:hover { background: var(--teal-50); }
+    .details-body { padding: 1.25rem 1.5rem; }
+    .details-body p:last-child { margin-bottom: 0; }
+
+    /* ── VIDEO EMBED ──────────────────────────── */
+    .video-card { margin-bottom: 1.5rem; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+    .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; background: #0f172a; }
+    .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+    .video-caption { padding: 12px 16px; background: var(--surface-alt); font-size: 13px; color: var(--ink-muted); display: flex; align-items: center; gap: 6px; }
+    .video-caption svg { width: 14px; height: 14px; color: var(--red-500); }
+
+    /* ── RESOURCE CARDS ───────────────────────── */
+    .resource-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+    .resource-card { display: flex; gap: 14px; padding: 1rem 1.25rem; border: 1px solid var(--border); border-radius: 12px; text-decoration: none; transition: all 0.2s var(--ease); background: white; }
+    .resource-card:hover { border-color: var(--teal-300); background: var(--teal-50); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+    .resource-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 18px; }
+    .resource-icon.docs { background: var(--blue-50); color: var(--blue-600); }
+    .resource-icon.video { background: var(--red-50); color: var(--red-500); }
+    .resource-icon.github { background: var(--ink); color: white; }
+    .resource-icon.article { background: var(--amber-50); color: var(--amber-600); }
+    .resource-info { min-width: 0; }
+    .resource-title { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 2px; line-height: 1.4; }
+    .resource-desc { font-size: 12px; color: var(--ink-muted); line-height: 1.5; }
+
+    /* ── ASSIGNMENT CARDS ─────────────────────── */
+    .assignment { border: 2px solid var(--teal-200); border-radius: 14px; padding: 1.5rem 1.75rem; margin-bottom: 1.5rem; background: linear-gradient(135deg, var(--teal-50) 0%, white 100%); }
+    .assignment-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+    .assignment-label { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--teal-700); }
+    .assignment-difficulty { display: inline-flex; padding: 4px 10px; border-radius: 100px; font-size: 11px; font-weight: 600; }
+    .difficulty-l1 { background: var(--teal-100); color: var(--teal-800); }
+    .difficulty-l2 { background: var(--amber-100); color: var(--amber-600); }
+    .difficulty-l3 { background: var(--red-100); color: var(--red-600); }
+    .assignment h4 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.75rem; }
+    .assignment p { font-size: 14px; }
+    .checklist { list-style: none; padding: 0; }
+    .checklist li { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border-light); font-size: 14px; }
+    .checklist li:last-child { border-bottom: none; }
+    .check-box { width: 20px; height: 20px; border-radius: 6px; border: 2px solid var(--border); flex-shrink: 0; margin-top: 1px; cursor: pointer; transition: all 0.15s var(--ease); display: flex; align-items: center; justify-content: center; }
+    .check-box:hover { border-color: var(--teal-500); }
+    .check-box.checked { background: var(--teal-500); border-color: var(--teal-500); }
+    .check-box.checked::after { content: ''; width: 10px; height: 10px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E"); background-size: contain; }
+
+    /* ── DIAGRAM ──────────────────────────────── */
+    .diagram { margin: 1.5rem 0; padding: 2rem; background: var(--surface-alt); border: 1px solid var(--border); border-radius: 14px; overflow-x: auto; }
+    .diagram pre { background: transparent; color: var(--ink); padding: 0; font-size: 13px; line-height: 1.6; }
+    .diagram-caption { margin-top: 1rem; font-size: 12px; color: var(--ink-muted); text-align: center; font-style: italic; }
+
+    /* ── FOOTER ───────────────────────────────── */
+    .chapter-footer { border-top: 1px solid var(--border); padding: 3rem 2rem; background: var(--surface-alt); }
+    .chapter-footer-inner { max-width: var(--content-max); margin: 0 auto; }
+    .footer-nav { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+    .footer-nav-link { display: flex; flex-direction: column; gap: 4px; padding: 1rem 1.5rem; border: 1px solid var(--border); border-radius: 12px; text-decoration: none; transition: all 0.2s var(--ease); max-width: 320px; background: white; }
+    .footer-nav-link:hover { border-color: var(--teal-300); box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+    .footer-nav-label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--teal-600); }
+    .footer-nav-title { font-size: 15px; font-weight: 600; color: var(--ink); }
+    .footer-brand { text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); font-size: 13px; color: var(--ink-muted); }
+
+    /* ── RESPONSIVE ───────────────────────────── */
+    @media (max-width: 960px) { .main-layout { grid-template-columns: 1fr; } .sidebar { display: none; } .resource-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 640px) { .hero { padding: 2.5rem 1.25rem 2rem; } .main-layout { padding: 0 1.25rem; } .content { padding: 2rem 0 4rem; } pre { padding: 1rem; font-size: 12.5px; } .footer-nav { flex-direction: column; } .footer-nav-link { max-width: 100%; width: 100%; } }
+    @media print { .top-nav, .sidebar, .progress-bar { display: none; } .main-layout { display: block; } .content { padding: 0; } .hero { background: white; border: none; } pre { background: #f1f5f9; color: var(--ink); border: 1px solid var(--border); } }
   </style>
 </head>
 <body>
+  <!-- Progress Bar -->
   <div class="progress-bar" id="progressBar"></div>
-  <nav class="top-nav"><div class="top-nav-inner"><a class="nav-brand" href="index.html"><div class="nav-brand-icon">ILA</div><span class="nav-brand-text">Iksha Learning Academy</span></a><div class="nav-chapter-nav"><a class="nav-btn" href="chapter-02.html">&larr; Previous</a><span class="nav-current">03 / 08</span><a class="nav-btn" href="chapter-04.html">Next &rarr;</a></div></div></nav>
 
-  <header class="hero"><div class="hero-inner">
-    <div class="hero-chapter-label"><span>Chapter 03</span> &middot; Phase 2: Building APIs</div>
-    <h1>ActiveRecord Fundamentals</h1>
-    <p class="hero-subtitle">Master the ORM that powers every Rails application. Learn migrations for schema evolution, associations for modeling relationships, validations for data integrity, callbacks for lifecycle hooks, and the query interface for efficient database access.</p>
-    <div class="hero-meta">
-      <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Estimated: 4&ndash;5 days</div>
-      <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>3 Advancement Levels</div>
-      <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>3 Assignments</div>
+  <!-- Top Navigation -->
+  <nav class="top-nav">
+    <div class="top-nav-inner">
+      <a class="nav-brand" href="index.html">
+        <div class="nav-brand-icon">ILA</div>
+        <span class="nav-brand-text">Iksha Learning Academy</span>
+      </a>
+      <div class="nav-chapter-nav">
+        <a class="nav-btn" href="chapter-02.html">&larr; Previous</a>
+        <span class="nav-current">03 / 08</span>
+        <a class="nav-btn" href="chapter-04.html">Next &rarr;</a>
+      </div>
     </div>
-  </div></header>
+  </nav>
 
+  <!-- Hero -->
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-chapter-label">
+        <span>Chapter 03</span> &middot; Phase 1: Ruby &amp; Rails Fundamentals
+      </div>
+      <h1>ActiveRecord Fundamentals</h1>
+      <p class="hero-subtitle">
+        Master Rails&rsquo; object-relational mapping layer &mdash; migrations for evolving your schema,
+        associations for connecting models, validations for data integrity, callbacks for lifecycle hooks,
+        and the query interface that lets you talk to your database without writing raw SQL.
+      </p>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Estimated: 4&ndash;5 days
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          3 Advancement Levels
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          3 Assignments
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content + Sidebar -->
   <div class="main-layout">
     <main class="content">
 
+      <!-- ════════════════════════════════════════
+           SECTION 1: WHY THIS MATTERS
+           ════════════════════════════════════════ -->
       <h2 id="why-this-matters">Why This Matters</h2>
-      <p>ActiveRecord is the bridge between your Ruby code and the database. It implements the Active Record pattern &mdash; each model class maps to a database table, and each instance maps to a row. You never write raw SQL for standard operations. Instead, you call methods like <code>User.find(1)</code>, <code>article.save</code>, or <code>Post.where(published: true)</code>, and ActiveRecord translates them into optimized SQL.</p>
-      <p>In every Rails application, the database schema is the source of truth. Migrations let you evolve that schema incrementally and reversibly, associations let you express relationships between tables as Ruby method calls, and validations ensure bad data never reaches the database. Mastering ActiveRecord is not optional &mdash; it is the difference between an application that works and one that works correctly.</p>
+
+      <p>
+        ActiveRecord is the <strong>Model</strong> layer in Rails MVC. It is an Object-Relational
+        Mapping (ORM) that connects your Ruby classes to database tables, rows to objects, and
+        columns to attributes &mdash; all without writing a single line of SQL. In a typical Rails
+        application, you spend more time working with ActiveRecord than any other part of the
+        framework. Your models define business rules, data relationships, and validation logic that
+        ensure your application's data stays consistent and correct.
+      </p>
+
+      <p>
+        Migrations are how you evolve your database schema over time. Instead of manually running
+        SQL ALTER TABLE statements, you write Ruby migration files that Rails can apply forward or
+        roll back. Every team member runs the same migrations, and your CI/CD pipeline applies them
+        automatically during deployment. This gives you a version-controlled, reproducible database
+        schema that matches your code at every point in history.
+      </p>
+
+      <p>
+        Associations are what make ActiveRecord powerful for real applications. A blog post
+        <code>has_many :comments</code>. A comment <code>belongs_to :article</code>. A student
+        <code>has_many :courses, through: :enrollments</code>. These declarations give you
+        intuitive Ruby methods for traversing relationships &mdash; no JOIN queries required.
+        Understanding associations deeply is the difference between writing clean, efficient code
+        and accidentally triggering N+1 query performance disasters.
+      </p>
 
       <div class="callout concept">
-        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>Key Insight</div>
-        <p>ActiveRecord is not just a query builder &mdash; it is a <strong>domain modeling tool</strong>. When you write <code>has_many :comments</code>, you are not just configuring a JOIN. You are declaring that an article can have comments, and Rails will give you methods to create, find, count, and delete those comments through the association.</p>
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Key Insight
+        </div>
+        <p>
+          ActiveRecord follows the <strong>Active Record pattern</strong> described by Martin Fowler:
+          an object wraps a row in a database table, encapsulates database access, and adds domain
+          logic on top. This means your <code>Article</code> model is simultaneously a Ruby class with
+          behavior <em>and</em> a gateway to the <code>articles</code> table. This dual nature is what
+          makes Rails models so productive &mdash; and why keeping them well-organized matters.
+        </p>
       </div>
 
       <hr class="section-divider">
 
+      <!-- ════════════════════════════════════════
+           SECTION 2: KEY CONCEPTS
+           ════════════════════════════════════════ -->
       <h2 id="key-concepts">Key Concepts</h2>
 
-      <h3 id="migrations">1. Migrations &mdash; Schema as Code</h3>
-      <p>Migrations are Ruby classes that describe database schema changes. Each migration has a timestamp, runs in order, and can be rolled back. They are version control for your database &mdash; every developer and every server applies the same changes in the same order.</p>
+      <h3 id="migrations">1. Migrations</h3>
+
+      <p>
+        Migrations are Ruby classes that define changes to your database schema. Each migration file
+        has a timestamp in its name, and Rails runs them in chronological order. You can add columns,
+        remove columns, create tables, add indexes, and modify column types &mdash; all in Ruby,
+        all version-controlled, and all reversible.
+      </p>
 
       <div class="code-block">
-        <div class="code-header"><span class="code-lang">ruby</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
 <pre>
-<span class="hl-comment"># db/migrate/20240115120000_create_products.rb</span>
-<span class="hl-keyword">class</span> <span class="hl-function">CreateProducts</span> &lt; ActiveRecord::Migration[<span class="hl-number">7.1</span>]
+<span class="hl-comment"># db/migrate/20240101000000_create_articles.rb</span>
+<span class="hl-keyword">class</span> <span class="hl-function">CreateArticles</span> &lt; ActiveRecord::Migration[<span class="hl-number">7.1</span>]
   <span class="hl-keyword">def</span> <span class="hl-function">change</span>
-    create_table <span class="hl-string">:products</span> <span class="hl-keyword">do</span> |t|
-      t.string   <span class="hl-string">:name</span>,        null: <span class="hl-keyword">false</span>
-      t.text     <span class="hl-string">:description</span>
-      t.decimal  <span class="hl-string">:price</span>,       precision: <span class="hl-number">10</span>, scale: <span class="hl-number">2</span>, null: <span class="hl-keyword">false</span>
-      t.integer  <span class="hl-string">:stock_count</span>, default: <span class="hl-number">0</span>
-      t.boolean  <span class="hl-string">:active</span>,      default: <span class="hl-keyword">true</span>
-      t.references <span class="hl-string">:category</span>,  foreign_key: <span class="hl-keyword">true</span>
+    create_table <span class="hl-string">:articles</span> <span class="hl-keyword">do</span> |t|
+      t.string   <span class="hl-string">:title</span>,   <span class="hl-string">null:</span> <span class="hl-keyword">false</span>
+      t.text     <span class="hl-string">:body</span>
+      t.integer  <span class="hl-string">:status</span>,  <span class="hl-string">default:</span> <span class="hl-number">0</span>
+      t.string   <span class="hl-string">:slug</span>,    <span class="hl-string">null:</span> <span class="hl-keyword">false</span>
 
-      t.timestamps <span class="hl-comment"># adds created_at and updated_at</span>
+      t.timestamps <span class="hl-comment"># creates created_at and updated_at</span>
     <span class="hl-keyword">end</span>
 
-    add_index <span class="hl-string">:products</span>, <span class="hl-string">:name</span>
-    add_index <span class="hl-string">:products</span>, [<span class="hl-string">:category_id</span>, <span class="hl-string">:active</span>]
+    add_index <span class="hl-string">:articles</span>, <span class="hl-string">:slug</span>, <span class="hl-string">unique:</span> <span class="hl-keyword">true</span>
+    add_index <span class="hl-string">:articles</span>, <span class="hl-string">:status</span>
+  <span class="hl-keyword">end</span>
+<span class="hl-keyword">end</span>
+
+<span class="hl-comment"># db/migrate/20240102000000_create_comments.rb</span>
+<span class="hl-keyword">class</span> <span class="hl-function">CreateComments</span> &lt; ActiveRecord::Migration[<span class="hl-number">7.1</span>]
+  <span class="hl-keyword">def</span> <span class="hl-function">change</span>
+    create_table <span class="hl-string">:comments</span> <span class="hl-keyword">do</span> |t|
+      t.text       <span class="hl-string">:body</span>,    <span class="hl-string">null:</span> <span class="hl-keyword">false</span>
+      t.references <span class="hl-string">:article</span>, <span class="hl-string">null:</span> <span class="hl-keyword">false</span>, <span class="hl-string">foreign_key:</span> <span class="hl-keyword">true</span>
+      t.references <span class="hl-string">:user</span>,    <span class="hl-string">null:</span> <span class="hl-keyword">false</span>, <span class="hl-string">foreign_key:</span> <span class="hl-keyword">true</span>
+
+      t.timestamps
+    <span class="hl-keyword">end</span>
+  <span class="hl-keyword">end</span>
+<span class="hl-keyword">end</span>
+
+<span class="hl-comment"># db/migrate/20240103000000_add_category_to_articles.rb</span>
+<span class="hl-keyword">class</span> <span class="hl-function">AddCategoryToArticles</span> &lt; ActiveRecord::Migration[<span class="hl-number">7.1</span>]
+  <span class="hl-keyword">def</span> <span class="hl-function">change</span>
+    add_column    <span class="hl-string">:articles</span>, <span class="hl-string">:category</span>, <span class="hl-string">:string</span>
+    add_index     <span class="hl-string">:articles</span>, <span class="hl-string">:category</span>
+    change_column_default <span class="hl-string">:articles</span>, <span class="hl-string">:status</span>, <span class="hl-string">from:</span> <span class="hl-keyword">nil</span>, <span class="hl-string">to:</span> <span class="hl-number">0</span>
   <span class="hl-keyword">end</span>
 <span class="hl-keyword">end</span>
 </pre>
       </div>
 
       <div class="code-block">
-        <div class="code-header"><span class="code-lang">bash</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <div class="code-header">
+          <span class="code-lang">bash</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
 <pre>
-<span class="hl-comment"># Generate a migration</span>
-bin/rails generate migration CreateProducts name:string price:decimal
-
 <span class="hl-comment"># Run pending migrations</span>
-bin/rails db:migrate
+rails db:migrate
 
-<span class="hl-comment"># Rollback the last migration</span>
-bin/rails db:rollback
+<span class="hl-comment"># Roll back the last migration</span>
+rails db:rollback
+
+<span class="hl-comment"># Roll back 3 migrations</span>
+rails db:rollback <span class="hl-flag">STEP=3</span>
 
 <span class="hl-comment"># Check migration status</span>
-bin/rails db:migrate:status
+rails db:migrate:status
 
-<span class="hl-comment"># Reset database (drop, create, migrate, seed)</span>
-bin/rails db:reset
+<span class="hl-comment"># Generate a migration</span>
+rails generate migration AddPublishedAtToArticles published_at:datetime
 </pre>
       </div>
 
       <div class="callout danger">
-        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Never Edit Old Migrations</div>
-        <p>Once a migration has been committed and run by other developers, never modify it. Create a new migration instead. Editing old migrations causes schema drift &mdash; your database will not match your teammates' databases. Always move forward.</p>
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Never edit a migration after it has been run in production
+        </div>
+        <p>
+          Once a migration is shared with other developers or deployed, treat it as immutable. If you
+          need to change something, write a <em>new</em> migration. Editing old migrations causes schema
+          mismatches between environments and breaks <code>db:migrate</code> for the entire team.
+        </p>
       </div>
 
-      <h3 id="associations">2. Associations &mdash; Modeling Relationships</h3>
-      <p>Associations declare relationships between models. Rails supports six types, but you will use three constantly: <code>belongs_to</code>, <code>has_many</code>, and <code>has_many :through</code>. These generate methods that let you navigate between related records without writing SQL JOINs.</p>
+      <h3 id="associations">2. Associations</h3>
+
+      <p>
+        Associations declare relationships between models. They add methods to your models for
+        querying related records, and they tell ActiveRecord how to construct JOIN queries. The
+        three most common associations are <code>belongs_to</code>, <code>has_many</code>, and
+        <code>has_many :through</code>. Getting associations right is critical for both correctness
+        and performance.
+      </p>
 
       <div class="code-block">
-        <div class="code-header"><span class="code-lang">ruby</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
 <pre>
-<span class="hl-comment"># app/models/user.rb</span>
-<span class="hl-keyword">class</span> <span class="hl-function">User</span> &lt; ApplicationRecord
-  has_many <span class="hl-string">:articles</span>, dependent: <span class="hl-string">:destroy</span>
-  has_many <span class="hl-string">:comments</span>
-  has_many <span class="hl-string">:commented_articles</span>, through: <span class="hl-string">:comments</span>, source: <span class="hl-string">:article</span>
-<span class="hl-keyword">end</span>
+<span class="hl-comment"># ═══════════════════════════════════════════</span>
+<span class="hl-comment"># ONE-TO-MANY: Article has many Comments</span>
+<span class="hl-comment"># ═══════════════════════════════════════════</span>
 
 <span class="hl-comment"># app/models/article.rb</span>
 <span class="hl-keyword">class</span> <span class="hl-function">Article</span> &lt; ApplicationRecord
-  belongs_to <span class="hl-string">:user</span>
-  has_many   <span class="hl-string">:comments</span>, dependent: <span class="hl-string">:destroy</span>
-  has_many   <span class="hl-string">:tags</span>,     through: <span class="hl-string">:article_tags</span>
-  has_many   <span class="hl-string">:article_tags</span>
+  has_many <span class="hl-string">:comments</span>, <span class="hl-string">dependent:</span> <span class="hl-string">:destroy</span>
+  belongs_to <span class="hl-string">:user</span>    <span class="hl-comment"># author of the article</span>
+  has_many <span class="hl-string">:taggings</span>
+  has_many <span class="hl-string">:tags</span>, <span class="hl-string">through:</span> <span class="hl-string">:taggings</span>
 <span class="hl-keyword">end</span>
 
 <span class="hl-comment"># app/models/comment.rb</span>
 <span class="hl-keyword">class</span> <span class="hl-function">Comment</span> &lt; ApplicationRecord
-  belongs_to <span class="hl-string">:user</span>
   belongs_to <span class="hl-string">:article</span>
+  belongs_to <span class="hl-string">:user</span>
 <span class="hl-keyword">end</span>
 
-<span class="hl-comment"># Usage — these methods are auto-generated by associations</span>
-user = User.first
-user.articles                  <span class="hl-comment"># all articles by this user</span>
-user.articles.create(title: <span class="hl-string">"New Post"</span>)  <span class="hl-comment"># create with user_id set</span>
-user.articles.count            <span class="hl-comment"># COUNT query, not loading all records</span>
+<span class="hl-comment"># ═══════════════════════════════════════════</span>
+<span class="hl-comment"># MANY-TO-MANY: Articles have many Tags through Taggings</span>
+<span class="hl-comment"># ═══════════════════════════════════════════</span>
 
+<span class="hl-comment"># app/models/tag.rb</span>
+<span class="hl-keyword">class</span> <span class="hl-function">Tag</span> &lt; ApplicationRecord
+  has_many <span class="hl-string">:taggings</span>
+  has_many <span class="hl-string">:articles</span>, <span class="hl-string">through:</span> <span class="hl-string">:taggings</span>
+<span class="hl-keyword">end</span>
+
+<span class="hl-comment"># app/models/tagging.rb (join model)</span>
+<span class="hl-keyword">class</span> <span class="hl-function">Tagging</span> &lt; ApplicationRecord
+  belongs_to <span class="hl-string">:article</span>
+  belongs_to <span class="hl-string">:tag</span>
+<span class="hl-keyword">end</span>
+
+<span class="hl-comment"># Usage in rails console:</span>
 article = Article.first
-article.user                   <span class="hl-comment"># the author</span>
-article.comments.recent        <span class="hl-comment"># chain scopes on associations</span>
-article.tags                   <span class="hl-comment"># through join table</span>
+article.comments             <span class="hl-comment"># =&gt; [#&lt;Comment...&gt;, ...]</span>
+article.comments.count       <span class="hl-comment"># =&gt; 5 (SQL COUNT query)</span>
+article.comments.create!(    <span class="hl-comment"># Create a comment for this article</span>
+  <span class="hl-string">body:</span> <span class="hl-string">"Great post!"</span>,
+  <span class="hl-string">user:</span> current_user
+)
+
+article.tags                 <span class="hl-comment"># =&gt; [#&lt;Tag name: "ruby"&gt;, ...]</span>
+article.tags &lt;&lt; Tag.find_by(<span class="hl-string">name:</span> <span class="hl-string">"rails"</span>)
+
+comment = Comment.first
+comment.article              <span class="hl-comment"># =&gt; #&lt;Article...&gt;</span>
+comment.article.title        <span class="hl-comment"># =&gt; "My First Post"</span>
 </pre>
       </div>
 
       <div class="diagram">
 <pre>
-  Association Types
-  ═════════════════
+  Association Diagram
+  ═══════════════════════════════════════════
 
-  belongs_to  :user       →  article has a user_id column pointing to users table
-  has_many    :articles   →  user has zero or more articles (articles.user_id = users.id)
-  has_many    :through    →  many-to-many via join table
-
-  ┌──────┐  1    *  ┌──────────┐  *    *  ┌──────┐
-  │ User │─────────▶│ Article  │◀────────▶│ Tag  │
-  └──────┘          └──────────┘          └──────┘
-                         │           (through article_tags)
-                         │ 1
-                         │
-                         ▼ *
-                    ┌──────────┐
-                    │ Comment  │
-                    └──────────┘
+  users              articles            comments
+  +----------+       +----------+       +----------+
+  | id       |&lt;------| user_id  |       | id       |
+  | name     |  1:N  | id       |&lt;------| article_id|
+  | email    |       | title    |  1:N  | user_id  |
+  +----------+       | body     |       | body     |
+                     +----------+       +----------+
+                          |
+                     taggings            tags
+                     +----------+       +----------+
+                     | article_id|------&gt;| id       |
+                     | tag_id   |------&gt;| name     |
+                     +----------+       +----------+
+                        N:M (through)
 </pre>
-        <div class="diagram-caption">Figure 1: Association map for a blog — User → Articles → Comments, Articles ↔ Tags</div>
+        <div class="diagram-caption">Figure 2: Entity relationship diagram showing one-to-many and many-to-many associations</div>
       </div>
 
-      <h3 id="validations">3. Validations &mdash; Data Integrity</h3>
-      <p>Validations run before saving a record to the database. If any validation fails, the save is aborted and error messages are attached to the record. This is your first line of defense against bad data.</p>
+      <h3 id="validations">3. Validations</h3>
+
+      <p>
+        Validations ensure that only valid data gets saved to your database. They run automatically
+        before <code>save</code>, <code>create</code>, and <code>update</code>. If validations fail,
+        the record is not persisted and error messages are populated on the model. Validations are
+        your first line of defense against bad data &mdash; always validate at the model level, even
+        if you also validate in the front end.
+      </p>
 
       <div class="code-block">
-        <div class="code-header"><span class="code-lang">ruby</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
 <pre>
-<span class="hl-keyword">class</span> <span class="hl-function">Product</span> &lt; ApplicationRecord
-  <span class="hl-comment"># Presence — field cannot be nil or empty</span>
-  validates <span class="hl-string">:name</span>,  presence: <span class="hl-keyword">true</span>
-  validates <span class="hl-string">:price</span>, presence: <span class="hl-keyword">true</span>
-
-  <span class="hl-comment"># Numericality — must be a number with constraints</span>
-  validates <span class="hl-string">:price</span>, numericality: { greater_than: <span class="hl-number">0</span> }
-  validates <span class="hl-string">:stock_count</span>, numericality: { only_integer: <span class="hl-keyword">true</span>, greater_than_or_equal_to: <span class="hl-number">0</span> }
-
-  <span class="hl-comment"># Uniqueness — no duplicates</span>
-  validates <span class="hl-string">:sku</span>, uniqueness: <span class="hl-keyword">true</span>, allow_nil: <span class="hl-keyword">true</span>
+<span class="hl-comment"># app/models/article.rb</span>
+<span class="hl-keyword">class</span> <span class="hl-function">Article</span> &lt; ApplicationRecord
+  <span class="hl-comment"># Presence — field must not be blank</span>
+  validates <span class="hl-string">:title</span>, <span class="hl-string">presence:</span> <span class="hl-keyword">true</span>
+  validates <span class="hl-string">:body</span>,  <span class="hl-string">presence:</span> <span class="hl-keyword">true</span>
 
   <span class="hl-comment"># Length constraints</span>
-  validates <span class="hl-string">:name</span>, length: { minimum: <span class="hl-number">2</span>, maximum: <span class="hl-number">200</span> }
-  validates <span class="hl-string">:description</span>, length: { maximum: <span class="hl-number">5000</span> }
+  validates <span class="hl-string">:title</span>, <span class="hl-string">length:</span> { <span class="hl-string">minimum:</span> <span class="hl-number">5</span>, <span class="hl-string">maximum:</span> <span class="hl-number">200</span> }
+  validates <span class="hl-string">:body</span>,  <span class="hl-string">length:</span> { <span class="hl-string">minimum:</span> <span class="hl-number">20</span> }
 
-  <span class="hl-comment"># Format — regex pattern matching</span>
-  validates <span class="hl-string">:sku</span>, format: { with: <span class="hl-string">/\A[A-Z]{2}-\d{6}\z/</span>,
-    message: <span class="hl-string">"must be like AB-123456"</span> }, allow_nil: <span class="hl-keyword">true</span>
+  <span class="hl-comment"># Uniqueness — no duplicate slugs</span>
+  validates <span class="hl-string">:slug</span>, <span class="hl-string">uniqueness:</span> <span class="hl-keyword">true</span>, <span class="hl-string">presence:</span> <span class="hl-keyword">true</span>
+
+  <span class="hl-comment"># Numericality</span>
+  validates <span class="hl-string">:word_count</span>, <span class="hl-string">numericality:</span> {
+    <span class="hl-string">only_integer:</span> <span class="hl-keyword">true</span>,
+    <span class="hl-string">greater_than:</span> <span class="hl-number">0</span>
+  }, <span class="hl-string">allow_nil:</span> <span class="hl-keyword">true</span>
 
   <span class="hl-comment"># Inclusion — must be one of these values</span>
-  validates <span class="hl-string">:status</span>, inclusion: { in: %w[draft active archived] }
+  validates <span class="hl-string">:status</span>, <span class="hl-string">inclusion:</span> {
+    <span class="hl-string">in:</span> %w[draft published archived],
+    <span class="hl-string">message:</span> <span class="hl-string">"%{value} is not a valid status"</span>
+  }
+
+  <span class="hl-comment"># Format — validates against a regex pattern</span>
+  validates <span class="hl-string">:slug</span>, <span class="hl-string">format:</span> {
+    <span class="hl-string">with:</span> <span class="hl-string">/\A[a-z0-9\-]+\z/</span>,
+    <span class="hl-string">message:</span> <span class="hl-string">"must be lowercase letters, numbers, and hyphens only"</span>
+  }
 
   <span class="hl-comment"># Custom validation method</span>
-  validate <span class="hl-string">:price_must_be_reasonable</span>
+  validate <span class="hl-string">:title_is_not_body</span>
 
   <span class="hl-keyword">private</span>
 
-  <span class="hl-keyword">def</span> <span class="hl-function">price_must_be_reasonable</span>
-    <span class="hl-keyword">if</span> price.present? && price > <span class="hl-number">1_000_000</span>
-      errors.add(<span class="hl-string">:price</span>, <span class="hl-string">"seems unreasonably high — please verify"</span>)
+  <span class="hl-keyword">def</span> <span class="hl-function">title_is_not_body</span>
+    <span class="hl-keyword">if</span> title.present? && body.present? && title == body
+      errors.add(<span class="hl-string">:title</span>, <span class="hl-string">"cannot be the same as the body"</span>)
     <span class="hl-keyword">end</span>
   <span class="hl-keyword">end</span>
 <span class="hl-keyword">end</span>
 
-<span class="hl-comment"># Working with validation errors</span>
-product = Product.new(name: <span class="hl-string">""</span>, price: <span class="hl-number">-5</span>)
-product.valid?                <span class="hl-comment"># => false</span>
-product.errors.full_messages  <span class="hl-comment"># => ["Name can't be blank", "Price must be greater than 0"]</span>
-product.errors[<span class="hl-string">:name</span>]         <span class="hl-comment"># => ["can't be blank"]</span>
+<span class="hl-comment"># Using validations</span>
+article = Article.new(<span class="hl-string">title:</span> <span class="hl-string">""</span>)
+article.valid?               <span class="hl-comment"># =&gt; false</span>
+article.errors.full_messages <span class="hl-comment"># =&gt; ["Title can't be blank", ...]</span>
+article.errors[<span class="hl-string">:title</span>]       <span class="hl-comment"># =&gt; ["can't be blank", "is too short..."]</span>
+
+article.save                 <span class="hl-comment"># =&gt; false (does not raise)</span>
+article.save!                <span class="hl-comment"># =&gt; raises ActiveRecord::RecordInvalid</span>
 </pre>
       </div>
 
-      <h3 id="callbacks">4. Callbacks &mdash; Lifecycle Hooks</h3>
-      <p>Callbacks let you hook into the lifecycle of an ActiveRecord object &mdash; before validation, after save, before destroy, and more. Use them sparingly for cross-cutting concerns like setting defaults or cleaning data. Avoid putting business logic in callbacks.</p>
+      <h3 id="callbacks">4. Callbacks</h3>
+
+      <p>
+        Callbacks are hooks into the ActiveRecord lifecycle. They let you run code automatically
+        before or after key events like validation, saving, creating, updating, and destroying.
+        Common use cases include generating slugs before saving, sending notifications after creation,
+        and cleaning up related data before destruction.
+      </p>
 
       <div class="code-block">
-        <div class="code-header"><span class="code-lang">ruby</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
 <pre>
+<span class="hl-comment"># app/models/article.rb</span>
 <span class="hl-keyword">class</span> <span class="hl-function">Article</span> &lt; ApplicationRecord
-  <span class="hl-comment"># Before validation — normalize data</span>
-  before_validation <span class="hl-string">:normalize_title</span>
+  <span class="hl-comment"># Before validation — runs before validations</span>
+  before_validation <span class="hl-string">:generate_slug</span>, <span class="hl-string">on:</span> <span class="hl-string">:create</span>
 
-  <span class="hl-comment"># Before save — set computed fields</span>
-  before_save <span class="hl-string">:generate_slug</span>
+  <span class="hl-comment"># Before save — runs before every save (create + update)</span>
+  before_save <span class="hl-string">:calculate_word_count</span>
 
-  <span class="hl-comment"># After create — trigger side effects</span>
+  <span class="hl-comment"># After create — runs only after a new record is created</span>
   after_create <span class="hl-string">:notify_subscribers</span>
 
-  <span class="hl-comment"># Before destroy — clean up dependencies</span>
+  <span class="hl-comment"># After update — runs only after an existing record is updated</span>
+  after_update <span class="hl-string">:clear_cache</span>, <span class="hl-keyword">if:</span> <span class="hl-string">:saved_change_to_body?</span>
+
+  <span class="hl-comment"># Before destroy — runs before a record is deleted</span>
   before_destroy <span class="hl-string">:check_if_destroyable</span>
 
   <span class="hl-keyword">private</span>
 
-  <span class="hl-keyword">def</span> <span class="hl-function">normalize_title</span>
-    <span class="hl-keyword">self</span>.title = title&.strip&.titleize
+  <span class="hl-keyword">def</span> <span class="hl-function">generate_slug</span>
+    <span class="hl-keyword">self</span>.slug = title
+      .downcase
+      .gsub(<span class="hl-string">/[^a-z0-9\s-]/</span>, <span class="hl-string">""</span>)
+      .gsub(<span class="hl-string">/[\s-]+/</span>, <span class="hl-string">"-"</span>)
+      .gsub(<span class="hl-string">/^-|-$/</span>, <span class="hl-string">""</span>)
   <span class="hl-keyword">end</span>
 
-  <span class="hl-keyword">def</span> <span class="hl-function">generate_slug</span>
-    <span class="hl-keyword">self</span>.slug = title.parameterize <span class="hl-keyword">if</span> title_changed?
+  <span class="hl-keyword">def</span> <span class="hl-function">calculate_word_count</span>
+    <span class="hl-keyword">self</span>.word_count = body.to_s.split.size
   <span class="hl-keyword">end</span>
 
   <span class="hl-keyword">def</span> <span class="hl-function">notify_subscribers</span>
-    NotificationJob.perform_later(<span class="hl-keyword">self</span>.id)
+    <span class="hl-comment"># Queue a background job to send emails</span>
+    ArticleNotificationJob.perform_later(<span class="hl-keyword">self</span>.id)
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">clear_cache</span>
+    Rails.cache.delete(<span class="hl-string">"article_#{id}"</span>)
   <span class="hl-keyword">end</span>
 
   <span class="hl-keyword">def</span> <span class="hl-function">check_if_destroyable</span>
-    <span class="hl-keyword">if</span> comments.any?
+    <span class="hl-keyword">if</span> comments.exists?
       errors.add(<span class="hl-string">:base</span>, <span class="hl-string">"Cannot delete article with comments"</span>)
-      <span class="hl-keyword">throw</span>(<span class="hl-string">:abort</span>)
+      <span class="hl-keyword">throw</span> <span class="hl-string">:abort</span>
     <span class="hl-keyword">end</span>
   <span class="hl-keyword">end</span>
 <span class="hl-keyword">end</span>
@@ -270,214 +664,514 @@ product.errors[<span class="hl-string">:name</span>]         <span class="hl-com
       </div>
 
       <div class="callout important">
-        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Callback Discipline</div>
-        <p>Callbacks are the most abused feature in Rails. Use them for data normalization (stripping whitespace, generating slugs) and simple side effects (enqueuing a background job). Never put complex business logic in callbacks &mdash; it makes your code hard to test, hard to debug, and creates invisible coupling between operations.</p>
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Use callbacks sparingly
+        </div>
+        <p>
+          Callbacks are powerful but can make your code harder to reason about. When an <code>after_create</code>
+          callback sends an email, every test that creates that model also sends an email (unless mocked).
+          For complex side effects, prefer <strong>service objects</strong> that you call explicitly.
+          Reserve callbacks for simple data transformations like slug generation and word count calculation.
+        </p>
       </div>
 
-      <h3 id="query-interface">5. The Query Interface</h3>
-      <p>ActiveRecord provides a chainable query interface that builds SQL incrementally. Queries are lazy &mdash; they do not execute until you need the results. This lets you build complex queries from simple, reusable pieces.</p>
+      <h3 id="queries">5. Query Interface</h3>
+
+      <p>
+        ActiveRecord provides a rich query interface that translates Ruby method calls into SQL.
+        Methods like <code>where</code>, <code>order</code>, <code>limit</code>, and <code>joins</code>
+        are chainable and lazy &mdash; they do not execute SQL until you actually need the data.
+        This lets you build complex queries incrementally.
+      </p>
 
       <div class="code-block">
-        <div class="code-header"><span class="code-lang">ruby</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
 <pre>
-<span class="hl-comment"># Finding records</span>
-Product.find(<span class="hl-number">1</span>)                     <span class="hl-comment"># raises RecordNotFound if missing</span>
-Product.find_by(sku: <span class="hl-string">"AB-123456"</span>)   <span class="hl-comment"># returns nil if missing</span>
-Product.find_by!(sku: <span class="hl-string">"AB-123456"</span>)  <span class="hl-comment"># raises if missing</span>
+<span class="hl-comment"># ═══════════════════════════════════════════</span>
+<span class="hl-comment"># FINDING RECORDS</span>
+<span class="hl-comment"># ═══════════════════════════════════════════</span>
 
-<span class="hl-comment"># Where clauses</span>
-Product.where(active: <span class="hl-keyword">true</span>)
-Product.where(<span class="hl-string">"price > ?"</span>, <span class="hl-number">50</span>)     <span class="hl-comment"># parameterized to prevent SQL injection</span>
-Product.where(price: <span class="hl-number">10</span>..<span class="hl-number">100</span>)       <span class="hl-comment"># BETWEEN 10 AND 100</span>
-Product.where.not(status: <span class="hl-string">"archived"</span>)
+<span class="hl-comment"># Find by primary key (raises RecordNotFound if missing)</span>
+Article.find(<span class="hl-number">42</span>)
 
-<span class="hl-comment"># Ordering and limiting</span>
-Product.order(price: <span class="hl-string">:desc</span>)
-Product.order(:name)
-Product.limit(<span class="hl-number">10</span>).offset(<span class="hl-number">20</span>)        <span class="hl-comment"># pagination building block</span>
+<span class="hl-comment"># Find by attribute (returns nil if missing)</span>
+Article.find_by(<span class="hl-string">slug:</span> <span class="hl-string">"hello-world"</span>)
 
-<span class="hl-comment"># Selecting specific columns</span>
-Product.select(<span class="hl-string">:id</span>, <span class="hl-string">:name</span>, <span class="hl-string">:price</span>)
+<span class="hl-comment"># Find or raise</span>
+Article.find_by!(<span class="hl-string">slug:</span> <span class="hl-string">"hello-world"</span>)
+
+<span class="hl-comment"># ═══════════════════════════════════════════</span>
+<span class="hl-comment"># FILTERING WITH WHERE</span>
+<span class="hl-comment"># ═══════════════════════════════════════════</span>
+
+<span class="hl-comment"># Exact match</span>
+Article.where(<span class="hl-string">status:</span> <span class="hl-string">"published"</span>)
+
+<span class="hl-comment"># Multiple conditions</span>
+Article.where(<span class="hl-string">status:</span> <span class="hl-string">"published"</span>, <span class="hl-string">category:</span> <span class="hl-string">"ruby"</span>)
+
+<span class="hl-comment"># Range</span>
+Article.where(<span class="hl-string">created_at:</span> <span class="hl-number">1</span>.week.ago..)
+
+<span class="hl-comment"># Array of values (IN clause)</span>
+Article.where(<span class="hl-string">status:</span> [<span class="hl-string">"published"</span>, <span class="hl-string">"archived"</span>])
+
+<span class="hl-comment"># SQL fragment (use ? for parameterized queries)</span>
+Article.where(<span class="hl-string">"word_count &gt; ?"</span>, <span class="hl-number">500</span>)
+
+<span class="hl-comment"># NOT</span>
+Article.where.not(<span class="hl-string">status:</span> <span class="hl-string">"draft"</span>)
+
+<span class="hl-comment"># ═══════════════════════════════════════════</span>
+<span class="hl-comment"># ORDERING, LIMITING, AND CHAINING</span>
+<span class="hl-comment"># ═══════════════════════════════════════════</span>
+
+Article
+  .where(<span class="hl-string">status:</span> <span class="hl-string">"published"</span>)
+  .order(<span class="hl-string">created_at:</span> <span class="hl-string">:desc</span>)
+  .limit(<span class="hl-number">10</span>)
+  .offset(<span class="hl-number">20</span>)
 
 <span class="hl-comment"># Aggregations</span>
-Product.count                        <span class="hl-comment"># SELECT COUNT(*)</span>
-Product.average(<span class="hl-string">:price</span>)              <span class="hl-comment"># SELECT AVG(price)</span>
-Product.sum(<span class="hl-string">:stock_count</span>)            <span class="hl-comment"># SELECT SUM(stock_count)</span>
-Product.maximum(<span class="hl-string">:price</span>)              <span class="hl-comment"># SELECT MAX(price)</span>
+Article.count                          <span class="hl-comment"># =&gt; 142</span>
+Article.where(<span class="hl-string">status:</span> <span class="hl-string">"published"</span>).count <span class="hl-comment"># =&gt; 98</span>
+Article.average(<span class="hl-string">:word_count</span>)            <span class="hl-comment"># =&gt; 850.5</span>
+Article.maximum(<span class="hl-string">:word_count</span>)            <span class="hl-comment"># =&gt; 3200</span>
+Article.sum(<span class="hl-string">:word_count</span>)                <span class="hl-comment"># =&gt; 120870</span>
 
-<span class="hl-comment"># Chaining — build complex queries from simple parts</span>
-Product
-  .where(active: <span class="hl-keyword">true</span>)
-  .where(<span class="hl-string">"price > ?"</span>, <span class="hl-number">25</span>)
-  .order(created_at: <span class="hl-string">:desc</span>)
-  .limit(<span class="hl-number">10</span>)
-  .includes(<span class="hl-string">:category</span>)              <span class="hl-comment"># eager load to avoid N+1</span>
+<span class="hl-comment"># Pluck — returns array of values (skips model instantiation)</span>
+Article.where(<span class="hl-string">status:</span> <span class="hl-string">"published"</span>).pluck(<span class="hl-string">:title</span>)
+<span class="hl-comment"># =&gt; ["Hello World", "Ruby Tips", ...]</span>
 
-<span class="hl-comment"># Scopes — named, reusable query fragments</span>
-<span class="hl-keyword">class</span> <span class="hl-function">Product</span> &lt; ApplicationRecord
-  scope <span class="hl-string">:active</span>,     -> { where(active: <span class="hl-keyword">true</span>) }
-  scope <span class="hl-string">:expensive</span>,  -> { where(<span class="hl-string">"price > ?"</span>, <span class="hl-number">100</span>) }
-  scope <span class="hl-string">:in_stock</span>,   -> { where(<span class="hl-string">"stock_count > 0"</span>) }
-  scope <span class="hl-string">:search</span>,     ->(q) { where(<span class="hl-string">"name ILIKE ?"</span>, <span class="hl-string">"%#{q}%"</span>) }
-<span class="hl-keyword">end</span>
-
-<span class="hl-comment"># Scopes chain beautifully</span>
-Product.active.in_stock.expensive.search(<span class="hl-string">"widget"</span>)
+<span class="hl-comment"># Eager loading — prevent N+1 queries</span>
+Article.includes(<span class="hl-string">:comments</span>, <span class="hl-string">:tags</span>).where(<span class="hl-string">status:</span> <span class="hl-string">"published"</span>)
 </pre>
       </div>
 
       <div class="callout tip">
-        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>N+1 Queries</div>
-        <p>The N+1 problem is the most common performance issue in Rails. If you load 100 articles and then call <code>article.user.name</code> for each one, Rails executes 101 queries (1 for articles + 100 for users). Use <code>.includes(:user)</code> to eager-load the association in a single query. The <code>bullet</code> gem can detect N+1 queries automatically.</p>
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Pro Tip
+        </div>
+        <p>
+          Use <code>.to_sql</code> on any ActiveRecord relation to see the exact SQL it will generate:
+          <code>Article.where(status: "published").order(:title).to_sql</code>. This is invaluable for
+          debugging queries and understanding what ActiveRecord is doing under the hood.
+        </p>
       </div>
 
-      <h3 id="seeding">6. Seeding and the Rails Console</h3>
-      <p>The seed file (<code>db/seeds.rb</code>) populates your database with initial data. The Rails console (<code>bin/rails console</code>) is your REPL for interacting with models directly. Both are essential for development and debugging.</p>
+      <h3 id="scopes">6. Scopes</h3>
+
+      <p>
+        Scopes are named queries defined on the model. They encapsulate common filtering logic
+        and can be chained with other scopes or query methods. Scopes keep your controllers clean
+        by moving query logic into the model where it belongs.
+      </p>
 
       <div class="code-block">
-        <div class="code-header"><span class="code-lang">ruby</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
 <pre>
-<span class="hl-comment"># db/seeds.rb</span>
-puts <span class="hl-string">"Seeding categories..."</span>
-electronics = Category.find_or_create_by!(name: <span class="hl-string">"Electronics"</span>)
-clothing    = Category.find_or_create_by!(name: <span class="hl-string">"Clothing"</span>)
+<span class="hl-comment"># app/models/article.rb</span>
+<span class="hl-keyword">class</span> <span class="hl-function">Article</span> &lt; ApplicationRecord
+  <span class="hl-comment"># Simple scopes</span>
+  scope <span class="hl-string">:published</span>,  -> { where(<span class="hl-string">status:</span> <span class="hl-string">"published"</span>) }
+  scope <span class="hl-string">:draft</span>,      -> { where(<span class="hl-string">status:</span> <span class="hl-string">"draft"</span>) }
+  scope <span class="hl-string">:archived</span>,   -> { where(<span class="hl-string">status:</span> <span class="hl-string">"archived"</span>) }
+  scope <span class="hl-string">:recent</span>,     -> { order(<span class="hl-string">created_at:</span> <span class="hl-string">:desc</span>) }
 
-puts <span class="hl-string">"Seeding products..."</span>
-<span class="hl-number">50</span>.times <span class="hl-keyword">do</span> |i|
-  Product.create!(
-    name: <span class="hl-string">"Product #{i + 1}"</span>,
-    price: rand(<span class="hl-number">10.0</span>..<span class="hl-number">500.0</span>).round(<span class="hl-number">2</span>),
-    stock_count: rand(<span class="hl-number">0</span>..<span class="hl-number">100</span>),
-    category: [electronics, clothing].sample,
-    status: %w[draft active archived].sample
-  )
+  <span class="hl-comment"># Scope with an argument</span>
+  scope <span class="hl-string">:by_category</span>, ->(cat) { where(<span class="hl-string">category:</span> cat) }
+
+  <span class="hl-comment"># Scope with a time range</span>
+  scope <span class="hl-string">:created_after</span>, ->(date) { where(<span class="hl-string">"created_at &gt; ?"</span>, date) }
+  scope <span class="hl-string">:this_week</span>, -> { where(<span class="hl-string">created_at:</span> <span class="hl-number">1</span>.week.ago..) }
+  scope <span class="hl-string">:this_month</span>, -> { where(<span class="hl-string">created_at:</span> <span class="hl-number">1</span>.month.ago..) }
+
+  <span class="hl-comment"># Scope with eager loading</span>
+  scope <span class="hl-string">:with_comments</span>, -> { includes(<span class="hl-string">:comments</span>) }
+  scope <span class="hl-string">:popular</span>, -> {
+    left_joins(<span class="hl-string">:comments</span>)
+      .group(<span class="hl-string">:id</span>)
+      .order(<span class="hl-string">"COUNT(comments.id) DESC"</span>)
+  }
 <span class="hl-keyword">end</span>
 
-puts <span class="hl-string">"Seeded #{Product.count} products."</span>
+<span class="hl-comment"># Chaining scopes — reads like English</span>
+Article.published.recent.limit(<span class="hl-number">10</span>)
+Article.published.by_category(<span class="hl-string">"ruby"</span>).this_week
+Article.draft.created_after(<span class="hl-number">3</span>.days.ago)
+Article.published.popular.limit(<span class="hl-number">5</span>)
+
+<span class="hl-comment"># In a controller — clean and readable</span>
+<span class="hl-keyword">class</span> <span class="hl-function">ArticlesController</span> &lt; ApplicationController
+  <span class="hl-keyword">def</span> <span class="hl-function">index</span>
+    <span class="hl-keyword">@articles</span> = Article
+      .published
+      .by_category(params[<span class="hl-string">:category</span>])
+      .recent
+      .limit(params[<span class="hl-string">:limit</span>] || <span class="hl-number">20</span>)
+      .offset(params[<span class="hl-string">:offset</span>] || <span class="hl-number">0</span>)
+
+    render <span class="hl-string">json:</span> <span class="hl-keyword">@articles</span>
+  <span class="hl-keyword">end</span>
+<span class="hl-keyword">end</span>
 </pre>
       </div>
 
       <details>
-        <summary>Essential Rails console commands</summary>
+        <summary>What is the difference between a scope and a class method?</summary>
         <div class="details-body">
-          <div class="code-block"><div class="code-header"><span class="code-lang">ruby</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-<pre>
-<span class="hl-comment"># Start the console</span>
-<span class="hl-comment"># bin/rails console</span>
-
-<span class="hl-comment"># Create records</span>
-user = User.create!(name: <span class="hl-string">"Alice"</span>, email: <span class="hl-string">"alice@example.com"</span>)
-
-<span class="hl-comment"># Query records</span>
-User.all
-User.where(active: <span class="hl-keyword">true</span>).count
-User.last
-
-<span class="hl-comment"># Inspect SQL being generated</span>
-User.where(active: <span class="hl-keyword">true</span>).to_sql
-
-<span class="hl-comment"># Reload a modified record from database</span>
-user.reload
-
-<span class="hl-comment"># Sandbox mode — all changes rolled back on exit</span>
-<span class="hl-comment"># bin/rails console --sandbox</span>
-</pre>
-          </div>
+          <p>
+            Functionally, scopes and class methods are very similar. The key difference is that scopes
+            always return an ActiveRecord relation (even if the lambda returns nil, it returns
+            <code>all</code>), making them safely chainable. Class methods can return anything, including
+            <code>nil</code>, which would break a chain. Use scopes for simple, reusable query fragments.
+            Use class methods when you need more complex logic or conditional branching.
+          </p>
         </div>
       </details>
 
       <hr class="section-divider">
 
+      <!-- ════════════════════════════════════════
+           SECTION 3: WATCH & LEARN
+           ════════════════════════════════════════ -->
       <h2 id="watch-learn">Watch &amp; Learn</h2>
-      <p>These videos cover ActiveRecord concepts in depth with practical examples.</p>
+
+      <p>
+        These videos cover ActiveRecord concepts from this chapter. Watch them to see migrations,
+        associations, and queries demonstrated with real code.
+      </p>
 
       <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/fmyvWz5TUWg?rel=0&amp;modestbranding=1&amp;start=3600" title="Rails ActiveRecord" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-caption"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>freeCodeCamp &mdash; Ruby on Rails Full Course (ActiveRecord section: migrations, models, queries)</div>
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/fmyvWz5TUWg?rel=0&amp;modestbranding=1"
+            title="ActiveRecord Associations in Rails"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          GoRails &mdash; ActiveRecord Associations Explained (has_many, belongs_to, through, and polymorphic)
+        </div>
       </div>
+
       <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/aAx_JnkHNlg?rel=0&amp;modestbranding=1" title="ActiveRecord Associations" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-caption"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>GoRails &mdash; ActiveRecord Associations Explained (has_many, belongs_to, through)</div>
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/H4lE5dQWkSQ?rel=0&amp;modestbranding=1"
+            title="Rails ActiveRecord Query Interface"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Deanin &mdash; Rails ActiveRecord Query Interface (where, order, joins, includes, and N+1 prevention)
+        </div>
       </div>
 
       <hr class="section-divider">
 
+      <!-- ════════════════════════════════════════
+           SECTION 4: FURTHER READING
+           ════════════════════════════════════════ -->
       <h2 id="further-reading">Further Reading</h2>
-      <p>Official ActiveRecord documentation and guides.</p>
+
+      <p>Deep-dive into the official documentation for ActiveRecord migrations, associations, and queries.</p>
+
       <div class="resource-grid">
-        <a class="resource-card" href="https://guides.rubyonrails.org/active_record_basics.html" target="_blank" rel="noopener"><div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><div class="resource-info"><div class="resource-title">Active Record Basics</div><div class="resource-desc">Official overview of the ORM pattern, naming conventions, and CRUD operations.</div></div></a>
-        <a class="resource-card" href="https://guides.rubyonrails.org/active_record_migrations.html" target="_blank" rel="noopener"><div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><div class="resource-info"><div class="resource-title">Active Record Migrations</div><div class="resource-desc">Creating tables, adding columns, indexes, and reversible migrations.</div></div></a>
-        <a class="resource-card" href="https://guides.rubyonrails.org/association_basics.html" target="_blank" rel="noopener"><div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><div class="resource-info"><div class="resource-title">Active Record Associations</div><div class="resource-desc">All six association types with detailed examples and options.</div></div></a>
-        <a class="resource-card" href="https://guides.rubyonrails.org/active_record_validations.html" target="_blank" rel="noopener"><div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><div class="resource-info"><div class="resource-title">Active Record Validations</div><div class="resource-desc">Built-in validators, custom validations, error messages, and conditional rules.</div></div></a>
-        <a class="resource-card" href="https://guides.rubyonrails.org/active_record_querying.html" target="_blank" rel="noopener"><div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><div class="resource-info"><div class="resource-title">Active Record Query Interface</div><div class="resource-desc">where, order, joins, includes, group, having, and raw SQL.</div></div></a>
+        <a class="resource-card" href="https://guides.rubyonrails.org/active_record_migrations.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Active Record Migrations</div>
+            <div class="resource-desc">Official guide to creating tables, adding columns, indexes, and reversible migrations.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://guides.rubyonrails.org/association_basics.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Active Record Associations</div>
+            <div class="resource-desc">Official guide to belongs_to, has_many, has_many :through, and polymorphic associations.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://guides.rubyonrails.org/active_record_querying.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Active Record Query Interface</div>
+            <div class="resource-desc">Complete reference for where, order, group, having, joins, includes, scopes, and more.</div>
+          </div>
+        </a>
       </div>
 
       <hr class="section-divider">
 
+      <!-- ════════════════════════════════════════
+           SECTION 5: ASSIGNMENTS
+           ════════════════════════════════════════ -->
       <h2 id="assignments">Assignments</h2>
-      <p>Complete these in order. Each level builds on the previous one.</p>
 
+      <p>
+        Complete these in order. Each level builds on the previous one. Use <code>rails console</code>
+        extensively to test your models, associations, and queries interactively.
+      </p>
+
+      <!-- Assignment 1: Level 1 -->
       <div class="assignment">
-        <div class="assignment-header"><div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Assignment 1</div><span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span></div>
-        <h4>E-commerce Data Model with Migrations</h4>
-        <p>Design and implement the database schema for an e-commerce store with proper associations and validations.</p>
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 1
+          </div>
+          <span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span>
+        </div>
+        <h4>Models with Validations and Basic Associations</h4>
+        <p>Create a blog data model with articles, comments, and users. Focus on validations and simple associations.</p>
+
         <ul class="checklist">
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create migrations for <code>Category</code>, <code>Product</code>, and <code>Review</code> models</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Set up associations: Category has_many Products, Product has_many Reviews</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Add validations for presence, numericality, and length on all models</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a seed file that populates at least 5 categories, 20 products, and 50 reviews</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Verify all associations work in <code>bin/rails console</code></span></li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Create <code>User</code>, <code>Article</code>, and <code>Comment</code> models with proper migrations including indexes and foreign keys</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Add validations: presence on required fields, length limits on title and body, uniqueness on user email and article slug</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Set up associations: User <code>has_many :articles</code>, Article <code>has_many :comments</code>, with <code>dependent: :destroy</code></span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Create a <code>db/seeds.rb</code> that populates 5 users, 20 articles, and 50 comments using Faker</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Test all associations and validations in <code>rails console</code> and verify SQL queries in the logs</span>
+          </li>
         </ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Done when</div><p><code>Product.first.category.name</code> and <code>Product.first.reviews.count</code> both work in the console. Invalid data is rejected with clear error messages.</p></div>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            <code>user.articles</code> returns articles. <code>article.comments.create!(...)</code> works.
+            Invalid records are rejected with meaningful error messages. Seeds populate your database.
+          </p>
+        </div>
       </div>
 
+      <!-- Assignment 2: Level 2 -->
       <div class="assignment">
-        <div class="assignment-header"><div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Assignment 2</div><span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span></div>
-        <h4>Advanced Queries with Scopes and Eager Loading</h4>
-        <p>Build a query layer that solves real business questions and handles N+1 performance issues.</p>
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 2
+          </div>
+          <span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span>
+        </div>
+        <h4>Many-to-Many with Scopes and Callbacks</h4>
+        <p>Add a tagging system to your blog using a many-to-many through association, along with scopes and lifecycle callbacks.</p>
+
         <ul class="checklist">
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Add scopes: <code>active</code>, <code>in_stock</code>, <code>by_category</code>, <code>price_range</code>, <code>search</code></span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a <code>Product.top_rated</code> scope using aggregate queries on reviews</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Add a many-to-many <code>Tag</code> system using a join table</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Solve all N+1 queries using <code>includes</code> and verify with SQL logs</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write RSpec model tests for every scope and validation</span></li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Create <code>Tag</code> and <code>Tagging</code> models implementing <code>has_many :through</code> for articles and tags</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Add scopes to Article: <code>published</code>, <code>draft</code>, <code>recent</code>, <code>by_category</code>, <code>popular</code></span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Add callbacks: <code>before_validation :generate_slug</code> and <code>before_save :calculate_word_count</code></span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Chain scopes in the controller: <code>Article.published.by_category("ruby").recent.limit(10)</code></span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Write RSpec model specs testing all validations, associations, scopes, and callbacks</span>
+          </li>
         </ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Done when</div><p>Complex queries like <code>Product.active.in_stock.by_category("Electronics").top_rated.limit(10)</code> work and generate efficient SQL.</p></div>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            <code>article.tags</code> and <code>tag.articles</code> both work. Scopes chain together
+            cleanly. Slugs are auto-generated. All RSpec model specs pass.
+          </p>
+        </div>
       </div>
 
+      <!-- Assignment 3: Level 3 -->
       <div class="assignment">
-        <div class="assignment-header"><div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Assignment 3</div><span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Production-Ready</span></div>
-        <h4>Production Data Layer with Callbacks and Transactions</h4>
-        <p>Handle real-world scenarios: order processing with transactions, inventory management with callbacks, and data integrity under concurrent access.</p>
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 3
+          </div>
+          <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Production-Ready</span>
+        </div>
+        <h4>Query Optimization and N+1 Prevention</h4>
+        <p>Optimize your blog API for production by identifying and fixing N+1 queries, adding database indexes, and using eager loading.</p>
+
         <ul class="checklist">
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create an <code>Order</code> model with <code>OrderItem</code> associations and transaction-based creation</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Implement stock decrement in a callback that prevents overselling using database-level locking</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Add counter caches for review counts and average ratings on products</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write a data migration that backfills computed columns from existing data</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Achieve full test coverage including edge cases like concurrent stock updates</span></li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Install the <code>bullet</code> gem and identify all N+1 queries in your application</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Fix N+1 queries using <code>includes</code>, <code>eager_load</code>, or <code>preload</code> as appropriate</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Add database indexes to all columns used in <code>where</code>, <code>order</code>, and <code>find_by</code> clauses</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Implement counter caches for <code>comments_count</code> on articles and <code>articles_count</code> on users</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Use <code>explain</code> on complex queries to verify index usage and compare query performance before and after</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Write request specs that verify the correct number of SQL queries per endpoint (no N+1 regressions)</span>
+          </li>
         </ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Done when</div><p>Orders process atomically (all items succeed or all fail). Stock never goes negative. All tests pass including edge cases.</p></div>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            The <code>bullet</code> gem reports zero N+1 warnings. Index pages load with a constant number
+            of SQL queries regardless of record count. All request specs pass.
+          </p>
+        </div>
       </div>
 
       <hr class="section-divider">
 
+      <!-- ════════════════════════════════════════
+           SECTION 6: SELF-CHECK
+           ════════════════════════════════════════ -->
       <h2 id="self-check">Self-Check</h2>
-      <p>Before moving to Chapter 04, honestly answer these questions.</p>
-      <details><summary>Can you write a migration, model, and validations from memory?</summary><div class="details-body"><p>Without checking notes, create a <code>Payment</code> model with amount (decimal), status (string with inclusion), and a belongs_to user. Add validations and a scope. If you need references, practice until it is automatic.</p></div></details>
-      <details><summary>Do you understand the N+1 problem and how to fix it?</summary><div class="details-body"><p>Load 10 articles and display each author's name. Check your Rails log &mdash; do you see 11 queries or 2? If you see 11, you have an N+1 problem. Add <code>.includes(:author)</code> and verify it drops to 2 queries.</p></div></details>
-      <details><summary>Can you explain when to use a callback vs a service object?</summary><div class="details-body"><p>Callbacks for data normalization (generating slugs, stripping whitespace). Service objects for business operations (processing an order, sending notifications). If your callback calls an external service or has conditional logic, extract it to a service object.</p></div></details>
+
+      <p>Before moving to Chapter 04, honestly answer these questions. If any answer is "no", go back and practice more.</p>
+
+      <details>
+        <summary>Can you write a migration to create a table with columns, indexes, and foreign keys?</summary>
+        <div class="details-body">
+          <p>
+            You should be able to write <code>create_table :orders do |t|</code> with various column types
+            (string, text, integer, decimal, boolean, datetime, references), add indexes with
+            <code>add_index</code>, and set up foreign key constraints with <code>foreign_key: true</code>.
+            You should also know how to add and remove columns in subsequent migrations.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Can you set up <code>has_many :through</code> without referring to documentation?</summary>
+        <div class="details-body">
+          <p>
+            A many-to-many relationship requires three models: the two main models and a join model.
+            For example: <code>Article has_many :taggings</code>, <code>Article has_many :tags, through: :taggings</code>.
+            <code>Tag has_many :taggings</code>, <code>Tag has_many :articles, through: :taggings</code>.
+            <code>Tagging belongs_to :article</code>, <code>Tagging belongs_to :tag</code>. The join table
+            needs both foreign key columns.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Can you chain scopes to build a complex query without writing raw SQL?</summary>
+        <div class="details-body">
+          <p>
+            Given a request like "find published articles in the ruby category from this week, ordered
+            by most comments, limited to 10", you should be able to write:
+            <code>Article.published.by_category("ruby").this_week.popular.limit(10)</code>. Each scope
+            is a simple, reusable building block. If you cannot chain scopes fluently, practice defining
+            and composing them in <code>rails console</code>.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Do you understand what an N+1 query is and how to prevent it?</summary>
+        <div class="details-body">
+          <p>
+            An N+1 query happens when you load a list of records (1 query) and then access an association
+            on each record individually (N queries). For example: <code>Article.all.each { |a| a.comments.count }</code>
+            fires one query for articles plus one query per article for comments. Fix it with
+            <code>Article.includes(:comments).all</code>, which loads all comments in a single additional query.
+            Use <code>.includes</code> for associations you will access, and install the <code>bullet</code>
+            gem to detect N+1 issues automatically.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Can you explain the difference between <code>save</code> and <code>save!</code>?</summary>
+        <div class="details-body">
+          <p>
+            <code>save</code> returns <code>true</code> on success and <code>false</code> on failure (validations
+            failed). <code>save!</code> returns <code>true</code> on success and <strong>raises</strong>
+            <code>ActiveRecord::RecordInvalid</code> on failure. Use <code>save</code> in controllers where
+            you want to handle the failure case (show errors to the user). Use <code>save!</code> in seeds,
+            background jobs, and situations where failure indicates a bug that should not be silently ignored.
+            The same bang/no-bang pattern applies to <code>create</code>/<code>create!</code> and
+            <code>update</code>/<code>update!</code>.
+          </p>
+        </div>
+      </details>
+
     </main>
 
-    <aside class="sidebar"><div class="sidebar-title">On this page</div>
+    <!-- Sidebar: Table of Contents -->
+    <aside class="sidebar">
+      <div class="sidebar-title">On this page</div>
       <ul class="toc-list">
         <li class="toc-item"><a href="#why-this-matters">Why This Matters</a></li>
         <li class="toc-item"><a href="#key-concepts">Key Concepts</a></li>
-        <li class="toc-item"><a href="#migrations" style="padding-left:28px;font-size:12px">Migrations</a></li>
-        <li class="toc-item"><a href="#associations" style="padding-left:28px;font-size:12px">Associations</a></li>
-        <li class="toc-item"><a href="#validations" style="padding-left:28px;font-size:12px">Validations</a></li>
-        <li class="toc-item"><a href="#callbacks" style="padding-left:28px;font-size:12px">Callbacks</a></li>
-        <li class="toc-item"><a href="#query-interface" style="padding-left:28px;font-size:12px">Query Interface</a></li>
-        <li class="toc-item"><a href="#seeding" style="padding-left:28px;font-size:12px">Seeding &amp; Console</a></li>
+        <li class="toc-item"><a href="#migrations" style="padding-left: 28px; font-size: 12px;">Migrations</a></li>
+        <li class="toc-item"><a href="#associations" style="padding-left: 28px; font-size: 12px;">Associations</a></li>
+        <li class="toc-item"><a href="#validations" style="padding-left: 28px; font-size: 12px;">Validations</a></li>
+        <li class="toc-item"><a href="#callbacks" style="padding-left: 28px; font-size: 12px;">Callbacks</a></li>
+        <li class="toc-item"><a href="#queries" style="padding-left: 28px; font-size: 12px;">Query Interface</a></li>
+        <li class="toc-item"><a href="#scopes" style="padding-left: 28px; font-size: 12px;">Scopes</a></li>
         <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a></li>
         <li class="toc-item"><a href="#further-reading">Further Reading</a></li>
         <li class="toc-item"><a href="#assignments">Assignments</a></li>
@@ -486,20 +1180,79 @@ user.reload
     </aside>
   </div>
 
-  <footer class="chapter-footer"><div class="chapter-footer-inner">
-    <nav class="footer-nav">
-      <a class="footer-nav-link" href="chapter-02.html"><span class="footer-nav-label">&larr; Previous Chapter</span><span class="footer-nav-title">02: Rails MVC Architecture</span></a>
-      <a class="footer-nav-link" href="chapter-04.html"><span class="footer-nav-label">Next Chapter &rarr;</span><span class="footer-nav-title">04: RESTful API Design</span></a>
-    </nav>
-    <div class="footer-brand">ILA (Iksha Learning Academy) &middot; Rails + React Engineering Certification &middot; Level 1</div>
-  </div></footer>
+  <!-- Footer Navigation -->
+  <footer class="chapter-footer">
+    <div class="chapter-footer-inner">
+      <nav class="footer-nav">
+        <a class="footer-nav-link" href="chapter-02.html">
+          <span class="footer-nav-label">&larr; Previous Chapter</span>
+          <span class="footer-nav-title">02: Rails MVC Architecture</span>
+        </a>
+        <a class="footer-nav-link" href="chapter-04.html">
+          <span class="footer-nav-label">Next Chapter &rarr;</span>
+          <span class="footer-nav-title">04: RESTful API Design</span>
+        </a>
+      </nav>
+      <div class="footer-brand">
+        ILA (Iksha Learning Academy) &middot; Rails + React Engineering Certification &middot; Level 1
+      </div>
+    </div>
+  </footer>
 
+  <!-- ════════════════════════════════════════
+       SCRIPTS
+       ════════════════════════════════════════ -->
   <script>
-    window.addEventListener('scroll',()=>{const s=window.scrollY;const d=document.documentElement.scrollHeight-window.innerHeight;const p=d>0?(s/d)*100:0;document.getElementById('progressBar').style.width=p+'%'});
-    const tocLinks=document.querySelectorAll('.toc-item a');const sections=[];tocLinks.forEach(link=>{const id=link.getAttribute('href').slice(1);const el=document.getElementById(id);if(el)sections.push({id,el,link})});
-    const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{const item=sections.find(s=>s.el===entry.target);if(item&&entry.isIntersecting){tocLinks.forEach(l=>l.classList.remove('active'));item.link.classList.add('active')}})},{rootMargin:'-80px 0px -60% 0px',threshold:0});
-    sections.forEach(s=>observer.observe(s.el));
-    function copyCode(btn){const pre=btn.closest('.code-block').querySelector('pre');navigator.clipboard.writeText(pre.textContent).then(()=>{btn.classList.add('copied');btn.textContent='Copied!';setTimeout(()=>{btn.classList.remove('copied');btn.textContent='Copy'},2000)})}
+    // ── Progress Bar ──
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      document.getElementById('progressBar').style.width = progress + '%';
+    });
+
+    // ── Active TOC ──
+    const tocLinks = document.querySelectorAll('.toc-item a');
+    const sections = [];
+
+    tocLinks.forEach(link => {
+      const id = link.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) sections.push({ id, el, link });
+    });
+
+    const observerOptions = {
+      rootMargin: '-80px 0px -60% 0px',
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const item = sections.find(s => s.el === entry.target);
+        if (item) {
+          if (entry.isIntersecting) {
+            tocLinks.forEach(l => l.classList.remove('active'));
+            item.link.classList.add('active');
+          }
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(s => observer.observe(s.el));
+
+    // ── Copy Code ──
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      const text = pre.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.classList.add('copied');
+        btn.textContent = 'Copied!';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.textContent = 'Copy';
+        }, 2000);
+      });
+    }
   </script>
 </body>
 </html>

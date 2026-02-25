@@ -8,168 +8,1174 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
-    :root{--ink:#0f172a;--ink-light:#334155;--ink-muted:#64748b;--surface:#ffffff;--surface-alt:#f8fafc;--surface-warm:#fffbeb;--border:#e2e8f0;--border-light:#f1f5f9;--teal-50:#f0fdfa;--teal-100:#ccfbf1;--teal-200:#99f6e4;--teal-500:#14b8a6;--teal-600:#0d9488;--teal-700:#0f766e;--teal-800:#115e59;--teal-900:#134e4a;--blue-50:#eff6ff;--blue-100:#dbeafe;--blue-500:#3b82f6;--blue-600:#2563eb;--blue-700:#1d4ed8;--amber-50:#fffbeb;--amber-100:#fef3c7;--amber-500:#f59e0b;--amber-600:#d97706;--red-50:#fef2f2;--red-100:#fee2e2;--red-500:#ef4444;--red-600:#dc2626;--purple-50:#faf5ff;--purple-100:#f3e8ff;--purple-500:#a855f7;--purple-600:#9333ea;--font-sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;--font-serif:'Instrument Serif',Georgia,serif;--font-mono:'JetBrains Mono','Fira Code',monospace;--content-max:780px;--sidebar-width:280px;--ease:cubic-bezier(0.4,0,0.2,1)}
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}body{font-family:var(--font-sans);font-size:16px;line-height:1.7;color:var(--ink);background:var(--surface)}
-    .progress-bar{position:fixed;top:0;left:0;width:0%;height:3px;background:linear-gradient(90deg,var(--teal-500),var(--blue-500));z-index:1000;transition:width .15s var(--ease)}
-    .top-nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem}.top-nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px}.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--teal-800)}.nav-brand-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--teal-600),var(--teal-800));border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px}.nav-brand-text{font-weight:700;font-size:15px;letter-spacing:-.02em}.nav-chapter-nav{display:flex;align-items:center;gap:8px}.nav-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;color:var(--ink-muted);border:1px solid var(--border);background:#fff;transition:all .2s var(--ease);cursor:pointer}.nav-btn:hover{color:var(--ink);border-color:var(--teal-500);background:var(--teal-50)}.nav-btn.disabled{opacity:.4;pointer-events:none}.nav-current{font-size:13px;font-weight:600;color:var(--ink-light);padding:0 4px}
-    .hero{background:linear-gradient(170deg,var(--teal-50) 0%,var(--surface) 50%,var(--blue-50) 100%);border-bottom:1px solid var(--border);padding:4rem 2rem 3.5rem}.hero-inner{max-width:var(--content-max);margin:0 auto}.hero-chapter-label{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--teal-700);text-transform:uppercase;letter-spacing:.08em;margin-bottom:1rem}.hero-chapter-label span{background:var(--teal-100);padding:3px 10px;border-radius:100px}.hero h1{font-family:var(--font-serif);font-size:clamp(2.4rem,5vw,3.2rem);font-weight:400;line-height:1.15;color:var(--ink);margin-bottom:1rem}.hero-subtitle{font-size:1.15rem;color:var(--ink-light);line-height:1.65;max-width:640px}.hero-meta{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1.5rem}.hero-meta-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-muted)}.hero-meta-item svg{width:16px;height:16px;color:var(--teal-600)}
-    .main-layout{max-width:1200px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:1fr var(--sidebar-width);gap:4rem;align-items:start}.content{padding:3rem 0 6rem;min-width:0}
-    .sidebar{position:sticky;top:76px;padding:2rem 0;max-height:calc(100vh - 76px);overflow-y:auto}.sidebar-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-muted);margin-bottom:1rem;padding-left:14px}.toc-list{list-style:none}.toc-item a{display:block;padding:6px 14px;font-size:13px;color:var(--ink-muted);text-decoration:none;border-left:2px solid transparent;transition:all .2s var(--ease);line-height:1.5}.toc-item a:hover{color:var(--ink);background:var(--surface-alt)}.toc-item a.active{color:var(--teal-700);border-left-color:var(--teal-500);background:var(--teal-50);font-weight:500}
-    .content h2{font-family:var(--font-serif);font-size:1.85rem;font-weight:400;color:var(--ink);margin:3rem 0 1rem;padding-top:1rem;scroll-margin-top:80px}.content h2:first-child{margin-top:0}.content h3{font-size:1.15rem;font-weight:600;color:var(--ink);margin:2rem 0 .75rem;scroll-margin-top:80px}.content p{margin-bottom:1.25rem;color:var(--ink-light)}.content strong{color:var(--ink);font-weight:600}.content a{color:var(--teal-700);text-decoration:underline;text-decoration-color:var(--teal-200);text-underline-offset:3px;transition:text-decoration-color .2s}.content a:hover{text-decoration-color:var(--teal-600)}.content ul,.content ol{margin-bottom:1.25rem;padding-left:1.5rem}.content li{margin-bottom:.5rem;color:var(--ink-light)}.content li::marker{color:var(--teal-500)}
-    .section-divider{border:none;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:3rem 0}
-    .callout{padding:1.25rem 1.5rem;border-radius:12px;margin-bottom:1.5rem;border:1px solid;position:relative}.callout-header{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;margin-bottom:.5rem}.callout-header svg{width:18px;height:18px;flex-shrink:0}.callout p:last-child{margin-bottom:0}.callout.concept{background:var(--blue-50);border-color:var(--blue-100)}.callout.concept .callout-header{color:var(--blue-700)}.callout.important{background:var(--amber-50);border-color:var(--amber-100)}.callout.important .callout-header{color:var(--amber-600)}.callout.danger{background:var(--red-50);border-color:var(--red-100)}.callout.danger .callout-header{color:var(--red-600)}.callout.tip{background:var(--purple-50);border-color:var(--purple-100)}.callout.tip .callout-header{color:var(--purple-600)}.callout.success{background:var(--teal-50);border-color:var(--teal-100)}.callout.success .callout-header{color:var(--teal-700)}
-    .code-block{position:relative;margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}.code-header{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:var(--surface-alt);border-bottom:1px solid var(--border);font-size:12px;color:var(--ink-muted)}.code-lang{font-family:var(--font-mono);font-weight:600;text-transform:uppercase;letter-spacing:.05em}.code-copy{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:#fff;font-size:11px;font-family:var(--font-sans);color:var(--ink-muted);cursor:pointer;transition:all .2s var(--ease)}.code-copy:hover{border-color:var(--teal-500);color:var(--teal-700)}.code-copy.copied{background:var(--teal-50);border-color:var(--teal-500);color:var(--teal-700)}
-    pre{margin:0;padding:1.25rem 1.5rem;overflow-x:auto;background:#1e293b;font-family:var(--font-mono);font-size:13.5px;line-height:1.7;color:#e2e8f0}code{font-family:var(--font-mono);font-size:.88em}p code,li code{padding:2px 7px;background:var(--surface-alt);border:1px solid var(--border);border-radius:5px;color:var(--teal-800);font-size:.85em}
-    .hl-keyword{color:#c084fc}.hl-string{color:#86efac}.hl-comment{color:#64748b;font-style:italic}.hl-function{color:#7dd3fc}.hl-number{color:#fbbf24}.hl-flag{color:#f472b6}
-    details{margin-bottom:1.25rem;border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .2s var(--ease)}details[open]{border-color:var(--teal-200)}details summary{padding:1rem 1.25rem;font-weight:600;font-size:15px;cursor:pointer;background:var(--surface-alt);list-style:none;display:flex;align-items:center;gap:10px;transition:background .2s var(--ease);user-select:none}details summary::-webkit-details-marker{display:none}details summary::before{content:'';width:20px;height:20px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain;flex-shrink:0;transition:transform .2s var(--ease)}details[open] summary::before{transform:rotate(90deg)}details summary:hover{background:var(--teal-50)}.details-body{padding:1.25rem 1.5rem}.details-body p:last-child{margin-bottom:0}
-    .video-card{margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}.video-wrapper{position:relative;padding-bottom:56.25%;height:0;background:#0f172a}.video-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}.video-caption{padding:12px 16px;background:var(--surface-alt);font-size:13px;color:var(--ink-muted);display:flex;align-items:center;gap:6px}.video-caption svg{width:14px;height:14px;color:var(--red-500)}
-    .resource-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1rem;margin-bottom:1.5rem}.resource-card{display:flex;gap:14px;padding:1rem 1.25rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all .2s var(--ease);background:#fff}.resource-card:hover{border-color:var(--teal-300);background:var(--teal-50);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.04)}.resource-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}.resource-icon.docs{background:var(--blue-50);color:var(--blue-600)}.resource-icon.video{background:var(--red-50);color:var(--red-500)}.resource-icon.github{background:var(--ink);color:#fff}.resource-icon.article{background:var(--amber-50);color:var(--amber-600)}.resource-info{min-width:0}.resource-title{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:2px;line-height:1.4}.resource-desc{font-size:12px;color:var(--ink-muted);line-height:1.5}
-    .assignment{border:2px solid var(--teal-200);border-radius:14px;padding:1.5rem 1.75rem;margin-bottom:1.5rem;background:linear-gradient(135deg,var(--teal-50) 0%,#fff 100%)}.assignment-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}.assignment-label{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--teal-700)}.assignment-difficulty{display:inline-flex;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:600}.difficulty-l1{background:var(--teal-100);color:var(--teal-800)}.difficulty-l2{background:var(--amber-100);color:var(--amber-600)}.difficulty-l3{background:var(--red-100);color:var(--red-600)}.assignment h4{font-size:1.05rem;font-weight:700;margin-bottom:.75rem}.assignment p{font-size:14px}
-    .checklist{list-style:none;padding:0}.checklist li{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border-light);font-size:14px}.checklist li:last-child{border-bottom:none}.check-box{width:20px;height:20px;border-radius:6px;border:2px solid var(--border);flex-shrink:0;margin-top:1px;cursor:pointer;transition:all .15s var(--ease);display:flex;align-items:center;justify-content:center}.check-box:hover{border-color:var(--teal-500)}.check-box.checked{background:var(--teal-500);border-color:var(--teal-500)}.check-box.checked::after{content:'';width:10px;height:10px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain}
-    .diagram{margin:1.5rem 0;padding:2rem;background:var(--surface-alt);border:1px solid var(--border);border-radius:14px;overflow-x:auto}.diagram pre{background:transparent;color:var(--ink);padding:0;font-size:13px;line-height:1.6}.diagram-caption{margin-top:1rem;font-size:12px;color:var(--ink-muted);text-align:center;font-style:italic}
-    .chapter-footer{border-top:1px solid var(--border);padding:3rem 2rem;background:var(--surface-alt)}.chapter-footer-inner{max-width:var(--content-max);margin:0 auto}.footer-nav{display:flex;justify-content:space-between;align-items:center;gap:1rem}.footer-nav-link{display:flex;flex-direction:column;gap:4px;padding:1rem 1.5rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all .2s var(--ease);max-width:320px;background:#fff}.footer-nav-link:hover{border-color:var(--teal-300);box-shadow:0 4px 12px rgba(0,0,0,.04)}.footer-nav-label{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--teal-600)}.footer-nav-title{font-size:15px;font-weight:600;color:var(--ink)}.footer-brand{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border);font-size:13px;color:var(--ink-muted)}
-    @media(max-width:960px){.main-layout{grid-template-columns:1fr}.sidebar{display:none}.resource-grid{grid-template-columns:1fr}}@media(max-width:640px){.hero{padding:2.5rem 1.25rem 2rem}.main-layout{padding:0 1.25rem}.content{padding:2rem 0 4rem}pre{padding:1rem;font-size:12.5px}.footer-nav{flex-direction:column}.footer-nav-link{max-width:100%;width:100%}}@media print{.top-nav,.sidebar,.progress-bar{display:none}.main-layout{display:block}.content{padding:0}.hero{background:#fff;border:none}pre{background:#f1f5f9;color:var(--ink);border:1px solid var(--border)}}
+    /* ═══════════════════════════════════════════════
+       ILA DESIGN SYSTEM — v1.0
+       Iksha Learning Academy
+       ═══════════════════════════════════════════════ */
+
+    :root {
+      /* Palette */
+      --ink:        #0f172a;
+      --ink-light:  #334155;
+      --ink-muted:  #64748b;
+      --surface:    #ffffff;
+      --surface-alt:#f8fafc;
+      --surface-warm:#fffbeb;
+      --border:     #e2e8f0;
+      --border-light:#f1f5f9;
+
+      /* Brand */
+      --teal-50:  #f0fdfa;
+      --teal-100: #ccfbf1;
+      --teal-200: #99f6e4;
+      --teal-500: #14b8a6;
+      --teal-600: #0d9488;
+      --teal-700: #0f766e;
+      --teal-800: #115e59;
+      --teal-900: #134e4a;
+
+      --blue-50:  #eff6ff;
+      --blue-100: #dbeafe;
+      --blue-500: #3b82f6;
+      --blue-600: #2563eb;
+      --blue-700: #1d4ed8;
+
+      --amber-50:  #fffbeb;
+      --amber-100: #fef3c7;
+      --amber-500: #f59e0b;
+      --amber-600: #d97706;
+
+      --red-50:   #fef2f2;
+      --red-100:  #fee2e2;
+      --red-500:  #ef4444;
+      --red-600:  #dc2626;
+
+      --purple-50:  #faf5ff;
+      --purple-100: #f3e8ff;
+      --purple-500: #a855f7;
+      --purple-600: #9333ea;
+
+      /* Typography */
+      --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-serif: 'Instrument Serif', Georgia, serif;
+      --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
+
+      /* Spacing */
+      --content-max: 780px;
+      --sidebar-width: 280px;
+
+      /* Transitions */
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--ink);
+      background: var(--surface);
+    }
+
+    /* ── PROGRESS BAR ─────────────────────────── */
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--teal-500), var(--blue-500));
+      z-index: 1000;
+      transition: width 0.15s var(--ease);
+    }
+
+    /* ── TOP NAV ──────────────────────────────── */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+    }
+
+    .top-nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--teal-800);
+    }
+
+    .nav-brand-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--teal-600), var(--teal-800));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .nav-brand-text {
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-chapter-nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      color: var(--ink-muted);
+      border: 1px solid var(--border);
+      background: white;
+      transition: all 0.2s var(--ease);
+      cursor: pointer;
+    }
+
+    .nav-btn:hover {
+      color: var(--ink);
+      border-color: var(--teal-500);
+      background: var(--teal-50);
+    }
+
+    .nav-btn.disabled {
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    .nav-current {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink-light);
+      padding: 0 4px;
+    }
+
+    /* ── HERO ─────────────────────────────────── */
+    .hero {
+      background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 4rem 2rem 3.5rem;
+    }
+
+    .hero-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
+    }
+
+    .hero-chapter-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--teal-700);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 1rem;
+    }
+
+    .hero-chapter-label span {
+      background: var(--teal-100);
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+
+    .hero h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(2.4rem, 5vw, 3.2rem);
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: 1rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: var(--ink-light);
+      line-height: 1.65;
+      max-width: 640px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .hero-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
+    .hero-meta-item svg {
+      width: 16px;
+      height: 16px;
+      color: var(--teal-600);
+    }
+
+    /* ── MAIN LAYOUT ──────────────────────────── */
+    .main-layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr var(--sidebar-width);
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .content {
+      padding: 3rem 0 6rem;
+      min-width: 0;
+    }
+
+    /* ── SIDEBAR TOC ──────────────────────────── */
+    .sidebar {
+      position: sticky;
+      top: 76px;
+      padding: 2rem 0;
+      max-height: calc(100vh - 76px);
+      overflow-y: auto;
+    }
+
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-muted);
+      margin-bottom: 1rem;
+      padding-left: 14px;
+    }
+
+    .toc-list {
+      list-style: none;
+    }
+
+    .toc-item a {
+      display: block;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--ink-muted);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: all 0.2s var(--ease);
+      line-height: 1.5;
+    }
+
+    .toc-item a:hover {
+      color: var(--ink);
+      background: var(--surface-alt);
+    }
+
+    .toc-item a.active {
+      color: var(--teal-700);
+      border-left-color: var(--teal-500);
+      background: var(--teal-50);
+      font-weight: 500;
+    }
+
+    /* ── TYPOGRAPHY ────────────────────────────── */
+    .content h2 {
+      font-family: var(--font-serif);
+      font-size: 1.85rem;
+      font-weight: 400;
+      color: var(--ink);
+      margin: 3rem 0 1rem;
+      padding-top: 1rem;
+      scroll-margin-top: 80px;
+    }
+
+    .content h2:first-child {
+      margin-top: 0;
+    }
+
+    .content h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 2rem 0 0.75rem;
+      scroll-margin-top: 80px;
+    }
+
+    .content p {
+      margin-bottom: 1.25rem;
+      color: var(--ink-light);
+    }
+
+    .content strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .content a {
+      color: var(--teal-700);
+      text-decoration: underline;
+      text-decoration-color: var(--teal-200);
+      text-underline-offset: 3px;
+      transition: text-decoration-color 0.2s;
+    }
+
+    .content a:hover {
+      text-decoration-color: var(--teal-600);
+    }
+
+    .content ul, .content ol {
+      margin-bottom: 1.25rem;
+      padding-left: 1.5rem;
+    }
+
+    .content li {
+      margin-bottom: 0.5rem;
+      color: var(--ink-light);
+    }
+
+    .content li::marker {
+      color: var(--teal-500);
+    }
+
+    /* ── SECTION DIVIDER ──────────────────────── */
+    .section-divider {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 3rem 0;
+    }
+
+    /* ── CALLOUT BOXES ────────────────────────── */
+    .callout {
+      padding: 1.25rem 1.5rem;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+      border: 1px solid;
+      position: relative;
+    }
+
+    .callout-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .callout-header svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    .callout p:last-child { margin-bottom: 0; }
+
+    .callout.concept {
+      background: var(--blue-50);
+      border-color: var(--blue-100);
+    }
+    .callout.concept .callout-header { color: var(--blue-700); }
+
+    .callout.important {
+      background: var(--amber-50);
+      border-color: var(--amber-100);
+    }
+    .callout.important .callout-header { color: var(--amber-600); }
+
+    .callout.danger {
+      background: var(--red-50);
+      border-color: var(--red-100);
+    }
+    .callout.danger .callout-header { color: var(--red-600); }
+
+    .callout.tip {
+      background: var(--purple-50);
+      border-color: var(--purple-100);
+    }
+    .callout.tip .callout-header { color: var(--purple-600); }
+
+    .callout.success {
+      background: var(--teal-50);
+      border-color: var(--teal-100);
+    }
+    .callout.success .callout-header { color: var(--teal-700); }
+
+    /* ── CODE BLOCKS ──────────────────────────── */
+    .code-block {
+      position: relative;
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+      background: var(--surface-alt);
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--ink-muted);
+    }
+
+    .code-lang {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .code-copy {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: white;
+      font-size: 11px;
+      font-family: var(--font-sans);
+      color: var(--ink-muted);
+      cursor: pointer;
+      transition: all 0.2s var(--ease);
+    }
+
+    .code-copy:hover {
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    .code-copy.copied {
+      background: var(--teal-50);
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    pre {
+      margin: 0;
+      padding: 1.25rem 1.5rem;
+      overflow-x: auto;
+      background: #1e293b;
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: #e2e8f0;
+    }
+
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.88em;
+    }
+
+    p code, li code {
+      padding: 2px 7px;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      color: var(--teal-800);
+      font-size: 0.85em;
+    }
+
+    /* Syntax highlights */
+    .hl-keyword  { color: #c084fc; }
+    .hl-string   { color: #86efac; }
+    .hl-comment  { color: #64748b; font-style: italic; }
+    .hl-function { color: #7dd3fc; }
+    .hl-number   { color: #fbbf24; }
+    .hl-flag     { color: #f472b6; }
+
+    /* ── COLLAPSIBLE (DETAILS) ────────────────── */
+    details {
+      margin-bottom: 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.2s var(--ease);
+    }
+
+    details[open] {
+      border-color: var(--teal-200);
+    }
+
+    details summary {
+      padding: 1rem 1.25rem;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      background: var(--surface-alt);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.2s var(--ease);
+      user-select: none;
+    }
+
+    details summary::-webkit-details-marker { display: none; }
+
+    details summary::before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+      flex-shrink: 0;
+      transition: transform 0.2s var(--ease);
+    }
+
+    details[open] summary::before {
+      transform: rotate(90deg);
+    }
+
+    details summary:hover {
+      background: var(--teal-50);
+    }
+
+    .details-body {
+      padding: 1.25rem 1.5rem;
+    }
+
+    .details-body p:last-child { margin-bottom: 0; }
+
+    /* ── VIDEO EMBED ──────────────────────────── */
+    .video-card {
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      background: #0f172a;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .video-caption {
+      padding: 12px 16px;
+      background: var(--surface-alt);
+      font-size: 13px;
+      color: var(--ink-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .video-caption svg {
+      width: 14px;
+      height: 14px;
+      color: var(--red-500);
+    }
+
+    /* ── RESOURCE CARDS ───────────────────────── */
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .resource-card {
+      display: flex;
+      gap: 14px;
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      background: white;
+    }
+
+    .resource-card:hover {
+      border-color: var(--teal-300);
+      background: var(--teal-50);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .resource-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 18px;
+    }
+
+    .resource-icon.docs    { background: var(--blue-50);   color: var(--blue-600); }
+    .resource-icon.video   { background: var(--red-50);    color: var(--red-500); }
+    .resource-icon.github  { background: var(--ink);       color: white; }
+    .resource-icon.article { background: var(--amber-50);  color: var(--amber-600); }
+    .resource-icon.pdf     { background: var(--purple-50); color: var(--purple-600); }
+
+    .resource-info {
+      min-width: 0;
+    }
+
+    .resource-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 2px;
+      line-height: 1.4;
+    }
+
+    .resource-desc {
+      font-size: 12px;
+      color: var(--ink-muted);
+      line-height: 1.5;
+    }
+
+    /* ── ASSIGNMENT CARDS ─────────────────────── */
+    .assignment {
+      border: 2px solid var(--teal-200);
+      border-radius: 14px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--teal-50) 0%, white 100%);
+    }
+
+    .assignment-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .assignment-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--teal-700);
+    }
+
+    .assignment-difficulty {
+      display: inline-flex;
+      padding: 4px 10px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .difficulty-l1 { background: var(--teal-100); color: var(--teal-800); }
+    .difficulty-l2 { background: var(--amber-100); color: var(--amber-600); }
+    .difficulty-l3 { background: var(--red-100); color: var(--red-600); }
+
+    .assignment h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .assignment p {
+      font-size: 14px;
+    }
+
+    .checklist {
+      list-style: none;
+      padding: 0;
+    }
+
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-light);
+      font-size: 14px;
+    }
+
+    .checklist li:last-child { border-bottom: none; }
+
+    .check-box {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      border: 2px solid var(--border);
+      flex-shrink: 0;
+      margin-top: 1px;
+      cursor: pointer;
+      transition: all 0.15s var(--ease);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .check-box:hover {
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked {
+      background: var(--teal-500);
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+    }
+
+    /* ── ARCHITECTURE DIAGRAM ─────────────────── */
+    .diagram {
+      margin: 1.5rem 0;
+      padding: 2rem;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow-x: auto;
+    }
+
+    .diagram pre {
+      background: transparent;
+      color: var(--ink);
+      padding: 0;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .diagram-caption {
+      margin-top: 1rem;
+      font-size: 12px;
+      color: var(--ink-muted);
+      text-align: center;
+      font-style: italic;
+    }
+
+    /* ── FOOTER ───────────────────────────────── */
+    .chapter-footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      background: var(--surface-alt);
+    }
+
+    .chapter-footer-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
+    }
+
+    .footer-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .footer-nav-link {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 1rem 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      max-width: 320px;
+      background: white;
+    }
+
+    .footer-nav-link:hover {
+      border-color: var(--teal-300);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .footer-nav-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--teal-600);
+    }
+
+    .footer-nav-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .footer-brand {
+      text-align: center;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
+    /* ── RESPONSIVE ───────────────────────────── */
+    @media (max-width: 960px) {
+      .main-layout {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        display: none;
+      }
+      .resource-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero { padding: 2.5rem 1.25rem 2rem; }
+      .main-layout { padding: 0 1.25rem; }
+      .content { padding: 2rem 0 4rem; }
+      pre { padding: 1rem; font-size: 12.5px; }
+      .footer-nav { flex-direction: column; }
+      .footer-nav-link { max-width: 100%; width: 100%; }
+    }
+
+    /* ── PRINT ────────────────────────────────── */
+    @media print {
+      .top-nav, .sidebar, .progress-bar { display: none; }
+      .main-layout { display: block; }
+      .content { padding: 0; }
+      .hero { background: white; border: none; }
+      pre { background: #f1f5f9; color: var(--ink); border: 1px solid var(--border); }
+    }
   </style>
 </head>
 <body>
+  <!-- Progress Bar -->
   <div class="progress-bar" id="progressBar"></div>
-  <nav class="top-nav"><div class="top-nav-inner"><a class="nav-brand" href="index.html"><div class="nav-brand-icon">ILA</div><span class="nav-brand-text">Iksha Learning Academy</span></a><div class="nav-chapter-nav"><a class="nav-btn" href="chapter-01.html">&larr; Previous</a><span class="nav-current">02 / 08</span><a class="nav-btn" href="chapter-03.html">Next &rarr;</a></div></div></nav>
 
-  <header class="hero"><div class="hero-inner">
-    <div class="hero-chapter-label"><span>Chapter 02</span> &middot; Phase 1: Ruby &amp; Rails Fundamentals</div>
-    <h1>Rails MVC Architecture</h1>
-    <p class="hero-subtitle">Understand the Model-View-Controller pattern that organizes every Rails application. Learn how models represent data, controllers handle requests, views render responses, and routing ties everything together with elegant conventions.</p>
-    <div class="hero-meta">
-      <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Estimated: 3&ndash;4 days</div>
-      <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>3 Advancement Levels</div>
-      <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>3 Assignments</div>
+  <!-- Top Navigation -->
+  <nav class="top-nav">
+    <div class="top-nav-inner">
+      <a class="nav-brand" href="index.html">
+        <div class="nav-brand-icon">ILA</div>
+        <span class="nav-brand-text">Iksha Learning Academy</span>
+      </a>
+      <div class="nav-chapter-nav">
+        <a class="nav-btn" href="chapter-01.html">&larr; Previous</a>
+        <span class="nav-current">02 / 08</span>
+        <a class="nav-btn" href="chapter-03.html">Next &rarr;</a>
+      </div>
     </div>
-  </div></header>
+  </nav>
 
+  <!-- Hero -->
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-chapter-label">
+        <span>Chapter 02</span> &middot; Phase 1: Ruby &amp; Rails Fundamentals
+      </div>
+      <h1>Rails MVC Architecture</h1>
+      <p class="hero-subtitle">
+        Understand the Model-View-Controller pattern that organizes every Rails application &mdash;
+        routing, generators, the request/response cycle, folder structure, and why Rails
+        favors convention over configuration to keep your code predictable and fast to write.
+      </p>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Estimated: 3&ndash;4 days
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          3 Advancement Levels
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          3 Assignments
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content + Sidebar -->
   <div class="main-layout">
     <main class="content">
 
+      <!-- ════════════════════════════════════════
+           SECTION 1: WHY THIS MATTERS
+           ════════════════════════════════════════ -->
       <h2 id="why-this-matters">Why This Matters</h2>
-      <p>Rails does not just use MVC &mdash; it <strong>is</strong> MVC. Every file in a Rails project lives in a specific directory determined by its role: models go in <code>app/models</code>, controllers in <code>app/controllers</code>, views in <code>app/views</code>. This is not optional. Understanding MVC is understanding how Rails thinks.</p>
-      <p>The MVC pattern separates concerns: models handle business logic and data, controllers coordinate between the user request and the model, and views format the response. This separation means you can change how data is stored without touching the UI, or redesign the UI without touching business logic.</p>
-      <p>Rails takes MVC further with <strong>convention over configuration</strong>. If you create a <code>Post</code> model, Rails expects a <code>posts</code> database table, a <code>PostsController</code>, and views in <code>app/views/posts/</code>. Follow the conventions and Rails writes boilerplate for you. Fight them and you write it yourself.</p>
+
+      <p>
+        Ruby on Rails is not just a collection of libraries glued together &mdash; it is an
+        <strong>opinionated framework</strong> built around the Model-View-Controller architectural
+        pattern. MVC provides a clear separation of concerns: data logic lives in Models, presentation
+        logic in Views, and coordination logic in Controllers. Every file you create in Rails, every
+        generator you run, and every URL your application responds to is shaped by this pattern. If
+        you do not understand MVC, you will constantly fight the framework instead of letting it
+        accelerate your development.
+      </p>
+
+      <p>
+        Rails takes MVC further than most frameworks by adding an aggressive set of conventions.
+        Where other frameworks ask you to configure database table names, file paths, URL structures,
+        and class relationships, Rails derives all of this from naming conventions. A model named
+        <code>Article</code> automatically maps to an <code>articles</code> database table, lives in
+        <code>app/models/article.rb</code>, and has a controller at <code>app/controllers/articles_controller.rb</code>.
+        This is the principle of <strong>Convention over Configuration</strong>, and it is the single
+        biggest reason Rails developers can build production applications faster than developers using
+        less opinionated frameworks.
+      </p>
+
+      <p>
+        Understanding the full request/response cycle &mdash; how a browser request enters your
+        application through the router, gets dispatched to a controller action, interacts with models,
+        and returns a response &mdash; gives you a mental map for debugging any issue. When something
+        goes wrong in a Rails app, knowing which layer is responsible lets you locate the problem in
+        seconds instead of minutes. This chapter builds that mental map.
+      </p>
 
       <div class="callout concept">
-        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>Key Insight</div>
-        <p>Convention over configuration means Rails makes decisions for you. A <code>User</code> model maps to a <code>users</code> table. A <code>UsersController#show</code> action renders <code>app/views/users/show.html.erb</code>. You can override all of this, but you almost never need to. The conventions <em>are</em> the framework.</p>
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Key Insight
+        </div>
+        <p>
+          Rails generators are not magic &mdash; they create the same files you could write by hand.
+          But they enforce naming conventions automatically. Once you understand what each generated
+          file does and where it lives, generators become a productivity tool rather than a black box.
+          Always inspect what a generator creates before moving on.
+        </p>
       </div>
 
       <hr class="section-divider">
 
+      <!-- ════════════════════════════════════════
+           SECTION 2: KEY CONCEPTS
+           ════════════════════════════════════════ -->
       <h2 id="key-concepts">Key Concepts</h2>
 
-      <h3 id="request-lifecycle">1. The Rails Request Lifecycle</h3>
-      <p>Every HTTP request to a Rails app follows the same path: the router matches the URL to a controller action, the controller queries models and prepares data, and the view renders the response. Understanding this flow is essential for debugging.</p>
+      <h3 id="mvc-pattern">1. The MVC Pattern Explained</h3>
+
+      <p>
+        MVC divides your application into three interconnected layers. The <strong>Model</strong>
+        handles data, business logic, and database interactions. The <strong>View</strong> handles
+        presentation and what the user sees. The <strong>Controller</strong> sits between them,
+        receiving user requests, asking Models for data, and deciding which View to render. In a
+        Rails API application (which is what we build in this course), the View layer is replaced by
+        JSON serialization since React handles the actual UI rendering on the front end.
+      </p>
 
       <div class="diagram">
 <pre>
-  HTTP Request Lifecycle in Rails
-  ═══════════════════════════════
+  Rails MVC Request Flow
+  ═══════════════════════════════════════════════════════
 
-  Browser/Client
-       │
-       ▼
-  ┌─────────────┐     ┌─────────────────┐     ┌──────────────┐
-  │   Router     │────▶│   Controller    │────▶│    Model     │
-  │ config/routes│     │ app/controllers │     │ app/models   │
-  └─────────────┘     └────────┬────────┘     └──────┬───────┘
-                               │                      │
-                               │    query/save         │
-                               │◀─────────────────────┘
-                               │
-                               ▼
-                      ┌─────────────────┐
-                      │     View        │
-                      │  app/views      │
-                      └────────┬────────┘
-                               │
-                               ▼
-                         HTTP Response
-                      (HTML, JSON, etc.)
+  Browser / React App
+       |
+       |  HTTP Request (GET /articles/42)
+       v
+  +---------------+
+  |    Router     |  config/routes.rb
+  |   (routes)    |  Maps URL + HTTP method to controller#action
+  +-------+-------+
+          |
+          v
+  +---------------+
+  |  Controller   |  app/controllers/articles_controller.rb
+  |   (action)    |  #show action receives params[:id] = 42
+  +-------+-------+
+          |
+          |  Article.find(42)
+          v
+  +---------------+
+  |    Model      |  app/models/article.rb
+  |  (business    |  Validates data, runs callbacks,
+  |    logic)     |  queries the database via ActiveRecord
+  +-------+-------+
+          |
+          |  Returns Article instance
+          v
+  +---------------+
+  |   View /      |  JSON response or ERB template
+  |  Serializer   |  Formats data for the client
+  +-------+-------+
+          |
+          |  HTTP Response (200 OK + JSON body)
+          v
+  Browser / React App
 </pre>
-        <div class="diagram-caption">Figure 1: Every Rails request follows Router → Controller → Model → View → Response</div>
+        <div class="diagram-caption">Figure 1: The complete Rails MVC request/response cycle</div>
       </div>
 
-      <h3 id="routing">2. Routing &mdash; The Front Door</h3>
-      <p>The router is defined in <code>config/routes.rb</code>. It maps HTTP verbs and URL patterns to controller actions. Rails provides <code>resources</code> as a shorthand that generates all seven RESTful routes at once.</p>
+      <div class="callout important">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Thin Controllers, Fat Models
+        </div>
+        <p>
+          A common Rails antipattern is putting business logic in controllers. Controllers should only
+          coordinate &mdash; receive the request, call the model, return the response. Business rules,
+          validations, and data transformations belong in Models or service objects. If your controller
+          action is longer than 10 lines, something probably belongs in the model layer.
+        </p>
+      </div>
+
+      <h3 id="routing">2. Routing in Rails</h3>
+
+      <p>
+        The router is the entry point of every Rails application. It maps incoming HTTP requests
+        (a combination of URL path and HTTP method) to a specific controller action. Rails routing
+        is defined in <code>config/routes.rb</code> and provides a powerful DSL for declaring
+        RESTful routes, nested resources, and custom endpoints. Understanding routing is essential
+        because every feature you build starts with a route definition.
+      </p>
 
       <div class="code-block">
-        <div class="code-header"><span class="code-lang">ruby</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
 <pre>
 <span class="hl-comment"># config/routes.rb</span>
 Rails.application.routes.draw <span class="hl-keyword">do</span>
-  <span class="hl-comment"># Root route — what loads at "/"</span>
+  <span class="hl-comment"># Root route — the homepage</span>
   root <span class="hl-string">"pages#home"</span>
 
-  <span class="hl-comment"># RESTful resource — generates 7 routes automatically</span>
+  <span class="hl-comment"># RESTful resource — generates 7 standard routes</span>
   resources <span class="hl-string">:articles</span>
-  <span class="hl-comment">#   GET    /articles          => articles#index</span>
-  <span class="hl-comment">#   GET    /articles/new       => articles#new</span>
-  <span class="hl-comment">#   POST   /articles           => articles#create</span>
-  <span class="hl-comment">#   GET    /articles/:id       => articles#show</span>
-  <span class="hl-comment">#   GET    /articles/:id/edit  => articles#edit</span>
-  <span class="hl-comment">#   PATCH  /articles/:id       => articles#update</span>
-  <span class="hl-comment">#   DELETE /articles/:id       => articles#destroy</span>
+  <span class="hl-comment"># GET    /articles          =&gt; articles#index</span>
+  <span class="hl-comment"># GET    /articles/new       =&gt; articles#new</span>
+  <span class="hl-comment"># POST   /articles           =&gt; articles#create</span>
+  <span class="hl-comment"># GET    /articles/:id       =&gt; articles#show</span>
+  <span class="hl-comment"># GET    /articles/:id/edit  =&gt; articles#edit</span>
+  <span class="hl-comment"># PATCH  /articles/:id       =&gt; articles#update</span>
+  <span class="hl-comment"># DELETE /articles/:id       =&gt; articles#destroy</span>
+
+  <span class="hl-comment"># Limit routes to only what you need (API-style)</span>
+  resources <span class="hl-string">:users</span>, <span class="hl-string">only:</span> [<span class="hl-string">:index</span>, <span class="hl-string">:show</span>, <span class="hl-string">:create</span>, <span class="hl-string">:update</span>]
 
   <span class="hl-comment"># Nested resources — articles have many comments</span>
   resources <span class="hl-string">:articles</span> <span class="hl-keyword">do</span>
-    resources <span class="hl-string">:comments</span>, only: [<span class="hl-string">:create</span>, <span class="hl-string">:destroy</span>]
+    resources <span class="hl-string">:comments</span>, <span class="hl-string">only:</span> [<span class="hl-string">:index</span>, <span class="hl-string">:create</span>, <span class="hl-string">:destroy</span>]
   <span class="hl-keyword">end</span>
+  <span class="hl-comment"># POST /articles/:article_id/comments =&gt; comments#create</span>
 
-  <span class="hl-comment"># API namespace — prefix all routes with /api/v1</span>
+  <span class="hl-comment"># Namespace — groups controllers under a module</span>
   namespace <span class="hl-string">:api</span> <span class="hl-keyword">do</span>
     namespace <span class="hl-string">:v1</span> <span class="hl-keyword">do</span>
-      resources <span class="hl-string">:users</span>, only: [<span class="hl-string">:index</span>, <span class="hl-string">:show</span>, <span class="hl-string">:create</span>]
+      resources <span class="hl-string">:articles</span>
+      resources <span class="hl-string">:users</span>
     <span class="hl-keyword">end</span>
   <span class="hl-keyword">end</span>
+  <span class="hl-comment"># GET /api/v1/articles =&gt; api/v1/articles#index</span>
 
-  <span class="hl-comment"># Custom route</span>
-  get <span class="hl-string">"about"</span>, to: <span class="hl-string">"pages#about"</span>
+  <span class="hl-comment"># Custom member and collection routes</span>
+  resources <span class="hl-string">:articles</span> <span class="hl-keyword">do</span>
+    member <span class="hl-keyword">do</span>
+      patch <span class="hl-string">:publish</span>    <span class="hl-comment"># PATCH /articles/:id/publish</span>
+      patch <span class="hl-string">:archive</span>    <span class="hl-comment"># PATCH /articles/:id/archive</span>
+    <span class="hl-keyword">end</span>
+    collection <span class="hl-keyword">do</span>
+      get <span class="hl-string">:search</span>      <span class="hl-comment"># GET /articles/search</span>
+      get <span class="hl-string">:drafts</span>      <span class="hl-comment"># GET /articles/drafts</span>
+    <span class="hl-keyword">end</span>
+  <span class="hl-keyword">end</span>
 <span class="hl-keyword">end</span>
 </pre>
       </div>
 
       <div class="code-block">
-        <div class="code-header"><span class="code-lang">bash</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <div class="code-header">
+          <span class="code-lang">bash</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
 <pre>
 <span class="hl-comment"># View all routes in your application</span>
-bin/rails routes
+rails routes
 
 <span class="hl-comment"># Filter routes by controller</span>
-bin/rails routes <span class="hl-flag">-c</span> articles
+rails routes <span class="hl-flag">-c</span> articles
 
-<span class="hl-comment"># Filter routes by HTTP verb</span>
-bin/rails routes <span class="hl-flag">-g</span> POST
+<span class="hl-comment"># Filter routes matching a pattern</span>
+rails routes <span class="hl-flag">-g</span> POST
+
+<span class="hl-comment"># Show routes in expanded format</span>
+rails routes <span class="hl-flag">--expanded</span>
 </pre>
       </div>
 
-      <h3 id="controllers">3. Controllers &mdash; Traffic Directors</h3>
-      <p>Controllers receive requests from the router, interact with models to fetch or save data, and determine what response to send back. Each public method in a controller is an <strong>action</strong>. Rails conventions keep controllers thin &mdash; they coordinate but should not contain business logic.</p>
+      <h3 id="controllers">3. Controllers and Actions</h3>
+
+      <p>
+        Controllers are Ruby classes that inherit from <code>ApplicationController</code>. Each public
+        method in a controller is an <strong>action</strong> that can respond to an HTTP request. The
+        controller receives request parameters through <code>params</code>, interacts with models to
+        fetch or persist data, and renders a response. In API mode, that response is typically JSON
+        with an appropriate HTTP status code.
+      </p>
 
       <div class="code-block">
-        <div class="code-header"><span class="code-lang">ruby</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
 <pre>
 <span class="hl-comment"># app/controllers/articles_controller.rb</span>
 <span class="hl-keyword">class</span> <span class="hl-function">ArticlesController</span> &lt; ApplicationController
-  before_action <span class="hl-string">:set_article</span>, only: [<span class="hl-string">:show</span>, <span class="hl-string">:edit</span>, <span class="hl-string">:update</span>, <span class="hl-string">:destroy</span>]
+  <span class="hl-comment"># Callback — runs before specific actions</span>
+  before_action <span class="hl-string">:set_article</span>, <span class="hl-string">only:</span> [<span class="hl-string">:show</span>, <span class="hl-string">:update</span>, <span class="hl-string">:destroy</span>]
 
   <span class="hl-comment"># GET /articles</span>
   <span class="hl-keyword">def</span> <span class="hl-function">index</span>
-    <span class="hl-keyword">@articles</span> = Article.all.order(created_at: <span class="hl-string">:desc</span>)
+    <span class="hl-keyword">@articles</span> = Article.all.order(<span class="hl-string">created_at:</span> <span class="hl-string">:desc</span>)
+    render <span class="hl-string">json:</span> <span class="hl-keyword">@articles</span>
   <span class="hl-keyword">end</span>
 
   <span class="hl-comment"># GET /articles/:id</span>
   <span class="hl-keyword">def</span> <span class="hl-function">show</span>
-  <span class="hl-keyword">end</span>
-
-  <span class="hl-comment"># GET /articles/new</span>
-  <span class="hl-keyword">def</span> <span class="hl-function">new</span>
-    <span class="hl-keyword">@article</span> = Article.new
+    render <span class="hl-string">json:</span> <span class="hl-keyword">@article</span>
   <span class="hl-keyword">end</span>
 
   <span class="hl-comment"># POST /articles</span>
@@ -177,247 +1183,673 @@ bin/rails routes <span class="hl-flag">-g</span> POST
     <span class="hl-keyword">@article</span> = Article.new(article_params)
 
     <span class="hl-keyword">if</span> <span class="hl-keyword">@article</span>.save
-      redirect_to <span class="hl-keyword">@article</span>, notice: <span class="hl-string">"Article was successfully created."</span>
+      render <span class="hl-string">json:</span> <span class="hl-keyword">@article</span>, <span class="hl-string">status:</span> <span class="hl-string">:created</span>
     <span class="hl-keyword">else</span>
-      render <span class="hl-string">:new</span>, status: <span class="hl-string">:unprocessable_entity</span>
+      render <span class="hl-string">json:</span> { <span class="hl-string">errors:</span> <span class="hl-keyword">@article</span>.errors.full_messages },
+             <span class="hl-string">status:</span> <span class="hl-string">:unprocessable_entity</span>
     <span class="hl-keyword">end</span>
   <span class="hl-keyword">end</span>
 
   <span class="hl-comment"># PATCH /articles/:id</span>
   <span class="hl-keyword">def</span> <span class="hl-function">update</span>
     <span class="hl-keyword">if</span> <span class="hl-keyword">@article</span>.update(article_params)
-      redirect_to <span class="hl-keyword">@article</span>, notice: <span class="hl-string">"Article was successfully updated."</span>
+      render <span class="hl-string">json:</span> <span class="hl-keyword">@article</span>
     <span class="hl-keyword">else</span>
-      render <span class="hl-string">:edit</span>, status: <span class="hl-string">:unprocessable_entity</span>
+      render <span class="hl-string">json:</span> { <span class="hl-string">errors:</span> <span class="hl-keyword">@article</span>.errors.full_messages },
+             <span class="hl-string">status:</span> <span class="hl-string">:unprocessable_entity</span>
     <span class="hl-keyword">end</span>
   <span class="hl-keyword">end</span>
 
   <span class="hl-comment"># DELETE /articles/:id</span>
   <span class="hl-keyword">def</span> <span class="hl-function">destroy</span>
     <span class="hl-keyword">@article</span>.destroy
-    redirect_to articles_path, notice: <span class="hl-string">"Article was successfully deleted."</span>
+    head <span class="hl-string">:no_content</span>
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">private</span>
+
+  <span class="hl-comment"># Strong parameters — whitelist allowed attributes</span>
+  <span class="hl-keyword">def</span> <span class="hl-function">article_params</span>
+    params.require(<span class="hl-string">:article</span>).permit(<span class="hl-string">:title</span>, <span class="hl-string">:body</span>, <span class="hl-string">:status</span>, <span class="hl-string">:category_id</span>)
+  <span class="hl-keyword">end</span>
+
+  <span class="hl-keyword">def</span> <span class="hl-function">set_article</span>
+    <span class="hl-keyword">@article</span> = Article.find(params[<span class="hl-string">:id</span>])
+  <span class="hl-keyword">end</span>
+<span class="hl-keyword">end</span>
+</pre>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Pro Tip
+        </div>
+        <p>
+          Strong parameters (<code>params.require().permit()</code>) are a security feature that
+          prevents mass-assignment attacks. Without them, a malicious user could send extra fields
+          like <code>admin: true</code> in a request body. Always whitelist exactly the attributes
+          you expect &mdash; never use <code>params.permit!</code> which allows everything.
+        </p>
+      </div>
+
+      <h3 id="generators">4. Rails Generators</h3>
+
+      <p>
+        Generators are command-line tools that scaffold boilerplate code following Rails conventions.
+        They create models, controllers, migrations, tests, and more. While you should understand
+        what every generated file does, generators save significant time by wiring up naming
+        conventions automatically. Think of them as templates that Rails fills in for you.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">bash</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># Create a new Rails API application</span>
+rails new blog_api <span class="hl-flag">--api</span> <span class="hl-flag">--database=postgresql</span> <span class="hl-flag">-T</span>
+
+<span class="hl-comment"># Generate a model (creates model file + migration)</span>
+rails generate model Article title:string body:text status:integer
+<span class="hl-comment"># Creates:</span>
+<span class="hl-comment">#   app/models/article.rb</span>
+<span class="hl-comment">#   db/migrate/20240101000000_create_articles.rb</span>
+<span class="hl-comment">#   spec/models/article_spec.rb (if RSpec installed)</span>
+
+<span class="hl-comment"># Generate a controller</span>
+rails generate controller Articles index show create update destroy
+<span class="hl-comment"># Creates:</span>
+<span class="hl-comment">#   app/controllers/articles_controller.rb</span>
+<span class="hl-comment">#   spec/controllers/articles_controller_spec.rb</span>
+
+<span class="hl-comment"># Generate a migration only</span>
+rails generate migration AddCategoryToArticles category:string
+<span class="hl-comment"># Creates: db/migrate/20240102000000_add_category_to_articles.rb</span>
+
+<span class="hl-comment"># Scaffold — generates model, controller, routes, and views</span>
+rails generate scaffold Comment body:text article:references
+
+<span class="hl-comment"># Undo any generator</span>
+rails destroy model Article
+rails destroy controller Articles
+
+<span class="hl-comment"># Preview what a generator will create without writing files</span>
+rails generate model Article <span class="hl-flag">--pretend</span>
+</pre>
+      </div>
+
+      <div class="callout danger">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Do not blindly run scaffold
+        </div>
+        <p>
+          The <code>scaffold</code> generator creates a lot of code you may not need. In real projects,
+          most teams generate models and controllers separately because scaffold adds views, helpers, and
+          route entries that clutter API-only applications. Prefer individual generators and always
+          inspect what each one creates before moving on.
+        </p>
+      </div>
+
+      <h3 id="folder-structure">5. Rails Folder Structure</h3>
+
+      <p>
+        Rails enforces a standardized directory layout. Every Rails application has the same
+        structure, which means you can jump into any Rails project and immediately know where
+        things live. This is convention over configuration in action &mdash; you never have to
+        configure paths or autoloading because Rails knows exactly where to look for each type of file.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">text</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+my_rails_app/
++-- app/                        <span class="hl-comment"># YOUR APPLICATION CODE</span>
+|   +-- controllers/            <span class="hl-comment"># Handle HTTP requests</span>
+|   |   +-- application_controller.rb
+|   |   +-- articles_controller.rb
+|   |   +-- concerns/          <span class="hl-comment"># Shared controller modules</span>
+|   +-- models/                 <span class="hl-comment"># Business logic + database interaction</span>
+|   |   +-- application_record.rb
+|   |   +-- article.rb
+|   |   +-- concerns/          <span class="hl-comment"># Shared model modules</span>
+|   +-- views/                  <span class="hl-comment"># Templates (ERB, Jbuilder, etc.)</span>
+|   +-- jobs/                   <span class="hl-comment"># Background jobs (Sidekiq, etc.)</span>
+|   +-- mailers/                <span class="hl-comment"># Email templates and logic</span>
+|   +-- serializers/            <span class="hl-comment"># JSON serialization (if using AMS)</span>
+|
++-- config/                     <span class="hl-comment"># CONFIGURATION</span>
+|   +-- routes.rb               <span class="hl-comment"># URL routing definitions</span>
+|   +-- database.yml            <span class="hl-comment"># Database connection settings</span>
+|   +-- application.rb          <span class="hl-comment"># Main app configuration</span>
+|   +-- environments/           <span class="hl-comment"># Per-environment settings</span>
+|   |   +-- development.rb
+|   |   +-- test.rb
+|   |   +-- production.rb
+|   +-- initializers/           <span class="hl-comment"># Code that runs at boot</span>
+|       +-- cors.rb
+|       +-- filter_parameter_logging.rb
+|
++-- db/                         <span class="hl-comment"># DATABASE</span>
+|   +-- migrate/                <span class="hl-comment"># Migration files (schema changes)</span>
+|   +-- schema.rb               <span class="hl-comment"># Current database schema snapshot</span>
+|   +-- seeds.rb                <span class="hl-comment"># Seed data for development</span>
+|
++-- spec/ (or test/)            <span class="hl-comment"># TESTS</span>
+|   +-- models/
+|   +-- requests/
+|   +-- factories/              <span class="hl-comment"># FactoryBot definitions</span>
+|   +-- spec_helper.rb
+|
++-- Gemfile                     <span class="hl-comment"># Ruby dependencies</span>
++-- Gemfile.lock                <span class="hl-comment"># Locked dependency versions</span>
++-- Rakefile                    <span class="hl-comment"># Task definitions</span>
++-- config.ru                   <span class="hl-comment"># Rack configuration</span>
+</pre>
+      </div>
+
+      <h3 id="request-cycle">6. The Request/Response Cycle in Detail</h3>
+
+      <p>
+        Understanding exactly what happens when a request hits your Rails application is critical for
+        debugging. Here is the complete lifecycle, step by step, from the moment a user clicks a link
+        or React makes a fetch call to the moment a response arrives back in the browser.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># Step 1: Request arrives — GET /articles/42</span>
+<span class="hl-comment"># The web server (Puma) receives the HTTP request</span>
+<span class="hl-comment"># and passes it to the Rack middleware stack.</span>
+
+<span class="hl-comment"># Step 2: Middleware runs in order</span>
+<span class="hl-comment"># Each middleware processes the request:</span>
+<span class="hl-comment">#   - ActionDispatch::SSL (force HTTPS in production)</span>
+<span class="hl-comment">#   - Rack::Cors (handle CORS headers for React)</span>
+<span class="hl-comment">#   - ActionDispatch::Cookies</span>
+<span class="hl-comment">#   - ActionDispatch::Session</span>
+<span class="hl-comment">#   - ActionDispatch::RequestId (adds unique ID)</span>
+
+<span class="hl-comment"># Step 3: Router matches the URL to a controller action</span>
+<span class="hl-comment"># config/routes.rb: resources :articles</span>
+<span class="hl-comment"># Match: GET /articles/:id =&gt; ArticlesController#show</span>
+<span class="hl-comment"># params[:id] = "42"</span>
+
+<span class="hl-comment"># Step 4: Controller filters and action run</span>
+<span class="hl-keyword">class</span> <span class="hl-function">ArticlesController</span> &lt; ApplicationController
+  before_action <span class="hl-string">:set_article</span>, <span class="hl-string">only:</span> [<span class="hl-string">:show</span>]
+
+  <span class="hl-keyword">def</span> <span class="hl-function">show</span>
+    <span class="hl-comment"># 4a: before_action fires first — calls set_article</span>
+    <span class="hl-comment"># 4b: The show action body runs</span>
+    render <span class="hl-string">json:</span> <span class="hl-keyword">@article</span>, <span class="hl-string">status:</span> <span class="hl-string">:ok</span>
   <span class="hl-keyword">end</span>
 
   <span class="hl-keyword">private</span>
 
   <span class="hl-keyword">def</span> <span class="hl-function">set_article</span>
+    <span class="hl-comment"># Step 5: Model queries the database</span>
+    <span class="hl-comment"># SQL: SELECT * FROM articles WHERE id = 42 LIMIT 1</span>
     <span class="hl-keyword">@article</span> = Article.find(params[<span class="hl-string">:id</span>])
-  <span class="hl-keyword">end</span>
-
-  <span class="hl-keyword">def</span> <span class="hl-function">article_params</span>
-    params.require(<span class="hl-string">:article</span>).permit(<span class="hl-string">:title</span>, <span class="hl-string">:body</span>, <span class="hl-string">:published</span>)
+  <span class="hl-keyword">rescue</span> ActiveRecord::RecordNotFound
+    render <span class="hl-string">json:</span> { <span class="hl-string">error:</span> <span class="hl-string">"Article not found"</span> }, <span class="hl-string">status:</span> <span class="hl-string">:not_found</span>
   <span class="hl-keyword">end</span>
 <span class="hl-keyword">end</span>
+
+<span class="hl-comment"># Step 6: Response is serialized and sent</span>
+<span class="hl-comment"># HTTP/1.1 200 OK</span>
+<span class="hl-comment"># Content-Type: application/json; charset=utf-8</span>
+<span class="hl-comment"># X-Request-Id: abc-123-def-456</span>
+<span class="hl-comment"># {"id":42,"title":"Hello World","body":"..."}</span>
 </pre>
       </div>
 
-      <div class="callout important">
-        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Strong Parameters are Non-Negotiable</div>
-        <p>Never trust user input directly. <code>params.require(:article).permit(:title, :body)</code> ensures only whitelisted attributes can be mass-assigned. Without this, attackers could inject admin privileges or modify attributes you never intended to expose.</p>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">bash</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># View the entire middleware stack</span>
+rails middleware
+
+<span class="hl-comment"># Start the Rails console to test models interactively</span>
+rails console
+<span class="hl-comment"># or the shorter alias</span>
+rails c
+
+<span class="hl-comment"># Start the development server on port 3000</span>
+rails server
+<span class="hl-comment"># or the shorter alias</span>
+rails s
+
+<span class="hl-comment"># Run database migrations</span>
+rails db:migrate
+
+<span class="hl-comment"># Seed the database with sample data</span>
+rails db:seed
+
+<span class="hl-comment"># Reset the database (drop + create + migrate + seed)</span>
+rails db:reset
+</pre>
       </div>
 
-      <h3 id="models">4. Models &mdash; Business Logic Home</h3>
-      <p>Models inherit from <code>ApplicationRecord</code> (which inherits from <code>ActiveRecord::Base</code>). They represent database tables and contain your business logic: validations, associations, scopes, and custom methods.</p>
+      <h3 id="conventions">7. Convention Over Configuration</h3>
+
+      <p>
+        Rails is built on a philosophy where sensible defaults eliminate the need for configuration
+        files. If you follow the naming conventions, Rails wires everything together automatically.
+        Here is a comprehensive mapping of how Rails derives names across the entire stack:
+      </p>
 
       <div class="code-block">
-        <div class="code-header"><span class="code-lang">ruby</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <div class="code-header">
+          <span class="code-lang">ruby</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
 <pre>
-<span class="hl-comment"># app/models/article.rb</span>
+<span class="hl-comment"># ═══════════════════════════════════════════</span>
+<span class="hl-comment"># RAILS NAMING CONVENTIONS</span>
+<span class="hl-comment"># ═══════════════════════════════════════════</span>
+
+<span class="hl-comment"># Model: singular, CamelCase</span>
 <span class="hl-keyword">class</span> <span class="hl-function">Article</span> &lt; ApplicationRecord
-  belongs_to <span class="hl-string">:author</span>, class_name: <span class="hl-string">"User"</span>
-  has_many <span class="hl-string">:comments</span>, dependent: <span class="hl-string">:destroy</span>
-
-  validates <span class="hl-string">:title</span>, presence: <span class="hl-keyword">true</span>, length: { maximum: <span class="hl-number">200</span> }
-  validates <span class="hl-string">:body</span>,  presence: <span class="hl-keyword">true</span>
-
-  scope <span class="hl-string">:published</span>, -> { where(published: <span class="hl-keyword">true</span>) }
-  scope <span class="hl-string">:recent</span>,    -> { order(created_at: <span class="hl-string">:desc</span>) }
-  scope <span class="hl-string">:by_author</span>, ->(user) { where(author: user) }
-
-  <span class="hl-keyword">def</span> <span class="hl-function">summary</span>
-    body.truncate(<span class="hl-number">150</span>)
-  <span class="hl-keyword">end</span>
 <span class="hl-keyword">end</span>
+<span class="hl-comment"># File:  app/models/article.rb</span>
+<span class="hl-comment"># Table: articles (plural, snake_case)</span>
+
+<span class="hl-comment"># Controller: plural, CamelCase, suffixed</span>
+<span class="hl-keyword">class</span> <span class="hl-function">ArticlesController</span> &lt; ApplicationController
+<span class="hl-keyword">end</span>
+<span class="hl-comment"># File: app/controllers/articles_controller.rb</span>
+
+<span class="hl-comment"># Multi-word model</span>
+<span class="hl-keyword">class</span> <span class="hl-function">BlogPost</span> &lt; ApplicationRecord
+<span class="hl-keyword">end</span>
+<span class="hl-comment"># File:       app/models/blog_post.rb</span>
+<span class="hl-comment"># Table:      blog_posts</span>
+<span class="hl-comment"># Controller: BlogPostsController</span>
+<span class="hl-comment"># Route:      /blog_posts</span>
+
+<span class="hl-comment"># Foreign key convention</span>
+<span class="hl-keyword">class</span> <span class="hl-function">Comment</span> &lt; ApplicationRecord
+  belongs_to <span class="hl-string">:article</span>
+  <span class="hl-comment"># Expects: article_id column in comments table</span>
+<span class="hl-keyword">end</span>
+
+<span class="hl-comment"># Namespaced model</span>
+<span class="hl-keyword">class</span> <span class="hl-function">Admin::User</span> &lt; ApplicationRecord
+<span class="hl-keyword">end</span>
+<span class="hl-comment"># File:  app/models/admin/user.rb</span>
+<span class="hl-comment"># Table: users (default) or admin_users (configurable)</span>
+
+<span class="hl-comment"># Test the inflector in rails console</span>
+<span class="hl-string">"BlogPost"</span>.underscore      <span class="hl-comment"># =&gt; "blog_post"</span>
+<span class="hl-string">"blog_post"</span>.classify       <span class="hl-comment"># =&gt; "BlogPost"</span>
+<span class="hl-string">"article"</span>.pluralize        <span class="hl-comment"># =&gt; "articles"</span>
+<span class="hl-string">"people"</span>.singularize       <span class="hl-comment"># =&gt; "person"</span>
+<span class="hl-string">"blog_post"</span>.camelize       <span class="hl-comment"># =&gt; "BlogPost"</span>
+<span class="hl-string">"Article"</span>.tableize         <span class="hl-comment"># =&gt; "articles"</span>
 </pre>
       </div>
 
-      <h3 id="views-templates">5. Views and Templates</h3>
-      <p>Views are ERB templates (Embedded Ruby) that combine HTML with Ruby code. Instance variables set in the controller (<code>@articles</code>) are automatically available in the corresponding view. For API applications, you will use JSON serializers instead of ERB, but understanding the view layer is still important.</p>
-
-      <div class="code-block">
-        <div class="code-header"><span class="code-lang">erb</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-<pre>
-<span class="hl-comment">&lt;%# app/views/articles/index.html.erb %&gt;</span>
-&lt;h1&gt;Articles&lt;/h1&gt;
-
-<span class="hl-keyword">&lt;%</span> <span class="hl-keyword">@articles</span>.each <span class="hl-keyword">do</span> |article| <span class="hl-keyword">%&gt;</span>
-  &lt;article&gt;
-    &lt;h2&gt;<span class="hl-keyword">&lt;%=</span> link_to article.title, article <span class="hl-keyword">%&gt;</span>&lt;/h2&gt;
-    &lt;p&gt;<span class="hl-keyword">&lt;%=</span> article.summary <span class="hl-keyword">%&gt;</span>&lt;/p&gt;
-    &lt;span&gt;By <span class="hl-keyword">&lt;%=</span> article.author.name <span class="hl-keyword">%&gt;</span>&lt;/span&gt;
-  &lt;/article&gt;
-<span class="hl-keyword">&lt;%</span> <span class="hl-keyword">end</span> <span class="hl-keyword">%&gt;</span>
-</pre>
+      <div class="callout concept">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          The Inflector
+        </div>
+        <p>
+          Rails uses an <strong>inflector</strong> to convert between singular/plural and CamelCase/snake_case.
+          It even handles irregular plurals: <code>"person".pluralize</code> returns <code>"people"</code>,
+          and <code>"octopus".pluralize</code> returns <code>"octopi"</code>. When in doubt, open
+          <code>rails console</code> and test the inflections directly.
+        </p>
       </div>
 
-      <div class="callout tip">
-        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>ERB Tags</div>
-        <p><code>&lt;%= %&gt;</code> outputs the result to HTML (use for displaying data). <code>&lt;% %&gt;</code> executes Ruby but does not output (use for loops and conditionals). Forgetting the <code>=</code> is the most common ERB mistake.</p>
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 3: WATCH & LEARN
+           ════════════════════════════════════════ -->
+      <h2 id="watch-learn">Watch &amp; Learn</h2>
+
+      <p>
+        These videos cover the MVC pattern and Rails application structure. Watch them to see
+        the concepts from this chapter demonstrated with real code.
+      </p>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/pPy0GQJLZUM?rel=0&amp;modestbranding=1"
+            title="Ruby on Rails for Beginners — Full Course"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          freeCodeCamp &mdash; Ruby on Rails for Beginners (covers MVC, routing, and project structure in depth)
+        </div>
       </div>
 
-      <h3 id="generators">6. Rails Generators</h3>
-      <p>Generators scaffold files following Rails conventions. They save time and ensure consistency. The most common generators create models, controllers, and migrations.</p>
-
-      <div class="code-block">
-        <div class="code-header"><span class="code-lang">bash</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-<pre>
-<span class="hl-comment"># Generate a model with attributes and migration</span>
-bin/rails generate model Article title:string body:text published:boolean author:references
-
-<span class="hl-comment"># Generate a controller with specific actions</span>
-bin/rails generate controller Articles index show new create edit update destroy
-
-<span class="hl-comment"># Generate a full scaffold (model + controller + views + tests + migration)</span>
-bin/rails generate scaffold Product name:string price:decimal description:text
-
-<span class="hl-comment"># Undo a generator</span>
-bin/rails destroy model Article
-
-<span class="hl-comment"># Dry run — see what files would be created</span>
-bin/rails generate model Article <span class="hl-flag">--pretend</span>
-</pre>
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/oyjzi837wME?rel=0&amp;modestbranding=1"
+            title="Rails Request/Response Cycle Explained"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          GoRails &mdash; Understanding the Rails Request/Response Cycle (middleware, routing, and controller flow)
+        </div>
       </div>
 
-      <div class="callout danger">
-        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Scaffold Warning</div>
-        <p><code>rails generate scaffold</code> is useful for learning, but professional Rails developers rarely use it in production. It generates too many files you will need to customize or delete. Prefer generating models and controllers separately.</p>
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 4: FURTHER READING
+           ════════════════════════════════════════ -->
+      <h2 id="further-reading">Further Reading</h2>
+
+      <p>Deep-dive into the official documentation and reference material for Rails MVC architecture.</p>
+
+      <div class="resource-grid">
+        <a class="resource-card" href="https://guides.rubyonrails.org/routing.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Rails Routing from the Outside In</div>
+            <div class="resource-desc">Official Rails guide covering resources, nested routes, namespaces, and route helpers.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://guides.rubyonrails.org/action_controller_overview.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Action Controller Overview</div>
+            <div class="resource-desc">Official guide to controllers, parameters, sessions, filters, and rendering responses.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://guides.rubyonrails.org/getting_started.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Getting Started with Rails</div>
+            <div class="resource-desc">Build your first Rails application step by step. Covers generators, MVC, and CRUD operations.</div>
+          </div>
+        </a>
       </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 5: ASSIGNMENTS
+           ════════════════════════════════════════ -->
+      <h2 id="assignments">Assignments</h2>
+
+      <p>
+        Complete these in order. Each level builds on the previous one. Focus on understanding
+        how the MVC layers connect rather than on styling or complex features.
+      </p>
+
+      <!-- Assignment 1: Level 1 -->
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 1
+          </div>
+          <span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span>
+        </div>
+        <h4>Explore a Generated Rails Application</h4>
+        <p>Generate a new Rails API application and map every file and folder to its purpose in the MVC pattern.</p>
+
+        <ul class="checklist">
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Run <code>rails new explorer_api --api --database=postgresql -T</code> and examine every generated file</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Generate a <code>Post</code> model with <code>title:string body:text published:boolean</code> and inspect both the model and migration files</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Add <code>resources :posts</code> to routes and run <code>rails routes</code> to document all 7 generated routes</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Create <code>PostsController</code> with <code>index</code> and <code>show</code> actions and test with <code>curl</code> or Postman</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Write a document mapping each request to its router rule, controller action, and model method</span>
+          </li>
+        </ul>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            You can explain what every folder in <code>app/</code> and <code>config/</code> does. You can trace
+            a GET request from URL to JSON response without guessing.
+          </p>
+        </div>
+      </div>
+
+      <!-- Assignment 2: Level 2 -->
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 2
+          </div>
+          <span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span>
+        </div>
+        <h4>Full CRUD API with Nested Resources</h4>
+        <p>Build a complete blog API with articles and comments, demonstrating nested routing and proper controller design.</p>
+
+        <ul class="checklist">
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Create <code>Article</code> and <code>Comment</code> models with proper associations (<code>has_many</code> / <code>belongs_to</code>)</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Implement full CRUD (index, show, create, update, destroy) for <code>ArticlesController</code> with strong parameters</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Implement nested <code>CommentsController</code> under articles with create and destroy actions</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Use <code>before_action</code> callbacks to DRY up record-finding logic across actions</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Handle <code>ActiveRecord::RecordNotFound</code> gracefully with a JSON error response and 404 status</span>
+          </li>
+        </ul>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            All CRUD operations work via <code>curl</code> or Postman. Nested comments are scoped to
+            their parent article. Invalid IDs return proper 404 JSON responses.
+          </p>
+        </div>
+      </div>
+
+      <!-- Assignment 3: Level 3 -->
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 3
+          </div>
+          <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Production-Ready</span>
+        </div>
+        <h4>Namespaced API with Versioning and Request Specs</h4>
+        <p>Build a versioned API under <code>/api/v1/</code> with shared error handling, pagination, and full RSpec coverage.</p>
+
+        <ul class="checklist">
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Create namespaced routes under <code>api/v1</code> with corresponding controller directory structure</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Implement a base <code>Api::V1::BaseController</code> with shared error handling using <code>rescue_from</code></span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Add pagination to index actions using <code>limit</code> and <code>offset</code> query parameters</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Add custom member routes (<code>publish</code>, <code>archive</code>) to articles with state validation</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Write RSpec request specs covering every endpoint, including error cases and edge conditions</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Add <code>rack-cors</code> configuration to allow requests from <code>localhost:3001</code> (React dev server)</span>
+          </li>
+        </ul>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            All endpoints live under <code>/api/v1/</code>. Error responses return consistent JSON structure.
+            All RSpec request specs pass. CORS headers allow your React front end to connect.
+          </p>
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 6: SELF-CHECK
+           ════════════════════════════════════════ -->
+      <h2 id="self-check">Self-Check</h2>
+
+      <p>Before moving to Chapter 03, honestly answer these questions. If any answer is "no", go back and practice more.</p>
 
       <details>
-        <summary>Rails naming conventions cheat sheet</summary>
+        <summary>Can you trace a request from URL to JSON response through all MVC layers?</summary>
         <div class="details-body">
-          <div class="code-block"><div class="code-header"><span class="code-lang">text</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-<pre>
-Model:        Article              (singular, CamelCase)
-Table:        articles             (plural, snake_case)
-Controller:   ArticlesController   (plural + "Controller")
-File:         articles_controller.rb
-View dir:     app/views/articles/  (plural)
-Route:        resources :articles  (plural symbol)
-URL helper:   articles_path        (plural)
-              article_path(@a)     (singular with instance)
-Migration:    CreateArticles       (CamelCase, descriptive)
-</pre>
-          </div>
+          <p>
+            Given <code>GET /articles/42</code>, you should be able to explain: the router matches
+            <code>resources :articles</code> and dispatches to <code>ArticlesController#show</code>
+            with <code>params[:id] = "42"</code>. The <code>before_action</code> calls
+            <code>Article.find(42)</code>, which generates a SQL SELECT query. The model instance
+            is serialized to JSON and returned with a 200 status code. If you cannot walk through
+            this from memory, review the request cycle section.
+          </p>
         </div>
       </details>
 
-      <hr class="section-divider">
-
-      <h2 id="watch-learn">Watch &amp; Learn</h2>
-      <p>These videos provide visual walkthroughs of MVC concepts and Rails project structure.</p>
-
-      <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/fmyvWz5TUWg?rel=0&amp;modestbranding=1" title="Learn Ruby on Rails - Full Course" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-caption"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>freeCodeCamp &mdash; Learn Ruby on Rails Full Course (MVC structure, routing, controllers)</div>
-      </div>
-      <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/wbZ6yrVxScM?rel=0&amp;modestbranding=1" title="Rails for Beginners" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-caption"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>Deanin &mdash; Ruby on Rails for Beginners (MVC, routing, and generators)</div>
-      </div>
-
-      <hr class="section-divider">
-
-      <h2 id="further-reading">Further Reading</h2>
-      <p>Official Rails guides and references for the MVC components covered in this chapter.</p>
-      <div class="resource-grid">
-        <a class="resource-card" href="https://guides.rubyonrails.org/getting_started.html" target="_blank" rel="noopener"><div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><div class="resource-info"><div class="resource-title">Rails Guides: Getting Started</div><div class="resource-desc">Build your first Rails app step-by-step with models, controllers, views, and routing.</div></div></a>
-        <a class="resource-card" href="https://guides.rubyonrails.org/routing.html" target="_blank" rel="noopener"><div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><div class="resource-info"><div class="resource-title">Rails Guides: Routing</div><div class="resource-desc">Resources, nested routes, namespaces, constraints, and custom routes.</div></div></a>
-        <a class="resource-card" href="https://guides.rubyonrails.org/action_controller_overview.html" target="_blank" rel="noopener"><div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><div class="resource-info"><div class="resource-title">Rails Guides: Action Controller</div><div class="resource-desc">Filters, strong parameters, sessions, cookies, and rendering.</div></div></a>
-        <a class="resource-card" href="https://guides.rubyonrails.org/layouts_and_rendering.html" target="_blank" rel="noopener"><div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><div class="resource-info"><div class="resource-title">Rails Guides: Layouts and Rendering</div><div class="resource-desc">Templates, layouts, partials, and content types.</div></div></a>
-        <a class="resource-card" href="https://guides.rubyonrails.org/command_line.html" target="_blank" rel="noopener"><div class="resource-icon article"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div class="resource-info"><div class="resource-title">Rails Guides: Command Line</div><div class="resource-desc">Generators, rails console, rails server, and dbconsole commands.</div></div></a>
-      </div>
-
-      <hr class="section-divider">
-
-      <h2 id="assignments">Assignments</h2>
-      <p>Complete these in order. Each level builds on the previous one.</p>
-
-      <div class="assignment">
-        <div class="assignment-header"><div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Assignment 1</div><span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span></div>
-        <h4>Blog Application with Full CRUD</h4>
-        <p>Build a blog with articles that can be created, read, updated, and deleted through the browser.</p>
-        <ul class="checklist">
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a new Rails app with <code>rails new blog</code></span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Generate an <code>Article</code> model with <code>title</code>, <code>body</code>, and <code>published</code> attributes</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create an <code>ArticlesController</code> with all 7 RESTful actions</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Add <code>resources :articles</code> to routes and set <code>root "articles#index"</code></span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create ERB views for index, show, new, and edit actions</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Add strong parameters in the controller for title and body</span></li>
-        </ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Done when</div><p>You can create, view, edit, and delete articles in the browser. <code>bin/rails routes</code> shows all 7 RESTful routes.</p></div>
-      </div>
-
-      <div class="assignment">
-        <div class="assignment-header"><div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Assignment 2</div><span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span></div>
-        <h4>Multi-Model Blog with Comments and Authors</h4>
-        <p>Extend the blog with nested resources and associations to model real relationships.</p>
-        <ul class="checklist">
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Generate a <code>User</code> model with <code>name</code> and <code>email</code></span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Add <code>belongs_to :author</code> on Article and <code>has_many :articles</code> on User</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Generate a <code>Comment</code> model with <code>body</code>, <code>article_id</code>, and <code>user_id</code></span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Add nested routes for comments within articles</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Display comments on article show page and add a comment form</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Add validations and display error messages in forms</span></li>
-        </ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Done when</div><p>Articles belong to authors, comments belong to articles. Validation errors display inline in forms.</p></div>
-      </div>
-
-      <div class="assignment">
-        <div class="assignment-header"><div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Assignment 3</div><span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Production-Ready</span></div>
-        <h4>Production MVC with Service Objects and Concerns</h4>
-        <p>Refactor to production patterns: extract business logic into service objects, use concerns for shared model behavior.</p>
-        <ul class="checklist">
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create an <code>ArticleCreationService</code> that handles creation, notification, and logging</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Extract a <code>Publishable</code> concern for shared publishing behavior</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Add pagination using the <code>pagy</code> gem</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Add search functionality using scopes and query parameters</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write controller and model tests using RSpec</span></li>
-        </ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Done when</div><p>Controllers are thin (under 10 lines per action). Business logic lives in services and models. All tests pass.</p></div>
-      </div>
-
-      <hr class="section-divider">
-
-      <h2 id="self-check">Self-Check</h2>
-      <p>Before moving to Chapter 03, honestly answer these questions.</p>
-
       <details>
-        <summary>Can you trace an HTTP request from URL to rendered response?</summary>
-        <div class="details-body"><p>Given <code>GET /articles/5</code>, can you explain: which route matches, which controller action runs, what model query executes, and which view renders? If you cannot trace this flow, review the request lifecycle diagram.</p></div>
+        <summary>Can you list the 7 RESTful routes that <code>resources :articles</code> generates?</summary>
+        <div class="details-body">
+          <p>
+            It generates: <code>GET /articles</code> (index), <code>GET /articles/new</code> (new),
+            <code>POST /articles</code> (create), <code>GET /articles/:id</code> (show),
+            <code>GET /articles/:id/edit</code> (edit), <code>PATCH /articles/:id</code> (update), and
+            <code>DELETE /articles/:id</code> (destroy). In API mode, you typically use only five of
+            these (skipping new and edit since those are form pages). You should know the HTTP method
+            and URL for each action without checking documentation.
+          </p>
+        </div>
       </details>
+
       <details>
-        <summary>Do you understand why controllers should be thin?</summary>
-        <div class="details-body"><p>A controller action should be 5-10 lines. If your create action has 30 lines of logic, that logic belongs in a model method or service object. Controllers coordinate &mdash; they do not compute.</p></div>
+        <summary>Can you name the file path for a model, controller, migration, and route file?</summary>
+        <div class="details-body">
+          <p>
+            Model: <code>app/models/article.rb</code>. Controller: <code>app/controllers/articles_controller.rb</code>.
+            Migration: <code>db/migrate/TIMESTAMP_create_articles.rb</code>. Routes: <code>config/routes.rb</code>.
+            If the controller is namespaced under <code>Api::V1</code>, the path becomes
+            <code>app/controllers/api/v1/articles_controller.rb</code>. These paths are conventions
+            that Rails uses for autoloading &mdash; they are not configurable.
+          </p>
+        </div>
       </details>
+
       <details>
-        <summary>Can you create a new resource from scratch without generators?</summary>
-        <div class="details-body"><p>Try creating a <code>Category</code> resource by hand: write the migration, model, controller, routes, and views without any generator. This proves you understand what generators do under the hood.</p></div>
+        <summary>Do you understand why strong parameters exist and how to use them?</summary>
+        <div class="details-body">
+          <p>
+            Strong parameters prevent mass-assignment vulnerabilities. Without them, a user could submit
+            <code>{ article: { title: "Hack", admin: true } }</code> and potentially set fields you did
+            not intend. The pattern <code>params.require(:article).permit(:title, :body)</code> ensures
+            only <code>title</code> and <code>body</code> can be set from user input. Every create and
+            update action must use strong parameters.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Can you explain Convention over Configuration with three concrete examples?</summary>
+        <div class="details-body">
+          <p>
+            <strong>1.</strong> A model named <code>Article</code> automatically maps to a table named <code>articles</code>
+            without any configuration. <strong>2.</strong> A file at <code>app/models/article.rb</code> is
+            automatically loaded by Rails without require statements. <strong>3.</strong> A <code>belongs_to :author</code>
+            association expects an <code>author_id</code> foreign key column without being told. In each case,
+            Rails uses naming conventions to derive the connection, eliminating boilerplate configuration.
+          </p>
+        </div>
       </details>
 
     </main>
 
+    <!-- Sidebar: Table of Contents -->
     <aside class="sidebar">
       <div class="sidebar-title">On this page</div>
       <ul class="toc-list">
         <li class="toc-item"><a href="#why-this-matters">Why This Matters</a></li>
         <li class="toc-item"><a href="#key-concepts">Key Concepts</a></li>
-        <li class="toc-item"><a href="#request-lifecycle" style="padding-left:28px;font-size:12px">Request Lifecycle</a></li>
-        <li class="toc-item"><a href="#routing" style="padding-left:28px;font-size:12px">Routing</a></li>
-        <li class="toc-item"><a href="#controllers" style="padding-left:28px;font-size:12px">Controllers</a></li>
-        <li class="toc-item"><a href="#models" style="padding-left:28px;font-size:12px">Models</a></li>
-        <li class="toc-item"><a href="#views-templates" style="padding-left:28px;font-size:12px">Views &amp; Templates</a></li>
-        <li class="toc-item"><a href="#generators" style="padding-left:28px;font-size:12px">Generators</a></li>
+        <li class="toc-item"><a href="#mvc-pattern" style="padding-left: 28px; font-size: 12px;">MVC Pattern</a></li>
+        <li class="toc-item"><a href="#routing" style="padding-left: 28px; font-size: 12px;">Routing</a></li>
+        <li class="toc-item"><a href="#controllers" style="padding-left: 28px; font-size: 12px;">Controllers &amp; Actions</a></li>
+        <li class="toc-item"><a href="#generators" style="padding-left: 28px; font-size: 12px;">Generators</a></li>
+        <li class="toc-item"><a href="#folder-structure" style="padding-left: 28px; font-size: 12px;">Folder Structure</a></li>
+        <li class="toc-item"><a href="#request-cycle" style="padding-left: 28px; font-size: 12px;">Request Cycle</a></li>
+        <li class="toc-item"><a href="#conventions" style="padding-left: 28px; font-size: 12px;">Conventions</a></li>
         <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a></li>
         <li class="toc-item"><a href="#further-reading">Further Reading</a></li>
         <li class="toc-item"><a href="#assignments">Assignments</a></li>
@@ -426,20 +1858,79 @@ Migration:    CreateArticles       (CamelCase, descriptive)
     </aside>
   </div>
 
-  <footer class="chapter-footer"><div class="chapter-footer-inner">
-    <nav class="footer-nav">
-      <a class="footer-nav-link" href="chapter-01.html"><span class="footer-nav-label">&larr; Previous Chapter</span><span class="footer-nav-title">01: Ruby Language Essentials</span></a>
-      <a class="footer-nav-link" href="chapter-03.html"><span class="footer-nav-label">Next Chapter &rarr;</span><span class="footer-nav-title">03: ActiveRecord Fundamentals</span></a>
-    </nav>
-    <div class="footer-brand">ILA (Iksha Learning Academy) &middot; Rails + React Engineering Certification &middot; Level 1</div>
-  </div></footer>
+  <!-- Footer Navigation -->
+  <footer class="chapter-footer">
+    <div class="chapter-footer-inner">
+      <nav class="footer-nav">
+        <a class="footer-nav-link" href="chapter-01.html">
+          <span class="footer-nav-label">&larr; Previous Chapter</span>
+          <span class="footer-nav-title">01: Ruby Language Essentials</span>
+        </a>
+        <a class="footer-nav-link" href="chapter-03.html">
+          <span class="footer-nav-label">Next Chapter &rarr;</span>
+          <span class="footer-nav-title">03: ActiveRecord Fundamentals</span>
+        </a>
+      </nav>
+      <div class="footer-brand">
+        ILA (Iksha Learning Academy) &middot; Rails + React Engineering Certification &middot; Level 1
+      </div>
+    </div>
+  </footer>
 
+  <!-- ════════════════════════════════════════
+       SCRIPTS
+       ════════════════════════════════════════ -->
   <script>
-    window.addEventListener('scroll',()=>{const s=window.scrollY;const d=document.documentElement.scrollHeight-window.innerHeight;const p=d>0?(s/d)*100:0;document.getElementById('progressBar').style.width=p+'%'});
-    const tocLinks=document.querySelectorAll('.toc-item a');const sections=[];tocLinks.forEach(link=>{const id=link.getAttribute('href').slice(1);const el=document.getElementById(id);if(el)sections.push({id,el,link})});
-    const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{const item=sections.find(s=>s.el===entry.target);if(item&&entry.isIntersecting){tocLinks.forEach(l=>l.classList.remove('active'));item.link.classList.add('active')}})},{rootMargin:'-80px 0px -60% 0px',threshold:0});
-    sections.forEach(s=>observer.observe(s.el));
-    function copyCode(btn){const pre=btn.closest('.code-block').querySelector('pre');navigator.clipboard.writeText(pre.textContent).then(()=>{btn.classList.add('copied');btn.textContent='Copied!';setTimeout(()=>{btn.classList.remove('copied');btn.textContent='Copy'},2000)})}
+    // ── Progress Bar ──
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      document.getElementById('progressBar').style.width = progress + '%';
+    });
+
+    // ── Active TOC ──
+    const tocLinks = document.querySelectorAll('.toc-item a');
+    const sections = [];
+
+    tocLinks.forEach(link => {
+      const id = link.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) sections.push({ id, el, link });
+    });
+
+    const observerOptions = {
+      rootMargin: '-80px 0px -60% 0px',
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const item = sections.find(s => s.el === entry.target);
+        if (item) {
+          if (entry.isIntersecting) {
+            tocLinks.forEach(l => l.classList.remove('active'));
+            item.link.classList.add('active');
+          }
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(s => observer.observe(s.el));
+
+    // ── Copy Code ──
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      const text = pre.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.classList.add('copied');
+        btn.textContent = 'Copied!';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.textContent = 'Copy';
+        }, 2000);
+      });
+    }
   </script>
 </body>
 </html>

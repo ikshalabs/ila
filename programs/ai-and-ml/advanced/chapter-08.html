@@ -7,95 +7,292 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-  <style>:root{--ink:#0f172a;--ink-light:#334155;--ink-muted:#64748b;--surface:#ffffff;--surface-alt:#f8fafc;--surface-warm:#fffbeb;--border:#e2e8f0;--border-light:#f1f5f9;--teal-50:#f0fdfa;--teal-100:#ccfbf1;--teal-200:#99f6e4;--teal-500:#14b8a6;--teal-600:#0d9488;--teal-700:#0f766e;--teal-800:#115e59;--teal-900:#134e4a;--blue-50:#eff6ff;--blue-100:#dbeafe;--blue-500:#3b82f6;--blue-600:#2563eb;--blue-700:#1d4ed8;--amber-50:#fffbeb;--amber-100:#fef3c7;--amber-500:#f59e0b;--amber-600:#d97706;--red-50:#fef2f2;--red-100:#fee2e2;--red-500:#ef4444;--red-600:#dc2626;--purple-50:#faf5ff;--purple-100:#f3e8ff;--purple-500:#a855f7;--purple-600:#9333ea;--font-sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;--font-serif:'Instrument Serif',Georgia,serif;--font-mono:'JetBrains Mono','Fira Code',monospace;--content-max:780px;--sidebar-width:280px;--ease:cubic-bezier(0.4,0,0.2,1)}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}body{font-family:var(--font-sans);font-size:16px;line-height:1.7;color:var(--ink);background:var(--surface)}.progress-bar{position:fixed;top:0;left:0;width:0%;height:3px;background:linear-gradient(90deg,var(--teal-500),var(--blue-500));z-index:1000;transition:width .15s var(--ease)}.top-nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem}.top-nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px}.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--teal-800)}.nav-brand-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--teal-600),var(--teal-800));border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px}.nav-brand-text{font-weight:700;font-size:15px;letter-spacing:-.02em}.nav-chapter-nav{display:flex;align-items:center;gap:8px}.nav-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;color:var(--ink-muted);border:1px solid var(--border);background:#fff;transition:all .2s var(--ease);cursor:pointer}.nav-btn:hover{color:var(--ink);border-color:var(--teal-500);background:var(--teal-50)}.nav-btn.disabled{opacity:.4;pointer-events:none}.nav-current{font-size:13px;font-weight:600;color:var(--ink-light);padding:0 4px}.hero{background:linear-gradient(170deg,var(--teal-50) 0%,var(--surface) 50%,var(--blue-50) 100%);border-bottom:1px solid var(--border);padding:4rem 2rem 3.5rem}.hero-inner{max-width:var(--content-max);margin:0 auto}.hero-chapter-label{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--teal-700);text-transform:uppercase;letter-spacing:.08em;margin-bottom:1rem}.hero-chapter-label span{background:var(--teal-100);padding:3px 10px;border-radius:100px}.hero h1{font-family:var(--font-serif);font-size:clamp(2.4rem,5vw,3.2rem);font-weight:400;line-height:1.15;color:var(--ink);margin-bottom:1rem}.hero-subtitle{font-size:1.15rem;color:var(--ink-light);line-height:1.65;max-width:640px}.hero-meta{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1.5rem}.hero-meta-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-muted)}.hero-meta-item svg{width:16px;height:16px;color:var(--teal-600)}.main-layout{max-width:1200px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:1fr var(--sidebar-width);gap:4rem;align-items:start}.content{padding:3rem 0 6rem;min-width:0}.sidebar{position:sticky;top:76px;padding:2rem 0;max-height:calc(100vh - 76px);overflow-y:auto}.sidebar-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-muted);margin-bottom:1rem;padding-left:14px}.toc-list{list-style:none}.toc-item a{display:block;padding:6px 14px;font-size:13px;color:var(--ink-muted);text-decoration:none;border-left:2px solid transparent;transition:all .2s var(--ease);line-height:1.5}.toc-item a:hover{color:var(--ink);background:var(--surface-alt)}.toc-item a.active{color:var(--teal-700);border-left-color:var(--teal-500);background:var(--teal-50);font-weight:500}.content h2{font-family:var(--font-serif);font-size:1.85rem;font-weight:400;color:var(--ink);margin:3rem 0 1rem;padding-top:1rem;scroll-margin-top:80px}.content h2:first-child{margin-top:0}.content h3{font-size:1.15rem;font-weight:600;color:var(--ink);margin:2rem 0 .75rem;scroll-margin-top:80px}.content p{margin-bottom:1.25rem;color:var(--ink-light)}.content strong{color:var(--ink);font-weight:600}.content a{color:var(--teal-700);text-decoration:underline;text-decoration-color:var(--teal-200);text-underline-offset:3px}.content ul,.content ol{margin-bottom:1.25rem;padding-left:1.5rem}.content li{margin-bottom:.5rem;color:var(--ink-light)}.content li::marker{color:var(--teal-500)}.section-divider{border:none;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:3rem 0}.callout{padding:1.25rem 1.5rem;border-radius:12px;margin-bottom:1.5rem;border:1px solid;position:relative}.callout-header{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;margin-bottom:.5rem}.callout-header svg{width:18px;height:18px;flex-shrink:0}.callout p:last-child{margin-bottom:0}.callout.concept{background:var(--blue-50);border-color:var(--blue-100)}.callout.concept .callout-header{color:var(--blue-700)}.callout.important{background:var(--amber-50);border-color:var(--amber-100)}.callout.important .callout-header{color:var(--amber-600)}.callout.danger{background:var(--red-50);border-color:var(--red-100)}.callout.danger .callout-header{color:var(--red-600)}.callout.tip{background:var(--purple-50);border-color:var(--purple-100)}.callout.tip .callout-header{color:var(--purple-600)}.callout.success{background:var(--teal-50);border-color:var(--teal-100)}.callout.success .callout-header{color:var(--teal-700)}.code-block{position:relative;margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}.code-header{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:var(--surface-alt);border-bottom:1px solid var(--border);font-size:12px;color:var(--ink-muted)}.code-lang{font-family:var(--font-mono);font-weight:600;text-transform:uppercase;letter-spacing:.05em}.code-copy{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:#fff;font-size:11px;font-family:var(--font-sans);color:var(--ink-muted);cursor:pointer;transition:all .2s var(--ease)}.code-copy:hover{border-color:var(--teal-500);color:var(--teal-700)}.code-copy.copied{background:var(--teal-50);border-color:var(--teal-500);color:var(--teal-700)}pre{margin:0;padding:1.25rem 1.5rem;overflow-x:auto;background:#1e293b;font-family:var(--font-mono);font-size:13.5px;line-height:1.7;color:#e2e8f0}code{font-family:var(--font-mono);font-size:.88em}p code,li code{padding:2px 7px;background:var(--surface-alt);border:1px solid var(--border);border-radius:5px;color:var(--teal-800);font-size:.85em}.hl-keyword{color:#c084fc}.hl-string{color:#86efac}.hl-comment{color:#64748b;font-style:italic}.hl-function{color:#7dd3fc}.hl-number{color:#fbbf24}.hl-flag{color:#f472b6}details{margin-bottom:1.25rem;border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .2s var(--ease)}details[open]{border-color:var(--teal-200)}details summary{padding:1rem 1.25rem;font-weight:600;font-size:15px;cursor:pointer;background:var(--surface-alt);list-style:none;display:flex;align-items:center;gap:10px;transition:background .2s var(--ease);user-select:none}details summary::-webkit-details-marker{display:none}details summary::before{content:'';width:20px;height:20px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain;flex-shrink:0;transition:transform .2s var(--ease)}details[open] summary::before{transform:rotate(90deg)}details summary:hover{background:var(--teal-50)}.details-body{padding:1.25rem 1.5rem}.details-body p:last-child{margin-bottom:0}.video-card{margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}.video-wrapper{position:relative;padding-bottom:56.25%;height:0;background:#0f172a}.video-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}.video-caption{padding:12px 16px;background:var(--surface-alt);font-size:13px;color:var(--ink-muted);display:flex;align-items:center;gap:6px}.video-caption svg{width:14px;height:14px;color:var(--red-500)}.resource-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1rem;margin-bottom:1.5rem}.resource-card{display:flex;gap:14px;padding:1rem 1.25rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all .2s var(--ease);background:#fff}.resource-card:hover{border-color:var(--teal-300);background:var(--teal-50);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.04)}.resource-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}.resource-icon.docs{background:var(--blue-50);color:var(--blue-600)}.resource-icon.video{background:var(--red-50);color:var(--red-500)}.resource-icon.github{background:var(--ink);color:#fff}.resource-icon.article{background:var(--amber-50);color:var(--amber-600)}.resource-icon.pdf{background:var(--purple-50);color:var(--purple-600)}.resource-info{min-width:0}.resource-title{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:2px;line-height:1.4}.resource-desc{font-size:12px;color:var(--ink-muted);line-height:1.5}.assignment{border:2px solid var(--teal-200);border-radius:14px;padding:1.5rem 1.75rem;margin-bottom:1.5rem;background:linear-gradient(135deg,var(--teal-50) 0%,#fff 100%)}.assignment-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}.assignment-label{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--teal-700)}.assignment-difficulty{display:inline-flex;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:600}.difficulty-l1{background:var(--teal-100);color:var(--teal-800)}.difficulty-l2{background:var(--amber-100);color:var(--amber-600)}.difficulty-l3{background:var(--red-100);color:var(--red-600)}.assignment h4{font-size:1.05rem;font-weight:700;margin-bottom:.75rem}.assignment p{font-size:14px}.checklist{list-style:none;padding:0}.checklist li{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border-light);font-size:14px}.checklist li:last-child{border-bottom:none}.check-box{width:20px;height:20px;border-radius:6px;border:2px solid var(--border);flex-shrink:0;margin-top:1px;cursor:pointer;transition:all .15s var(--ease);display:flex;align-items:center;justify-content:center}.check-box:hover{border-color:var(--teal-500)}.check-box.checked{background:var(--teal-500);border-color:var(--teal-500)}.check-box.checked::after{content:'';width:10px;height:10px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain}.diagram{margin:1.5rem 0;padding:2rem;background:var(--surface-alt);border:1px solid var(--border);border-radius:14px;overflow-x:auto}.diagram pre{background:transparent;color:var(--ink);padding:0;font-size:13px;line-height:1.6}.chapter-footer{border-top:1px solid var(--border);padding:3rem 2rem;background:var(--surface-alt)}.chapter-footer-inner{max-width:var(--content-max);margin:0 auto}.footer-nav{display:flex;justify-content:space-between;align-items:center;gap:1rem}.footer-nav-link{display:flex;flex-direction:column;gap:4px;padding:1rem 1.5rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all .2s var(--ease);max-width:320px;background:#fff}.footer-nav-link:hover{border-color:var(--teal-300);box-shadow:0 4px 12px rgba(0,0,0,.04)}.footer-nav-label{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--teal-600)}.footer-nav-title{font-size:15px;font-weight:600;color:var(--ink)}.footer-brand{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border);font-size:13px;color:var(--ink-muted)}@media(max-width:960px){.main-layout{grid-template-columns:1fr}.sidebar{display:none}.resource-grid{grid-template-columns:1fr}}@media(max-width:640px){.hero{padding:2.5rem 1.25rem 2rem}.main-layout{padding:0 1.25rem}.content{padding:2rem 0 4rem}pre{padding:1rem;font-size:12.5px}.footer-nav{flex-direction:column}.footer-nav-link{max-width:100%;width:100%}}@media print{.top-nav,.sidebar,.progress-bar{display:none}.main-layout{display:block}.content{padding:0}.hero{background:#fff;border:none}pre{background:#f1f5f9;color:var(--ink);border:1px solid var(--border)}}
+  <style>
+    /* ═══════════════════════════════════════════════
+       ILA DESIGN SYSTEM — v1.0
+       Iksha Learning Academy
+       ═══════════════════════════════════════════════ */
+
+    :root {
+      --ink:        #0f172a;
+      --ink-light:  #334155;
+      --ink-muted:  #64748b;
+      --surface:    #ffffff;
+      --surface-alt:#f8fafc;
+      --surface-warm:#fffbeb;
+      --border:     #e2e8f0;
+      --border-light:#f1f5f9;
+      --teal-50:  #f0fdfa; --teal-100: #ccfbf1; --teal-200: #99f6e4; --teal-500: #14b8a6; --teal-600: #0d9488; --teal-700: #0f766e; --teal-800: #115e59; --teal-900: #134e4a;
+      --blue-50:  #eff6ff; --blue-100: #dbeafe; --blue-500: #3b82f6; --blue-600: #2563eb; --blue-700: #1d4ed8;
+      --amber-50:  #fffbeb; --amber-100: #fef3c7; --amber-500: #f59e0b; --amber-600: #d97706;
+      --red-50:   #fef2f2; --red-100:  #fee2e2; --red-500:  #ef4444; --red-600:  #dc2626;
+      --purple-50:  #faf5ff; --purple-100: #f3e8ff; --purple-500: #a855f7; --purple-600: #9333ea;
+      --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-serif: 'Instrument Serif', Georgia, serif;
+      --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
+      --content-max: 780px;
+      --sidebar-width: 280px;
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    body { font-family: var(--font-sans); font-size: 16px; line-height: 1.7; color: var(--ink); background: var(--surface); }
+
+    .progress-bar { position: fixed; top: 0; left: 0; width: 0%; height: 3px; background: linear-gradient(90deg, var(--teal-500), var(--blue-500)); z-index: 1000; transition: width 0.15s var(--ease); }
+
+    .top-nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 2rem; }
+    .top-nav-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 56px; }
+    .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--teal-800); }
+    .nav-brand-icon { width: 32px; height: 32px; background: linear-gradient(135deg, var(--teal-600), var(--teal-800)); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 14px; }
+    .nav-brand-text { font-weight: 700; font-size: 15px; letter-spacing: -0.02em; }
+    .nav-chapter-nav { display: flex; align-items: center; gap: 8px; }
+    .nav-btn { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 8px; font-size: 13px; font-weight: 500; text-decoration: none; color: var(--ink-muted); border: 1px solid var(--border); background: white; transition: all 0.2s var(--ease); cursor: pointer; }
+    .nav-btn:hover { color: var(--ink); border-color: var(--teal-500); background: var(--teal-50); }
+    .nav-btn.disabled { opacity: 0.4; pointer-events: none; }
+    .nav-current { font-size: 13px; font-weight: 600; color: var(--ink-light); padding: 0 4px; }
+
+    .hero { background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%); border-bottom: 1px solid var(--border); padding: 4rem 2rem 3.5rem; }
+    .hero-inner { max-width: var(--content-max); margin: 0 auto; }
+    .hero-chapter-label { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--teal-700); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1rem; }
+    .hero-chapter-label span { background: var(--teal-100); padding: 3px 10px; border-radius: 100px; }
+    .hero h1 { font-family: var(--font-serif); font-size: clamp(2.4rem, 5vw, 3.2rem); font-weight: 400; line-height: 1.15; color: var(--ink); margin-bottom: 1rem; }
+    .hero-subtitle { font-size: 1.15rem; color: var(--ink-light); line-height: 1.65; max-width: 640px; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.5rem; }
+    .hero-meta-item { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--ink-muted); }
+    .hero-meta-item svg { width: 16px; height: 16px; color: var(--teal-600); }
+
+    .main-layout { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: grid; grid-template-columns: 1fr var(--sidebar-width); gap: 4rem; align-items: start; }
+    .content { padding: 3rem 0 6rem; min-width: 0; }
+
+    .sidebar { position: sticky; top: 76px; padding: 2rem 0; max-height: calc(100vh - 76px); overflow-y: auto; }
+    .sidebar-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-muted); margin-bottom: 1rem; padding-left: 14px; }
+    .toc-list { list-style: none; }
+    .toc-item a { display: block; padding: 6px 14px; font-size: 13px; color: var(--ink-muted); text-decoration: none; border-left: 2px solid transparent; transition: all 0.2s var(--ease); line-height: 1.5; }
+    .toc-item a:hover { color: var(--ink); background: var(--surface-alt); }
+    .toc-item a.active { color: var(--teal-700); border-left-color: var(--teal-500); background: var(--teal-50); font-weight: 500; }
+
+    .content h2 { font-family: var(--font-serif); font-size: 1.85rem; font-weight: 400; color: var(--ink); margin: 3rem 0 1rem; padding-top: 1rem; scroll-margin-top: 80px; }
+    .content h2:first-child { margin-top: 0; }
+    .content h3 { font-size: 1.15rem; font-weight: 600; color: var(--ink); margin: 2rem 0 0.75rem; scroll-margin-top: 80px; }
+    .content p { margin-bottom: 1.25rem; color: var(--ink-light); }
+    .content strong { color: var(--ink); font-weight: 600; }
+    .content a { color: var(--teal-700); text-decoration: underline; text-decoration-color: var(--teal-200); text-underline-offset: 3px; transition: text-decoration-color 0.2s; }
+    .content a:hover { text-decoration-color: var(--teal-600); }
+    .content ul, .content ol { margin-bottom: 1.25rem; padding-left: 1.5rem; }
+    .content li { margin-bottom: 0.5rem; color: var(--ink-light); }
+    .content li::marker { color: var(--teal-500); }
+
+    .section-divider { border: none; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 3rem 0; }
+
+    .callout { padding: 1.25rem 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; border: 1px solid; position: relative; }
+    .callout-header { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; margin-bottom: 0.5rem; }
+    .callout-header svg { width: 18px; height: 18px; flex-shrink: 0; }
+    .callout p:last-child { margin-bottom: 0; }
+    .callout.concept { background: var(--blue-50); border-color: var(--blue-100); }
+    .callout.concept .callout-header { color: var(--blue-700); }
+    .callout.important { background: var(--amber-50); border-color: var(--amber-100); }
+    .callout.important .callout-header { color: var(--amber-600); }
+    .callout.danger { background: var(--red-50); border-color: var(--red-100); }
+    .callout.danger .callout-header { color: var(--red-600); }
+    .callout.tip { background: var(--purple-50); border-color: var(--purple-100); }
+    .callout.tip .callout-header { color: var(--purple-600); }
+    .callout.success { background: var(--teal-50); border-color: var(--teal-100); }
+    .callout.success .callout-header { color: var(--teal-700); }
+
+    .code-block { position: relative; margin-bottom: 1.5rem; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+    .code-header { display: flex; align-items: center; justify-content: space-between; padding: 8px 16px; background: var(--surface-alt); border-bottom: 1px solid var(--border); font-size: 12px; color: var(--ink-muted); }
+    .code-lang { font-family: var(--font-mono); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+    .code-copy { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border); background: white; font-size: 11px; font-family: var(--font-sans); color: var(--ink-muted); cursor: pointer; transition: all 0.2s var(--ease); }
+    .code-copy:hover { border-color: var(--teal-500); color: var(--teal-700); }
+    .code-copy.copied { background: var(--teal-50); border-color: var(--teal-500); color: var(--teal-700); }
+    pre { margin: 0; padding: 1.25rem 1.5rem; overflow-x: auto; background: #1e293b; font-family: var(--font-mono); font-size: 13.5px; line-height: 1.7; color: #e2e8f0; }
+    code { font-family: var(--font-mono); font-size: 0.88em; }
+    p code, li code { padding: 2px 7px; background: var(--surface-alt); border: 1px solid var(--border); border-radius: 5px; color: var(--teal-800); font-size: 0.85em; }
+    .hl-keyword  { color: #c084fc; } .hl-string   { color: #86efac; } .hl-comment  { color: #64748b; font-style: italic; } .hl-function { color: #7dd3fc; } .hl-number   { color: #fbbf24; } .hl-flag     { color: #f472b6; }
+
+    details { margin-bottom: 1.25rem; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; transition: border-color 0.2s var(--ease); }
+    details[open] { border-color: var(--teal-200); }
+    details summary { padding: 1rem 1.25rem; font-weight: 600; font-size: 15px; cursor: pointer; background: var(--surface-alt); list-style: none; display: flex; align-items: center; gap: 10px; transition: background 0.2s var(--ease); user-select: none; }
+    details summary::-webkit-details-marker { display: none; }
+    details summary::before { content: ''; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E"); background-size: contain; flex-shrink: 0; transition: transform 0.2s var(--ease); }
+    details[open] summary::before { transform: rotate(90deg); }
+    details summary:hover { background: var(--teal-50); }
+    .details-body { padding: 1.25rem 1.5rem; }
+    .details-body p:last-child { margin-bottom: 0; }
+
+    .video-card { margin-bottom: 1.5rem; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+    .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; background: #0f172a; }
+    .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+    .video-caption { padding: 12px 16px; background: var(--surface-alt); font-size: 13px; color: var(--ink-muted); display: flex; align-items: center; gap: 6px; }
+    .video-caption svg { width: 14px; height: 14px; color: var(--red-500); }
+
+    .resource-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+    .resource-card { display: flex; gap: 14px; padding: 1rem 1.25rem; border: 1px solid var(--border); border-radius: 12px; text-decoration: none; transition: all 0.2s var(--ease); background: white; }
+    .resource-card:hover { border-color: var(--teal-300); background: var(--teal-50); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+    .resource-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 18px; }
+    .resource-icon.docs { background: var(--blue-50); color: var(--blue-600); }
+    .resource-icon.video { background: var(--red-50); color: var(--red-500); }
+    .resource-icon.github { background: var(--ink); color: white; }
+    .resource-icon.article { background: var(--amber-50); color: var(--amber-600); }
+    .resource-icon.pdf { background: var(--purple-50); color: var(--purple-600); }
+    .resource-info { min-width: 0; }
+    .resource-title { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 2px; line-height: 1.4; }
+    .resource-desc { font-size: 12px; color: var(--ink-muted); line-height: 1.5; }
+
+    .assignment { border: 2px solid var(--teal-200); border-radius: 14px; padding: 1.5rem 1.75rem; margin-bottom: 1.5rem; background: linear-gradient(135deg, var(--teal-50) 0%, white 100%); }
+    .assignment-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+    .assignment-label { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--teal-700); }
+    .assignment-difficulty { display: inline-flex; padding: 4px 10px; border-radius: 100px; font-size: 11px; font-weight: 600; }
+    .difficulty-l1 { background: var(--teal-100); color: var(--teal-800); }
+    .difficulty-l2 { background: var(--amber-100); color: var(--amber-600); }
+    .difficulty-l3 { background: var(--red-100); color: var(--red-600); }
+    .assignment h4 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.75rem; }
+    .assignment p { font-size: 14px; }
+    .checklist { list-style: none; padding: 0; }
+    .checklist li { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border-light); font-size: 14px; }
+    .checklist li:last-child { border-bottom: none; }
+    .check-box { width: 20px; height: 20px; border-radius: 6px; border: 2px solid var(--border); flex-shrink: 0; margin-top: 1px; cursor: pointer; transition: all 0.15s var(--ease); display: flex; align-items: center; justify-content: center; }
+    .check-box:hover { border-color: var(--teal-500); }
+    .check-box.checked { background: var(--teal-500); border-color: var(--teal-500); }
+    .check-box.checked::after { content: ''; width: 10px; height: 10px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E"); background-size: contain; }
+
+    .diagram { margin: 1.5rem 0; padding: 2rem; background: var(--surface-alt); border: 1px solid var(--border); border-radius: 14px; overflow-x: auto; }
+    .diagram pre { background: transparent; color: var(--ink); padding: 0; font-size: 13px; line-height: 1.6; }
+    .diagram-caption { margin-top: 1rem; font-size: 12px; color: var(--ink-muted); text-align: center; font-style: italic; }
+
+    .chapter-footer { border-top: 1px solid var(--border); padding: 3rem 2rem; background: var(--surface-alt); }
+    .chapter-footer-inner { max-width: var(--content-max); margin: 0 auto; }
+    .footer-nav { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+    .footer-nav-link { display: flex; flex-direction: column; gap: 4px; padding: 1rem 1.5rem; border: 1px solid var(--border); border-radius: 12px; text-decoration: none; transition: all 0.2s var(--ease); max-width: 320px; background: white; }
+    .footer-nav-link:hover { border-color: var(--teal-300); box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+    .footer-nav-label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--teal-600); }
+    .footer-nav-title { font-size: 15px; font-weight: 600; color: var(--ink); }
+    .footer-brand { text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); font-size: 13px; color: var(--ink-muted); }
+
+    @media (max-width: 960px) { .main-layout { grid-template-columns: 1fr; } .sidebar { display: none; } .resource-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 640px) { .hero { padding: 2.5rem 1.25rem 2rem; } .main-layout { padding: 0 1.25rem; } .content { padding: 2rem 0 4rem; } pre { padding: 1rem; font-size: 12.5px; } .footer-nav { flex-direction: column; } .footer-nav-link { max-width: 100%; width: 100%; } }
+    @media print { .top-nav, .sidebar, .progress-bar { display: none; } .main-layout { display: block; } .content { padding: 0; } .hero { background: white; border: none; } pre { background: #f1f5f9; color: var(--ink); border: 1px solid var(--border); } }
   </style>
 </head>
 <body>
+  <!-- Progress Bar -->
   <div class="progress-bar" id="progressBar"></div>
+
+  <!-- Top Navigation -->
   <nav class="top-nav">
     <div class="top-nav-inner">
-      <a class="nav-brand" href="index.html"><div class="nav-brand-icon">ILA</div><span class="nav-brand-text">Iksha Learning Academy</span></a>
-      <div class="nav-chapter-nav"><a class="nav-btn" href="chapter-07.html">&larr; Previous</a><span class="nav-current">08 / 10</span><a class="nav-btn" href="chapter-09.html">Next &rarr;</a></div>
+      <a class="nav-brand" href="index.html">
+        <div class="nav-brand-icon">ILA</div>
+        <span class="nav-brand-text">Iksha Learning Academy</span>
+      </a>
+      <div class="nav-chapter-nav">
+        <a class="nav-btn" href="chapter-07.html">&larr; Previous</a>
+        <span class="nav-current">08 / 10</span>
+        <a class="nav-btn" href="chapter-09.html">Next &rarr;</a>
+      </div>
     </div>
   </nav>
+
+  <!-- Hero -->
   <header class="hero">
     <div class="hero-inner">
-      <div class="hero-chapter-label"><span>Chapter 08</span> &middot; Phase 4: Production Operations</div>
+      <div class="hero-chapter-label">
+        <span>Chapter 08</span> &middot; Phase 3: Production Operations
+      </div>
       <h1>Model Monitoring and Drift</h1>
-      <p class="hero-subtitle">Keep models healthy in production: detect data drift, monitor model performance, implement A/B testing, design automated retraining triggers, and build alerting systems.</p>
+      <p class="hero-subtitle">
+        Models degrade silently. Learn to detect data drift, concept drift, and prediction quality decay
+        using statistical tests and automated pipelines. Build systems that catch model failures before
+        your users do &mdash; and trigger retraining when the evidence demands it.
+      </p>
       <div class="hero-meta">
-        <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Estimated: 3&ndash;4 days</div>
-        <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>3 Advancement Levels</div>
-        <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>3 Assignments</div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Estimated: 3&ndash;4 days
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          6 Core Concepts
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          3 Assignments
+        </div>
       </div>
     </div>
   </header>
+
+  <!-- Main Content + Sidebar -->
   <div class="main-layout">
     <main class="content">
+
+      <!-- ════════════════════════════════════════
+           SECTION 1: WHY THIS MATTERS
+           ════════════════════════════════════════ -->
       <h2 id="why-this-matters">Why This Matters</h2>
 
-      <p>Models degrade in production as data distributions shift. Detecting drift, monitoring performance, A/B testing, and automated retraining keep your ML systems healthy and accurate over time.</p>
+      <p>
+        Every ML model has an expiration date. The world changes, user behavior shifts, new products launch,
+        and the data your model learned from becomes a fading snapshot of a reality that no longer exists. A
+        fraud detection model trained on 2023 transaction patterns will miss 2025 fraud tactics. A recommendation
+        engine trained on pre-pandemic shopping behavior will misfire in a post-pandemic world. This is not a
+        hypothetical risk &mdash; it is a certainty.
+      </p>
 
-      <p>The concepts in this chapter will be referenced throughout the rest of the course. Take the time to build deep understanding, not just surface-level familiarity.</p>
+      <p>
+        The challenge is that model degradation is <strong>invisible to traditional monitoring</strong>. Your
+        service stays up, latency stays low, error rates stay flat &mdash; but predictions quietly become less
+        accurate, less calibrated, and less useful. The only way to catch this is to monitor the statistical
+        properties of your model's inputs, outputs, and performance metrics over time. This chapter teaches you
+        to build that monitoring layer.
+      </p>
+
+      <p>
+        Chapter 07 gave you the observability infrastructure: Prometheus metrics, structured logs, and
+        distributed traces. This chapter builds on that foundation with drift-specific statistical tests,
+        automated detection pipelines, and retraining triggers. Together, they form a closed-loop system
+        that detects degradation and responds automatically.
+      </p>
 
       <div class="callout concept">
-        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg> Key Insight</div>
-        <p>Data drift does not mean your model is wrong &mdash; it means the world changed. Detecting drift early and retraining proactively is cheaper than debugging a production failure.</p>
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Key Insight
+        </div>
+        <p>
+          There are two fundamentally different kinds of drift. <strong>Data drift</strong> (covariate shift)
+          means the inputs change but the mapping from inputs to outputs stays the same &mdash; you can detect
+          this without labels. <strong>Concept drift</strong> means the mapping itself changes &mdash; you can
+          only detect this with ground truth labels. A complete monitoring system needs both detection mechanisms
+          because they catch different failure modes.
+        </p>
       </div>
 
       <hr class="section-divider">
 
+      <!-- ════════════════════════════════════════
+           SECTION 2: KEY CONCEPTS
+           ════════════════════════════════════════ -->
       <h2 id="key-concepts">Key Concepts</h2>
 
+      <h3 id="data-drift-psi">1. Data Drift Detection with PSI and KS Tests</h3>
 
-      <h3 id="data-drift">1. Data Drift Detection</h3>
+      <p>
+        Data drift occurs when the statistical properties of production input data diverge from the training
+        data distribution. The <strong>Population Stability Index (PSI)</strong> quantifies this divergence by
+        comparing bin proportions between a reference distribution and a production distribution. PSI below 0.1
+        indicates no significant drift, 0.1&ndash;0.2 suggests moderate drift worth investigating, and above
+        0.2 indicates significant drift that likely requires model retraining.
+      </p>
 
-      <p>Data Drift Detection is a critical concept in this domain. Understanding it deeply will differentiate you from practitioners who only know the API calls. Let us explore the theory, the implementation, and the practical considerations.</p>
-
-      <p>In practice, data drift detection requires careful attention to both theoretical foundations and engineering details. The code below demonstrates the core patterns you will use in production systems.</p>
-
-      <div class="code-block">
-        <div class="code-header">
-          <span class="code-lang">python</span>
-          <button class="code-copy" onclick="copyCode(this)">Copy</button>
-        </div>
-<pre>
-<span class="hl-keyword">import</span> numpy <span class="hl-keyword">as</span> np
-<span class="hl-keyword">import</span> torch
-<span class="hl-keyword">import</span> torch.nn <span class="hl-keyword">as</span> nn
-
-<span class="hl-comment"># Data Drift Detection — core implementation</span>
-<span class="hl-keyword">class</span> <span class="hl-function">DataDrift</span>:
-    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, config=<span class="hl-keyword">None</span>):
-        self.config = config or {}
-        self.model = <span class="hl-keyword">None</span>
-        self.history = []
-
-    <span class="hl-keyword">def</span> <span class="hl-function">fit</span>(self, X, y):
-        <span class="hl-string">"""Train the model on input data."""</span>
-        <span class="hl-function">print</span>(<span class="hl-string">f"Training on {X.shape[0]} samples..."</span>)
-        <span class="hl-comment"># Implementation specific to Data Drift Detection</span>
-        <span class="hl-keyword">return</span> self
-
-    <span class="hl-keyword">def</span> <span class="hl-function">predict</span>(self, X):
-        <span class="hl-string">"""Generate predictions."""</span>
-        <span class="hl-keyword">return</span> self.model(X)
-
-    <span class="hl-keyword">def</span> <span class="hl-function">evaluate</span>(self, X, y):
-        <span class="hl-string">"""Evaluate model performance."""</span>
-        preds = self.predict(X)
-        accuracy = (preds == y).mean()
-        <span class="hl-function">print</span>(<span class="hl-string">f"Accuracy: {accuracy:.4f}"</span>)
-        <span class="hl-keyword">return</span> accuracy
-</pre>
-      </div>
-
-
-      <h3 id="performance-monitoring">2. Model Performance Monitoring</h3>
-
-      <p>Model Performance Monitoring is a critical concept in this domain. Understanding it deeply will differentiate you from practitioners who only know the API calls. Let us explore the theory, the implementation, and the practical considerations.</p>
-
-      <p>In practice, model performance monitoring requires careful attention to both theoretical foundations and engineering details. The code below demonstrates the core patterns you will use in production systems.</p>
+      <p>
+        The <strong>Kolmogorov-Smirnov (KS) test</strong> is a non-parametric test that measures the maximum
+        distance between two cumulative distribution functions. Unlike PSI, it does not require binning, making
+        it more sensitive to localized distribution changes. The KS test produces a p-value: if it falls below
+        your significance threshold (typically 0.05), you reject the null hypothesis that the two distributions
+        are identical.
+      </p>
 
       <div class="code-block">
         <div class="code-header">
@@ -104,41 +301,132 @@
         </div>
 <pre>
 <span class="hl-keyword">import</span> numpy <span class="hl-keyword">as</span> np
-<span class="hl-keyword">import</span> torch
-<span class="hl-keyword">import</span> torch.nn <span class="hl-keyword">as</span> nn
+<span class="hl-keyword">from</span> scipy <span class="hl-keyword">import</span> stats
+<span class="hl-keyword">from</span> typing <span class="hl-keyword">import</span> Dict, Tuple, List
+<span class="hl-keyword">from</span> dataclasses <span class="hl-keyword">import</span> dataclass
 
-<span class="hl-comment"># Model Performance Monitoring — core implementation</span>
-<span class="hl-keyword">class</span> <span class="hl-function">PerformanceMonitoring</span>:
-    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, config=<span class="hl-keyword">None</span>):
-        self.config = config or {}
-        self.model = <span class="hl-keyword">None</span>
-        self.history = []
+<span class="hl-flag">@dataclass</span>
+<span class="hl-keyword">class</span> <span class="hl-function">DriftResult</span>:
+    <span class="hl-string">"""Result of a drift detection test for a single feature."""</span>
+    feature_name: <span class="hl-function">str</span>
+    psi_score: <span class="hl-function">float</span>
+    ks_statistic: <span class="hl-function">float</span>
+    ks_p_value: <span class="hl-function">float</span>
+    is_drifted: <span class="hl-function">bool</span>
+    drift_severity: <span class="hl-function">str</span>  <span class="hl-comment"># "none", "moderate", "severe"</span>
+    ref_mean: <span class="hl-function">float</span>
+    prod_mean: <span class="hl-function">float</span>
+    ref_std: <span class="hl-function">float</span>
+    prod_std: <span class="hl-function">float</span>
 
-    <span class="hl-keyword">def</span> <span class="hl-function">fit</span>(self, X, y):
-        <span class="hl-string">"""Train the model on input data."""</span>
-        <span class="hl-function">print</span>(<span class="hl-string">f"Training on {X.shape[0]} samples..."</span>)
-        <span class="hl-comment"># Implementation specific to Model Performance Monitoring</span>
-        <span class="hl-keyword">return</span> self
 
-    <span class="hl-keyword">def</span> <span class="hl-function">predict</span>(self, X):
-        <span class="hl-string">"""Generate predictions."""</span>
-        <span class="hl-keyword">return</span> self.model(X)
+<span class="hl-keyword">def</span> <span class="hl-function">calculate_psi</span>(
+    reference: np.ndarray,
+    production: np.ndarray,
+    n_bins: <span class="hl-function">int</span> = <span class="hl-number">10</span>,
+    epsilon: <span class="hl-function">float</span> = <span class="hl-number">1e-6</span>,
+) -> <span class="hl-function">float</span>:
+    <span class="hl-string">"""Calculate Population Stability Index.
 
-    <span class="hl-keyword">def</span> <span class="hl-function">evaluate</span>(self, X, y):
-        <span class="hl-string">"""Evaluate model performance."""</span>
-        preds = self.predict(X)
-        accuracy = (preds == y).mean()
-        <span class="hl-function">print</span>(<span class="hl-string">f"Accuracy: {accuracy:.4f}"</span>)
-        <span class="hl-keyword">return</span> accuracy
+    PSI = SUM( (P_i - Q_i) * ln(P_i / Q_i) )
+
+    Where P_i = proportion in bin i for production data
+          Q_i = proportion in bin i for reference data
+    """</span>
+    <span class="hl-comment"># Create bins from reference distribution</span>
+    breakpoints = np.percentile(
+        reference, np.linspace(<span class="hl-number">0</span>, <span class="hl-number">100</span>, n_bins + <span class="hl-number">1</span>)
+    )
+    breakpoints[<span class="hl-number">0</span>] = -np.inf
+    breakpoints[-<span class="hl-number">1</span>] = np.inf
+
+    <span class="hl-comment"># Calculate proportions in each bin</span>
+    ref_counts = np.histogram(reference, bins=breakpoints)[<span class="hl-number">0</span>]
+    prod_counts = np.histogram(production, bins=breakpoints)[<span class="hl-number">0</span>]
+
+    ref_pct = ref_counts / <span class="hl-function">len</span>(reference) + epsilon
+    prod_pct = prod_counts / <span class="hl-function">len</span>(production) + epsilon
+
+    <span class="hl-comment"># PSI formula</span>
+    psi = np.<span class="hl-function">sum</span>((prod_pct - ref_pct) * np.log(prod_pct / ref_pct))
+    <span class="hl-keyword">return</span> <span class="hl-function">float</span>(psi)
+
+
+<span class="hl-keyword">def</span> <span class="hl-function">detect_drift</span>(
+    reference: np.ndarray,
+    production: np.ndarray,
+    feature_name: <span class="hl-function">str</span>,
+    psi_threshold: <span class="hl-function">float</span> = <span class="hl-number">0.2</span>,
+    ks_alpha: <span class="hl-function">float</span> = <span class="hl-number">0.05</span>,
+) -> DriftResult:
+    <span class="hl-string">"""Run both PSI and KS tests on a single feature."""</span>
+    psi = calculate_psi(reference, production)
+    ks_stat, ks_p = stats.ks_2samp(reference, production)
+
+    <span class="hl-comment"># Determine severity</span>
+    <span class="hl-keyword">if</span> psi &lt; <span class="hl-number">0.1</span> <span class="hl-keyword">and</span> ks_p >= ks_alpha:
+        severity = <span class="hl-string">"none"</span>
+    <span class="hl-keyword">elif</span> psi &lt; psi_threshold:
+        severity = <span class="hl-string">"moderate"</span>
+    <span class="hl-keyword">else</span>:
+        severity = <span class="hl-string">"severe"</span>
+
+    <span class="hl-keyword">return</span> DriftResult(
+        feature_name=feature_name,
+        psi_score=<span class="hl-function">round</span>(psi, <span class="hl-number">4</span>),
+        ks_statistic=<span class="hl-function">round</span>(ks_stat, <span class="hl-number">4</span>),
+        ks_p_value=<span class="hl-function">round</span>(ks_p, <span class="hl-number">6</span>),
+        is_drifted=(psi >= psi_threshold <span class="hl-keyword">or</span> ks_p &lt; ks_alpha),
+        drift_severity=severity,
+        ref_mean=<span class="hl-function">round</span>(np.mean(reference), <span class="hl-number">4</span>),
+        prod_mean=<span class="hl-function">round</span>(np.mean(production), <span class="hl-number">4</span>),
+        ref_std=<span class="hl-function">round</span>(np.std(reference), <span class="hl-number">4</span>),
+        prod_std=<span class="hl-function">round</span>(np.std(production), <span class="hl-number">4</span>),
+    )
+
+
+<span class="hl-comment"># Example: detect drift across all features</span>
+reference_data = {
+    <span class="hl-string">"age"</span>: np.random.normal(<span class="hl-number">35</span>, <span class="hl-number">10</span>, <span class="hl-number">10000</span>),
+    <span class="hl-string">"income"</span>: np.random.lognormal(<span class="hl-number">10.5</span>, <span class="hl-number">0.8</span>, <span class="hl-number">10000</span>),
+    <span class="hl-string">"session_count"</span>: np.random.poisson(<span class="hl-number">5</span>, <span class="hl-number">10000</span>).astype(<span class="hl-function">float</span>),
+}
+
+<span class="hl-comment"># Simulate drift: income distribution shifts</span>
+production_data = {
+    <span class="hl-string">"age"</span>: np.random.normal(<span class="hl-number">35</span>, <span class="hl-number">10</span>, <span class="hl-number">5000</span>),
+    <span class="hl-string">"income"</span>: np.random.lognormal(<span class="hl-number">11.0</span>, <span class="hl-number">0.9</span>, <span class="hl-number">5000</span>),  <span class="hl-comment"># DRIFTED</span>
+    <span class="hl-string">"session_count"</span>: np.random.poisson(<span class="hl-number">5</span>, <span class="hl-number">5000</span>).astype(<span class="hl-function">float</span>),
+}
+
+<span class="hl-keyword">for</span> feature <span class="hl-keyword">in</span> reference_data:
+    result = detect_drift(
+        reference_data[feature],
+        production_data[feature],
+        feature
+    )
+    <span class="hl-keyword">print</span>(<span class="hl-string">f"</span>{result.feature_name}: PSI=<span class="hl-string">{result.psi_score}, "</span>
+          <span class="hl-string">f"KS p={result.ks_p_value}, drift={result.drift_severity}"</span>)
 </pre>
       </div>
 
+      <h3 id="concept-drift">2. Concept Drift and Label Delay</h3>
 
-      <h3 id="ab-testing">3. A/B Testing for Models</h3>
+      <p>
+        Concept drift is harder to detect because it requires <strong>ground truth labels</strong>. In many
+        production systems, labels arrive with significant delay: fraud labels come when transactions are
+        reviewed (days), ad conversion labels come when users complete purchases (hours to weeks), and
+        medical diagnosis labels come after lab results (days to months). This <em>label delay</em> creates
+        a blind spot where your model might be failing but you cannot confirm it yet.
+      </p>
 
-      <p>A/B Testing for Models is a critical concept in this domain. Understanding it deeply will differentiate you from practitioners who only know the API calls. Let us explore the theory, the implementation, and the practical considerations.</p>
-
-      <p>In practice, a/b testing for models requires careful attention to both theoretical foundations and engineering details. The code below demonstrates the core patterns you will use in production systems.</p>
+      <p>
+        The ADWIN (Adaptive Windowing) algorithm is a streaming approach to concept drift detection. It
+        maintains a variable-length window of recent observations and detects when the mean of a subwindow
+        changes significantly compared to the rest. When drift is detected, old data is discarded, adapting
+        the window to the new distribution. For ML systems, feed ADWIN a stream of binary correctness indicators
+        (was the prediction correct?) and it will alert when accuracy shifts.
+      </p>
 
       <div class="code-block">
         <div class="code-header">
@@ -147,41 +435,207 @@
         </div>
 <pre>
 <span class="hl-keyword">import</span> numpy <span class="hl-keyword">as</span> np
-<span class="hl-keyword">import</span> torch
-<span class="hl-keyword">import</span> torch.nn <span class="hl-keyword">as</span> nn
+<span class="hl-keyword">from</span> collections <span class="hl-keyword">import</span> deque
+<span class="hl-keyword">from</span> typing <span class="hl-keyword">import</span> Optional
 
-<span class="hl-comment"># A/B Testing for Models — core implementation</span>
-<span class="hl-keyword">class</span> <span class="hl-function">AbTesting</span>:
-    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, config=<span class="hl-keyword">None</span>):
-        self.config = config or {}
-        self.model = <span class="hl-keyword">None</span>
-        self.history = []
+<span class="hl-keyword">class</span> <span class="hl-function">ADWINDriftDetector</span>:
+    <span class="hl-string">"""Adaptive Windowing method for concept drift detection.
 
-    <span class="hl-keyword">def</span> <span class="hl-function">fit</span>(self, X, y):
-        <span class="hl-string">"""Train the model on input data."""</span>
-        <span class="hl-function">print</span>(<span class="hl-string">f"Training on {X.shape[0]} samples..."</span>)
-        <span class="hl-comment"># Implementation specific to A/B Testing for Models</span>
-        <span class="hl-keyword">return</span> self
+    Maintains a variable-length window. When drift is detected,
+    the old portion is dropped. Feed it a stream of 0/1 values
+    representing prediction correctness.
+    """</span>
 
-    <span class="hl-keyword">def</span> <span class="hl-function">predict</span>(self, X):
-        <span class="hl-string">"""Generate predictions."""</span>
-        <span class="hl-keyword">return</span> self.model(X)
+    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, delta: <span class="hl-function">float</span> = <span class="hl-number">0.002</span>):
+        self.delta = delta
+        self.window: List[<span class="hl-function">float</span>] = []
+        self.drift_detected = <span class="hl-keyword">False</span>
+        self.drift_count = <span class="hl-number">0</span>
 
-    <span class="hl-keyword">def</span> <span class="hl-function">evaluate</span>(self, X, y):
-        <span class="hl-string">"""Evaluate model performance."""</span>
-        preds = self.predict(X)
-        accuracy = (preds == y).mean()
-        <span class="hl-function">print</span>(<span class="hl-string">f"Accuracy: {accuracy:.4f}"</span>)
-        <span class="hl-keyword">return</span> accuracy
+    <span class="hl-keyword">def</span> <span class="hl-function">add_element</span>(self, value: <span class="hl-function">float</span>) -> <span class="hl-function">bool</span>:
+        <span class="hl-string">"""Add observation. Returns True if concept drift detected."""</span>
+        self.window.append(value)
+        self.drift_detected = <span class="hl-keyword">False</span>
+
+        <span class="hl-keyword">if</span> <span class="hl-function">len</span>(self.window) &lt; <span class="hl-number">30</span>:
+            <span class="hl-keyword">return</span> <span class="hl-keyword">False</span>
+
+        <span class="hl-comment"># Check for drift by comparing sub-windows</span>
+        <span class="hl-keyword">for</span> split <span class="hl-keyword">in</span> <span class="hl-function">range</span>(<span class="hl-number">10</span>, <span class="hl-function">len</span>(self.window) - <span class="hl-number">10</span>):
+            left = self.window[:split]
+            right = self.window[split:]
+
+            mean_diff = <span class="hl-function">abs</span>(np.mean(left) - np.mean(right))
+            n_l, n_r = <span class="hl-function">len</span>(left), <span class="hl-function">len</span>(right)
+
+            <span class="hl-comment"># Hoeffding bound for the confidence interval</span>
+            epsilon = np.sqrt(
+                np.log(<span class="hl-number">2.0</span> / self.delta) /
+                (<span class="hl-number">2.0</span> * ((<span class="hl-number">1.0</span> / n_l) + (<span class="hl-number">1.0</span> / n_r)))
+            )
+
+            <span class="hl-keyword">if</span> mean_diff >= epsilon:
+                <span class="hl-comment"># Drop old data before the split point</span>
+                self.window = self.window[split:]
+                self.drift_detected = <span class="hl-keyword">True</span>
+                self.drift_count += <span class="hl-number">1</span>
+                <span class="hl-keyword">return</span> <span class="hl-keyword">True</span>
+
+        <span class="hl-keyword">return</span> <span class="hl-keyword">False</span>
+
+    @<span class="hl-function">property</span>
+    <span class="hl-keyword">def</span> <span class="hl-function">current_mean</span>(self) -> Optional[<span class="hl-function">float</span>]:
+        <span class="hl-keyword">if</span> self.window:
+            <span class="hl-keyword">return</span> np.mean(self.window)
+        <span class="hl-keyword">return</span> <span class="hl-keyword">None</span>
+
+
+<span class="hl-comment"># Simulate concept drift in a classification task</span>
+np.random.seed(<span class="hl-number">42</span>)
+detector = ADWINDriftDetector(delta=<span class="hl-number">0.01</span>)
+
+<span class="hl-comment"># Phase 1: Model is accurate (90% correct)</span>
+<span class="hl-keyword">for</span> _ <span class="hl-keyword">in</span> <span class="hl-function">range</span>(<span class="hl-number">500</span>):
+    correct = np.random.binomial(<span class="hl-number">1</span>, <span class="hl-number">0.9</span>)
+    detector.add_element(correct)
+
+<span class="hl-comment"># Phase 2: Concept drift (accuracy drops to 60%)</span>
+<span class="hl-keyword">for</span> i <span class="hl-keyword">in</span> <span class="hl-function">range</span>(<span class="hl-number">300</span>):
+    correct = np.random.binomial(<span class="hl-number">1</span>, <span class="hl-number">0.6</span>)
+    <span class="hl-keyword">if</span> detector.add_element(correct):
+        <span class="hl-keyword">print</span>(<span class="hl-string">f"DRIFT at step {500 + i}: "</span>
+              <span class="hl-string">f"accuracy = {detector.current_mean:.3f}"</span>)
+        <span class="hl-keyword">break</span>
 </pre>
       </div>
 
+      <div class="callout important">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Label Delay Trap
+        </div>
+        <p>
+          Never wait for labels to start monitoring. Use <strong>proxy signals</strong> that are available
+          immediately: prediction confidence distributions, output class balance, feature distributions, and
+          user engagement metrics. A sudden drop in average confidence or a shift in predicted class ratios
+          often signals concept drift days before labels confirm it.
+        </p>
+      </div>
 
-      <h3 id="retraining">4. Automated Retraining Strategies</h3>
+      <h3 id="evidently-reports">3. Automated Drift Reports with Evidently</h3>
 
-      <p>Automated Retraining Strategies is a critical concept in this domain. Understanding it deeply will differentiate you from practitioners who only know the API calls. Let us explore the theory, the implementation, and the practical considerations.</p>
+      <p>
+        Evidently is an open-source library that generates comprehensive data and model quality reports. It
+        computes dozens of statistical tests across all features simultaneously, produces visual reports, and
+        integrates with monitoring pipelines. For production use, Evidently can run as a batch job that
+        compares each day's data against the reference distribution and exports results to Prometheus or
+        a database.
+      </p>
 
-      <p>In practice, automated retraining strategies requires careful attention to both theoretical foundations and engineering details. The code below demonstrates the core patterns you will use in production systems.</p>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">python</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-keyword">import</span> pandas <span class="hl-keyword">as</span> pd
+<span class="hl-keyword">from</span> evidently.report <span class="hl-keyword">import</span> Report
+<span class="hl-keyword">from</span> evidently.metric_preset <span class="hl-keyword">import</span> DataDriftPreset
+<span class="hl-keyword">from</span> evidently.metric_preset <span class="hl-keyword">import</span> TargetDriftPreset
+<span class="hl-keyword">from</span> evidently.metrics <span class="hl-keyword">import</span> (
+    DataDriftTable,
+    DatasetDriftMetric,
+    ColumnDriftMetric,
+)
+<span class="hl-keyword">from</span> evidently.test_suite <span class="hl-keyword">import</span> TestSuite
+<span class="hl-keyword">from</span> evidently.tests <span class="hl-keyword">import</span> (
+    TestShareOfDriftedColumns,
+    TestColumnDrift,
+)
+
+
+<span class="hl-keyword">def</span> <span class="hl-function">run_drift_report</span>(
+    reference_df: pd.DataFrame,
+    production_df: pd.DataFrame,
+    output_path: <span class="hl-function">str</span> = <span class="hl-string">"drift_report.html"</span>,
+) -> <span class="hl-function">dict</span>:
+    <span class="hl-string">"""Generate comprehensive drift report."""</span>
+
+    <span class="hl-comment"># Create a drift report with multiple metrics</span>
+    report = Report(metrics=[
+        DatasetDriftMetric(),
+        DataDriftTable(),
+    ])
+
+    report.run(
+        reference_data=reference_df,
+        current_data=production_df,
+    )
+
+    <span class="hl-comment"># Save HTML report for visual inspection</span>
+    report.save_html(output_path)
+
+    <span class="hl-comment"># Extract results programmatically</span>
+    results = report.as_dict()
+    <span class="hl-keyword">return</span> results
+
+
+<span class="hl-keyword">def</span> <span class="hl-function">run_drift_tests</span>(
+    reference_df: pd.DataFrame,
+    production_df: pd.DataFrame,
+    critical_features: list,
+    max_drift_share: <span class="hl-function">float</span> = <span class="hl-number">0.3</span>,
+) -> <span class="hl-function">bool</span>:
+    <span class="hl-string">"""Run automated drift tests. Returns True if all pass."""</span>
+
+    tests = [
+        <span class="hl-comment"># No more than 30% of columns should be drifted</span>
+        TestShareOfDriftedColumns(lte=max_drift_share),
+    ]
+
+    <span class="hl-comment"># Add specific tests for critical features</span>
+    <span class="hl-keyword">for</span> feature <span class="hl-keyword">in</span> critical_features:
+        tests.append(TestColumnDrift(column_name=feature))
+
+    suite = TestSuite(tests=tests)
+    suite.run(
+        reference_data=reference_df,
+        current_data=production_df,
+    )
+
+    <span class="hl-comment"># Check if all tests passed</span>
+    result = suite.as_dict()
+    all_passed = <span class="hl-function">all</span>(
+        test[<span class="hl-string">"status"</span>] == <span class="hl-string">"SUCCESS"</span>
+        <span class="hl-keyword">for</span> test <span class="hl-keyword">in</span> result[<span class="hl-string">"tests"</span>]
+    )
+    <span class="hl-keyword">return</span> all_passed
+
+
+<span class="hl-comment"># Usage in a daily monitoring pipeline</span>
+reference = pd.read_parquet(<span class="hl-string">"data/reference_features.parquet"</span>)
+today = pd.read_parquet(<span class="hl-string">"data/today_features.parquet"</span>)
+
+all_ok = run_drift_tests(
+    reference, today,
+    critical_features=[<span class="hl-string">"income"</span>, <span class="hl-string">"age"</span>, <span class="hl-string">"transaction_count"</span>],
+)
+
+<span class="hl-keyword">if</span> <span class="hl-keyword">not</span> all_ok:
+    <span class="hl-keyword">print</span>(<span class="hl-string">"ALERT: Drift detected! Generating detailed report..."</span>)
+    run_drift_report(reference, today, <span class="hl-string">"reports/drift_report.html"</span>)
+</pre>
+      </div>
+
+      <h3 id="prediction-quality">4. Prediction Quality Monitoring</h3>
+
+      <p>
+        Beyond input drift, you must monitor the quality of your model's outputs. This involves tracking
+        <strong>proxy metrics</strong> (available immediately) and <strong>ground-truth metrics</strong>
+        (available after label delay). Proxy metrics include: mean prediction confidence, confidence
+        calibration (does a 90% confidence prediction actually have 90% accuracy?), prediction class
+        distribution, and output value distribution for regression models.
+      </p>
 
       <div class="code-block">
         <div class="code-header">
@@ -190,41 +644,105 @@
         </div>
 <pre>
 <span class="hl-keyword">import</span> numpy <span class="hl-keyword">as</span> np
-<span class="hl-keyword">import</span> torch
-<span class="hl-keyword">import</span> torch.nn <span class="hl-keyword">as</span> nn
+<span class="hl-keyword">from</span> sklearn.calibration <span class="hl-keyword">import</span> calibration_curve
+<span class="hl-keyword">from</span> sklearn.metrics <span class="hl-keyword">import</span> (
+    accuracy_score, precision_score, recall_score,
+    f1_score, roc_auc_score, log_loss,
+)
+<span class="hl-keyword">from</span> collections <span class="hl-keyword">import</span> deque
+<span class="hl-keyword">from</span> dataclasses <span class="hl-keyword">import</span> dataclass, field
+<span class="hl-keyword">from</span> typing <span class="hl-keyword">import</span> Dict, List
 
-<span class="hl-comment"># Automated Retraining Strategies — core implementation</span>
-<span class="hl-keyword">class</span> <span class="hl-function">Retraining</span>:
-    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, config=<span class="hl-keyword">None</span>):
-        self.config = config or {}
-        self.model = <span class="hl-keyword">None</span>
-        self.history = []
 
-    <span class="hl-keyword">def</span> <span class="hl-function">fit</span>(self, X, y):
-        <span class="hl-string">"""Train the model on input data."""</span>
-        <span class="hl-function">print</span>(<span class="hl-string">f"Training on {X.shape[0]} samples..."</span>)
-        <span class="hl-comment"># Implementation specific to Automated Retraining Strategies</span>
-        <span class="hl-keyword">return</span> self
+<span class="hl-flag">@dataclass</span>
+<span class="hl-keyword">class</span> <span class="hl-function">QualitySnapshot</span>:
+    <span class="hl-string">"""A snapshot of model quality metrics at a point in time."""</span>
+    timestamp: <span class="hl-function">float</span>
+    sample_count: <span class="hl-function">int</span>
+    accuracy: <span class="hl-function">float</span>
+    precision: <span class="hl-function">float</span>
+    recall: <span class="hl-function">float</span>
+    f1: <span class="hl-function">float</span>
+    auc_roc: <span class="hl-function">float</span>
+    log_loss_val: <span class="hl-function">float</span>
+    calibration_error: <span class="hl-function">float</span>
 
-    <span class="hl-keyword">def</span> <span class="hl-function">predict</span>(self, X):
-        <span class="hl-string">"""Generate predictions."""</span>
-        <span class="hl-keyword">return</span> self.model(X)
 
-    <span class="hl-keyword">def</span> <span class="hl-function">evaluate</span>(self, X, y):
-        <span class="hl-string">"""Evaluate model performance."""</span>
-        preds = self.predict(X)
-        accuracy = (preds == y).mean()
-        <span class="hl-function">print</span>(<span class="hl-string">f"Accuracy: {accuracy:.4f}"</span>)
-        <span class="hl-keyword">return</span> accuracy
+<span class="hl-keyword">class</span> <span class="hl-function">PredictionQualityMonitor</span>:
+    <span class="hl-string">"""Track model prediction quality over sliding windows."""</span>
+
+    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, window_size: <span class="hl-function">int</span> = <span class="hl-number">5000</span>):
+        self.predictions = deque(maxlen=window_size)
+        self.labels = deque(maxlen=window_size)
+        self.probabilities = deque(maxlen=window_size)
+        self.history: List[QualitySnapshot] = []
+
+    <span class="hl-keyword">def</span> <span class="hl-function">add_labeled_prediction</span>(
+        self, prediction: <span class="hl-function">int</span>, probability: <span class="hl-function">float</span>, label: <span class="hl-function">int</span>
+    ):
+        <span class="hl-string">"""Record a prediction that now has a ground truth label."""</span>
+        self.predictions.append(prediction)
+        self.probabilities.append(probability)
+        self.labels.append(label)
+
+    <span class="hl-keyword">def</span> <span class="hl-function">compute_quality</span>(self) -> QualitySnapshot:
+        <span class="hl-string">"""Compute all quality metrics over the current window."""</span>
+        <span class="hl-keyword">import</span> time
+
+        preds = np.array(self.predictions)
+        probs = np.array(self.probabilities)
+        labels = np.array(self.labels)
+
+        <span class="hl-comment"># Compute calibration error</span>
+        prob_true, prob_pred = calibration_curve(
+            labels, probs, n_bins=<span class="hl-number">10</span>, strategy=<span class="hl-string">"uniform"</span>
+        )
+        ece = np.mean(np.<span class="hl-function">abs</span>(prob_true - prob_pred))
+
+        snapshot = QualitySnapshot(
+            timestamp=time.time(),
+            sample_count=<span class="hl-function">len</span>(preds),
+            accuracy=accuracy_score(labels, preds),
+            precision=precision_score(labels, preds, zero_division=<span class="hl-number">0</span>),
+            recall=recall_score(labels, preds, zero_division=<span class="hl-number">0</span>),
+            f1=f1_score(labels, preds, zero_division=<span class="hl-number">0</span>),
+            auc_roc=roc_auc_score(labels, probs),
+            log_loss_val=log_loss(labels, probs),
+            calibration_error=ece,
+        )
+        self.history.append(snapshot)
+        <span class="hl-keyword">return</span> snapshot
+
+    <span class="hl-keyword">def</span> <span class="hl-function">detect_degradation</span>(
+        self, baseline_accuracy: <span class="hl-function">float</span>, threshold: <span class="hl-function">float</span> = <span class="hl-number">0.05</span>
+    ) -> <span class="hl-function">bool</span>:
+        <span class="hl-string">"""Check if current accuracy dropped below baseline by threshold."""</span>
+        <span class="hl-keyword">if</span> <span class="hl-function">len</span>(self.predictions) &lt; <span class="hl-number">100</span>:
+            <span class="hl-keyword">return</span> <span class="hl-keyword">False</span>
+
+        current = accuracy_score(
+            np.array(self.labels), np.array(self.predictions)
+        )
+        <span class="hl-keyword">return</span> (baseline_accuracy - current) > threshold
 </pre>
       </div>
 
+      <h3 id="training-serving-skew">5. Training-Serving Skew Detection</h3>
 
-      <h3 id="alerting">5. Alerting and Observability</h3>
+      <p>
+        Training-serving skew occurs when the features used at training time differ from those used at inference
+        time. This can happen due to bugs in feature engineering pipelines, differences between batch and
+        streaming feature computation, stale feature store entries, or timezone handling differences. Skew is
+        particularly insidious because the model appears to be working correctly in offline evaluation but
+        performs poorly in production.
+      </p>
 
-      <p>Alerting and Observability is a critical concept in this domain. Understanding it deeply will differentiate you from practitioners who only know the API calls. Let us explore the theory, the implementation, and the practical considerations.</p>
-
-      <p>In practice, alerting and observability requires careful attention to both theoretical foundations and engineering details. The code below demonstrates the core patterns you will use in production systems.</p>
+      <p>
+        To detect skew, log the feature vectors used at inference time and periodically compare their
+        distributions against the training data. The comparison should happen at the <em>transformed feature</em>
+        level (after preprocessing), not the raw data level, because skew often occurs in the transformation
+        pipeline itself.
+      </p>
 
       <div class="code-block">
         <div class="code-header">
@@ -233,41 +751,103 @@
         </div>
 <pre>
 <span class="hl-keyword">import</span> numpy <span class="hl-keyword">as</span> np
-<span class="hl-keyword">import</span> torch
-<span class="hl-keyword">import</span> torch.nn <span class="hl-keyword">as</span> nn
+<span class="hl-keyword">import</span> pandas <span class="hl-keyword">as</span> pd
+<span class="hl-keyword">from</span> typing <span class="hl-keyword">import</span> Dict, List
 
-<span class="hl-comment"># Alerting and Observability — core implementation</span>
-<span class="hl-keyword">class</span> <span class="hl-function">Alerting</span>:
-    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, config=<span class="hl-keyword">None</span>):
-        self.config = config or {}
-        self.model = <span class="hl-keyword">None</span>
-        self.history = []
+<span class="hl-keyword">class</span> <span class="hl-function">TrainingServingSkewDetector</span>:
+    <span class="hl-string">"""Detect differences between training and serving features."""</span>
 
-    <span class="hl-keyword">def</span> <span class="hl-function">fit</span>(self, X, y):
-        <span class="hl-string">"""Train the model on input data."""</span>
-        <span class="hl-function">print</span>(<span class="hl-string">f"Training on {X.shape[0]} samples..."</span>)
-        <span class="hl-comment"># Implementation specific to Alerting and Observability</span>
-        <span class="hl-keyword">return</span> self
+    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, training_stats: Dict[<span class="hl-function">str</span>, Dict]):
+        <span class="hl-string">"""
+        training_stats: dict of feature_name -> {
+            'mean': float, 'std': float,
+            'min': float, 'max': float,
+            'null_rate': float, 'dtype': str
+        }
+        """</span>
+        self.training_stats = training_stats
 
-    <span class="hl-keyword">def</span> <span class="hl-function">predict</span>(self, X):
-        <span class="hl-string">"""Generate predictions."""</span>
-        <span class="hl-keyword">return</span> self.model(X)
+    <span class="hl-keyword">def</span> <span class="hl-function">check_skew</span>(self, serving_features: pd.DataFrame) -> Dict:
+        <span class="hl-string">"""Compare serving features against training statistics."""</span>
+        skew_report = {}
 
-    <span class="hl-keyword">def</span> <span class="hl-function">evaluate</span>(self, X, y):
-        <span class="hl-string">"""Evaluate model performance."""</span>
-        preds = self.predict(X)
-        accuracy = (preds == y).mean()
-        <span class="hl-function">print</span>(<span class="hl-string">f"Accuracy: {accuracy:.4f}"</span>)
-        <span class="hl-keyword">return</span> accuracy
+        <span class="hl-keyword">for</span> col, train_stats <span class="hl-keyword">in</span> self.training_stats.items():
+            <span class="hl-keyword">if</span> col <span class="hl-keyword">not in</span> serving_features.columns:
+                skew_report[col] = {<span class="hl-string">"issue"</span>: <span class="hl-string">"MISSING_FEATURE"</span>}
+                <span class="hl-keyword">continue</span>
+
+            serving_col = serving_features[col]
+            issues = []
+
+            <span class="hl-comment"># Check dtype mismatch</span>
+            <span class="hl-keyword">if</span> <span class="hl-function">str</span>(serving_col.dtype) != train_stats[<span class="hl-string">"dtype"</span>]:
+                issues.append(<span class="hl-string">f"dtype: train={train_stats['dtype']}, "</span>
+                              <span class="hl-string">f"serve={serving_col.dtype}"</span>)
+
+            <span class="hl-comment"># Check null rate increase</span>
+            serve_null_rate = serving_col.isnull().mean()
+            <span class="hl-keyword">if</span> serve_null_rate > train_stats[<span class="hl-string">"null_rate"</span>] * <span class="hl-number">2</span> + <span class="hl-number">0.01</span>:
+                issues.append(
+                    <span class="hl-string">f"null_rate: train={train_stats['null_rate']:.3f}, "</span>
+                    <span class="hl-string">f"serve={serve_null_rate:.3f}"</span>)
+
+            <span class="hl-comment"># Check distribution shift (z-score of mean difference)</span>
+            <span class="hl-keyword">if</span> train_stats[<span class="hl-string">"std"</span>] > <span class="hl-number">0</span>:
+                z_score = <span class="hl-function">abs</span>(
+                    serving_col.mean() - train_stats[<span class="hl-string">"mean"</span>]
+                ) / train_stats[<span class="hl-string">"std"</span>]
+                <span class="hl-keyword">if</span> z_score > <span class="hl-number">3</span>:
+                    issues.append(
+                        <span class="hl-string">f"mean_shift: z={z_score:.2f} "</span>
+                        <span class="hl-string">f"(train={train_stats['mean']:.4f}, "</span>
+                        <span class="hl-string">f"serve={serving_col.mean():.4f})"</span>)
+
+            <span class="hl-comment"># Check for out-of-range values</span>
+            oor_count = (
+                (serving_col &lt; train_stats[<span class="hl-string">"min"</span>]) |
+                (serving_col > train_stats[<span class="hl-string">"max"</span>])
+            ).<span class="hl-function">sum</span>()
+            <span class="hl-keyword">if</span> oor_count > <span class="hl-number">0</span>:
+                issues.append(
+                    <span class="hl-string">f"out_of_range: {oor_count} values"</span>)
+
+            skew_report[col] = {
+                <span class="hl-string">"issues"</span>: issues,
+                <span class="hl-string">"has_skew"</span>: <span class="hl-function">len</span>(issues) > <span class="hl-number">0</span>,
+            }
+
+        <span class="hl-keyword">return</span> skew_report
 </pre>
       </div>
 
+      <div class="callout tip">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Pro Tip
+        </div>
+        <p>
+          Log <strong>feature schemas</strong> alongside feature values. Store the expected data types, valid
+          ranges, and allowed categories for each feature. Then validate every serving request against this
+          schema. This catches a large class of training-serving skew bugs (type mismatches, missing features,
+          new categories) immediately at inference time rather than waiting for drift detection.
+        </p>
+      </div>
 
-      <h3 id="root-cause">6. Root Cause Analysis</h3>
+      <h3 id="retraining-triggers">6. Automated Retraining Pipelines</h3>
 
-      <p>Root Cause Analysis is a critical concept in this domain. Understanding it deeply will differentiate you from practitioners who only know the API calls. Let us explore the theory, the implementation, and the practical considerations.</p>
+      <p>
+        When drift is confirmed, the natural response is to retrain the model on fresh data. But automated
+        retraining is surprisingly tricky to get right. You need to answer several questions: How much new
+        data is enough? Should you retrain from scratch or fine-tune? How do you validate the new model before
+        deploying it? What happens if the new model is worse than the old one?
+      </p>
 
-      <p>In practice, root cause analysis requires careful attention to both theoretical foundations and engineering details. The code below demonstrates the core patterns you will use in production systems.</p>
+      <p>
+        The safest pattern is a <strong>validation gate</strong>: after retraining, evaluate the new model
+        against a held-out set that represents the current distribution. Only promote the new model if it
+        improves on the production model by a minimum margin (e.g., 0.5% accuracy improvement). This prevents
+        deploying models that regressed due to data quality issues in the retraining data.
+      </p>
 
       <div class="code-block">
         <div class="code-header">
@@ -275,133 +855,424 @@
           <button class="code-copy" onclick="copyCode(this)">Copy</button>
         </div>
 <pre>
-<span class="hl-keyword">import</span> numpy <span class="hl-keyword">as</span> np
-<span class="hl-keyword">import</span> torch
-<span class="hl-keyword">import</span> torch.nn <span class="hl-keyword">as</span> nn
+<span class="hl-keyword">import</span> logging
+<span class="hl-keyword">from</span> dataclasses <span class="hl-keyword">import</span> dataclass
+<span class="hl-keyword">from</span> typing <span class="hl-keyword">import</span> Callable, Dict, Optional
+<span class="hl-keyword">from</span> datetime <span class="hl-keyword">import</span> datetime
 
-<span class="hl-comment"># Root Cause Analysis — core implementation</span>
-<span class="hl-keyword">class</span> <span class="hl-function">RootCause</span>:
-    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, config=<span class="hl-keyword">None</span>):
-        self.config = config or {}
-        self.model = <span class="hl-keyword">None</span>
-        self.history = []
+logger = logging.getLogger(__name__)
 
-    <span class="hl-keyword">def</span> <span class="hl-function">fit</span>(self, X, y):
-        <span class="hl-string">"""Train the model on input data."""</span>
-        <span class="hl-function">print</span>(<span class="hl-string">f"Training on {X.shape[0]} samples..."</span>)
-        <span class="hl-comment"># Implementation specific to Root Cause Analysis</span>
-        <span class="hl-keyword">return</span> self
+<span class="hl-flag">@dataclass</span>
+<span class="hl-keyword">class</span> <span class="hl-function">RetrainingConfig</span>:
+    model_name: <span class="hl-function">str</span>
+    psi_threshold: <span class="hl-function">float</span> = <span class="hl-number">0.2</span>        <span class="hl-comment"># Trigger on feature drift</span>
+    accuracy_drop: <span class="hl-function">float</span> = <span class="hl-number">0.05</span>       <span class="hl-comment"># Trigger on quality drop</span>
+    min_improvement: <span class="hl-function">float</span> = <span class="hl-number">0.005</span>    <span class="hl-comment"># Min required improvement</span>
+    min_samples: <span class="hl-function">int</span> = <span class="hl-number">5000</span>           <span class="hl-comment"># Min labeled data for retrain</span>
+    cooldown_hours: <span class="hl-function">int</span> = <span class="hl-number">24</span>          <span class="hl-comment"># Min time between retrains</span>
 
-    <span class="hl-keyword">def</span> <span class="hl-function">predict</span>(self, X):
-        <span class="hl-string">"""Generate predictions."""</span>
-        <span class="hl-keyword">return</span> self.model(X)
 
-    <span class="hl-keyword">def</span> <span class="hl-function">evaluate</span>(self, X, y):
-        <span class="hl-string">"""Evaluate model performance."""</span>
-        preds = self.predict(X)
-        accuracy = (preds == y).mean()
-        <span class="hl-function">print</span>(<span class="hl-string">f"Accuracy: {accuracy:.4f}"</span>)
-        <span class="hl-keyword">return</span> accuracy
+<span class="hl-keyword">class</span> <span class="hl-function">RetrainingOrchestrator</span>:
+    <span class="hl-string">"""Orchestrates the detect-retrain-validate-deploy cycle."""</span>
+
+    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(
+        self,
+        config: RetrainingConfig,
+        train_fn: Callable,
+        evaluate_fn: Callable,
+        deploy_fn: Callable,
+    ):
+        self.config = config
+        self.train_fn = train_fn
+        self.evaluate_fn = evaluate_fn
+        self.deploy_fn = deploy_fn
+        self.last_retrain: Optional[datetime] = <span class="hl-keyword">None</span>
+        self.retrain_log = []
+
+    <span class="hl-keyword">def</span> <span class="hl-function">should_retrain</span>(self, drift_metrics: Dict, quality_metrics: Dict) -> <span class="hl-function">bool</span>:
+        <span class="hl-string">"""Decide whether to trigger retraining."""</span>
+
+        <span class="hl-comment"># Check cooldown</span>
+        <span class="hl-keyword">if</span> self.last_retrain:
+            hours_since = (
+                datetime.now() - self.last_retrain
+            ).total_seconds() / <span class="hl-number">3600</span>
+            <span class="hl-keyword">if</span> hours_since &lt; self.config.cooldown_hours:
+                <span class="hl-keyword">return</span> <span class="hl-keyword">False</span>
+
+        <span class="hl-comment"># Check drift triggers</span>
+        max_psi = drift_metrics.get(<span class="hl-string">"max_psi"</span>, <span class="hl-number">0</span>)
+        drifted = max_psi > self.config.psi_threshold
+
+        <span class="hl-comment"># Check quality triggers</span>
+        accuracy = quality_metrics.get(<span class="hl-string">"accuracy"</span>)
+        baseline = quality_metrics.get(<span class="hl-string">"baseline_accuracy"</span>)
+        degraded = <span class="hl-keyword">False</span>
+        <span class="hl-keyword">if</span> accuracy <span class="hl-keyword">and</span> baseline:
+            degraded = (baseline - accuracy) > self.config.accuracy_drop
+
+        <span class="hl-comment"># Check data sufficiency</span>
+        has_data = quality_metrics.get(
+            <span class="hl-string">"labeled_count"</span>, <span class="hl-number">0</span>
+        ) >= self.config.min_samples
+
+        <span class="hl-keyword">return</span> (drifted <span class="hl-keyword">or</span> degraded) <span class="hl-keyword">and</span> has_data
+
+    <span class="hl-keyword">def</span> <span class="hl-function">execute</span>(self, training_data, current_metrics: Dict) -> <span class="hl-function">bool</span>:
+        <span class="hl-string">"""Run the full retrain-validate-deploy cycle."""</span>
+        logger.info(<span class="hl-string">"Starting retraining for %s"</span>, self.config.model_name)
+
+        <span class="hl-comment"># Step 1: Train new model</span>
+        new_model = self.train_fn(training_data)
+
+        <span class="hl-comment"># Step 2: Evaluate on held-out validation set</span>
+        new_metrics = self.evaluate_fn(new_model)
+        current_acc = current_metrics.get(<span class="hl-string">"accuracy"</span>, <span class="hl-number">0</span>)
+        new_acc = new_metrics.get(<span class="hl-string">"accuracy"</span>, <span class="hl-number">0</span>)
+        improvement = new_acc - current_acc
+
+        <span class="hl-comment"># Step 3: Validation gate</span>
+        <span class="hl-keyword">if</span> improvement &lt; self.config.min_improvement:
+            logger.warning(
+                <span class="hl-string">"REJECTED: new=%.4f, old=%.4f, improvement=%.4f &lt; %.4f"</span>,
+                new_acc, current_acc, improvement,
+                self.config.min_improvement,
+            )
+            self.retrain_log.append({
+                <span class="hl-string">"status"</span>: <span class="hl-string">"rejected"</span>,
+                <span class="hl-string">"reason"</span>: <span class="hl-string">"insufficient_improvement"</span>,
+                <span class="hl-string">"improvement"</span>: improvement,
+            })
+            <span class="hl-keyword">return</span> <span class="hl-keyword">False</span>
+
+        <span class="hl-comment"># Step 4: Deploy</span>
+        logger.info(
+            <span class="hl-string">"APPROVED: %.4f -> %.4f (+%.4f). Deploying."</span>,
+            current_acc, new_acc, improvement,
+        )
+        self.deploy_fn(new_model)
+        self.last_retrain = datetime.now()
+        self.retrain_log.append({
+            <span class="hl-string">"status"</span>: <span class="hl-string">"deployed"</span>,
+            <span class="hl-string">"improvement"</span>: improvement,
+            <span class="hl-string">"new_accuracy"</span>: new_acc,
+        })
+        <span class="hl-keyword">return</span> <span class="hl-keyword">True</span>
 </pre>
       </div>
+
+      <div class="diagram">
+<pre>
+  ┌──────────────┐    drift signal    ┌─────────────────┐
+  │   Drift      │ ─────────────────▶ │   Retraining    │
+  │  Detector    │                    │  Orchestrator   │
+  └──────────────┘                    └────────┬────────┘
+                                               │
+                                    ┌──────────▼──────────┐
+                                    │   Train New Model   │
+                                    └──────────┬──────────┘
+                                               │
+                                    ┌──────────▼──────────┐
+                                    │  Validation Gate    │
+                                    │  (compare vs prod)  │
+                                    └──────────┬──────────┘
+                                       ┌───────┴───────┐
+                                       │               │
+                                  ┌────▼────┐    ┌─────▼─────┐
+                                  │ APPROVE │    │  REJECT   │
+                                  │ Deploy  │    │  Keep old │
+                                  └─────────┘    └───────────┘
+</pre>
+        <div class="diagram-caption">Figure 1: The detect-retrain-validate-deploy lifecycle for automated model updates</div>
+      </div>
+
+      <details>
+        <summary>How do you choose between scheduled and triggered retraining?</summary>
+        <div class="details-body">
+          <p>
+            <strong>Scheduled retraining</strong> (e.g., weekly) is simpler and predictable. Use it when your
+            domain changes gradually and you have a steady stream of labeled data. <strong>Triggered retraining</strong>
+            (on drift detection) is more responsive but requires reliable drift detection. Use it when your
+            domain changes unpredictably. In practice, most teams use both: a scheduled cadence as a baseline
+            with drift-triggered retraining for unexpected shifts.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>What sample size do you need for reliable drift detection?</summary>
+        <div class="details-body">
+          <p>
+            For PSI, you need at least 200&ndash;500 samples per bin, so with 10 bins that means 2,000&ndash;5,000
+            production samples minimum. For the KS test, sensitivity increases with sample size &mdash; with
+            very large samples (100K+), the test becomes overly sensitive and will flag trivial differences
+            as significant. In that case, use an effect-size threshold alongside the p-value, or use PSI
+            which is naturally calibrated to practical significance.
+          </p>
+        </div>
+      </details>
 
       <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 3: WATCH & LEARN
+           ════════════════════════════════════════ -->
       <h2 id="watch-learn">Watch &amp; Learn</h2>
-      <p>These videos cover core concepts. Watch before starting assignments.</p>
+
+      <p>
+        These videos cover drift detection, model quality monitoring, and automated retraining patterns.
+      </p>
+
       <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/s8Jj-ZQFNWY?rel=0&amp;modestbranding=1" title="Google &mdash; Data-centric AI and monitoring in production" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-caption"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg> Google &mdash; Data-centric AI and monitoring in production</div>
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0&amp;modestbranding=1"
+            title="Data Drift and Concept Drift in Production ML"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Data Drift and Concept Drift &mdash; Statistical tests, detection strategies, and production patterns
+        </div>
       </div>
+
       <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/nA-YR_RZYoQ?rel=0&amp;modestbranding=1" title="Evidently AI &mdash; ML monitoring and data drift detection in production" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-caption"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg> Evidently AI &mdash; ML monitoring and data drift detection in production</div>
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0&amp;modestbranding=1"
+            title="Automated Retraining Pipelines"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Automated Retraining Pipelines &mdash; Validation gates, A/B testing, and safe model promotion
+        </div>
       </div>
 
       <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 4: FURTHER READING
+           ════════════════════════════════════════ -->
       <h2 id="further-reading">Further Reading</h2>
-      <p>Deep-dive into official documentation and reference material.</p>
+
+      <p>Research papers, documentation, and tools for drift detection and model monitoring.</p>
+
       <div class="resource-grid">
         <a class="resource-card" href="https://docs.evidentlyai.com/" target="_blank" rel="noopener">
-          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-          <div class="resource-info"><div class="resource-title">Evidently AI Documentation</div><div class="resource-desc">Open-source ML monitoring and drift detection.</div></div>
-        </a>
-        <a class="resource-card" href="https://whylabs.ai/" target="_blank" rel="noopener">
-          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-          <div class="resource-info"><div class="resource-title">WhyLabs Documentation</div><div class="resource-desc">ML observability platform.</div></div>
-        </a>
-        <a class="resource-card" href="https://arxiv.org/abs/2011.09926" target="_blank" rel="noopener">
-          <div class="resource-icon article"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
-          <div class="resource-info"><div class="resource-title">Failing Loudly: ML Monitoring Paper</div><div class="resource-desc">Research on detecting distribution shift.</div></div>
-        </a>
-        <a class="resource-card" href="https://great-expectations.io/" target="_blank" rel="noopener">
-          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-          <div class="resource-info"><div class="resource-title">Great Expectations</div><div class="resource-desc">Data validation and documentation framework.</div></div>
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Evidently AI Documentation</div>
+            <div class="resource-desc">Open-source ML monitoring: data drift, model quality, and target drift reports with visual dashboards.</div>
+          </div>
         </a>
 
+        <a class="resource-card" href="https://github.com/SeldonIO/alibi-detect" target="_blank" rel="noopener">
+          <div class="resource-icon github">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Alibi Detect</div>
+            <div class="resource-desc">Advanced drift detection algorithms: KS, MMD, Chi-squared, LSDD, and learned kernel tests.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://arxiv.org/abs/2011.09926" target="_blank" rel="noopener">
+          <div class="resource-icon pdf">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Failing Loudly: An Empirical Study of Methods for Detecting Dataset Shift</div>
+            <div class="resource-desc">Systematic comparison of drift detection methods with practical recommendations.</div>
+          </div>
+        </a>
       </div>
+
       <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 5: ASSIGNMENTS
+           ════════════════════════════════════════ -->
       <h2 id="assignments">Assignments</h2>
-      <p>Complete these in order. Each level builds on the previous one.</p>
+
+      <p>
+        Complete these in order. Each level builds on the previous one. Submit your work as a GitHub PR
+        with drift detection code, monitoring reports, and retraining pipeline configurations.
+      </p>
+
+      <!-- Assignment 1 -->
       <div class="assignment">
-        <div class="assignment-header"><div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 1</div><span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span></div>
-        <h4>Core Implementation: Data Drift Detection</h4>
-        <p>Build foundational understanding by implementing core concepts from scratch.</p>
-        <ul class="checklist">          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Implement the core concepts from Data Drift Detection</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a working example demonstrating Model Performance Monitoring</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write comprehensive unit tests for your implementation</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Document your code with docstrings and comments</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Run benchmarks and record performance metrics</span></li></ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div><p>Your implementation passes all tests and you can explain every line of code.</p></div>
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 1
+          </div>
+          <span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span>
+        </div>
+        <h4>Build a Drift Detection Library</h4>
+        <p>Implement PSI, KS test, and chi-squared test for categorical features. Validate on synthetic data with known drift.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Implement <code>calculate_psi()</code> for numeric features with configurable bin count</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Implement <code>ks_drift_test()</code> using scipy's <code>ks_2samp</code></span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Implement <code>chi_squared_test()</code> for categorical features</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Generate synthetic data with controllable drift and validate all three tests</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write unit tests for edge cases: identical distributions, single values, empty arrays</span></li>
+        </ul>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>All three drift tests correctly detect drifted features in synthetic data with zero false negatives and no crashes on edge cases.</p>
+        </div>
       </div>
+
+      <!-- Assignment 2 -->
       <div class="assignment">
-        <div class="assignment-header"><div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 2</div><span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span></div>
-        <h4>Applied Project: Model Monitoring and Drift in Practice</h4>
-        <p>Apply the concepts to a real-world dataset and compare approaches systematically.</p>
-        <ul class="checklist">          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Build a complete pipeline integrating Data Drift Detection and Model Performance Monitoring</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Apply A/B Testing for Models on a real-world dataset</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Compare at least 3 different approaches and document tradeoffs</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create visualizations that tell a clear story about your results</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write a 200-word analysis of your findings</span></li></ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div><p>Your comparison clearly identifies the best approach with supporting evidence and visualizations.</p></div>
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 2
+          </div>
+          <span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span>
+        </div>
+        <h4>Evidently-Powered Monitoring Pipeline</h4>
+        <p>Build a daily drift monitoring pipeline using Evidently that generates HTML reports and exports metrics to Prometheus.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Train a model on reference data and save reference feature statistics</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a batch pipeline that runs Evidently <code>DataDriftPreset</code> and <code>TargetDriftPreset</code> daily</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Export drift scores as Prometheus gauges via pushgateway</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Build a Grafana dashboard showing drift PSI over time per feature</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Configure alerts that fire when any critical feature exceeds PSI threshold</span></li>
+        </ul>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>Your pipeline runs daily, generates Evidently reports, and Grafana shows drift trends with working alerts.</p>
+        </div>
       </div>
+
+      <!-- Assignment 3 -->
       <div class="assignment">
-        <div class="assignment-header"><div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 3</div><span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Production-Ready</span></div>
-        <h4>Production System: End-to-End Model Monitoring and Drift</h4>
-        <p>Build a production-quality system that demonstrates mastery of all concepts in this chapter.</p>
-        <ul class="checklist">          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Design a production-ready system incorporating model monitoring and drift best practices</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Implement error handling, logging, and configuration management</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a comprehensive test suite with edge cases</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write documentation for future maintainers</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Deploy or package your solution for team use</span></li></ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div><p>Your system is documented, tested, and could be handed to a colleague for production use.</p></div>
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 3
+          </div>
+          <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Production-Ready</span>
+        </div>
+        <h4>Closed-Loop Retraining System</h4>
+        <p>Build an end-to-end system that detects drift, triggers retraining, validates the new model, and deploys only on improvement.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Implement <code>RetrainingOrchestrator</code> with configurable triggers and validation gate</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Connect drift detection output to retraining triggers with cooldown logic</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Implement a validation gate that compares new model vs production model on fresh data</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Simulate a gradual concept drift scenario and verify the system retrains and improves</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Simulate a data quality issue where retraining makes things worse and verify the gate rejects</span></li>
+        </ul>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>Drift triggers retraining, good models are deployed, bad models are rejected, and the complete lifecycle is logged.</p>
+        </div>
       </div>
+
       <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 6: SELF-CHECK
+           ════════════════════════════════════════ -->
       <h2 id="self-check">Self-Check</h2>
-      <p>Before moving on, honestly answer these. If any answer is "no," go back and practice.</p>
+
+      <p>Before moving to Chapter 09, honestly answer these questions. If any answer is "no", go back and fix it.</p>
+
       <details>
-        <summary>Can you explain Data Drift Detection to a colleague without consulting notes?</summary>
-        <div class="details-body"><p>Try explaining the core concept, why it matters, and when to use it. If you need to look things up, spend more time with the material. True understanding means you can teach it.</p></div>
+        <summary>Can you explain the difference between data drift and concept drift?</summary>
+        <div class="details-body">
+          <p>
+            Data drift (covariate shift) means inputs change but the input-output relationship stays the same.
+            Concept drift means the input-output relationship changes. Data drift is detectable without labels
+            (PSI, KS tests on inputs). Concept drift requires ground truth labels to confirm.
+          </p>
+        </div>
       </details>
+
       <details>
-        <summary>Can you implement Model Performance Monitoring from memory?</summary>
-        <div class="details-body"><p>Open a blank notebook and try to implement the core algorithm without any reference. The act of writing code from memory reveals gaps in understanding that reading alone will not expose.</p></div>
+        <summary>Can you implement PSI from scratch and interpret the results?</summary>
+        <div class="details-body">
+          <p>
+            PSI compares bin proportions between two distributions using the formula
+            SUM((P_i - Q_i) * ln(P_i / Q_i)). Thresholds: below 0.1 is stable, 0.1&ndash;0.2 is moderate
+            drift, above 0.2 is significant drift. You should be able to write this from memory and explain
+            why the epsilon correction prevents division by zero.
+          </p>
+        </div>
       </details>
+
       <details>
-        <summary>Do you understand when A/B Testing for Models would fail?</summary>
-        <div class="details-body"><p>Knowing when a technique works is important, but knowing when it fails is more important. Every algorithm has assumptions and limitations. If you cannot list at least 3 failure modes, review the material.</p></div>
+        <summary>Do you understand how to handle label delay in monitoring?</summary>
+        <div class="details-body">
+          <p>
+            Use proxy metrics (confidence scores, class distributions) as early warning signals. When labels
+            arrive, compute ground-truth metrics on sliding windows. Use streaming detectors like ADWIN for
+            real-time concept drift detection. Never wait for labels to start monitoring &mdash; data drift
+            detection is your first line of defense.
+          </p>
+        </div>
       </details>
+
+      <details>
+        <summary>Can you design a safe automated retraining pipeline with a validation gate?</summary>
+        <div class="details-body">
+          <p>
+            Your pipeline should: (1) detect drift or quality degradation, (2) trigger retraining with
+            a cooldown period, (3) evaluate the new model on held-out data, (4) compare against production
+            model, (5) deploy only if improvement exceeds a minimum threshold, (6) log all decisions for
+            audit. If any of these steps are unclear, review the RetrainingOrchestrator code.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Can you detect training-serving skew in a feature pipeline?</summary>
+        <div class="details-body">
+          <p>
+            Log feature vectors at inference time and compare their statistics (mean, std, null rate, dtype,
+            value range) against the training data. Flag dtype mismatches, increased null rates, mean shifts
+            beyond 3 standard deviations, and out-of-range values. Use feature schemas to catch issues at
+            request time rather than waiting for drift detection.
+          </p>
+        </div>
+      </details>
+
     </main>
+
+    <!-- Sidebar: Table of Contents -->
     <aside class="sidebar">
       <div class="sidebar-title">On this page</div>
       <ul class="toc-list">
         <li class="toc-item"><a href="#why-this-matters">Why This Matters</a></li>
         <li class="toc-item"><a href="#key-concepts">Key Concepts</a></li>
-        <li class="toc-item"><a href="#data-drift" style="padding-left:28px;font-size:12px">Data Drift Detection</a></li>
-        <li class="toc-item"><a href="#performance-monitoring" style="padding-left:28px;font-size:12px">Model Performance Monitoring</a></li>
-        <li class="toc-item"><a href="#ab-testing" style="padding-left:28px;font-size:12px">A/B Testing for Models</a></li>
-        <li class="toc-item"><a href="#retraining" style="padding-left:28px;font-size:12px">Automated Retraining Strategies</a></li>
-        <li class="toc-item"><a href="#alerting" style="padding-left:28px;font-size:12px">Alerting and Observability</a></li>
-        <li class="toc-item"><a href="#root-cause" style="padding-left:28px;font-size:12px">Root Cause Analysis</a></li>
+        <li class="toc-item"><a href="#data-drift-psi" style="padding-left: 28px; font-size: 12px;">PSI and KS Tests</a></li>
+        <li class="toc-item"><a href="#concept-drift" style="padding-left: 28px; font-size: 12px;">Concept Drift</a></li>
+        <li class="toc-item"><a href="#evidently-reports" style="padding-left: 28px; font-size: 12px;">Evidently Reports</a></li>
+        <li class="toc-item"><a href="#prediction-quality" style="padding-left: 28px; font-size: 12px;">Prediction Quality</a></li>
+        <li class="toc-item"><a href="#training-serving-skew" style="padding-left: 28px; font-size: 12px;">Training-Serving Skew</a></li>
+        <li class="toc-item"><a href="#retraining-triggers" style="padding-left: 28px; font-size: 12px;">Retraining Pipelines</a></li>
         <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a></li>
         <li class="toc-item"><a href="#further-reading">Further Reading</a></li>
         <li class="toc-item"><a href="#assignments">Assignments</a></li>
@@ -409,18 +1280,80 @@
       </ul>
     </aside>
   </div>
+
+  <!-- Footer Navigation -->
   <footer class="chapter-footer">
     <div class="chapter-footer-inner">
-      <nav class="footer-nav"><a class="footer-nav-link" href="chapter-07.html"><span class="footer-nav-label">&larr; Previous Chapter</span><span class="footer-nav-title">07: Scalable Training Infrastructure</span></a><a class="footer-nav-link" href="chapter-09.html"><span class="footer-nav-label">Next Chapter &rarr;</span><span class="footer-nav-title">09: Production ML Systems</span></a></nav>
-      <div class="footer-brand">ILA (Iksha Learning Academy) &middot; AI &amp; Machine Learning Certification &middot; Advanced Track</div>
+      <nav class="footer-nav">
+        <a class="footer-nav-link" href="chapter-07.html">
+          <span class="footer-nav-label">&larr; Previous Chapter</span>
+          <span class="footer-nav-title">07: Monitoring and Observability</span>
+        </a>
+        <a class="footer-nav-link" href="chapter-09.html">
+          <span class="footer-nav-label">Next Chapter &rarr;</span>
+          <span class="footer-nav-title">09: Production ML Systems</span>
+        </a>
+      </nav>
+      <div class="footer-brand">
+        ILA (Iksha Learning Academy) &middot; AI &amp; ML Engineering Certification &middot; Level 2
+      </div>
     </div>
   </footer>
+
+  <!-- ════════════════════════════════════════
+       SCRIPTS
+       ════════════════════════════════════════ -->
   <script>
-    window.addEventListener('scroll',()=>{const s=window.scrollY;const d=document.documentElement.scrollHeight-window.innerHeight;document.getElementById('progressBar').style.width=(d>0?(s/d)*100:0)+'%'});
-    const tocLinks=document.querySelectorAll('.toc-item a');const sections=[];tocLinks.forEach(l=>{const id=l.getAttribute('href').slice(1);const el=document.getElementById(id);if(el)sections.push({id,el,link:l})});
-    const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{const item=sections.find(s=>s.el===entry.target);if(item&&entry.isIntersecting){tocLinks.forEach(l=>l.classList.remove('active'));item.link.classList.add('active')}})},{rootMargin:'-80px 0px -60% 0px',threshold:0});
-    sections.forEach(s=>observer.observe(s.el));
-    function copyCode(btn){const pre=btn.closest('.code-block').querySelector('pre');navigator.clipboard.writeText(pre.textContent).then(()=>{btn.classList.add('copied');btn.textContent='Copied!';setTimeout(()=>{btn.classList.remove('copied');btn.textContent='Copy'},2000)})}
+    // ── Progress Bar ──
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      document.getElementById('progressBar').style.width = progress + '%';
+    });
+
+    // ── Active TOC ──
+    const tocLinks = document.querySelectorAll('.toc-item a');
+    const sections = [];
+
+    tocLinks.forEach(link => {
+      const id = link.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) sections.push({ id, el, link });
+    });
+
+    const observerOptions = {
+      rootMargin: '-80px 0px -60% 0px',
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const item = sections.find(s => s.el === entry.target);
+        if (item) {
+          if (entry.isIntersecting) {
+            tocLinks.forEach(l => l.classList.remove('active'));
+            item.link.classList.add('active');
+          }
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(s => observer.observe(s.el));
+
+    // ── Copy Code ──
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      const text = pre.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.classList.add('copied');
+        btn.textContent = 'Copied!';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.textContent = 'Copy';
+        }, 2000);
+      });
+    }
   </script>
 </body>
 </html>

@@ -8,363 +8,1888 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
-    :root{--ink:#0f172a;--ink-light:#334155;--ink-muted:#64748b;--surface:#ffffff;--surface-alt:#f8fafc;--surface-warm:#fffbeb;--border:#e2e8f0;--border-light:#f1f5f9;--teal-50:#f0fdfa;--teal-100:#ccfbf1;--teal-200:#99f6e4;--teal-500:#14b8a6;--teal-600:#0d9488;--teal-700:#0f766e;--teal-800:#115e59;--teal-900:#134e4a;--blue-50:#eff6ff;--blue-100:#dbeafe;--blue-500:#3b82f6;--blue-600:#2563eb;--blue-700:#1d4ed8;--amber-50:#fffbeb;--amber-100:#fef3c7;--amber-500:#f59e0b;--amber-600:#d97706;--red-50:#fef2f2;--red-100:#fee2e2;--red-500:#ef4444;--red-600:#dc2626;--purple-50:#faf5ff;--purple-100:#f3e8ff;--purple-500:#a855f7;--purple-600:#9333ea;--font-sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;--font-serif:'Instrument Serif',Georgia,serif;--font-mono:'JetBrains Mono','Fira Code',monospace;--content-max:780px;--sidebar-width:280px;--ease:cubic-bezier(0.4,0,0.2,1)}
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}body{font-family:var(--font-sans);font-size:16px;line-height:1.7;color:var(--ink);background:var(--surface)}
-    .progress-bar{position:fixed;top:0;left:0;width:0%;height:3px;background:linear-gradient(90deg,var(--teal-500),var(--blue-500));z-index:1000;transition:width .15s var(--ease)}.top-nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem}.top-nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px}.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--teal-800)}.nav-brand-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--teal-600),var(--teal-800));border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px}.nav-brand-text{font-weight:700;font-size:15px;letter-spacing:-.02em}.nav-chapter-nav{display:flex;align-items:center;gap:8px}.nav-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;color:var(--ink-muted);border:1px solid var(--border);background:#fff;transition:all .2s var(--ease);cursor:pointer}.nav-btn:hover{color:var(--ink);border-color:var(--teal-500);background:var(--teal-50)}.nav-btn.disabled{opacity:.4;pointer-events:none}.nav-current{font-size:13px;font-weight:600;color:var(--ink-light);padding:0 4px}
-    .hero{background:linear-gradient(170deg,var(--teal-50) 0%,var(--surface) 50%,var(--blue-50) 100%);border-bottom:1px solid var(--border);padding:4rem 2rem 3.5rem}.hero-inner{max-width:var(--content-max);margin:0 auto}.hero-chapter-label{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--teal-700);text-transform:uppercase;letter-spacing:.08em;margin-bottom:1rem}.hero-chapter-label span{background:var(--teal-100);padding:3px 10px;border-radius:100px}.hero h1{font-family:var(--font-serif);font-size:clamp(2.4rem,5vw,3.2rem);font-weight:400;line-height:1.15;color:var(--ink);margin-bottom:1rem}.hero-subtitle{font-size:1.15rem;color:var(--ink-light);line-height:1.65;max-width:640px}.hero-meta{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1.5rem}.hero-meta-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-muted)}.hero-meta-item svg{width:16px;height:16px;color:var(--teal-600)}
-    .main-layout{max-width:1200px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:1fr var(--sidebar-width);gap:4rem;align-items:start}.content{padding:3rem 0 6rem;min-width:0}.sidebar{position:sticky;top:76px;padding:2rem 0;max-height:calc(100vh - 76px);overflow-y:auto}.sidebar-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-muted);margin-bottom:1rem;padding-left:14px}.toc-list{list-style:none}.toc-item a{display:block;padding:6px 14px;font-size:13px;color:var(--ink-muted);text-decoration:none;border-left:2px solid transparent;transition:all .2s var(--ease);line-height:1.5}.toc-item a:hover{color:var(--ink);background:var(--surface-alt)}.toc-item a.active{color:var(--teal-700);border-left-color:var(--teal-500);background:var(--teal-50);font-weight:500}
-    .content h2{font-family:var(--font-serif);font-size:1.85rem;font-weight:400;color:var(--ink);margin:3rem 0 1rem;padding-top:1rem;scroll-margin-top:80px}.content h2:first-child{margin-top:0}.content h3{font-size:1.15rem;font-weight:600;color:var(--ink);margin:2rem 0 .75rem;scroll-margin-top:80px}.content p{margin-bottom:1.25rem;color:var(--ink-light)}.content strong{color:var(--ink);font-weight:600}.content a{color:var(--teal-700);text-decoration:underline;text-decoration-color:var(--teal-200);text-underline-offset:3px}.content ul,.content ol{margin-bottom:1.25rem;padding-left:1.5rem}.content li{margin-bottom:.5rem;color:var(--ink-light)}.content li::marker{color:var(--teal-500)}
-    .section-divider{border:none;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:3rem 0}
-    .callout{padding:1.25rem 1.5rem;border-radius:12px;margin-bottom:1.5rem;border:1px solid;position:relative}.callout-header{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;margin-bottom:.5rem}.callout-header svg{width:18px;height:18px;flex-shrink:0}.callout p:last-child{margin-bottom:0}.callout.concept{background:var(--blue-50);border-color:var(--blue-100)}.callout.concept .callout-header{color:var(--blue-700)}.callout.important{background:var(--amber-50);border-color:var(--amber-100)}.callout.important .callout-header{color:var(--amber-600)}.callout.danger{background:var(--red-50);border-color:var(--red-100)}.callout.danger .callout-header{color:var(--red-600)}.callout.tip{background:var(--purple-50);border-color:var(--purple-100)}.callout.tip .callout-header{color:var(--purple-600)}.callout.success{background:var(--teal-50);border-color:var(--teal-100)}.callout.success .callout-header{color:var(--teal-700)}
-    .code-block{position:relative;margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}.code-header{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:var(--surface-alt);border-bottom:1px solid var(--border);font-size:12px;color:var(--ink-muted)}.code-lang{font-family:var(--font-mono);font-weight:600;text-transform:uppercase;letter-spacing:.05em}.code-copy{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:#fff;font-size:11px;font-family:var(--font-sans);color:var(--ink-muted);cursor:pointer;transition:all .2s var(--ease)}.code-copy:hover{border-color:var(--teal-500);color:var(--teal-700)}.code-copy.copied{background:var(--teal-50);border-color:var(--teal-500);color:var(--teal-700)}
-    pre{margin:0;padding:1.25rem 1.5rem;overflow-x:auto;background:#1e293b;font-family:var(--font-mono);font-size:13.5px;line-height:1.7;color:#e2e8f0}code{font-family:var(--font-mono);font-size:.88em}p code,li code{padding:2px 7px;background:var(--surface-alt);border:1px solid var(--border);border-radius:5px;color:var(--teal-800);font-size:.85em}
-    .hl-keyword{color:#c084fc}.hl-string{color:#86efac}.hl-comment{color:#64748b;font-style:italic}.hl-function{color:#7dd3fc}.hl-number{color:#fbbf24}.hl-flag{color:#f472b6}
-    details{margin-bottom:1.25rem;border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .2s var(--ease)}details[open]{border-color:var(--teal-200)}details summary{padding:1rem 1.25rem;font-weight:600;font-size:15px;cursor:pointer;background:var(--surface-alt);list-style:none;display:flex;align-items:center;gap:10px;transition:background .2s var(--ease);user-select:none}details summary::-webkit-details-marker{display:none}details summary::before{content:'';width:20px;height:20px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain;flex-shrink:0;transition:transform .2s var(--ease)}details[open] summary::before{transform:rotate(90deg)}details summary:hover{background:var(--teal-50)}.details-body{padding:1.25rem 1.5rem}.details-body p:last-child{margin-bottom:0}
-    .video-card{margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}.video-wrapper{position:relative;padding-bottom:56.25%;height:0;background:#0f172a}.video-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}.video-caption{padding:12px 16px;background:var(--surface-alt);font-size:13px;color:var(--ink-muted);display:flex;align-items:center;gap:6px}.video-caption svg{width:14px;height:14px;color:var(--red-500)}
-    .resource-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1rem;margin-bottom:1.5rem}.resource-card{display:flex;gap:14px;padding:1rem 1.25rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all .2s var(--ease);background:#fff}.resource-card:hover{border-color:var(--teal-300);background:var(--teal-50);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.04)}.resource-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}.resource-icon.docs{background:var(--blue-50);color:var(--blue-600)}.resource-icon.video{background:var(--red-50);color:var(--red-500)}.resource-icon.github{background:var(--ink);color:#fff}.resource-icon.article{background:var(--amber-50);color:var(--amber-600)}.resource-info{min-width:0}.resource-title{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:2px;line-height:1.4}.resource-desc{font-size:12px;color:var(--ink-muted);line-height:1.5}
-    .assignment{border:2px solid var(--teal-200);border-radius:14px;padding:1.5rem 1.75rem;margin-bottom:1.5rem;background:linear-gradient(135deg,var(--teal-50) 0%,#fff 100%)}.assignment-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}.assignment-label{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--teal-700)}.assignment-difficulty{display:inline-flex;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:600}.difficulty-l1{background:var(--teal-100);color:var(--teal-800)}.difficulty-l2{background:var(--amber-100);color:var(--amber-600)}.difficulty-l3{background:var(--red-100);color:var(--red-600)}.assignment h4{font-size:1.05rem;font-weight:700;margin-bottom:.75rem}.assignment p{font-size:14px}
-    .checklist{list-style:none;padding:0}.checklist li{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border-light);font-size:14px}.checklist li:last-child{border-bottom:none}.check-box{width:20px;height:20px;border-radius:6px;border:2px solid var(--border);flex-shrink:0;margin-top:1px;cursor:pointer;transition:all .15s var(--ease);display:flex;align-items:center;justify-content:center}.check-box:hover{border-color:var(--teal-500)}.check-box.checked{background:var(--teal-500);border-color:var(--teal-500)}.check-box.checked::after{content:'';width:10px;height:10px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain}
-    .diagram{margin:1.5rem 0;padding:2rem;background:var(--surface-alt);border:1px solid var(--border);border-radius:14px;overflow-x:auto}.diagram pre{background:transparent;color:var(--ink);padding:0;font-size:13px;line-height:1.6}.diagram-caption{margin-top:1rem;font-size:12px;color:var(--ink-muted);text-align:center;font-style:italic}
-    .chapter-footer{border-top:1px solid var(--border);padding:3rem 2rem;background:var(--surface-alt)}.chapter-footer-inner{max-width:var(--content-max);margin:0 auto}.footer-nav{display:flex;justify-content:space-between;align-items:center;gap:1rem}.footer-nav-link{display:flex;flex-direction:column;gap:4px;padding:1rem 1.5rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all .2s var(--ease);max-width:320px;background:#fff}.footer-nav-link:hover{border-color:var(--teal-300);box-shadow:0 4px 12px rgba(0,0,0,.04)}.footer-nav-label{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--teal-600)}.footer-nav-title{font-size:15px;font-weight:600;color:var(--ink)}.footer-brand{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border);font-size:13px;color:var(--ink-muted)}
-    @media(max-width:960px){.main-layout{grid-template-columns:1fr}.sidebar{display:none}.resource-grid{grid-template-columns:1fr}}@media(max-width:640px){.hero{padding:2.5rem 1.25rem 2rem}.main-layout{padding:0 1.25rem}.content{padding:2rem 0 4rem}pre{padding:1rem;font-size:12.5px}.footer-nav{flex-direction:column}.footer-nav-link{max-width:100%;width:100%}}@media print{.top-nav,.sidebar,.progress-bar{display:none}.main-layout{display:block}.content{padding:0}.hero{background:#fff;border:none}pre{background:#f1f5f9;color:var(--ink);border:1px solid var(--border)}}
+    /* ═══════════════════════════════════════════════
+       ILA DESIGN SYSTEM — v1.0
+       Iksha Learning Academy
+       ═══════════════════════════════════════════════ */
+
+    :root {
+      /* Palette */
+      --ink:        #0f172a;
+      --ink-light:  #334155;
+      --ink-muted:  #64748b;
+      --surface:    #ffffff;
+      --surface-alt:#f8fafc;
+      --surface-warm:#fffbeb;
+      --border:     #e2e8f0;
+      --border-light:#f1f5f9;
+
+      /* Brand */
+      --teal-50:  #f0fdfa;
+      --teal-100: #ccfbf1;
+      --teal-200: #99f6e4;
+      --teal-500: #14b8a6;
+      --teal-600: #0d9488;
+      --teal-700: #0f766e;
+      --teal-800: #115e59;
+      --teal-900: #134e4a;
+
+      --blue-50:  #eff6ff;
+      --blue-100: #dbeafe;
+      --blue-500: #3b82f6;
+      --blue-600: #2563eb;
+      --blue-700: #1d4ed8;
+
+      --amber-50:  #fffbeb;
+      --amber-100: #fef3c7;
+      --amber-500: #f59e0b;
+      --amber-600: #d97706;
+
+      --red-50:   #fef2f2;
+      --red-100:  #fee2e2;
+      --red-500:  #ef4444;
+      --red-600:  #dc2626;
+
+      --purple-50:  #faf5ff;
+      --purple-100: #f3e8ff;
+      --purple-500: #a855f7;
+      --purple-600: #9333ea;
+
+      /* Typography */
+      --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-serif: 'Instrument Serif', Georgia, serif;
+      --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
+
+      /* Spacing */
+      --content-max: 780px;
+      --sidebar-width: 280px;
+
+      /* Transitions */
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--ink);
+      background: var(--surface);
+    }
+
+    /* ── PROGRESS BAR ─────────────────────────── */
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--teal-500), var(--blue-500));
+      z-index: 1000;
+      transition: width 0.15s var(--ease);
+    }
+
+    /* ── TOP NAV ──────────────────────────────── */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+    }
+
+    .top-nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--teal-800);
+    }
+
+    .nav-brand-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--teal-600), var(--teal-800));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .nav-brand-text {
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-chapter-nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      color: var(--ink-muted);
+      border: 1px solid var(--border);
+      background: white;
+      transition: all 0.2s var(--ease);
+      cursor: pointer;
+    }
+
+    .nav-btn:hover {
+      color: var(--ink);
+      border-color: var(--teal-500);
+      background: var(--teal-50);
+    }
+
+    .nav-btn.disabled {
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    .nav-current {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink-light);
+      padding: 0 4px;
+    }
+
+    /* ── HERO ─────────────────────────────────── */
+    .hero {
+      background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 4rem 2rem 3.5rem;
+    }
+
+    .hero-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
+    }
+
+    .hero-chapter-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--teal-700);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 1rem;
+    }
+
+    .hero-chapter-label span {
+      background: var(--teal-100);
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+
+    .hero h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(2.4rem, 5vw, 3.2rem);
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: 1rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: var(--ink-light);
+      line-height: 1.65;
+      max-width: 640px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .hero-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
+    .hero-meta-item svg {
+      width: 16px;
+      height: 16px;
+      color: var(--teal-600);
+    }
+
+    /* ── MAIN LAYOUT ──────────────────────────── */
+    .main-layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr var(--sidebar-width);
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .content {
+      padding: 3rem 0 6rem;
+      min-width: 0;
+    }
+
+    /* ── SIDEBAR TOC ──────────────────────────── */
+    .sidebar {
+      position: sticky;
+      top: 76px;
+      padding: 2rem 0;
+      max-height: calc(100vh - 76px);
+      overflow-y: auto;
+    }
+
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-muted);
+      margin-bottom: 1rem;
+      padding-left: 14px;
+    }
+
+    .toc-list {
+      list-style: none;
+    }
+
+    .toc-item a {
+      display: block;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--ink-muted);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: all 0.2s var(--ease);
+      line-height: 1.5;
+    }
+
+    .toc-item a:hover {
+      color: var(--ink);
+      background: var(--surface-alt);
+    }
+
+    .toc-item a.active {
+      color: var(--teal-700);
+      border-left-color: var(--teal-500);
+      background: var(--teal-50);
+      font-weight: 500;
+    }
+
+    /* ── TYPOGRAPHY ────────────────────────────── */
+    .content h2 {
+      font-family: var(--font-serif);
+      font-size: 1.85rem;
+      font-weight: 400;
+      color: var(--ink);
+      margin: 3rem 0 1rem;
+      padding-top: 1rem;
+      scroll-margin-top: 80px;
+    }
+
+    .content h2:first-child {
+      margin-top: 0;
+    }
+
+    .content h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 2rem 0 0.75rem;
+      scroll-margin-top: 80px;
+    }
+
+    .content p {
+      margin-bottom: 1.25rem;
+      color: var(--ink-light);
+    }
+
+    .content strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .content a {
+      color: var(--teal-700);
+      text-decoration: underline;
+      text-decoration-color: var(--teal-200);
+      text-underline-offset: 3px;
+      transition: text-decoration-color 0.2s;
+    }
+
+    .content a:hover {
+      text-decoration-color: var(--teal-600);
+    }
+
+    .content ul, .content ol {
+      margin-bottom: 1.25rem;
+      padding-left: 1.5rem;
+    }
+
+    .content li {
+      margin-bottom: 0.5rem;
+      color: var(--ink-light);
+    }
+
+    .content li::marker {
+      color: var(--teal-500);
+    }
+
+    /* ── SECTION DIVIDER ──────────────────────── */
+    .section-divider {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 3rem 0;
+    }
+
+    /* ── CALLOUT BOXES ────────────────────────── */
+    .callout {
+      padding: 1.25rem 1.5rem;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+      border: 1px solid;
+      position: relative;
+    }
+
+    .callout-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .callout-header svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    .callout p:last-child { margin-bottom: 0; }
+
+    .callout.concept {
+      background: var(--blue-50);
+      border-color: var(--blue-100);
+    }
+    .callout.concept .callout-header { color: var(--blue-700); }
+
+    .callout.important {
+      background: var(--amber-50);
+      border-color: var(--amber-100);
+    }
+    .callout.important .callout-header { color: var(--amber-600); }
+
+    .callout.danger {
+      background: var(--red-50);
+      border-color: var(--red-100);
+    }
+    .callout.danger .callout-header { color: var(--red-600); }
+
+    .callout.tip {
+      background: var(--purple-50);
+      border-color: var(--purple-100);
+    }
+    .callout.tip .callout-header { color: var(--purple-600); }
+
+    .callout.success {
+      background: var(--teal-50);
+      border-color: var(--teal-100);
+    }
+    .callout.success .callout-header { color: var(--teal-700); }
+
+    /* ── CODE BLOCKS ──────────────────────────── */
+    .code-block {
+      position: relative;
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+      background: var(--surface-alt);
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--ink-muted);
+    }
+
+    .code-lang {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .code-copy {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: white;
+      font-size: 11px;
+      font-family: var(--font-sans);
+      color: var(--ink-muted);
+      cursor: pointer;
+      transition: all 0.2s var(--ease);
+    }
+
+    .code-copy:hover {
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    .code-copy.copied {
+      background: var(--teal-50);
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    pre {
+      margin: 0;
+      padding: 1.25rem 1.5rem;
+      overflow-x: auto;
+      background: #1e293b;
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: #e2e8f0;
+    }
+
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.88em;
+    }
+
+    p code, li code {
+      padding: 2px 7px;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      color: var(--teal-800);
+      font-size: 0.85em;
+    }
+
+    /* Syntax highlights (minimal) */
+    .hl-keyword  { color: #c084fc; }
+    .hl-string   { color: #86efac; }
+    .hl-comment  { color: #64748b; font-style: italic; }
+    .hl-function { color: #7dd3fc; }
+    .hl-number   { color: #fbbf24; }
+    .hl-flag     { color: #f472b6; }
+
+    /* ── COLLAPSIBLE (DETAILS) ────────────────── */
+    details {
+      margin-bottom: 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.2s var(--ease);
+    }
+
+    details[open] {
+      border-color: var(--teal-200);
+    }
+
+    details summary {
+      padding: 1rem 1.25rem;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      background: var(--surface-alt);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.2s var(--ease);
+      user-select: none;
+    }
+
+    details summary::-webkit-details-marker { display: none; }
+
+    details summary::before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+      flex-shrink: 0;
+      transition: transform 0.2s var(--ease);
+    }
+
+    details[open] summary::before {
+      transform: rotate(90deg);
+    }
+
+    details summary:hover {
+      background: var(--teal-50);
+    }
+
+    .details-body {
+      padding: 1.25rem 1.5rem;
+    }
+
+    .details-body p:last-child { margin-bottom: 0; }
+
+    /* ── VIDEO EMBED ──────────────────────────── */
+    .video-card {
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      background: #0f172a;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .video-caption {
+      padding: 12px 16px;
+      background: var(--surface-alt);
+      font-size: 13px;
+      color: var(--ink-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .video-caption svg {
+      width: 14px;
+      height: 14px;
+      color: var(--red-500);
+    }
+
+    /* ── RESOURCE CARDS ───────────────────────── */
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .resource-card {
+      display: flex;
+      gap: 14px;
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      background: white;
+    }
+
+    .resource-card:hover {
+      border-color: var(--teal-300);
+      background: var(--teal-50);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .resource-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 18px;
+    }
+
+    .resource-icon.docs    { background: var(--blue-50);   color: var(--blue-600); }
+    .resource-icon.video   { background: var(--red-50);    color: var(--red-500); }
+    .resource-icon.github  { background: var(--ink);       color: white; }
+    .resource-icon.article { background: var(--amber-50);  color: var(--amber-600); }
+    .resource-icon.pdf     { background: var(--purple-50); color: var(--purple-600); }
+
+    .resource-info {
+      min-width: 0;
+    }
+
+    .resource-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 2px;
+      line-height: 1.4;
+    }
+
+    .resource-desc {
+      font-size: 12px;
+      color: var(--ink-muted);
+      line-height: 1.5;
+    }
+
+    /* ── ASSIGNMENT CARDS ─────────────────────── */
+    .assignment {
+      border: 2px solid var(--teal-200);
+      border-radius: 14px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--teal-50) 0%, white 100%);
+    }
+
+    .assignment-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .assignment-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--teal-700);
+    }
+
+    .assignment-difficulty {
+      display: inline-flex;
+      padding: 4px 10px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .difficulty-l1 { background: var(--teal-100); color: var(--teal-800); }
+    .difficulty-l2 { background: var(--amber-100); color: var(--amber-600); }
+    .difficulty-l3 { background: var(--red-100); color: var(--red-600); }
+
+    .assignment h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .assignment p {
+      font-size: 14px;
+    }
+
+    .checklist {
+      list-style: none;
+      padding: 0;
+    }
+
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-light);
+      font-size: 14px;
+    }
+
+    .checklist li:last-child { border-bottom: none; }
+
+    .check-box {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      border: 2px solid var(--border);
+      flex-shrink: 0;
+      margin-top: 1px;
+      cursor: pointer;
+      transition: all 0.15s var(--ease);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .check-box:hover {
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked {
+      background: var(--teal-500);
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+    }
+
+    /* ── ARCHITECTURE DIAGRAM ─────────────────── */
+    .diagram {
+      margin: 1.5rem 0;
+      padding: 2rem;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow-x: auto;
+    }
+
+    .diagram pre {
+      background: transparent;
+      color: var(--ink);
+      padding: 0;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .diagram-caption {
+      margin-top: 1rem;
+      font-size: 12px;
+      color: var(--ink-muted);
+      text-align: center;
+      font-style: italic;
+    }
+
+    /* ── FOOTER ───────────────────────────────── */
+    .chapter-footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      background: var(--surface-alt);
+    }
+
+    .chapter-footer-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
+    }
+
+    .footer-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .footer-nav-link {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 1rem 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      max-width: 320px;
+      background: white;
+    }
+
+    .footer-nav-link:hover {
+      border-color: var(--teal-300);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .footer-nav-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--teal-600);
+    }
+
+    .footer-nav-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .footer-brand {
+      text-align: center;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
+    /* ── RESPONSIVE ───────────────────────────── */
+    @media (max-width: 960px) {
+      .main-layout {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        display: none;
+      }
+      .resource-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero { padding: 2.5rem 1.25rem 2rem; }
+      .main-layout { padding: 0 1.25rem; }
+      .content { padding: 2rem 0 4rem; }
+      pre { padding: 1rem; font-size: 12.5px; }
+      .footer-nav { flex-direction: column; }
+      .footer-nav-link { max-width: 100%; width: 100%; }
+    }
+
+    /* ── PRINT ────────────────────────────────── */
+    @media print {
+      .top-nav, .sidebar, .progress-bar { display: none; }
+      .main-layout { display: block; }
+      .content { padding: 0; }
+      .hero { background: white; border: none; }
+      pre { background: #f1f5f9; color: var(--ink); border: 1px solid var(--border); }
+    }
   </style>
 </head>
 <body>
+  <!-- Progress Bar -->
   <div class="progress-bar" id="progressBar"></div>
-  <nav class="top-nav"><div class="top-nav-inner"><a class="nav-brand" href="index.html"><div class="nav-brand-icon">ILA</div><span class="nav-brand-text">Iksha Learning Academy</span></a><div class="nav-chapter-nav"><a class="nav-btn" href="chapter-04.html">&larr; Previous</a><span class="nav-current">05 / 08</span><a class="nav-btn" href="chapter-06.html">Next &rarr;</a></div></div></nav>
 
-  <header class="hero"><div class="hero-inner">
-    <div class="hero-chapter-label"><span>Chapter 05</span> &middot; Phase 3: React Fundamentals</div>
-    <h1>React Components and JSX</h1>
-    <p class="hero-subtitle">Learn to build user interfaces with React's component model. Understand JSX syntax, functional components, props for data flow, conditional rendering, list rendering, and component composition patterns that scale from simple pages to complex applications.</p>
-    <div class="hero-meta">
-      <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Estimated: 3&ndash;4 days</div>
-      <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>3 Advancement Levels</div>
-      <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>3 Assignments</div>
+  <!-- Top Navigation -->
+  <nav class="top-nav">
+    <div class="top-nav-inner">
+      <a class="nav-brand" href="index.html">
+        <div class="nav-brand-icon">ILA</div>
+        <span class="nav-brand-text">Iksha Learning Academy</span>
+      </a>
+      <div class="nav-chapter-nav">
+        <a class="nav-btn" href="chapter-04.html">&larr; Previous</a>
+        <span class="nav-current">05 / 08</span>
+        <a class="nav-btn" href="chapter-06.html">Next &rarr;</a>
+      </div>
     </div>
-  </div></header>
+  </nav>
 
+  <!-- Hero -->
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-chapter-label">
+        <span>Chapter 05</span> &middot; Phase 2: React Front-End Development
+      </div>
+      <h1>React Components and JSX</h1>
+      <p class="hero-subtitle">
+        Learn to build user interfaces with React's component model and JSX syntax &mdash; functional components,
+        props, composition patterns, conditional rendering, lists with keys, and event handling.
+        This is where your Rails API meets the browser.
+      </p>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Estimated: 3&ndash;4 days
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          3 Advancement Levels
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          3 Assignments
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content + Sidebar -->
   <div class="main-layout">
     <main class="content">
 
+      <!-- ════════════════════════════════════════
+           SECTION 1: WHY THIS MATTERS
+           ════════════════════════════════════════ -->
       <h2 id="why-this-matters">Why This Matters</h2>
-      <p>React is the most widely used JavaScript library for building user interfaces. It introduces a fundamental shift in how you think about UI: instead of manipulating the DOM directly, you describe <strong>what</strong> the interface should look like for a given state, and React figures out <strong>how</strong> to update the DOM efficiently.</p>
-      <p>Components are React's building blocks. Every button, form, card, page, and layout in a React application is a component. They are reusable, composable, and testable. Once you understand components and props, you understand how to build any UI &mdash; because every complex interface is just a tree of simple components.</p>
+
+      <p>
+        React is the most widely adopted front-end library in professional web development, and for
+        good reason. It introduced a <strong>component-based architecture</strong> that fundamentally
+        changed how developers think about building user interfaces. Instead of manipulating the DOM
+        directly with imperative code, you describe what the UI should look like for any given state,
+        and React figures out how to update the browser efficiently. This declarative approach eliminates
+        entire categories of bugs related to DOM synchronization.
+      </p>
+
+      <p>
+        In a full-stack Rails + React application, your Rails API handles data persistence, business logic,
+        authentication, and authorization. React handles everything the user sees and interacts with. The
+        boundary between these two layers is clean JSON over HTTP. But building a React front-end that is
+        maintainable, testable, and performant requires understanding components deeply &mdash; not just
+        how to render HTML, but how to decompose a UI into reusable pieces, pass data between them, and
+        handle user interactions elegantly.
+      </p>
+
+      <p>
+        JSX is the syntax that makes React practical. It looks like HTML embedded in JavaScript, but it is
+        actually syntactic sugar for function calls. Understanding that JSX compiles to
+        <code>React.createElement</code> calls helps you debug rendering issues, understand error messages,
+        and write more intentional component code. This chapter builds the foundation for everything React
+        that follows &mdash; state management, API integration, routing, and testing all depend on solid
+        component fundamentals.
+      </p>
 
       <div class="callout concept">
-        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>Key Insight</div>
-        <p>React's mental model is: <strong>UI = f(state)</strong>. Your interface is a function of your data. When the data changes, React re-renders only the parts that need updating. This is why React applications feel fast &mdash; you never manually manipulate DOM nodes.</p>
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Key Insight
+        </div>
+        <p>
+          React components are just functions that return JSX. A component receives data through
+          <strong>props</strong> (like function arguments) and returns a description of what the UI
+          should look like. There is no magic &mdash; if you can write a JavaScript function, you can
+          write a React component. The power comes from composing many small components together.
+        </p>
       </div>
 
       <hr class="section-divider">
 
+      <!-- ════════════════════════════════════════
+           SECTION 2: KEY CONCEPTS
+           ════════════════════════════════════════ -->
       <h2 id="key-concepts">Key Concepts</h2>
 
-      <h3 id="jsx-syntax">1. JSX &mdash; JavaScript Meets HTML</h3>
-      <p>JSX is a syntax extension that lets you write HTML-like code inside JavaScript. It is not a template language &mdash; it compiles to regular JavaScript function calls. Every React component returns JSX that describes what should appear on screen.</p>
+      <h3 id="jsx-syntax">1. JSX Syntax and Expressions</h3>
+
+      <p>
+        JSX stands for JavaScript XML. It is a syntax extension that allows you to write HTML-like markup
+        directly inside JavaScript files. Under the hood, a build tool like Babel or SWC transforms JSX into
+        <code>React.createElement()</code> calls. This means JSX is not a template language &mdash; it has the
+        full power of JavaScript. You can embed any JavaScript expression inside JSX by wrapping it in
+        curly braces <code>{}</code>.
+      </p>
 
       <div class="code-block">
-        <div class="code-header"><span class="code-lang">jsx</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <div class="code-header">
+          <span class="code-lang">jsx</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
 <pre>
-<span class="hl-comment">// JSX looks like HTML but it is JavaScript</span>
-<span class="hl-keyword">const</span> <span class="hl-function">greeting</span> = &lt;h1&gt;Hello, World!&lt;/h1&gt;;
+<span class="hl-comment">// JSX looks like HTML but lives inside JavaScript</span>
+<span class="hl-keyword">const</span> <span class="hl-function">element</span> = &lt;h1&gt;Hello, World!&lt;/h1&gt;;
 
-<span class="hl-comment">// Embedding expressions with curly braces</span>
+<span class="hl-comment">// Embedding JavaScript expressions with curly braces</span>
 <span class="hl-keyword">const</span> name = <span class="hl-string">"Alice"</span>;
-<span class="hl-keyword">const</span> <span class="hl-function">element</span> = &lt;h1&gt;Hello, {name}!&lt;/h1&gt;;
+<span class="hl-keyword">const</span> <span class="hl-function">greeting</span> = &lt;h1&gt;Hello, {name}!&lt;/h1&gt;;
 
-<span class="hl-comment">// JSX expressions can be any valid JavaScript</span>
-<span class="hl-keyword">const</span> <span class="hl-function">price</span> = &lt;span&gt;${(<span class="hl-number">29.99</span> * <span class="hl-number">1.1</span>).toFixed(<span class="hl-number">2</span>)}&lt;/span&gt;;
+<span class="hl-comment">// Any valid JavaScript expression works inside {}</span>
+<span class="hl-keyword">const</span> <span class="hl-function">math</span> = &lt;p&gt;Two plus two is {<span class="hl-number">2</span> + <span class="hl-number">2</span>}&lt;/p&gt;;
+<span class="hl-keyword">const</span> <span class="hl-function">upper</span> = &lt;p&gt;{name.<span class="hl-function">toUpperCase</span>()}&lt;/p&gt;;
+<span class="hl-keyword">const</span> <span class="hl-function">today</span> = &lt;p&gt;Date: {<span class="hl-keyword">new</span> <span class="hl-function">Date</span>().<span class="hl-function">toLocaleDateString</span>()}&lt;/p&gt;;
 
-<span class="hl-comment">// Attributes use camelCase (className, not class; onClick, not onclick)</span>
-<span class="hl-keyword">const</span> <span class="hl-function">button</span> = (
-  &lt;button className=<span class="hl-string">"btn-primary"</span> onClick={handleClick}&gt;
-    Click Me
-  &lt;/button&gt;
+<span class="hl-comment">// JSX attributes use camelCase (className, not class)</span>
+<span class="hl-keyword">const</span> <span class="hl-function">styledElement</span> = (
+  &lt;div className=<span class="hl-string">"container"</span>&gt;
+    &lt;label htmlFor=<span class="hl-string">"email"</span>&gt;Email&lt;/label&gt;
+    &lt;input
+      id=<span class="hl-string">"email"</span>
+      type=<span class="hl-string">"email"</span>
+      placeholder=<span class="hl-string">"you@example.com"</span>
+      autoComplete=<span class="hl-string">"email"</span>
+    /&gt;
+  &lt;/div&gt;
 );
 
-<span class="hl-comment">// Multi-line JSX must be wrapped in parentheses</span>
-<span class="hl-comment">// and have a single root element (or use fragments)</span>
-<span class="hl-keyword">const</span> <span class="hl-function">card</span> = (
+<span class="hl-comment">// Inline styles use a JavaScript object with camelCase properties</span>
+<span class="hl-keyword">const</span> <span class="hl-function">inlineStyled</span> = (
+  &lt;div style={{ backgroundColor: <span class="hl-string">"#f0fdfa"</span>, padding: <span class="hl-string">"1rem"</span>, borderRadius: <span class="hl-string">"8px"</span> }}&gt;
+    &lt;p style={{ color: <span class="hl-string">"#0f766e"</span>, fontWeight: <span class="hl-number">600</span> }}&gt;Styled with objects&lt;/p&gt;
+  &lt;/div&gt;
+);
+
+<span class="hl-comment">// JSX must have a single root element (use fragments to avoid extra divs)</span>
+<span class="hl-keyword">const</span> <span class="hl-function">fragment</span> = (
   &lt;&gt;
-    &lt;h2&gt;Title&lt;/h2&gt;
-    &lt;p&gt;Description&lt;/p&gt;
+    &lt;h1&gt;Title&lt;/h1&gt;
+    &lt;p&gt;Paragraph&lt;/p&gt;
   &lt;/&gt;
 );
 </pre>
       </div>
 
       <div class="callout important">
-        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>JSX is Not HTML</div>
-        <p>Key differences: use <code>className</code> instead of <code>class</code>, <code>htmlFor</code> instead of <code>for</code>, and <code>style</code> takes an object (<code>style=&#123;&#123; color: "red" &#125;&#125;</code>), not a string. Self-closing tags must have a slash: <code>&lt;img /&gt;</code>, <code>&lt;br /&gt;</code>, <code>&lt;input /&gt;</code>.</p>
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          JSX is not HTML
+        </div>
+        <p>
+          JSX uses <code>className</code> instead of <code>class</code>, <code>htmlFor</code> instead of
+          <code>for</code>, and all attributes are camelCase (<code>onClick</code>, <code>tabIndex</code>,
+          <code>autoFocus</code>). This is because JSX compiles to JavaScript, and <code>class</code> and
+          <code>for</code> are reserved keywords in JavaScript. Self-closing tags like <code>&lt;img&gt;</code>
+          and <code>&lt;input&gt;</code> must include the closing slash: <code>&lt;img /&gt;</code>.
+        </p>
       </div>
 
       <h3 id="functional-components">2. Functional Components</h3>
-      <p>Components are JavaScript functions that return JSX. They accept a single argument called <strong>props</strong> (properties) &mdash; an object containing data passed from the parent component. By convention, component names start with a capital letter.</p>
+
+      <p>
+        In modern React, <strong>all components are functions</strong>. A functional component is a JavaScript
+        function that accepts a single argument (an object called <code>props</code>) and returns JSX. The
+        function name must start with an uppercase letter so React can distinguish your components from
+        regular HTML elements. Components let you split the UI into independent, reusable pieces that you
+        can think about in isolation.
+      </p>
 
       <div class="code-block">
-        <div class="code-header"><span class="code-lang">jsx</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <div class="code-header">
+          <span class="code-lang">jsx</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
 <pre>
-<span class="hl-comment">// A simple component — receives props, returns JSX</span>
-<span class="hl-keyword">function</span> <span class="hl-function">UserCard</span>({ name, email, role }) {
+<span class="hl-comment">// The simplest possible component</span>
+<span class="hl-keyword">function</span> <span class="hl-function">Welcome</span>() {
+  <span class="hl-keyword">return</span> &lt;h1&gt;Welcome to ILA!&lt;/h1&gt;;
+}
+
+<span class="hl-comment">// Arrow function syntax (equally valid, common in codebases)</span>
+<span class="hl-keyword">const</span> <span class="hl-function">Greeting</span> = () =&gt; {
+  <span class="hl-keyword">return</span> &lt;h1&gt;Welcome to ILA!&lt;/h1&gt;;
+};
+
+<span class="hl-comment">// Arrow function with implicit return (single expression)</span>
+<span class="hl-keyword">const</span> <span class="hl-function">ShortGreeting</span> = () =&gt; &lt;h1&gt;Welcome to ILA!&lt;/h1&gt;;
+
+<span class="hl-comment">// Component that accepts props</span>
+<span class="hl-keyword">function</span> <span class="hl-function">UserGreeting</span>({ name, role }) {
   <span class="hl-keyword">return</span> (
-    &lt;div className=<span class="hl-string">"user-card"</span>&gt;
-      &lt;h3&gt;{name}&lt;/h3&gt;
-      &lt;p&gt;{email}&lt;/p&gt;
-      &lt;span className=<span class="hl-string">"badge"</span>&gt;{role}&lt;/span&gt;
+    &lt;div className=<span class="hl-string">"user-greeting"</span>&gt;
+      &lt;h2&gt;Hello, {name}!&lt;/h2&gt;
+      &lt;p&gt;Your role: {role}&lt;/p&gt;
     &lt;/div&gt;
   );
 }
 
-<span class="hl-comment">// Arrow function syntax (equally valid)</span>
-<span class="hl-keyword">const</span> <span class="hl-function">Badge</span> = ({ text, variant = <span class="hl-string">"default"</span> }) =&gt; (
-  &lt;span className={<span class="hl-string">`badge badge-${variant}`</span>}&gt;{text}&lt;/span&gt;
-);
-
-<span class="hl-comment">// Using components — pass data via props</span>
+<span class="hl-comment">// Using the component (props passed as JSX attributes)</span>
 <span class="hl-keyword">function</span> <span class="hl-function">App</span>() {
   <span class="hl-keyword">return</span> (
     &lt;div&gt;
-      &lt;UserCard name=<span class="hl-string">"Alice"</span> email=<span class="hl-string">"alice@example.com"</span> role=<span class="hl-string">"admin"</span> /&gt;
-      &lt;UserCard name=<span class="hl-string">"Bob"</span> email=<span class="hl-string">"bob@example.com"</span> role=<span class="hl-string">"user"</span> /&gt;
+      &lt;UserGreeting name=<span class="hl-string">"Alice"</span> role=<span class="hl-string">"admin"</span> /&gt;
+      &lt;UserGreeting name=<span class="hl-string">"Bob"</span> role=<span class="hl-string">"editor"</span> /&gt;
+      &lt;UserGreeting name=<span class="hl-string">"Charlie"</span> role=<span class="hl-string">"viewer"</span> /&gt;
     &lt;/div&gt;
+  );
+}
+
+<span class="hl-comment">// A realistic component with multiple elements</span>
+<span class="hl-keyword">function</span> <span class="hl-function">ProductCard</span>({ title, price, imageUrl, inStock }) {
+  <span class="hl-keyword">return</span> (
+    &lt;article className=<span class="hl-string">"product-card"</span>&gt;
+      &lt;img src={imageUrl} alt={title} className=<span class="hl-string">"product-image"</span> /&gt;
+      &lt;div className=<span class="hl-string">"product-details"</span>&gt;
+        &lt;h3 className=<span class="hl-string">"product-title"</span>&gt;{title}&lt;/h3&gt;
+        &lt;span className=<span class="hl-string">"product-price"</span>&gt;${price.<span class="hl-function">toFixed</span>(<span class="hl-number">2</span>)}&lt;/span&gt;
+        &lt;span className={inStock ? <span class="hl-string">"in-stock"</span> : <span class="hl-string">"out-of-stock"</span>}&gt;
+          {inStock ? <span class="hl-string">"In Stock"</span> : <span class="hl-string">"Out of Stock"</span>}
+        &lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/article&gt;
   );
 }
 </pre>
       </div>
 
-      <h3 id="props">3. Props &mdash; Data Flow</h3>
-      <p>Props flow <strong>one direction</strong>: from parent to child. A child component never modifies its props. This unidirectional data flow makes React applications predictable and debuggable. You always know where data comes from by looking up the component tree.</p>
+      <h3 id="props-and-composition">3. Props, Children, and Composition</h3>
+
+      <p>
+        Props are how data flows in React &mdash; always <strong>downward from parent to child</strong>.
+        A parent component passes data to a child via props, and the child reads them as a plain JavaScript
+        object. Props are read-only: a child component must never modify its own props. This one-way data
+        flow makes React applications predictable and easy to debug, because you can always trace where data
+        comes from by following the component tree upward.
+      </p>
 
       <div class="code-block">
-        <div class="code-header"><span class="code-lang">jsx</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <div class="code-header">
+          <span class="code-lang">jsx</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
 <pre>
-<span class="hl-comment">// Props can be any JavaScript value</span>
-<span class="hl-keyword">function</span> <span class="hl-function">ProductCard</span>({ product, onAddToCart }) {
+<span class="hl-comment">// Props with default values</span>
+<span class="hl-keyword">function</span> <span class="hl-function">Button</span>({ label, variant = <span class="hl-string">"primary"</span>, size = <span class="hl-string">"md"</span>, disabled = <span class="hl-keyword">false</span> }) {
   <span class="hl-keyword">return</span> (
-    &lt;div className=<span class="hl-string">"product-card"</span>&gt;
-      &lt;img src={product.imageUrl} alt={product.name} /&gt;
-      &lt;h3&gt;{product.name}&lt;/h3&gt;
-      &lt;p className=<span class="hl-string">"price"</span>&gt;${product.price.toFixed(<span class="hl-number">2</span>)}&lt;/p&gt;
-      &lt;button onClick={() =&gt; onAddToCart(product.id)}&gt;
-        Add to Cart
-      &lt;/button&gt;
-    &lt;/div&gt;
+    &lt;button
+      className={<span class="hl-string">`btn btn-</span>${variant}<span class="hl-string"> btn-</span>${size}<span class="hl-string">`</span>}
+      disabled={disabled}
+    &gt;
+      {label}
+    &lt;/button&gt;
   );
 }
 
-<span class="hl-comment">// The children prop — content between opening and closing tags</span>
+<span class="hl-comment">// Using children prop for composition</span>
 <span class="hl-keyword">function</span> <span class="hl-function">Card</span>({ title, children }) {
   <span class="hl-keyword">return</span> (
     &lt;div className=<span class="hl-string">"card"</span>&gt;
-      &lt;div className=<span class="hl-string">"card-header"</span>&gt;{title}&lt;/div&gt;
-      &lt;div className=<span class="hl-string">"card-body"</span>&gt;{children}&lt;/div&gt;
+      &lt;div className=<span class="hl-string">"card-header"</span>&gt;
+        &lt;h3&gt;{title}&lt;/h3&gt;
+      &lt;/div&gt;
+      &lt;div className=<span class="hl-string">"card-body"</span>&gt;
+        {children}
+      &lt;/div&gt;
     &lt;/div&gt;
   );
 }
 
-<span class="hl-comment">// Usage — children is everything between the tags</span>
-&lt;Card title=<span class="hl-string">"User Profile"</span>&gt;
-  &lt;p&gt;Name: Alice&lt;/p&gt;
-  &lt;p&gt;Email: alice@example.com&lt;/p&gt;
-&lt;/Card&gt;
+<span class="hl-comment">// Composition: nesting components inside other components</span>
+<span class="hl-keyword">function</span> <span class="hl-function">Dashboard</span>() {
+  <span class="hl-keyword">return</span> (
+    &lt;div className=<span class="hl-string">"dashboard"</span>&gt;
+      &lt;Card title=<span class="hl-string">"User Statistics"</span>&gt;
+        &lt;p&gt;Total users: <span class="hl-number">1,234</span>&lt;/p&gt;
+        &lt;p&gt;Active today: <span class="hl-number">567</span>&lt;/p&gt;
+        &lt;Button label=<span class="hl-string">"View All"</span> variant=<span class="hl-string">"secondary"</span> /&gt;
+      &lt;/Card&gt;
+
+      &lt;Card title=<span class="hl-string">"Recent Orders"</span>&gt;
+        &lt;p&gt;Processing: <span class="hl-number">12</span>&lt;/p&gt;
+        &lt;p&gt;Shipped: <span class="hl-number">45</span>&lt;/p&gt;
+        &lt;Button label=<span class="hl-string">"Manage Orders"</span> /&gt;
+      &lt;/Card&gt;
+    &lt;/div&gt;
+  );
+}
+
+<span class="hl-comment">// Spreading props to pass them through</span>
+<span class="hl-keyword">function</span> <span class="hl-function">TextInput</span>({ label, error, ...inputProps }) {
+  <span class="hl-keyword">return</span> (
+    &lt;div className=<span class="hl-string">"form-field"</span>&gt;
+      &lt;label&gt;{label}&lt;/label&gt;
+      &lt;input {...inputProps} className={error ? <span class="hl-string">"input-error"</span> : <span class="hl-string">"input"</span>} /&gt;
+      {error &amp;&amp; &lt;span className=<span class="hl-string">"error-message"</span>&gt;{error}&lt;/span&gt;}
+    &lt;/div&gt;
+  );
+}
+
+<span class="hl-comment">// Usage: all standard input attributes pass through</span>
+&lt;TextInput
+  label=<span class="hl-string">"Email"</span>
+  type=<span class="hl-string">"email"</span>
+  placeholder=<span class="hl-string">"you@example.com"</span>
+  required
+  error=<span class="hl-string">"Email is required"</span>
+/&gt;
 </pre>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Pro Tip
+        </div>
+        <p>
+          Favor <strong>composition over configuration</strong>. Instead of building a single component with 20 props
+          to control every variation, build smaller components and compose them together. A
+          <code>&lt;Card&gt;</code> that accepts <code>children</code> is more flexible than a
+          <code>&lt;Card content={...} footer={...} sidebar={...} /&gt;</code> that tries to anticipate
+          every use case.
+        </p>
       </div>
 
       <h3 id="conditional-rendering">4. Conditional Rendering</h3>
-      <p>Since JSX is JavaScript, you use JavaScript expressions for conditional rendering. The three most common patterns are ternary operators, logical AND (<code>&amp;&amp;</code>), and early returns.</p>
+
+      <p>
+        React does not have a special template syntax for conditionals like <code>v-if</code> or
+        <code>*ngIf</code>. Instead, you use plain JavaScript. This is one of React's greatest strengths:
+        there is no new syntax to learn for control flow. The three most common patterns are the
+        <strong>logical AND</strong> operator, the <strong>ternary</strong> operator, and
+        <strong>early returns</strong>.
+      </p>
 
       <div class="code-block">
-        <div class="code-header"><span class="code-lang">jsx</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <div class="code-header">
+          <span class="code-lang">jsx</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
 <pre>
-<span class="hl-keyword">function</span> <span class="hl-function">UserGreeting</span>({ user, isLoading, error }) {
-  <span class="hl-comment">// Early return pattern — handle edge cases first</span>
-  <span class="hl-keyword">if</span> (isLoading) <span class="hl-keyword">return</span> &lt;Spinner /&gt;;
-  <span class="hl-keyword">if</span> (error) <span class="hl-keyword">return</span> &lt;ErrorMessage message={error} /&gt;;
-  <span class="hl-keyword">if</span> (!user) <span class="hl-keyword">return</span> &lt;p&gt;No user found.&lt;/p&gt;;
-
+<span class="hl-comment">// Pattern 1: Logical AND (&amp;&amp;) — show or hide</span>
+<span class="hl-keyword">function</span> <span class="hl-function">Notification</span>({ message, isVisible }) {
   <span class="hl-keyword">return</span> (
     &lt;div&gt;
-      &lt;h2&gt;Welcome, {user.name}!&lt;/h2&gt;
-
-      <span class="hl-comment">{/* Ternary — choose between two elements */}</span>
-      {user.isAdmin ? (
-        &lt;AdminDashboard /&gt;
-      ) : (
-        &lt;UserDashboard /&gt;
-      )}
-
-      <span class="hl-comment">{/* Logical AND — show only if condition is true */}</span>
-      {user.unreadCount &gt; <span class="hl-number">0</span> &amp;&amp; (
-        &lt;Badge text={<span class="hl-string">`${user.unreadCount} new`</span>} /&gt;
+      {isVisible &amp;&amp; (
+        &lt;div className=<span class="hl-string">"notification"</span>&gt;
+          &lt;p&gt;{message}&lt;/p&gt;
+        &lt;/div&gt;
       )}
     &lt;/div&gt;
   );
 }
-</pre>
-      </div>
 
-      <h3 id="list-rendering">5. Rendering Lists</h3>
-      <p>Use JavaScript's <code>map()</code> to transform arrays of data into arrays of JSX elements. Every element in a list must have a unique <code>key</code> prop so React can efficiently track which items change.</p>
+<span class="hl-comment">// Pattern 2: Ternary operator — either/or</span>
+<span class="hl-keyword">function</span> <span class="hl-function">LoginButton</span>({ isLoggedIn, userName }) {
+  <span class="hl-keyword">return</span> (
+    &lt;header&gt;
+      {isLoggedIn ? (
+        &lt;span&gt;Welcome back, {userName}!&lt;/span&gt;
+      ) : (
+        &lt;button&gt;Sign In&lt;/button&gt;
+      )}
+    &lt;/header&gt;
+  );
+}
 
-      <div class="code-block">
-        <div class="code-header"><span class="code-lang">jsx</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-<pre>
-<span class="hl-keyword">function</span> <span class="hl-function">ArticleList</span>({ articles }) {
-  <span class="hl-keyword">if</span> (articles.length === <span class="hl-number">0</span>) {
-    <span class="hl-keyword">return</span> &lt;p className=<span class="hl-string">"empty-state"</span>&gt;No articles yet.&lt;/p&gt;;
-  }
+<span class="hl-comment">// Pattern 3: Early return — guard clauses (like Ruby!)</span>
+<span class="hl-keyword">function</span> <span class="hl-function">UserProfile</span>({ user, isLoading, error }) {
+  <span class="hl-keyword">if</span> (isLoading) <span class="hl-keyword">return</span> &lt;div className=<span class="hl-string">"spinner"</span>&gt;Loading...&lt;/div&gt;;
+  <span class="hl-keyword">if</span> (error) <span class="hl-keyword">return</span> &lt;div className=<span class="hl-string">"error"</span>&gt;Error: {error.message}&lt;/div&gt;;
+  <span class="hl-keyword">if</span> (!user) <span class="hl-keyword">return</span> &lt;div&gt;No user found&lt;/div&gt;;
 
   <span class="hl-keyword">return</span> (
-    &lt;ul className=<span class="hl-string">"article-list"</span>&gt;
-      {articles.map((article) =&gt; (
-        &lt;li key={article.id}&gt;
-          &lt;ArticleCard
-            title={article.title}
-            summary={article.summary}
-            author={article.user.name}
-            createdAt={article.created_at}
-          /&gt;
-        &lt;/li&gt;
-      ))}
-    &lt;/ul&gt;
+    &lt;div className=<span class="hl-string">"profile"</span>&gt;
+      &lt;h2&gt;{user.name}&lt;/h2&gt;
+      &lt;p&gt;{user.email}&lt;/p&gt;
+      {user.isAdmin &amp;&amp; &lt;span className=<span class="hl-string">"badge"</span>&gt;Admin&lt;/span&gt;}
+    &lt;/div&gt;
   );
+}
+
+<span class="hl-comment">// Pattern 4: Rendering different components based on a value</span>
+<span class="hl-keyword">function</span> <span class="hl-function">StatusIcon</span>({ status }) {
+  <span class="hl-keyword">const</span> icons = {
+    success: &lt;span className=<span class="hl-string">"icon-success"</span>&gt;OK&lt;/span&gt;,
+    warning: &lt;span className=<span class="hl-string">"icon-warning"</span>&gt;!!&lt;/span&gt;,
+    error:   &lt;span className=<span class="hl-string">"icon-error"</span>&gt;X&lt;/span&gt;,
+  };
+
+  <span class="hl-keyword">return</span> icons[status] || &lt;span className=<span class="hl-string">"icon-unknown"</span>&gt;?&lt;/span&gt;;
 }
 </pre>
       </div>
 
       <div class="callout danger">
-        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Never Use Array Index as Key</div>
-        <p>Using <code>key={index}</code> causes bugs when the list is reordered, filtered, or items are inserted. Always use a stable, unique identifier like <code>id</code> from the database. If your data does not have an ID, that is a data modeling problem to fix first.</p>
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Watch out for falsy value rendering
+        </div>
+        <p>
+          The expression <code>{count &amp;&amp; &lt;span&gt;{count}&lt;/span&gt;}</code> will render
+          <code>0</code> on screen when count is zero, because <code>0</code> is falsy but still a valid
+          React child. Use explicit checks instead: <code>{count &gt; 0 &amp;&amp; &lt;span&gt;{count}&lt;/span&gt;}</code>
+          or a ternary operator.
+        </p>
       </div>
 
-      <h3 id="composition">6. Component Composition</h3>
-      <p>Composition is how you build complex UIs from simple components. Instead of inheritance, React uses composition &mdash; components contain other components, pass them data through props, and use the <code>children</code> prop for flexible layouts.</p>
+      <h3 id="lists-and-keys">5. Lists, Keys, and Iteration</h3>
+
+      <p>
+        Rendering lists is one of the most common operations in React. You use JavaScript's
+        <code>.map()</code> method to transform an array of data into an array of JSX elements. React
+        requires a <code>key</code> prop on each element in a list so it can efficiently update the DOM
+        when items are added, removed, or reordered. Keys must be unique among siblings and stable
+        across re-renders.
+      </p>
 
       <div class="code-block">
-        <div class="code-header"><span class="code-lang">jsx</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <div class="code-header">
+          <span class="code-lang">jsx</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
 <pre>
-<span class="hl-comment">// Layout component — wraps any content</span>
-<span class="hl-keyword">function</span> <span class="hl-function">PageLayout</span>({ title, children }) {
+<span class="hl-comment">// Basic list rendering with .map()</span>
+<span class="hl-keyword">function</span> <span class="hl-function">UserList</span>({ users }) {
   <span class="hl-keyword">return</span> (
-    &lt;div className=<span class="hl-string">"page"</span>&gt;
-      &lt;header className=<span class="hl-string">"page-header"</span>&gt;
-        &lt;h1&gt;{title}&lt;/h1&gt;
-      &lt;/header&gt;
-      &lt;main className=<span class="hl-string">"page-content"</span>&gt;
-        {children}
-      &lt;/main&gt;
-      &lt;Footer /&gt;
+    &lt;ul className=<span class="hl-string">"user-list"</span>&gt;
+      {users.<span class="hl-function">map</span>((user) =&gt; (
+        &lt;li key={user.id}&gt;
+          {user.name} &mdash; {user.email}
+        &lt;/li&gt;
+      ))}
+    &lt;/ul&gt;
+  );
+}
+
+<span class="hl-comment">// Rendering a list of components</span>
+<span class="hl-keyword">function</span> <span class="hl-function">ProductGrid</span>({ products }) {
+  <span class="hl-keyword">return</span> (
+    &lt;div className=<span class="hl-string">"product-grid"</span>&gt;
+      {products.<span class="hl-function">map</span>((product) =&gt; (
+        &lt;ProductCard
+          key={product.id}
+          title={product.name}
+          price={product.price}
+          imageUrl={product.imageUrl}
+          inStock={product.inStock}
+        /&gt;
+      ))}
     &lt;/div&gt;
   );
 }
 
-<span class="hl-comment">// Composing a full page from small components</span>
-<span class="hl-keyword">function</span> <span class="hl-function">ArticlesPage</span>() {
+<span class="hl-comment">// Filtering and mapping together</span>
+<span class="hl-keyword">function</span> <span class="hl-function">ActiveUsers</span>({ users }) {
+  <span class="hl-keyword">const</span> activeUsers = users.<span class="hl-function">filter</span>((u) =&gt; u.isActive);
+
+  <span class="hl-keyword">if</span> (activeUsers.length === <span class="hl-number">0</span>) {
+    <span class="hl-keyword">return</span> &lt;p className=<span class="hl-string">"empty-state"</span>&gt;No active users found.&lt;/p&gt;;
+  }
+
   <span class="hl-keyword">return</span> (
-    &lt;PageLayout title=<span class="hl-string">"All Articles"</span>&gt;
-      &lt;SearchBar placeholder=<span class="hl-string">"Search articles..."</span> /&gt;
-      &lt;ArticleList articles={articles} /&gt;
-      &lt;Pagination total={totalPages} current={page} /&gt;
-    &lt;/PageLayout&gt;
+    &lt;div&gt;
+      &lt;h3&gt;Active Users ({activeUsers.length})&lt;/h3&gt;
+      &lt;ul&gt;
+        {activeUsers.<span class="hl-function">map</span>((user) =&gt; (
+          &lt;li key={user.id}&gt;
+            &lt;strong&gt;{user.name}&lt;/strong&gt;
+            &lt;span&gt;Last seen: {user.lastActive}&lt;/span&gt;
+          &lt;/li&gt;
+        ))}
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  );
+}
+
+<span class="hl-comment">// Nested lists with separate keys per level</span>
+<span class="hl-keyword">function</span> <span class="hl-function">CategoryMenu</span>({ categories }) {
+  <span class="hl-keyword">return</span> (
+    &lt;nav&gt;
+      {categories.<span class="hl-function">map</span>((category) =&gt; (
+        &lt;div key={category.id} className=<span class="hl-string">"category-group"</span>&gt;
+          &lt;h4&gt;{category.name}&lt;/h4&gt;
+          &lt;ul&gt;
+            {category.items.<span class="hl-function">map</span>((item) =&gt; (
+              &lt;li key={item.id}&gt;{item.label}&lt;/li&gt;
+            ))}
+          &lt;/ul&gt;
+        &lt;/div&gt;
+      ))}
+    &lt;/nav&gt;
   );
 }
 </pre>
       </div>
 
-      <div class="callout tip">
-        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>Pro Tip</div>
-        <p>A good component does one thing well. If a component is doing too much (fetching data, handling forms, rendering lists, AND managing layout), split it into smaller components. Each component should be easy to describe in one sentence.</p>
+      <div class="diagram">
+<pre>
+  Why Keys Matter for React's Reconciliation
+  ═══════════════════════════════════════════
+
+  Without keys (uses index):          With stable keys (uses id):
+  ─────────────────────────           ──────────────────────────
+
+  Before:                             Before:
+  [0] Alice                           [id:1] Alice
+  [1] Bob                             [id:2] Bob
+  [2] Charlie                         [id:3] Charlie
+
+  After inserting "Zoe" at top:       After inserting "Zoe" at top:
+  [0] Zoe      (React thinks          [id:4] Zoe      (new element)
+  [1] Alice     ALL items changed)    [id:1] Alice    (unchanged)
+  [2] Bob                             [id:2] Bob      (unchanged)
+  [3] Charlie                         [id:3] Charlie  (unchanged)
+
+  Result: Re-renders ALL items        Result: Only inserts ONE item
+</pre>
+        <div class="diagram-caption">Figure 1: Stable keys let React minimize DOM updates during list changes</div>
       </div>
+
+      <h3 id="event-handling">6. Event Handling</h3>
+
+      <p>
+        React handles events using <strong>synthetic events</strong> &mdash; a cross-browser wrapper around
+        the browser's native event system. Event handlers in JSX are passed as camelCase props
+        (<code>onClick</code>, <code>onChange</code>, <code>onSubmit</code>) and receive a synthetic event
+        object. You can prevent default behavior, stop propagation, and access the target element just
+        like with native DOM events.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">jsx</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">// Basic click handler</span>
+<span class="hl-keyword">function</span> <span class="hl-function">Counter</span>() {
+  <span class="hl-keyword">const</span> [count, setCount] = <span class="hl-function">useState</span>(<span class="hl-number">0</span>);
+
+  <span class="hl-keyword">const</span> <span class="hl-function">handleIncrement</span> = () =&gt; {
+    <span class="hl-function">setCount</span>(count + <span class="hl-number">1</span>);
+  };
+
+  <span class="hl-keyword">return</span> (
+    &lt;div&gt;
+      &lt;p&gt;Count: {count}&lt;/p&gt;
+      &lt;button onClick={handleIncrement}&gt;Increment&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
+
+<span class="hl-comment">// Form handling with controlled inputs</span>
+<span class="hl-keyword">function</span> <span class="hl-function">LoginForm</span>() {
+  <span class="hl-keyword">const</span> [email, setEmail] = <span class="hl-function">useState</span>(<span class="hl-string">""</span>);
+  <span class="hl-keyword">const</span> [password, setPassword] = <span class="hl-function">useState</span>(<span class="hl-string">""</span>);
+
+  <span class="hl-keyword">const</span> <span class="hl-function">handleSubmit</span> = (e) =&gt; {
+    e.<span class="hl-function">preventDefault</span>();  <span class="hl-comment">// prevent page reload</span>
+    console.<span class="hl-function">log</span>(<span class="hl-string">"Logging in:"</span>, { email, password });
+  };
+
+  <span class="hl-keyword">return</span> (
+    &lt;form onSubmit={handleSubmit}&gt;
+      &lt;input
+        type=<span class="hl-string">"email"</span>
+        value={email}
+        onChange={(e) =&gt; <span class="hl-function">setEmail</span>(e.target.value)}
+        placeholder=<span class="hl-string">"Email"</span>
+      /&gt;
+      &lt;input
+        type=<span class="hl-string">"password"</span>
+        value={password}
+        onChange={(e) =&gt; <span class="hl-function">setPassword</span>(e.target.value)}
+        placeholder=<span class="hl-string">"Password"</span>
+      /&gt;
+      &lt;button type=<span class="hl-string">"submit"</span>&gt;Sign In&lt;/button&gt;
+    &lt;/form&gt;
+  );
+}
+
+<span class="hl-comment">// Passing data with event handlers (common pattern)</span>
+<span class="hl-keyword">function</span> <span class="hl-function">TaskList</span>({ tasks, onDelete }) {
+  <span class="hl-keyword">return</span> (
+    &lt;ul&gt;
+      {tasks.<span class="hl-function">map</span>((task) =&gt; (
+        &lt;li key={task.id}&gt;
+          &lt;span&gt;{task.title}&lt;/span&gt;
+          &lt;button onClick={() =&gt; <span class="hl-function">onDelete</span>(task.id)}&gt;
+            Delete
+          &lt;/button&gt;
+        &lt;/li&gt;
+      ))}
+    &lt;/ul&gt;
+  );
+}
+
+<span class="hl-comment">// Keyboard and focus events</span>
+<span class="hl-keyword">function</span> <span class="hl-function">SearchBox</span>({ onSearch }) {
+  <span class="hl-keyword">const</span> [query, setQuery] = <span class="hl-function">useState</span>(<span class="hl-string">""</span>);
+
+  <span class="hl-keyword">const</span> <span class="hl-function">handleKeyDown</span> = (e) =&gt; {
+    <span class="hl-keyword">if</span> (e.key === <span class="hl-string">"Enter"</span>) {
+      <span class="hl-function">onSearch</span>(query);
+    }
+    <span class="hl-keyword">if</span> (e.key === <span class="hl-string">"Escape"</span>) {
+      <span class="hl-function">setQuery</span>(<span class="hl-string">""</span>);
+    }
+  };
+
+  <span class="hl-keyword">return</span> (
+    &lt;input
+      type=<span class="hl-string">"search"</span>
+      value={query}
+      onChange={(e) =&gt; <span class="hl-function">setQuery</span>(e.target.value)}
+      onKeyDown={handleKeyDown}
+      onFocus={() =&gt; console.<span class="hl-function">log</span>(<span class="hl-string">"Search focused"</span>)}
+      placeholder=<span class="hl-string">"Search..."</span>
+    /&gt;
+  );
+}
+</pre>
+      </div>
+
+      <details>
+        <summary>What is the difference between <code>onClick={handler}</code> and <code>onClick={handler()}</code>?</summary>
+        <div class="details-body">
+          <p>
+            <strong><code>onClick={handler}</code></strong> passes a reference to the function. React will call
+            it when the user clicks. This is what you want.
+          </p>
+          <p>
+            <strong><code>onClick={handler()}</code></strong> calls the function immediately during rendering
+            and passes the return value as the handler. This is almost always a bug &mdash; the function runs on every
+            render, not on click.
+          </p>
+          <p>
+            If you need to pass arguments, use an arrow function: <code>onClick={() =&gt; handler(id)}</code>.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>When should I extract a component versus keeping things inline?</summary>
+        <div class="details-body">
+          <p>
+            Extract a component when any of these apply: (1) the JSX is reused in multiple places,
+            (2) the logic is complex enough that it deserves its own name, (3) the file is getting long
+            and hard to scan, or (4) you want to test the piece independently. A good rule of thumb: if
+            you need to scroll past a chunk of JSX to understand the parent component, that chunk
+            should probably be its own component.
+          </p>
+        </div>
+      </details>
 
       <hr class="section-divider">
 
+      <!-- ════════════════════════════════════════
+           SECTION 3: WATCH & LEARN
+           ════════════════════════════════════════ -->
       <h2 id="watch-learn">Watch &amp; Learn</h2>
-      <p>These videos cover React fundamentals with hands-on examples.</p>
+
+      <p>
+        These videos cover React components and JSX from this chapter. Watch them alongside your practice
+        to reinforce the concepts.
+      </p>
 
       <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/bMknfKXIFA8?rel=0&amp;modestbranding=1" title="React Course for Beginners" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-caption"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>freeCodeCamp &mdash; React Course for Beginners (components, props, JSX, and more)</div>
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/bMknfKXIFA8?rel=0&amp;modestbranding=1"
+            title="React Course - Beginner's Tutorial"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          freeCodeCamp &mdash; React Course for Beginners (covers components, JSX, props, and project structure)
+        </div>
       </div>
+
       <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/SqcY0GlETPk?rel=0&amp;modestbranding=1" title="React Tutorial for Beginners" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-caption"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>Programming with Mosh &mdash; React Tutorial for Beginners (2024 update)</div>
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/SqcY0GlETPk?rel=0&amp;modestbranding=1"
+            title="React Tutorial for Beginners"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Programming with Mosh &mdash; React Tutorial for Beginners (components, props, conditional rendering, and lists)
+        </div>
       </div>
 
       <hr class="section-divider">
 
+      <!-- ════════════════════════════════════════
+           SECTION 4: FURTHER READING
+           ════════════════════════════════════════ -->
       <h2 id="further-reading">Further Reading</h2>
+
+      <p>Deep-dive into the official documentation and reference material for React components and JSX.</p>
+
       <div class="resource-grid">
-        <a class="resource-card" href="https://react.dev/learn" target="_blank" rel="noopener"><div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><div class="resource-info"><div class="resource-title">React.dev: Learn React</div><div class="resource-desc">The official React tutorial. Interactive, modern, and comprehensive.</div></div></a>
-        <a class="resource-card" href="https://react.dev/learn/your-first-component" target="_blank" rel="noopener"><div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><div class="resource-info"><div class="resource-title">React.dev: Your First Component</div><div class="resource-desc">Deep dive into component creation, nesting, and importing/exporting.</div></div></a>
-        <a class="resource-card" href="https://react.dev/learn/writing-markup-with-jsx" target="_blank" rel="noopener"><div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><div class="resource-info"><div class="resource-title">React.dev: Writing Markup with JSX</div><div class="resource-desc">JSX rules, expressions, and the differences from HTML.</div></div></a>
-        <a class="resource-card" href="https://react.dev/learn/passing-props-to-a-component" target="_blank" rel="noopener"><div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><div class="resource-info"><div class="resource-title">React.dev: Passing Props</div><div class="resource-desc">Props, destructuring, default values, and the children prop.</div></div></a>
+        <a class="resource-card" href="https://react.dev/learn/your-first-component" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Your First Component &mdash; React Docs</div>
+            <div class="resource-desc">Official guide to defining, exporting, and nesting React components from scratch.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://react.dev/learn/writing-markup-with-jsx" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Writing Markup with JSX &mdash; React Docs</div>
+            <div class="resource-desc">Official reference for JSX rules, expressions, attributes, and fragments.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://react.dev/learn/rendering-lists" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Rendering Lists &mdash; React Docs</div>
+            <div class="resource-desc">Official guide on rendering arrays, using keys, and handling empty states.</div>
+          </div>
+        </a>
       </div>
 
       <hr class="section-divider">
 
+      <!-- ════════════════════════════════════════
+           SECTION 5: ASSIGNMENTS
+           ════════════════════════════════════════ -->
       <h2 id="assignments">Assignments</h2>
 
+      <p>
+        Complete these in order. Each level builds on the previous one. All components should be
+        well-structured with proper prop types and follow React community conventions.
+      </p>
+
+      <!-- Assignment 1: Level 1 -->
       <div class="assignment">
-        <div class="assignment-header"><div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Assignment 1</div><span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span></div>
-        <h4>Component Library with Props</h4>
-        <p>Build a set of reusable UI components that accept props and render different content.</p>
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 1
+          </div>
+          <span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span>
+        </div>
+        <h4>Static Component Library</h4>
+        <p>Build a set of reusable UI components to practice JSX syntax and props.</p>
+
         <ul class="checklist">
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a Vite + React project with <code>npm create vite@latest</code></span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Build a <code>Button</code> component with <code>variant</code>, <code>size</code>, and <code>onClick</code> props</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Build a <code>Card</code> component with <code>title</code>, <code>children</code>, and optional <code>footer</code> props</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Build an <code>Avatar</code> component with <code>src</code>, <code>name</code>, and <code>size</code> props</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create an <code>App</code> component that composes all three into a user profile card</span></li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Create a <code>Button</code> component that accepts <code>label</code>, <code>variant</code> (primary/secondary/danger), and <code>size</code> (sm/md/lg) props</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Create a <code>Card</code> component that uses <code>children</code> for content and accepts <code>title</code> and optional <code>footer</code> props</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Create an <code>Avatar</code> component that shows an image or falls back to initials when no image URL is provided</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Build a <code>ComponentShowcase</code> page that renders every component variant in a grid layout</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Ensure all components use proper default props and conditional rendering for optional props</span>
+          </li>
         </ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Done when</div><p>Each component is in its own file, accepts props, and renders differently based on those props. The app composes them together.</p></div>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            All components render correctly in the browser. Each component handles missing or optional
+            props gracefully. The showcase page displays at least 3 variants of each component.
+          </p>
+        </div>
       </div>
 
+      <!-- Assignment 2: Level 2 -->
       <div class="assignment">
-        <div class="assignment-header"><div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Assignment 2</div><span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span></div>
-        <h4>Product Catalog with Lists and Conditional Rendering</h4>
-        <p>Build a product catalog that renders a list of products with filtering and empty states.</p>
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 2
+          </div>
+          <span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span>
+        </div>
+        <h4>Interactive Task Manager UI</h4>
+        <p>Build a task management interface with dynamic lists, filtering, and event handling.</p>
+
         <ul class="checklist">
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a <code>ProductCard</code> component displaying name, price, image, and stock status</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a <code>ProductGrid</code> component that maps an array of products to <code>ProductCard</code> components</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Add conditional rendering: loading spinner, error message, and empty state</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Add category filter buttons that show/hide products by category</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Use proper <code>key</code> props on all list items</span></li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Create a <code>TaskItem</code> component that displays task title, priority badge, and a delete button</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Create a <code>TaskList</code> component that renders an array of tasks using <code>.map()</code> with proper keys</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Add filter tabs (All, Active, Completed) that conditionally render different subsets of tasks</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Handle empty states with a friendly message when no tasks match the current filter</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Implement a form with <code>onSubmit</code> that adds new tasks and clears the input after submission</span>
+          </li>
         </ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Done when</div><p>The catalog displays products from mock data, filters work, and loading/error/empty states render correctly.</p></div>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            Users can add tasks, delete tasks, toggle completion, and filter the list. Each state
+            transition renders correctly without console errors or missing key warnings.
+          </p>
+        </div>
       </div>
 
+      <!-- Assignment 3: Level 3 -->
       <div class="assignment">
-        <div class="assignment-header"><div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Assignment 3</div><span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Production-Ready</span></div>
-        <h4>Multi-Page Layout with Component Architecture</h4>
-        <p>Design a complete component architecture for a dashboard with reusable layout components.</p>
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 3
+          </div>
+          <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Production-Ready</span>
+        </div>
+        <h4>Composable Dashboard Layout System</h4>
+        <p>Architect a dashboard with deeply nested composition, dynamic layouts, and advanced patterns.</p>
+
         <ul class="checklist">
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create layout components: <code>Sidebar</code>, <code>Header</code>, <code>PageLayout</code>, <code>ContentArea</code></span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Build a <code>DataTable</code> component that accepts columns and rows as props</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a <code>Modal</code> component using the <code>children</code> prop for flexible content</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Implement a <code>Breadcrumb</code> component that renders navigation from an array of steps</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Document each component with JSDoc comments describing props and usage examples</span></li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Create a <code>Layout</code> component with <code>Header</code>, <code>Sidebar</code>, and <code>MainContent</code> slots using children and render props</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Build a <code>DataTable</code> component that accepts column definitions and row data as props, with sortable headers</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Implement a <code>Tabs</code> component that dynamically renders content based on the selected tab</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Build a <code>Modal</code> component using React portals that can wrap any content via children</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Create a complete dashboard page that composes all components together with realistic mock data</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Ensure the dashboard is responsive and handles loading, empty, and error states for each widget</span>
+          </li>
         </ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Done when</div><p>Components are truly reusable &mdash; they work in any context, accept flexible props, and are documented.</p></div>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            The dashboard renders a realistic layout with tables, chart placeholders, tabs, and modals.
+            Each component is independently reusable and handles all edge cases. No prop drilling beyond
+            two levels.
+          </p>
+        </div>
       </div>
 
       <hr class="section-divider">
 
+      <!-- ════════════════════════════════════════
+           SECTION 6: SELF-CHECK
+           ════════════════════════════════════════ -->
       <h2 id="self-check">Self-Check</h2>
-      <details><summary>Can you build a component from scratch in under 5 minutes?</summary><div class="details-body"><p>Time yourself building a <code>NotificationBanner</code> component that accepts <code>type</code> (success, warning, error), <code>message</code>, and an optional <code>onDismiss</code> callback. If it takes longer than 5 minutes, practice the component creation workflow more.</p></div></details>
-      <details><summary>Do you understand the difference between props and children?</summary><div class="details-body"><p>Props are named attributes (<code>&lt;Card title="Hello" /&gt;</code>). Children is the content between tags (<code>&lt;Card&gt;content here&lt;/Card&gt;</code>). Use props for specific data, children for flexible content that the parent decides.</p></div></details>
-      <details><summary>Can you explain why keys matter in lists?</summary><div class="details-body"><p>Keys tell React which items changed, were added, or were removed. Without stable keys, React cannot efficiently update the DOM and may lose input state or cause visual glitches when lists change.</p></div></details>
+
+      <p>Before moving to Chapter 06, honestly answer these questions. If any answer is "no", go back and practice more.</p>
+
+      <details>
+        <summary>Can you create a functional component that accepts props and returns JSX from memory?</summary>
+        <div class="details-body">
+          <p>
+            Open a new file and write a <code>UserCard</code> component that takes <code>name</code>,
+            <code>email</code>, and <code>avatarUrl</code> props without consulting documentation. It
+            should use destructuring, default values, and conditional rendering for the avatar. If you
+            need to look up the syntax, practice writing 10 small components until it becomes automatic.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Can you explain the difference between props and children?</summary>
+        <div class="details-body">
+          <p>
+            <strong>Props</strong> are named values passed as attributes: <code>&lt;Button label="Click" /&gt;</code>.
+            <strong>Children</strong> is the content between opening and closing tags: <code>&lt;Card&gt;content here&lt;/Card&gt;</code>.
+            Children is actually just a special prop called <code>children</code>. Use named props for structured data and
+            children for flexible content composition.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Can you render a list from an array with proper keys and handle the empty state?</summary>
+        <div class="details-body">
+          <p>
+            Given an array of objects from an API, you should be able to use <code>.map()</code> to render
+            a list, choose appropriate keys (always use unique IDs, never array indices for dynamic lists),
+            and show a fallback message when the array is empty. If this pattern is not second nature,
+            build three different list components with different data shapes.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Can you handle form submission with controlled inputs?</summary>
+        <div class="details-body">
+          <p>
+            You should be able to create a form where each input's value is controlled by React state,
+            updated via <code>onChange</code>, and submitted via <code>onSubmit</code> with
+            <code>e.preventDefault()</code>. The form should be clearable after submission. This is the
+            pattern you will use for every form in your Rails + React application.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Do you understand why React needs keys on list items?</summary>
+        <div class="details-body">
+          <p>
+            Keys help React's reconciliation algorithm identify which items have changed, been added, or
+            been removed. Without stable keys, React may re-render the entire list instead of only the
+            changed items. Using array indices as keys causes bugs when items are reordered or deleted.
+            Always use unique, stable identifiers from your data (like database IDs).
+          </p>
+        </div>
+      </details>
+
     </main>
 
-    <aside class="sidebar"><div class="sidebar-title">On this page</div>
+    <!-- Sidebar: Table of Contents -->
+    <aside class="sidebar">
+      <div class="sidebar-title">On this page</div>
       <ul class="toc-list">
         <li class="toc-item"><a href="#why-this-matters">Why This Matters</a></li>
         <li class="toc-item"><a href="#key-concepts">Key Concepts</a></li>
-        <li class="toc-item"><a href="#jsx-syntax" style="padding-left:28px;font-size:12px">JSX Syntax</a></li>
-        <li class="toc-item"><a href="#functional-components" style="padding-left:28px;font-size:12px">Functional Components</a></li>
-        <li class="toc-item"><a href="#props" style="padding-left:28px;font-size:12px">Props</a></li>
-        <li class="toc-item"><a href="#conditional-rendering" style="padding-left:28px;font-size:12px">Conditional Rendering</a></li>
-        <li class="toc-item"><a href="#list-rendering" style="padding-left:28px;font-size:12px">List Rendering</a></li>
-        <li class="toc-item"><a href="#composition" style="padding-left:28px;font-size:12px">Composition</a></li>
+        <li class="toc-item"><a href="#jsx-syntax" style="padding-left: 28px; font-size: 12px;">JSX Syntax &amp; Expressions</a></li>
+        <li class="toc-item"><a href="#functional-components" style="padding-left: 28px; font-size: 12px;">Functional Components</a></li>
+        <li class="toc-item"><a href="#props-and-composition" style="padding-left: 28px; font-size: 12px;">Props &amp; Composition</a></li>
+        <li class="toc-item"><a href="#conditional-rendering" style="padding-left: 28px; font-size: 12px;">Conditional Rendering</a></li>
+        <li class="toc-item"><a href="#lists-and-keys" style="padding-left: 28px; font-size: 12px;">Lists &amp; Keys</a></li>
+        <li class="toc-item"><a href="#event-handling" style="padding-left: 28px; font-size: 12px;">Event Handling</a></li>
         <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a></li>
         <li class="toc-item"><a href="#further-reading">Further Reading</a></li>
         <li class="toc-item"><a href="#assignments">Assignments</a></li>
@@ -373,20 +1898,79 @@
     </aside>
   </div>
 
-  <footer class="chapter-footer"><div class="chapter-footer-inner">
-    <nav class="footer-nav">
-      <a class="footer-nav-link" href="chapter-04.html"><span class="footer-nav-label">&larr; Previous Chapter</span><span class="footer-nav-title">04: RESTful API Design</span></a>
-      <a class="footer-nav-link" href="chapter-06.html"><span class="footer-nav-label">Next Chapter &rarr;</span><span class="footer-nav-title">06: State Management and Hooks</span></a>
-    </nav>
-    <div class="footer-brand">ILA (Iksha Learning Academy) &middot; Rails + React Engineering Certification &middot; Level 1</div>
-  </div></footer>
+  <!-- Footer Navigation -->
+  <footer class="chapter-footer">
+    <div class="chapter-footer-inner">
+      <nav class="footer-nav">
+        <a class="footer-nav-link" href="chapter-04.html">
+          <span class="footer-nav-label">&larr; Previous Chapter</span>
+          <span class="footer-nav-title">04: RESTful API Design</span>
+        </a>
+        <a class="footer-nav-link" href="chapter-06.html">
+          <span class="footer-nav-label">Next Chapter &rarr;</span>
+          <span class="footer-nav-title">06: State Management and Hooks</span>
+        </a>
+      </nav>
+      <div class="footer-brand">
+        ILA (Iksha Learning Academy) &middot; Rails + React Engineering Certification &middot; Level 1
+      </div>
+    </div>
+  </footer>
 
+  <!-- ════════════════════════════════════════
+       SCRIPTS
+       ════════════════════════════════════════ -->
   <script>
-    window.addEventListener('scroll',()=>{const s=window.scrollY;const d=document.documentElement.scrollHeight-window.innerHeight;const p=d>0?(s/d)*100:0;document.getElementById('progressBar').style.width=p+'%'});
-    const tocLinks=document.querySelectorAll('.toc-item a');const sections=[];tocLinks.forEach(link=>{const id=link.getAttribute('href').slice(1);const el=document.getElementById(id);if(el)sections.push({id,el,link})});
-    const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{const item=sections.find(s=>s.el===entry.target);if(item&&entry.isIntersecting){tocLinks.forEach(l=>l.classList.remove('active'));item.link.classList.add('active')}})},{rootMargin:'-80px 0px -60% 0px',threshold:0});
-    sections.forEach(s=>observer.observe(s.el));
-    function copyCode(btn){const pre=btn.closest('.code-block').querySelector('pre');navigator.clipboard.writeText(pre.textContent).then(()=>{btn.classList.add('copied');btn.textContent='Copied!';setTimeout(()=>{btn.classList.remove('copied');btn.textContent='Copy'},2000)})}
+    // ── Progress Bar ──
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      document.getElementById('progressBar').style.width = progress + '%';
+    });
+
+    // ── Active TOC ──
+    const tocLinks = document.querySelectorAll('.toc-item a');
+    const sections = [];
+
+    tocLinks.forEach(link => {
+      const id = link.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) sections.push({ id, el, link });
+    });
+
+    const observerOptions = {
+      rootMargin: '-80px 0px -60% 0px',
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const item = sections.find(s => s.el === entry.target);
+        if (item) {
+          if (entry.isIntersecting) {
+            tocLinks.forEach(l => l.classList.remove('active'));
+            item.link.classList.add('active');
+          }
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(s => observer.observe(s.el));
+
+    // ── Copy Code ──
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      const text = pre.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.classList.add('copied');
+        btn.textContent = 'Copied!';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.textContent = 'Copy';
+        }, 2000);
+      });
+    }
   </script>
 </body>
 </html>

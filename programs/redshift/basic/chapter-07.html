@@ -3,368 +3,1841 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chapter 07: Data Transformation &mdash; ILA Redshift Foundations</title>
+  <title>Chapter 07: Data Transformation &mdash; ILA Redshift</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
-    :root{--ink:#0f172a;--ink-light:#334155;--ink-muted:#64748b;--surface:#ffffff;--surface-alt:#f8fafc;--surface-warm:#fffbeb;--border:#e2e8f0;--border-light:#f1f5f9;--teal-50:#f0fdfa;--teal-100:#ccfbf1;--teal-200:#99f6e4;--teal-500:#14b8a6;--teal-600:#0d9488;--teal-700:#0f766e;--teal-800:#115e59;--teal-900:#134e4a;--blue-50:#eff6ff;--blue-100:#dbeafe;--blue-500:#3b82f6;--blue-600:#2563eb;--blue-700:#1d4ed8;--amber-50:#fffbeb;--amber-100:#fef3c7;--amber-500:#f59e0b;--amber-600:#d97706;--red-50:#fef2f2;--red-100:#fee2e2;--red-500:#ef4444;--red-600:#dc2626;--purple-50:#faf5ff;--purple-100:#f3e8ff;--purple-500:#a855f7;--purple-600:#9333ea;--font-sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;--font-serif:'Instrument Serif',Georgia,serif;--font-mono:'JetBrains Mono','Fira Code',monospace;--content-max:780px;--sidebar-width:280px;--ease:cubic-bezier(0.4,0,0.2,1)}
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
-    body{font-family:var(--font-sans);font-size:16px;line-height:1.7;color:var(--ink);background:var(--surface)}
-    .progress-bar{position:fixed;top:0;left:0;width:0%;height:3px;background:linear-gradient(90deg,var(--teal-500),var(--blue-500));z-index:1000;transition:width .15s var(--ease)}
-    .top-nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem}
-    .top-nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px}
-    .nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--teal-800)}
-    .nav-brand-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--teal-600),var(--teal-800));border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px}
-    .nav-brand-text{font-weight:700;font-size:15px;letter-spacing:-.02em}
-    .nav-chapter-nav{display:flex;align-items:center;gap:8px}
-    .nav-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;color:var(--ink-muted);border:1px solid var(--border);background:#fff;transition:all .2s var(--ease);cursor:pointer}
-    .nav-btn:hover{color:var(--ink);border-color:var(--teal-500);background:var(--teal-50)}
-    .nav-btn.disabled{opacity:.4;pointer-events:none}
-    .nav-current{font-size:13px;font-weight:600;color:var(--ink-light);padding:0 4px}
-    .hero{background:linear-gradient(170deg,var(--teal-50) 0%,var(--surface) 50%,var(--blue-50) 100%);border-bottom:1px solid var(--border);padding:4rem 2rem 3.5rem}
-    .hero-inner{max-width:var(--content-max);margin:0 auto}
-    .hero-chapter-label{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--teal-700);text-transform:uppercase;letter-spacing:.08em;margin-bottom:1rem}
-    .hero-chapter-label span{background:var(--teal-100);padding:3px 10px;border-radius:100px}
-    .hero h1{font-family:var(--font-serif);font-size:clamp(2.4rem,5vw,3.2rem);font-weight:400;line-height:1.15;color:var(--ink);margin-bottom:1rem}
-    .hero-subtitle{font-size:1.15rem;color:var(--ink-light);line-height:1.65;max-width:640px}
-    .hero-meta{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1.5rem}
-    .hero-meta-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-muted)}
-    .hero-meta-item svg{width:16px;height:16px;color:var(--teal-600)}
-    .main-layout{max-width:1200px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:1fr var(--sidebar-width);gap:4rem;align-items:start}
-    .content{padding:3rem 0 6rem;min-width:0}
-    .sidebar{position:sticky;top:76px;padding:2rem 0;max-height:calc(100vh - 76px);overflow-y:auto}
-    .sidebar-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-muted);margin-bottom:1rem;padding-left:14px}
-    .toc-list{list-style:none}
-    .toc-item a{display:block;padding:6px 14px;font-size:13px;color:var(--ink-muted);text-decoration:none;border-left:2px solid transparent;transition:all .2s var(--ease);line-height:1.5}
-    .toc-item a:hover{color:var(--ink);background:var(--surface-alt)}
-    .toc-item a.active{color:var(--teal-700);border-left-color:var(--teal-500);background:var(--teal-50);font-weight:500}
-    .content h2{font-family:var(--font-serif);font-size:1.85rem;font-weight:400;color:var(--ink);margin:3rem 0 1rem;padding-top:1rem;scroll-margin-top:80px}
-    .content h2:first-child{margin-top:0}
-    .content h3{font-size:1.15rem;font-weight:600;color:var(--ink);margin:2rem 0 .75rem;scroll-margin-top:80px}
-    .content p{margin-bottom:1.25rem;color:var(--ink-light)}
-    .content strong{color:var(--ink);font-weight:600}
-    .content a{color:var(--teal-700);text-decoration:underline;text-decoration-color:var(--teal-200);text-underline-offset:3px;transition:text-decoration-color .2s}
-    .content a:hover{text-decoration-color:var(--teal-600)}
-    .content ul,.content ol{margin-bottom:1.25rem;padding-left:1.5rem}
-    .content li{margin-bottom:.5rem;color:var(--ink-light)}
-    .content li::marker{color:var(--teal-500)}
-    .section-divider{border:none;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:3rem 0}
-    .callout{padding:1.25rem 1.5rem;border-radius:12px;margin-bottom:1.5rem;border:1px solid;position:relative}
-    .callout-header{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;margin-bottom:.5rem}
-    .callout-header svg{width:18px;height:18px;flex-shrink:0}
-    .callout p:last-child{margin-bottom:0}
-    .callout.concept{background:var(--blue-50);border-color:var(--blue-100)}
-    .callout.concept .callout-header{color:var(--blue-700)}
-    .callout.important{background:var(--amber-50);border-color:var(--amber-100)}
-    .callout.important .callout-header{color:var(--amber-600)}
-    .callout.danger{background:var(--red-50);border-color:var(--red-100)}
-    .callout.danger .callout-header{color:var(--red-600)}
-    .callout.tip{background:var(--purple-50);border-color:var(--purple-100)}
-    .callout.tip .callout-header{color:var(--purple-600)}
-    .callout.success{background:var(--teal-50);border-color:var(--teal-100)}
-    .callout.success .callout-header{color:var(--teal-700)}
-    .code-block{position:relative;margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}
-    .code-header{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:var(--surface-alt);border-bottom:1px solid var(--border);font-size:12px;color:var(--ink-muted)}
-    .code-lang{font-family:var(--font-mono);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
-    .code-copy{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:#fff;font-size:11px;font-family:var(--font-sans);color:var(--ink-muted);cursor:pointer;transition:all .2s var(--ease)}
-    .code-copy:hover{border-color:var(--teal-500);color:var(--teal-700)}
-    .code-copy.copied{background:var(--teal-50);border-color:var(--teal-500);color:var(--teal-700)}
-    pre{margin:0;padding:1.25rem 1.5rem;overflow-x:auto;background:#1e293b;font-family:var(--font-mono);font-size:13.5px;line-height:1.7;color:#e2e8f0}
-    code{font-family:var(--font-mono);font-size:.88em}
-    p code,li code{padding:2px 7px;background:var(--surface-alt);border:1px solid var(--border);border-radius:5px;color:var(--teal-800);font-size:.85em}
-    .hl-keyword{color:#c084fc}
-    .hl-string{color:#86efac}
-    .hl-comment{color:#64748b;font-style:italic}
-    .hl-function{color:#7dd3fc}
-    .hl-number{color:#fbbf24}
-    .hl-flag{color:#f472b6}
-    details{margin-bottom:1.25rem;border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .2s var(--ease)}
-    details[open]{border-color:var(--teal-200)}
-    details summary{padding:1rem 1.25rem;font-weight:600;font-size:15px;cursor:pointer;background:var(--surface-alt);list-style:none;display:flex;align-items:center;gap:10px;transition:background .2s var(--ease);user-select:none}
-    details summary::-webkit-details-marker{display:none}
-    details summary::before{content:'';width:20px;height:20px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain;flex-shrink:0;transition:transform .2s var(--ease)}
-    details[open] summary::before{transform:rotate(90deg)}
-    details summary:hover{background:var(--teal-50)}
-    .details-body{padding:1.25rem 1.5rem}
-    .details-body p:last-child{margin-bottom:0}
-    .video-card{margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}
-    .video-wrapper{position:relative;padding-bottom:56.25%;height:0;background:#0f172a}
-    .video-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
-    .video-caption{padding:12px 16px;background:var(--surface-alt);font-size:13px;color:var(--ink-muted);display:flex;align-items:center;gap:6px}
-    .video-caption svg{width:14px;height:14px;color:var(--red-500)}
-    .resource-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1rem;margin-bottom:1.5rem}
-    .resource-card{display:flex;gap:14px;padding:1rem 1.25rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all .2s var(--ease);background:#fff}
-    .resource-card:hover{border-color:var(--teal-300);background:var(--teal-50);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.04)}
-    .resource-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}
-    .resource-icon.docs{background:var(--blue-50);color:var(--blue-600)}
-    .resource-icon.video{background:var(--red-50);color:var(--red-500)}
-    .resource-icon.github{background:var(--ink);color:#fff}
-    .resource-icon.article{background:var(--amber-50);color:var(--amber-600)}
-    .resource-icon.pdf{background:var(--purple-50);color:var(--purple-600)}
-    .resource-info{min-width:0}
-    .resource-title{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:2px;line-height:1.4}
-    .resource-desc{font-size:12px;color:var(--ink-muted);line-height:1.5}
-    .assignment{border:2px solid var(--teal-200);border-radius:14px;padding:1.5rem 1.75rem;margin-bottom:1.5rem;background:linear-gradient(135deg,var(--teal-50) 0%,#fff 100%)}
-    .assignment-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
-    .assignment-label{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--teal-700)}
-    .assignment-difficulty{display:inline-flex;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:600}
-    .difficulty-l1{background:var(--teal-100);color:var(--teal-800)}
-    .difficulty-l2{background:var(--amber-100);color:var(--amber-600)}
-    .difficulty-l3{background:var(--red-100);color:var(--red-600)}
-    .assignment h4{font-size:1.05rem;font-weight:700;margin-bottom:.75rem}
-    .assignment p{font-size:14px}
-    .checklist{list-style:none;padding:0}
-    .checklist li{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border-light);font-size:14px}
-    .checklist li:last-child{border-bottom:none}
-    .check-box{width:20px;height:20px;border-radius:6px;border:2px solid var(--border);flex-shrink:0;margin-top:1px;cursor:pointer;transition:all .15s var(--ease);display:flex;align-items:center;justify-content:center}
-    .check-box:hover{border-color:var(--teal-500)}
-    .check-box.checked{background:var(--teal-500);border-color:var(--teal-500)}
-    .check-box.checked::after{content:'';width:10px;height:10px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain}
-    .diagram{margin:1.5rem 0;padding:2rem;background:var(--surface-alt);border:1px solid var(--border);border-radius:14px;overflow-x:auto}
-    .diagram pre{background:transparent;color:var(--ink);padding:0;font-size:13px;line-height:1.6}
-    .diagram-caption{margin-top:1rem;font-size:12px;color:var(--ink-muted);text-align:center;font-style:italic}
-    .chapter-footer{border-top:1px solid var(--border);padding:3rem 2rem;background:var(--surface-alt)}
-    .chapter-footer-inner{max-width:var(--content-max);margin:0 auto}
-    .footer-nav{display:flex;justify-content:space-between;align-items:center;gap:1rem}
-    .footer-nav-link{display:flex;flex-direction:column;gap:4px;padding:1rem 1.5rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all .2s var(--ease);max-width:320px;background:#fff}
-    .footer-nav-link:hover{border-color:var(--teal-300);box-shadow:0 4px 12px rgba(0,0,0,.04)}
-    .footer-nav-label{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--teal-600)}
-    .footer-nav-title{font-size:15px;font-weight:600;color:var(--ink)}
-    .footer-brand{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border);font-size:13px;color:var(--ink-muted)}
-    @media(max-width:960px){.main-layout{grid-template-columns:1fr}.sidebar{display:none}.resource-grid{grid-template-columns:1fr}}
-    @media(max-width:640px){.hero{padding:2.5rem 1.25rem 2rem}.main-layout{padding:0 1.25rem}.content{padding:2rem 0 4rem}pre{padding:1rem;font-size:12.5px}.footer-nav{flex-direction:column}.footer-nav-link{max-width:100%;width:100%}}
-    @media print{.top-nav,.sidebar,.progress-bar{display:none}.main-layout{display:block}.content{padding:0}.hero{background:#fff;border:none}pre{background:#f1f5f9;color:var(--ink);border:1px solid var(--border)}}
+    /* ═══════════════════════════════════════════════
+       ILA DESIGN SYSTEM — v1.0
+       Iksha Learning Academy
+       ═══════════════════════════════════════════════ */
+
+    :root {
+      /* Palette */
+      --ink:        #0f172a;
+      --ink-light:  #334155;
+      --ink-muted:  #64748b;
+      --surface:    #ffffff;
+      --surface-alt:#f8fafc;
+      --surface-warm:#fffbeb;
+      --border:     #e2e8f0;
+      --border-light:#f1f5f9;
+
+      /* Brand */
+      --teal-50:  #f0fdfa;
+      --teal-100: #ccfbf1;
+      --teal-200: #99f6e4;
+      --teal-500: #14b8a6;
+      --teal-600: #0d9488;
+      --teal-700: #0f766e;
+      --teal-800: #115e59;
+      --teal-900: #134e4a;
+
+      --blue-50:  #eff6ff;
+      --blue-100: #dbeafe;
+      --blue-500: #3b82f6;
+      --blue-600: #2563eb;
+      --blue-700: #1d4ed8;
+
+      --amber-50:  #fffbeb;
+      --amber-100: #fef3c7;
+      --amber-500: #f59e0b;
+      --amber-600: #d97706;
+
+      --red-50:   #fef2f2;
+      --red-100:  #fee2e2;
+      --red-500:  #ef4444;
+      --red-600:  #dc2626;
+
+      --purple-50:  #faf5ff;
+      --purple-100: #f3e8ff;
+      --purple-500: #a855f7;
+      --purple-600: #9333ea;
+
+      /* Typography */
+      --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-serif: 'Instrument Serif', Georgia, serif;
+      --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
+
+      /* Spacing */
+      --content-max: 780px;
+      --sidebar-width: 280px;
+
+      /* Transitions */
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--ink);
+      background: var(--surface);
+    }
+
+    /* ── PROGRESS BAR ─────────────────────────── */
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--teal-500), var(--blue-500));
+      z-index: 1000;
+      transition: width 0.15s var(--ease);
+    }
+
+    /* ── TOP NAV ──────────────────────────────── */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+    }
+
+    .top-nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--teal-800);
+    }
+
+    .nav-brand-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--teal-600), var(--teal-800));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .nav-brand-text {
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-chapter-nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      color: var(--ink-muted);
+      border: 1px solid var(--border);
+      background: white;
+      transition: all 0.2s var(--ease);
+      cursor: pointer;
+    }
+
+    .nav-btn:hover {
+      color: var(--ink);
+      border-color: var(--teal-500);
+      background: var(--teal-50);
+    }
+
+    .nav-btn.disabled {
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    .nav-current {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink-light);
+      padding: 0 4px;
+    }
+
+    /* ── HERO ─────────────────────────────────── */
+    .hero {
+      background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 4rem 2rem 3.5rem;
+    }
+
+    .hero-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
+    }
+
+    .hero-chapter-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--teal-700);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 1rem;
+    }
+
+    .hero-chapter-label span {
+      background: var(--teal-100);
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+
+    .hero h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(2.4rem, 5vw, 3.2rem);
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: 1rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: var(--ink-light);
+      line-height: 1.65;
+      max-width: 640px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .hero-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
+    .hero-meta-item svg {
+      width: 16px;
+      height: 16px;
+      color: var(--teal-600);
+    }
+
+    /* ── MAIN LAYOUT ──────────────────────────── */
+    .main-layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr var(--sidebar-width);
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .content {
+      padding: 3rem 0 6rem;
+      min-width: 0;
+    }
+
+    /* ── SIDEBAR TOC ──────────────────────────── */
+    .sidebar {
+      position: sticky;
+      top: 76px;
+      padding: 2rem 0;
+      max-height: calc(100vh - 76px);
+      overflow-y: auto;
+    }
+
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-muted);
+      margin-bottom: 1rem;
+      padding-left: 14px;
+    }
+
+    .toc-list {
+      list-style: none;
+    }
+
+    .toc-item a {
+      display: block;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--ink-muted);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: all 0.2s var(--ease);
+      line-height: 1.5;
+    }
+
+    .toc-item a:hover {
+      color: var(--ink);
+      background: var(--surface-alt);
+    }
+
+    .toc-item a.active {
+      color: var(--teal-700);
+      border-left-color: var(--teal-500);
+      background: var(--teal-50);
+      font-weight: 500;
+    }
+
+    /* ── TYPOGRAPHY ────────────────────────────── */
+    .content h2 {
+      font-family: var(--font-serif);
+      font-size: 1.85rem;
+      font-weight: 400;
+      color: var(--ink);
+      margin: 3rem 0 1rem;
+      padding-top: 1rem;
+      scroll-margin-top: 80px;
+    }
+
+    .content h2:first-child {
+      margin-top: 0;
+    }
+
+    .content h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 2rem 0 0.75rem;
+      scroll-margin-top: 80px;
+    }
+
+    .content p {
+      margin-bottom: 1.25rem;
+      color: var(--ink-light);
+    }
+
+    .content strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .content a {
+      color: var(--teal-700);
+      text-decoration: underline;
+      text-decoration-color: var(--teal-200);
+      text-underline-offset: 3px;
+      transition: text-decoration-color 0.2s;
+    }
+
+    .content a:hover {
+      text-decoration-color: var(--teal-600);
+    }
+
+    .content ul, .content ol {
+      margin-bottom: 1.25rem;
+      padding-left: 1.5rem;
+    }
+
+    .content li {
+      margin-bottom: 0.5rem;
+      color: var(--ink-light);
+    }
+
+    .content li::marker {
+      color: var(--teal-500);
+    }
+
+    /* ── SECTION DIVIDER ──────────────────────── */
+    .section-divider {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 3rem 0;
+    }
+
+    /* ── CALLOUT BOXES ────────────────────────── */
+    .callout {
+      padding: 1.25rem 1.5rem;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+      border: 1px solid;
+      position: relative;
+    }
+
+    .callout-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .callout-header svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    .callout p:last-child { margin-bottom: 0; }
+
+    .callout.concept {
+      background: var(--blue-50);
+      border-color: var(--blue-100);
+    }
+    .callout.concept .callout-header { color: var(--blue-700); }
+
+    .callout.important {
+      background: var(--amber-50);
+      border-color: var(--amber-100);
+    }
+    .callout.important .callout-header { color: var(--amber-600); }
+
+    .callout.danger {
+      background: var(--red-50);
+      border-color: var(--red-100);
+    }
+    .callout.danger .callout-header { color: var(--red-600); }
+
+    .callout.tip {
+      background: var(--purple-50);
+      border-color: var(--purple-100);
+    }
+    .callout.tip .callout-header { color: var(--purple-600); }
+
+    .callout.success {
+      background: var(--teal-50);
+      border-color: var(--teal-100);
+    }
+    .callout.success .callout-header { color: var(--teal-700); }
+
+    /* ── CODE BLOCKS ──────────────────────────── */
+    .code-block {
+      position: relative;
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+      background: var(--surface-alt);
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--ink-muted);
+    }
+
+    .code-lang {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .code-copy {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: white;
+      font-size: 11px;
+      font-family: var(--font-sans);
+      color: var(--ink-muted);
+      cursor: pointer;
+      transition: all 0.2s var(--ease);
+    }
+
+    .code-copy:hover {
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    .code-copy.copied {
+      background: var(--teal-50);
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    pre {
+      margin: 0;
+      padding: 1.25rem 1.5rem;
+      overflow-x: auto;
+      background: #1e293b;
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: #e2e8f0;
+    }
+
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.88em;
+    }
+
+    p code, li code {
+      padding: 2px 7px;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      color: var(--teal-800);
+      font-size: 0.85em;
+    }
+
+    /* Syntax highlights (minimal) */
+    .hl-keyword  { color: #c084fc; }
+    .hl-string   { color: #86efac; }
+    .hl-comment  { color: #64748b; font-style: italic; }
+    .hl-function { color: #7dd3fc; }
+    .hl-number   { color: #fbbf24; }
+    .hl-flag     { color: #f472b6; }
+
+    /* ── COLLAPSIBLE (DETAILS) ────────────────── */
+    details {
+      margin-bottom: 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.2s var(--ease);
+    }
+
+    details[open] {
+      border-color: var(--teal-200);
+    }
+
+    details summary {
+      padding: 1rem 1.25rem;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      background: var(--surface-alt);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.2s var(--ease);
+      user-select: none;
+    }
+
+    details summary::-webkit-details-marker { display: none; }
+
+    details summary::before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+      flex-shrink: 0;
+      transition: transform 0.2s var(--ease);
+    }
+
+    details[open] summary::before {
+      transform: rotate(90deg);
+    }
+
+    details summary:hover {
+      background: var(--teal-50);
+    }
+
+    .details-body {
+      padding: 1.25rem 1.5rem;
+    }
+
+    .details-body p:last-child { margin-bottom: 0; }
+
+    /* ── VIDEO EMBED ──────────────────────────── */
+    .video-card {
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      background: #0f172a;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .video-caption {
+      padding: 12px 16px;
+      background: var(--surface-alt);
+      font-size: 13px;
+      color: var(--ink-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .video-caption svg {
+      width: 14px;
+      height: 14px;
+      color: var(--red-500);
+    }
+
+    /* ── RESOURCE CARDS ───────────────────────── */
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .resource-card {
+      display: flex;
+      gap: 14px;
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      background: white;
+    }
+
+    .resource-card:hover {
+      border-color: var(--teal-300);
+      background: var(--teal-50);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .resource-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 18px;
+    }
+
+    .resource-icon.docs    { background: var(--blue-50);   color: var(--blue-600); }
+    .resource-icon.video   { background: var(--red-50);    color: var(--red-500); }
+    .resource-icon.github  { background: var(--ink);       color: white; }
+    .resource-icon.article { background: var(--amber-50);  color: var(--amber-600); }
+    .resource-icon.pdf     { background: var(--purple-50); color: var(--purple-600); }
+
+    .resource-info {
+      min-width: 0;
+    }
+
+    .resource-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 2px;
+      line-height: 1.4;
+    }
+
+    .resource-desc {
+      font-size: 12px;
+      color: var(--ink-muted);
+      line-height: 1.5;
+    }
+
+    /* ── ASSIGNMENT CARDS ─────────────────────── */
+    .assignment {
+      border: 2px solid var(--teal-200);
+      border-radius: 14px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--teal-50) 0%, white 100%);
+    }
+
+    .assignment-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .assignment-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--teal-700);
+    }
+
+    .assignment-difficulty {
+      display: inline-flex;
+      padding: 4px 10px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .difficulty-l1 { background: var(--teal-100); color: var(--teal-800); }
+    .difficulty-l2 { background: var(--amber-100); color: var(--amber-600); }
+    .difficulty-l3 { background: var(--red-100); color: var(--red-600); }
+
+    .assignment h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .assignment p {
+      font-size: 14px;
+    }
+
+    .checklist {
+      list-style: none;
+      padding: 0;
+    }
+
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-light);
+      font-size: 14px;
+    }
+
+    .checklist li:last-child { border-bottom: none; }
+
+    .check-box {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      border: 2px solid var(--border);
+      flex-shrink: 0;
+      margin-top: 1px;
+      cursor: pointer;
+      transition: all 0.15s var(--ease);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .check-box:hover {
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked {
+      background: var(--teal-500);
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+    }
+
+    /* ── ARCHITECTURE DIAGRAM ─────────────────── */
+    .diagram {
+      margin: 1.5rem 0;
+      padding: 2rem;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow-x: auto;
+    }
+
+    .diagram pre {
+      background: transparent;
+      color: var(--ink);
+      padding: 0;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .diagram-caption {
+      margin-top: 1rem;
+      font-size: 12px;
+      color: var(--ink-muted);
+      text-align: center;
+      font-style: italic;
+    }
+
+    /* ── FOOTER ───────────────────────────────── */
+    .chapter-footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      background: var(--surface-alt);
+    }
+
+    .chapter-footer-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
+    }
+
+    .footer-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .footer-nav-link {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 1rem 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      max-width: 320px;
+      background: white;
+    }
+
+    .footer-nav-link:hover {
+      border-color: var(--teal-300);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .footer-nav-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--teal-600);
+    }
+
+    .footer-nav-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .footer-brand {
+      text-align: center;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
+    /* ── RESPONSIVE ───────────────────────────── */
+    @media (max-width: 960px) {
+      .main-layout {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        display: none;
+      }
+      .resource-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero { padding: 2.5rem 1.25rem 2rem; }
+      .main-layout { padding: 0 1.25rem; }
+      .content { padding: 2rem 0 4rem; }
+      pre { padding: 1rem; font-size: 12.5px; }
+      .footer-nav { flex-direction: column; }
+      .footer-nav-link { max-width: 100%; width: 100%; }
+    }
+
+    /* ── PRINT ────────────────────────────────── */
+    @media print {
+      .top-nav, .sidebar, .progress-bar { display: none; }
+      .main-layout { display: block; }
+      .content { padding: 0; }
+      .hero { background: white; border: none; }
+      pre { background: #f1f5f9; color: var(--ink); border: 1px solid var(--border); }
+    }
   </style>
 </head>
 <body>
+  <!-- Progress Bar -->
   <div class="progress-bar" id="progressBar"></div>
-  <nav class="top-nav"><div class="top-nav-inner"><a class="nav-brand" href="index.html"><div class="nav-brand-icon">ILA</div><span class="nav-brand-text">Iksha Learning Academy</span></a><div class="nav-chapter-nav"><a class="nav-btn" href="chapter-06.html">&larr; Previous</a><span class="nav-current">07 / 08</span><a class="nav-btn" href="chapter-08.html">Next &rarr;</a></div></div></nav>
 
-  <header class="hero"><div class="hero-inner">
-    <div class="hero-chapter-label"><span>Chapter 07</span> &middot; Redshift Basic</div>
-    <h1>Data Transformation</h1>
-    <p class="hero-subtitle">Build robust data transformation pipelines using CTEs, CTAS, temporary tables, user-defined functions, and stored procedures &mdash; the essential tools for turning raw ad-tech event logs into clean, analysis-ready datasets.</p>
-    <div class="hero-meta">
-      <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Estimated: 60&ndash;90 min</div>
-      <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> Key Concepts</div>
-      <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> 3 Assignments</div>
+  <!-- Top Navigation -->
+  <nav class="top-nav">
+    <div class="top-nav-inner">
+      <a class="nav-brand" href="index.html">
+        <div class="nav-brand-icon">ILA</div>
+        <span class="nav-brand-text">Iksha Learning Academy</span>
+      </a>
+      <div class="nav-chapter-nav">
+        <a class="nav-btn" href="chapter-06.html">&larr; Previous</a>
+        <span class="nav-current">07 / 08</span>
+        <a class="nav-btn" href="chapter-08.html">Next &rarr;</a>
+      </div>
     </div>
-  </div></header>
+  </nav>
 
+  <!-- Hero -->
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-chapter-label">
+        <span>Chapter 07</span> &middot; Redshift Foundations
+      </div>
+      <h1>Data Transformation</h1>
+      <p class="hero-subtitle">
+        Master the art of reshaping, cleaning, and enriching raw data inside Amazon Redshift &mdash;
+        from type casting and string manipulation to pivoting, unpivoting, and building
+        incremental transformation pipelines that turn raw event logs into analytics-ready tables.
+      </p>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Estimated: 55&ndash;70 min
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          6 Key Concepts
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          3 Assignments
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content + Sidebar -->
   <div class="main-layout">
     <main class="content">
 
+      <!-- ════════════════════════════════════════
+           SECTION 1: WHY THIS MATTERS
+           ════════════════════════════════════════ -->
       <h2 id="why-this-matters">Why This Matters</h2>
-      <p>Raw impression logs from bid servers are messy: timestamps in different formats, null device types, duplicate events from retry logic, and bid prices that need currency conversion. Data transformation is the process of cleaning, enriching, and reshaping this raw data into the star schema that powers your dashboards and reports.</p>
-      <p>Redshift provides several transformation mechanisms, each optimized for different use cases. CTEs and subqueries handle complex query logic. CTAS (CREATE TABLE AS SELECT) materializes intermediate results for reuse. Temporary tables provide session-scoped scratch space. Stored procedures encapsulate multi-step ETL logic into reusable, schedulable units.</p>
+
+      <p>
+        Raw data is never ready for analysis. Impression logs arrive with inconsistent timestamp formats,
+        nullable fields where business logic demands defaults, string-encoded numbers, and nested JSON
+        payloads that must be flattened into relational columns. Before a single dashboard chart can be
+        drawn or a campaign performance report generated, the data must be <strong>transformed</strong>.
+      </p>
+
+      <p>
+        In Redshift, data transformation is not a separate tool or service &mdash; it happens directly
+        inside the warehouse using SQL. This is both a strength and a responsibility. Redshift gives you
+        powerful built-in functions for type casting, string manipulation, date arithmetic, conditional
+        logic, and JSON extraction. But writing transformations that are correct, performant, and
+        maintainable requires understanding the specific functions Redshift provides and the patterns
+        that work best with its columnar, MPP architecture.
+      </p>
+
+      <p>
+        This chapter teaches you to build transformation logic that turns raw staging tables into
+        clean, enriched, analytics-ready fact and dimension tables. You will learn to handle every
+        common data quality issue encountered in ad-tech pipelines: missing values, format mismatches,
+        duplicate records, and schema evolution.
+      </p>
 
       <div class="callout concept">
-        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg> Key Insight</div>
-        <p>In ad-tech ETL, the most common transformation pattern is the <strong>incremental daily load</strong>: delete today's partition from the target table, then insert the transformed result. This pattern is idempotent (safe to re-run) and efficient (processes only one day of data). Wrap it in a transaction for atomicity.</p>
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Key Insight
+        </div>
+        <p>
+          The goal of data transformation is not just to make data "look right." It is to encode
+          business rules into repeatable SQL logic so that every analyst, every dashboard, and
+          every downstream model sees the <strong>same consistent view</strong> of the data.
+          A campaign's click-through rate must be calculated the same way everywhere, or your
+          organization will spend more time arguing about numbers than acting on them.
+        </p>
       </div>
 
       <hr class="section-divider">
 
+      <!-- ════════════════════════════════════════
+           SECTION 2: KEY CONCEPTS
+           ════════════════════════════════════════ -->
       <h2 id="key-concepts">Key Concepts</h2>
 
-      <h3 id="ctes">1. Common Table Expressions (CTEs)</h3>
-      <p>CTEs break complex transformations into named, readable steps. They are essential for multi-stage ad-tech calculations like attribution windows and funnel analysis:</p>
+      <!-- Concept 1 -->
+      <h3 id="type-casting">1. Type Casting and Data Coercion</h3>
 
-      <div class="code-block"><div class="code-header"><span class="code-lang">sql</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+      <p>
+        Data loaded from CSV files, S3 JSON payloads, or external Spectrum tables often arrives as
+        strings. Before you can perform arithmetic, date filtering, or aggregation, you must cast
+        values to their correct data types. Redshift supports several casting syntaxes, but they
+        behave differently when encountering invalid data.
+      </p>
+
+      <p>
+        The <code>CAST()</code> function and the <code>::</code> shorthand will raise an error if
+        the value cannot be converted. For resilient ETL pipelines, you need defensive strategies
+        that handle bad data gracefully without killing the entire transformation.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
 <pre>
-<span class="hl-comment">-- Multi-step campaign performance calculation using CTEs</span>
-<span class="hl-keyword">WITH</span> impression_metrics <span class="hl-keyword">AS</span> (
-    <span class="hl-keyword">SELECT</span>
-        campaign_id,
-        event_date,
-        <span class="hl-function">COUNT</span>(*) <span class="hl-keyword">AS</span> impressions,
-        <span class="hl-function">SUM</span>(<span class="hl-keyword">CASE WHEN</span> is_clicked <span class="hl-keyword">THEN</span> <span class="hl-number">1</span> <span class="hl-keyword">ELSE</span> <span class="hl-number">0</span> <span class="hl-keyword">END</span>) <span class="hl-keyword">AS</span> clicks,
-        <span class="hl-function">SUM</span>(win_price_cpm) / <span class="hl-number">1000.0</span> <span class="hl-keyword">AS</span> spend
-    <span class="hl-keyword">FROM</span> analytics.fact_impressions
-    <span class="hl-keyword">WHERE</span> event_date = <span class="hl-string">'2025-01-15'</span>
-    <span class="hl-keyword">GROUP BY</span> campaign_id, event_date
-),
-with_derived <span class="hl-keyword">AS</span> (
-    <span class="hl-keyword">SELECT</span> *,
-        <span class="hl-function">ROUND</span>(clicks * <span class="hl-number">100.0</span> / <span class="hl-function">NULLIF</span>(impressions, <span class="hl-number">0</span>), <span class="hl-number">4</span>) <span class="hl-keyword">AS</span> ctr,
-        <span class="hl-function">ROUND</span>(spend / <span class="hl-function">NULLIF</span>(clicks, <span class="hl-number">0</span>), <span class="hl-number">2</span>) <span class="hl-keyword">AS</span> cpc,
-        <span class="hl-function">ROUND</span>(spend / <span class="hl-function">NULLIF</span>(impressions, <span class="hl-number">0</span>) * <span class="hl-number">1000</span>, <span class="hl-number">2</span>) <span class="hl-keyword">AS</span> effective_cpm
-    <span class="hl-keyword">FROM</span> impression_metrics
-)
-<span class="hl-keyword">SELECT</span> wd.*, dc.campaign_name, dc.advertiser_name
-<span class="hl-keyword">FROM</span> with_derived wd
-<span class="hl-keyword">JOIN</span> analytics.dim_campaign dc <span class="hl-keyword">ON</span> wd.campaign_id = dc.campaign_id
-<span class="hl-keyword">ORDER BY</span> spend <span class="hl-keyword">DESC</span>;
-</pre></div>
-
-      <h3 id="ctas">2. CREATE TABLE AS SELECT (CTAS)</h3>
-      <p>CTAS creates a new table from a query result. It is the fastest way to materialize transformed data because it bypasses the leader node for data distribution and inherits optimal compression automatically:</p>
-
-      <div class="code-block"><div class="code-header"><span class="code-lang">sql</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-<pre>
-<span class="hl-comment">-- Materialize daily summary as a new table</span>
-<span class="hl-keyword">CREATE TABLE</span> analytics.fact_daily_summary
-<span class="hl-keyword">DISTSTYLE</span> KEY <span class="hl-keyword">DISTKEY</span>(campaign_id)
-<span class="hl-keyword">COMPOUND SORTKEY</span>(event_date, campaign_id)
-<span class="hl-keyword">AS</span>
+<span class="hl-comment">-- Basic type casting syntaxes in Redshift</span>
 <span class="hl-keyword">SELECT</span>
-    event_date,
-    campaign_id,
-    <span class="hl-function">COUNT</span>(*) <span class="hl-keyword">AS</span> impressions,
-    <span class="hl-function">SUM</span>(<span class="hl-keyword">CASE WHEN</span> is_clicked <span class="hl-keyword">THEN</span> <span class="hl-number">1</span> <span class="hl-keyword">ELSE</span> <span class="hl-number">0</span> <span class="hl-keyword">END</span>) <span class="hl-keyword">AS</span> clicks,
-    <span class="hl-function">SUM</span>(win_price_cpm) / <span class="hl-number">1000.0</span> <span class="hl-keyword">AS</span> spend,
-    <span class="hl-function">AVG</span>(win_price_cpm) <span class="hl-keyword">AS</span> avg_cpm
-<span class="hl-keyword">FROM</span> analytics.fact_impressions
-<span class="hl-keyword">GROUP BY</span> event_date, campaign_id;
-</pre></div>
+    <span class="hl-comment">-- CAST function (ANSI standard)</span>
+    <span class="hl-function">CAST</span>(bid_price_str <span class="hl-keyword">AS</span> <span class="hl-function">DECIMAL</span>(<span class="hl-number">10</span>,<span class="hl-number">4</span>))   <span class="hl-keyword">AS</span> bid_price,
 
-      <h3 id="temp-tables">3. Temporary Tables</h3>
-      <p>Temporary tables exist only for the duration of your session. They are ideal for staging intermediate results during multi-step ETL transformations:</p>
+    <span class="hl-comment">-- Double-colon shorthand (PostgreSQL style)</span>
+    event_ts_str::<span class="hl-function">TIMESTAMP</span>                    <span class="hl-keyword">AS</span> event_timestamp,
 
-      <div class="code-block"><div class="code-header"><span class="code-lang">sql</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+    <span class="hl-comment">-- Safe casting with CASE to prevent errors on bad data</span>
+    <span class="hl-keyword">CASE</span>
+        <span class="hl-keyword">WHEN</span> impressions_str ~ <span class="hl-string">'^[0-9]+$'</span>
+        <span class="hl-keyword">THEN</span> impressions_str::<span class="hl-function">INTEGER</span>
+        <span class="hl-keyword">ELSE</span> <span class="hl-number">0</span>
+    <span class="hl-keyword">END</span>                                         <span class="hl-keyword">AS</span> impressions,
+
+    <span class="hl-comment">-- NVL for null handling with default values</span>
+    <span class="hl-function">NVL</span>(country_code, <span class="hl-string">'XX'</span>)                   <span class="hl-keyword">AS</span> country_code,
+
+    <span class="hl-comment">-- COALESCE for multi-column fallback chains</span>
+    <span class="hl-function">COALESCE</span>(win_price, bid_price, <span class="hl-number">0.00</span>)      <span class="hl-keyword">AS</span> effective_price
+
+<span class="hl-keyword">FROM</span> staging.raw_impressions;
+</pre>
+      </div>
+
+      <div class="callout important">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Important
+        </div>
+        <p>
+          Redshift does not have a <code>TRY_CAST()</code> function like SQL Server or Snowflake.
+          If you need safe casting, you must use a <code>CASE</code> expression with regex validation
+          (<code>~</code> operator) to test the string before casting. Always build this defensive
+          pattern into your staging-to-production transformation queries to prevent pipeline failures.
+        </p>
+      </div>
+
+      <!-- Concept 2 -->
+      <h3 id="string-manipulation">2. String Manipulation and Cleaning</h3>
+
+      <p>
+        Ad-tech data is notoriously inconsistent. Publisher names arrive in mixed case, URLs contain
+        tracking parameters that must be stripped, creative identifiers embed metadata that needs
+        extraction, and user-agent strings require parsing. Redshift provides a comprehensive set
+        of string functions to handle all of these transformations efficiently.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
 <pre>
-<span class="hl-comment">-- Stage cleaned impression data before final insert</span>
-<span class="hl-keyword">CREATE TEMP TABLE</span> stg_impressions <span class="hl-keyword">AS</span>
+<span class="hl-comment">-- String transformation functions for ad-tech data cleaning</span>
 <span class="hl-keyword">SELECT</span>
-    event_timestamp,
-    event_date,
-    campaign_id,
-    creative_id,
-    <span class="hl-function">UPPER</span>(<span class="hl-function">TRIM</span>(country_code)) <span class="hl-keyword">AS</span> country_code,
-    <span class="hl-function">COALESCE</span>(device_type, <span class="hl-string">'unknown'</span>) <span class="hl-keyword">AS</span> device_type,
-    <span class="hl-function">ABS</span>(win_price_cpm) <span class="hl-keyword">AS</span> win_price_cpm
-<span class="hl-keyword">FROM</span> analytics.raw_impressions
-<span class="hl-keyword">WHERE</span> event_date = <span class="hl-string">'2025-01-15'</span>
-  <span class="hl-keyword">AND</span> campaign_id <span class="hl-keyword">IS NOT NULL</span>
-  <span class="hl-keyword">AND</span> win_price_cpm >= <span class="hl-number">0</span>;
-</pre></div>
+    <span class="hl-comment">-- Standardize case for consistent grouping</span>
+    <span class="hl-function">LOWER</span>(<span class="hl-function">TRIM</span>(publisher_name))                <span class="hl-keyword">AS</span> publisher_clean,
 
-      <h3 id="stored-procedures">4. Stored Procedures for ETL</h3>
-      <p>Stored procedures encapsulate multi-step ETL logic into reusable, schedulable units. They support variables, conditionals, loops, and transaction control:</p>
+    <span class="hl-comment">-- Extract domain from full URL</span>
+    <span class="hl-function">REGEXP_SUBSTR</span>(
+        page_url,
+        <span class="hl-string">'https?://([^/]+)'</span>,
+        <span class="hl-number">1</span>, <span class="hl-number">1</span>, <span class="hl-string">'e'</span>
+    )                                            <span class="hl-keyword">AS</span> domain,
 
-      <div class="code-block"><div class="code-header"><span class="code-lang">sql</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-<pre>
-<span class="hl-keyword">CREATE OR REPLACE PROCEDURE</span> analytics.load_daily_impressions(
-    p_load_date <span class="hl-function">DATE</span>
-)
-<span class="hl-keyword">LANGUAGE</span> plpgsql
-<span class="hl-keyword">AS</span> $$
-<span class="hl-keyword">BEGIN</span>
-    <span class="hl-comment">-- Step 1: Delete existing data for idempotency</span>
-    <span class="hl-keyword">DELETE FROM</span> analytics.fact_impressions
-    <span class="hl-keyword">WHERE</span> event_date = p_load_date;
+    <span class="hl-comment">-- Replace characters for normalization</span>
+    <span class="hl-function">REPLACE</span>(
+        <span class="hl-function">REPLACE</span>(device_model, <span class="hl-string">' '</span>, <span class="hl-string">'-'</span>),
+        <span class="hl-string">'_'</span>, <span class="hl-string">'-'</span>
+    )                                            <span class="hl-keyword">AS</span> device_normalized,
 
-    <span class="hl-comment">-- Step 2: Insert transformed data</span>
-    <span class="hl-keyword">INSERT INTO</span> analytics.fact_impressions
-    <span class="hl-keyword">SELECT</span>
-        event_timestamp, event_date, campaign_id,
-        creative_id, publisher_id, device_type,
-        country_code, bid_price_cpm, win_price_cpm,
-        is_viewable, is_clicked
-    <span class="hl-keyword">FROM</span> analytics.stg_raw_impressions
-    <span class="hl-keyword">WHERE</span> event_date = p_load_date;
+    <span class="hl-comment">-- Extract creative size from tag "banner_300x250_v2"</span>
+    <span class="hl-function">REGEXP_SUBSTR</span>(
+        creative_tag,
+        <span class="hl-string">'(\d+x\d+)'</span>,
+        <span class="hl-number">1</span>, <span class="hl-number">1</span>, <span class="hl-string">'e'</span>
+    )                                            <span class="hl-keyword">AS</span> creative_size,
 
-    <span class="hl-comment">-- Step 3: Update statistics</span>
-    <span class="hl-keyword">ANALYZE</span> analytics.fact_impressions;
+    <span class="hl-comment">-- Pad IDs to consistent length for display</span>
+    <span class="hl-function">LPAD</span>(campaign_id::<span class="hl-function">VARCHAR</span>, <span class="hl-number">8</span>, <span class="hl-string">'0'</span>)          <span class="hl-keyword">AS</span> campaign_display_id,
 
-    <span class="hl-keyword">RAISE INFO</span> <span class="hl-string">'Loaded impressions for %'</span>, p_load_date;
-<span class="hl-keyword">END</span>;
-$$;
+    <span class="hl-comment">-- Build composite key from multiple fields</span>
+    advertiser_id::<span class="hl-function">VARCHAR</span> || <span class="hl-string">'-'</span> ||
+    campaign_id::<span class="hl-function">VARCHAR</span> || <span class="hl-string">'-'</span> ||
+    <span class="hl-function">TO_CHAR</span>(event_date, <span class="hl-string">'YYYYMMDD'</span>)              <span class="hl-keyword">AS</span> composite_key,
 
-<span class="hl-comment">-- Execute the procedure</span>
-<span class="hl-keyword">CALL</span> analytics.load_daily_impressions(<span class="hl-string">'2025-01-15'</span>);
-</pre></div>
+    <span class="hl-comment">-- Substring for fixed-width encoded fields</span>
+    <span class="hl-function">SUBSTRING</span>(bid_request_id, <span class="hl-number">1</span>, <span class="hl-number">8</span>)             <span class="hl-keyword">AS</span> exchange_prefix,
+    <span class="hl-function">SUBSTRING</span>(bid_request_id, <span class="hl-number">10</span>, <span class="hl-number">16</span>)            <span class="hl-keyword">AS</span> auction_id
+
+<span class="hl-keyword">FROM</span> staging.raw_impressions
+<span class="hl-keyword">WHERE</span> <span class="hl-function">LEN</span>(page_url) > <span class="hl-number">0</span>;
+</pre>
+      </div>
 
       <div class="callout tip">
-        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg> Pro Tip</div>
-        <p>Always make stored procedures idempotent by deleting the target partition before inserting. This means you can safely re-run a failed load without creating duplicates. In ad-tech billing, duplicate impressions directly cause overbilling &mdash; idempotency is not optional.</p>
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Pro Tip
+        </div>
+        <p>
+          Redshift's <code>REGEXP_SUBSTR</code> with the <code>'e'</code> flag extracts only the
+          captured group (the part inside parentheses), not the entire match. This differs from
+          standard regex behavior and is extremely useful for parsing URLs and creative tags.
+          Always use the <code>'e'</code> flag when you need to extract a sub-pattern.
+        </p>
+      </div>
+
+      <!-- Concept 3 -->
+      <h3 id="date-transformations">3. Date and Timestamp Transformations</h3>
+
+      <p>
+        Time is the most important dimension in ad-tech analytics. Every report is time-bound &mdash;
+        daily campaign performance, hourly bid analysis, weekly trend reports. Raw event timestamps
+        arrive in UTC epoch milliseconds, ISO 8601 strings, or inconsistent timezone formats.
+        Transforming these into usable date and time columns is a critical ETL skill.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- Date and timestamp transformation patterns</span>
+<span class="hl-keyword">SELECT</span>
+    <span class="hl-comment">-- Convert epoch milliseconds to timestamp</span>
+    <span class="hl-function">TIMESTAMP</span> <span class="hl-string">'epoch'</span> +
+        (event_epoch_ms / <span class="hl-number">1000</span>) * <span class="hl-keyword">INTERVAL</span> <span class="hl-string">'1 second'</span>
+                                                 <span class="hl-keyword">AS</span> event_timestamp_utc,
+
+    <span class="hl-comment">-- Convert UTC to Eastern for US advertiser reporting</span>
+    <span class="hl-function">CONVERT_TIMEZONE</span>(
+        <span class="hl-string">'UTC'</span>,
+        <span class="hl-string">'US/Eastern'</span>,
+        event_timestamp
+    )                                            <span class="hl-keyword">AS</span> event_timestamp_et,
+
+    <span class="hl-comment">-- Truncate to various granularities</span>
+    <span class="hl-function">DATE_TRUNC</span>(<span class="hl-string">'hour'</span>, event_timestamp)          <span class="hl-keyword">AS</span> event_hour,
+    <span class="hl-function">DATE_TRUNC</span>(<span class="hl-string">'day'</span>, event_timestamp)           <span class="hl-keyword">AS</span> event_date,
+    <span class="hl-function">DATE_TRUNC</span>(<span class="hl-string">'week'</span>, event_timestamp)          <span class="hl-keyword">AS</span> event_week,
+
+    <span class="hl-comment">-- Extract individual date components</span>
+    <span class="hl-function">EXTRACT</span>(<span class="hl-keyword">YEAR</span> <span class="hl-keyword">FROM</span> event_timestamp)          <span class="hl-keyword">AS</span> event_year,
+    <span class="hl-function">EXTRACT</span>(<span class="hl-keyword">MONTH</span> <span class="hl-keyword">FROM</span> event_timestamp)         <span class="hl-keyword">AS</span> event_month,
+    <span class="hl-function">EXTRACT</span>(DOW <span class="hl-keyword">FROM</span> event_timestamp)           <span class="hl-keyword">AS</span> day_of_week,
+    <span class="hl-function">EXTRACT</span>(<span class="hl-keyword">HOUR</span> <span class="hl-keyword">FROM</span> event_timestamp)          <span class="hl-keyword">AS</span> hour_of_day,
+
+    <span class="hl-comment">-- Campaign duration in days</span>
+    <span class="hl-function">DATEDIFF</span>(<span class="hl-string">'day'</span>, campaign_start, campaign_end) <span class="hl-keyword">AS</span> campaign_days,
+
+    <span class="hl-comment">-- Format for reporting output</span>
+    <span class="hl-function">TO_CHAR</span>(event_timestamp, <span class="hl-string">'YYYY-MM-DD HH24:MI'</span>) <span class="hl-keyword">AS</span> formatted_ts,
+
+    <span class="hl-comment">-- Flag weekend traffic for bid optimization</span>
+    <span class="hl-keyword">CASE</span>
+        <span class="hl-keyword">WHEN</span> <span class="hl-function">EXTRACT</span>(DOW <span class="hl-keyword">FROM</span> event_timestamp) <span class="hl-keyword">IN</span> (<span class="hl-number">0</span>, <span class="hl-number">6</span>)
+        <span class="hl-keyword">THEN</span> <span class="hl-string">'weekend'</span>
+        <span class="hl-keyword">ELSE</span> <span class="hl-string">'weekday'</span>
+    <span class="hl-keyword">END</span>                                          <span class="hl-keyword">AS</span> day_type
+
+<span class="hl-keyword">FROM</span> staging.raw_bid_events;
+</pre>
+      </div>
+
+      <p>
+        The <code>CONVERT_TIMEZONE</code> function is critical for multi-region advertisers. Bid events
+        are recorded in UTC by exchanges, but US advertisers expect Eastern Time, European advertisers
+        expect CET, and APAC advertisers expect their local zones. Build timezone conversion into your
+        transformation layer so downstream consumers never need to think about time zones.
+      </p>
+
+      <div class="callout important">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Important
+        </div>
+        <p>
+          Redshift stores <code>TIMESTAMP</code> without timezone information. If your source column
+          is <code>TIMESTAMPTZ</code>, Redshift silently converts it to UTC during storage. Always be
+          explicit: store raw timestamps in UTC, and apply <code>CONVERT_TIMEZONE</code> at the
+          transformation layer for reporting. Document your timezone policy in the schema comments.
+        </p>
+      </div>
+
+      <!-- Concept 4 -->
+      <h3 id="conditional-logic">4. Conditional Logic and Business Rules</h3>
+
+      <p>
+        Real-world data transformation is not just about changing data types. It is about encoding
+        <strong>business rules</strong> into SQL. What counts as a valid impression? How do you classify
+        traffic quality? What revenue model applies to each campaign? These rules are implemented
+        using <code>CASE</code> expressions, <code>DECODE</code>, and conditional aggregation patterns.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- Business rule transformations for ad-tech metrics</span>
+<span class="hl-keyword">SELECT</span>
+    campaign_id,
+    event_date,
+
+    <span class="hl-comment">-- Classify traffic quality based on viewability</span>
+    <span class="hl-keyword">CASE</span>
+        <span class="hl-keyword">WHEN</span> viewability_pct >= <span class="hl-number">70</span> <span class="hl-keyword">THEN</span> <span class="hl-string">'premium'</span>
+        <span class="hl-keyword">WHEN</span> viewability_pct >= <span class="hl-number">50</span> <span class="hl-keyword">THEN</span> <span class="hl-string">'standard'</span>
+        <span class="hl-keyword">WHEN</span> viewability_pct >= <span class="hl-number">30</span> <span class="hl-keyword">THEN</span> <span class="hl-string">'below_standard'</span>
+        <span class="hl-keyword">WHEN</span> viewability_pct IS <span class="hl-keyword">NULL</span> <span class="hl-keyword">THEN</span> <span class="hl-string">'unmeasured'</span>
+        <span class="hl-keyword">ELSE</span> <span class="hl-string">'non_viewable'</span>
+    <span class="hl-keyword">END</span>                                      <span class="hl-keyword">AS</span> viewability_tier,
+
+    <span class="hl-comment">-- Revenue calculation based on pricing model</span>
+    <span class="hl-keyword">CASE</span> pricing_model
+        <span class="hl-keyword">WHEN</span> <span class="hl-string">'CPM'</span>  <span class="hl-keyword">THEN</span> impressions * bid_price / <span class="hl-number">1000.0</span>
+        <span class="hl-keyword">WHEN</span> <span class="hl-string">'CPC'</span>  <span class="hl-keyword">THEN</span> clicks * bid_price
+        <span class="hl-keyword">WHEN</span> <span class="hl-string">'CPA'</span>  <span class="hl-keyword">THEN</span> conversions * bid_price
+        <span class="hl-keyword">WHEN</span> <span class="hl-string">'CPCV'</span> <span class="hl-keyword">THEN</span> completed_views * bid_price
+        <span class="hl-keyword">ELSE</span> <span class="hl-number">0</span>
+    <span class="hl-keyword">END</span>                                      <span class="hl-keyword">AS</span> gross_revenue,
+
+    <span class="hl-comment">-- Flag suspicious activity for fraud detection</span>
+    <span class="hl-keyword">CASE</span>
+        <span class="hl-keyword">WHEN</span> clicks > impressions          <span class="hl-keyword">THEN</span> <span class="hl-keyword">TRUE</span>
+        <span class="hl-keyword">WHEN</span> time_on_page_ms &lt; <span class="hl-number">100</span>         <span class="hl-keyword">THEN</span> <span class="hl-keyword">TRUE</span>
+        <span class="hl-keyword">WHEN</span> ip_frequency_1h > <span class="hl-number">50</span>          <span class="hl-keyword">THEN</span> <span class="hl-keyword">TRUE</span>
+        <span class="hl-keyword">ELSE</span> <span class="hl-keyword">FALSE</span>
+    <span class="hl-keyword">END</span>                                      <span class="hl-keyword">AS</span> is_suspicious,
+
+    <span class="hl-comment">-- DECODE for simple value mapping (Redshift-specific)</span>
+    <span class="hl-function">DECODE</span>(device_type_code,
+        <span class="hl-number">1</span>, <span class="hl-string">'Desktop'</span>,
+        <span class="hl-number">2</span>, <span class="hl-string">'Mobile'</span>,
+        <span class="hl-number">3</span>, <span class="hl-string">'Tablet'</span>,
+        <span class="hl-number">4</span>, <span class="hl-string">'Connected TV'</span>,
+        <span class="hl-number">5</span>, <span class="hl-string">'Console'</span>,
+        <span class="hl-string">'Unknown'</span>
+    )                                        <span class="hl-keyword">AS</span> device_type_name
+
+<span class="hl-keyword">FROM</span> staging.enriched_events;
+</pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- Conditional aggregation: multiple metrics in one pass</span>
+<span class="hl-keyword">SELECT</span>
+    campaign_id,
+    event_date,
+    <span class="hl-function">COUNT</span>(*)                                         <span class="hl-keyword">AS</span> total_impressions,
+    <span class="hl-function">SUM</span>(<span class="hl-keyword">CASE WHEN</span> is_viewable <span class="hl-keyword">THEN</span> <span class="hl-number">1</span> <span class="hl-keyword">ELSE</span> <span class="hl-number">0</span> <span class="hl-keyword">END</span>)     <span class="hl-keyword">AS</span> viewable_impressions,
+    <span class="hl-function">SUM</span>(<span class="hl-keyword">CASE WHEN</span> is_clicked  <span class="hl-keyword">THEN</span> <span class="hl-number">1</span> <span class="hl-keyword">ELSE</span> <span class="hl-number">0</span> <span class="hl-keyword">END</span>)     <span class="hl-keyword">AS</span> clicks,
+    <span class="hl-function">SUM</span>(<span class="hl-keyword">CASE WHEN</span> converted   <span class="hl-keyword">THEN</span> <span class="hl-number">1</span> <span class="hl-keyword">ELSE</span> <span class="hl-number">0</span> <span class="hl-keyword">END</span>)     <span class="hl-keyword">AS</span> conversions,
+    <span class="hl-function">SUM</span>(<span class="hl-keyword">CASE</span>
+        <span class="hl-keyword">WHEN</span> device_type = <span class="hl-string">'Mobile'</span> <span class="hl-keyword">THEN</span> <span class="hl-number">1</span> <span class="hl-keyword">ELSE</span> <span class="hl-number">0</span>
+    <span class="hl-keyword">END</span>)                                             <span class="hl-keyword">AS</span> mobile_impressions,
+    <span class="hl-function">ROUND</span>(
+        <span class="hl-number">100.0</span> * <span class="hl-function">SUM</span>(<span class="hl-keyword">CASE WHEN</span> is_clicked <span class="hl-keyword">THEN</span> <span class="hl-number">1</span> <span class="hl-keyword">ELSE</span> <span class="hl-number">0</span> <span class="hl-keyword">END</span>)
+        / <span class="hl-function">NULLIF</span>(<span class="hl-function">COUNT</span>(*), <span class="hl-number">0</span>),
+    <span class="hl-number">4</span>)                                               <span class="hl-keyword">AS</span> ctr_pct,
+    <span class="hl-function">ROUND</span>(<span class="hl-function">AVG</span>(win_price_cpm), <span class="hl-number">4</span>)                     <span class="hl-keyword">AS</span> avg_cpm
+<span class="hl-keyword">FROM</span> analytics.fact_impressions
+<span class="hl-keyword">GROUP BY</span> campaign_id, event_date;
+</pre>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Pro Tip
+        </div>
+        <p>
+          Redshift's <code>DECODE</code> function is more concise than <code>CASE</code> for simple
+          value lookups and can be slightly faster because it is optimized internally. Use <code>DECODE</code>
+          for direct value mapping, and reserve <code>CASE</code> for range comparisons and complex
+          multi-condition logic.
+        </p>
+      </div>
+
+      <!-- Concept 5 -->
+      <h3 id="json-transformation">5. JSON Parsing and Semi-Structured Data</h3>
+
+      <p>
+        Many ad-tech data feeds deliver event payloads as JSON strings stored in a single
+        <code>VARCHAR(MAX)</code> column. Bid request objects from OpenRTB, attribution payloads
+        from mobile measurement partners, and event metadata from tag managers all arrive as JSON.
+        Redshift provides functions to parse and flatten this semi-structured data into relational
+        columns suitable for analysis.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- Extract fields from JSON payloads in Redshift</span>
+<span class="hl-keyword">SELECT</span>
+    event_id,
+
+    <span class="hl-comment">-- Top-level string field extraction</span>
+    <span class="hl-function">JSON_EXTRACT_PATH_TEXT</span>(
+        payload, <span class="hl-string">'device'</span>, <span class="hl-string">'ua'</span>
+    )                                          <span class="hl-keyword">AS</span> user_agent,
+
+    <span class="hl-comment">-- Nested numeric value with type casting</span>
+    <span class="hl-function">JSON_EXTRACT_PATH_TEXT</span>(
+        payload, <span class="hl-string">'bid'</span>, <span class="hl-string">'price'</span>
+    )::<span class="hl-function">DECIMAL</span>(<span class="hl-number">10</span>,<span class="hl-number">4</span>)                           <span class="hl-keyword">AS</span> bid_price,
+
+    <span class="hl-comment">-- Geographic data from deeply nested objects</span>
+    <span class="hl-function">JSON_EXTRACT_PATH_TEXT</span>(
+        payload, <span class="hl-string">'device'</span>, <span class="hl-string">'geo'</span>, <span class="hl-string">'country'</span>
+    )                                          <span class="hl-keyword">AS</span> country_code,
+
+    <span class="hl-function">JSON_EXTRACT_PATH_TEXT</span>(
+        payload, <span class="hl-string">'device'</span>, <span class="hl-string">'geo'</span>, <span class="hl-string">'city'</span>
+    )                                          <span class="hl-keyword">AS</span> city_name,
+
+    <span class="hl-comment">-- Safe extraction with NULLIF for missing keys</span>
+    <span class="hl-function">NVL</span>(
+        <span class="hl-function">NULLIF</span>(
+            <span class="hl-function">JSON_EXTRACT_PATH_TEXT</span>(
+                payload, <span class="hl-string">'app'</span>, <span class="hl-string">'bundle'</span>
+            ), <span class="hl-string">''</span>
+        ),
+        <span class="hl-string">'unknown_bundle'</span>
+    )                                          <span class="hl-keyword">AS</span> app_bundle,
+
+    <span class="hl-comment">-- Boolean extraction from JSON</span>
+    <span class="hl-keyword">CASE</span>
+        <span class="hl-keyword">WHEN</span> <span class="hl-function">JSON_EXTRACT_PATH_TEXT</span>(
+            payload, <span class="hl-string">'regs'</span>, <span class="hl-string">'gdpr'</span>
+        ) = <span class="hl-string">'1'</span>
+        <span class="hl-keyword">THEN</span> <span class="hl-keyword">TRUE</span>
+        <span class="hl-keyword">ELSE</span> <span class="hl-keyword">FALSE</span>
+    <span class="hl-keyword">END</span>                                        <span class="hl-keyword">AS</span> gdpr_applies,
+
+    <span class="hl-comment">-- Count array elements in JSON</span>
+    <span class="hl-function">JSON_ARRAY_LENGTH</span>(
+        <span class="hl-function">JSON_EXTRACT_PATH_TEXT</span>(payload, <span class="hl-string">'imp'</span>)
+    )                                          <span class="hl-keyword">AS</span> num_imp_slots
+
+<span class="hl-keyword">FROM</span> staging.raw_bid_requests
+<span class="hl-keyword">WHERE</span> <span class="hl-function">IS_VALID_JSON</span>(payload);
+</pre>
+      </div>
+
+      <div class="callout danger">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+          Watch Out
+        </div>
+        <p>
+          <code>JSON_EXTRACT_PATH_TEXT</code> returns an empty string (<code>''</code>) &mdash;
+          not <code>NULL</code> &mdash; when a key is missing. This is a common source of bugs.
+          Always wrap extractions in <code>NULLIF(value, '')</code> if you need proper NULL semantics
+          for downstream <code>COALESCE</code> or <code>NVL</code> logic.
+        </p>
+      </div>
+
+      <!-- Concept 6 -->
+      <h3 id="ctas-incremental">6. CTAS, INSERT-SELECT, and Incremental Transforms</h3>
+
+      <p>
+        Writing transformation queries is only half the job. You also need to materialize the results
+        into destination tables. Redshift provides two primary mechanisms: <code>CREATE TABLE AS SELECT</code>
+        (CTAS) for creating new tables from query results, and <code>INSERT INTO ... SELECT</code> for
+        appending to existing tables. Each has important implications for distribution, sorting,
+        and compression that affect downstream query performance.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- CTAS: Create a transformed table with physical design</span>
+<span class="hl-keyword">CREATE TABLE</span> analytics.fact_daily_metrics
+<span class="hl-keyword">DISTSTYLE</span> KEY
+<span class="hl-keyword">DISTKEY</span> (campaign_id)
+<span class="hl-keyword">SORTKEY</span> (event_date, campaign_id)
+<span class="hl-keyword">AS</span>
+<span class="hl-keyword">SELECT</span>
+    fi.event_date,
+    fi.campaign_id,
+    dc.campaign_name,
+    dc.advertiser_id,
+    dc.advertiser_name,
+    <span class="hl-function">COUNT</span>(*)                                       <span class="hl-keyword">AS</span> impressions,
+    <span class="hl-function">SUM</span>(<span class="hl-keyword">CASE WHEN</span> fi.is_clicked <span class="hl-keyword">THEN</span> <span class="hl-number">1</span> <span class="hl-keyword">ELSE</span> <span class="hl-number">0</span> <span class="hl-keyword">END</span>) <span class="hl-keyword">AS</span> clicks,
+    <span class="hl-function">SUM</span>(<span class="hl-keyword">CASE WHEN</span> fi.is_viewable <span class="hl-keyword">THEN</span> <span class="hl-number">1</span> <span class="hl-keyword">ELSE</span> <span class="hl-number">0</span> <span class="hl-keyword">END</span>) <span class="hl-keyword">AS</span> viewable,
+    <span class="hl-function">ROUND</span>(<span class="hl-function">AVG</span>(fi.win_price_cpm), <span class="hl-number">4</span>)                <span class="hl-keyword">AS</span> avg_cpm,
+    <span class="hl-function">ROUND</span>(<span class="hl-function">SUM</span>(fi.win_price_cpm) / <span class="hl-number">1000.0</span>, <span class="hl-number">2</span>)       <span class="hl-keyword">AS</span> total_spend,
+    <span class="hl-function">CURRENT_TIMESTAMP</span>                              <span class="hl-keyword">AS</span> etl_loaded_at
+<span class="hl-keyword">FROM</span> analytics.fact_impressions fi
+<span class="hl-keyword">JOIN</span> analytics.dim_campaign dc
+    <span class="hl-keyword">ON</span> fi.campaign_id = dc.campaign_id
+<span class="hl-keyword">GROUP BY</span> <span class="hl-number">1</span>, <span class="hl-number">2</span>, <span class="hl-number">3</span>, <span class="hl-number">4</span>, <span class="hl-number">5</span>;
+</pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- Incremental transform: idempotent DELETE + INSERT</span>
+<span class="hl-keyword">BEGIN</span>;
+
+<span class="hl-comment">-- Step 1: Remove stale data for the target partition</span>
+<span class="hl-keyword">DELETE FROM</span> analytics.fact_daily_metrics
+<span class="hl-keyword">WHERE</span> event_date = <span class="hl-function">CURRENT_DATE</span> - <span class="hl-number">1</span>;
+
+<span class="hl-comment">-- Step 2: Insert fresh transformed data</span>
+<span class="hl-keyword">INSERT INTO</span> analytics.fact_daily_metrics
+<span class="hl-keyword">SELECT</span>
+    fi.event_date,
+    fi.campaign_id,
+    dc.campaign_name,
+    dc.advertiser_id,
+    dc.advertiser_name,
+    <span class="hl-function">COUNT</span>(*),
+    <span class="hl-function">SUM</span>(<span class="hl-keyword">CASE WHEN</span> fi.is_clicked <span class="hl-keyword">THEN</span> <span class="hl-number">1</span> <span class="hl-keyword">ELSE</span> <span class="hl-number">0</span> <span class="hl-keyword">END</span>),
+    <span class="hl-function">SUM</span>(<span class="hl-keyword">CASE WHEN</span> fi.is_viewable <span class="hl-keyword">THEN</span> <span class="hl-number">1</span> <span class="hl-keyword">ELSE</span> <span class="hl-number">0</span> <span class="hl-keyword">END</span>),
+    <span class="hl-function">ROUND</span>(<span class="hl-function">AVG</span>(fi.win_price_cpm), <span class="hl-number">4</span>),
+    <span class="hl-function">ROUND</span>(<span class="hl-function">SUM</span>(fi.win_price_cpm) / <span class="hl-number">1000.0</span>, <span class="hl-number">2</span>),
+    <span class="hl-function">CURRENT_TIMESTAMP</span>
+<span class="hl-keyword">FROM</span> analytics.fact_impressions fi
+<span class="hl-keyword">JOIN</span> analytics.dim_campaign dc
+    <span class="hl-keyword">ON</span> fi.campaign_id = dc.campaign_id
+<span class="hl-keyword">WHERE</span> fi.event_date = <span class="hl-function">CURRENT_DATE</span> - <span class="hl-number">1</span>
+<span class="hl-keyword">GROUP BY</span> <span class="hl-number">1</span>, <span class="hl-number">2</span>, <span class="hl-number">3</span>, <span class="hl-number">4</span>, <span class="hl-number">5</span>;
+
+<span class="hl-keyword">COMMIT</span>;
+
+<span class="hl-comment">-- Step 3: Update table statistics after significant INSERT</span>
+<span class="hl-keyword">ANALYZE</span> analytics.fact_daily_metrics;
+</pre>
+      </div>
+
+      <div class="callout important">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Important
+        </div>
+        <p>
+          The DELETE + INSERT pattern (sometimes called "upsert by partition") is the idiomatic
+          Redshift approach for incremental transformations. Redshift does not support <code>MERGE</code>
+          as a single atomic statement. Always wrap DELETE and INSERT in an explicit transaction
+          (<code>BEGIN; ... COMMIT;</code>) to ensure atomicity &mdash; if the INSERT fails, the
+          DELETE also rolls back, preventing data loss.
+        </p>
+      </div>
+
+      <div class="diagram">
+<pre>
+  ┌──────────────────────────────────────────────────────────────┐
+  │                INCREMENTAL TRANSFORM FLOW                    │
+  │                                                              │
+  │  S3 Raw Data    Staging Table      Transform      Analytics  │
+  │  ──────────     ────────────       ─────────      ────────── │
+  │  events_       staging.raw_       DELETE old +    analytics. │
+  │  2025-01-15/   impressions_       INSERT new      fact_daily │
+  │  *.parquet     _20250115          (yesterday)     _metrics   │
+  │      │              │                  │              │      │
+  │      │   COPY       │    SQL           │   ANALYZE    │      │
+  │      └──────────────┘──────────────────┘──────────────┘      │
+  │                                                              │
+  │  Runs daily at 02:00 UTC via Airflow / Step Functions        │
+  └──────────────────────────────────────────────────────────────┘
+</pre>
+        <div class="diagram-caption">Figure 1: Incremental transformation pattern &mdash; DELETE old partition, INSERT new, ANALYZE</div>
       </div>
 
       <hr class="section-divider">
 
+      <!-- ════════════════════════════════════════
+           SECTION 3: WATCH & LEARN
+           ════════════════════════════════════════ -->
       <h2 id="watch-learn">Watch &amp; Learn</h2>
-      <p>These videos cover the core concepts in this chapter. Watch them before starting assignments.</p>
 
-      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/lWwFJV_9PoE?rel=0&amp;modestbranding=1" title="Redshift ETL Best Practices" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-caption"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg> AWS re:Invent &mdash; Building ETL pipelines with Amazon Redshift stored procedures</div></div>
-      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/BHwzDmr6d7s?rel=0&amp;modestbranding=1" title="Data Transformation Patterns" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-caption"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg> AWS &mdash; Data transformation techniques in Amazon Redshift</div></div>
+      <p>
+        These videos cover data transformation techniques in Amazon Redshift. Watch them to see
+        real-world examples of the patterns taught in this chapter.
+      </p>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/lWwFJV_9PoE?rel=0&amp;modestbranding=1"
+            title="Amazon Redshift ETL and ELT Patterns"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          AWS re:Invent &mdash; ETL and ELT Patterns with Amazon Redshift
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/dfo4J5ZhlKI?rel=0&amp;modestbranding=1"
+            title="Working with JSON Data in Redshift"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          AWS Tutorial &mdash; Working with JSON Data in Amazon Redshift
+        </div>
+      </div>
 
       <hr class="section-divider">
 
+      <!-- ════════════════════════════════════════
+           SECTION 4: FURTHER READING
+           ════════════════════════════════════════ -->
       <h2 id="further-reading">Further Reading</h2>
-      <p>Deep-dive into the official documentation and reference material.</p>
+
+      <p>Deep-dive into the official documentation for Redshift data transformation functions and patterns.</p>
+
       <div class="resource-grid">
-        <a class="resource-card" href="https://docs.aws.amazon.com/redshift/latest/dg/r_WITH_clause.html" target="_blank" rel="noopener"><div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><div class="resource-info"><div class="resource-title">WITH Clause (CTEs)</div><div class="resource-desc">Complete reference for Common Table Expressions in Redshift.</div></div></a>
-        <a class="resource-card" href="https://docs.aws.amazon.com/redshift/latest/dg/r_CREATE_TABLE_AS.html" target="_blank" rel="noopener"><div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><div class="resource-info"><div class="resource-title">CREATE TABLE AS</div><div class="resource-desc">CTAS syntax for materializing query results into new tables.</div></div></a>
-        <a class="resource-card" href="https://docs.aws.amazon.com/redshift/latest/dg/stored-procedure-overview.html" target="_blank" rel="noopener"><div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><div class="resource-info"><div class="resource-title">Stored Procedures</div><div class="resource-desc">Creating and managing stored procedures for ETL pipelines.</div></div></a>
-        <a class="resource-card" href="https://docs.aws.amazon.com/redshift/latest/dg/c_SQL_functions.html" target="_blank" rel="noopener"><div class="resource-icon article"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div class="resource-info"><div class="resource-title">SQL Functions Reference</div><div class="resource-desc">Complete list of built-in functions for data transformation.</div></div></a>
+        <a class="resource-card" href="https://docs.aws.amazon.com/redshift/latest/dg/c_SQL_functions.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Redshift SQL Functions Reference</div>
+            <div class="resource-desc">Complete reference for all built-in functions: string, date, math, conditional, and JSON.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://docs.aws.amazon.com/redshift/latest/dg/json-functions.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">JSON Functions in Redshift</div>
+            <div class="resource-desc">JSON_EXTRACT_PATH_TEXT, IS_VALID_JSON, JSON_ARRAY_LENGTH, and related functions.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://docs.aws.amazon.com/redshift/latest/dg/r_CTAS_usage_notes.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">CREATE TABLE AS (CTAS) Usage</div>
+            <div class="resource-desc">How CTAS handles distribution, sort keys, encoding, and its performance implications.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://docs.aws.amazon.com/redshift/latest/dg/r_CONVERT_TIMEZONE.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">CONVERT_TIMEZONE Function</div>
+            <div class="resource-desc">Timezone conversion reference for building multi-region reporting pipelines.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://docs.aws.amazon.com/redshift/latest/dg/r_REGEXP_SUBSTR.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">REGEXP_SUBSTR Function</div>
+            <div class="resource-desc">Regular expression extraction for parsing URLs, creative tags, and encoded fields.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://aws.amazon.com/blogs/big-data/etl-and-elt-design-patterns-for-lake-house-architecture-using-amazon-redshift/" target="_blank" rel="noopener">
+          <div class="resource-icon article">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">ETL/ELT Design Patterns for Redshift</div>
+            <div class="resource-desc">AWS Big Data Blog on transformation architecture patterns for lake house designs.</div>
+          </div>
+        </a>
       </div>
 
       <hr class="section-divider">
 
+      <!-- ════════════════════════════════════════
+           SECTION 5: ASSIGNMENTS
+           ════════════════════════════════════════ -->
       <h2 id="assignments">Assignments</h2>
-      <p>Complete these in order. Each level builds on the previous one.</p>
 
+      <p>
+        Complete these in order. Each builds on the transformation techniques covered in the Key Concepts section.
+      </p>
+
+      <!-- Assignment 1 -->
       <div class="assignment">
-        <div class="assignment-header"><div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 1</div><span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span></div>
-        <h4>CTE-Based Data Transformation</h4>
-        <p>Use CTEs to build a multi-step campaign performance report.</p>
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 1
+          </div>
+          <span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span>
+        </div>
+        <h4>Basic Data Cleaning Pipeline</h4>
+        <p>Create a staging-to-clean transformation for raw impression data with proper type casting and null handling.</p>
+
         <ul class="checklist">
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write a CTE pipeline that calculates daily impressions, clicks, CTR, spend, and CPC</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Add a second CTE that enriches with campaign dimension attributes</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Add a third CTE that calculates 7-day rolling averages</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Verify the final output matches manual calculations for a sample campaign</span></li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Create a <code>staging.raw_impressions</code> table with all columns as <code>VARCHAR</code></span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Insert 1,000 sample rows with mixed quality: empty strings, invalid numbers, and null values</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Write a CTAS query that casts columns to proper types with safe CASE-based validation</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Use <code>NVL</code> and <code>COALESCE</code> to fill sensible defaults for nullable fields</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Verify zero rows have NULL values in required columns using a validation query</span>
+          </li>
         </ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div><p>You have a clean, readable multi-step transformation pipeline using CTEs.</p></div>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            Your clean table has zero NULLs in required columns, all numeric columns are properly typed,
+            and all timestamps are valid <code>TIMESTAMP</code> values.
+          </p>
+        </div>
       </div>
+
+      <!-- Assignment 2 -->
       <div class="assignment">
-        <div class="assignment-header"><div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 2</div><span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span></div>
-        <h4>CTAS and Temp Table ETL Pipeline</h4>
-        <p>Build an ETL pipeline using CTAS and temp tables for daily impression loading.</p>
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 2
+          </div>
+          <span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span>
+        </div>
+        <h4>JSON Payload Flattening</h4>
+        <p>Parse OpenRTB-style JSON bid request payloads into a properly typed relational table.</p>
+
         <ul class="checklist">
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a temp table that stages and cleans raw impression data (handle nulls, trim strings, validate types)</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Use CTAS to create a daily summary fact table from the cleaned staging data</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Implement the delete-then-insert idempotent pattern in a transaction</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Run the pipeline for 3 different dates and verify data integrity</span></li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Create a table with <code>payload VARCHAR(MAX)</code> and load 500 sample JSON records</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Write a transformation extracting at least 10 fields from nested JSON paths</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Handle missing JSON keys with <code>NULLIF</code> and <code>NVL</code> wrappers</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Filter out invalid JSON records using <code>IS_VALID_JSON()</code> and log the rejected count</span>
+          </li>
         </ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div><p>You have a working ETL pipeline that cleanly transforms raw data into analysis-ready fact tables.</p></div>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            All JSON fields are extracted into typed relational columns, invalid JSON records are excluded,
+            and the output table has proper <code>DISTKEY</code> and <code>SORTKEY</code> definitions.
+          </p>
+        </div>
       </div>
+
+      <!-- Assignment 3 -->
       <div class="assignment">
-        <div class="assignment-header"><div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 3</div><span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Production-Ready</span></div>
-        <h4>Stored Procedure ETL Suite</h4>
-        <p>Encapsulate your entire daily ETL into stored procedures with error handling.</p>
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 3
+          </div>
+          <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Production-Ready</span>
+        </div>
+        <h4>Incremental Daily Transformation Pipeline</h4>
+        <p>Build a complete daily transformation converting raw impressions into an aggregated metrics table using DELETE+INSERT.</p>
+
         <ul class="checklist">
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create <code>load_daily_impressions(DATE)</code> with delete, insert, and ANALYZE steps</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create <code>build_daily_summary(DATE)</code> that aggregates impressions into daily summaries</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Add error handling with BEGIN/EXCEPTION blocks that log failures to an audit table</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a master orchestrator procedure that calls both sub-procedures in sequence</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Test the rollback behavior: what happens when the summary build fails after impressions loaded?</span></li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Create the target <code>analytics.fact_daily_metrics</code> table with proper DDL</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Write a DELETE + INSERT transformation inside an explicit <code>BEGIN; ... COMMIT;</code> block</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Include business rule transforms: viewability tiers, revenue calculation, fraud flags</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Add an <code>ANALYZE</code> statement after the INSERT and verify statistics are updated</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Run the pipeline for 3 consecutive days and verify no duplicates with <code>COUNT DISTINCT</code></span>
+          </li>
         </ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div><p>Your ETL suite is production-ready: idempotent, error-handled, and auditable.</p></div>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            Your pipeline is idempotent &mdash; running it multiple times for the same date produces
+            identical results with no duplicates. The target table has correct metrics and proper
+            physical design attributes.
+          </p>
+        </div>
       </div>
 
       <hr class="section-divider">
 
+      <!-- ════════════════════════════════════════
+           SECTION 6: SELF-CHECK
+           ════════════════════════════════════════ -->
       <h2 id="self-check">Self-Check</h2>
-      <p>Before moving to the next chapter, honestly answer these questions.</p>
 
-      <details><summary>When should you use a CTE vs a temp table vs CTAS?</summary><div class="details-body"><p>Use CTEs for readability within a single query &mdash; they do not persist data. Use temp tables when you need to stage data for multiple queries within a session (e.g., cleaning data, then running quality checks, then inserting). Use CTAS when you need a permanent materialized table (e.g., daily summary fact). CTAS is fastest because it parallelizes the write across all slices.</p></div></details>
-      <details><summary>Why is idempotency critical for ad-tech ETL?</summary><div class="details-body"><p>Ad-tech impression data directly drives billing. If a daily load is retried (due to timeout, network error, or partial failure), a non-idempotent INSERT would create duplicate impressions. Duplicate impressions mean advertisers are billed twice for the same ad view. The delete-then-insert pattern in a transaction ensures exactly-once loading.</p></div></details>
-      <details><summary>What are the advantages of stored procedures over external ETL scripts?</summary><div class="details-body"><p>Stored procedures run inside Redshift (no data transfer overhead), support transaction control (COMMIT/ROLLBACK), can use variables and conditionals, and are callable from any scheduler (AWS Step Functions, Airflow, cron). External scripts must round-trip data through the leader node. For transformations that do not leave Redshift, stored procedures are 2-10x faster.</p></div></details>
+      <p>Before moving to Chapter 08, honestly answer these questions. If any answer is unclear, revisit the relevant section.</p>
+
+      <details>
+        <summary>Why does Redshift lack TRY_CAST, and how do you safely cast data types?</summary>
+        <div class="details-body">
+          <p>
+            Redshift's PostgreSQL heritage does not include <code>TRY_CAST</code>. To safely cast, use a
+            <code>CASE</code> expression that first validates the string format using the regex match
+            operator (<code>~</code>). For example, check that a string matches <code>'^[0-9]+$'</code>
+            before casting to INTEGER. For dates, verify the format with <code>REGEXP_INSTR</code>
+            before casting. This pattern is essential for ETL pipelines that must not fail on bad records.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>What is the difference between NVL, COALESCE, and NULLIF?</summary>
+        <div class="details-body">
+          <p>
+            <code>NVL(expr, default)</code> returns the default if expr is NULL &mdash; exactly two arguments.
+            <code>COALESCE(expr1, expr2, ..., exprN)</code> returns the first non-NULL value from a list &mdash;
+            use for fallback chains. <code>NULLIF(expr1, expr2)</code> returns NULL if both are equal,
+            otherwise returns expr1 &mdash; use to convert sentinel values (empty strings, zeros) back to
+            NULL for proper aggregate behavior.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Why must you wrap DELETE+INSERT in a transaction for incremental transforms?</summary>
+        <div class="details-body">
+          <p>
+            Without an explicit transaction, if the INSERT fails after the DELETE commits, you lose data
+            for that partition permanently. By wrapping both in <code>BEGIN; ... COMMIT;</code>, if the
+            INSERT fails the entire transaction rolls back, preserving original data. This atomicity
+            guarantee is critical for production data pipelines where data loss is unacceptable.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>How does JSON_EXTRACT_PATH_TEXT handle missing keys differently from NULL?</summary>
+        <div class="details-body">
+          <p>
+            <code>JSON_EXTRACT_PATH_TEXT</code> returns an empty string (<code>''</code>) when a key
+            does not exist, not <code>NULL</code>. This means <code>NVL(...)</code> alone will not
+            trigger the fallback. You must use <code>NVL(NULLIF(JSON_EXTRACT_PATH_TEXT(...), ''), 'default')</code>
+            to properly handle missing JSON keys with default values.
+          </p>
+        </div>
+      </details>
 
     </main>
+
+    <!-- Sidebar: Table of Contents -->
     <aside class="sidebar">
       <div class="sidebar-title">On this page</div>
       <ul class="toc-list">
         <li class="toc-item"><a href="#why-this-matters">Why This Matters</a></li>
         <li class="toc-item"><a href="#key-concepts">Key Concepts</a></li>
-        <li class="toc-item"><a href="#ctes" style="padding-left:28px;font-size:12px">CTEs</a></li>
-        <li class="toc-item"><a href="#ctas" style="padding-left:28px;font-size:12px">CTAS</a></li>
-        <li class="toc-item"><a href="#temp-tables" style="padding-left:28px;font-size:12px">Temp Tables</a></li>
-        <li class="toc-item"><a href="#stored-procedures" style="padding-left:28px;font-size:12px">Stored Procedures</a></li>
+        <li class="toc-item"><a href="#type-casting" style="padding-left: 28px; font-size: 12px;">Type Casting</a></li>
+        <li class="toc-item"><a href="#string-manipulation" style="padding-left: 28px; font-size: 12px;">String Manipulation</a></li>
+        <li class="toc-item"><a href="#date-transformations" style="padding-left: 28px; font-size: 12px;">Date Transforms</a></li>
+        <li class="toc-item"><a href="#conditional-logic" style="padding-left: 28px; font-size: 12px;">Conditional Logic</a></li>
+        <li class="toc-item"><a href="#json-transformation" style="padding-left: 28px; font-size: 12px;">JSON Parsing</a></li>
+        <li class="toc-item"><a href="#ctas-incremental" style="padding-left: 28px; font-size: 12px;">CTAS &amp; Incremental</a></li>
         <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a></li>
         <li class="toc-item"><a href="#further-reading">Further Reading</a></li>
         <li class="toc-item"><a href="#assignments">Assignments</a></li>
@@ -373,19 +1846,79 @@ $$;
     </aside>
   </div>
 
-  <footer class="chapter-footer"><div class="chapter-footer-inner">
-    <nav class="footer-nav">
-      <a class="footer-nav-link" href="chapter-06.html"><span class="footer-nav-label">&larr; Previous Chapter</span><span class="footer-nav-title">06: Query Optimization</span></a>
-      <a class="footer-nav-link" href="chapter-08.html"><span class="footer-nav-label">Next Chapter &rarr;</span><span class="footer-nav-title">08: Visualization and Reporting</span></a>
-    </nav>
-    <div class="footer-brand">ILA (Iksha Learning Academy) &middot; Redshift Foundations &middot; Basic Track</div>
-  </div></footer>
+  <!-- Footer Navigation -->
+  <footer class="chapter-footer">
+    <div class="chapter-footer-inner">
+      <nav class="footer-nav">
+        <a class="footer-nav-link" href="chapter-06.html">
+          <span class="footer-nav-label">&larr; Previous Chapter</span>
+          <span class="footer-nav-title">06: Query Optimization</span>
+        </a>
+        <a class="footer-nav-link" href="chapter-08.html">
+          <span class="footer-nav-label">Next Chapter &rarr;</span>
+          <span class="footer-nav-title">08: Visualization and Reporting</span>
+        </a>
+      </nav>
+      <div class="footer-brand">
+        ILA (Iksha Learning Academy) &middot; Redshift Foundations &middot; Basic Track
+      </div>
+    </div>
+  </footer>
 
+  <!-- ════════════════════════════════════════
+       SCRIPTS
+       ════════════════════════════════════════ -->
   <script>
-    window.addEventListener('scroll',()=>{const s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight;document.getElementById('progressBar').style.width=(d>0?(s/d)*100:0)+'%'});
-    const tocLinks=document.querySelectorAll('.toc-item a'),sections=[];tocLinks.forEach(link=>{const id=link.getAttribute('href').slice(1),el=document.getElementById(id);if(el)sections.push({id,el,link})});
-    const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{const item=sections.find(s=>s.el===entry.target);if(item&&entry.isIntersecting){tocLinks.forEach(l=>l.classList.remove('active'));item.link.classList.add('active')}})},{rootMargin:'-80px 0px -60% 0px',threshold:0});sections.forEach(s=>observer.observe(s.el));
-    function copyCode(btn){const pre=btn.closest('.code-block').querySelector('pre');navigator.clipboard.writeText(pre.textContent).then(()=>{btn.classList.add('copied');btn.textContent='Copied!';setTimeout(()=>{btn.classList.remove('copied');btn.textContent='Copy'},2000)})}
+    // ── Progress Bar ──
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      document.getElementById('progressBar').style.width = progress + '%';
+    });
+
+    // ── Active TOC ──
+    const tocLinks = document.querySelectorAll('.toc-item a');
+    const sections = [];
+
+    tocLinks.forEach(link => {
+      const id = link.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) sections.push({ id, el, link });
+    });
+
+    const observerOptions = {
+      rootMargin: '-80px 0px -60% 0px',
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const item = sections.find(s => s.el === entry.target);
+        if (item) {
+          if (entry.isIntersecting) {
+            tocLinks.forEach(l => l.classList.remove('active'));
+            item.link.classList.add('active');
+          }
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(s => observer.observe(s.el));
+
+    // ── Copy Code ──
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      const text = pre.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.classList.add('copied');
+        btn.textContent = 'Copied!';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.textContent = 'Copy';
+        }, 2000);
+      });
+    }
   </script>
 </body>
 </html>

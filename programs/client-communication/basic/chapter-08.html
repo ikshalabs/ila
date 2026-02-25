@@ -8,7 +8,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
+    /* ═══════════════════════════════════════════════
+       ILA DESIGN SYSTEM — v1.0
+       Iksha Learning Academy
+       ═══════════════════════════════════════════════ */
+
     :root {
+      /* Palette */
       --ink:        #0f172a;
       --ink-light:  #334155;
       --ink-muted:  #64748b;
@@ -17,6 +23,8 @@
       --surface-warm:#fffbeb;
       --border:     #e2e8f0;
       --border-light:#f1f5f9;
+
+      /* Brand */
       --teal-50:  #f0fdfa;
       --teal-100: #ccfbf1;
       --teal-200: #99f6e4;
@@ -25,36 +33,48 @@
       --teal-700: #0f766e;
       --teal-800: #115e59;
       --teal-900: #134e4a;
+
       --blue-50:  #eff6ff;
       --blue-100: #dbeafe;
       --blue-500: #3b82f6;
       --blue-600: #2563eb;
       --blue-700: #1d4ed8;
+
       --amber-50:  #fffbeb;
       --amber-100: #fef3c7;
       --amber-500: #f59e0b;
       --amber-600: #d97706;
+
       --red-50:   #fef2f2;
       --red-100:  #fee2e2;
       --red-500:  #ef4444;
       --red-600:  #dc2626;
+
       --purple-50:  #faf5ff;
       --purple-100: #f3e8ff;
       --purple-500: #a855f7;
       --purple-600: #9333ea;
-      --green-50:  #f0fdf4;
-      --green-100: #dcfce7;
-      --green-500: #22c55e;
-      --green-600: #16a34a;
+
+      /* Typography */
       --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       --font-serif: 'Instrument Serif', Georgia, serif;
       --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
+
+      /* Spacing */
       --content-max: 780px;
+      --sidebar-width: 280px;
+
+      /* Transitions */
       --ease: cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
 
     body {
       font-family: var(--font-sans);
@@ -64,6 +84,7 @@
       background: var(--surface);
     }
 
+    /* ── PROGRESS BAR ─────────────────────────── */
     .progress-bar {
       position: fixed;
       top: 0;
@@ -75,6 +96,7 @@
       transition: width 0.15s var(--ease);
     }
 
+    /* ── TOP NAV ──────────────────────────────── */
     .top-nav {
       position: sticky;
       top: 0;
@@ -162,6 +184,7 @@
       padding: 0 4px;
     }
 
+    /* ── HERO ─────────────────────────────────── */
     .hero {
       background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%);
       border-bottom: 1px solid var(--border);
@@ -222,33 +245,117 @@
       color: var(--ink-muted);
     }
 
-    .content {
-      max-width: var(--content-max);
-      margin: 0 auto;
-      padding: 3rem 2rem 6rem;
+    .hero-meta-item svg {
+      width: 16px;
+      height: 16px;
+      color: var(--teal-600);
     }
 
+    /* ── MAIN LAYOUT ──────────────────────────── */
+    .main-layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr var(--sidebar-width);
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .content {
+      padding: 3rem 0 6rem;
+      min-width: 0;
+    }
+
+    /* ── SIDEBAR TOC ──────────────────────────── */
+    .sidebar {
+      position: sticky;
+      top: 76px;
+      padding: 2rem 0;
+      max-height: calc(100vh - 76px);
+      overflow-y: auto;
+    }
+
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-muted);
+      margin-bottom: 1rem;
+      padding-left: 14px;
+    }
+
+    .toc-list {
+      list-style: none;
+    }
+
+    .toc-item a {
+      display: block;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--ink-muted);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: all 0.2s var(--ease);
+      line-height: 1.5;
+    }
+
+    .toc-item a:hover {
+      color: var(--ink);
+      background: var(--surface-alt);
+    }
+
+    .toc-item a.active {
+      color: var(--teal-700);
+      border-left-color: var(--teal-500);
+      background: var(--teal-50);
+      font-weight: 500;
+    }
+
+    /* ── TYPOGRAPHY ────────────────────────────── */
     .content h2 {
       font-family: var(--font-serif);
       font-size: 1.85rem;
       font-weight: 400;
       color: var(--ink);
       margin: 3rem 0 1rem;
+      padding-top: 1rem;
       scroll-margin-top: 80px;
     }
 
-    .content h2:first-child { margin-top: 0; }
+    .content h2:first-child {
+      margin-top: 0;
+    }
 
     .content h3 {
       font-size: 1.15rem;
       font-weight: 600;
       color: var(--ink);
       margin: 2rem 0 0.75rem;
+      scroll-margin-top: 80px;
     }
 
     .content p {
       margin-bottom: 1.25rem;
       color: var(--ink-light);
+    }
+
+    .content strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .content a {
+      color: var(--teal-700);
+      text-decoration: underline;
+      text-decoration-color: var(--teal-200);
+      text-underline-offset: 3px;
+      transition: text-decoration-color 0.2s;
+    }
+
+    .content a:hover {
+      text-decoration-color: var(--teal-600);
     }
 
     .content ul, .content ol {
@@ -261,13 +368,25 @@
       color: var(--ink-light);
     }
 
-    .content li::marker { color: var(--teal-500); }
+    .content li::marker {
+      color: var(--teal-500);
+    }
 
+    /* ── SECTION DIVIDER ──────────────────────── */
+    .section-divider {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 3rem 0;
+    }
+
+    /* ── CALLOUT BOXES ────────────────────────── */
     .callout {
       padding: 1.25rem 1.5rem;
       border-radius: 12px;
       margin-bottom: 1.5rem;
       border: 1px solid;
+      position: relative;
     }
 
     .callout-header {
@@ -277,6 +396,12 @@
       font-size: 14px;
       font-weight: 600;
       margin-bottom: 0.5rem;
+    }
+
+    .callout-header svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
     }
 
     .callout p:last-child { margin-bottom: 0; }
@@ -293,6 +418,12 @@
     }
     .callout.important .callout-header { color: var(--amber-600); }
 
+    .callout.danger {
+      background: var(--red-50);
+      border-color: var(--red-100);
+    }
+    .callout.danger .callout-header { color: var(--red-600); }
+
     .callout.tip {
       background: var(--purple-50);
       border-color: var(--purple-100);
@@ -305,93 +436,403 @@
     }
     .callout.success .callout-header { color: var(--teal-700); }
 
-    .section-divider {
-      border: none;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--border), transparent);
-      margin: 3rem 0;
-    }
-
-    .coming-soon-banner {
-      background: var(--amber-50);
-      border: 1px solid var(--amber-100);
+    /* ── CODE BLOCKS ──────────────────────────── */
+    .code-block {
+      position: relative;
+      margin-bottom: 1.5rem;
       border-radius: 12px;
-      padding: 2.5rem;
-      text-align: center;
-      margin: 2rem 0;
+      overflow: hidden;
+      border: 1px solid var(--border);
     }
 
-    .coming-soon-banner h3 {
-      color: var(--amber-600);
-      margin-bottom: 0.5rem;
-    }
-
-    .coming-soon-banner p {
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+      background: var(--surface-alt);
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
       color: var(--ink-muted);
-      margin-bottom: 0;
     }
 
-    .topics-preview {
+    .code-lang {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .code-copy {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: white;
+      font-size: 11px;
+      font-family: var(--font-sans);
+      color: var(--ink-muted);
+      cursor: pointer;
+      transition: all 0.2s var(--ease);
+    }
+
+    .code-copy:hover {
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    .code-copy.copied {
+      background: var(--teal-50);
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    pre {
+      margin: 0;
+      padding: 1.25rem 1.5rem;
+      overflow-x: auto;
+      background: #1e293b;
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: #e2e8f0;
+    }
+
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.88em;
+    }
+
+    p code, li code {
+      padding: 2px 7px;
       background: var(--surface-alt);
       border: 1px solid var(--border);
+      border-radius: 5px;
+      color: var(--teal-800);
+      font-size: 0.85em;
+    }
+
+    /* Syntax highlights */
+    .hl-keyword  { color: #c084fc; }
+    .hl-string   { color: #86efac; }
+    .hl-comment  { color: #64748b; font-style: italic; }
+    .hl-function { color: #7dd3fc; }
+    .hl-number   { color: #fbbf24; }
+    .hl-flag     { color: #f472b6; }
+
+    /* ── COLLAPSIBLE (DETAILS) ────────────────── */
+    details {
+      margin-bottom: 1.25rem;
+      border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 1.5rem 2rem;
-      margin: 1.5rem 0;
+      overflow: hidden;
+      transition: border-color 0.2s var(--ease);
     }
 
-    .topics-preview h3 {
-      font-size: 0.95rem;
-      margin-bottom: 0.75rem;
+    details[open] {
+      border-color: var(--teal-200);
+    }
+
+    details summary {
+      padding: 1rem 1.25rem;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      background: var(--surface-alt);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.2s var(--ease);
+      user-select: none;
+    }
+
+    details summary::-webkit-details-marker { display: none; }
+
+    details summary::before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+      flex-shrink: 0;
+      transition: transform 0.2s var(--ease);
+    }
+
+    details[open] summary::before {
+      transform: rotate(90deg);
+    }
+
+    details summary:hover {
+      background: var(--teal-50);
+    }
+
+    .details-body {
+      padding: 1.25rem 1.5rem;
+    }
+
+    .details-body p:last-child { margin-bottom: 0; }
+
+    /* ── VIDEO EMBED ──────────────────────────── */
+    .video-card {
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      background: #0f172a;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .video-caption {
+      padding: 12px 16px;
+      background: var(--surface-alt);
+      font-size: 13px;
+      color: var(--ink-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .video-caption svg {
+      width: 14px;
+      height: 14px;
+      color: var(--red-500);
+    }
+
+    /* ── RESOURCE CARDS ───────────────────────── */
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .resource-card {
+      display: flex;
+      gap: 14px;
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      background: white;
+    }
+
+    .resource-card:hover {
+      border-color: var(--teal-300);
+      background: var(--teal-50);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .resource-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 18px;
+    }
+
+    .resource-icon.docs    { background: var(--blue-50);   color: var(--blue-600); }
+    .resource-icon.video   { background: var(--red-50);    color: var(--red-500); }
+    .resource-icon.github  { background: var(--ink);       color: white; }
+    .resource-icon.article { background: var(--amber-50);  color: var(--amber-600); }
+    .resource-icon.pdf     { background: var(--purple-50); color: var(--purple-600); }
+
+    .resource-info {
+      min-width: 0;
+    }
+
+    .resource-title {
+      font-size: 14px;
+      font-weight: 600;
       color: var(--ink);
+      margin-bottom: 2px;
+      line-height: 1.4;
     }
 
-    .topics-preview ul {
+    .resource-desc {
+      font-size: 12px;
+      color: var(--ink-muted);
+      line-height: 1.5;
+    }
+
+    /* ── ASSIGNMENT CARDS ─────────────────────── */
+    .assignment {
+      border: 2px solid var(--teal-200);
+      border-radius: 14px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--teal-50) 0%, white 100%);
+    }
+
+    .assignment-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .assignment-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--teal-700);
+    }
+
+    .assignment-difficulty {
+      display: inline-flex;
+      padding: 4px 10px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .difficulty-l1 { background: var(--teal-100); color: var(--teal-800); }
+    .difficulty-l2 { background: var(--amber-100); color: var(--amber-600); }
+    .difficulty-l3 { background: var(--red-100); color: var(--red-600); }
+
+    .assignment h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .assignment p {
+      font-size: 14px;
+    }
+
+    .checklist {
       list-style: none;
       padding: 0;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 0.5rem;
     }
 
-    .topics-preview li {
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-light);
       font-size: 14px;
-      color: var(--ink-light);
-      padding-left: 1.25rem;
-      position: relative;
     }
 
-    .topics-preview li::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 8px;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
+    .checklist li:last-child { border-bottom: none; }
+
+    .check-box {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      border: 2px solid var(--border);
+      flex-shrink: 0;
+      margin-top: 1px;
+      cursor: pointer;
+      transition: all 0.15s var(--ease);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .check-box:hover {
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked {
       background: var(--teal-500);
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+    }
+
+    /* ── ARCHITECTURE DIAGRAM ─────────────────── */
+    .diagram {
+      margin: 1.5rem 0;
+      padding: 2rem;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow-x: auto;
+    }
+
+    .diagram pre {
+      background: transparent;
+      color: var(--ink);
+      padding: 0;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .diagram-caption {
+      margin-top: 1rem;
+      font-size: 12px;
+      color: var(--ink-muted);
+      text-align: center;
+      font-style: italic;
+    }
+
+    /* ── FOOTER ───────────────────────────────── */
+    .chapter-footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      background: var(--surface-alt);
+    }
+
+    .chapter-footer-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
     }
 
     .footer-nav {
-      max-width: var(--content-max);
-      margin: 0 auto;
-      padding: 2rem;
       display: flex;
       justify-content: space-between;
-      border-top: 1px solid var(--border);
+      align-items: center;
+      gap: 1rem;
     }
 
     .footer-nav-link {
       display: flex;
       flex-direction: column;
-      text-decoration: none;
-      padding: 1rem;
+      gap: 4px;
+      padding: 1rem 1.5rem;
+      border: 1px solid var(--border);
       border-radius: 12px;
-      transition: background 0.2s var(--ease);
-      max-width: 45%;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      max-width: 320px;
+      background: white;
     }
 
     .footer-nav-link:hover {
-      background: var(--surface-alt);
+      border-color: var(--teal-300);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
     }
 
     .footer-nav-label {
@@ -399,46 +840,61 @@
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.06em;
-      color: var(--ink-muted);
-      margin-bottom: 4px;
+      color: var(--teal-600);
     }
 
     .footer-nav-title {
       font-size: 15px;
       font-weight: 600;
-      color: var(--teal-700);
+      color: var(--ink);
     }
 
-    .footer-nav-link.next { text-align: right; margin-left: auto; }
-
-    .footer {
+    .footer-brand {
       text-align: center;
-      padding: 2rem;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
       font-size: 13px;
       color: var(--ink-muted);
-      border-top: 1px solid var(--border);
     }
 
-    .footer a {
-      color: var(--teal-700);
-      text-decoration: none;
+    /* ── RESPONSIVE ───────────────────────────── */
+    @media (max-width: 960px) {
+      .main-layout {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        display: none;
+      }
+      .resource-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
-    .footer a:hover { text-decoration: underline; }
+    @media (max-width: 640px) {
+      .hero { padding: 2.5rem 1.25rem 2rem; }
+      .main-layout { padding: 0 1.25rem; }
+      .content { padding: 2rem 0 4rem; }
+      pre { padding: 1rem; font-size: 12.5px; }
+      .footer-nav { flex-direction: column; }
+      .footer-nav-link { max-width: 100%; width: 100%; }
+    }
 
-    @media (max-width: 768px) {
-      .hero { padding: 3rem 1.5rem 2.5rem; }
-      .content { padding: 2rem 1.5rem 4rem; }
-      .hero h1 { font-size: 2rem; }
-      .footer-nav { flex-direction: column; gap: 1rem; }
-      .footer-nav-link { max-width: 100%; }
-      .footer-nav-link.next { text-align: left; }
+    /* ── PRINT ────────────────────────────────── */
+    @media print {
+      .top-nav, .sidebar, .progress-bar { display: none; }
+      .main-layout { display: block; }
+      .content { padding: 0; }
+      .hero { background: white; border: none; }
+      pre { background: #f1f5f9; color: var(--ink); border: 1px solid var(--border); }
     }
   </style>
 </head>
 <body>
+  <!-- Progress Bar -->
   <div class="progress-bar" id="progressBar"></div>
 
+  <!-- Top Navigation -->
   <nav class="top-nav">
     <div class="top-nav-inner">
       <a class="nav-brand" href="index.html">
@@ -448,74 +904,628 @@
       <div class="nav-chapter-nav">
         <a class="nav-btn" href="chapter-07.html">&larr; Previous</a>
         <span class="nav-current">08 / 08</span>
-        <a class="nav-btn" href="index.html">All Chapters</a>
+        <a class="nav-btn" href="../advanced/chapter-01.html">Next &rarr;</a>
       </div>
     </div>
   </nav>
 
+  <!-- Hero -->
   <header class="hero">
     <div class="hero-inner">
       <div class="hero-chapter-label">
-        <span>Chapter 08</span> 
+        <span>Chapter 08</span> &middot; Phase 4: Systems &amp; Capstone
       </div>
       <h1>Communication Audit and Capstone</h1>
-      <p class="hero-subtitle">Self-assessment, peer review, communication plan, capstone portfolio</p>
+      <p class="hero-subtitle">
+        Bring together every skill from the program into a comprehensive communication audit. Evaluate, measure, and improve your team's entire communication system. Complete your capstone project to demonstrate mastery.
+      </p>
       <div class="hero-meta">
-        <div class="hero-meta-item">3 Assignments</div>
-        <div class="hero-meta-item">~45 min read</div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Estimated: 3&ndash;4 hours
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          3 Advancement Levels
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          3 Assignments
+        </div>
       </div>
     </div>
   </header>
 
-  <main class="content">
-    <h2>Overview</h2>
-    <p>This chapter covers <strong>communication audit and capstone</strong> as part of the Client Communication Foundations curriculum. You will build practical skills through guided explanations, code examples, and hands-on assignments.</p>
+  <!-- Main Content + Sidebar -->
+  <div class="main-layout">
+    <main class="content">
 
-    <div class="topics-preview">
-      <h3>Topics Covered</h3>
-      <ul>
-            <li>Self-assessment</li>
-            <li>peer review</li>
-            <li>communication plan</li>
-            <li>capstone portfolio</li>
+      <h2 id="why-this-matters">Why This Matters</h2>
+
+      <p>
+        You have now learned the individual skills of client communication: writing, meetings,
+        presentations, feedback, relationship building, and documentation. This chapter brings them
+        all together into a system. Individual skills are necessary but insufficient &mdash; what
+        makes a team excellent at communication is a <strong>system</strong> that ensures consistency,
+        catches failures, and improves over time.
+      </p>
+
+      <p>
+        A communication audit is a structured evaluation of how your team communicates with clients.
+        It identifies strengths, weaknesses, gaps, and opportunities. It is the diagnostic tool that
+        tells you where to invest your improvement effort for the highest return.
+      </p>
+
+      <div class="callout concept">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Capstone Purpose
+        </div>
+        <p>
+          The capstone project for Level 1 requires you to conduct a complete communication audit
+          on a real client engagement and create an actionable improvement plan. This is not a
+          theoretical exercise &mdash; it is a practical assessment that will immediately improve
+          how your team communicates.
+        </p>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="key-concepts">Key Concepts</h2>
+
+      <h3 id="audit-framework">1. The Communication Audit Framework</h3>
+
+      <p>
+        A communication audit evaluates six dimensions of client communication. Each dimension
+        corresponds to a chapter in this program. Rate each dimension on a 1-5 scale to identify
+        your team's strengths and gaps.
+      </p>
+
+      <div class="diagram">
+<pre>
+  +---------------------------------------------------------------+
+  |              COMMUNICATION AUDIT FRAMEWORK                      |
+  |                                                                 |
+  |   Dimension               Score (1-5)   Evidence               |
+  |   ─────────────────────   ───────────   ──────────────────     |
+  |   1. Written Comm         [   /5  ]     Emails, docs, specs   |
+  |      (Ch 01-02)                                                |
+  |                                                                 |
+  |   2. Verbal Comm          [   /5  ]     Meeting recordings,   |
+  |      (Ch 03-04)                         feedback surveys       |
+  |                                                                 |
+  |   3. Interpersonal        [   /5  ]     Client NPS, retention |
+  |      (Ch 05-06)                         rates, testimonials    |
+  |                                                                 |
+  |   4. Documentation        [   /5  ]     Doc coverage, new     |
+  |      (Ch 07)                            hire onboarding time   |
+  |                                                                 |
+  |   5. Process              [   /5  ]     Templates in use,     |
+  |      (All chapters)                     consistency of output  |
+  |                                                                 |
+  |   6. Culture              [   /5  ]     Team attitudes, time  |
+  |      (All chapters)                     invested in comm       |
+  |                                                                 |
+  |   TOTAL                   [   /30 ]                            |
+  |   ─────────────────────────────────                             |
+  |   25-30: Excellent  |  20-24: Good  |  15-19: Needs Work      |
+  |   Below 15: Critical gaps that need immediate attention        |
+  +---------------------------------------------------------------+
+</pre>
+        <div class="diagram-caption">Figure 1: The six-dimension communication audit scorecard</div>
+      </div>
+
+      <h3 id="communication-matrix">2. The Communication Matrix</h3>
+
+      <p>
+        A communication matrix maps every communication channel to its purpose, audience, frequency,
+        and owner. It is the single most useful artifact from a communication audit because it makes
+        the invisible system visible.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">template</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── COMMUNICATION MATRIX TEMPLATE ────────────── */</span>
+
+<span class="hl-keyword">Channel          Purpose           Audience        Frequency   Owner</span>
+<span class="hl-string">─────────────    ──────────────    ────────────    ─────────   ──────</span>
+Weekly email     Status update     All stakeholders Weekly Fri  PM
+Sprint demo      Show progress     Product team     Bi-weekly   Tech Lead
+Slack channel    Quick questions   Dev + client PM  Real-time   All
+Decision log     Record choices    All stakeholders Per decision PM
+Daily standup    Team sync         Internal team    Daily       Scrum Master
+Incident alert   Urgent issues     Client exec +PM  As needed   On-call
+Quarterly review Relationship      Client exec      Quarterly   Account Mgr
+Retro notes      Process improve   Internal team    Per sprint  Scrum Master
+
+<span class="hl-keyword">ANTI-PATTERNS TO CHECK FOR:</span>
+- Channel with no clear owner (= nobody maintains it)
+- Two channels serving the same purpose (= confusion)
+- Stakeholder receiving no regular communication (= blind spot)
+- High-frequency channel with no structure (= noise)
+- Important decisions made in ephemeral channels (= lost history)
+</pre>
+      </div>
+
+      <h3 id="measurement">3. Measuring Communication Effectiveness</h3>
+
+      <p>
+        What gets measured gets managed. Here are the metrics that tell you whether your
+        communication system is working:
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">framework</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── COMMUNICATION METRICS ─────────────────────── */</span>
+
+<span class="hl-keyword">LEADING INDICATORS (predict future satisfaction)</span>
+- Response time to client messages (target: &lt; 4 hours)
+- Percentage of meetings with agendas sent in advance
+- Percentage of meetings with follow-up notes sent
+- Documentation coverage (documented vs undocumented)
+- Proactive vs reactive communication ratio
+
+<span class="hl-keyword">LAGGING INDICATORS (measure past performance)</span>
+- Client NPS score (quarterly survey)
+- Client satisfaction rating (sprint-end survey)
+- Number of "misunderstanding" incidents per quarter
+- Average time to resolve communication breakdowns
+- Client retention rate and contract renewal rate
+
+<span class="hl-keyword">TEAM HEALTH INDICATORS</span>
+- Time spent in meetings vs deep work per week
+- Number of "where is this documented?" questions
+- New hire time-to-productivity (weeks to fully ramped)
+- Team communication satisfaction (internal survey)
+</pre>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Start Simple
+        </div>
+        <p>
+          Do not try to measure everything at once. Pick the three metrics most relevant to your
+          team's biggest communication challenge and track those for one quarter. Once you have a
+          baseline, you can expand. Measurement is only useful if it leads to action.
+        </p>
+      </div>
+
+      <h3 id="improvement-plan">4. Building a Communication Improvement Plan</h3>
+
+      <p>
+        After completing the audit, create an improvement plan that is specific, time-bound, and
+        owned. The plan should prioritize high-impact, low-effort improvements first.
+      </p>
+
+      <div class="diagram">
+<pre>
+  +---------------------------------------------------------------+
+  |          IMPROVEMENT PRIORITY MATRIX                            |
+  |                                                                 |
+  |   HIGH IMPACT                                                   |
+  |   +---------------------------+---------------------------+     |
+  |   |                           |                           |     |
+  |   |  DO FIRST                 |  DO SECOND                |     |
+  |   |  (Quick Wins)             |  (Strategic)              |     |
+  |   |                           |                           |     |
+  |   |  - Meeting agendas        |  - Documentation system   |     |
+  |   |  - Follow-up notes        |  - Feedback surveys       |     |
+  |   |  - Status update template |  - Knowledge transfer     |     |
+  |   |                           |    process                |     |
+  |   +---------------------------+---------------------------+     |
+  |   |                           |                           |     |
+  |   |  DO THIRD                 |  DO LATER                 |     |
+  |   |  (Opportunistic)          |  (Low Priority)           |     |
+  |   |                           |                           |     |
+  |   |  - Slack channel cleanup  |  - Video documentation    |     |
+  |   |  - Email templates        |  - Communication training |     |
+  |   |  - Meeting recordings     |    for all team members   |     |
+  |   |                           |                           |     |
+  |   +---------------------------+---------------------------+     |
+  |   LOW EFFORT                           HIGH EFFORT              |
+  +---------------------------------------------------------------+
+</pre>
+        <div class="diagram-caption">Figure 2: Improvement priority matrix &mdash; start with high-impact, low-effort quick wins</div>
+      </div>
+
+      <h3 id="capstone-overview">5. Level 1 Capstone Project</h3>
+
+      <p>
+        The capstone project demonstrates that you can apply all Level 1 skills in an integrated,
+        practical way. Here is the complete scope:
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">framework</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── LEVEL 1 CAPSTONE: COMMUNICATION AUDIT ─────── */</span>
+
+<span class="hl-keyword">DELIVERABLE 1: Communication Audit Report</span>
+- Score all 6 dimensions with evidence
+- Identify top 3 strengths and top 3 gaps
+- Include communication matrix for your project
+- Collect at least 2 client feedback data points
+
+<span class="hl-keyword">DELIVERABLE 2: Improvement Plan</span>
+- 3 quick wins to implement immediately
+- 2 strategic improvements for the quarter
+- Specific metrics to track progress
+- Assigned owners and deadlines for each item
+
+<span class="hl-keyword">DELIVERABLE 3: Template Library</span>
+- Meeting agenda template (customized for your team)
+- Status update template (customized for your client)
+- Follow-up notes template
+- Feedback request template
+
+<span class="hl-keyword">DELIVERABLE 4: Presentation</span>
+- 15-minute presentation of findings to your team
+- Include data, examples, and recommendations
+- Use the presentation structure from Chapter 04
+- Handle Q&amp;A using the techniques from Chapter 04
+
+<span class="hl-keyword">GRADING CRITERIA:</span>
+- Thoroughness of the audit (all 6 dimensions covered)
+- Quality of evidence (data, not opinions)
+- Practicality of the improvement plan
+- Quality of the templates (usable by the whole team)
+- Effectiveness of the presentation delivery
+</pre>
+      </div>
+
+      <details>
+        <summary>Can I use a past project for the capstone?</summary>
+        <div class="details-body">
+          <p>
+            Ideally, use a current project so the improvements can be implemented immediately. However,
+            a recent past project (within the last 3 months) is acceptable if you have sufficient data
+            and access to stakeholders for feedback collection. The key is that the audit must be
+            grounded in real evidence, not hypothetical scenarios.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>What if my team scores poorly on the audit?</summary>
+        <div class="details-body">
+          <p>
+            A low score is not a failure &mdash; it is a clear roadmap for improvement. Most teams
+            score between 15-20 on their first audit. The value of the audit is in identifying
+            specific, actionable gaps, not in achieving a high score. Share the results
+            transparently with your team and use them to drive improvement.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>How long should the capstone take?</summary>
+        <div class="details-body">
+          <p>
+            Plan for 2-3 weeks of part-time work. The audit itself takes about 1 week (gathering
+            data, scoring dimensions, collecting feedback). The improvement plan and templates take
+            about 1 week. The presentation preparation takes 2-3 days. Do not rush it &mdash; this
+            is the demonstration of everything you have learned.
+          </p>
+        </div>
+      </details>
+
+      <hr class="section-divider">
+
+      <h2 id="watch-learn">Watch &amp; Learn</h2>
+
+      <p>These videos cover communication systems, measurement, and continuous improvement.</p>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/GlSCMx5_bWA?rel=0&amp;modestbranding=1"
+            title="Communication Systems &mdash; Building processes that scale beyond individual effort"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Communication Systems &mdash; Building processes that scale beyond individual effort
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/LLiJYvzm0ko?rel=0&amp;modestbranding=1"
+            title="Measuring Communication &mdash; Metrics and feedback loops for continuous improvement"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Measuring Communication &mdash; Metrics and feedback loops for continuous improvement
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="further-reading">Further Reading</h2>
+
+      <p>Resources on communication systems, measurement, and organizational effectiveness.</p>
+
+      <div class="resource-grid">
+        <a class="resource-card" href="https://www.amazon.com/Team-Topologies-Organizing-Business-Technology/dp/1942788819" target="_blank" rel="noopener">
+          <div class="resource-icon article">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Team Topologies &mdash; Skelton &amp; Pais</div>
+            <div class="resource-desc">How organizational design affects communication patterns and team effectiveness.</div>
+          </div>
+        </a>
+        <a class="resource-card" href="https://hbr.org/2020/10/what-effective-feedback-really-looks-like" target="_blank" rel="noopener">
+          <div class="resource-icon article">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">What Effective Feedback Really Looks Like (HBR)</div>
+            <div class="resource-desc">Research-backed approaches to feedback systems that drive improvement.</div>
+          </div>
+        </a>
+        <a class="resource-card" href="https://www.atlassian.com/team-playbook/health-monitor" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Atlassian Team Health Monitor</div>
+            <div class="resource-desc">Framework for assessing team health across multiple dimensions including communication.</div>
+          </div>
+        </a>
+        <a class="resource-card" href="https://rework.withgoogle.com/guides/understanding-team-effectiveness/steps/introduction/" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Google re:Work &mdash; Team Effectiveness</div>
+            <div class="resource-desc">Google's research on what makes teams effective, including psychological safety and communication norms.</div>
+          </div>
+        </a>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="assignments">Assignments</h2>
+
+      <p>These assignments build toward the capstone. Complete them in order.</p>
+
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 1
+          </div>
+          <span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span>
+        </div>
+        <h4>Complete the Communication Audit Scorecard</h4>
+        <p>Score your current project on all 6 dimensions of the communication audit framework.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Score each dimension 1-5 with written justification for each score</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Collect evidence for each score (emails, meeting recordings, survey results)</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Identify the single highest-scoring and lowest-scoring dimensions</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write a 1-paragraph analysis of why the gap exists</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Get a colleague to independently score the same project and compare results</span></li>
+        </ul>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>You have a completed scorecard with evidence-backed scores and a clear identification of strengths and gaps.</p>
+        </div>
+      </div>
+
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 2
+          </div>
+          <span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span>
+        </div>
+        <h4>Build the Communication Matrix and Template Library</h4>
+        <p>Create a complete communication matrix and a library of templates for your project.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Map all current communication channels using the matrix template</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Identify anti-patterns (duplicate channels, unowned channels, gaps)</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create or customize at least 4 templates (agenda, status, follow-up, feedback)</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Test each template in a real client interaction</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Gather feedback on template usability from at least 2 team members</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Iterate on templates based on feedback</span></li>
+        </ul>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>Your team has adopted at least 3 templates as standard practice, and client communication is visibly more consistent.</p>
+        </div>
+      </div>
+
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 3
+          </div>
+          <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Production-Ready</span>
+        </div>
+        <h4>Complete the Level 1 Capstone Project</h4>
+        <p>Deliver all four capstone deliverables: audit report, improvement plan, template library, and presentation.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Deliver a complete communication audit report with all 6 dimensions scored and evidenced</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Deliver an improvement plan with prioritized actions, owners, and deadlines</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Deliver a template library with at least 4 production-ready templates</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Deliver a 15-minute presentation to your team with Q&A</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Implement at least 2 quick wins from your improvement plan within 2 weeks</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Measure the impact of those quick wins using the metrics from this chapter</span></li>
+        </ul>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>Your team can point to measurable improvement in at least one communication metric within 30 days of implementing your recommendations.</p>
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="self-check">Self-Check</h2>
+
+      <p>Final self-check before completing Level 1.</p>
+
+      <details>
+        <summary>Can you identify and score all 6 dimensions of communication for any project?</summary>
+        <div class="details-body">
+          <p>
+            If any of the 6 dimensions feel unfamiliar, revisit the corresponding chapter. The audit
+            framework is only as good as your understanding of each dimension. You should be able to
+            explain what "good" looks like for each dimension and provide examples from your experience.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Do you have a system for communication, or do you rely on individual effort?</summary>
+        <div class="details-body">
+          <p>
+            The difference between Level 1 and Level 2 is systems thinking. If your team's communication
+            quality depends entirely on individual discipline, it is fragile. A system with templates,
+            checklists, and accountability structures ensures consistency regardless of who is
+            having a good or bad day.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Are you ready for Level 2?</summary>
+        <div class="details-body">
+          <p>
+            Level 2 (Advanced) covers strategic communication: stakeholder mapping, cross-functional
+            communication, delivering bad news, executive presentations, and crisis communication.
+            You are ready when you can consistently execute all Level 1 skills without conscious effort
+            &mdash; they should be habits, not checklists.
+          </p>
+        </div>
+      </details>
+
+    </main>
+
+    <!-- Sidebar: Table of Contents -->
+    <aside class="sidebar">
+      <div class="sidebar-title">On this page</div>
+      <ul class="toc-list">
+        <li class="toc-item"><a href="#why-this-matters">Why This Matters</a></li>
+        <li class="toc-item"><a href="#key-concepts">Key Concepts</a></li>
+        <li class="toc-item"><a href="#audit-framework" style="padding-left: 28px; font-size: 12px;">The Audit Framework</a></li>
+        <li class="toc-item"><a href="#communication-matrix" style="padding-left: 28px; font-size: 12px;">Communication Matrix</a></li>
+        <li class="toc-item"><a href="#measurement" style="padding-left: 28px; font-size: 12px;">Measuring Communication</a></li>
+        <li class="toc-item"><a href="#improvement-plan" style="padding-left: 28px; font-size: 12px;">Improvement Planning</a></li>
+        <li class="toc-item"><a href="#capstone-overview" style="padding-left: 28px; font-size: 12px;">Capstone Project Overview</a></li>
+        <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a></li>
+        <li class="toc-item"><a href="#further-reading">Further Reading</a></li>
+        <li class="toc-item"><a href="#assignments">Assignments</a></li>
+        <li class="toc-item"><a href="#self-check">Self-Check</a></li>
       </ul>
-    </div>
+    </aside>
+  </div>
 
-    <hr class="section-divider">
-
-    <div class="coming-soon-banner">
-      <h3>Content In Development</h3>
-      <p>Full chapter content with detailed explanations, code examples, video walkthroughs, and assignments is being developed. Check back soon.</p>
-    </div>
-
-    <div class="callout tip">
-      <div class="callout-header">What You Will Learn</div>
-      <p>By the end of this chapter, you will understand self-assessment, peer review, communication plan, capstone portfolio and be able to apply these concepts in real-world scenarios.</p>
-    </div>
-
-  </main>
-
-  <nav class="footer-nav">
-        <a class="footer-nav-link prev" href="chapter-07.html">
-          <span class="footer-nav-label">&larr; Previous</span>
-          <span class="footer-nav-title">Chapter 07: Documentation Culture</span>
+  <!-- Footer Navigation -->
+  <footer class="chapter-footer">
+    <div class="chapter-footer-inner">
+      <nav class="footer-nav">
+        <a class="footer-nav-link" href="chapter-07.html">
+          <span class="footer-nav-label">&larr; Previous Chapter</span>
+          <span class="footer-nav-title">07: Documentation Culture</span>
         </a>
-        <a class="footer-nav-link next" href="index.html">
-          <span class="footer-nav-label">Back to &rarr;</span>
-          <span class="footer-nav-title">Client Communication Foundations</span>
+        <a class="footer-nav-link" href="../advanced/chapter-01.html">
+          <span class="footer-nav-label">Next Chapter &rarr;</span>
+          <span class="footer-nav-title">Advanced 01: Stakeholder Mapping and Influence</span>
         </a>
-  </nav>
-
-  <footer class="footer">
-    ILA (Iksha Learning Academy) &middot; Client Communication Foundations &middot; <a href="index.html">All Chapters</a>
+      </nav>
+      <div class="footer-brand">
+        ILA (Iksha Learning Academy) &middot; Client Communication Professional Certification &middot; Level 1
+      </div>
+    </div>
   </footer>
 
+  <!-- Scripts -->
   <script>
+    // ── Progress Bar ──
     window.addEventListener('scroll', () => {
-      const h = document.documentElement;
-      const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
-      document.getElementById('progressBar').style.width = Math.min(pct, 100) + '%';
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      document.getElementById('progressBar').style.width = progress + '%';
     });
+
+    // ── Active TOC ──
+    const tocLinks = document.querySelectorAll('.toc-item a');
+    const sections = [];
+
+    tocLinks.forEach(link => {
+      const id = link.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) sections.push({ id, el, link });
+    });
+
+    const observerOptions = {
+      rootMargin: '-80px 0px -60% 0px',
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const item = sections.find(s => s.el === entry.target);
+        if (item) {
+          if (entry.isIntersecting) {
+            tocLinks.forEach(l => l.classList.remove('active'));
+            item.link.classList.add('active');
+          }
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(s => observer.observe(s.el));
+
+    // ── Copy Code ──
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      const text = pre.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.classList.add('copied');
+        btn.textContent = 'Copied!';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.textContent = 'Copy';
+        }, 2000);
+      });
+    }
   </script>
 </body>
 </html>

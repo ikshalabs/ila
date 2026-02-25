@@ -8,14 +8,157 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
-    :root{--ink:#0f172a;--ink-light:#334155;--ink-muted:#64748b;--surface:#ffffff;--surface-alt:#f8fafc;--surface-warm:#fffbeb;--border:#e2e8f0;--border-light:#f1f5f9;--teal-50:#f0fdfa;--teal-100:#ccfbf1;--teal-200:#99f6e4;--teal-500:#14b8a6;--teal-600:#0d9488;--teal-700:#0f766e;--teal-800:#115e59;--teal-900:#134e4a;--blue-50:#eff6ff;--blue-100:#dbeafe;--blue-500:#3b82f6;--blue-600:#2563eb;--blue-700:#1d4ed8;--amber-50:#fffbeb;--amber-100:#fef3c7;--amber-500:#f59e0b;--amber-600:#d97706;--red-50:#fef2f2;--red-100:#fee2e2;--red-500:#ef4444;--red-600:#dc2626;--purple-50:#faf5ff;--purple-100:#f3e8ff;--purple-500:#a855f7;--purple-600:#9333ea;--font-sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;--font-serif:'Instrument Serif',Georgia,serif;--font-mono:'JetBrains Mono','Fira Code',monospace;--content-max:780px;--sidebar-width:280px;--ease:cubic-bezier(0.4,0,0.2,1)}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}body{font-family:var(--font-sans);font-size:16px;line-height:1.7;color:var(--ink);background:var(--surface)}.progress-bar{position:fixed;top:0;left:0;width:0%;height:3px;background:linear-gradient(90deg,var(--teal-500),var(--blue-500));z-index:1000;transition:width .15s var(--ease)}.top-nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem}.top-nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px}.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--teal-800)}.nav-brand-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--teal-600),var(--teal-800));border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px}.nav-brand-text{font-weight:700;font-size:15px;letter-spacing:-.02em}.nav-chapter-nav{display:flex;align-items:center;gap:8px}.nav-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;color:var(--ink-muted);border:1px solid var(--border);background:#fff;transition:all .2s var(--ease);cursor:pointer}.nav-btn:hover{color:var(--ink);border-color:var(--teal-500);background:var(--teal-50)}.nav-btn.disabled{opacity:.4;pointer-events:none}.nav-current{font-size:13px;font-weight:600;color:var(--ink-light);padding:0 4px}.hero{background:linear-gradient(170deg,var(--teal-50) 0%,var(--surface) 50%,var(--blue-50) 100%);border-bottom:1px solid var(--border);padding:4rem 2rem 3.5rem}.hero-inner{max-width:var(--content-max);margin:0 auto}.hero-chapter-label{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--teal-700);text-transform:uppercase;letter-spacing:.08em;margin-bottom:1rem}.hero-chapter-label span{background:var(--teal-100);padding:3px 10px;border-radius:100px}.hero h1{font-family:var(--font-serif);font-size:clamp(2.4rem,5vw,3.2rem);font-weight:400;line-height:1.15;color:var(--ink);margin-bottom:1rem}.hero-subtitle{font-size:1.15rem;color:var(--ink-light);line-height:1.65;max-width:640px}.hero-meta{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1.5rem}.hero-meta-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-muted)}.hero-meta-item svg{width:16px;height:16px;color:var(--teal-600)}.main-layout{max-width:1200px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:1fr var(--sidebar-width);gap:4rem;align-items:start}.content{padding:3rem 0 6rem;min-width:0}.sidebar{position:sticky;top:76px;padding:2rem 0;max-height:calc(100vh - 76px);overflow-y:auto}.sidebar-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-muted);margin-bottom:1rem;padding-left:14px}.toc-list{list-style:none}.toc-item a{display:block;padding:6px 14px;font-size:13px;color:var(--ink-muted);text-decoration:none;border-left:2px solid transparent;transition:all .2s var(--ease);line-height:1.5}.toc-item a:hover{color:var(--ink);background:var(--surface-alt)}.toc-item a.active{color:var(--teal-700);border-left-color:var(--teal-500);background:var(--teal-50);font-weight:500}.content h2{font-family:var(--font-serif);font-size:1.85rem;font-weight:400;color:var(--ink);margin:3rem 0 1rem;padding-top:1rem;scroll-margin-top:80px}.content h2:first-child{margin-top:0}.content h3{font-size:1.15rem;font-weight:600;color:var(--ink);margin:2rem 0 .75rem;scroll-margin-top:80px}.content p{margin-bottom:1.25rem;color:var(--ink-light)}.content strong{color:var(--ink);font-weight:600}.content a{color:var(--teal-700);text-decoration:underline;text-decoration-color:var(--teal-200);text-underline-offset:3px;transition:text-decoration-color .2s}.content a:hover{text-decoration-color:var(--teal-600)}.content ul,.content ol{margin-bottom:1.25rem;padding-left:1.5rem}.content li{margin-bottom:.5rem;color:var(--ink-light)}.content li::marker{color:var(--teal-500)}.section-divider{border:none;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:3rem 0}.callout{padding:1.25rem 1.5rem;border-radius:12px;margin-bottom:1.5rem;border:1px solid;position:relative}.callout-header{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;margin-bottom:.5rem}.callout-header svg{width:18px;height:18px;flex-shrink:0}.callout p:last-child{margin-bottom:0}.callout.concept{background:var(--blue-50);border-color:var(--blue-100)}.callout.concept .callout-header{color:var(--blue-700)}.callout.important{background:var(--amber-50);border-color:var(--amber-100)}.callout.important .callout-header{color:var(--amber-600)}.callout.danger{background:var(--red-50);border-color:var(--red-100)}.callout.danger .callout-header{color:var(--red-600)}.callout.tip{background:var(--purple-50);border-color:var(--purple-100)}.callout.tip .callout-header{color:var(--purple-600)}.callout.success{background:var(--teal-50);border-color:var(--teal-100)}.callout.success .callout-header{color:var(--teal-700)}.code-block{position:relative;margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}.code-header{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:var(--surface-alt);border-bottom:1px solid var(--border);font-size:12px;color:var(--ink-muted)}.code-lang{font-family:var(--font-mono);font-weight:600;text-transform:uppercase;letter-spacing:.05em}.code-copy{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:#fff;font-size:11px;font-family:var(--font-sans);color:var(--ink-muted);cursor:pointer;transition:all .2s var(--ease)}.code-copy:hover{border-color:var(--teal-500);color:var(--teal-700)}.code-copy.copied{background:var(--teal-50);border-color:var(--teal-500);color:var(--teal-700)}pre{margin:0;padding:1.25rem 1.5rem;overflow-x:auto;background:#1e293b;font-family:var(--font-mono);font-size:13.5px;line-height:1.7;color:#e2e8f0}code{font-family:var(--font-mono);font-size:.88em}p code,li code{padding:2px 7px;background:var(--surface-alt);border:1px solid var(--border);border-radius:5px;color:var(--teal-800);font-size:.85em}.hl-keyword{color:#c084fc}.hl-string{color:#86efac}.hl-comment{color:#64748b;font-style:italic}.hl-function{color:#7dd3fc}.hl-number{color:#fbbf24}.hl-flag{color:#f472b6}details{margin-bottom:1.25rem;border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .2s var(--ease)}details[open]{border-color:var(--teal-200)}details summary{padding:1rem 1.25rem;font-weight:600;font-size:15px;cursor:pointer;background:var(--surface-alt);list-style:none;display:flex;align-items:center;gap:10px;transition:background .2s var(--ease);user-select:none}details summary::-webkit-details-marker{display:none}details summary::before{content:'';width:20px;height:20px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain;flex-shrink:0;transition:transform .2s var(--ease)}details[open] summary::before{transform:rotate(90deg)}details summary:hover{background:var(--teal-50)}.details-body{padding:1.25rem 1.5rem}.details-body p:last-child{margin-bottom:0}.video-card{margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}.video-wrapper{position:relative;padding-bottom:56.25%;height:0;background:#0f172a}.video-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}.video-caption{padding:12px 16px;background:var(--surface-alt);font-size:13px;color:var(--ink-muted);display:flex;align-items:center;gap:6px}.video-caption svg{width:14px;height:14px;color:var(--red-500)}.resource-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1rem;margin-bottom:1.5rem}.resource-card{display:flex;gap:14px;padding:1rem 1.25rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all .2s var(--ease);background:#fff}.resource-card:hover{border-color:var(--teal-300);background:var(--teal-50);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.04)}.resource-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}.resource-icon.docs{background:var(--blue-50);color:var(--blue-600)}.resource-icon.video{background:var(--red-50);color:var(--red-500)}.resource-icon.article{background:var(--amber-50);color:var(--amber-600)}.resource-icon.pdf{background:var(--purple-50);color:var(--purple-600)}.resource-info{min-width:0}.resource-title{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:2px;line-height:1.4}.resource-desc{font-size:12px;color:var(--ink-muted);line-height:1.5}.assignment{border:2px solid var(--teal-200);border-radius:14px;padding:1.5rem 1.75rem;margin-bottom:1.5rem;background:linear-gradient(135deg,var(--teal-50) 0%,#fff 100%)}.assignment-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}.assignment-label{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--teal-700)}.assignment-difficulty{display:inline-flex;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:600}.difficulty-l1{background:var(--teal-100);color:var(--teal-800)}.difficulty-l2{background:var(--amber-100);color:var(--amber-600)}.difficulty-l3{background:var(--red-100);color:var(--red-600)}.assignment h4{font-size:1.05rem;font-weight:700;margin-bottom:.75rem}.assignment p{font-size:14px}.checklist{list-style:none;padding:0}.checklist li{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border-light);font-size:14px}.checklist li:last-child{border-bottom:none}.check-box{width:20px;height:20px;border-radius:6px;border:2px solid var(--border);flex-shrink:0;margin-top:1px;cursor:pointer;transition:all .15s var(--ease);display:flex;align-items:center;justify-content:center}.check-box:hover{border-color:var(--teal-500)}.check-box.checked{background:var(--teal-500);border-color:var(--teal-500)}.check-box.checked::after{content:'';width:10px;height:10px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain}.diagram{margin:1.5rem 0;padding:2rem;background:var(--surface-alt);border:1px solid var(--border);border-radius:14px;overflow-x:auto}.diagram pre{background:transparent;color:var(--ink);padding:0;font-size:13px;line-height:1.6}.diagram-caption{margin-top:1rem;font-size:12px;color:var(--ink-muted);text-align:center;font-style:italic}.chapter-footer{border-top:1px solid var(--border);padding:3rem 2rem;background:var(--surface-alt)}.chapter-footer-inner{max-width:var(--content-max);margin:0 auto}.footer-nav{display:flex;justify-content:space-between;align-items:center;gap:1rem}.footer-nav-link{display:flex;flex-direction:column;gap:4px;padding:1rem 1.5rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all .2s var(--ease);max-width:320px;background:#fff}.footer-nav-link:hover{border-color:var(--teal-300);box-shadow:0 4px 12px rgba(0,0,0,.04)}.footer-nav-label{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--teal-600)}.footer-nav-title{font-size:15px;font-weight:600;color:var(--ink)}.footer-brand{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border);font-size:13px;color:var(--ink-muted)}@media(max-width:960px){.main-layout{grid-template-columns:1fr}.sidebar{display:none}.resource-grid{grid-template-columns:1fr}}@media(max-width:640px){.hero{padding:2.5rem 1.25rem 2rem}.main-layout{padding:0 1.25rem}.content{padding:2rem 0 4rem}pre{padding:1rem;font-size:12.5px}.footer-nav{flex-direction:column}.footer-nav-link{max-width:100%;width:100%}}@media print{.top-nav,.sidebar,.progress-bar{display:none}.main-layout{display:block}.content{padding:0}.hero{background:#fff;border:none}pre{background:#f1f5f9;color:var(--ink);border:1px solid var(--border)}}
+    :root {
+      --ink: #0f172a; --ink-light: #334155; --ink-muted: #64748b;
+      --surface: #ffffff; --surface-alt: #f8fafc; --surface-warm: #fffbeb;
+      --border: #e2e8f0; --border-light: #f1f5f9;
+      --teal-50: #f0fdfa; --teal-100: #ccfbf1; --teal-200: #99f6e4;
+      --teal-500: #14b8a6; --teal-600: #0d9488; --teal-700: #0f766e;
+      --teal-800: #115e59; --teal-900: #134e4a;
+      --blue-50: #eff6ff; --blue-100: #dbeafe; --blue-500: #3b82f6;
+      --blue-600: #2563eb; --blue-700: #1d4ed8;
+      --amber-50: #fffbeb; --amber-100: #fef3c7; --amber-500: #f59e0b; --amber-600: #d97706;
+      --red-50: #fef2f2; --red-100: #fee2e2; --red-500: #ef4444; --red-600: #dc2626;
+      --purple-50: #faf5ff; --purple-100: #f3e8ff; --purple-500: #a855f7; --purple-600: #9333ea;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-serif: 'Instrument Serif', Georgia, serif;
+      --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+      --content-max: 780px; --sidebar-width: 280px;
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    body { font-family: var(--font-sans); font-size: 16px; line-height: 1.7; color: var(--ink); background: var(--surface); }
+    .progress-bar { position: fixed; top: 0; left: 0; width: 0%; height: 3px; background: linear-gradient(90deg, var(--teal-500), var(--blue-500)); z-index: 1000; transition: width 0.15s var(--ease); }
+    .top-nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 2rem; }
+    .top-nav-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 56px; }
+    .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--teal-800); }
+    .nav-brand-icon { width: 32px; height: 32px; background: linear-gradient(135deg, var(--teal-600), var(--teal-800)); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 14px; }
+    .nav-brand-text { font-weight: 700; font-size: 15px; letter-spacing: -0.02em; }
+    .nav-chapter-nav { display: flex; align-items: center; gap: 8px; }
+    .nav-btn { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 8px; font-size: 13px; font-weight: 500; text-decoration: none; color: var(--ink-muted); border: 1px solid var(--border); background: white; transition: all 0.2s var(--ease); cursor: pointer; }
+    .nav-btn:hover { color: var(--ink); border-color: var(--teal-500); background: var(--teal-50); }
+    .nav-btn.disabled { opacity: 0.4; pointer-events: none; }
+    .nav-current { font-size: 13px; font-weight: 600; color: var(--ink-light); padding: 0 4px; }
+    .hero { background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%); border-bottom: 1px solid var(--border); padding: 4rem 2rem 3.5rem; }
+    .hero-inner { max-width: var(--content-max); margin: 0 auto; }
+    .hero-chapter-label { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--teal-700); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1rem; }
+    .hero-chapter-label span { background: var(--teal-100); padding: 3px 10px; border-radius: 100px; }
+    .hero h1 { font-family: var(--font-serif); font-size: clamp(2.4rem, 5vw, 3.2rem); font-weight: 400; line-height: 1.15; color: var(--ink); margin-bottom: 1rem; }
+    .hero-subtitle { font-size: 1.15rem; color: var(--ink-light); line-height: 1.65; max-width: 640px; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.5rem; }
+    .hero-meta-item { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--ink-muted); }
+    .hero-meta-item svg { width: 16px; height: 16px; color: var(--teal-600); }
+    .main-layout { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: grid; grid-template-columns: 1fr var(--sidebar-width); gap: 4rem; align-items: start; }
+    .content { padding: 3rem 0 6rem; min-width: 0; }
+    .sidebar { position: sticky; top: 76px; padding: 2rem 0; max-height: calc(100vh - 76px); overflow-y: auto; }
+    .sidebar-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-muted); margin-bottom: 1rem; padding-left: 14px; }
+    .toc-list { list-style: none; }
+    .toc-item a { display: block; padding: 6px 14px; font-size: 13px; color: var(--ink-muted); text-decoration: none; border-left: 2px solid transparent; transition: all 0.2s var(--ease); line-height: 1.5; }
+    .toc-item a:hover { color: var(--ink); background: var(--surface-alt); }
+    .toc-item a.active { color: var(--teal-700); border-left-color: var(--teal-500); background: var(--teal-50); font-weight: 500; }
+    .content h2 { font-family: var(--font-serif); font-size: 1.85rem; font-weight: 400; color: var(--ink); margin: 3rem 0 1rem; padding-top: 1rem; scroll-margin-top: 80px; }
+    .content h2:first-child { margin-top: 0; }
+    .content h3 { font-size: 1.15rem; font-weight: 600; color: var(--ink); margin: 2rem 0 0.75rem; scroll-margin-top: 80px; }
+    .content p { margin-bottom: 1.25rem; color: var(--ink-light); }
+    .content strong { color: var(--ink); font-weight: 600; }
+    .content a { color: var(--teal-700); text-decoration: underline; text-decoration-color: var(--teal-200); text-underline-offset: 3px; transition: text-decoration-color 0.2s; }
+    .content a:hover { text-decoration-color: var(--teal-600); }
+    .content ul, .content ol { margin-bottom: 1.25rem; padding-left: 1.5rem; }
+    .content li { margin-bottom: 0.5rem; color: var(--ink-light); }
+    .content li::marker { color: var(--teal-500); }
+    .section-divider { border: none; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 3rem 0; }
+    .callout { padding: 1.25rem 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; border: 1px solid; position: relative; }
+    .callout-header { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; margin-bottom: 0.5rem; }
+    .callout-header svg { width: 18px; height: 18px; flex-shrink: 0; }
+    .callout p:last-child { margin-bottom: 0; }
+    .callout.concept { background: var(--blue-50); border-color: var(--blue-100); }
+    .callout.concept .callout-header { color: var(--blue-700); }
+    .callout.important { background: var(--amber-50); border-color: var(--amber-100); }
+    .callout.important .callout-header { color: var(--amber-600); }
+    .callout.danger { background: var(--red-50); border-color: var(--red-100); }
+    .callout.danger .callout-header { color: var(--red-600); }
+    .callout.tip { background: var(--purple-50); border-color: var(--purple-100); }
+    .callout.tip .callout-header { color: var(--purple-600); }
+    .callout.success { background: var(--teal-50); border-color: var(--teal-100); }
+    .callout.success .callout-header { color: var(--teal-700); }
+    .code-block { position: relative; margin-bottom: 1.5rem; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+    .code-header { display: flex; align-items: center; justify-content: space-between; padding: 8px 16px; background: var(--surface-alt); border-bottom: 1px solid var(--border); font-size: 12px; color: var(--ink-muted); }
+    .code-lang { font-family: var(--font-mono); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+    .code-copy { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border); background: white; font-size: 11px; font-family: var(--font-sans); color: var(--ink-muted); cursor: pointer; transition: all 0.2s var(--ease); }
+    .code-copy:hover { border-color: var(--teal-500); color: var(--teal-700); }
+    .code-copy.copied { background: var(--teal-50); border-color: var(--teal-500); color: var(--teal-700); }
+    pre { margin: 0; padding: 1.25rem 1.5rem; overflow-x: auto; background: #1e293b; font-family: var(--font-mono); font-size: 13.5px; line-height: 1.7; color: #e2e8f0; }
+    code { font-family: var(--font-mono); font-size: 0.88em; }
+    p code, li code { padding: 2px 7px; background: var(--surface-alt); border: 1px solid var(--border); border-radius: 5px; color: var(--teal-800); font-size: 0.85em; }
+    .hl-keyword { color: #c084fc; } .hl-string { color: #86efac; } .hl-comment { color: #64748b; font-style: italic; } .hl-function { color: #7dd3fc; } .hl-number { color: #fbbf24; } .hl-flag { color: #f472b6; }
+    details { margin-bottom: 1.25rem; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; transition: border-color 0.2s var(--ease); }
+    details[open] { border-color: var(--teal-200); }
+    details summary { padding: 1rem 1.25rem; font-weight: 600; font-size: 15px; cursor: pointer; background: var(--surface-alt); list-style: none; display: flex; align-items: center; gap: 10px; transition: background 0.2s var(--ease); user-select: none; }
+    details summary::-webkit-details-marker { display: none; }
+    details summary::before { content: ''; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E"); background-size: contain; flex-shrink: 0; transition: transform 0.2s var(--ease); }
+    details[open] summary::before { transform: rotate(90deg); }
+    details summary:hover { background: var(--teal-50); }
+    .details-body { padding: 1.25rem 1.5rem; }
+    .details-body p:last-child { margin-bottom: 0; }
+    .video-card { margin-bottom: 1.5rem; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+    .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; background: #0f172a; }
+    .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+    .video-caption { padding: 12px 16px; background: var(--surface-alt); font-size: 13px; color: var(--ink-muted); display: flex; align-items: center; gap: 6px; }
+    .video-caption svg { width: 14px; height: 14px; color: var(--red-500); }
+    .resource-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+    .resource-card { display: flex; gap: 14px; padding: 1rem 1.25rem; border: 1px solid var(--border); border-radius: 12px; text-decoration: none; transition: all 0.2s var(--ease); background: white; }
+    .resource-card:hover { border-color: var(--teal-300); background: var(--teal-50); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+    .resource-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 18px; }
+    .resource-icon.docs { background: var(--blue-50); color: var(--blue-600); }
+    .resource-icon.video { background: var(--red-50); color: var(--red-500); }
+    .resource-icon.github { background: var(--ink); color: white; }
+    .resource-icon.article { background: var(--amber-50); color: var(--amber-600); }
+    .resource-icon.pdf { background: var(--purple-50); color: var(--purple-600); }
+    .resource-info { min-width: 0; }
+    .resource-title { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 2px; line-height: 1.4; }
+    .resource-desc { font-size: 12px; color: var(--ink-muted); line-height: 1.5; }
+    .assignment { border: 2px solid var(--teal-200); border-radius: 14px; padding: 1.5rem 1.75rem; margin-bottom: 1.5rem; background: linear-gradient(135deg, var(--teal-50) 0%, white 100%); }
+    .assignment-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+    .assignment-label { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--teal-700); }
+    .assignment-difficulty { display: inline-flex; padding: 4px 10px; border-radius: 100px; font-size: 11px; font-weight: 600; }
+    .difficulty-l1 { background: var(--teal-100); color: var(--teal-800); }
+    .difficulty-l2 { background: var(--amber-100); color: var(--amber-600); }
+    .difficulty-l3 { background: var(--red-100); color: var(--red-600); }
+    .assignment h4 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.75rem; }
+    .assignment p { font-size: 14px; }
+    .checklist { list-style: none; padding: 0; }
+    .checklist li { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border-light); font-size: 14px; }
+    .checklist li:last-child { border-bottom: none; }
+    .check-box { width: 20px; height: 20px; border-radius: 6px; border: 2px solid var(--border); flex-shrink: 0; margin-top: 1px; cursor: pointer; transition: all 0.15s var(--ease); display: flex; align-items: center; justify-content: center; }
+    .check-box:hover { border-color: var(--teal-500); }
+    .check-box.checked { background: var(--teal-500); border-color: var(--teal-500); }
+    .check-box.checked::after { content: ''; width: 10px; height: 10px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E"); background-size: contain; }
+    .diagram { margin: 1.5rem 0; padding: 2rem; background: var(--surface-alt); border: 1px solid var(--border); border-radius: 14px; overflow-x: auto; }
+    .diagram pre { background: transparent; color: var(--ink); padding: 0; font-size: 13px; line-height: 1.6; }
+    .diagram-caption { margin-top: 1rem; font-size: 12px; color: var(--ink-muted); text-align: center; font-style: italic; }
+    .chapter-footer { border-top: 1px solid var(--border); padding: 3rem 2rem; background: var(--surface-alt); }
+    .chapter-footer-inner { max-width: var(--content-max); margin: 0 auto; }
+    .footer-nav { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+    .footer-nav-link { display: flex; flex-direction: column; gap: 4px; padding: 1rem 1.5rem; border: 1px solid var(--border); border-radius: 12px; text-decoration: none; transition: all 0.2s var(--ease); max-width: 320px; background: white; }
+    .footer-nav-link:hover { border-color: var(--teal-300); box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+    .footer-nav-label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--teal-600); }
+    .footer-nav-title { font-size: 15px; font-weight: 600; color: var(--ink); }
+    .footer-brand { text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); font-size: 13px; color: var(--ink-muted); }
+    @media (max-width: 960px) { .main-layout { grid-template-columns: 1fr; } .sidebar { display: none; } .resource-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 640px) { .hero { padding: 2.5rem 1.25rem 2rem; } .main-layout { padding: 0 1.25rem; } .content { padding: 2rem 0 4rem; } pre { padding: 1rem; font-size: 12.5px; } .footer-nav { flex-direction: column; } .footer-nav-link { max-width: 100%; width: 100%; } }
+    @media print { .top-nav, .sidebar, .progress-bar { display: none; } .main-layout { display: block; } .content { padding: 0; } .hero { background: white; border: none; } pre { background: #f1f5f9; color: var(--ink); border: 1px solid var(--border); } }
   </style>
 </head>
 <body>
   <div class="progress-bar" id="progressBar"></div>
+
   <nav class="top-nav">
     <div class="top-nav-inner">
-      <a class="nav-brand" href="index.html"><div class="nav-brand-icon">ILA</div><span class="nav-brand-text">Iksha Learning Academy</span></a>
+      <a class="nav-brand" href="index.html">
+        <div class="nav-brand-icon">ILA</div>
+        <span class="nav-brand-text">Iksha Learning Academy</span>
+      </a>
       <div class="nav-chapter-nav">
         <a class="nav-btn" href="chapter-02.html">&larr; Previous</a>
         <span class="nav-current">03 / 08</span>
@@ -26,13 +169,28 @@
 
   <header class="hero">
     <div class="hero-inner">
-      <div class="hero-chapter-label"><span>Chapter 03</span> &middot; Negotiation Foundations</div>
+      <div class="hero-chapter-label">
+        <span>Chapter 03</span> &middot; Phase 2: Communication
+      </div>
       <h1>Active Listening and Communication</h1>
-      <p class="hero-subtitle">The most powerful negotiation tool is not what you say &mdash; it is how you listen. Master empathy, mirroring, labeling, open-ended questions, and strategic silence to unlock information and build trust at the table.</p>
+      <p class="hero-subtitle">
+        The best negotiators talk less and listen more. Master the techniques of active listening, tactical
+        empathy, open-ended questioning, and calibrated responses that transform adversarial exchanges
+        into collaborative problem-solving conversations.
+      </p>
       <div class="hero-meta">
-        <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Estimated: 45&ndash;60 min</div>
-        <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> 5 Key Concepts</div>
-        <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> 3 Assignments</div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Estimated: 55&ndash;70 min
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          5 Key Concepts
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          3 Assignments
+        </div>
       </div>
     </div>
   </header>
@@ -42,243 +200,455 @@
 
       <h2 id="why-this-matters">Why This Matters</h2>
 
-      <p>Chris Voss, the former FBI lead international kidnapping negotiator, built his entire approach around one principle: <strong>the person who feels most heard is the person most willing to move</strong>. In hostage situations, lives depended on it. In startup negotiations, deals do.</p>
+      <p>
+        Research from the Harvard Negotiation Project shows that <strong>80% of negotiation failures stem
+        from communication breakdowns</strong>, not from irreconcilable differences. Parties walk away
+        from deals not because no ZOPA existed, but because they never discovered it. The information
+        needed to create value was there &mdash; it simply was not exchanged because both sides were too
+        busy talking to listen.
+      </p>
 
-      <p>Most people enter negotiations focused on what they plan to say &mdash; their arguments, their data, their proposals. But research consistently shows that the best negotiators spend 70-80% of their time listening and only 20-30% talking. The information you gather through listening is far more valuable than the arguments you deliver through talking.</p>
-
-      <p>In a startup environment, where you negotiate with investors, customers, employees, and vendors daily, communication skills compound. A founder who listens well builds trust faster, uncovers hidden needs, and creates deals that stick. A founder who talks past people burns bridges and misses creative solutions.</p>
+      <p>
+        Active listening is not passive. It is the most demanding cognitive activity in any negotiation.
+        You are simultaneously processing what is being said, reading nonverbal cues, formulating hypotheses
+        about underlying interests, and planning your response &mdash; all while making the other person
+        feel genuinely heard. This chapter teaches the specific techniques that make this possible.
+      </p>
 
       <div class="callout concept">
-        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg> Key Insight</div>
-        <p><strong>Listening is not passive. It is the most active, most strategic thing you can do in a negotiation.</strong> Every piece of information the other side reveals &mdash; their priorities, their constraints, their fears &mdash; is leverage you can use to create better outcomes for both sides.</p>
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Key Insight
+        </div>
+        <p>
+          Chris Voss, former FBI lead hostage negotiator, describes the core principle: <strong>"Negotiation
+          is not an act of battle; it's a process of discovery."</strong> The goal of communication in
+          negotiation is not to persuade &mdash; it is to understand. Persuasion becomes easy once you
+          truly understand what the other side needs.
+        </p>
       </div>
+
+      <p>
+        The irony of negotiation communication is that the more you focus on being understood, the less
+        effective you become. The more you focus on understanding the other person, the more persuasive
+        you naturally become. This chapter inverts your instincts and replaces them with techniques
+        grounded in behavioral psychology and decades of field research.
+      </p>
 
       <hr class="section-divider">
 
       <h2 id="key-concepts">Key Concepts</h2>
 
-      <h3 id="tactical-empathy">1. Tactical Empathy</h3>
+      <h3 id="active-listening-levels">1. The Four Levels of Listening</h3>
 
-      <p>Tactical empathy, as defined by Chris Voss, is the deliberate act of understanding the other person's feelings and perspective &mdash; <strong>not to agree with them, but to influence them</strong>. It is empathy deployed with strategic purpose.</p>
-
-      <p>In practice, tactical empathy means you actively demonstrate that you understand the other side's position, even if you disagree with it. This lowers their defenses and opens the door to collaboration. When someone feels understood, their brain literally shifts from fight-or-flight mode to problem-solving mode.</p>
+      <p>
+        Most people listen at Level 1 &mdash; waiting for their turn to talk. Expert negotiators operate
+        at Levels 3 and 4, where real information exchange happens.
+      </p>
 
       <div class="code-block">
-        <div class="code-header"><span class="code-lang">Scenario</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <div class="code-header">
+          <span class="code-lang">framework</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
 <pre>
-<span class="hl-comment">/* ── Tactical Empathy: Investor Meeting ───────────────────── */</span>
+<span class="hl-comment">/* ═══════════════════════════════════════════════
+   THE FOUR LEVELS OF LISTENING
+   Diagnose where you are and aim for Level 3+
+   ═══════════════════════════════════════════════ */</span>
 
-<span class="hl-keyword">SITUATION:</span>
-  An investor says: "I'm concerned about your burn rate.
-  You're spending $180K/month with only 6 months of runway."
+<span class="hl-keyword">LEVEL 1: COSMETIC LISTENING</span>
+<span class="hl-function">────────────────────────────────────────────────</span>
+  Behavior:    Nodding, saying "uh-huh" while planning response
+  Inner state: Focused on your own agenda and arguments
+  Impact:      Other person feels unheard, becomes defensive
+  Result:      Positions harden, information flow stops
 
-<span class="hl-keyword">WITHOUT TACTICAL EMPATHY:</span> (defensive)
-  "Our burn is actually very reasonable for our stage.
-  Most Series A companies spend more than we do."
-  <span class="hl-comment">// Result: Investor feels dismissed, pushes harder</span>
+<span class="hl-keyword">LEVEL 2: CONVERSATIONAL LISTENING</span>
+<span class="hl-function">────────────────────────────────────────────────</span>
+  Behavior:    Hearing words, responding to surface meaning
+  Inner state: Processing content but missing subtext
+  Impact:      Basic exchange occurs but depth is shallow
+  Result:      Transactional deals, missed creative options
 
-<span class="hl-keyword">WITH TACTICAL EMPATHY:</span> (strategic)
-  "You're right to focus on that. If I were looking at
-  our numbers from the outside, I'd have the same concern.
-  The burn rate looks aggressive relative to our runway.
-  What I'd like to show you is how we've mapped each
-  dollar to specific milestones that reduce risk..."
-  <span class="hl-comment">// Result: Investor feels heard, opens to your explanation</span>
+<span class="hl-keyword">LEVEL 3: ACTIVE LISTENING</span>
+<span class="hl-function">────────────────────────────────────────────────</span>
+  Behavior:    Mirroring, paraphrasing, asking follow-ups
+  Inner state: Genuinely curious about their perspective
+  Impact:      Other person feels understood, opens up
+  Result:      Hidden interests surface, trust builds
 
-<span class="hl-keyword">THE FORMULA:</span>
-  <span class="hl-function">1.</span> Acknowledge their perspective ("You're right to...")
-  <span class="hl-function">2.</span> Validate the emotion ("I'd feel the same way if...")
-  <span class="hl-function">3.</span> Bridge to your point ("What I'd like to show you...")
+<span class="hl-keyword">LEVEL 4: EMPATHIC LISTENING</span>
+<span class="hl-function">────────────────────────────────────────────────</span>
+  Behavior:    Labeling emotions, validating concerns
+  Inner state: Understanding their emotional landscape
+  Impact:      Deep rapport, psychological safety
+  Result:      Breakthrough insights, creative solutions emerge
+
+<span class="hl-comment">/* Diagnostic: Record your next negotiation and
+   honestly assess which level you operated at
+   for each 5-minute segment. */</span>
 </pre>
       </div>
 
-      <h3 id="mirroring">2. Mirroring</h3>
+      <h3 id="mirroring">2. Mirroring (Isopraxism)</h3>
 
-      <p><strong>Mirroring</strong> is one of the simplest yet most powerful listening techniques. It means repeating the last 1-3 words (or the critical words) that the other person just said, with an upward inflection. This simple act triggers the other person to elaborate, often revealing information they didn't intend to share.</p>
-
-      <div class="code-block">
-        <div class="code-header"><span class="code-lang">Technique</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-<pre>
-<span class="hl-comment">/* ── Mirroring in Practice ────────────────────────────────── */</span>
-
-<span class="hl-keyword">EXAMPLE 1: Vendor Negotiation</span>
-  Vendor: "We really can't go below $1,200 per month."
-  You:    "Can't go below $1,200?" <span class="hl-comment">(mirror + silence)</span>
-  Vendor: "Well, I mean... for the standard package. There
-           might be some flexibility if you're willing to
-           commit to a longer term."
-  <span class="hl-string">→ You just learned they have pricing flexibility</span>
-
-<span class="hl-keyword">EXAMPLE 2: Salary Discussion</span>
-  Candidate: "I was really hoping for at least $160K."
-  You:       "$160K?" <span class="hl-comment">(mirror + silence)</span>
-  Candidate: "Yeah, I mean, my current total comp including
-              bonus is around $155K, so I was hoping for at
-              least a small bump."
-  <span class="hl-string">→ Now you know their current comp and the real benchmark</span>
-
-<span class="hl-keyword">EXAMPLE 3: Customer Objection</span>
-  Customer: "The implementation timeline is too long."
-  You:      "Too long?" <span class="hl-comment">(mirror + silence)</span>
-  Customer: "We have a board presentation in 6 weeks and we
-             need to show this working by then."
-  <span class="hl-string">→ Now you know the real deadline and the real stakeholder</span>
-
-<span class="hl-keyword">RULES:</span>
-  <span class="hl-number">1.</span> Repeat their exact words (do not paraphrase)
-  <span class="hl-number">2.</span> Use an upward, curious inflection
-  <span class="hl-number">3.</span> Follow with at least 4 seconds of silence
-  <span class="hl-number">4.</span> Do not fill the silence — let them fill it
-</pre>
-      </div>
-
-      <h3 id="labeling">3. Labeling Emotions</h3>
-
-      <p><strong>Labeling</strong> is the practice of naming the emotion you observe in the other person. It starts with phrases like "It seems like...", "It sounds like...", or "It looks like..." followed by a description of their emotional state. This technique validates their feelings and often diffuses negative emotions on the spot.</p>
+      <p>
+        Mirroring is the simplest and most powerful listening technique. You repeat the last 1&ndash;3
+        words (or the critical words) of what someone just said, with an upward inflection. This triggers
+        the other person to elaborate, providing more information than a direct question would.
+      </p>
 
       <div class="code-block">
-        <div class="code-header"><span class="code-lang">Framework</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <div class="code-header">
+          <span class="code-lang">scenario</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
 <pre>
-<span class="hl-comment">/* ── Labeling Framework ───────────────────────────────────── */</span>
+<span class="hl-comment">/* ═══════════════════════════════════════════════
+   MIRRORING IN ACTION
+   Repeat the last 1-3 critical words
+   ═══════════════════════════════════════════════ */</span>
 
-<span class="hl-keyword">FORMULA:</span> "It seems like..." + [observed emotion/perspective]
+<span class="hl-keyword">EXAMPLE 1: Salary Negotiation</span>
 
-<span class="hl-keyword">STARTUP SCENARIOS:</span>
+Counterpart: "We typically don't go above the band for this role."
+<span class="hl-string">Your mirror:  "Don't go above the band?"</span>
+Counterpart: "Well, not typically. But we have made exceptions
+              when someone brings specialized experience in our
+              industry vertical."
+<span class="hl-comment">→ You just learned there ARE exceptions and what triggers them.</span>
 
-<span class="hl-function">Investor who keeps asking about competition:</span>
-  "It seems like you're concerned about our
-   defensibility in this market."
-  <span class="hl-string">→ They explain the real concern; you address it directly</span>
+<span class="hl-keyword">EXAMPLE 2: Vendor Negotiation</span>
 
-<span class="hl-function">Customer hesitating to sign:</span>
-  "It sounds like there's something holding you back
-   from moving forward."
-  <span class="hl-string">→ They reveal the internal blocker you didn't know about</span>
+Vendor:      "Our pricing reflects the premium support package."
+<span class="hl-string">Your mirror:  "Premium support package?"</span>
+Vendor:      "Yes, it includes 24/7 support, a dedicated account
+              manager, and priority bug fixes. Though honestly,
+              most clients your size don't use the 24/7 component."
+<span class="hl-comment">→ You just found a cost-reduction lever (drop 24/7 support).</span>
 
-<span class="hl-function">Employee asking for a raise:</span>
-  "It seems like you feel your contributions aren't
-   being recognized at your current level."
-  <span class="hl-string">→ They feel heard; now you can have a real conversation</span>
+<span class="hl-keyword">EXAMPLE 3: Team Conflict</span>
 
-<span class="hl-function">Vendor pushing aggressive terms:</span>
-  "It looks like you're under pressure to close
-   this deal before end of quarter."
-  <span class="hl-string">→ They confirm the timeline pressure you can leverage</span>
+Colleague:   "I just feel like my input doesn't matter in these
+              decisions."
+<span class="hl-string">Your mirror:  "Your input doesn't matter?"</span>
+Colleague:   "I mean, not that it doesn't matter at all. It's more
+              that by the time I'm brought in, the key choices have
+              already been made."
+<span class="hl-comment">→ The real issue is timing of inclusion, not lack of respect.</span>
 
-<span class="hl-keyword">RULES:</span>
-  <span class="hl-number">1.</span> Never start with "I" — it makes it about you
-  <span class="hl-number">2.</span> Use "It seems..." not "You are..." (less confrontational)
-  <span class="hl-number">3.</span> Pause after labeling — let them confirm or correct
-  <span class="hl-number">4.</span> If they correct you, that's even more information
-</pre>
-      </div>
+<span class="hl-function">── MIRRORING RULES ──────────────────────────────</span>
 
-      <h3 id="open-ended-questions">4. Open-Ended Questions (Calibrated Questions)</h3>
-
-      <p>Calibrated questions are open-ended questions that start with "How" or "What" and are designed to get the other side to solve your problem for you. They give the other person the illusion of control while you steer the conversation toward your objectives.</p>
-
-      <div class="code-block">
-        <div class="code-header"><span class="code-lang">Reference</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-<pre>
-<span class="hl-comment">/* ── Calibrated Question Library for Startups ────────────── */</span>
-
-<span class="hl-keyword">DISCOVERY QUESTIONS:</span>
-  "What's the biggest challenge you're facing with [X]?"
-  "How does this decision get made on your end?"
-  "What does success look like for you in this deal?"
-  "What happens if we don't reach an agreement?"
-
-<span class="hl-keyword">OBSTACLE QUESTIONS:</span>
-  "What's preventing us from moving forward?"
-  "How can we make this work within your budget?"
-  "What would need to change for this to be a yes?"
-  "How do I address the concerns of your [legal/security] team?"
-
-<span class="hl-keyword">IMPLEMENTATION QUESTIONS:</span>
-  "How would you like to structure the rollout?"
-  "What does your timeline look like?"
-  "How do we ensure this gets the internal support it needs?"
-  "What does your team need from us to be successful?"
-
-<span class="hl-keyword">PRICE RESISTANCE QUESTIONS:</span>
-  "How am I supposed to do that?" <span class="hl-comment">(when asked for a discount)</span>
-  "What are you comparing us to?"
-  "How do you think about ROI on this kind of investment?"
-  "What would make this price feel right to you?"
-
-<span class="hl-keyword">AVOID:</span>
-  <span class="hl-flag">"Why"</span> questions — they trigger defensiveness
-  <span class="hl-flag">"Do you..."</span> questions — they invite yes/no answers
-  <span class="hl-flag">"Can you..."</span> questions — they sound demanding
+<span class="hl-keyword">1.</span> Use a curious, upward tone (not challenging)
+<span class="hl-keyword">2.</span> Wait 4+ seconds after mirroring (silence is key)
+<span class="hl-keyword">3.</span> Mirror the most emotionally loaded words
+<span class="hl-keyword">4.</span> Use no more than 3 mirrors in a row before changing technique
+<span class="hl-keyword">5.</span> Pair with genuine facial curiosity
 </pre>
       </div>
 
       <div class="callout tip">
-        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg> Pro Tip</div>
-        <p>The single most powerful calibrated question in a negotiation is: <strong>"How am I supposed to do that?"</strong> When someone asks for a 50% discount, responding with this question (in a respectful tone) forces them to engage with the reality of your constraints while feeling like they are in control of finding the solution.</p>
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Pro Tip
+        </div>
+        <p>
+          The 4-second silence after a mirror is where the magic happens. Most people are uncomfortable
+          with silence and fill it with information. This is precisely the information you need. Practice
+          counting "one-Mississippi, two-Mississippi" silently after every mirror.
+        </p>
       </div>
 
-      <h3 id="strategic-silence">5. The Power of Strategic Silence</h3>
+      <h3 id="labeling-emotions">3. Labeling Emotions</h3>
 
-      <p>Most people are deeply uncomfortable with silence. In a negotiation, this discomfort is a tool. After you make an important point, ask a tough question, or respond to an offer, <strong>stop talking</strong>. Let the silence work. The other person will almost always fill it &mdash; often with information, concessions, or revised positions they didn't plan to share.</p>
+      <p>
+        Labeling is the practice of identifying and verbalizing the other person's emotions. It defuses
+        negative emotions and amplifies positive ones. The neuroscience behind this is called "affect
+        labeling" &mdash; when you name an emotion, the amygdala's response to it decreases measurably.
+      </p>
 
       <div class="code-block">
-        <div class="code-header"><span class="code-lang">Technique</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <div class="code-header">
+          <span class="code-lang">framework</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
 <pre>
-<span class="hl-comment">/* ── Strategic Silence Playbook ───────────────────────────── */</span>
+<span class="hl-comment">/* ═══════════════════════════════════════════════
+   EMOTION LABELING TEMPLATES
+   Start with "It seems like..." or "It sounds like..."
+   Never use "I think you..."
+   ═══════════════════════════════════════════════ */</span>
 
-<span class="hl-keyword">WHEN TO USE SILENCE:</span>
+<span class="hl-function">── DEFUSING NEGATIVE EMOTIONS ───────────────────</span>
 
-<span class="hl-function">After stating your price:</span>
-  "Based on our analysis, we believe $85,000 per year
-   is the right price for this engagement."
-  [SILENCE — do not justify, do not explain, do not fidget]
-  <span class="hl-string">→ Let them respond first. Their first words reveal everything.</span>
+<span class="hl-keyword">Frustration:</span>
+  "It seems like this process has been really frustrating for you."
+  "It sounds like you've been dealing with this for a while."
 
-<span class="hl-function">After receiving a low offer:</span>
-  Them: "We can offer $45 per hour."
-  You:  [Pause 4-6 seconds. Look thoughtful.]
-  <span class="hl-string">→ Often they'll immediately improve the offer unprompted.</span>
+<span class="hl-keyword">Fear/Anxiety:</span>
+  "It seems like there's a concern about how this might affect..."
+  "It sounds like there's some uncertainty about the timeline."
 
-<span class="hl-function">After asking a calibrated question:</span>
-  "What would need to change for this to be a yes?"
-  [SILENCE — even if it lasts 10+ seconds]
-  <span class="hl-string">→ The real answer comes after the awkward pause.</span>
+<span class="hl-keyword">Anger:</span>
+  "It seems like you feel this situation has been unfair."
+  "It sounds like something about this arrangement isn't working."
 
-<span class="hl-function">After a mirror:</span>
-  "$1,200 per month?"
-  [SILENCE — minimum 4 seconds]
-  <span class="hl-string">→ They elaborate. New information emerges.</span>
+<span class="hl-keyword">Distrust:</span>
+  "It seems like you've had experiences where commitments
+   weren't honored."
+  "It sounds like you want to make sure this is different."
 
-<span class="hl-keyword">RULES:</span>
-  <span class="hl-number">1.</span> Silence after a question: let them answer fully
-  <span class="hl-number">2.</span> Silence after your offer: do not weaken it by talking
-  <span class="hl-number">3.</span> Silence after bad news: let them process
-  <span class="hl-number">4.</span> Count to 4 in your head if silence feels unbearable
+<span class="hl-function">── AMPLIFYING POSITIVE EMOTIONS ─────────────────</span>
+
+<span class="hl-keyword">Enthusiasm:</span>
+  "It sounds like you're really excited about this opportunity."
+  "It seems like this aligns well with what you've been building."
+
+<span class="hl-keyword">Relief:</span>
+  "It sounds like this takes a real weight off your plate."
+  "It seems like this resolves something that's been on your mind."
+
+<span class="hl-function">── CRITICAL RULES ───────────────────────────────</span>
+
+<span class="hl-keyword">DO:</span>     Start with "It seems like..." or "It sounds like..."
+<span class="hl-keyword">DON'T:</span>  Start with "I think you feel..." (sounds presumptuous)
+<span class="hl-keyword">DO:</span>     Pause after labeling and wait for confirmation/correction
+<span class="hl-keyword">DON'T:</span>  Label and immediately follow with a request
+<span class="hl-keyword">DO:</span>     Accept corrections gracefully ("You're right, help me
+         understand what it actually is")
 </pre>
       </div>
+
+      <h3 id="calibrated-questions">4. Calibrated Questions</h3>
+
+      <p>
+        Calibrated questions are open-ended questions that begin with <strong>"How"</strong> or
+        <strong>"What"</strong>. They accomplish two things simultaneously: they gather information and
+        they make the other person feel in control while you actually guide the conversation.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">framework</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ═══════════════════════════════════════════════
+   CALIBRATED QUESTION LIBRARY
+   Replace closed questions with open alternatives
+   ═══════════════════════════════════════════════ */</span>
+
+<span class="hl-function">── INFORMATION GATHERING ────────────────────────</span>
+
+Instead of: "Is the price negotiable?"
+<span class="hl-string">Ask:        "How did you arrive at that number?"</span>
+
+Instead of: "Can you do better on the timeline?"
+<span class="hl-string">Ask:        "What would it take to accelerate the delivery?"</span>
+
+Instead of: "Is that your final offer?"
+<span class="hl-string">Ask:        "How am I supposed to make that work?"</span>
+
+<span class="hl-function">── CREATING OWNERSHIP ───────────────────────────</span>
+
+Instead of: "Will you approve this by Friday?"
+<span class="hl-string">Ask:        "What do you need from me to move this forward?"</span>
+
+Instead of: "Can your team handle this?"
+<span class="hl-string">Ask:        "How would your team approach implementing this?"</span>
+
+<span class="hl-function">── PROBLEM SOLVING ──────────────────────────────</span>
+
+Instead of: "That doesn't work for us."
+<span class="hl-string">Ask:        "How can we solve this together?"</span>
+
+Instead of: "We need to lower the price."
+<span class="hl-string">Ask:        "What can we adjust to make this fit within budget?"</span>
+
+<span class="hl-function">── THE MAGIC QUESTION ───────────────────────────</span>
+
+<span class="hl-keyword">When you feel stuck, always return to:</span>
+<span class="hl-string">"How am I supposed to do that?"</span>
+
+This question:
+  - Is non-confrontational
+  - Puts the problem back on them to solve
+  - Reveals their flexibility and constraints
+  - Creates empathy for your position
+  - Often produces creative solutions
+</pre>
+      </div>
+
+      <h3 id="tactical-empathy">5. Tactical Empathy and the Accusation Audit</h3>
+
+      <p>
+        Tactical empathy is understanding the other person's perspective not to agree with it, but to use
+        that understanding strategically. The <strong>Accusation Audit</strong> preemptively lists every
+        negative thing the other person might think about you before they say it, defusing objections
+        before they form.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">framework</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ═══════════════════════════════════════════════
+   ACCUSATION AUDIT TEMPLATE
+   Preempt objections by naming them first
+   ═══════════════════════════════════════════════ */</span>
+
+<span class="hl-keyword">STEP 1:</span> List every negative perception they might have
+
+  <span class="hl-string">"You're probably thinking..."</span>
+  - We're being unreasonable on price
+  - We're wasting your time
+  - We don't understand your constraints
+  - This is going to be a difficult conversation
+  - We're going to ask for too much
+
+<span class="hl-keyword">STEP 2:</span> Lead with these before presenting your case
+
+  <span class="hl-string">Example opening:</span>
+  "I want to be upfront. You might feel like what I'm about
+   to suggest is aggressive. You might think we're not
+   appreciating the value you bring. You might even wonder
+   if this conversation is worth your time. I bring this up
+   because I respect you enough to address the elephant in
+   the room."
+
+<span class="hl-keyword">STEP 3:</span> Wait for their response
+
+  <span class="hl-comment">Typical responses:</span>
+  - "No, it's not that bad." (They minimize their objections)
+  - "Well, I appreciate you saying that." (Rapport deepens)
+  - "Actually, my concern is more about X." (Real issue emerges)
+
+<span class="hl-function">── WHY THIS WORKS ───────────────────────────────</span>
+
+When YOU name the negatives, you:
+  <span class="hl-number">1.</span> Remove the other person's ammunition
+  <span class="hl-number">2.</span> Demonstrate self-awareness and honesty
+  <span class="hl-number">3.</span> Create psychological safety for honest dialogue
+  <span class="hl-number">4.</span> Often hear "It's not THAT bad" (lowered expectations)
+  <span class="hl-number">5.</span> Build trust that accelerates the entire negotiation
+</pre>
+      </div>
+
+      <div class="callout important">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Critical Distinction
+        </div>
+        <p>
+          Tactical empathy is not sympathy. You are not agreeing or feeling sorry for them. You are
+          demonstrating that you <strong>understand</strong> their perspective. "It sounds like this
+          timeline puts real pressure on your team" is empathy. "I'm sorry you're under so much pressure"
+          is sympathy. The first builds respect; the second can signal weakness.
+        </p>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="communication-diagnosis">Communication Diagnosis Framework</h2>
+
+      <p>
+        Use this framework to diagnose communication breakdowns in real time during any negotiation.
+      </p>
+
+      <div class="diagram">
+<pre>
+   Conversation feels stuck?
+   │
+   ├── Are they repeating themselves?
+   │   └── YES → They don't feel heard
+   │            → Use mirroring + labeling
+   │
+   ├── Are they getting emotional?
+   │   └── YES → Emotion is blocking logic
+   │            → Label the emotion, then pause
+   │
+   ├── Are they giving one-word answers?
+   │   └── YES → They don't feel safe
+   │            → Use an accusation audit
+   │
+   ├── Are they making unreasonable demands?
+   │   └── YES → They may have hidden pressure
+   │            → Ask: "How am I supposed to do that?"
+   │
+   └── Are they talking about themselves a lot?
+       └── YES → Let them continue (this is good)
+                → They are revealing information
+                → Mirror and ask calibrated questions
+</pre>
+        <div class="diagram-caption">Figure 1: Real-time communication diagnosis tree for negotiations</div>
+      </div>
+
+      <details>
+        <summary>How do I practice active listening outside negotiations?</summary>
+        <div class="details-body">
+          <p>
+            Practice in low-stakes conversations every day. In your next meeting, try mirroring three times.
+            At dinner, label one emotion your partner or friend expresses. In a one-on-one with a colleague,
+            ask only calibrated questions for the first five minutes. The skills become automatic faster than
+            you think &mdash; most people report noticeable improvement within two weeks of daily practice.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>What if mirroring feels unnatural?</summary>
+        <div class="details-body">
+          <p>
+            It feels unnatural because you have spent decades practicing the opposite &mdash; jumping in with
+            your own thoughts. The discomfort is a signal that you are doing something new, not something wrong.
+            Start with low-stakes conversations. Within 5&ndash;10 uses, it will feel as natural as asking "how
+            are you?" Most people never notice you are using a technique.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>When should I NOT use these techniques?</summary>
+        <div class="details-body">
+          <p>
+            These techniques assume good faith on both sides. If someone is acting in bad faith &mdash;
+            deliberately lying, using threats, or negotiating destructively &mdash; techniques alone
+            will not protect you. In those situations, focus on your BATNA (Chapter 02) and be prepared to
+            walk away. Also, avoid over-using techniques in personal relationships where sincerity matters
+            more than strategy.
+          </p>
+        </div>
+      </details>
 
       <hr class="section-divider">
 
       <h2 id="watch-learn">Watch &amp; Learn</h2>
 
+      <p>
+        These videos demonstrate the listening techniques in action. Pay attention to the pauses and
+        silences &mdash; that is where the real work happens.
+      </p>
+
       <div class="video-card">
         <div class="video-wrapper">
-          <iframe src="https://www.youtube.com/embed/MjhDkNmtjy0?rel=0&amp;modestbranding=1" title="Chris Voss - Active Listening Techniques" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+          <iframe src="https://www.youtube.com/embed/CIlgTGYlS0E?rel=0&amp;modestbranding=1" title="Active Listening in Negotiations" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
         </div>
         <div class="video-caption">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
-          Chris Voss &mdash; Mirroring, labeling, and calibrated questions demonstrated in real negotiation scenarios.
+          Active Listening Techniques &mdash; How to hear what people really mean in negotiations
         </div>
       </div>
 
       <div class="video-card">
         <div class="video-wrapper">
-          <iframe src="https://www.youtube.com/embed/YMyofREc5Jk?rel=0&amp;modestbranding=1" title="Active Listening Skills for Negotiations" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+          <iframe src="https://www.youtube.com/embed/dOHBnsSB2wU?rel=0&amp;modestbranding=1" title="Tactical Empathy and Communication" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
         </div>
         <div class="video-caption">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
-          Harvard PON &mdash; Active listening skills: how to hear what the other side is really saying.
+          Tactical Empathy &mdash; Understanding vs agreeing in high-stakes conversations
         </div>
       </div>
 
@@ -288,20 +658,43 @@
 
       <div class="resource-grid">
         <a class="resource-card" href="https://www.amazon.com/Never-Split-Difference-Negotiating-Depended/dp/0062407805" target="_blank" rel="noopener">
-          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-          <div class="resource-info"><div class="resource-title">Never Split the Difference &mdash; Chris Voss</div><div class="resource-desc">The definitive guide to tactical empathy, mirroring, labeling, and calibrated questions from the FBI's top negotiator.</div></div>
+          <div class="resource-icon pdf">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Never Split the Difference (Chris Voss)</div>
+            <div class="resource-desc">The definitive guide to tactical empathy, mirroring, and labeling from a former FBI hostage negotiator.</div>
+          </div>
         </a>
-        <a class="resource-card" href="https://www.amazon.com/Crucial-Conversations-Talking-Stakes-Second/dp/1469266822" target="_blank" rel="noopener">
-          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-          <div class="resource-info"><div class="resource-title">Crucial Conversations &mdash; Patterson, Grenny, et al.</div><div class="resource-desc">How to handle high-stakes conversations where emotions run strong and opinions differ. Essential for internal negotiations.</div></div>
+
+        <a class="resource-card" href="https://www.pon.harvard.edu/daily/negotiation-skills-daily/listening-skills-for-maximum-success/" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Harvard PON: Listening for Success</div>
+            <div class="resource-desc">Research-backed listening strategies from Harvard's Program on Negotiation with practical exercises.</div>
+          </div>
         </a>
-        <a class="resource-card" href="https://hbr.org/2015/06/the-art-of-active-listening" target="_blank" rel="noopener">
-          <div class="resource-icon article"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
-          <div class="resource-info"><div class="resource-title">HBR: The Art of Active Listening</div><div class="resource-desc">Research on how active listening changes negotiation outcomes. Includes practical exercises for improvement.</div></div>
+
+        <a class="resource-card" href="https://www.mindtools.com/a8v8do2/active-listening" target="_blank" rel="noopener">
+          <div class="resource-icon article">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">MindTools: Active Listening Guide</div>
+            <div class="resource-desc">Practical techniques for improving listening skills with self-assessment tools and practice scenarios.</div>
+          </div>
         </a>
-        <a class="resource-card" href="https://www.blackswanltd.com/the-edge" target="_blank" rel="noopener">
-          <div class="resource-icon article"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
-          <div class="resource-info"><div class="resource-title">The Black Swan Group Newsletter</div><div class="resource-desc">Chris Voss's weekly negotiation tips. Practical tactical advice for applying listening skills in business.</div></div>
+
+        <a class="resource-card" href="https://www.amazon.com/Crucial-Conversations-Talking-Stakes-Third/dp/1260474186" target="_blank" rel="noopener">
+          <div class="resource-icon pdf">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Crucial Conversations (Patterson et al.)</div>
+            <div class="resource-desc">Framework for handling high-stakes conversations where emotions run strong and opinions vary.</div>
+          </div>
         </a>
       </div>
 
@@ -309,62 +702,83 @@
 
       <h2 id="assignments">Assignments</h2>
 
+      <p>Complete these assignments to build your active listening muscles through deliberate practice.</p>
+
       <div class="assignment">
         <div class="assignment-header">
-          <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 1</div>
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 1
+          </div>
           <span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span>
         </div>
-        <h4>Mirror and Label Practice Session</h4>
-        <p>In your next 3 conversations (work or personal), practice mirroring and labeling at least twice each. Track results.</p>
+        <h4>Mirroring Practice Journal</h4>
+        <p>Practice mirroring in 5 different conversations over the next 3 days and document the results.</p>
         <ul class="checklist">
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Use mirroring (repeat last 1-3 words) in 3 different conversations</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Use labeling ("It seems like...") in 3 different conversations</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Note what information was revealed after each mirror</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Note the emotional response after each label (did they soften?)</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write a brief log: technique used, context, result</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Use mirroring at least 3 times in each of 5 separate conversations</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Document the exact words you mirrored and what happened next</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Note how long you waited in silence after each mirror</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Record at least one instance where mirroring revealed unexpected information</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Reflect on which conversations were easiest and hardest to mirror in</span></li>
         </ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0">
-          <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div>
-          <p>You have a log of 6+ technique applications with observed results and personal reflections.</p>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>You have a journal with 5 documented conversations showing the mirror, the response, and what you learned.</p>
         </div>
       </div>
 
       <div class="assignment">
         <div class="assignment-header">
-          <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 2</div>
-          <span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Applied</span>
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 2
+          </div>
+          <span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span>
         </div>
-        <h4>Calibrated Question Role-Play</h4>
-        <p>With a partner, practice using only calibrated questions to negotiate a vendor pricing scenario. The buyer may only ask "How" and "What" questions.</p>
+        <h4>Calibrated Question Conversion Exercise</h4>
+        <p>Take 10 closed-ended questions from your work life and convert them to calibrated open-ended questions.</p>
         <ul class="checklist">
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Partner A is the vendor. Partner B (buyer) may only use How/What questions for 10 minutes</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Document every question Partner B asks and the information it revealed</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Swap roles and repeat</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Identify which questions produced the most valuable information</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Collect 10 yes/no questions you commonly ask in professional settings</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Convert each to a "How" or "What" calibrated question</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Test at least 5 of the converted questions in real conversations</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Document the quality and depth of responses compared to original questions</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Identify which calibrated questions produced the most useful information</span></li>
         </ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0">
-          <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div>
-          <p>You have a ranked list of the most effective calibrated questions and understand why they work.</p>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>You have a side-by-side comparison showing 10 original questions and their calibrated versions with field-test results.</p>
         </div>
       </div>
 
       <div class="assignment">
         <div class="assignment-header">
-          <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 3</div>
-          <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Strategic</span>
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 3
+          </div>
+          <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Mastery</span>
         </div>
-        <h4>Full Active Listening Negotiation</h4>
-        <p>Conduct a complete negotiation role-play combining all five techniques: tactical empathy, mirroring, labeling, calibrated questions, and strategic silence.</p>
+        <h4>Full Accusation Audit and Role-Play</h4>
+        <p>Prepare and deliver an accusation audit for a challenging upcoming conversation, then role-play with a partner.</p>
         <ul class="checklist">
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Set up a 20-minute enterprise sales negotiation scenario with a partner</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Use each of the 5 techniques at least once during the negotiation</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Record (audio) or have an observer take notes on technique usage</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Debrief: which technique felt most natural? Which was most effective?</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write a personal development plan for the technique that needs the most work</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Choose a real upcoming difficult conversation or negotiation</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write a complete accusation audit with at least 5 potential negative perceptions</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Craft your opening statement incorporating the audit naturally</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Role-play the opening with a partner who plays the counterpart</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Debrief: What happened? Did the audit change the tone? What would you adjust?</span></li>
         </ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0">
-          <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div>
-          <p>You have a recording or detailed notes, a debrief analysis, and a development plan for your weakest technique.</p>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>Your role-play partner reports that the accusation audit noticeably shifted the conversation tone from adversarial to collaborative.</p>
         </div>
       </div>
 
@@ -372,19 +786,34 @@
 
       <h2 id="self-check">Self-Check</h2>
 
+      <p>Before moving to Chapter 04, answer these honestly.</p>
+
       <details>
-        <summary>Can you mirror someone's words without it feeling awkward?</summary>
-        <div class="details-body"><p>Mirroring feels strange the first few times. The key is to use a genuinely curious tone &mdash; as if you are fascinated by what they just said and want to hear more. If it feels mechanical, practice in low-stakes conversations until it becomes natural. Most people never notice you are doing it.</p></div>
+        <summary>Can I mirror without it feeling forced?</summary>
+        <div class="details-body">
+          <p>If mirroring still feels awkward after 15+ practice attempts, you are likely overthinking it. The key is tone &mdash; curious, not challenging. Record yourself practicing and listen back. Most people discover their mirrors sound perfectly natural to others even when they feel unnatural to themselves.</p>
+        </div>
       </details>
 
       <details>
-        <summary>Do you know the difference between "How" questions and "Why" questions in negotiation?</summary>
-        <div class="details-body"><p>"How" questions invite collaboration and problem-solving: "How can we make this work?" "Why" questions trigger defensiveness: "Why do you need that?" Even when you mean well, "why" puts the other person on trial. Replace every "why" with a "what" or "how" and watch the tone of the conversation shift.</p></div>
+        <summary>Do I default to calibrated questions or closed questions?</summary>
+        <div class="details-body">
+          <p>Monitor your questions in your next three meetings. Count how many start with "Do," "Is," "Can," or "Will" versus "How" and "What." If more than half are closed, you need more practice. The goal is to make open-ended questions your default mode.</p>
+        </div>
       </details>
 
       <details>
-        <summary>Can you sit in silence for 6 seconds after making an offer?</summary>
-        <div class="details-body"><p>Time yourself. Say your offer out loud, then start counting. For most people, 6 seconds of silence feels like an eternity. But in a negotiation, those 6 seconds are when the other side processes, recalculates, and often moves toward you. Practice holding silence in every conversation this week.</p></div>
+        <summary>Can I sit in silence for 4 seconds after a mirror?</summary>
+        <div class="details-body">
+          <p>Four seconds of silence feels like an eternity when you are not used to it. Practice by counting silently. The discomfort you feel is exactly what the other person fills with valuable information. If you cannot hold 4 seconds, start with 2 and build up.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Have I successfully labeled an emotion in a real conversation?</summary>
+        <div class="details-body">
+          <p>If not, try it today. Start with something low-stakes: "It sounds like you're really enjoying this project." Notice the response. People almost always elaborate when their emotions are accurately labeled. If you label incorrectly, they will correct you &mdash; which is equally useful information.</p>
+        </div>
       </details>
 
     </main>
@@ -394,11 +823,12 @@
       <ul class="toc-list">
         <li class="toc-item"><a href="#why-this-matters">Why This Matters</a></li>
         <li class="toc-item"><a href="#key-concepts">Key Concepts</a></li>
-        <li class="toc-item"><a href="#tactical-empathy" style="padding-left:28px;font-size:12px">Tactical Empathy</a></li>
-        <li class="toc-item"><a href="#mirroring" style="padding-left:28px;font-size:12px">Mirroring</a></li>
-        <li class="toc-item"><a href="#labeling" style="padding-left:28px;font-size:12px">Labeling Emotions</a></li>
-        <li class="toc-item"><a href="#open-ended-questions" style="padding-left:28px;font-size:12px">Open-Ended Questions</a></li>
-        <li class="toc-item"><a href="#strategic-silence" style="padding-left:28px;font-size:12px">Strategic Silence</a></li>
+        <li class="toc-item"><a href="#active-listening-levels" style="padding-left: 28px; font-size: 12px;">Four Levels of Listening</a></li>
+        <li class="toc-item"><a href="#mirroring" style="padding-left: 28px; font-size: 12px;">Mirroring</a></li>
+        <li class="toc-item"><a href="#labeling-emotions" style="padding-left: 28px; font-size: 12px;">Labeling Emotions</a></li>
+        <li class="toc-item"><a href="#calibrated-questions" style="padding-left: 28px; font-size: 12px;">Calibrated Questions</a></li>
+        <li class="toc-item"><a href="#tactical-empathy" style="padding-left: 28px; font-size: 12px;">Tactical Empathy</a></li>
+        <li class="toc-item"><a href="#communication-diagnosis">Communication Diagnosis</a></li>
         <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a></li>
         <li class="toc-item"><a href="#further-reading">Further Reading</a></li>
         <li class="toc-item"><a href="#assignments">Assignments</a></li>
@@ -410,15 +840,34 @@
   <footer class="chapter-footer">
     <div class="chapter-footer-inner">
       <nav class="footer-nav">
-        <a class="footer-nav-link" href="chapter-02.html"><span class="footer-nav-label">&larr; Previous Chapter</span><span class="footer-nav-title">02: Preparation and Research</span></a>
-        <a class="footer-nav-link" href="chapter-04.html"><span class="footer-nav-label">Next Chapter &rarr;</span><span class="footer-nav-title">04: Anchoring and Framing</span></a>
+        <a class="footer-nav-link" href="chapter-02.html">
+          <span class="footer-nav-label">&larr; Previous Chapter</span>
+          <span class="footer-nav-title">02: Preparation and Research</span>
+        </a>
+        <a class="footer-nav-link" href="chapter-04.html">
+          <span class="footer-nav-label">Next Chapter &rarr;</span>
+          <span class="footer-nav-title">04: Framing and Persuasion</span>
+        </a>
       </nav>
-      <div class="footer-brand">ILA (Iksha Learning Academy) &middot; Negotiation Foundations &middot; Basic Track</div>
+      <div class="footer-brand">
+        ILA (Iksha Learning Academy) &middot; Negotiations Professional Certification &middot; Level 1
+      </div>
     </div>
   </footer>
 
   <script>
-    window.addEventListener('scroll',()=>{const s=window.scrollY;const d=document.documentElement.scrollHeight-window.innerHeight;const p=d>0?(s/d)*100:0;document.getElementById('progressBar').style.width=p+'%'});const tocLinks=document.querySelectorAll('.toc-item a');const sections=[];tocLinks.forEach(link=>{const id=link.getAttribute('href').slice(1);const el=document.getElementById(id);if(el)sections.push({id,el,link})});const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{const item=sections.find(s=>s.el===entry.target);if(item&&entry.isIntersecting){tocLinks.forEach(l=>l.classList.remove('active'));item.link.classList.add('active')}})},{rootMargin:'-80px 0px -60% 0px',threshold:0});sections.forEach(s=>observer.observe(s.el));function copyCode(btn){const pre=btn.closest('.code-block').querySelector('pre');navigator.clipboard.writeText(pre.textContent).then(()=>{btn.classList.add('copied');btn.textContent='Copied!';setTimeout(()=>{btn.classList.remove('copied');btn.textContent='Copy'},2000)})}
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      document.getElementById('progressBar').style.width = progress + '%';
+    });
+    const tocLinks = document.querySelectorAll('.toc-item a');
+    const sections = [];
+    tocLinks.forEach(link => { const id = link.getAttribute('href').slice(1); const el = document.getElementById(id); if (el) sections.push({ id, el, link }); });
+    const observer = new IntersectionObserver(entries => { entries.forEach(entry => { const item = sections.find(s => s.el === entry.target); if (item && entry.isIntersecting) { tocLinks.forEach(l => l.classList.remove('active')); item.link.classList.add('active'); } }); }, { rootMargin: '-80px 0px -60% 0px', threshold: 0 });
+    sections.forEach(s => observer.observe(s.el));
+    function copyCode(btn) { const pre = btn.closest('.code-block').querySelector('pre'); navigator.clipboard.writeText(pre.textContent).then(() => { btn.classList.add('copied'); btn.textContent = 'Copied!'; setTimeout(() => { btn.classList.remove('copied'); btn.textContent = 'Copy'; }, 2000); }); }
   </script>
 </body>
 </html>

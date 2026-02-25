@@ -8,7 +8,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
+    /* ═══════════════════════════════════════════════
+       ILA DESIGN SYSTEM — v1.0
+       Iksha Learning Academy
+       ═══════════════════════════════════════════════ */
+
     :root {
+      /* Palette */
       --ink:        #0f172a;
       --ink-light:  #334155;
       --ink-muted:  #64748b;
@@ -17,6 +23,8 @@
       --surface-warm:#fffbeb;
       --border:     #e2e8f0;
       --border-light:#f1f5f9;
+
+      /* Brand */
       --teal-50:  #f0fdfa;
       --teal-100: #ccfbf1;
       --teal-200: #99f6e4;
@@ -25,36 +33,48 @@
       --teal-700: #0f766e;
       --teal-800: #115e59;
       --teal-900: #134e4a;
+
       --blue-50:  #eff6ff;
       --blue-100: #dbeafe;
       --blue-500: #3b82f6;
       --blue-600: #2563eb;
       --blue-700: #1d4ed8;
+
       --amber-50:  #fffbeb;
       --amber-100: #fef3c7;
       --amber-500: #f59e0b;
       --amber-600: #d97706;
+
       --red-50:   #fef2f2;
       --red-100:  #fee2e2;
       --red-500:  #ef4444;
       --red-600:  #dc2626;
+
       --purple-50:  #faf5ff;
       --purple-100: #f3e8ff;
       --purple-500: #a855f7;
       --purple-600: #9333ea;
-      --green-50:  #f0fdf4;
-      --green-100: #dcfce7;
-      --green-500: #22c55e;
-      --green-600: #16a34a;
+
+      /* Typography */
       --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       --font-serif: 'Instrument Serif', Georgia, serif;
       --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
+
+      /* Spacing */
       --content-max: 780px;
+      --sidebar-width: 280px;
+
+      /* Transitions */
       --ease: cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
 
     body {
       font-family: var(--font-sans);
@@ -64,6 +84,7 @@
       background: var(--surface);
     }
 
+    /* ── PROGRESS BAR ─────────────────────────── */
     .progress-bar {
       position: fixed;
       top: 0;
@@ -75,6 +96,7 @@
       transition: width 0.15s var(--ease);
     }
 
+    /* ── TOP NAV ──────────────────────────────── */
     .top-nav {
       position: sticky;
       top: 0;
@@ -162,6 +184,7 @@
       padding: 0 4px;
     }
 
+    /* ── HERO ─────────────────────────────────── */
     .hero {
       background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%);
       border-bottom: 1px solid var(--border);
@@ -222,18 +245,82 @@
       color: var(--ink-muted);
     }
 
-    .content {
-      max-width: var(--content-max);
-      margin: 0 auto;
-      padding: 3rem 2rem 6rem;
+    .hero-meta-item svg {
+      width: 16px;
+      height: 16px;
+      color: var(--teal-600);
     }
 
+    /* ── MAIN LAYOUT ──────────────────────────── */
+    .main-layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr var(--sidebar-width);
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .content {
+      padding: 3rem 0 6rem;
+      min-width: 0;
+    }
+
+    /* ── SIDEBAR TOC ──────────────────────────── */
+    .sidebar {
+      position: sticky;
+      top: 76px;
+      padding: 2rem 0;
+      max-height: calc(100vh - 76px);
+      overflow-y: auto;
+    }
+
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-muted);
+      margin-bottom: 1rem;
+      padding-left: 14px;
+    }
+
+    .toc-list {
+      list-style: none;
+    }
+
+    .toc-item a {
+      display: block;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--ink-muted);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: all 0.2s var(--ease);
+      line-height: 1.5;
+    }
+
+    .toc-item a:hover {
+      color: var(--ink);
+      background: var(--surface-alt);
+    }
+
+    .toc-item a.active {
+      color: var(--teal-700);
+      border-left-color: var(--teal-500);
+      background: var(--teal-50);
+      font-weight: 500;
+    }
+
+    /* ── TYPOGRAPHY ────────────────────────────── */
     .content h2 {
       font-family: var(--font-serif);
       font-size: 1.85rem;
       font-weight: 400;
       color: var(--ink);
       margin: 3rem 0 1rem;
+      padding-top: 1rem;
       scroll-margin-top: 80px;
     }
 
@@ -244,201 +331,159 @@
       font-weight: 600;
       color: var(--ink);
       margin: 2rem 0 0.75rem;
+      scroll-margin-top: 80px;
     }
 
-    .content p {
-      margin-bottom: 1.25rem;
-      color: var(--ink-light);
-    }
+    .content p { margin-bottom: 1.25rem; color: var(--ink-light); }
+    .content strong { color: var(--ink); font-weight: 600; }
 
-    .content ul, .content ol {
-      margin-bottom: 1.25rem;
-      padding-left: 1.5rem;
+    .content a {
+      color: var(--teal-700);
+      text-decoration: underline;
+      text-decoration-color: var(--teal-200);
+      text-underline-offset: 3px;
+      transition: text-decoration-color 0.2s;
     }
+    .content a:hover { text-decoration-color: var(--teal-600); }
 
-    .content li {
-      margin-bottom: 0.5rem;
-      color: var(--ink-light);
-    }
-
+    .content ul, .content ol { margin-bottom: 1.25rem; padding-left: 1.5rem; }
+    .content li { margin-bottom: 0.5rem; color: var(--ink-light); }
     .content li::marker { color: var(--teal-500); }
 
-    .callout {
-      padding: 1.25rem 1.5rem;
-      border-radius: 12px;
-      margin-bottom: 1.5rem;
-      border: 1px solid;
-    }
-
-    .callout-header {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-    }
-
-    .callout p:last-child { margin-bottom: 0; }
-
-    .callout.concept {
-      background: var(--blue-50);
-      border-color: var(--blue-100);
-    }
-    .callout.concept .callout-header { color: var(--blue-700); }
-
-    .callout.important {
-      background: var(--amber-50);
-      border-color: var(--amber-100);
-    }
-    .callout.important .callout-header { color: var(--amber-600); }
-
-    .callout.tip {
-      background: var(--purple-50);
-      border-color: var(--purple-100);
-    }
-    .callout.tip .callout-header { color: var(--purple-600); }
-
-    .callout.success {
-      background: var(--teal-50);
-      border-color: var(--teal-100);
-    }
-    .callout.success .callout-header { color: var(--teal-700); }
-
     .section-divider {
-      border: none;
-      height: 1px;
+      border: none; height: 1px;
       background: linear-gradient(90deg, transparent, var(--border), transparent);
       margin: 3rem 0;
     }
 
-    .coming-soon-banner {
-      background: var(--amber-50);
-      border: 1px solid var(--amber-100);
-      border-radius: 12px;
-      padding: 2.5rem;
-      text-align: center;
-      margin: 2rem 0;
+    /* ── CALLOUT BOXES ────────────────────────── */
+    .callout { padding: 1.25rem 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; border: 1px solid; position: relative; }
+    .callout-header { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; margin-bottom: 0.5rem; }
+    .callout-header svg { width: 18px; height: 18px; flex-shrink: 0; }
+    .callout p:last-child { margin-bottom: 0; }
+    .callout.concept { background: var(--blue-50); border-color: var(--blue-100); }
+    .callout.concept .callout-header { color: var(--blue-700); }
+    .callout.important { background: var(--amber-50); border-color: var(--amber-100); }
+    .callout.important .callout-header { color: var(--amber-600); }
+    .callout.danger { background: var(--red-50); border-color: var(--red-100); }
+    .callout.danger .callout-header { color: var(--red-600); }
+    .callout.tip { background: var(--purple-50); border-color: var(--purple-100); }
+    .callout.tip .callout-header { color: var(--purple-600); }
+    .callout.success { background: var(--teal-50); border-color: var(--teal-100); }
+    .callout.success .callout-header { color: var(--teal-700); }
+
+    /* ── CODE BLOCKS ──────────────────────────── */
+    .code-block { position: relative; margin-bottom: 1.5rem; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+    .code-header { display: flex; align-items: center; justify-content: space-between; padding: 8px 16px; background: var(--surface-alt); border-bottom: 1px solid var(--border); font-size: 12px; color: var(--ink-muted); }
+    .code-lang { font-family: var(--font-mono); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+    .code-copy { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border); background: white; font-size: 11px; font-family: var(--font-sans); color: var(--ink-muted); cursor: pointer; transition: all 0.2s var(--ease); }
+    .code-copy:hover { border-color: var(--teal-500); color: var(--teal-700); }
+    .code-copy.copied { background: var(--teal-50); border-color: var(--teal-500); color: var(--teal-700); }
+
+    pre { margin: 0; padding: 1.25rem 1.5rem; overflow-x: auto; background: #1e293b; font-family: var(--font-mono); font-size: 13.5px; line-height: 1.7; color: #e2e8f0; }
+    code { font-family: var(--font-mono); font-size: 0.88em; }
+    p code, li code { padding: 2px 7px; background: var(--surface-alt); border: 1px solid var(--border); border-radius: 5px; color: var(--teal-800); font-size: 0.85em; }
+
+    .hl-keyword  { color: #c084fc; }
+    .hl-string   { color: #86efac; }
+    .hl-comment  { color: #64748b; font-style: italic; }
+    .hl-function { color: #7dd3fc; }
+    .hl-number   { color: #fbbf24; }
+    .hl-flag     { color: #f472b6; }
+
+    /* ── COLLAPSIBLE ──────────────────────────── */
+    details { margin-bottom: 1.25rem; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; transition: border-color 0.2s var(--ease); }
+    details[open] { border-color: var(--teal-200); }
+    details summary { padding: 1rem 1.25rem; font-weight: 600; font-size: 15px; cursor: pointer; background: var(--surface-alt); list-style: none; display: flex; align-items: center; gap: 10px; transition: background 0.2s var(--ease); user-select: none; }
+    details summary::-webkit-details-marker { display: none; }
+    details summary::before { content: ''; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E"); background-size: contain; flex-shrink: 0; transition: transform 0.2s var(--ease); }
+    details[open] summary::before { transform: rotate(90deg); }
+    details summary:hover { background: var(--teal-50); }
+    .details-body { padding: 1.25rem 1.5rem; }
+    .details-body p:last-child { margin-bottom: 0; }
+
+    /* ── VIDEO EMBED ──────────────────────────── */
+    .video-card { margin-bottom: 1.5rem; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+    .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; background: #0f172a; }
+    .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+    .video-caption { padding: 12px 16px; background: var(--surface-alt); font-size: 13px; color: var(--ink-muted); display: flex; align-items: center; gap: 6px; }
+    .video-caption svg { width: 14px; height: 14px; color: var(--red-500); }
+
+    /* ── RESOURCE CARDS ───────────────────────── */
+    .resource-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+    .resource-card { display: flex; gap: 14px; padding: 1rem 1.25rem; border: 1px solid var(--border); border-radius: 12px; text-decoration: none; transition: all 0.2s var(--ease); background: white; }
+    .resource-card:hover { border-color: var(--teal-300); background: var(--teal-50); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+    .resource-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 18px; }
+    .resource-icon.docs    { background: var(--blue-50);   color: var(--blue-600); }
+    .resource-icon.video   { background: var(--red-50);    color: var(--red-500); }
+    .resource-icon.github  { background: var(--ink);       color: white; }
+    .resource-icon.article { background: var(--amber-50);  color: var(--amber-600); }
+    .resource-icon.pdf     { background: var(--purple-50); color: var(--purple-600); }
+    .resource-info { min-width: 0; }
+    .resource-title { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 2px; line-height: 1.4; }
+    .resource-desc { font-size: 12px; color: var(--ink-muted); line-height: 1.5; }
+
+    /* ── ASSIGNMENT CARDS ─────────────────────── */
+    .assignment { border: 2px solid var(--teal-200); border-radius: 14px; padding: 1.5rem 1.75rem; margin-bottom: 1.5rem; background: linear-gradient(135deg, var(--teal-50) 0%, white 100%); }
+    .assignment-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+    .assignment-label { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--teal-700); }
+    .assignment-difficulty { display: inline-flex; padding: 4px 10px; border-radius: 100px; font-size: 11px; font-weight: 600; }
+    .difficulty-l1 { background: var(--teal-100); color: var(--teal-800); }
+    .difficulty-l2 { background: var(--amber-100); color: var(--amber-600); }
+    .difficulty-l3 { background: var(--red-100); color: var(--red-600); }
+    .assignment h4 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.75rem; }
+    .assignment p { font-size: 14px; }
+    .checklist { list-style: none; padding: 0; }
+    .checklist li { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border-light); font-size: 14px; }
+    .checklist li:last-child { border-bottom: none; }
+    .check-box { width: 20px; height: 20px; border-radius: 6px; border: 2px solid var(--border); flex-shrink: 0; margin-top: 1px; cursor: pointer; transition: all 0.15s var(--ease); display: flex; align-items: center; justify-content: center; }
+    .check-box:hover { border-color: var(--teal-500); }
+    .check-box.checked { background: var(--teal-500); border-color: var(--teal-500); }
+    .check-box.checked::after { content: ''; width: 10px; height: 10px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E"); background-size: contain; }
+
+    /* ── DIAGRAM ──────────────────────────────── */
+    .diagram { margin: 1.5rem 0; padding: 2rem; background: var(--surface-alt); border: 1px solid var(--border); border-radius: 14px; overflow-x: auto; }
+    .diagram pre { background: transparent; color: var(--ink); padding: 0; font-size: 13px; line-height: 1.6; }
+    .diagram-caption { margin-top: 1rem; font-size: 12px; color: var(--ink-muted); text-align: center; font-style: italic; }
+
+    /* ── FOOTER ───────────────────────────────── */
+    .chapter-footer { border-top: 1px solid var(--border); padding: 3rem 2rem; background: var(--surface-alt); }
+    .chapter-footer-inner { max-width: var(--content-max); margin: 0 auto; }
+    .footer-nav { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+    .footer-nav-link { display: flex; flex-direction: column; gap: 4px; padding: 1rem 1.5rem; border: 1px solid var(--border); border-radius: 12px; text-decoration: none; transition: all 0.2s var(--ease); max-width: 320px; background: white; }
+    .footer-nav-link:hover { border-color: var(--teal-300); box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+    .footer-nav-label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--teal-600); }
+    .footer-nav-title { font-size: 15px; font-weight: 600; color: var(--ink); }
+    .footer-brand { text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); font-size: 13px; color: var(--ink-muted); }
+
+    /* ── RESPONSIVE ───────────────────────────── */
+    @media (max-width: 960px) {
+      .main-layout { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .resource-grid { grid-template-columns: 1fr; }
     }
-
-    .coming-soon-banner h3 {
-      color: var(--amber-600);
-      margin-bottom: 0.5rem;
+    @media (max-width: 640px) {
+      .hero { padding: 2.5rem 1.25rem 2rem; }
+      .main-layout { padding: 0 1.25rem; }
+      .content { padding: 2rem 0 4rem; }
+      pre { padding: 1rem; font-size: 12.5px; }
+      .footer-nav { flex-direction: column; }
+      .footer-nav-link { max-width: 100%; width: 100%; }
     }
-
-    .coming-soon-banner p {
-      color: var(--ink-muted);
-      margin-bottom: 0;
-    }
-
-    .topics-preview {
-      background: var(--surface-alt);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.5rem 2rem;
-      margin: 1.5rem 0;
-    }
-
-    .topics-preview h3 {
-      font-size: 0.95rem;
-      margin-bottom: 0.75rem;
-      color: var(--ink);
-    }
-
-    .topics-preview ul {
-      list-style: none;
-      padding: 0;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 0.5rem;
-    }
-
-    .topics-preview li {
-      font-size: 14px;
-      color: var(--ink-light);
-      padding-left: 1.25rem;
-      position: relative;
-    }
-
-    .topics-preview li::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 8px;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--teal-500);
-    }
-
-    .footer-nav {
-      max-width: var(--content-max);
-      margin: 0 auto;
-      padding: 2rem;
-      display: flex;
-      justify-content: space-between;
-      border-top: 1px solid var(--border);
-    }
-
-    .footer-nav-link {
-      display: flex;
-      flex-direction: column;
-      text-decoration: none;
-      padding: 1rem;
-      border-radius: 12px;
-      transition: background 0.2s var(--ease);
-      max-width: 45%;
-    }
-
-    .footer-nav-link:hover {
-      background: var(--surface-alt);
-    }
-
-    .footer-nav-label {
-      font-size: 12px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--ink-muted);
-      margin-bottom: 4px;
-    }
-
-    .footer-nav-title {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--teal-700);
-    }
-
-    .footer-nav-link.next { text-align: right; margin-left: auto; }
-
-    .footer {
-      text-align: center;
-      padding: 2rem;
-      font-size: 13px;
-      color: var(--ink-muted);
-      border-top: 1px solid var(--border);
-    }
-
-    .footer a {
-      color: var(--teal-700);
-      text-decoration: none;
-    }
-
-    .footer a:hover { text-decoration: underline; }
-
-    @media (max-width: 768px) {
-      .hero { padding: 3rem 1.5rem 2.5rem; }
-      .content { padding: 2rem 1.5rem 4rem; }
-      .hero h1 { font-size: 2rem; }
-      .footer-nav { flex-direction: column; gap: 1rem; }
-      .footer-nav-link { max-width: 100%; }
-      .footer-nav-link.next { text-align: left; }
+    @media print {
+      .top-nav, .sidebar, .progress-bar { display: none; }
+      .main-layout { display: block; }
+      .content { padding: 0; }
+      .hero { background: white; border: none; }
+      pre { background: #f1f5f9; color: var(--ink); border: 1px solid var(--border); }
     }
   </style>
 </head>
 <body>
+  <!-- Progress Bar -->
   <div class="progress-bar" id="progressBar"></div>
 
+  <!-- Top Navigation -->
   <nav class="top-nav">
     <div class="top-nav-inner">
       <a class="nav-brand" href="index.html">
@@ -453,71 +498,585 @@
     </div>
   </nav>
 
+  <!-- Hero -->
   <header class="hero">
     <div class="hero-inner">
       <div class="hero-chapter-label">
-        <span>Chapter 03</span> 
+        <span>Chapter 03</span> &middot; Venture Finance
       </div>
       <h1>Term Sheet Negotiations</h1>
-      <p class="hero-subtitle">Valuation, liquidation preferences, anti-dilution, board seats, pro-rata rights, investor dynamics</p>
+      <p class="hero-subtitle">
+        Term sheets define the economic and governance rules of your startup for years. A single poorly negotiated clause &mdash; liquidation preference, anti-dilution, or board composition &mdash; can cost founders millions of dollars or control of their own company. Learn to read, analyze, and negotiate every line of a venture capital term sheet.
+      </p>
       <div class="hero-meta">
-        <div class="hero-meta-item">3 Assignments</div>
-        <div class="hero-meta-item">~45 min read</div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Estimated: 60&ndash;80 min
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          6 Key Concepts
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          3 Assignments
+        </div>
       </div>
     </div>
   </header>
 
-  <main class="content">
-    <h2>Overview</h2>
-    <p>This chapter covers <strong>term sheet negotiations</strong> as part of the Advanced Negotiations curriculum. You will build practical skills through guided explanations, code examples, and hands-on assignments.</p>
+  <!-- Main Content + Sidebar -->
+  <div class="main-layout">
+    <main class="content">
 
-    <div class="topics-preview">
-      <h3>Topics Covered</h3>
-      <ul>
-            <li>Valuation</li>
-            <li>liquidation preferences</li>
-            <li>anti-dilution</li>
-            <li>board seats</li>
-            <li>pro-rata rights</li>
-            <li>investor dynamics</li>
+      <h2 id="why-this-matters">Why This Matters</h2>
+
+      <p>
+        A term sheet is a non-binding document that outlines the key terms under which a venture capital firm will invest in your startup. Despite being "non-binding," once a term sheet is signed, it becomes extraordinarily difficult to renegotiate &mdash; the investor has leverage, the founder has signaled commitment, and legal fees start accumulating. According to data from Carta, the average Series A term sheet contains <strong>23 distinct negotiable provisions</strong>, yet most first-time founders negotiate only 2&ndash;3 of them: valuation, board seats, and option pool size. The other 20 provisions default to investor-friendly terms that may never matter &mdash; or may prove devastating.
+      </p>
+
+      <p>
+        The asymmetry is stark. A typical VC partner negotiates 8&ndash;12 term sheets per year. A first-time founder negotiates exactly one. The investor has seen every variation, knows which terms they will enforce and which are throwaway negotiation chips, and has a legal team that drafts these documents daily. The founder is usually seeing a term sheet for the first time, is under time pressure (their runway is running out), and is emotionally committed to closing the deal because telling the team "we raised!" is the most validating thing they can imagine.
+      </p>
+
+      <p>
+        This chapter levels the playing field. You will learn the anatomy of a standard venture term sheet, understand the economic and governance implications of every major clause, identify which terms matter most at each funding stage, and develop negotiation strategies for the provisions that have the highest long-term impact on your outcomes as a founder.
+      </p>
+
+      <div class="callout concept">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Key Insight
+        </div>
+        <p>
+          <strong>Valuation is the least important economic term on a term sheet.</strong> Liquidation preferences, participation rights, anti-dilution provisions, and option pool sizing often have a larger impact on founder outcomes than the headline valuation number. Yet valuation is what founders obsess over and what TechCrunch reports. Learn to look past the vanity metrics to the terms that actually determine how much money you make (or lose) at exit.
+        </p>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="key-concepts">Key Concepts</h2>
+
+      <h3 id="term-sheet-anatomy">1. Anatomy of a Venture Term Sheet</h3>
+
+      <p>
+        Every term sheet contains two categories of provisions: <strong>economic terms</strong> (how money flows) and <strong>governance terms</strong> (who controls decisions). Understanding both categories is essential because they interact in complex ways. A favorable valuation means little if governance terms let the investor block your ability to run the company.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Term Sheet</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── Anatomy of a Series A Term Sheet ─────────────────────── */</span>
+
+<span class="hl-keyword">ECONOMIC TERMS</span> (How money flows at exit)
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  <span class="hl-function">Pre-Money Valuation:</span>    $20M (what company is worth before investment)
+  <span class="hl-function">Investment Amount:</span>      $5M
+  <span class="hl-function">Post-Money Valuation:</span>   $25M (pre-money + investment)
+  <span class="hl-function">Price Per Share:</span>        $5.00 (post-money / fully diluted shares)
+  <span class="hl-function">Liquidation Preference:</span> 1x non-participating preferred
+  <span class="hl-function">Anti-Dilution:</span>          Broad-based weighted average
+  <span class="hl-function">Option Pool:</span>            15% post-money (created pre-investment)
+  <span class="hl-function">Dividends:</span>              Non-cumulative, 6% when declared
+  <span class="hl-function">Conversion:</span>             1:1 at any time, automatic at IPO
+
+<span class="hl-keyword">GOVERNANCE TERMS</span> (Who controls decisions)
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  <span class="hl-function">Board Composition:</span>      5 seats (2 founders, 2 investors, 1 independent)
+  <span class="hl-function">Protective Provisions:</span>  Investor veto on: new stock, debt, M&amp;A,
+                          budget changes, executive changes, bylaws
+  <span class="hl-function">Drag-Along:</span>             Majority of preferred + common can force sale
+  <span class="hl-function">Information Rights:</span>     Monthly financials, annual budget, cap table
+  <span class="hl-function">Right of First Refusal:</span> On future rounds and secondary sales
+  <span class="hl-function">Pro-Rata Rights:</span>       Right to maintain ownership % in future rounds
+  <span class="hl-function">No-Shop Clause:</span>        30 days (cannot negotiate with other investors)
+
+<span class="hl-keyword">FOUNDER TERMS</span> (What happens to your equity)
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  <span class="hl-function">Founder Vesting:</span>        4 years, 1-year cliff (may restart or credit)
+  <span class="hl-function">Single/Double Trigger:</span>  Acceleration on change of control
+  <span class="hl-function">IP Assignment:</span>          All IP must be assigned to the company
+  <span class="hl-function">Non-Compete:</span>            12 months post-departure (enforceability varies)
+</pre>
+      </div>
+
+      <h3 id="liquidation-preference">2. Liquidation Preferences: The Hidden Economics</h3>
+
+      <p>
+        Liquidation preference determines who gets paid first (and how much) when the company is sold. It is the single most impactful economic term on a term sheet because it directly affects how much money founders and employees receive at exit. The difference between "1x non-participating" and "2x participating" can be millions of dollars.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Analysis</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── Liquidation Preference Impact Analysis ───────────────── */</span>
+
+<span class="hl-keyword">SCENARIO:</span> $5M invested at $25M post-money (20% ownership)
+           Company sells for $30M
+
+<span class="hl-function">1x Non-Participating Preferred</span> (founder-friendly)
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Investor choice: Take $5M (1x preference) OR convert to 20% common
+  Convert: 20% of $30M = $6M  &larr; Investor chooses this (higher)
+  Founders/employees get: $30M - $6M = <span class="hl-number">$24M (80%)</span>
+
+<span class="hl-function">1x Participating Preferred</span> (investor-friendly)
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Investor gets: $5M (1x preference) PLUS 20% of remaining $25M
+  Investor total: $5M + $5M = <span class="hl-flag">$10M (33.3% of exit)</span>
+  Founders/employees get: $30M - $10M = <span class="hl-number">$20M (66.7%)</span>
+  <span class="hl-comment">/* Investor gets $4M more than non-participating! */</span>
+
+<span class="hl-function">2x Participating Preferred</span> (very investor-friendly)
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Investor gets: $10M (2x preference) PLUS 20% of remaining $20M
+  Investor total: $10M + $4M = <span class="hl-flag">$14M (46.7% of exit)</span>
+  Founders/employees get: $30M - $14M = <span class="hl-number">$16M (53.3%)</span>
+  <span class="hl-comment">/* Investor gets $8M more than non-participating! */</span>
+
+<span class="hl-keyword">NEGOTIATION PRIORITY:</span>
+  <span class="hl-string">Best:  1x non-participating (industry standard for competitive rounds)</span>
+  OK:    1x participating with a cap (3-4x typically)
+  <span class="hl-flag">Avoid: 2x+ participating (signals weak founder leverage)</span>
+</pre>
+      </div>
+
+      <div class="callout danger">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Critical Warning
+        </div>
+        <p>
+          <strong>Participating preferred is sometimes called "double dipping"</strong> because the investor gets their money back AND participates in the upside. In small-to-medium exits (the most common outcome), this can dramatically reduce what founders receive. Always negotiate for non-participating preferred or, at minimum, a participation cap.
+        </p>
+      </div>
+
+      <h3 id="anti-dilution">3. Anti-Dilution Protection</h3>
+
+      <p>
+        Anti-dilution provisions protect investors if the company raises a future round at a lower valuation (a "down round"). While the concept is reasonable &mdash; investors should have some protection against value destruction &mdash; the specific mechanism matters enormously. There are two main types, and the difference between them can cost founders significant ownership.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Framework</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── Anti-Dilution Mechanisms Compared ─────────────────────── */</span>
+
+<span class="hl-keyword">BROAD-BASED WEIGHTED AVERAGE</span> (founder-friendly, industry standard)
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  How:   Adjusts the conversion price using a formula that considers
+         the size of the down round relative to total shares outstanding
+  Impact: Moderate dilution to founders in a down round
+  Fair?:  Yes &mdash; adjustment scales with severity of the down round
+
+  Formula: New Price = Old Price x [(A + B) / (A + C)]
+  Where: A = total shares before new round
+         B = shares new money would buy at old price
+         C = shares actually issued in down round
+
+<span class="hl-keyword">FULL RATCHET</span> (very investor-friendly, avoid if possible)
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  How:   Converts ALL of investor's shares at the new lower price
+         as if they had invested at the down round price originally
+  Impact: Massive dilution to founders, even for a small down round
+  Fair?:  Rarely &mdash; a tiny bridge round at a discount can wipe out founders
+
+  Example: Investor owns 1M shares bought at $10 ($10M invested)
+  Down round: $5/share
+  Full ratchet: Investor now has 2M shares (as if they paid $5 each)
+  <span class="hl-flag">Founders lose 1M shares worth of ownership instantly!</span>
+
+<span class="hl-keyword">NEGOTIATION GUIDANCE:</span>
+  Always: Insist on broad-based weighted average
+  Never:  Accept full ratchet (except in extreme distress situations)
+  Tactic: "Full ratchet punishes founders disproportionately for
+           market conditions we can't control. Broad-based weighted
+           average protects you fairly while keeping us motivated."
+</pre>
+      </div>
+
+      <h3 id="option-pool">4. The Option Pool Shuffle</h3>
+
+      <p>
+        The option pool is reserved equity for future employee stock options. Investors almost always require that the option pool be created (or topped up) <em>before</em> the investment, meaning it comes entirely out of the founders' ownership. This is known as the "option pool shuffle" and it effectively lowers your real valuation.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Math</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── Option Pool Shuffle: The Hidden Valuation Discount ───── */</span>
+
+<span class="hl-keyword">HEADLINE TERMS:</span>  $20M pre-money, $5M investment, 15% option pool
+
+<span class="hl-function">What the FOUNDER thinks:</span>
+  Pre-money: $20M &rarr; Founders own 80% of $25M post = $20M in value
+
+<span class="hl-function">What ACTUALLY happens:</span>
+  15% pool created BEFORE the investment comes out of $20M pre-money
+  Pool value: 15% x $25M post-money = $3.75M
+  Effective pre-money for existing shareholders: $20M - $3.75M = <span class="hl-flag">$16.25M</span>
+
+  <span class="hl-keyword">Real ownership breakdown post-closing:</span>
+  Investors:    20.0%  ($5M / $25M)
+  Option pool:  15.0%  (reserved for future hires)
+  Founders:     <span class="hl-flag">65.0%</span>  (NOT 80%!)
+
+<span class="hl-keyword">NEGOTIATION TACTICS:</span>
+  <span class="hl-number">1.</span> Challenge the pool size: "We only need 10% to hit our next
+     milestones. Let's create what we actually need, not a generic 15-20%."
+  <span class="hl-number">2.</span> Create a hiring plan: Show exactly which roles need options and
+     at what grant sizes. Data beats arbitrary percentages.
+  <span class="hl-number">3.</span> Negotiate post-money pool: If pool is post-money, it dilutes
+     investors too (they will resist, but it is fairer).
+  <span class="hl-number">4.</span> Credit existing grants: If you already have options outstanding,
+     they should count toward the pool requirement.
+</pre>
+      </div>
+
+      <h3 id="board-composition">5. Board Composition and Governance Control</h3>
+
+      <p>
+        Board composition determines who makes the strategic decisions for your company. Getting this wrong means investors can block your decisions, replace you as CEO, or force a sale you do not want. The standard structures vary by stage, and understanding what is "market" gives you leverage in negotiations.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Governance</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── Board Composition by Stage ───────────────────────────── */</span>
+
+<span class="hl-keyword">SEED / PRE-SERIES A</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━</span>
+  Best:    3 seats &mdash; 2 founders, 1 independent (or investor observer)
+  OK:      3 seats &mdash; 2 founders, 1 investor
+  Avoid:   Giving up board control at seed stage
+  Reality: Many seed investors don't require board seats
+
+<span class="hl-keyword">SERIES A</span>
+<span class="hl-string">━━━━━━━━</span>
+  Best:    5 seats &mdash; 2 founders, 1 investor, 2 independents
+  Market:  5 seats &mdash; 2 founders, 2 investors, 1 independent
+  Avoid:   3 seats &mdash; 1 founder, 1 investor, 1 independent (minority)
+  Key:     Independent director should be mutually agreed, not chosen by VC
+
+<span class="hl-keyword">SERIES B+</span>
+<span class="hl-string">━━━━━━━━━</span>
+  Common:  5-7 seats with multiple investor seats
+  Key:     Negotiate that founder designees + independents always outnumber
+           investor designees (maintain "effective control")
+  Watch:   Some VCs want the independent to be "someone both sides agree on"
+           which effectively gives them a veto on the swing vote
+
+<span class="hl-keyword">PROTECTIVE PROVISIONS</span> (investor veto rights)
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━</span>
+  Standard:   Veto on new stock issuance, major debt, M&amp;A, dividends
+  Aggressive: Veto on hiring/firing executives, annual budget, pivots
+  Negotiate:  Remove operational vetoes (hiring, budget, pivots)
+  Keep:       Financial vetoes are reasonable (stock, debt, M&amp;A)
+</pre>
+      </div>
+
+      <h3 id="negotiation-strategy">6. Term Sheet Negotiation Strategy</h3>
+
+      <p>
+        Negotiating a term sheet is fundamentally different from negotiating a vendor contract or salary. The relationship matters enormously &mdash; this investor will sit on your board for 7&ndash;10 years. The information asymmetry is extreme. And the time pressure is real (your no-shop clause is ticking). Here is a strategic approach that balances assertiveness with relationship building.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Strategy</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── Term Sheet Negotiation Playbook ──────────────────────── */</span>
+
+<span class="hl-keyword">PHASE 1: PREPARATION (before receiving term sheet)</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  [ ] Talk to 5+ founders who raised at the same stage recently
+  [ ] Get a sense of "market" terms for each major provision
+  [ ] Engage startup-experienced legal counsel BEFORE term sheet arrives
+  [ ] Build your BATNA: have 2-3 interested investors if possible
+  [ ] Rank your priorities: what do you NEED vs. what is NICE-TO-HAVE
+
+<span class="hl-keyword">PHASE 2: ANALYSIS (48 hours after receiving)</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  [ ] Review every clause with your attorney (not just valuation)
+  [ ] Model exit scenarios at 3 different outcomes ($50M, $150M, $500M)
+  [ ] Identify the 3-5 terms with the highest impact on your outcome
+  [ ] Prepare specific counterproposals for each priority term
+  [ ] Understand which terms the investor will defend vs. trade away
+
+<span class="hl-keyword">PHASE 3: NEGOTIATION (1-2 focused sessions)</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  [ ] Lead with enthusiasm: "We're excited to work with you"
+  [ ] Bundle your asks: present all counterproposals together
+  [ ] Anchor with data: "The market standard for Series A is..."
+  [ ] Trade across issues: "We'll accept X if you'll give us Y"
+  [ ] Protect the relationship: "This isn't adversarial &mdash; we want
+      terms that keep both sides motivated for the next 10 years"
+
+<span class="hl-keyword">PHASE 4: CLOSING</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━</span>
+  [ ] Get all agreed changes in writing before signing
+  [ ] Confirm the no-shop period and exclusive negotiation timeline
+  [ ] Begin legal documentation immediately (term sheet to close: 4-8 wks)
+  [ ] Maintain communication: respond to investor calls within 24 hours
+</pre>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Pro Tip
+        </div>
+        <p>
+          <strong>Never negotiate a term sheet without experienced startup counsel.</strong> A good startup attorney has seen hundreds of term sheets and can tell you instantly which terms are standard, which are aggressive, and which are deal-breakers. Their fee ($10K&ndash;$20K) will save you millions over the life of the investment. Some attorneys will defer fees for early-stage startups.
+        </p>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="watch-learn">Watch &amp; Learn</h2>
+
+      <p>These videos break down term sheet concepts with real examples and practical advice from experienced founders and investors.</p>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/M8kOCFhGuns?rel=0&amp;modestbranding=1" title="Y Combinator - How to Negotiate with VCs" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Y Combinator &mdash; How to negotiate with VCs. Dalton Caldwell on term sheet tactics, valuation, and maintaining founder leverage.
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/SxSblAdGWfI?rel=0&amp;modestbranding=1" title="Brad Feld - Venture Deals Term Sheets" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Brad Feld &mdash; "Venture Deals" key concepts. Co-author of the definitive guide walks through every major term sheet provision.
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="further-reading">Further Reading</h2>
+
+      <p>Essential resources for mastering venture term sheet negotiations.</p>
+
+      <div class="resource-grid">
+        <a class="resource-card" href="https://www.amazon.com/Venture-Deals-Smarter-Lawyer-Capitalist/dp/1119594820" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Venture Deals &mdash; Brad Feld &amp; Jason Mendelson</div>
+            <div class="resource-desc">The definitive guide to term sheets. Every founder should read this before their first fundraise.</div>
+          </div>
+        </a>
+        <a class="resource-card" href="https://www.ycombinator.com/documents" target="_blank" rel="noopener">
+          <div class="resource-icon article">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Y Combinator Standard Documents</div>
+            <div class="resource-desc">SAFE notes and post-money SAFE templates. The most founder-friendly early-stage investment documents available.</div>
+          </div>
+        </a>
+        <a class="resource-card" href="https://www.amazon.com/Term-Sheets-Valuations-Intricacies-Valuation/dp/1587622467" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Term Sheets &amp; Valuations &mdash; Alex Wilmerding</div>
+            <div class="resource-desc">Step-by-step guide to understanding and negotiating startup investment terms with detailed examples.</div>
+          </div>
+        </a>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="assignments">Assignments</h2>
+
+      <p>Complete these in order. Each builds on the previous. Use real or sample term sheets for maximum learning.</p>
+
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 1
+          </div>
+          <span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span>
+        </div>
+        <h4>Term Sheet Clause Analysis</h4>
+        <p>Download a sample Series A term sheet and identify every provision from this chapter. Calculate founder ownership under three different liquidation preference scenarios.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Read a sample term sheet and label each clause as economic, governance, or founder-related</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Calculate founder ownership at three exit valuations ($30M, $100M, $500M) under 1x non-participating</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Repeat the calculations for 1x participating preferred and compare the difference</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Calculate the effective pre-money valuation after the option pool shuffle</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Identify the 3 most impactful clauses and explain why they matter to founders</span></li>
+        </ul>
+        <div class="callout success" style="margin-top:1rem;margin-bottom:0">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>You can calculate founder payout at exit under different liquidation preference structures and explain the option pool shuffle's impact on effective valuation.</p>
+        </div>
+      </div>
+
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 2
+          </div>
+          <span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Applied</span>
+        </div>
+        <h4>Term Sheet Red Line Exercise</h4>
+        <p>Given a deliberately investor-heavy term sheet, identify the aggressive clauses and draft a counterproposal with specific alternative language and justification for each change.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Identify all terms that are more aggressive than market standard</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Rank the aggressive terms by impact on founder outcomes</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Draft specific alternative language for the top 5 clauses</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Prepare talking points explaining why each change is reasonable</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Identify 2 terms you would concede as negotiation chips and explain your strategy</span></li>
+        </ul>
+        <div class="callout success" style="margin-top:1rem;margin-bottom:0">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>You have a marked-up term sheet with specific alternative language, talking points, and a clear negotiation strategy with planned concessions.</p>
+        </div>
+      </div>
+
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 3
+          </div>
+          <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Strategic</span>
+        </div>
+        <h4>Full Term Sheet Negotiation Simulation</h4>
+        <p>With a partner, simulate a complete Series A term sheet negotiation. One plays the founder, the other plays the lead VC partner. Each receives confidential role briefs with different priorities and limits.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create detailed role briefs: founder (runway, BATNA, priorities) and VC (fund strategy, ownership targets, governance needs)</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Conduct a 45-minute negotiation covering valuation, liquidation preference, board seats, option pool, and anti-dilution</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Draft a final term sheet reflecting all agreed terms</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Model founder payout at $50M, $200M, and $1B exit under the negotiated terms</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Swap roles and repeat. Compare how outcomes differ and which negotiation tactics worked best</span></li>
+        </ul>
+        <div class="callout success" style="margin-top:1rem;margin-bottom:0">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>You have completed two full term sheet negotiations (one from each side), produced two term sheets, and compared payout scenarios across both negotiated outcomes.</p>
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="self-check">Self-Check</h2>
+
+      <p>Before moving to Chapter 04, honestly answer these questions.</p>
+
+      <details>
+        <summary>Can you explain the difference between 1x non-participating and 1x participating preferred, and model the dollar impact at a $30M exit?</summary>
+        <div class="details-body">
+          <p>With 1x non-participating, the investor chooses the higher of their preference or their pro-rata share. With 1x participating, the investor gets their preference PLUS pro-rata of the remainder. At a $30M exit with $5M invested (20% ownership), non-participating yields $6M to the investor; participating yields $10M. The $4M difference comes directly from founders.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>What is the option pool shuffle and how does it affect your effective valuation?</summary>
+        <div class="details-body">
+          <p>When investors require an option pool created pre-investment, the pool dilutes only the existing shareholders (founders), not the investors. A $20M pre-money with a 15% pool effectively values the founders' existing equity at $16.25M, not $20M. Always negotiate the pool size based on a specific hiring plan rather than accepting an arbitrary percentage.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Why is broad-based weighted average anti-dilution better for founders than full ratchet?</summary>
+        <div class="details-body">
+          <p>Broad-based weighted average adjusts conversion prices proportionally to the size and impact of a down round. Full ratchet treats every down round as if the investor's entire position should be repriced to the new low price, regardless of how small the down round is. A tiny bridge at a discount can cause massive founder dilution under full ratchet.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>What board composition should you insist on at Series A?</summary>
+        <div class="details-body">
+          <p>The best structure is 5 seats: 2 founder designees, 1 investor designee, and 2 mutually agreed independent directors. Market standard is 2-2-1 (founder-investor-independent). Never accept a structure where investor designees outnumber founder designees. The independent director should be genuinely independent, not an investor-friendly pick.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Can you list the 5 highest-impact terms to negotiate beyond valuation?</summary>
+        <div class="details-body">
+          <p>(1) Liquidation preference (participating vs. non-participating), (2) Anti-dilution protection (broad-based vs. full ratchet), (3) Option pool size and timing (pre vs. post money), (4) Board composition and protective provisions, (5) Founder vesting terms (acceleration triggers, cliff, credit for prior service).</p>
+        </div>
+      </details>
+
+    </main>
+
+    <aside class="sidebar">
+      <div class="sidebar-title">On this page</div>
+      <ul class="toc-list">
+        <li class="toc-item"><a href="#why-this-matters">Why This Matters</a></li>
+        <li class="toc-item"><a href="#key-concepts">Key Concepts</a></li>
+        <li class="toc-item"><a href="#term-sheet-anatomy" style="padding-left:28px;font-size:12px">Term Sheet Anatomy</a></li>
+        <li class="toc-item"><a href="#liquidation-preference" style="padding-left:28px;font-size:12px">Liquidation Preferences</a></li>
+        <li class="toc-item"><a href="#anti-dilution" style="padding-left:28px;font-size:12px">Anti-Dilution</a></li>
+        <li class="toc-item"><a href="#option-pool" style="padding-left:28px;font-size:12px">Option Pool Shuffle</a></li>
+        <li class="toc-item"><a href="#board-composition" style="padding-left:28px;font-size:12px">Board Composition</a></li>
+        <li class="toc-item"><a href="#negotiation-strategy" style="padding-left:28px;font-size:12px">Negotiation Strategy</a></li>
+        <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a></li>
+        <li class="toc-item"><a href="#further-reading">Further Reading</a></li>
+        <li class="toc-item"><a href="#assignments">Assignments</a></li>
+        <li class="toc-item"><a href="#self-check">Self-Check</a></li>
       </ul>
-    </div>
+    </aside>
+  </div>
 
-    <hr class="section-divider">
-
-    <div class="coming-soon-banner">
-      <h3>Content In Development</h3>
-      <p>Full chapter content with detailed explanations, code examples, video walkthroughs, and assignments is being developed. Check back soon.</p>
-    </div>
-
-    <div class="callout tip">
-      <div class="callout-header">What You Will Learn</div>
-      <p>By the end of this chapter, you will understand valuation, liquidation preferences, anti-dilution, board seats, pro-rata rights, investor dynamics and be able to apply these concepts in real-world scenarios.</p>
-    </div>
-
-  </main>
-
-  <nav class="footer-nav">
-        <a class="footer-nav-link prev" href="chapter-02.html">
-          <span class="footer-nav-label">&larr; Previous</span>
-          <span class="footer-nav-title">Chapter 02: Game Theory for Negotiators</span>
+  <footer class="chapter-footer">
+    <div class="chapter-footer-inner">
+      <nav class="footer-nav">
+        <a class="footer-nav-link" href="chapter-02.html">
+          <span class="footer-nav-label">&larr; Previous Chapter</span>
+          <span class="footer-nav-title">02: Game Theory for Negotiators</span>
         </a>
-        <a class="footer-nav-link next" href="chapter-04.html">
-          <span class="footer-nav-label">Next &rarr;</span>
-          <span class="footer-nav-title">Chapter 04: Equity and Co-Founder Agreements</span>
+        <a class="footer-nav-link" href="chapter-04.html">
+          <span class="footer-nav-label">Next Chapter &rarr;</span>
+          <span class="footer-nav-title">04: Equity and Co-Founder Agreements</span>
         </a>
-  </nav>
-
-  <footer class="footer">
-    ILA (Iksha Learning Academy) &middot; Advanced Negotiations &middot; <a href="index.html">All Chapters</a>
+      </nav>
+      <div class="footer-brand">ILA (Iksha Learning Academy) &middot; Advanced Negotiations &middot; Advanced Track</div>
+    </div>
   </footer>
 
   <script>
-    window.addEventListener('scroll', () => {
-      const h = document.documentElement;
-      const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
-      document.getElementById('progressBar').style.width = Math.min(pct, 100) + '%';
-    });
+    window.addEventListener('scroll',()=>{const s=window.scrollY;const d=document.documentElement.scrollHeight-window.innerHeight;document.getElementById('progressBar').style.width=(d>0?(s/d)*100:0)+'%'});
+    const tocLinks=document.querySelectorAll('.toc-item a');const secs=[];tocLinks.forEach(l=>{const id=l.getAttribute('href').slice(1);const el=document.getElementById(id);if(el)secs.push({id,el,link:l})});
+    const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{const it=secs.find(s=>s.el===e.target);if(it&&e.isIntersecting){tocLinks.forEach(l=>l.classList.remove('active'));it.link.classList.add('active')}})},{rootMargin:'-80px 0px -60% 0px',threshold:0});secs.forEach(s=>obs.observe(s.el));
+    function copyCode(btn){const pre=btn.closest('.code-block').querySelector('pre');navigator.clipboard.writeText(pre.textContent).then(()=>{btn.classList.add('copied');btn.textContent='Copied!';setTimeout(()=>{btn.classList.remove('copied');btn.textContent='Copy'},2000)})}
   </script>
 </body>
 </html>

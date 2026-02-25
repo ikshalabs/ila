@@ -8,7 +8,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
+    /* ═══════════════════════════════════════════════
+       ILA DESIGN SYSTEM — v1.0
+       Iksha Learning Academy
+       ═══════════════════════════════════════════════ */
+
     :root {
+      /* Palette */
       --ink:        #0f172a;
       --ink-light:  #334155;
       --ink-muted:  #64748b;
@@ -17,6 +23,8 @@
       --surface-warm:#fffbeb;
       --border:     #e2e8f0;
       --border-light:#f1f5f9;
+
+      /* Brand */
       --teal-50:  #f0fdfa;
       --teal-100: #ccfbf1;
       --teal-200: #99f6e4;
@@ -25,36 +33,48 @@
       --teal-700: #0f766e;
       --teal-800: #115e59;
       --teal-900: #134e4a;
+
       --blue-50:  #eff6ff;
       --blue-100: #dbeafe;
       --blue-500: #3b82f6;
       --blue-600: #2563eb;
       --blue-700: #1d4ed8;
+
       --amber-50:  #fffbeb;
       --amber-100: #fef3c7;
       --amber-500: #f59e0b;
       --amber-600: #d97706;
+
       --red-50:   #fef2f2;
       --red-100:  #fee2e2;
       --red-500:  #ef4444;
       --red-600:  #dc2626;
+
       --purple-50:  #faf5ff;
       --purple-100: #f3e8ff;
       --purple-500: #a855f7;
       --purple-600: #9333ea;
-      --green-50:  #f0fdf4;
-      --green-100: #dcfce7;
-      --green-500: #22c55e;
-      --green-600: #16a34a;
+
+      /* Typography */
       --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       --font-serif: 'Instrument Serif', Georgia, serif;
       --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
+
+      /* Spacing */
       --content-max: 780px;
+      --sidebar-width: 280px;
+
+      /* Transitions */
       --ease: cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
 
     body {
       font-family: var(--font-sans);
@@ -64,6 +84,7 @@
       background: var(--surface);
     }
 
+    /* ── PROGRESS BAR ─────────────────────────── */
     .progress-bar {
       position: fixed;
       top: 0;
@@ -75,6 +96,7 @@
       transition: width 0.15s var(--ease);
     }
 
+    /* ── TOP NAV ──────────────────────────────── */
     .top-nav {
       position: sticky;
       top: 0;
@@ -162,6 +184,7 @@
       padding: 0 4px;
     }
 
+    /* ── HERO ─────────────────────────────────── */
     .hero {
       background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%);
       border-bottom: 1px solid var(--border);
@@ -222,33 +245,117 @@
       color: var(--ink-muted);
     }
 
-    .content {
-      max-width: var(--content-max);
-      margin: 0 auto;
-      padding: 3rem 2rem 6rem;
+    .hero-meta-item svg {
+      width: 16px;
+      height: 16px;
+      color: var(--teal-600);
     }
 
+    /* ── MAIN LAYOUT ──────────────────────────── */
+    .main-layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr var(--sidebar-width);
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .content {
+      padding: 3rem 0 6rem;
+      min-width: 0;
+    }
+
+    /* ── SIDEBAR TOC ──────────────────────────── */
+    .sidebar {
+      position: sticky;
+      top: 76px;
+      padding: 2rem 0;
+      max-height: calc(100vh - 76px);
+      overflow-y: auto;
+    }
+
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-muted);
+      margin-bottom: 1rem;
+      padding-left: 14px;
+    }
+
+    .toc-list {
+      list-style: none;
+    }
+
+    .toc-item a {
+      display: block;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--ink-muted);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: all 0.2s var(--ease);
+      line-height: 1.5;
+    }
+
+    .toc-item a:hover {
+      color: var(--ink);
+      background: var(--surface-alt);
+    }
+
+    .toc-item a.active {
+      color: var(--teal-700);
+      border-left-color: var(--teal-500);
+      background: var(--teal-50);
+      font-weight: 500;
+    }
+
+    /* ── TYPOGRAPHY ────────────────────────────── */
     .content h2 {
       font-family: var(--font-serif);
       font-size: 1.85rem;
       font-weight: 400;
       color: var(--ink);
       margin: 3rem 0 1rem;
+      padding-top: 1rem;
       scroll-margin-top: 80px;
     }
 
-    .content h2:first-child { margin-top: 0; }
+    .content h2:first-child {
+      margin-top: 0;
+    }
 
     .content h3 {
       font-size: 1.15rem;
       font-weight: 600;
       color: var(--ink);
       margin: 2rem 0 0.75rem;
+      scroll-margin-top: 80px;
     }
 
     .content p {
       margin-bottom: 1.25rem;
       color: var(--ink-light);
+    }
+
+    .content strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .content a {
+      color: var(--teal-700);
+      text-decoration: underline;
+      text-decoration-color: var(--teal-200);
+      text-underline-offset: 3px;
+      transition: text-decoration-color 0.2s;
+    }
+
+    .content a:hover {
+      text-decoration-color: var(--teal-600);
     }
 
     .content ul, .content ol {
@@ -261,13 +368,25 @@
       color: var(--ink-light);
     }
 
-    .content li::marker { color: var(--teal-500); }
+    .content li::marker {
+      color: var(--teal-500);
+    }
 
+    /* ── SECTION DIVIDER ──────────────────────── */
+    .section-divider {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 3rem 0;
+    }
+
+    /* ── CALLOUT BOXES ────────────────────────── */
     .callout {
       padding: 1.25rem 1.5rem;
       border-radius: 12px;
       margin-bottom: 1.5rem;
       border: 1px solid;
+      position: relative;
     }
 
     .callout-header {
@@ -277,6 +396,12 @@
       font-size: 14px;
       font-weight: 600;
       margin-bottom: 0.5rem;
+    }
+
+    .callout-header svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
     }
 
     .callout p:last-child { margin-bottom: 0; }
@@ -293,6 +418,12 @@
     }
     .callout.important .callout-header { color: var(--amber-600); }
 
+    .callout.danger {
+      background: var(--red-50);
+      border-color: var(--red-100);
+    }
+    .callout.danger .callout-header { color: var(--red-600); }
+
     .callout.tip {
       background: var(--purple-50);
       border-color: var(--purple-100);
@@ -305,93 +436,403 @@
     }
     .callout.success .callout-header { color: var(--teal-700); }
 
-    .section-divider {
-      border: none;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--border), transparent);
-      margin: 3rem 0;
-    }
-
-    .coming-soon-banner {
-      background: var(--amber-50);
-      border: 1px solid var(--amber-100);
+    /* ── CODE BLOCKS ──────────────────────────── */
+    .code-block {
+      position: relative;
+      margin-bottom: 1.5rem;
       border-radius: 12px;
-      padding: 2.5rem;
-      text-align: center;
-      margin: 2rem 0;
+      overflow: hidden;
+      border: 1px solid var(--border);
     }
 
-    .coming-soon-banner h3 {
-      color: var(--amber-600);
-      margin-bottom: 0.5rem;
-    }
-
-    .coming-soon-banner p {
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+      background: var(--surface-alt);
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
       color: var(--ink-muted);
-      margin-bottom: 0;
     }
 
-    .topics-preview {
+    .code-lang {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .code-copy {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: white;
+      font-size: 11px;
+      font-family: var(--font-sans);
+      color: var(--ink-muted);
+      cursor: pointer;
+      transition: all 0.2s var(--ease);
+    }
+
+    .code-copy:hover {
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    .code-copy.copied {
+      background: var(--teal-50);
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    pre {
+      margin: 0;
+      padding: 1.25rem 1.5rem;
+      overflow-x: auto;
+      background: #1e293b;
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: #e2e8f0;
+    }
+
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.88em;
+    }
+
+    p code, li code {
+      padding: 2px 7px;
       background: var(--surface-alt);
       border: 1px solid var(--border);
+      border-radius: 5px;
+      color: var(--teal-800);
+      font-size: 0.85em;
+    }
+
+    /* Syntax highlights (minimal) */
+    .hl-keyword  { color: #c084fc; }
+    .hl-string   { color: #86efac; }
+    .hl-comment  { color: #64748b; font-style: italic; }
+    .hl-function { color: #7dd3fc; }
+    .hl-number   { color: #fbbf24; }
+    .hl-flag     { color: #f472b6; }
+
+    /* ── COLLAPSIBLE (DETAILS) ────────────────── */
+    details {
+      margin-bottom: 1.25rem;
+      border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 1.5rem 2rem;
-      margin: 1.5rem 0;
+      overflow: hidden;
+      transition: border-color 0.2s var(--ease);
     }
 
-    .topics-preview h3 {
-      font-size: 0.95rem;
-      margin-bottom: 0.75rem;
+    details[open] {
+      border-color: var(--teal-200);
+    }
+
+    details summary {
+      padding: 1rem 1.25rem;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      background: var(--surface-alt);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.2s var(--ease);
+      user-select: none;
+    }
+
+    details summary::-webkit-details-marker { display: none; }
+
+    details summary::before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+      flex-shrink: 0;
+      transition: transform 0.2s var(--ease);
+    }
+
+    details[open] summary::before {
+      transform: rotate(90deg);
+    }
+
+    details summary:hover {
+      background: var(--teal-50);
+    }
+
+    .details-body {
+      padding: 1.25rem 1.5rem;
+    }
+
+    .details-body p:last-child { margin-bottom: 0; }
+
+    /* ── VIDEO EMBED ──────────────────────────── */
+    .video-card {
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      background: #0f172a;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .video-caption {
+      padding: 12px 16px;
+      background: var(--surface-alt);
+      font-size: 13px;
+      color: var(--ink-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .video-caption svg {
+      width: 14px;
+      height: 14px;
+      color: var(--red-500);
+    }
+
+    /* ── RESOURCE CARDS ───────────────────────── */
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .resource-card {
+      display: flex;
+      gap: 14px;
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      background: white;
+    }
+
+    .resource-card:hover {
+      border-color: var(--teal-300);
+      background: var(--teal-50);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .resource-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 18px;
+    }
+
+    .resource-icon.docs    { background: var(--blue-50);   color: var(--blue-600); }
+    .resource-icon.video   { background: var(--red-50);    color: var(--red-500); }
+    .resource-icon.github  { background: var(--ink);       color: white; }
+    .resource-icon.article { background: var(--amber-50);  color: var(--amber-600); }
+    .resource-icon.pdf     { background: var(--purple-50); color: var(--purple-600); }
+
+    .resource-info {
+      min-width: 0;
+    }
+
+    .resource-title {
+      font-size: 14px;
+      font-weight: 600;
       color: var(--ink);
+      margin-bottom: 2px;
+      line-height: 1.4;
     }
 
-    .topics-preview ul {
+    .resource-desc {
+      font-size: 12px;
+      color: var(--ink-muted);
+      line-height: 1.5;
+    }
+
+    /* ── ASSIGNMENT CARDS ─────────────────────── */
+    .assignment {
+      border: 2px solid var(--teal-200);
+      border-radius: 14px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--teal-50) 0%, white 100%);
+    }
+
+    .assignment-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .assignment-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--teal-700);
+    }
+
+    .assignment-difficulty {
+      display: inline-flex;
+      padding: 4px 10px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .difficulty-l1 { background: var(--teal-100); color: var(--teal-800); }
+    .difficulty-l2 { background: var(--amber-100); color: var(--amber-600); }
+    .difficulty-l3 { background: var(--red-100); color: var(--red-600); }
+
+    .assignment h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .assignment p {
+      font-size: 14px;
+    }
+
+    .checklist {
       list-style: none;
       padding: 0;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 0.5rem;
     }
 
-    .topics-preview li {
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-light);
       font-size: 14px;
-      color: var(--ink-light);
-      padding-left: 1.25rem;
-      position: relative;
     }
 
-    .topics-preview li::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 8px;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
+    .checklist li:last-child { border-bottom: none; }
+
+    .check-box {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      border: 2px solid var(--border);
+      flex-shrink: 0;
+      margin-top: 1px;
+      cursor: pointer;
+      transition: all 0.15s var(--ease);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .check-box:hover {
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked {
       background: var(--teal-500);
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+    }
+
+    /* ── DIAGRAM ──────────────────────────────── */
+    .diagram {
+      margin: 1.5rem 0;
+      padding: 2rem;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow-x: auto;
+    }
+
+    .diagram pre {
+      background: transparent;
+      color: var(--ink);
+      padding: 0;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .diagram-caption {
+      margin-top: 1rem;
+      font-size: 12px;
+      color: var(--ink-muted);
+      text-align: center;
+      font-style: italic;
+    }
+
+    /* ── FOOTER ───────────────────────────────── */
+    .chapter-footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      background: var(--surface-alt);
+    }
+
+    .chapter-footer-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
     }
 
     .footer-nav {
-      max-width: var(--content-max);
-      margin: 0 auto;
-      padding: 2rem;
       display: flex;
       justify-content: space-between;
-      border-top: 1px solid var(--border);
+      align-items: center;
+      gap: 1rem;
     }
 
     .footer-nav-link {
       display: flex;
       flex-direction: column;
-      text-decoration: none;
-      padding: 1rem;
+      gap: 4px;
+      padding: 1rem 1.5rem;
+      border: 1px solid var(--border);
       border-radius: 12px;
-      transition: background 0.2s var(--ease);
-      max-width: 45%;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      max-width: 320px;
+      background: white;
     }
 
     .footer-nav-link:hover {
-      background: var(--surface-alt);
+      border-color: var(--teal-300);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
     }
 
     .footer-nav-label {
@@ -399,46 +840,61 @@
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.06em;
-      color: var(--ink-muted);
-      margin-bottom: 4px;
+      color: var(--teal-600);
     }
 
     .footer-nav-title {
       font-size: 15px;
       font-weight: 600;
-      color: var(--teal-700);
+      color: var(--ink);
     }
 
-    .footer-nav-link.next { text-align: right; margin-left: auto; }
-
-    .footer {
+    .footer-brand {
       text-align: center;
-      padding: 2rem;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
       font-size: 13px;
       color: var(--ink-muted);
-      border-top: 1px solid var(--border);
     }
 
-    .footer a {
-      color: var(--teal-700);
-      text-decoration: none;
+    /* ── RESPONSIVE ───────────────────────────── */
+    @media (max-width: 960px) {
+      .main-layout {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        display: none;
+      }
+      .resource-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
-    .footer a:hover { text-decoration: underline; }
+    @media (max-width: 640px) {
+      .hero { padding: 2.5rem 1.25rem 2rem; }
+      .main-layout { padding: 0 1.25rem; }
+      .content { padding: 2rem 0 4rem; }
+      pre { padding: 1rem; font-size: 12.5px; }
+      .footer-nav { flex-direction: column; }
+      .footer-nav-link { max-width: 100%; width: 100%; }
+    }
 
-    @media (max-width: 768px) {
-      .hero { padding: 3rem 1.5rem 2.5rem; }
-      .content { padding: 2rem 1.5rem 4rem; }
-      .hero h1 { font-size: 2rem; }
-      .footer-nav { flex-direction: column; gap: 1rem; }
-      .footer-nav-link { max-width: 100%; }
-      .footer-nav-link.next { text-align: left; }
+    /* ── PRINT ────────────────────────────────── */
+    @media print {
+      .top-nav, .sidebar, .progress-bar { display: none; }
+      .main-layout { display: block; }
+      .content { padding: 0; }
+      .hero { background: white; border: none; }
+      pre { background: #f1f5f9; color: var(--ink); border: 1px solid var(--border); }
     }
   </style>
 </head>
 <body>
+  <!-- Progress Bar -->
   <div class="progress-bar" id="progressBar"></div>
 
+  <!-- Top Navigation -->
   <nav class="top-nav">
     <div class="top-nav-inner">
       <a class="nav-brand" href="index.html">
@@ -446,77 +902,882 @@
         <span class="nav-brand-text">Iksha Learning Academy</span>
       </a>
       <div class="nav-chapter-nav">
-        <a class="nav-btn" href="chapter-05.html">&larr; Previous</a>
+        <a class="nav-btn" href="chapter-05.html">&larr; Enterprise Sales Negotiations</a>
         <span class="nav-current">06 / 10</span>
-        <a class="nav-btn" href="chapter-07.html">Next &rarr;</a>
+        <a class="nav-btn" href="chapter-07.html">Cross-Cultural Negotiations &rarr;</a>
       </div>
     </div>
   </nav>
 
+  <!-- Hero -->
   <header class="hero">
     <div class="hero-inner">
       <div class="hero-chapter-label">
-        <span>Chapter 06</span> 
+        <span>Chapter 06</span> &middot; Advanced Alliance Building
       </div>
       <h1>Strategic Partnerships</h1>
-      <p class="hero-subtitle">Revenue sharing, co-development agreements, licensing, exclusivity, joint ventures</p>
+      <p class="hero-subtitle">
+        Strategic partnerships can multiply your startup's reach, credibility, and revenue faster than any single sales effort. This chapter teaches you how to identify, negotiate, structure, and sustain partnerships where both sides gain disproportionate value &mdash; and how to avoid the alliance traps that destroy more partnerships than they create.
+      </p>
       <div class="hero-meta">
-        <div class="hero-meta-item">3 Assignments</div>
-        <div class="hero-meta-item">~45 min read</div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Estimated: 60&ndash;80 min
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          6 Key Concepts
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          3 Assignments
+        </div>
       </div>
     </div>
   </header>
 
-  <main class="content">
-    <h2>Overview</h2>
-    <p>This chapter covers <strong>strategic partnerships</strong> as part of the Advanced Negotiations curriculum. You will build practical skills through guided explanations, code examples, and hands-on assignments.</p>
+  <!-- Main Content + Sidebar -->
+  <div class="main-layout">
+    <main class="content">
 
-    <div class="topics-preview">
-      <h3>Topics Covered</h3>
-      <ul>
-            <li>Revenue sharing</li>
-            <li>co-development agreements</li>
-            <li>licensing</li>
-            <li>exclusivity</li>
-            <li>joint ventures</li>
+      <!-- ════════════════════════════════════════
+           SECTION 1: WHY THIS MATTERS
+           ════════════════════════════════════════ -->
+      <h2 id="why-this-matters">Why This Matters</h2>
+
+      <p>
+        In the startup world, strategic partnerships represent one of the highest-leverage activities a founder or business development leader can pursue. A single well-structured partnership with a major platform, distribution channel, or complementary product company can accomplish in months what years of organic growth cannot. When Stripe partnered with Shopify, when Slack integrated with Salesforce, when Spotify built its partnership ecosystem &mdash; these alliances became fundamental growth drivers that reshaped their respective trajectories.
+      </p>
+
+      <p>
+        Yet the failure rate for strategic partnerships is staggeringly high. Research from McKinsey suggests that <strong>nearly 70% of strategic alliances fail to meet their stated objectives</strong>, and most dissolve within five years. The reasons are almost always rooted in negotiation failures: misaligned incentives, unclear governance, power imbalances that were never addressed, and expectations that were never made explicit. The partnership that looks brilliant on a press release can become a resource-draining distraction if the underlying deal terms are wrong.
+      </p>
+
+      <p>
+        This chapter equips you with the frameworks to negotiate partnerships that actually work. You will learn to assess strategic fit before the first conversation, structure deals that create mutual accountability, navigate the unique power dynamics that arise when a startup partners with a much larger organization, and build contractual guardrails that protect your interests without suffocating the relationship. The difference between a transformative partnership and a failed alliance is almost always found in how the deal was negotiated.
+      </p>
+
+      <div class="callout concept">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Key Insight
+        </div>
+        <p>
+          The best partnership negotiations do not start with term sheets. They start with a deep understanding of <strong>what the other organization truly needs that it cannot build, buy, or achieve alone</strong>. When you can articulate the other side's strategic gap better than they can, you become an indispensable partner rather than a replaceable vendor.
+        </p>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 2: KEY CONCEPTS
+           ════════════════════════════════════════ -->
+      <h2 id="key-concepts">Key Concepts</h2>
+
+      <h3 id="partnership-spectrum">1. The Partnership Spectrum: From Transactional to Transformational</h3>
+
+      <p>
+        Not all partnerships are created equal. Before you begin negotiating, you need to understand where your prospective alliance sits on the partnership spectrum. Each level demands a fundamentally different negotiation approach, different contractual structures, and different governance models.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Framework</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── The Partnership Spectrum ─────────────────────────────── */</span>
+
+<span class="hl-keyword">LEVEL 1: TRANSACTIONAL</span> (Referral / Reseller)
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Investment:    Low (weeks to set up)
+  Integration:   Minimal (referral links, co-branding)
+  Revenue Model: Commission-based (10-30% referral fees)
+  Risk Level:    Low (easy to exit)
+  Governance:    Quarterly review, single point of contact
+  Negotiation:   Distributive — focus on commission rates, territories
+
+  <span class="hl-function">Example:</span> Your SaaS startup refers customers to a
+  complementary tool and receives a 20% commission.
+
+<span class="hl-keyword">LEVEL 2: INTEGRATIVE</span> (Technology / Go-to-Market)
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Investment:    Medium (months to build integration)
+  Integration:   Deep (API, shared data, co-built features)
+  Revenue Model: Revenue share, joint pricing, bundling
+  Risk Level:    Medium (switching costs build over time)
+  Governance:    Monthly steering committee, shared KPIs
+  Negotiation:   Mixed — integration depth, data rights, exclusivity
+
+  <span class="hl-function">Example:</span> Your analytics platform integrates natively
+  with a CRM, sharing data bidirectionally.
+
+<span class="hl-keyword">LEVEL 3: TRANSFORMATIONAL</span> (Strategic / Equity)
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Investment:    High (quarters to years to realize value)
+  Integration:   Full (shared roadmap, co-development)
+  Revenue Model: Equity stakes, joint ventures, M&A path
+  Risk Level:    High (existential dependency)
+  Governance:    Board-level oversight, joint exec team
+  Negotiation:   Integrative — vision alignment, IP rights, exit terms
+
+  <span class="hl-function">Example:</span> A cloud provider takes a $50M strategic stake
+  in your infrastructure startup with co-development rights.
+</pre>
+      </div>
+
+      <p>
+        The critical negotiation mistake is treating a Level 3 partnership with Level 1 negotiation tactics. If you are negotiating a deep technology integration but spending all your time haggling over referral commission percentages, you are optimizing the wrong variables. Conversely, bringing transformational-level complexity to a simple referral agreement creates unnecessary friction.
+      </p>
+
+      <h3 id="strategic-fit">2. The Strategic Fit Assessment Framework</h3>
+
+      <p>
+        Before you invest weeks in negotiating a partnership, you need to determine whether there is genuine strategic fit. Many partnerships look attractive on the surface but collapse because the underlying strategic rationale was thin. The Strategic Fit Assessment is a disciplined approach to evaluating potential partnerships before you enter formal discussions.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Framework</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── Strategic Fit Assessment: 5 Dimensions ──────────────── */</span>
+
+<span class="hl-keyword">DIMENSION 1: COMPLEMENTARITY</span>
+  Question: "Does this partner have something we lack,
+             and do we have something they lack?"
+  <span class="hl-function">Score 1-5:</span>
+    5 = Perfect complement (they have distribution, we have product)
+    3 = Partial overlap, some unique value
+    1 = We largely duplicate each other's capabilities
+
+<span class="hl-keyword">DIMENSION 2: STRATEGIC ALIGNMENT</span>
+  Question: "Are we heading in the same direction
+             for the next 3-5 years?"
+  <span class="hl-function">Score 1-5:</span>
+    5 = Fully aligned roadmaps and market vision
+    3 = Aligned today but divergent futures possible
+    1 = Different markets, different strategies
+
+<span class="hl-keyword">DIMENSION 3: CUSTOMER OVERLAP</span>
+  Question: "Do we serve the same buyers, or can we
+             open each other's markets?"
+  <span class="hl-function">Score 1-5:</span>
+    5 = Same ICP, different buying moment
+    3 = Adjacent segments with some overlap
+    1 = Completely different customer bases
+
+<span class="hl-keyword">DIMENSION 4: CULTURAL COMPATIBILITY</span>
+  Question: "Can our teams actually work together
+             without constant friction?"
+  <span class="hl-function">Score 1-5:</span>
+    5 = Similar values, pace, decision-making style
+    3 = Manageable differences with mutual respect
+    1 = Fundamentally incompatible operating styles
+
+<span class="hl-keyword">DIMENSION 5: POWER BALANCE</span>
+  Question: "Is there enough mutual dependency to
+             prevent one side from dominating?"
+  <span class="hl-function">Score 1-5:</span>
+    5 = True interdependency — both need this equally
+    3 = Moderate imbalance with structural protections
+    1 = One side holds all leverage — vassal relationship
+
+<span class="hl-string">SCORING: 20-25 = Pursue aggressively</span>
+<span class="hl-string">         15-19 = Proceed with caution</span>
+<span class="hl-string">         10-14 = Restructure or decline</span>
+<span class="hl-string">          5-9  = Walk away</span>
+</pre>
+      </div>
+
+      <div class="callout important">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Power Imbalance Warning
+        </div>
+        <p>
+          When a 20-person startup partners with a Fortune 500 corporation, the power imbalance is extreme. The larger company can change priorities overnight, reassign your champion, or sunset the partnership program. Always negotiate <strong>contractual protections</strong> &mdash; minimum commitments, exclusivity periods, termination penalties &mdash; before the enthusiasm of the deal fades. The best time to negotiate safeguards is before the contract is signed, not after the larger partner has lost interest.
+        </p>
+      </div>
+
+      <h3 id="value-creation">3. Value Creation Architecture in Partnership Deals</h3>
+
+      <p>
+        The most durable partnerships are structured around <strong>mutual value creation</strong> &mdash; where both sides gain more from the partnership than they contribute to it. This requires moving beyond simple revenue-share models and designing architectures where each partner's contribution amplifies the other's capabilities.
+      </p>
+
+      <div class="diagram">
+<pre>
+    ┌─────────────────────────────────────────────────────────────┐
+    │                VALUE CREATION ARCHITECTURE                   │
+    ├─────────────────────────────────────────────────────────────┤
+    │                                                              │
+    │   YOUR STARTUP              PARTNER ORGANIZATION             │
+    │   ┌──────────────┐          ┌──────────────────┐            │
+    │   │ Product /    │          │ Distribution /   │            │
+    │   │ Technology   │──────────│ Market Access    │            │
+    │   └──────────────┘          └──────────────────┘            │
+    │          │                           │                       │
+    │          ▼                           ▼                       │
+    │   ┌──────────────┐          ┌──────────────────┐            │
+    │   │ Innovation   │          │ Scale /          │            │
+    │   │ Speed        │──────────│ Credibility      │            │
+    │   └──────────────┘          └──────────────────┘            │
+    │          │                           │                       │
+    │          └───────────┬───────────────┘                       │
+    │                      ▼                                       │
+    │              ┌───────────────┐                               │
+    │              │ JOINT VALUE   │                               │
+    │              │ (> sum of     │                               │
+    │              │  parts)       │                               │
+    │              └───────────────┘                               │
+    │                      │                                       │
+    │          ┌───────────┴───────────┐                           │
+    │          ▼                       ▼                           │
+    │   ┌──────────────┐       ┌──────────────┐                   │
+    │   │ Your Share   │       │ Partner's    │                   │
+    │   │ of Value     │       │ Share of     │                   │
+    │   │ Created      │       │ Value Created│                   │
+    │   └──────────────┘       └──────────────┘                   │
+    │                                                              │
+    └─────────────────────────────────────────────────────────────┘
+</pre>
+        <div class="diagram-caption">Figure 1: Value creation architecture showing how partner contributions combine to create joint value exceeding individual contributions</div>
+      </div>
+
+      <p>
+        When negotiating the value split, resist the temptation to focus solely on revenue share percentages. Instead, map all the value exchange levers available to both sides: data access, co-marketing spend, engineering resources, customer introductions, brand endorsement, and IP rights. A partnership where you accept a lower revenue share but gain access to the partner's enterprise customer base and co-marketing budget may be far more valuable than a higher percentage of a smaller pie.
+      </p>
+
+      <h3 id="negotiation-playbook">4. The Partnership Negotiation Playbook</h3>
+
+      <p>
+        Partnership negotiations differ from sales negotiations in several critical ways. The timeline is longer, the issues are more complex, more stakeholders are involved, and the relationship itself is a deliverable. Here is a structured playbook for navigating the major phases.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Negotiation Script</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── Phase 1: Discovery and Alignment (Weeks 1-4) ────────── */</span>
+
+<span class="hl-keyword">OPENING CONVERSATION:</span>
+  You: "We've been watching what [Partner] is building in
+       [market segment], and we see a natural alignment
+       between your [capability] and our [capability].
+       Before we discuss any specifics, I'd love to
+       understand your strategic priorities for the
+       next 12-18 months in this area."
+
+  <span class="hl-function">PURPOSE:</span> Demonstrate homework. Signal long-term thinking.
+  Let them reveal their priorities before you pitch.
+
+<span class="hl-keyword">INTEREST MAPPING:</span>
+  You: "If we were to build something together, what would
+       success look like from your perspective? What metrics
+       would your leadership team use to evaluate whether
+       this partnership was worth the investment?"
+
+  <span class="hl-function">PURPOSE:</span> Understand their internal success criteria.
+  This tells you what to optimize for in the deal structure.
+
+<span class="hl-comment">/* ── Phase 2: Value Proposition Design (Weeks 4-8) ───────── */</span>
+
+<span class="hl-keyword">JOINT VALUE PROPOSITION:</span>
+  You: "Based on our conversations, here's what I think
+       we can create together: [specific value prop].
+       For your team, this means [their benefit].
+       For us, this means [your benefit].
+       For the shared customer, this means [customer benefit]."
+
+  <span class="hl-function">PURPOSE:</span> Present a three-sided value story. The partner
+  needs ammunition to sell this deal internally.
+
+<span class="hl-comment">/* ── Phase 3: Term Negotiation (Weeks 8-14) ──────────────── */</span>
+
+<span class="hl-keyword">HANDLING EXCLUSIVITY REQUESTS:</span>
+  Partner: "We'd like exclusivity in this category."
+  You: "Exclusivity is something we can consider.
+       What level of commitment and investment would
+       accompany that exclusivity? We've found that
+       the best exclusive relationships come with
+       minimum revenue guarantees, dedicated resources,
+       and co-marketing investment."
+
+  <span class="hl-function">PURPOSE:</span> Never give exclusivity for free. Always link
+  it to reciprocal commitments from the partner.
+
+<span class="hl-keyword">PROTECTING YOUR INTERESTS:</span>
+  You: "We want to make sure both sides are protected.
+       Can we include performance milestones at 6 and
+       12 months? If either side isn't hitting the
+       targets we agree on, we should have an honest
+       conversation about restructuring or unwinding."
+
+  <span class="hl-function">PURPOSE:</span> Build exit ramps that both sides agree to
+  in advance, while emotions are positive.
+</pre>
+      </div>
+
+      <h3 id="deal-structure">5. Structuring the Partnership Agreement</h3>
+
+      <p>
+        The legal structure of a partnership agreement is where the negotiation outcomes become binding commitments. A poorly structured agreement creates ongoing friction, while a well-crafted one aligns incentives and provides clear pathways for resolving disagreements. These are the critical structural elements you must negotiate.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Term Sheet Framework</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── Critical Elements of a Partnership Agreement ────────── */</span>
+
+<span class="hl-keyword">1. SCOPE AND OBJECTIVES</span>
+<span class="hl-string">───────────────────────────</span>
+  - Specific activities covered by the partnership
+  - Markets and geographies included/excluded
+  - Product lines or features in scope
+  - <span class="hl-function">Negotiate:</span> Keep scope narrow initially with
+    expansion clauses tied to performance milestones
+
+<span class="hl-keyword">2. ECONOMIC TERMS</span>
+<span class="hl-string">───────────────────────────</span>
+  - Revenue share model (gross vs. net, payment timing)
+  - Minimum revenue commitments / guaranteed floors
+  - Co-marketing budget allocation and approval process
+  - <span class="hl-function">Negotiate:</span> Include ratchet clauses — if partner
+    exceeds targets, your share percentage increases
+
+<span class="hl-keyword">3. EXCLUSIVITY AND NON-COMPETE</span>
+<span class="hl-string">───────────────────────────</span>
+  - Category exclusivity (if any) — always time-bounded
+  - Non-compete restrictions on both sides
+  - Most-favored-nation clauses for pricing
+  - <span class="hl-function">Negotiate:</span> Exclusivity should ALWAYS have a
+    performance trigger — lose it if targets missed
+
+<span class="hl-keyword">4. INTELLECTUAL PROPERTY</span>
+<span class="hl-string">───────────────────────────</span>
+  - Background IP ownership (what you bring in)
+  - Foreground IP ownership (what you create together)
+  - License grants and usage rights post-termination
+  - <span class="hl-function">Negotiate:</span> Joint IP should default to the party
+    most dependent on it for core business
+
+<span class="hl-keyword">5. GOVERNANCE AND DECISION-MAKING</span>
+<span class="hl-string">───────────────────────────</span>
+  - Steering committee composition and meeting cadence
+  - Escalation paths for disagreements
+  - Unilateral decision rights vs. joint approval
+  - <span class="hl-function">Negotiate:</span> Clear RACI matrix for all major
+    partnership activities — ambiguity kills alliances
+
+<span class="hl-keyword">6. TERM, RENEWAL, AND EXIT</span>
+<span class="hl-string">───────────────────────────</span>
+  - Initial term length (12-36 months typical)
+  - Auto-renewal vs. affirmative renewal
+  - Termination for convenience notice periods
+  - Termination for cause triggers
+  - <span class="hl-function">Negotiate:</span> Include a "wind-down" period with
+    customer migration support obligations
+</pre>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Pro Tip
+        </div>
+        <p>
+          <strong>Negotiate the divorce before the wedding.</strong> The easiest time to agree on exit terms, IP reversion, customer migration obligations, and non-compete wind-down periods is when both sides are enthusiastic about working together. Bringing up termination scenarios after the relationship has soured is dramatically harder and more expensive.
+        </p>
+      </div>
+
+      <h3 id="case-study">6. Case Study: Startup-Enterprise Partnership Negotiation</h3>
+
+      <p>
+        Consider a real-world scenario to illustrate these frameworks in action. A B2B analytics startup, DataPulse (Series B, 150 employees, $20M ARR), is negotiating a strategic partnership with CloudMega (Fortune 100 cloud provider). CloudMega wants to embed DataPulse's analytics engine into its enterprise platform. Here is how the negotiation unfolded.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Case Study</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── DataPulse x CloudMega: Partnership Negotiation ──────── */</span>
+
+<span class="hl-keyword">STRATEGIC FIT ASSESSMENT:</span>
+  Complementarity:      5/5 — Cloud needs analytics, DataPulse needs distribution
+  Strategic Alignment:  4/5 — Both targeting enterprise data teams
+  Customer Overlap:     4/5 — Same ICP, different entry point
+  Cultural Compatibility: 3/5 — Speed mismatch (startup vs. enterprise)
+  Power Balance:        2/5 — CloudMega has massive leverage
+  <span class="hl-string">Total: 18/25 — Proceed with caution</span>
+
+<span class="hl-keyword">DATAPULSE PREPARATION:</span>
+  BATNA: Continue organic growth ($20M → projected $35M in 18 months)
+  Reservation Price: Will not accept less than 70/30 revenue split
+  Key Interest: Distribution access to CloudMega's 50,000 enterprises
+  Key Fear: Becoming dependent on CloudMega, losing direct customer relationships
+
+<span class="hl-keyword">CLOUDMEGA'S POSITION:</span>
+  BATNA: Build analytics in-house (18-month timeline, $30M+ cost)
+  Key Interest: Add analytics capability before competitor launches
+  Key Fear: DataPulse partners with rival cloud provider
+
+<span class="hl-keyword">NEGOTIATION ISSUES AND OUTCOMES:</span>
+  <span class="hl-function">Issue 1: Revenue Share</span>
+    CloudMega opens: 50/50 split
+    DataPulse counters: 80/20 (technology provider premium)
+    Agreed: 70/30 base with escalator to 75/25 above $10M
+
+  <span class="hl-function">Issue 2: Exclusivity</span>
+    CloudMega wants: Full cloud platform exclusivity
+    DataPulse counters: No exclusivity without guarantees
+    Agreed: 12-month exclusive with $5M minimum revenue guarantee
+    If minimum not met → exclusivity automatically expires
+
+  <span class="hl-function">Issue 3: Customer Relationships</span>
+    CloudMega wants: Own all customer relationships
+    DataPulse counters: Must maintain direct customer access
+    Agreed: Joint account management. DataPulse retains
+    direct customer relationships and data access rights
+
+  <span class="hl-function">Issue 4: IP Rights</span>
+    CloudMega wants: Perpetual license to DataPulse's core engine
+    DataPulse counters: Term-limited license only
+    Agreed: License for partnership term + 6 months wind-down
+    No perpetual rights. Custom integration code = joint IP
+
+<span class="hl-keyword">KEY LESSON:</span>
+  DataPulse's weak power position (2/5) was offset by:
+  1. CloudMega's time pressure (competitor launching in 12 months)
+  2. DataPulse's strong BATNA (organic growth was viable)
+  3. Structured exclusivity with performance floors
+  4. Clear exit terms that prevented lock-in
+</pre>
+      </div>
+
+      <div class="callout concept">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          The Partnership Paradox
+        </div>
+        <p>
+          The partnerships that deliver the most value are also the ones that create the most dependency risk. The skill of advanced partnership negotiation lies in <strong>maximizing value creation while structuring protections against dependency</strong>. Minimum commitments, performance-triggered exclusivity, retained customer relationships, and clear IP reversion terms are not signs of distrust &mdash; they are the foundation of sustainable partnerships.
+        </p>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 3: WATCH & LEARN
+           ════════════════════════════════════════ -->
+      <h2 id="watch-learn">Watch &amp; Learn</h2>
+
+      <p>
+        These videos provide real-world insight into how strategic partnerships are negotiated and managed at the highest levels. Watch them to see the frameworks from this chapter applied in practice.
+      </p>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/2eF2OPH_Mbc?rel=0&amp;modestbranding=1"
+            title="Strategic Alliances and Partnerships - Harvard Business Review"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Strategic Alliances &mdash; How to structure partnerships that actually create value. Covers governance models and common failure modes.
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/RGj5ErtfEXM?rel=0&amp;modestbranding=1"
+            title="Business Development and Strategic Partnerships"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Business Development Masterclass &mdash; How startups negotiate high-value strategic partnerships with larger organizations.
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 4: FURTHER READING
+           ════════════════════════════════════════ -->
+      <h2 id="further-reading">Further Reading</h2>
+
+      <p>Deepen your understanding of strategic partnership negotiation with these essential resources.</p>
+
+      <div class="resource-grid">
+        <a class="resource-card" href="https://hbr.org/1994/07/collaborative-advantage-the-art-of-alliances" target="_blank" rel="noopener">
+          <div class="resource-icon article">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">HBR: Collaborative Advantage &mdash; Rosabeth Moss Kanter</div>
+            <div class="resource-desc">Landmark article on how the best alliances create more value than either partner could alone. Covers the eight keys to partnership success.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://www.amazon.com/Alliance-Managing-Talent-Networked-Age/dp/0804179565" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">The Alliance &mdash; Reid Hoffman, Ben Casnocha, Chris Yeh</div>
+            <div class="resource-desc">LinkedIn co-founder's framework for managing strategic relationships in the networked age. Essential reading for tech partnerships.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://www.mckinsey.com/capabilities/strategy-and-corporate-finance/our-insights/improving-the-management-of-complex-business-partnerships" target="_blank" rel="noopener">
+          <div class="resource-icon pdf">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">McKinsey: Managing Complex Business Partnerships</div>
+            <div class="resource-desc">Data-driven analysis of why alliances fail and the governance practices that distinguish successful partnerships from the 70% that don't deliver.</div>
+          </div>
+        </a>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 5: ASSIGNMENTS
+           ════════════════════════════════════════ -->
+      <h2 id="assignments">Assignments</h2>
+
+      <p>
+        Complete these assignments in order. Each builds on the previous one, progressively deepening your ability to evaluate, negotiate, and structure strategic partnerships.
+      </p>
+
+      <!-- Assignment 1: Level 1 -->
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 1
+          </div>
+          <span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span>
+        </div>
+        <h4>Strategic Fit Assessment</h4>
+        <p>Identify a potential partnership for your organization (real or hypothetical) and complete a full Strategic Fit Assessment using the five-dimension framework from this chapter.</p>
+
+        <ul class="checklist">
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Identify a specific potential partner and describe the partnership opportunity in 2-3 sentences</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Score all five dimensions (Complementarity, Strategic Alignment, Customer Overlap, Cultural Compatibility, Power Balance) with written justification for each score</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Calculate the total score and determine the recommended action (pursue, proceed with caution, restructure, or walk away)</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Identify the weakest dimension and propose two specific actions to improve that score before entering negotiations</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Define where this partnership falls on the Partnership Spectrum (Transactional, Integrative, or Transformational) and justify your classification</span>
+          </li>
+        </ul>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            You have a complete Strategic Fit Assessment with scores, justifications, a clear recommendation, and an improvement plan for the weakest dimension.
+          </p>
+        </div>
+      </div>
+
+      <!-- Assignment 2: Level 2 -->
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 2
+          </div>
+          <span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Applied</span>
+        </div>
+        <h4>Partnership Term Sheet Negotiation Role-Play</h4>
+        <p>With a partner, role-play the negotiation of a technology integration partnership between a startup (DataPulse) and an enterprise platform (CloudMega). Negotiate across four issues simultaneously.</p>
+
+        <ul class="checklist">
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Partner A plays DataPulse (startup): Priority is customer access > revenue share > IP rights > exclusivity terms</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Partner B plays CloudMega (enterprise): Priority is exclusivity > speed to market > revenue share > IP rights</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Negotiate for 30 minutes. Document every proposal and counter-proposal in writing</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Produce a final one-page term sheet summarizing the agreed terms across all four issues</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Debrief: Identify which trades were discovered and which opportunities for mutual gain were missed</span>
+          </li>
+        </ul>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            You have a completed term sheet and a written debrief identifying at least three integrative trades that were (or could have been) made across the four negotiation issues.
+          </p>
+        </div>
+      </div>
+
+      <!-- Assignment 3: Level 3 -->
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 3
+          </div>
+          <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Strategic</span>
+        </div>
+        <h4>Partnership Post-Mortem and Restructuring</h4>
+        <p>Analyze a failed or underperforming partnership (real or case study) and design a restructured deal that addresses the root causes of failure. Present your analysis as a board-level recommendation.</p>
+
+        <ul class="checklist">
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Select a partnership case study (public failure or personal experience) and document the original deal terms</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Identify the top three root causes of underperformance using the Strategic Fit Assessment and governance frameworks</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Design a restructured agreement that addresses each root cause with specific contractual provisions</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Create a negotiation plan for approaching the partner about restructuring, including your BATNA if they refuse</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Write a one-page board memo recommending restructure, exit, or continuation with specific rationale and financial impact</span>
+          </li>
+        </ul>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            You have a complete post-mortem analysis, a restructured term sheet, a negotiation plan, and a board-ready recommendation memo that demonstrates strategic partnership management at an executive level.
+          </p>
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 6: SELF-CHECK
+           ════════════════════════════════════════ -->
+      <h2 id="self-check">Self-Check</h2>
+
+      <p>Before moving to Chapter 07, honestly answer these questions. If any answer is uncertain, revisit the relevant section.</p>
+
+      <details>
+        <summary>Can you explain the difference between transactional, integrative, and transformational partnerships with real examples?</summary>
+        <div class="details-body">
+          <p>
+            <strong>Transactional:</strong> A simple referral agreement where your SaaS tool recommends a complementary product and earns a 15% commission. Low investment, low risk, easy to exit.
+          </p>
+          <p>
+            <strong>Integrative:</strong> A deep API integration between your analytics platform and a CRM, with shared data flows, joint pricing, and a co-marketing budget. Medium investment, growing switching costs.
+          </p>
+          <p>
+            <strong>Transformational:</strong> A cloud provider takes an equity stake in your startup and co-develops features on a shared roadmap, with board-level governance. High investment, existential dependency risk.
+          </p>
+          <p>
+            If you can identify where your current or prospective partnerships fall on this spectrum, you understand the framework.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Could you complete a Strategic Fit Assessment for a partnership your organization is considering?</summary>
+        <div class="details-body">
+          <p>
+            The five dimensions are Complementarity, Strategic Alignment, Customer Overlap, Cultural Compatibility, and Power Balance. Each is scored 1-5. A total of 20+ suggests pursuing aggressively, 15-19 suggests caution, and below 15 suggests restructuring or declining.
+          </p>
+          <p>
+            The most commonly underestimated dimension is Power Balance. Startups often accept partnerships where the larger organization holds all the leverage without negotiating structural protections.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Do you know how to negotiate exclusivity without giving it away for free?</summary>
+        <div class="details-body">
+          <p>
+            Exclusivity should always be linked to reciprocal commitments: minimum revenue guarantees, co-marketing investment, dedicated engineering resources, or guaranteed customer introductions. It should also be time-bounded and performance-triggered &mdash; if the partner misses their minimum commitments, exclusivity automatically expires.
+          </p>
+          <p>
+            Never grant exclusivity as a goodwill gesture. It is one of the most valuable concessions you can offer, and it should always come with a price.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Can you explain why "negotiating the divorce before the wedding" matters in partnerships?</summary>
+        <div class="details-body">
+          <p>
+            Exit terms, IP reversion, customer migration obligations, non-compete wind-down periods, and dispute resolution mechanisms are all dramatically easier to negotiate when both sides are excited about the partnership. Once a relationship sours, these conversations become adversarial and expensive.
+          </p>
+          <p>
+            Building clear exit ramps into the original agreement is not a sign of pessimism. It is a sign of professional partnership management that protects both sides.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Do you understand how to structure a value creation architecture that benefits both partners?</summary>
+        <div class="details-body">
+          <p>
+            A strong value creation architecture maps all exchange levers beyond revenue share: data access, co-marketing, engineering resources, customer introductions, brand endorsement, and IP rights. The goal is to create joint value that exceeds the sum of individual contributions, then negotiate a fair division of that surplus.
+          </p>
+          <p>
+            If either partner could achieve the same result independently, there is no partnership value to divide &mdash; and the deal will eventually collapse.
+          </p>
+        </div>
+      </details>
+
+    </main>
+
+    <!-- Sidebar: Table of Contents -->
+    <aside class="sidebar">
+      <div class="sidebar-title">On this page</div>
+      <ul class="toc-list">
+        <li class="toc-item"><a href="#why-this-matters">Why This Matters</a></li>
+        <li class="toc-item"><a href="#key-concepts">Key Concepts</a></li>
+        <li class="toc-item"><a href="#partnership-spectrum" style="padding-left: 28px; font-size: 12px;">Partnership Spectrum</a></li>
+        <li class="toc-item"><a href="#strategic-fit" style="padding-left: 28px; font-size: 12px;">Strategic Fit Assessment</a></li>
+        <li class="toc-item"><a href="#value-creation" style="padding-left: 28px; font-size: 12px;">Value Creation Architecture</a></li>
+        <li class="toc-item"><a href="#negotiation-playbook" style="padding-left: 28px; font-size: 12px;">Negotiation Playbook</a></li>
+        <li class="toc-item"><a href="#deal-structure" style="padding-left: 28px; font-size: 12px;">Deal Structure</a></li>
+        <li class="toc-item"><a href="#case-study" style="padding-left: 28px; font-size: 12px;">Case Study</a></li>
+        <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a></li>
+        <li class="toc-item"><a href="#further-reading">Further Reading</a></li>
+        <li class="toc-item"><a href="#assignments">Assignments</a></li>
+        <li class="toc-item"><a href="#self-check">Self-Check</a></li>
       </ul>
-    </div>
+    </aside>
+  </div>
 
-    <hr class="section-divider">
-
-    <div class="coming-soon-banner">
-      <h3>Content In Development</h3>
-      <p>Full chapter content with detailed explanations, code examples, video walkthroughs, and assignments is being developed. Check back soon.</p>
-    </div>
-
-    <div class="callout tip">
-      <div class="callout-header">What You Will Learn</div>
-      <p>By the end of this chapter, you will understand revenue sharing, co-development agreements, licensing, exclusivity, joint ventures and be able to apply these concepts in real-world scenarios.</p>
-    </div>
-
-  </main>
-
-  <nav class="footer-nav">
-        <a class="footer-nav-link prev" href="chapter-05.html">
-          <span class="footer-nav-label">&larr; Previous</span>
-          <span class="footer-nav-title">Chapter 05: Enterprise Sales Negotiations</span>
+  <!-- Footer Navigation -->
+  <footer class="chapter-footer">
+    <div class="chapter-footer-inner">
+      <nav class="footer-nav">
+        <a class="footer-nav-link" href="chapter-05.html">
+          <span class="footer-nav-label">&larr; Previous Chapter</span>
+          <span class="footer-nav-title">05: Enterprise Sales Negotiations</span>
         </a>
-        <a class="footer-nav-link next" href="chapter-07.html">
-          <span class="footer-nav-label">Next &rarr;</span>
-          <span class="footer-nav-title">Chapter 07: Cross-Cultural Negotiations</span>
+        <a class="footer-nav-link" href="chapter-07.html">
+          <span class="footer-nav-label">Next Chapter &rarr;</span>
+          <span class="footer-nav-title">07: Cross-Cultural Negotiations</span>
         </a>
-  </nav>
-
-  <footer class="footer">
-    ILA (Iksha Learning Academy) &middot; Advanced Negotiations &middot; <a href="index.html">All Chapters</a>
+      </nav>
+      <div class="footer-brand">
+        ILA (Iksha Learning Academy) &middot; Negotiations &middot; Advanced Track
+      </div>
+    </div>
   </footer>
 
+  <!-- ════════════════════════════════════════
+       SCRIPTS
+       ════════════════════════════════════════ -->
   <script>
+    // ── Progress Bar ──
     window.addEventListener('scroll', () => {
-      const h = document.documentElement;
-      const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
-      document.getElementById('progressBar').style.width = Math.min(pct, 100) + '%';
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      document.getElementById('progressBar').style.width = progress + '%';
     });
+
+    // ── Active TOC ──
+    const tocLinks = document.querySelectorAll('.toc-item a');
+    const sections = [];
+
+    tocLinks.forEach(link => {
+      const id = link.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) sections.push({ id, el, link });
+    });
+
+    const observerOptions = {
+      rootMargin: '-80px 0px -60% 0px',
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const item = sections.find(s => s.el === entry.target);
+        if (item) {
+          if (entry.isIntersecting) {
+            tocLinks.forEach(l => l.classList.remove('active'));
+            item.link.classList.add('active');
+          }
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(s => observer.observe(s.el));
+
+    // ── Copy Code ──
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      const text = pre.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.classList.add('copied');
+        btn.textContent = 'Copied!';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.textContent = 'Copy';
+        }, 2000);
+      });
+    }
   </script>
 </body>
 </html>

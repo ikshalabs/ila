@@ -3,350 +3,1570 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chapter 03: Giving and Receiving Feedback — ILA Client Communication</title>
+  <title>Chapter 03: Meeting Management &mdash; ILA Client Communication</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
-    :root{--ink:#0f172a;--ink-light:#334155;--ink-muted:#64748b;--surface:#ffffff;--surface-alt:#f8fafc;--surface-warm:#fffbeb;--border:#e2e8f0;--border-light:#f1f5f9;--teal-50:#f0fdfa;--teal-100:#ccfbf1;--teal-200:#99f6e4;--teal-500:#14b8a6;--teal-600:#0d9488;--teal-700:#0f766e;--teal-800:#115e59;--teal-900:#134e4a;--blue-50:#eff6ff;--blue-100:#dbeafe;--blue-500:#3b82f6;--blue-600:#2563eb;--blue-700:#1d4ed8;--amber-50:#fffbeb;--amber-100:#fef3c7;--amber-500:#f59e0b;--amber-600:#d97706;--red-50:#fef2f2;--red-100:#fee2e2;--red-500:#ef4444;--red-600:#dc2626;--purple-50:#faf5ff;--purple-100:#f3e8ff;--purple-500:#a855f7;--purple-600:#9333ea;--font-sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;--font-serif:'Instrument Serif',Georgia,serif;--font-mono:'JetBrains Mono','Fira Code',monospace;--content-max:780px;--sidebar-width:280px;--ease:cubic-bezier(0.4,0,0.2,1)}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}body{font-family:var(--font-sans);font-size:16px;line-height:1.7;color:var(--ink);background:var(--surface)}.progress-bar{position:fixed;top:0;left:0;width:0%;height:3px;background:linear-gradient(90deg,var(--teal-500),var(--blue-500));z-index:1000;transition:width .15s var(--ease)}.top-nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem}.top-nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px}.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--teal-800)}.nav-brand-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--teal-600),var(--teal-800));border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px}.nav-brand-text{font-weight:700;font-size:15px;letter-spacing:-.02em}.nav-chapter-nav{display:flex;align-items:center;gap:8px}.nav-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;color:var(--ink-muted);border:1px solid var(--border);background:#fff;transition:all .2s var(--ease);cursor:pointer}.nav-btn:hover{color:var(--ink);border-color:var(--teal-500);background:var(--teal-50)}.nav-btn.disabled{opacity:.4;pointer-events:none}.nav-current{font-size:13px;font-weight:600;color:var(--ink-light);padding:0 4px}.hero{background:linear-gradient(170deg,var(--teal-50) 0%,var(--surface) 50%,var(--blue-50) 100%);border-bottom:1px solid var(--border);padding:4rem 2rem 3.5rem}.hero-inner{max-width:var(--content-max);margin:0 auto}.hero-chapter-label{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--teal-700);text-transform:uppercase;letter-spacing:.08em;margin-bottom:1rem}.hero-chapter-label span{background:var(--teal-100);padding:3px 10px;border-radius:100px}.hero h1{font-family:var(--font-serif);font-size:clamp(2.4rem,5vw,3.2rem);font-weight:400;line-height:1.15;color:var(--ink);margin-bottom:1rem}.hero-subtitle{font-size:1.15rem;color:var(--ink-light);line-height:1.65;max-width:640px}.hero-meta{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1.5rem}.hero-meta-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-muted)}.hero-meta-item svg{width:16px;height:16px;color:var(--teal-600)}.main-layout{max-width:1200px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:1fr var(--sidebar-width);gap:4rem;align-items:start}.content{padding:3rem 0 6rem;min-width:0}.sidebar{position:sticky;top:76px;padding:2rem 0;max-height:calc(100vh - 76px);overflow-y:auto}.sidebar-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-muted);margin-bottom:1rem;padding-left:14px}.toc-list{list-style:none}.toc-item a{display:block;padding:6px 14px;font-size:13px;color:var(--ink-muted);text-decoration:none;border-left:2px solid transparent;transition:all .2s var(--ease);line-height:1.5}.toc-item a:hover{color:var(--ink);background:var(--surface-alt)}.toc-item a.active{color:var(--teal-700);border-left-color:var(--teal-500);background:var(--teal-50);font-weight:500}.content h2{font-family:var(--font-serif);font-size:1.85rem;font-weight:400;color:var(--ink);margin:3rem 0 1rem;padding-top:1rem;scroll-margin-top:80px}.content h2:first-child{margin-top:0}.content h3{font-size:1.15rem;font-weight:600;color:var(--ink);margin:2rem 0 .75rem;scroll-margin-top:80px}.content p{margin-bottom:1.25rem;color:var(--ink-light)}.content strong{color:var(--ink);font-weight:600}.content a{color:var(--teal-700);text-decoration:underline;text-decoration-color:var(--teal-200);text-underline-offset:3px;transition:text-decoration-color .2s}.content a:hover{text-decoration-color:var(--teal-600)}.content ul,.content ol{margin-bottom:1.25rem;padding-left:1.5rem}.content li{margin-bottom:.5rem;color:var(--ink-light)}.content li::marker{color:var(--teal-500)}.section-divider{border:none;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:3rem 0}.callout{padding:1.25rem 1.5rem;border-radius:12px;margin-bottom:1.5rem;border:1px solid;position:relative}.callout-header{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;margin-bottom:.5rem}.callout-header svg{width:18px;height:18px;flex-shrink:0}.callout p:last-child{margin-bottom:0}.callout.concept{background:var(--blue-50);border-color:var(--blue-100)}.callout.concept .callout-header{color:var(--blue-700)}.callout.important{background:var(--amber-50);border-color:var(--amber-100)}.callout.important .callout-header{color:var(--amber-600)}.callout.danger{background:var(--red-50);border-color:var(--red-100)}.callout.danger .callout-header{color:var(--red-600)}.callout.tip{background:var(--purple-50);border-color:var(--purple-100)}.callout.tip .callout-header{color:var(--purple-600)}.callout.success{background:var(--teal-50);border-color:var(--teal-100)}.callout.success .callout-header{color:var(--teal-700)}.code-block{position:relative;margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}.code-header{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:var(--surface-alt);border-bottom:1px solid var(--border);font-size:12px;color:var(--ink-muted)}.code-lang{font-family:var(--font-mono);font-weight:600;text-transform:uppercase;letter-spacing:.05em}.code-copy{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:#fff;font-size:11px;font-family:var(--font-sans);color:var(--ink-muted);cursor:pointer;transition:all .2s var(--ease)}.code-copy:hover{border-color:var(--teal-500);color:var(--teal-700)}.code-copy.copied{background:var(--teal-50);border-color:var(--teal-500);color:var(--teal-700)}pre{margin:0;padding:1.25rem 1.5rem;overflow-x:auto;background:#1e293b;font-family:var(--font-mono);font-size:13.5px;line-height:1.7;color:#e2e8f0}code{font-family:var(--font-mono);font-size:.88em}p code,li code{padding:2px 7px;background:var(--surface-alt);border:1px solid var(--border);border-radius:5px;color:var(--teal-800);font-size:.85em}.hl-keyword{color:#c084fc}.hl-string{color:#86efac}.hl-comment{color:#64748b;font-style:italic}.hl-function{color:#7dd3fc}.hl-number{color:#fbbf24}.hl-flag{color:#f472b6}details{margin-bottom:1.25rem;border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .2s var(--ease)}details[open]{border-color:var(--teal-200)}details summary{padding:1rem 1.25rem;font-weight:600;font-size:15px;cursor:pointer;background:var(--surface-alt);list-style:none;display:flex;align-items:center;gap:10px;transition:background .2s var(--ease);user-select:none}details summary::-webkit-details-marker{display:none}details summary::before{content:'';width:20px;height:20px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain;flex-shrink:0;transition:transform .2s var(--ease)}details[open] summary::before{transform:rotate(90deg)}details summary:hover{background:var(--teal-50)}.details-body{padding:1.25rem 1.5rem}.details-body p:last-child{margin-bottom:0}.video-card{margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}.video-wrapper{position:relative;padding-bottom:56.25%;height:0;background:#0f172a}.video-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}.video-caption{padding:12px 16px;background:var(--surface-alt);font-size:13px;color:var(--ink-muted);display:flex;align-items:center;gap:6px}.video-caption svg{width:14px;height:14px;color:var(--red-500)}.resource-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1rem;margin-bottom:1.5rem}.resource-card{display:flex;gap:14px;padding:1rem 1.25rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all .2s var(--ease);background:#fff}.resource-card:hover{border-color:var(--teal-300);background:var(--teal-50);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.04)}.resource-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}.resource-icon.docs{background:var(--blue-50);color:var(--blue-600)}.resource-icon.video{background:var(--red-50);color:var(--red-500)}.resource-icon.article{background:var(--amber-50);color:var(--amber-600)}.resource-icon.book{background:var(--teal-50);color:var(--teal-700)}.resource-info{min-width:0}.resource-title{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:2px;line-height:1.4}.resource-desc{font-size:12px;color:var(--ink-muted);line-height:1.5}.assignment{border:2px solid var(--teal-200);border-radius:14px;padding:1.5rem 1.75rem;margin-bottom:1.5rem;background:linear-gradient(135deg,var(--teal-50) 0%,#fff 100%)}.assignment-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}.assignment-label{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--teal-700)}.assignment-difficulty{display:inline-flex;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:600}.difficulty-l1{background:var(--teal-100);color:var(--teal-800)}.difficulty-l2{background:var(--amber-100);color:var(--amber-600)}.difficulty-l3{background:var(--red-100);color:var(--red-600)}.assignment h4{font-size:1.05rem;font-weight:700;margin-bottom:.75rem}.assignment p{font-size:14px}.checklist{list-style:none;padding:0}.checklist li{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border-light);font-size:14px}.checklist li:last-child{border-bottom:none}.check-box{width:20px;height:20px;border-radius:6px;border:2px solid var(--border);flex-shrink:0;margin-top:1px;cursor:pointer;transition:all .15s var(--ease);display:flex;align-items:center;justify-content:center}.check-box:hover{border-color:var(--teal-500)}.check-box.checked{background:var(--teal-500);border-color:var(--teal-500)}.check-box.checked::after{content:'';width:10px;height:10px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain}.diagram{margin:1.5rem 0;padding:2rem;background:var(--surface-alt);border:1px solid var(--border);border-radius:14px;overflow-x:auto}.diagram pre{background:transparent;color:var(--ink);padding:0;font-size:13px;line-height:1.6}.diagram-caption{margin-top:1rem;font-size:12px;color:var(--ink-muted);text-align:center;font-style:italic}.chapter-footer{border-top:1px solid var(--border);padding:3rem 2rem;background:var(--surface-alt)}.chapter-footer-inner{max-width:var(--content-max);margin:0 auto}.footer-nav{display:flex;justify-content:space-between;align-items:center;gap:1rem}.footer-nav-link{display:flex;flex-direction:column;gap:4px;padding:1rem 1.5rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all .2s var(--ease);max-width:320px;background:#fff}.footer-nav-link:hover{border-color:var(--teal-300);box-shadow:0 4px 12px rgba(0,0,0,.04)}.footer-nav-label{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--teal-600)}.footer-nav-title{font-size:15px;font-weight:600;color:var(--ink)}.footer-brand{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border);font-size:13px;color:var(--ink-muted)}@media(max-width:960px){.main-layout{grid-template-columns:1fr}.sidebar{display:none}.resource-grid{grid-template-columns:1fr}}@media(max-width:640px){.hero{padding:2.5rem 1.25rem 2rem}.main-layout{padding:0 1.25rem}.content{padding:2rem 0 4rem}pre{padding:1rem;font-size:12.5px}.footer-nav{flex-direction:column}.footer-nav-link{max-width:100%;width:100%}}@media print{.top-nav,.sidebar,.progress-bar{display:none}.main-layout{display:block}.content{padding:0}.hero{background:#fff;border:none}pre{background:#f1f5f9;color:var(--ink);border:1px solid var(--border)}}
+    /* ═══════════════════════════════════════════════
+       ILA DESIGN SYSTEM — v1.0
+       Iksha Learning Academy
+       ═══════════════════════════════════════════════ */
+
+    :root {
+      /* Palette */
+      --ink:        #0f172a;
+      --ink-light:  #334155;
+      --ink-muted:  #64748b;
+      --surface:    #ffffff;
+      --surface-alt:#f8fafc;
+      --surface-warm:#fffbeb;
+      --border:     #e2e8f0;
+      --border-light:#f1f5f9;
+
+      /* Brand */
+      --teal-50:  #f0fdfa;
+      --teal-100: #ccfbf1;
+      --teal-200: #99f6e4;
+      --teal-500: #14b8a6;
+      --teal-600: #0d9488;
+      --teal-700: #0f766e;
+      --teal-800: #115e59;
+      --teal-900: #134e4a;
+
+      --blue-50:  #eff6ff;
+      --blue-100: #dbeafe;
+      --blue-500: #3b82f6;
+      --blue-600: #2563eb;
+      --blue-700: #1d4ed8;
+
+      --amber-50:  #fffbeb;
+      --amber-100: #fef3c7;
+      --amber-500: #f59e0b;
+      --amber-600: #d97706;
+
+      --red-50:   #fef2f2;
+      --red-100:  #fee2e2;
+      --red-500:  #ef4444;
+      --red-600:  #dc2626;
+
+      --purple-50:  #faf5ff;
+      --purple-100: #f3e8ff;
+      --purple-500: #a855f7;
+      --purple-600: #9333ea;
+
+      /* Typography */
+      --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-serif: 'Instrument Serif', Georgia, serif;
+      --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
+
+      /* Spacing */
+      --content-max: 780px;
+      --sidebar-width: 280px;
+
+      /* Transitions */
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--ink);
+      background: var(--surface);
+    }
+
+    /* ── PROGRESS BAR ─────────────────────────── */
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--teal-500), var(--blue-500));
+      z-index: 1000;
+      transition: width 0.15s var(--ease);
+    }
+
+    /* ── TOP NAV ──────────────────────────────── */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+    }
+
+    .top-nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--teal-800);
+    }
+
+    .nav-brand-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--teal-600), var(--teal-800));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .nav-brand-text {
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-chapter-nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      color: var(--ink-muted);
+      border: 1px solid var(--border);
+      background: white;
+      transition: all 0.2s var(--ease);
+      cursor: pointer;
+    }
+
+    .nav-btn:hover {
+      color: var(--ink);
+      border-color: var(--teal-500);
+      background: var(--teal-50);
+    }
+
+    .nav-btn.disabled {
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    .nav-current {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink-light);
+      padding: 0 4px;
+    }
+
+    /* ── HERO ─────────────────────────────────── */
+    .hero {
+      background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 4rem 2rem 3.5rem;
+    }
+
+    .hero-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
+    }
+
+    .hero-chapter-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--teal-700);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 1rem;
+    }
+
+    .hero-chapter-label span {
+      background: var(--teal-100);
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+
+    .hero h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(2.4rem, 5vw, 3.2rem);
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: 1rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: var(--ink-light);
+      line-height: 1.65;
+      max-width: 640px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .hero-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
+    .hero-meta-item svg {
+      width: 16px;
+      height: 16px;
+      color: var(--teal-600);
+    }
+
+    /* ── MAIN LAYOUT ──────────────────────────── */
+    .main-layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr var(--sidebar-width);
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .content {
+      padding: 3rem 0 6rem;
+      min-width: 0;
+    }
+
+    /* ── SIDEBAR TOC ──────────────────────────── */
+    .sidebar {
+      position: sticky;
+      top: 76px;
+      padding: 2rem 0;
+      max-height: calc(100vh - 76px);
+      overflow-y: auto;
+    }
+
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-muted);
+      margin-bottom: 1rem;
+      padding-left: 14px;
+    }
+
+    .toc-list {
+      list-style: none;
+    }
+
+    .toc-item a {
+      display: block;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--ink-muted);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: all 0.2s var(--ease);
+      line-height: 1.5;
+    }
+
+    .toc-item a:hover {
+      color: var(--ink);
+      background: var(--surface-alt);
+    }
+
+    .toc-item a.active {
+      color: var(--teal-700);
+      border-left-color: var(--teal-500);
+      background: var(--teal-50);
+      font-weight: 500;
+    }
+
+    /* ── TYPOGRAPHY ────────────────────────────── */
+    .content h2 {
+      font-family: var(--font-serif);
+      font-size: 1.85rem;
+      font-weight: 400;
+      color: var(--ink);
+      margin: 3rem 0 1rem;
+      padding-top: 1rem;
+      scroll-margin-top: 80px;
+    }
+
+    .content h2:first-child {
+      margin-top: 0;
+    }
+
+    .content h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 2rem 0 0.75rem;
+      scroll-margin-top: 80px;
+    }
+
+    .content p {
+      margin-bottom: 1.25rem;
+      color: var(--ink-light);
+    }
+
+    .content strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .content a {
+      color: var(--teal-700);
+      text-decoration: underline;
+      text-decoration-color: var(--teal-200);
+      text-underline-offset: 3px;
+      transition: text-decoration-color 0.2s;
+    }
+
+    .content a:hover {
+      text-decoration-color: var(--teal-600);
+    }
+
+    .content ul, .content ol {
+      margin-bottom: 1.25rem;
+      padding-left: 1.5rem;
+    }
+
+    .content li {
+      margin-bottom: 0.5rem;
+      color: var(--ink-light);
+    }
+
+    .content li::marker {
+      color: var(--teal-500);
+    }
+
+    /* ── SECTION DIVIDER ──────────────────────── */
+    .section-divider {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 3rem 0;
+    }
+
+    /* ── CALLOUT BOXES ────────────────────────── */
+    .callout {
+      padding: 1.25rem 1.5rem;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+      border: 1px solid;
+      position: relative;
+    }
+
+    .callout-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .callout-header svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    .callout p:last-child { margin-bottom: 0; }
+
+    .callout.concept {
+      background: var(--blue-50);
+      border-color: var(--blue-100);
+    }
+    .callout.concept .callout-header { color: var(--blue-700); }
+
+    .callout.important {
+      background: var(--amber-50);
+      border-color: var(--amber-100);
+    }
+    .callout.important .callout-header { color: var(--amber-600); }
+
+    .callout.danger {
+      background: var(--red-50);
+      border-color: var(--red-100);
+    }
+    .callout.danger .callout-header { color: var(--red-600); }
+
+    .callout.tip {
+      background: var(--purple-50);
+      border-color: var(--purple-100);
+    }
+    .callout.tip .callout-header { color: var(--purple-600); }
+
+    .callout.success {
+      background: var(--teal-50);
+      border-color: var(--teal-100);
+    }
+    .callout.success .callout-header { color: var(--teal-700); }
+
+    /* ── CODE BLOCKS ──────────────────────────── */
+    .code-block {
+      position: relative;
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+      background: var(--surface-alt);
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--ink-muted);
+    }
+
+    .code-lang {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .code-copy {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: white;
+      font-size: 11px;
+      font-family: var(--font-sans);
+      color: var(--ink-muted);
+      cursor: pointer;
+      transition: all 0.2s var(--ease);
+    }
+
+    .code-copy:hover {
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    .code-copy.copied {
+      background: var(--teal-50);
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    pre {
+      margin: 0;
+      padding: 1.25rem 1.5rem;
+      overflow-x: auto;
+      background: #1e293b;
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: #e2e8f0;
+    }
+
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.88em;
+    }
+
+    p code, li code {
+      padding: 2px 7px;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      color: var(--teal-800);
+      font-size: 0.85em;
+    }
+
+    /* Syntax highlights */
+    .hl-keyword  { color: #c084fc; }
+    .hl-string   { color: #86efac; }
+    .hl-comment  { color: #64748b; font-style: italic; }
+    .hl-function { color: #7dd3fc; }
+    .hl-number   { color: #fbbf24; }
+    .hl-flag     { color: #f472b6; }
+
+    /* ── COLLAPSIBLE (DETAILS) ────────────────── */
+    details {
+      margin-bottom: 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.2s var(--ease);
+    }
+
+    details[open] {
+      border-color: var(--teal-200);
+    }
+
+    details summary {
+      padding: 1rem 1.25rem;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      background: var(--surface-alt);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.2s var(--ease);
+      user-select: none;
+    }
+
+    details summary::-webkit-details-marker { display: none; }
+
+    details summary::before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+      flex-shrink: 0;
+      transition: transform 0.2s var(--ease);
+    }
+
+    details[open] summary::before {
+      transform: rotate(90deg);
+    }
+
+    details summary:hover {
+      background: var(--teal-50);
+    }
+
+    .details-body {
+      padding: 1.25rem 1.5rem;
+    }
+
+    .details-body p:last-child { margin-bottom: 0; }
+
+    /* ── VIDEO EMBED ──────────────────────────── */
+    .video-card {
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      background: #0f172a;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .video-caption {
+      padding: 12px 16px;
+      background: var(--surface-alt);
+      font-size: 13px;
+      color: var(--ink-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .video-caption svg {
+      width: 14px;
+      height: 14px;
+      color: var(--red-500);
+    }
+
+    /* ── RESOURCE CARDS ───────────────────────── */
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .resource-card {
+      display: flex;
+      gap: 14px;
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      background: white;
+    }
+
+    .resource-card:hover {
+      border-color: var(--teal-300);
+      background: var(--teal-50);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .resource-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 18px;
+    }
+
+    .resource-icon.docs    { background: var(--blue-50);   color: var(--blue-600); }
+    .resource-icon.video   { background: var(--red-50);    color: var(--red-500); }
+    .resource-icon.github  { background: var(--ink);       color: white; }
+    .resource-icon.article { background: var(--amber-50);  color: var(--amber-600); }
+    .resource-icon.pdf     { background: var(--purple-50); color: var(--purple-600); }
+
+    .resource-info {
+      min-width: 0;
+    }
+
+    .resource-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 2px;
+      line-height: 1.4;
+    }
+
+    .resource-desc {
+      font-size: 12px;
+      color: var(--ink-muted);
+      line-height: 1.5;
+    }
+
+    /* ── ASSIGNMENT CARDS ─────────────────────── */
+    .assignment {
+      border: 2px solid var(--teal-200);
+      border-radius: 14px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--teal-50) 0%, white 100%);
+    }
+
+    .assignment-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .assignment-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--teal-700);
+    }
+
+    .assignment-difficulty {
+      display: inline-flex;
+      padding: 4px 10px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .difficulty-l1 { background: var(--teal-100); color: var(--teal-800); }
+    .difficulty-l2 { background: var(--amber-100); color: var(--amber-600); }
+    .difficulty-l3 { background: var(--red-100); color: var(--red-600); }
+
+    .assignment h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .assignment p {
+      font-size: 14px;
+    }
+
+    .checklist {
+      list-style: none;
+      padding: 0;
+    }
+
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-light);
+      font-size: 14px;
+    }
+
+    .checklist li:last-child { border-bottom: none; }
+
+    .check-box {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      border: 2px solid var(--border);
+      flex-shrink: 0;
+      margin-top: 1px;
+      cursor: pointer;
+      transition: all 0.15s var(--ease);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .check-box:hover {
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked {
+      background: var(--teal-500);
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+    }
+
+    /* ── ARCHITECTURE DIAGRAM ─────────────────── */
+    .diagram {
+      margin: 1.5rem 0;
+      padding: 2rem;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow-x: auto;
+    }
+
+    .diagram pre {
+      background: transparent;
+      color: var(--ink);
+      padding: 0;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .diagram-caption {
+      margin-top: 1rem;
+      font-size: 12px;
+      color: var(--ink-muted);
+      text-align: center;
+      font-style: italic;
+    }
+
+    /* ── FOOTER ───────────────────────────────── */
+    .chapter-footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      background: var(--surface-alt);
+    }
+
+    .chapter-footer-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
+    }
+
+    .footer-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .footer-nav-link {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 1rem 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      max-width: 320px;
+      background: white;
+    }
+
+    .footer-nav-link:hover {
+      border-color: var(--teal-300);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .footer-nav-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--teal-600);
+    }
+
+    .footer-nav-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .footer-brand {
+      text-align: center;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
+    /* ── RESPONSIVE ───────────────────────────── */
+    @media (max-width: 960px) {
+      .main-layout {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        display: none;
+      }
+      .resource-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero { padding: 2.5rem 1.25rem 2rem; }
+      .main-layout { padding: 0 1.25rem; }
+      .content { padding: 2rem 0 4rem; }
+      pre { padding: 1rem; font-size: 12.5px; }
+      .footer-nav { flex-direction: column; }
+      .footer-nav-link { max-width: 100%; width: 100%; }
+    }
+
+    /* ── PRINT ────────────────────────────────── */
+    @media print {
+      .top-nav, .sidebar, .progress-bar { display: none; }
+      .main-layout { display: block; }
+      .content { padding: 0; }
+      .hero { background: white; border: none; }
+      pre { background: #f1f5f9; color: var(--ink); border: 1px solid var(--border); }
+    }
   </style>
 </head>
 <body>
+  <!-- Progress Bar -->
   <div class="progress-bar" id="progressBar"></div>
-  <nav class="top-nav"><div class="top-nav-inner"><a class="nav-brand" href="index.html"><div class="nav-brand-icon">ILA</div><span class="nav-brand-text">Iksha Learning Academy</span></a><div class="nav-chapter-nav"><a class="nav-btn" href="chapter-02.html">&larr; Previous</a><span class="nav-current">03 / 08</span><a class="nav-btn" href="chapter-04.html">Next &rarr;</a></div></div></nav>
 
-  <header class="hero"><div class="hero-inner">
-    <div class="hero-chapter-label"><span>Chapter 03</span> &middot; Communication Foundations</div>
-    <h1>Giving and Receiving Feedback</h1>
-    <p class="hero-subtitle">Build a feedback culture that accelerates growth instead of creating resentment. In startups where iteration speed is everything, the ability to give clear, actionable feedback — and to receive it without defensiveness — is a competitive advantage.</p>
-    <div class="hero-meta">
-      <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Estimated: 3&ndash;4 hours</div>
-      <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>5 Key Concepts</div>
-      <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>3 Assignments</div>
+  <!-- Top Navigation -->
+  <nav class="top-nav">
+    <div class="top-nav-inner">
+      <a class="nav-brand" href="index.html">
+        <div class="nav-brand-icon">ILA</div>
+        <span class="nav-brand-text">Iksha Learning Academy</span>
+      </a>
+      <div class="nav-chapter-nav">
+        <a class="nav-btn" href="chapter-02.html">&larr; Previous</a>
+        <span class="nav-current">03 / 08</span>
+        <a class="nav-btn" href="chapter-04.html">Next &rarr;</a>
+      </div>
     </div>
-  </div></header>
+  </nav>
 
+  <!-- Hero -->
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-chapter-label">
+        <span>Chapter 03</span> &middot; Phase 2: Verbal Communication
+      </div>
+      <h1>Meeting Management</h1>
+      <p class="hero-subtitle">
+        Run client meetings that start on time, stay focused, produce clear decisions, and end with everyone knowing exactly what happens next. Stop wasting everyone's most expensive resource: time.
+      </p>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Estimated: 3&ndash;4 hours
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          3 Advancement Levels
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          3 Assignments
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content + Sidebar -->
   <div class="main-layout">
     <main class="content">
 
+      <!-- ════════════════════════════════════════ -->
       <h2 id="why-this-matters">Why This Matters</h2>
 
-      <p>In a startup environment, the feedback loop between team members, between teams and clients, and between managers and reports is the engine of improvement. When feedback flows freely and constructively, teams iterate faster, catch mistakes earlier, and build stronger relationships with clients. When feedback is absent, vague, or delivered poorly, small problems compound into major crises.</p>
+      <p>
+        The average professional spends 31 hours per month in unproductive meetings. In client services,
+        this number is even higher because meetings involve cross-organizational coordination, timezone
+        gymnastics, and the overhead of context-switching between multiple projects. A poorly run
+        30-minute meeting with four people does not cost 30 minutes &mdash; it costs 2 hours of collective
+        time plus the recovery time for everyone to get back into deep work.
+      </p>
 
-      <p>Research from Gallup shows that employees who receive regular, meaningful feedback are <strong>3.6 times more likely to be engaged</strong> at work. In a startup where retention and morale directly impact your ability to ship, this is not a soft skill — it is an operational imperative.</p>
-
-      <p>The challenge is that most people have never been taught how to give feedback well. They either avoid it entirely (leading to festering issues) or deliver it so bluntly that it damages the relationship. This chapter teaches you structured frameworks that make feedback specific, actionable, and safe to give and receive.</p>
+      <p>
+        The flip side is that a well-run meeting is one of the most powerful tools in client communication.
+        It is the only format where you can read body language, resolve ambiguity in real time, and build
+        the kind of personal rapport that no email can replicate. The goal is not fewer meetings &mdash;
+        it is fewer <strong>bad</strong> meetings.
+      </p>
 
       <div class="callout concept">
-        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>Key Insight</div>
-        <p>Feedback is not criticism. Criticism says "this is wrong." Feedback says "here is what I observed, here is the impact, and here is what I suggest." The former triggers defensiveness. The latter opens dialogue. Master the difference and you will become the person everyone wants to work with.</p>
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Key Insight
+        </div>
+        <p>
+          Every meeting should answer three questions before it is scheduled: (1) What decision needs to
+          be made? (2) Who needs to be in the room to make it? (3) What information do those people need
+          in advance? If you cannot answer all three, the meeting should be an email.
+        </p>
       </div>
+
+      <p>
+        Research from Bain &amp; Company found that a single weekly executive meeting at one large company
+        consumed 300,000 person-hours per year across all the preparatory meetings it spawned. The lesson
+        is clear: meetings are the most expensive communication channel you have. Treat them with the
+        discipline they deserve.
+      </p>
+
+      <p>
+        In client services specifically, meetings serve a dual purpose. They are both a coordination
+        mechanism and a trust-building ritual. Clients who feel informed, heard, and respected during
+        meetings are significantly more likely to approve scope changes, extend contracts, and refer
+        new business. Meetings are not just about getting work done &mdash; they are about building
+        the relationship that makes future work possible.
+      </p>
 
       <hr class="section-divider">
 
+      <!-- ════════════════════════════════════════ -->
       <h2 id="key-concepts">Key Concepts</h2>
 
-      <h3 id="sbi-model">1. The SBI Feedback Model</h3>
+      <h3 id="meeting-types">1. The Four Types of Client Meetings</h3>
 
-      <p>The <strong>Situation-Behavior-Impact (SBI)</strong> model, developed by the Center for Creative Leadership, is the most reliable framework for delivering clear, non-judgmental feedback. It works because it separates observable facts from personal interpretation.</p>
-
-      <div class="diagram">
-<pre>
- ┌─────────────────────────────────────────────────┐
- │              SBI FEEDBACK MODEL                  │
- │                                                  │
- │  S — SITUATION                                   │
- │      When and where did this happen?             │
- │      "During yesterday's client demo..."         │
- │                                                  │
- │  B — BEHAVIOR                                    │
- │      What specifically did the person do?         │
- │      "...you interrupted the client twice         │
- │       while they were describing their needs..."  │
- │                                                  │
- │  I — IMPACT                                      │
- │      What was the effect of that behavior?        │
- │      "...which made them visibly frustrated       │
- │       and they stopped sharing context."          │
- │                                                  │
- │  Optional: REQUEST                                │
- │      What would you like to see instead?          │
- │      "Next time, could you note your thoughts     │
- │       and wait for a natural pause?"              │
- └─────────────────────────────────────────────────┘
-</pre>
-        <div class="diagram-caption">Figure 1: The SBI Feedback Model with optional Request extension</div>
-      </div>
-
-      <div class="code-block">
-        <div class="code-header"><span class="code-lang">SBI EXAMPLES</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-<pre>
-<span class="hl-keyword">POSITIVE FEEDBACK (reinforcing):</span>
-
-<span class="hl-function">Situation:</span> "In this morning's standup..."
-<span class="hl-function">Behavior:</span> "...you flagged the API dependency blocker
-           before it affected anyone else's work..."
-<span class="hl-function">Impact:</span>   "...which saved Marcus at least half a day
-           and kept us on track for the sprint goal."
-
-<span class="hl-keyword">CONSTRUCTIVE FEEDBACK (redirecting):</span>
-
-<span class="hl-function">Situation:</span> "During the client email thread yesterday..."
-<span class="hl-function">Behavior:</span> "...you committed to a Friday delivery date
-           without checking with the team first..."
-<span class="hl-function">Impact:</span>   "...which put us in a tough spot because QA
-           needs at least 2 days, and we now risk missing
-           a deadline we cannot control."
-<span class="hl-function">Request:</span>  "In the future, could you reply with 'Let me
-           confirm timing with the team' before committing
-           to specific dates externally?"
-
-<span class="hl-comment">/* Notice: no judgment words like "careless" or "bad"
-   — only observable facts and their consequences. */</span>
-</pre>
-      </div>
-
-      <h3 id="radical-candor">2. Radical Candor Framework</h3>
-
-      <p>Kim Scott's <strong>Radical Candor</strong> framework maps feedback styles on two axes: <strong>Care Personally</strong> (do you genuinely care about the person?) and <strong>Challenge Directly</strong> (are you willing to be honest?). The intersection creates four quadrants:</p>
+      <p>
+        Not all meetings serve the same purpose. Using the right format for the right purpose prevents
+        the "meeting that should have been an email" problem. Here are the four types you will run
+        most frequently in client work:
+      </p>
 
       <div class="diagram">
 <pre>
-                    CHALLENGE DIRECTLY
-                          ▲
-                          │
-         Obnoxious        │        Radical
-         Aggression       │        Candor
-         "You're bad at   │  "I care about your growth,
-          presentations"  │   and I noticed X. Here's
-                          │   how we can fix it."
-  ────────────────────────┼────────────────────────►
-                          │                CARE
-         Manipulative     │        Ruinous     PERSONALLY
-         Insincerity      │        Empathy
-         "Nice job"       │  "It was fine..."
-         (behind back:    │   (thinks: it was terrible
-          "that was       │    but doesn't want to
-           terrible")     │    hurt feelings)
-                          │
+  ┌───────────────────────────────────────────────────────────────────┐
+  │                  CLIENT MEETING TYPE MATRIX                       │
+  ├─────────────────┬────────────┬────────────┬───────────────────────┤
+  │  Type            │  Duration  │  Frequency │  Purpose              │
+  ├─────────────────┼────────────┼────────────┼───────────────────────┤
+  │  Status Sync     │  15-30 min │  Weekly    │  Progress, blockers,  │
+  │                  │            │            │  upcoming decisions    │
+  ├─────────────────┼────────────┼────────────┼───────────────────────┤
+  │  Decision        │  30-45 min │  As needed │  Present options,     │
+  │  Meeting         │            │            │  get approval         │
+  ├─────────────────┼────────────┼────────────┼───────────────────────┤
+  │  Demo /          │  30-60 min │  Bi-weekly │  Show working         │
+  │  Review          │            │  or sprint │  software, get        │
+  │                  │            │  end       │  feedback             │
+  ├─────────────────┼────────────┼────────────┼───────────────────────┤
+  │  Discovery /     │  60-90 min │  Project   │  Understand needs,    │
+  │  Kickoff         │            │  start     │  align expectations   │
+  └─────────────────┴────────────┴────────────┴───────────────────────┘
 </pre>
-        <div class="diagram-caption">Figure 2: Radical Candor's four quadrants</div>
+        <div class="diagram-caption">Figure 1: Client meeting types &mdash; choose the right format for the right purpose</div>
       </div>
 
-      <p>The goal is the upper-right quadrant: <strong>Radical Candor</strong>. You care enough about the person to tell them the truth, and you respect them enough to be direct. The most common failure mode in startups is <strong>Ruinous Empathy</strong> — being so concerned about hurting feelings that you withhold the feedback people need to grow.</p>
+      <p>
+        Each meeting type has different rules. A status sync should be rapid-fire and information-dense.
+        A decision meeting should present options clearly with pros, cons, and a recommendation. A demo
+        should be visually engaging and interactive. A discovery session should be mostly listening. When
+        you mix these formats, you get meetings that feel unfocused and unproductive.
+      </p>
 
       <div class="callout important">
-        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Watch Out</div>
-        <p>Radical Candor is not a license to be harsh. The "Care Personally" axis is not optional — it is the foundation. If someone does not believe you genuinely care about their success, your direct feedback will always land as aggression, regardless of how carefully you word it. Build the relationship first, then use it as the vehicle for honest feedback.</p>
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Anti-Pattern Warning
+        </div>
+        <p>
+          The most common anti-pattern is the "status meeting that turns into a decision meeting." When
+          a status sync surfaces an unexpected issue, do not try to resolve it on the spot. Instead,
+          say: "This needs a dedicated discussion. Let me schedule a 30-minute decision meeting with the
+          right people this week." This keeps the status meeting on track and ensures the decision gets
+          the attention it deserves.
+        </p>
       </div>
 
-      <h3 id="one-on-ones">3. Structuring Effective 1:1 Conversations</h3>
+      <h3 id="agenda-framework">2. The Agenda Framework</h3>
 
-      <p>The weekly 1:1 is the most underutilized tool for feedback in most startups. When done well, it is the safe space where feedback flows both directions — manager to report and report to manager. When done poorly, it is a status update that could have been an email.</p>
+      <p>
+        Every client meeting must have a written agenda sent at least 24 hours in advance. No
+        exceptions. The agenda is not just a courtesy &mdash; it is a contract between you and the
+        client about how the time will be used.
+      </p>
 
       <div class="code-block">
-        <div class="code-header"><span class="code-lang">1:1 MEETING TEMPLATE</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <div class="code-header">
+          <span class="code-lang">template</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
 <pre>
-<span class="hl-keyword">1:1 AGENDA — [Manager] + [Report]</span>
-<span class="hl-keyword">Duration:</span> 30 minutes | <span class="hl-keyword">Frequency:</span> Weekly
+<span class="hl-comment">/* ── MEETING AGENDA TEMPLATE ───────────────────── */</span>
 
-<span class="hl-function">[5 min] Check-In</span>
-- How are you doing? (genuinely, not as small talk)
-- Anything on your mind before we start?
+<span class="hl-keyword">Meeting:</span> [Project Name] &mdash; [Meeting Type]
+<span class="hl-keyword">Date:</span> [Day, Date] at [Time] [Timezone]
+<span class="hl-keyword">Duration:</span> [X] minutes (hard stop)
+<span class="hl-keyword">Attendees:</span> [Name (Role)], [Name (Role)], ...
+<span class="hl-keyword">Meeting Link:</span> [Zoom/Teams/Meet link]
 
-<span class="hl-function">[10 min] Their Agenda</span>
-- What is top of mind for you this week?
-- Any blockers I can help remove?
-- Any feedback for me on how I can support you better?
+<span class="hl-keyword">═══ PRE-READ (review before the meeting) ═══</span>
+- [Link to document, design, or context they need]
+- [Specific question to think about before the call]
 
-<span class="hl-function">[10 min] Your Agenda</span>
-- SBI feedback on specific recent situations
-- Coaching on upcoming challenges
-- Career development check-in (monthly)
+<span class="hl-keyword">═══ AGENDA ═══</span>
 
-<span class="hl-function">[5 min] Commitments</span>
-- What are we each committing to before next 1:1?
-- Any follow-ups needed?
+<span class="hl-function">1. [Topic] (X min)</span> &mdash; [Owner]
+   Goal: [What decision or outcome we need]
 
-<span class="hl-comment">/* KEY RULE: The report's agenda comes first.
-   This is THEIR meeting, not yours. If they have
-   nothing to discuss, that itself is data — either
-   they do not feel safe, or you are not creating
-   enough space for them to surface issues. */</span>
+<span class="hl-function">2. [Topic] (X min)</span> &mdash; [Owner]
+   Goal: [What decision or outcome we need]
+
+<span class="hl-function">3. [Topic] (X min)</span> &mdash; [Owner]
+   Goal: [What decision or outcome we need]
+
+<span class="hl-function">4. Action Items &amp; Next Steps (5 min)</span> &mdash; Facilitator
+   Goal: Confirm who does what by when
+
+<span class="hl-keyword">═══ PARKING LOT ═══</span>
+(Topics raised during the meeting that need separate
+ discussion will be captured here)
 </pre>
       </div>
-
-      <h3 id="receiving-feedback">4. Receiving Feedback Without Defensiveness</h3>
-
-      <p>Giving feedback is hard. Receiving it well is even harder. Your instinctive reaction to critical feedback is to defend, deflect, or shut down. These responses are natural — your brain perceives feedback as a threat. The skill is learning to override that instinct with a deliberate process.</p>
-
-      <p>The <strong>HEAR model</strong> for receiving feedback:</p>
-
-      <ul>
-        <li><strong>H — Halt.</strong> Pause before responding. Take a breath. Do not immediately explain or defend.</li>
-        <li><strong>E — Empathize.</strong> Acknowledge that the other person took a risk by giving you this feedback. Thank them for it, even if it stings.</li>
-        <li><strong>A — Ask.</strong> Clarify with questions: "Can you give me a specific example?" or "What would good look like in that situation?"</li>
-        <li><strong>R — Reflect.</strong> Take time to process before committing to action. Say: "Thank you for this. I want to think about it and follow up with you tomorrow."</li>
-      </ul>
-
-      <div class="code-block">
-        <div class="code-header"><span class="code-lang">RECEIVING FEEDBACK — SCRIPTS</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-<pre>
-<span class="hl-comment">/* When you receive constructive feedback: */</span>
-
-<span class="hl-flag">DEFENSIVE (natural but unhelpful):</span>
-"That's not what happened. The client was already
- frustrated before I said anything."
-
-<span class="hl-string">PRODUCTIVE (deliberate and growth-oriented):</span>
-"Thank you for telling me that. I appreciate you
- being direct. Can you give me a specific example
- of the moment where I lost the room? I want to
- understand so I can handle it better next time."
-
-<span class="hl-comment">/* When you disagree with feedback: */</span>
-
-<span class="hl-flag">DISMISSIVE:</span>
-"I disagree. I think it went fine."
-
-<span class="hl-string">EXPLORATORY:</span>
-"I hear you, and I had a different read on the
- situation. Can we walk through what happened?
- I want to understand your perspective because
- I may be missing something."
-
-<span class="hl-comment">/* When you need time to process: */</span>
-
-<span class="hl-string">"This is really valuable feedback. I want to sit
- with it rather than react in the moment. Can we
- revisit this in our 1:1 on Thursday? I want to
- come back with a thoughtful response."</span>
-</pre>
-      </div>
-
-      <h3 id="feedback-culture">5. Building a Feedback Culture on Your Team</h3>
-
-      <p>Individual feedback skills are necessary but not sufficient. For feedback to work at scale, it needs to be embedded in your team's culture — normalized, expected, and safe. Here is how to build that culture:</p>
-
-      <ul>
-        <li><strong>Model it publicly.</strong> Ask for feedback on yourself in team settings: "What is one thing I could do better in these meetings?" When the leader goes first, it signals safety.</li>
-        <li><strong>Make it frequent and small.</strong> Feedback should not be a quarterly event tied to performance reviews. It should be a daily occurrence — quick, specific, and in the moment.</li>
-        <li><strong>Separate feedback from evaluation.</strong> Coaching conversations (1:1s) should feel different from performance reviews. If people fear that every piece of feedback will appear in their review, they will stop being honest.</li>
-        <li><strong>Create structured rituals.</strong> Sprint retrospectives, peer code reviews, and design critiques are all built-in feedback mechanisms. Use them intentionally.</li>
-      </ul>
 
       <div class="callout tip">
-        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>Pro Tip</div>
-        <p>Start with positive feedback. Most people have a 5:1 ratio expectation — they need to hear 5 pieces of positive feedback for every 1 piece of constructive feedback to feel psychologically safe. If you have never given someone positive feedback and then hit them with something critical, it will land badly regardless of your technique.</p>
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Pro Tip
+        </div>
+        <p>
+          Always include time allocations for each agenda item. This gives you permission to say
+          "We have 5 minutes left on this topic &mdash; should we continue or move to the next item?"
+          Without time allocations, meetings expand to fill all available time. This is Parkinson's
+          Law applied to meetings, and it is relentless.
+        </p>
+      </div>
+
+      <h3 id="facilitation">3. Facilitation Techniques</h3>
+
+      <p>
+        Facilitation is the art of guiding a conversation toward a productive outcome without
+        dominating it. Here are the essential techniques for client meetings:
+      </p>
+
+      <ul>
+        <li><strong>The Opening Frame</strong> &mdash; Start every meeting with: "Today we need to [specific outcome]. Here is our agenda. Any additions before we start?"</li>
+        <li><strong>The Redirect</strong> &mdash; When conversation drifts: "That is a great point. Let me add it to the parking lot so we can give it proper attention. For now, let us finish [current topic]."</li>
+        <li><strong>The Decision Check</strong> &mdash; Before moving on: "So we have agreed to [decision]. Is everyone aligned?" Wait for explicit confirmation, not just silence.</li>
+        <li><strong>The Time Check</strong> &mdash; At the halfway mark: "We are halfway through our time. We have covered items 1 and 2. Items 3 and 4 remain. Are we on track?"</li>
+        <li><strong>The Closing Frame</strong> &mdash; End every meeting with action items: "Let me recap what we decided and who owns each next step."</li>
+      </ul>
+
+      <div class="diagram">
+<pre>
+  ┌─────────────────────────────────────────────────────────────┐
+  │              MEETING FACILITATION FLOW                       │
+  │                                                              │
+  │   ┌──────────┐    ┌──────────┐    ┌──────────┐              │
+  │   │  OPEN    │───▶│  GUIDE   │───▶│  CLOSE   │              │
+  │   │          │    │          │    │          │              │
+  │   │ - Frame  │    │ - Topic  │    │ - Recap  │              │
+  │   │ - Agenda │    │ - Redirect│   │ - Actions│              │
+  │   │ - Roles  │    │ - Decide │    │ - Dates  │              │
+  │   └──────────┘    └─────┬────┘    └──────────┘              │
+  │                         │                                    │
+  │                    ┌────▼────┐                               │
+  │                    │ PARKING │                               │
+  │                    │   LOT   │                               │
+  │                    │         │                               │
+  │                    │ Topics  │                               │
+  │                    │ for     │                               │
+  │                    │ later   │                               │
+  │                    └─────────┘                               │
+  └─────────────────────────────────────────────────────────────┘
+</pre>
+        <div class="diagram-caption">Figure 2: The facilitation flow &mdash; Open, Guide, Close, with a Parking Lot for overflow topics</div>
+      </div>
+
+      <h3 id="meeting-notes">4. Meeting Notes and Follow-Up</h3>
+
+      <p>
+        A meeting without notes is a meeting that did not happen. Within 2 hours of the meeting
+        ending, send a follow-up email to all attendees with the meeting notes. This is not optional
+        &mdash; it is the mechanism that converts conversation into commitment.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">template</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── MEETING FOLLOW-UP TEMPLATE ────────────────── */</span>
+
+<span class="hl-keyword">Subject:</span> [Project] Meeting Notes &mdash; [Date]
+
+Hi everyone,
+
+Thanks for the productive call today. Here is a summary
+of what we discussed and agreed to:
+
+<span class="hl-keyword">═══ DECISIONS MADE ═══</span>
+1. [Decision] &mdash; Approved by [Name]
+2. [Decision] &mdash; Approved by [Name]
+3. [Decision] &mdash; Pending confirmation from [Name]
+
+<span class="hl-keyword">═══ ACTION ITEMS ═══</span>
+| # | Action               | Owner    | Due Date   |
+|---|----------------------|----------|------------|
+| 1 | [Task description]   | [Name]   | [Date]     |
+| 2 | [Task description]   | [Name]   | [Date]     |
+| 3 | [Task description]   | [Name]   | [Date]     |
+| 4 | [Task description]   | [Name]   | [Date]     |
+
+<span class="hl-keyword">═══ PARKING LOT (for future discussion) ═══</span>
+- [Topic] &mdash; Will schedule separately this week
+- [Topic] &mdash; Added to sprint backlog for review
+
+<span class="hl-keyword">═══ NEXT MEETING ═══</span>
+[Day, Date] at [Time] [Timezone]
+Preview: We will cover [topics for next time]
+
+Please reply to confirm the action items are accurate.
+If I missed anything, let me know by end of day.
+
+Best,
+[Your name]
+</pre>
+      </div>
+
+      <p>
+        The meeting notes serve three critical purposes. First, they create accountability by
+        putting commitments in writing. Second, they serve as a historical record that you can
+        reference when there is a disagreement about what was agreed. Third, they keep absent
+        stakeholders in the loop without requiring a separate catch-up meeting.
+      </p>
+
+      <h3 id="difficult-moments">5. Handling Difficult Meeting Moments</h3>
+
+      <p>
+        Client meetings will occasionally go sideways. Someone gets frustrated, a topic becomes
+        contentious, or you are asked a question you cannot answer. Preparation is the antidote
+        to panic. Here is a playbook for the most common scenarios:
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">framework</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── DIFFICULT MOMENT PLAYBOOK ─────────────────── */</span>
+
+<span class="hl-keyword">Scenario 1: Client is frustrated about a delay</span>
+<span class="hl-function">Step 1:</span> Acknowledge: "I understand this is frustrating,
+        and I appreciate your patience."
+<span class="hl-function">Step 2:</span> Own it: "This delay is on us. Here is what
+        happened and what we are doing about it."
+<span class="hl-function">Step 3:</span> Commit: "We will have [specific deliverable]
+        by [specific date]. I will send daily updates
+        until this is resolved."
+
+<span class="hl-keyword">Scenario 2: Asked a question you cannot answer</span>
+<span class="hl-function">Step 1:</span> Be honest: "I do not have that information
+        right now."
+<span class="hl-function">Step 2:</span> Commit to follow-up: "I will get you the
+        answer by [specific time] today."
+<span class="hl-function">Step 3:</span> Actually follow up. On time. Every time.
+
+<span class="hl-keyword">Scenario 3: Meeting going off-topic</span>
+<span class="hl-function">Step 1:</span> Acknowledge: "That is an important point."
+<span class="hl-function">Step 2:</span> Redirect: "To give it proper attention, let
+        me add it to the parking lot."
+<span class="hl-function">Step 3:</span> Refocus: "Let us get back to [agenda item]
+        so we can hit our decision deadline."
+
+<span class="hl-keyword">Scenario 4: Two stakeholders disagree</span>
+<span class="hl-function">Step 1:</span> Name it: "It sounds like we have two valid
+        perspectives here."
+<span class="hl-function">Step 2:</span> Summarize both: "Option A would [outcome].
+        Option B would [outcome]."
+<span class="hl-function">Step 3:</span> Seek resolution: "What criteria should we
+        use to decide between them?"
+<span class="hl-function">Step 4:</span> If no resolution: "Let me document both
+        options with tradeoffs and we can decide
+        async by [date]."
+</pre>
+      </div>
+
+      <div class="callout danger">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+          Never Do This
+        </div>
+        <p>
+          Never blame a team member in front of the client. Even if the delay was caused by one
+          person's mistake, in the meeting you say "we" and "the team." Internal accountability
+          conversations happen privately. The client should see a unified team, not finger-pointing.
+        </p>
+      </div>
+
+      <h3 id="cadence">6. Establishing Meeting Cadence</h3>
+
+      <p>
+        The right meeting cadence depends on the project phase and the client's communication style.
+        Here is a recommended cadence by project phase:
+      </p>
+
+      <div class="diagram">
+<pre>
+  ┌─────────────────────────────────────────────────────────────┐
+  │             RECOMMENDED MEETING CADENCE                      │
+  ├─────────────────────────────────────────────────────────────┤
+  │                                                              │
+  │  Project Phase      Cadence           Meeting Types          │
+  │  ──────────────     ────────────      ──────────────         │
+  │  Discovery          3x per week       Kickoff + Discovery    │
+  │  (Week 1-2)                           sessions               │
+  │                                                              │
+  │  Active Dev         1x per week       Status sync (30 min)   │
+  │  (Weeks 3-N)        + as needed       + Decision meetings    │
+  │                                                              │
+  │  Sprint Ends        Bi-weekly         Demo/Review (45 min)   │
+  │                                                              │
+  │  Pre-Launch         2x per week       Status + testing       │
+  │  (Final 2 weeks)                      coordination           │
+  │                                                              │
+  │  Post-Launch        1x per week       Support + iteration    │
+  │  (Month 1)          then monthly      planning               │
+  └─────────────────────────────────────────────────────────────┘
+</pre>
+        <div class="diagram-caption">Figure 3: Meeting cadence by project phase &mdash; adjust based on client preferences</div>
       </div>
 
       <details>
-        <summary>How to give feedback to someone more senior than you</summary>
-        <div class="details-body"><p>Giving upward feedback is intimidating but essential. Use the same SBI framework, but lead with the impact on you or the team: "When the decision to change the API architecture was made without the team's input [Situation], it was announced via email with no discussion [Behavior], and the team felt excluded from a decision that directly affects our daily work [Impact]. Could we discuss having a brief sync before major architectural changes?" Frame it as a shared interest in better outcomes, not a complaint.</p></div>
+        <summary>What if the client wants more meetings than recommended?</summary>
+        <div class="details-body">
+          <p>
+            This is usually a trust signal. When a client wants daily meetings, it often means they
+            do not trust that work is happening between meetings. The solution is not to push back on
+            the meeting frequency &mdash; it is to increase the visibility of your work. Send daily
+            async updates, share demo links as soon as features are ready, and proactively flag
+            blockers before the client asks. Once trust is established, propose reducing frequency.
+          </p>
+        </div>
       </details>
 
       <details>
-        <summary>How to handle feedback you fundamentally disagree with</summary>
-        <div class="details-body"><p>Not all feedback is accurate. Sometimes the person giving feedback has incomplete information or different values. The key is to separate the signal from the noise. Ask yourself: (1) Is there any truth here, even if the framing is off? (2) Have I heard similar feedback from others? (3) If I imagine my most respected colleague watching the situation, would they agree? If the answer to all three is genuinely no, acknowledge the perspective ("I hear you, thank you for sharing that") and do not feel obligated to change.</p></div>
+        <summary>What about timezone challenges?</summary>
+        <div class="details-body">
+          <p>
+            When working across timezones, establish one "overlap window" that works for both sides
+            and protect it. All synchronous meetings happen during this window. Everything else is
+            handled asynchronously. If the overlap is small (2 hours or less), use it for decision
+            meetings only and handle status updates via email. Record demos so team members in other
+            timezones can watch on their own schedule and leave comments asynchronously.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Should internal team meetings happen before or after client meetings?</summary>
+        <div class="details-body">
+          <p>
+            Before. Always hold a 10-minute internal prep meeting before any client call. Align on
+            what you will present, who will speak to each topic, and any sensitive areas to be aware
+            of. This prevents the "developer says something that surprises the project manager" problem
+            and presents a unified, professional front to the client. After the meeting, do a quick
+            5-minute internal debrief to capture lessons learned.
+          </p>
+        </div>
       </details>
 
       <hr class="section-divider">
 
+      <!-- ════════════════════════════════════════ -->
       <h2 id="watch-learn">Watch &amp; Learn</h2>
 
-      <p>These videos cover feedback frameworks and techniques that complement the concepts in this chapter.</p>
+      <p>These videos cover meeting facilitation and client communication strategies.</p>
 
       <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/YLBDkz0TwLM?rel=0&modestbranding=1" title="Radical Candor in 6 Minutes" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-caption"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>Kim Scott — Radical Candor in 6 Minutes (The core framework explained)</div>
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/razSIzhA4SI?rel=0&amp;modestbranding=1"
+            title="Meeting Management &mdash; Techniques for running productive, time-boxed client meetings"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Meeting Management &mdash; Techniques for running productive, time-boxed client meetings
+        </div>
       </div>
 
       <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/wtl5UrrgU8c?rel=0&modestbranding=1" title="The Secret to Giving Great Feedback" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-caption"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>TED — The Secret to Giving Great Feedback (LeeAnn Renninger)</div>
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/P9iNu_Be-p0?rel=0&amp;modestbranding=1"
+            title="Client Communication &mdash; Building trust through structured verbal interactions"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Client Communication &mdash; Building trust through structured verbal interactions
+        </div>
       </div>
 
       <hr class="section-divider">
 
+      <!-- ════════════════════════════════════════ -->
       <h2 id="further-reading">Further Reading</h2>
-      <p>Deepen your feedback skills with these resources.</p>
+
+      <p>Resources on meeting management, facilitation, and productive collaboration.</p>
+
       <div class="resource-grid">
-        <a class="resource-card" href="https://www.amazon.com/Radical-Candor-Revised-Kick-Ass-Humanity/dp/1250235375" target="_blank" rel="noopener"><div class="resource-icon book"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><div class="resource-info"><div class="resource-title">Radical Candor — Kim Scott</div><div class="resource-desc">The definitive guide to caring personally while challenging directly. Essential reading for any manager.</div></div></a>
-        <a class="resource-card" href="https://www.amazon.com/Thanks-Feedback-Science-Receiving-Well/dp/0143127136" target="_blank" rel="noopener"><div class="resource-icon book"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><div class="resource-info"><div class="resource-title">Thanks for the Feedback — Stone &amp; Heen</div><div class="resource-desc">The art and science of receiving feedback well. Covers triggers, blind spots, and growth identity.</div></div></a>
-        <a class="resource-card" href="https://hbr.org/2019/03/the-feedback-fallacy" target="_blank" rel="noopener"><div class="resource-icon article"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div class="resource-info"><div class="resource-title">The Feedback Fallacy (HBR)</div><div class="resource-desc">A provocative article arguing that most feedback does not work. Introduces strengths-based alternatives.</div></div></a>
-        <a class="resource-card" href="https://www.amazon.com/Nonviolent-Communication-Language-Life-Changing-Relationships/dp/189200528X" target="_blank" rel="noopener"><div class="resource-icon book"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><div class="resource-info"><div class="resource-title">Nonviolent Communication — Marshall Rosenberg</div><div class="resource-desc">The foundational framework for separating observation from judgment in all communication.</div></div></a>
+        <a class="resource-card" href="https://hbr.org/2017/07/stop-the-meeting-madness" target="_blank" rel="noopener">
+          <div class="resource-icon article">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Stop the Meeting Madness (HBR)</div>
+            <div class="resource-desc">Harvard Business Review analysis of meeting dysfunction and concrete strategies to fix it.</div>
+          </div>
+        </a>
+        <a class="resource-card" href="https://www.amazon.com/Death-Meeting-Leadership-Business-Lencioni/dp/0787968056" target="_blank" rel="noopener">
+          <div class="resource-icon article">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Death by Meeting &mdash; Patrick Lencioni</div>
+            <div class="resource-desc">A leadership fable about making meetings engaging and productive.</div>
+          </div>
+        </a>
+        <a class="resource-card" href="https://fellow.app/blog/meetings/meeting-agenda-templates/" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Meeting Agenda Templates (Fellow.app)</div>
+            <div class="resource-desc">Professional agenda templates for different meeting types and contexts.</div>
+          </div>
+        </a>
+        <a class="resource-card" href="https://www.atlassian.com/team-playbook/plays/meeting-notes" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Atlassian Meeting Notes Playbook</div>
+            <div class="resource-desc">Structured framework for taking and distributing meeting notes that drive action.</div>
+          </div>
+        </a>
       </div>
 
       <hr class="section-divider">
 
+      <!-- ════════════════════════════════════════ -->
       <h2 id="assignments">Assignments</h2>
-      <p>Complete these assignments in order. Practice with real situations whenever possible.</p>
+
+      <p>Complete these assignments in order. Use real client interactions whenever possible.</p>
 
       <div class="assignment">
-        <div class="assignment-header"><div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Assignment 1</div><span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span></div>
-        <h4>SBI Practice with Real Scenarios</h4>
-        <p>Write SBI-formatted feedback for 5 real situations from your recent work experience.</p>
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 1
+          </div>
+          <span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span>
+        </div>
+        <h4>Write and Send a Meeting Agenda</h4>
+        <p>Create a professional meeting agenda for an upcoming client meeting using the template from this chapter.</p>
         <ul class="checklist">
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write 3 positive SBI feedback examples from the past 2 weeks</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write 2 constructive SBI feedback examples with a Request component</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Review each for judgment words and replace with observable behaviors</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Actually deliver at least 2 of these feedback pieces this week</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Document how the recipient responded and what you would adjust</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Choose an upcoming meeting or create a realistic scenario</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write a complete agenda with time allocations for each item</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Include a pre-read section with links or preparation questions</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Include a parking lot section (even if initially empty)</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Send the agenda at least 24 hours before the meeting</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>After the meeting, note whether the agenda kept discussion on track</span></li>
         </ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Done when</div><p>You have delivered real SBI feedback to at least 2 people and documented the experience, including what went well and what you would change.</p></div>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>The meeting started on time, covered all agenda items, and ended with clear action items.</p>
+        </div>
       </div>
 
       <div class="assignment">
-        <div class="assignment-header"><div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Assignment 2</div><span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span></div>
-        <h4>Design Your 1:1 Framework</h4>
-        <p>Create a structured 1:1 framework and use it for at least 4 consecutive weeks.</p>
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 2
+          </div>
+          <span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span>
+        </div>
+        <h4>Facilitate a Meeting and Send Follow-Up Notes</h4>
+        <p>Run a client meeting using the facilitation techniques from this chapter, then send structured follow-up notes.</p>
         <ul class="checklist">
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a 1:1 template based on the framework in this chapter</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Share it with your manager or report and agree on the format</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Conduct 4 consecutive weekly 1:1s using the template</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Include at least one piece of SBI feedback in each session</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>After 4 weeks, ask for feedback on the 1:1 format itself and iterate</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Use the Opening Frame to start the meeting with a clear purpose</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Use the Redirect technique at least once to keep discussion on track</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Use the Decision Check before moving between agenda items</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Use the Closing Frame to summarize decisions and action items</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Send meeting notes within 2 hours using the template from this chapter</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Get confirmation from at least one attendee that notes are accurate</span></li>
         </ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Done when</div><p>You have 4 weeks of documented 1:1 notes showing a consistent structure, feedback exchange, and iterative improvement of the format itself.</p></div>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>Meeting ends on time with documented decisions and assigned action items. A mentor reviews your follow-up notes and confirms they meet the template standard.</p>
+        </div>
       </div>
 
       <div class="assignment">
-        <div class="assignment-header"><div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Assignment 3</div><span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Leadership</span></div>
-        <h4>Launch a Team Feedback Ritual</h4>
-        <p>Design and implement a team-wide feedback mechanism that runs for at least one full sprint cycle.</p>
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 3
+          </div>
+          <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Production-Ready</span>
+        </div>
+        <h4>Design a Complete Meeting System for a New Project</h4>
+        <p>Create a complete meeting plan for a new client engagement, including cadence, templates, and escalation paths.</p>
         <ul class="checklist">
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Train your team on the SBI model in a 15-minute session</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Introduce a "feedback round" in your retrospective format</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Model vulnerability by asking for feedback on yourself publicly</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Run the ritual for 2 sprint cycles and collect team sentiment</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Document what worked, what did not, and your recommendations for scaling it</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Define the meeting cadence for each project phase (discovery, development, launch, support)</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create agenda templates for each meeting type (status, decision, demo, kickoff)</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Define roles: who facilitates, who takes notes, who owns follow-up</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create an escalation path for critical issues surfaced in meetings</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Document timezone differences and async alternatives</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Present the plan to your team and incorporate their feedback</span></li>
         </ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Done when</div><p>Your team has participated in at least 2 sprint cycles of the feedback ritual, and team members report feeling more comfortable giving and receiving feedback.</p></div>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>Your team adopts the meeting plan for an actual client engagement and reports that it reduced meeting overhead by at least 20% compared to previous projects.</p>
+        </div>
       </div>
 
       <hr class="section-divider">
 
+      <!-- ════════════════════════════════════════ -->
       <h2 id="self-check">Self-Check</h2>
-      <p>Before moving to Chapter 04, honestly answer these questions.</p>
 
-      <details><summary>Can you deliver constructive feedback using SBI without judgment language?</summary><div class="details-body"><p>Write an SBI statement right now for a recent situation. Read it aloud. Does it contain any words like "always," "never," "careless," or "wrong"? If so, rewrite it with observable behaviors only. The test is whether the recipient could watch a video of the situation and agree with your description of what happened.</p></div></details>
+      <p>Before moving to Chapter 04, honestly assess yourself against these criteria.</p>
 
-      <details><summary>Do you have a process for receiving feedback without becoming defensive?</summary><div class="details-body"><p>Think about the last time someone gave you constructive feedback. Did you thank them, ask clarifying questions, and take time to reflect? Or did you immediately explain, justify, or deflect? If the latter, practice the HEAR model with a trusted colleague who can give you feedback and hold you accountable for the response pattern.</p></div></details>
+      <details>
+        <summary>Do all of your client meetings have written agendas sent in advance?</summary>
+        <div class="details-body">
+          <p>
+            Review your last five client meetings. How many had a written agenda sent at least 24 hours
+            before? If fewer than four out of five, this is the single highest-leverage habit to build.
+            Start with a template and fill it in &mdash; it takes less than 5 minutes.
+          </p>
+        </div>
+      </details>
 
-      <details><summary>Is feedback a regular occurrence in your team, or a rare event?</summary><div class="details-body"><p>Count the number of times you gave or received specific, actionable feedback in the past week — not in a formal review, but in the normal flow of work. If the number is less than 3, feedback is not yet a habit on your team. Start with one piece of positive SBI feedback per day and build from there.</p></div></details>
+      <details>
+        <summary>Can you keep a 30-minute meeting under 30 minutes?</summary>
+        <div class="details-body">
+          <p>
+            If meetings regularly run over, the issue is usually scope, not time management. Each
+            meeting should address 2&ndash;3 topics maximum. If you have more, split into multiple
+            meetings or handle some asynchronously. Practice the time check at the halfway mark.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Do you send follow-up notes within 2 hours of every meeting?</summary>
+        <div class="details-body">
+          <p>
+            Time your follow-up process. If it takes longer than 15 minutes, you are writing too
+            much. Focus on decisions and action items. Detailed discussion notes are less valuable
+            than a clear list of who committed to what by when.
+          </p>
+        </div>
+      </details>
 
     </main>
 
+    <!-- Sidebar: Table of Contents -->
     <aside class="sidebar">
       <div class="sidebar-title">On this page</div>
       <ul class="toc-list">
         <li class="toc-item"><a href="#why-this-matters">Why This Matters</a></li>
         <li class="toc-item"><a href="#key-concepts">Key Concepts</a></li>
-        <li class="toc-item"><a href="#sbi-model" style="padding-left:28px;font-size:12px">SBI Feedback Model</a></li>
-        <li class="toc-item"><a href="#radical-candor" style="padding-left:28px;font-size:12px">Radical Candor</a></li>
-        <li class="toc-item"><a href="#one-on-ones" style="padding-left:28px;font-size:12px">1:1 Conversations</a></li>
-        <li class="toc-item"><a href="#receiving-feedback" style="padding-left:28px;font-size:12px">Receiving Feedback</a></li>
-        <li class="toc-item"><a href="#feedback-culture" style="padding-left:28px;font-size:12px">Feedback Culture</a></li>
+        <li class="toc-item"><a href="#meeting-types" style="padding-left: 28px; font-size: 12px;">Meeting Types</a></li>
+        <li class="toc-item"><a href="#agenda-framework" style="padding-left: 28px; font-size: 12px;">Agenda Framework</a></li>
+        <li class="toc-item"><a href="#facilitation" style="padding-left: 28px; font-size: 12px;">Facilitation Techniques</a></li>
+        <li class="toc-item"><a href="#meeting-notes" style="padding-left: 28px; font-size: 12px;">Meeting Notes</a></li>
+        <li class="toc-item"><a href="#difficult-moments" style="padding-left: 28px; font-size: 12px;">Difficult Moments</a></li>
+        <li class="toc-item"><a href="#cadence" style="padding-left: 28px; font-size: 12px;">Meeting Cadence</a></li>
         <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a></li>
         <li class="toc-item"><a href="#further-reading">Further Reading</a></li>
         <li class="toc-item"><a href="#assignments">Assignments</a></li>
@@ -355,16 +1575,77 @@
     </aside>
   </div>
 
-  <footer class="chapter-footer"><div class="chapter-footer-inner">
-    <nav class="footer-nav">
-      <a class="footer-nav-link" href="chapter-02.html"><span class="footer-nav-label">&larr; Previous Chapter</span><span class="footer-nav-title">02: Meeting Management</span></a>
-      <a class="footer-nav-link" href="chapter-04.html"><span class="footer-nav-label">Next Chapter &rarr;</span><span class="footer-nav-title">04: Status Reporting and Updates</span></a>
-    </nav>
-    <div class="footer-brand">ILA (Iksha Learning Academy) &middot; Client Communication &middot; Basic</div>
-  </div></footer>
+  <!-- Footer Navigation -->
+  <footer class="chapter-footer">
+    <div class="chapter-footer-inner">
+      <nav class="footer-nav">
+        <a class="footer-nav-link" href="chapter-02.html">
+          <span class="footer-nav-label">&larr; Previous Chapter</span>
+          <span class="footer-nav-title">02: Technical Writing for Non-Technical Audiences</span>
+        </a>
+        <a class="footer-nav-link" href="chapter-04.html">
+          <span class="footer-nav-label">Next Chapter &rarr;</span>
+          <span class="footer-nav-title">04: Presentations and Demos</span>
+        </a>
+      </nav>
+      <div class="footer-brand">
+        ILA (Iksha Learning Academy) &middot; Client Communication Professional Certification &middot; Level 1
+      </div>
+    </div>
+  </footer>
 
+  <!-- Scripts -->
   <script>
-    window.addEventListener('scroll',()=>{const s=window.scrollY;const d=document.documentElement.scrollHeight-window.innerHeight;const p=d>0?(s/d)*100:0;document.getElementById('progressBar').style.width=p+'%'});const tocLinks=document.querySelectorAll('.toc-item a');const sections=[];tocLinks.forEach(link=>{const id=link.getAttribute('href').slice(1);const el=document.getElementById(id);if(el)sections.push({id,el,link})});const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{const item=sections.find(s=>s.el===entry.target);if(item&&entry.isIntersecting){tocLinks.forEach(l=>l.classList.remove('active'));item.link.classList.add('active')}})},{rootMargin:'-80px 0px -60% 0px',threshold:0});sections.forEach(s=>observer.observe(s.el));function copyCode(btn){const pre=btn.closest('.code-block').querySelector('pre');navigator.clipboard.writeText(pre.textContent).then(()=>{btn.classList.add('copied');btn.textContent='Copied!';setTimeout(()=>{btn.classList.remove('copied');btn.textContent='Copy'},2000)})}
+    // ── Progress Bar ──
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      document.getElementById('progressBar').style.width = progress + '%';
+    });
+
+    // ── Active TOC ──
+    const tocLinks = document.querySelectorAll('.toc-item a');
+    const sections = [];
+
+    tocLinks.forEach(link => {
+      const id = link.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) sections.push({ id, el, link });
+    });
+
+    const observerOptions = {
+      rootMargin: '-80px 0px -60% 0px',
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const item = sections.find(s => s.el === entry.target);
+        if (item) {
+          if (entry.isIntersecting) {
+            tocLinks.forEach(l => l.classList.remove('active'));
+            item.link.classList.add('active');
+          }
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(s => observer.observe(s.el));
+
+    // ── Copy Code ──
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      const text = pre.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.classList.add('copied');
+        btn.textContent = 'Copied!';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.textContent = 'Copy';
+        }, 2000);
+      });
+    }
   </script>
 </body>
 </html>

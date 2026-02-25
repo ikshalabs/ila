@@ -8,7 +8,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
+    /* ═══════════════════════════════════════════════
+       ILA DESIGN SYSTEM — v1.0
+       Iksha Learning Academy
+       ═══════════════════════════════════════════════ */
+
     :root {
+      /* Palette */
       --ink:        #0f172a;
       --ink-light:  #334155;
       --ink-muted:  #64748b;
@@ -17,6 +23,8 @@
       --surface-warm:#fffbeb;
       --border:     #e2e8f0;
       --border-light:#f1f5f9;
+
+      /* Brand */
       --teal-50:  #f0fdfa;
       --teal-100: #ccfbf1;
       --teal-200: #99f6e4;
@@ -25,36 +33,48 @@
       --teal-700: #0f766e;
       --teal-800: #115e59;
       --teal-900: #134e4a;
+
       --blue-50:  #eff6ff;
       --blue-100: #dbeafe;
       --blue-500: #3b82f6;
       --blue-600: #2563eb;
       --blue-700: #1d4ed8;
+
       --amber-50:  #fffbeb;
       --amber-100: #fef3c7;
       --amber-500: #f59e0b;
       --amber-600: #d97706;
+
       --red-50:   #fef2f2;
       --red-100:  #fee2e2;
       --red-500:  #ef4444;
       --red-600:  #dc2626;
+
       --purple-50:  #faf5ff;
       --purple-100: #f3e8ff;
       --purple-500: #a855f7;
       --purple-600: #9333ea;
-      --green-50:  #f0fdf4;
-      --green-100: #dcfce7;
-      --green-500: #22c55e;
-      --green-600: #16a34a;
+
+      /* Typography */
       --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       --font-serif: 'Instrument Serif', Georgia, serif;
       --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
+
+      /* Spacing */
       --content-max: 780px;
+      --sidebar-width: 280px;
+
+      /* Transitions */
       --ease: cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
 
     body {
       font-family: var(--font-sans);
@@ -64,6 +84,7 @@
       background: var(--surface);
     }
 
+    /* ── PROGRESS BAR ─────────────────────────── */
     .progress-bar {
       position: fixed;
       top: 0;
@@ -75,6 +96,7 @@
       transition: width 0.15s var(--ease);
     }
 
+    /* ── TOP NAV ──────────────────────────────── */
     .top-nav {
       position: sticky;
       top: 0;
@@ -162,6 +184,7 @@
       padding: 0 4px;
     }
 
+    /* ── HERO ─────────────────────────────────── */
     .hero {
       background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%);
       border-bottom: 1px solid var(--border);
@@ -222,33 +245,117 @@
       color: var(--ink-muted);
     }
 
-    .content {
-      max-width: var(--content-max);
-      margin: 0 auto;
-      padding: 3rem 2rem 6rem;
+    .hero-meta-item svg {
+      width: 16px;
+      height: 16px;
+      color: var(--teal-600);
     }
 
+    /* ── MAIN LAYOUT ──────────────────────────── */
+    .main-layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr var(--sidebar-width);
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .content {
+      padding: 3rem 0 6rem;
+      min-width: 0;
+    }
+
+    /* ── SIDEBAR TOC ──────────────────────────── */
+    .sidebar {
+      position: sticky;
+      top: 76px;
+      padding: 2rem 0;
+      max-height: calc(100vh - 76px);
+      overflow-y: auto;
+    }
+
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-muted);
+      margin-bottom: 1rem;
+      padding-left: 14px;
+    }
+
+    .toc-list {
+      list-style: none;
+    }
+
+    .toc-item a {
+      display: block;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--ink-muted);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: all 0.2s var(--ease);
+      line-height: 1.5;
+    }
+
+    .toc-item a:hover {
+      color: var(--ink);
+      background: var(--surface-alt);
+    }
+
+    .toc-item a.active {
+      color: var(--teal-700);
+      border-left-color: var(--teal-500);
+      background: var(--teal-50);
+      font-weight: 500;
+    }
+
+    /* ── TYPOGRAPHY ────────────────────────────── */
     .content h2 {
       font-family: var(--font-serif);
       font-size: 1.85rem;
       font-weight: 400;
       color: var(--ink);
       margin: 3rem 0 1rem;
+      padding-top: 1rem;
       scroll-margin-top: 80px;
     }
 
-    .content h2:first-child { margin-top: 0; }
+    .content h2:first-child {
+      margin-top: 0;
+    }
 
     .content h3 {
       font-size: 1.15rem;
       font-weight: 600;
       color: var(--ink);
       margin: 2rem 0 0.75rem;
+      scroll-margin-top: 80px;
     }
 
     .content p {
       margin-bottom: 1.25rem;
       color: var(--ink-light);
+    }
+
+    .content strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .content a {
+      color: var(--teal-700);
+      text-decoration: underline;
+      text-decoration-color: var(--teal-200);
+      text-underline-offset: 3px;
+      transition: text-decoration-color 0.2s;
+    }
+
+    .content a:hover {
+      text-decoration-color: var(--teal-600);
     }
 
     .content ul, .content ol {
@@ -261,13 +368,25 @@
       color: var(--ink-light);
     }
 
-    .content li::marker { color: var(--teal-500); }
+    .content li::marker {
+      color: var(--teal-500);
+    }
 
+    /* ── SECTION DIVIDER ──────────────────────── */
+    .section-divider {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 3rem 0;
+    }
+
+    /* ── CALLOUT BOXES ────────────────────────── */
     .callout {
       padding: 1.25rem 1.5rem;
       border-radius: 12px;
       margin-bottom: 1.5rem;
       border: 1px solid;
+      position: relative;
     }
 
     .callout-header {
@@ -277,6 +396,12 @@
       font-size: 14px;
       font-weight: 600;
       margin-bottom: 0.5rem;
+    }
+
+    .callout-header svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
     }
 
     .callout p:last-child { margin-bottom: 0; }
@@ -293,6 +418,12 @@
     }
     .callout.important .callout-header { color: var(--amber-600); }
 
+    .callout.danger {
+      background: var(--red-50);
+      border-color: var(--red-100);
+    }
+    .callout.danger .callout-header { color: var(--red-600); }
+
     .callout.tip {
       background: var(--purple-50);
       border-color: var(--purple-100);
@@ -305,93 +436,403 @@
     }
     .callout.success .callout-header { color: var(--teal-700); }
 
-    .section-divider {
-      border: none;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--border), transparent);
-      margin: 3rem 0;
-    }
-
-    .coming-soon-banner {
-      background: var(--amber-50);
-      border: 1px solid var(--amber-100);
+    /* ── CODE BLOCKS ──────────────────────────── */
+    .code-block {
+      position: relative;
+      margin-bottom: 1.5rem;
       border-radius: 12px;
-      padding: 2.5rem;
-      text-align: center;
-      margin: 2rem 0;
+      overflow: hidden;
+      border: 1px solid var(--border);
     }
 
-    .coming-soon-banner h3 {
-      color: var(--amber-600);
-      margin-bottom: 0.5rem;
-    }
-
-    .coming-soon-banner p {
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+      background: var(--surface-alt);
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
       color: var(--ink-muted);
-      margin-bottom: 0;
     }
 
-    .topics-preview {
+    .code-lang {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .code-copy {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: white;
+      font-size: 11px;
+      font-family: var(--font-sans);
+      color: var(--ink-muted);
+      cursor: pointer;
+      transition: all 0.2s var(--ease);
+    }
+
+    .code-copy:hover {
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    .code-copy.copied {
+      background: var(--teal-50);
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    pre {
+      margin: 0;
+      padding: 1.25rem 1.5rem;
+      overflow-x: auto;
+      background: #1e293b;
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: #e2e8f0;
+    }
+
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.88em;
+    }
+
+    p code, li code {
+      padding: 2px 7px;
       background: var(--surface-alt);
       border: 1px solid var(--border);
+      border-radius: 5px;
+      color: var(--teal-800);
+      font-size: 0.85em;
+    }
+
+    /* Syntax highlights */
+    .hl-keyword  { color: #c084fc; }
+    .hl-string   { color: #86efac; }
+    .hl-comment  { color: #64748b; font-style: italic; }
+    .hl-function { color: #7dd3fc; }
+    .hl-number   { color: #fbbf24; }
+    .hl-flag     { color: #f472b6; }
+
+    /* ── COLLAPSIBLE (DETAILS) ────────────────── */
+    details {
+      margin-bottom: 1.25rem;
+      border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 1.5rem 2rem;
-      margin: 1.5rem 0;
+      overflow: hidden;
+      transition: border-color 0.2s var(--ease);
     }
 
-    .topics-preview h3 {
-      font-size: 0.95rem;
-      margin-bottom: 0.75rem;
+    details[open] {
+      border-color: var(--teal-200);
+    }
+
+    details summary {
+      padding: 1rem 1.25rem;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      background: var(--surface-alt);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.2s var(--ease);
+      user-select: none;
+    }
+
+    details summary::-webkit-details-marker { display: none; }
+
+    details summary::before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+      flex-shrink: 0;
+      transition: transform 0.2s var(--ease);
+    }
+
+    details[open] summary::before {
+      transform: rotate(90deg);
+    }
+
+    details summary:hover {
+      background: var(--teal-50);
+    }
+
+    .details-body {
+      padding: 1.25rem 1.5rem;
+    }
+
+    .details-body p:last-child { margin-bottom: 0; }
+
+    /* ── VIDEO EMBED ──────────────────────────── */
+    .video-card {
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      background: #0f172a;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .video-caption {
+      padding: 12px 16px;
+      background: var(--surface-alt);
+      font-size: 13px;
+      color: var(--ink-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .video-caption svg {
+      width: 14px;
+      height: 14px;
+      color: var(--red-500);
+    }
+
+    /* ── RESOURCE CARDS ───────────────────────── */
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .resource-card {
+      display: flex;
+      gap: 14px;
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      background: white;
+    }
+
+    .resource-card:hover {
+      border-color: var(--teal-300);
+      background: var(--teal-50);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .resource-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 18px;
+    }
+
+    .resource-icon.docs    { background: var(--blue-50);   color: var(--blue-600); }
+    .resource-icon.video   { background: var(--red-50);    color: var(--red-500); }
+    .resource-icon.github  { background: var(--ink);       color: white; }
+    .resource-icon.article { background: var(--amber-50);  color: var(--amber-600); }
+    .resource-icon.pdf     { background: var(--purple-50); color: var(--purple-600); }
+
+    .resource-info {
+      min-width: 0;
+    }
+
+    .resource-title {
+      font-size: 14px;
+      font-weight: 600;
       color: var(--ink);
+      margin-bottom: 2px;
+      line-height: 1.4;
     }
 
-    .topics-preview ul {
+    .resource-desc {
+      font-size: 12px;
+      color: var(--ink-muted);
+      line-height: 1.5;
+    }
+
+    /* ── ASSIGNMENT CARDS ─────────────────────── */
+    .assignment {
+      border: 2px solid var(--teal-200);
+      border-radius: 14px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--teal-50) 0%, white 100%);
+    }
+
+    .assignment-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .assignment-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--teal-700);
+    }
+
+    .assignment-difficulty {
+      display: inline-flex;
+      padding: 4px 10px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .difficulty-l1 { background: var(--teal-100); color: var(--teal-800); }
+    .difficulty-l2 { background: var(--amber-100); color: var(--amber-600); }
+    .difficulty-l3 { background: var(--red-100); color: var(--red-600); }
+
+    .assignment h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .assignment p {
+      font-size: 14px;
+    }
+
+    .checklist {
       list-style: none;
       padding: 0;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 0.5rem;
     }
 
-    .topics-preview li {
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-light);
       font-size: 14px;
-      color: var(--ink-light);
-      padding-left: 1.25rem;
-      position: relative;
     }
 
-    .topics-preview li::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 8px;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
+    .checklist li:last-child { border-bottom: none; }
+
+    .check-box {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      border: 2px solid var(--border);
+      flex-shrink: 0;
+      margin-top: 1px;
+      cursor: pointer;
+      transition: all 0.15s var(--ease);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .check-box:hover {
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked {
       background: var(--teal-500);
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+    }
+
+    /* ── ARCHITECTURE DIAGRAM ─────────────────── */
+    .diagram {
+      margin: 1.5rem 0;
+      padding: 2rem;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow-x: auto;
+    }
+
+    .diagram pre {
+      background: transparent;
+      color: var(--ink);
+      padding: 0;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .diagram-caption {
+      margin-top: 1rem;
+      font-size: 12px;
+      color: var(--ink-muted);
+      text-align: center;
+      font-style: italic;
+    }
+
+    /* ── FOOTER ───────────────────────────────── */
+    .chapter-footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      background: var(--surface-alt);
+    }
+
+    .chapter-footer-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
     }
 
     .footer-nav {
-      max-width: var(--content-max);
-      margin: 0 auto;
-      padding: 2rem;
       display: flex;
       justify-content: space-between;
-      border-top: 1px solid var(--border);
+      align-items: center;
+      gap: 1rem;
     }
 
     .footer-nav-link {
       display: flex;
       flex-direction: column;
-      text-decoration: none;
-      padding: 1rem;
+      gap: 4px;
+      padding: 1rem 1.5rem;
+      border: 1px solid var(--border);
       border-radius: 12px;
-      transition: background 0.2s var(--ease);
-      max-width: 45%;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      max-width: 320px;
+      background: white;
     }
 
     .footer-nav-link:hover {
-      background: var(--surface-alt);
+      border-color: var(--teal-300);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
     }
 
     .footer-nav-label {
@@ -399,46 +840,61 @@
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.06em;
-      color: var(--ink-muted);
-      margin-bottom: 4px;
+      color: var(--teal-600);
     }
 
     .footer-nav-title {
       font-size: 15px;
       font-weight: 600;
-      color: var(--teal-700);
+      color: var(--ink);
     }
 
-    .footer-nav-link.next { text-align: right; margin-left: auto; }
-
-    .footer {
+    .footer-brand {
       text-align: center;
-      padding: 2rem;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
       font-size: 13px;
       color: var(--ink-muted);
-      border-top: 1px solid var(--border);
     }
 
-    .footer a {
-      color: var(--teal-700);
-      text-decoration: none;
+    /* ── RESPONSIVE ───────────────────────────── */
+    @media (max-width: 960px) {
+      .main-layout {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        display: none;
+      }
+      .resource-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
-    .footer a:hover { text-decoration: underline; }
+    @media (max-width: 640px) {
+      .hero { padding: 2.5rem 1.25rem 2rem; }
+      .main-layout { padding: 0 1.25rem; }
+      .content { padding: 2rem 0 4rem; }
+      pre { padding: 1rem; font-size: 12.5px; }
+      .footer-nav { flex-direction: column; }
+      .footer-nav-link { max-width: 100%; width: 100%; }
+    }
 
-    @media (max-width: 768px) {
-      .hero { padding: 3rem 1.5rem 2.5rem; }
-      .content { padding: 2rem 1.5rem 4rem; }
-      .hero h1 { font-size: 2rem; }
-      .footer-nav { flex-direction: column; gap: 1rem; }
-      .footer-nav-link { max-width: 100%; }
-      .footer-nav-link.next { text-align: left; }
+    /* ── PRINT ────────────────────────────────── */
+    @media print {
+      .top-nav, .sidebar, .progress-bar { display: none; }
+      .main-layout { display: block; }
+      .content { padding: 0; }
+      .hero { background: white; border: none; }
+      pre { background: #f1f5f9; color: var(--ink); border: 1px solid var(--border); }
     }
   </style>
 </head>
 <body>
+  <!-- Progress Bar -->
   <div class="progress-bar" id="progressBar"></div>
 
+  <!-- Top Navigation -->
   <nav class="top-nav">
     <div class="top-nav-inner">
       <a class="nav-brand" href="index.html">
@@ -453,70 +909,733 @@
     </div>
   </nav>
 
+  <!-- Hero -->
   <header class="hero">
     <div class="hero-inner">
       <div class="hero-chapter-label">
-        <span>Chapter 06</span> 
+        <span>Chapter 06</span> &middot; Phase 3: Interpersonal
       </div>
       <h1>Building Client Relationships</h1>
-      <p class="hero-subtitle">First impressions, trust signals, regular check-ins, expectation setting, boundary management</p>
+      <p class="hero-subtitle">
+        Learn the interpersonal skills that turn transactional client engagements into long-term partnerships. Build trust, manage expectations, and create the kind of rapport that survives project challenges.
+      </p>
       <div class="hero-meta">
-        <div class="hero-meta-item">3 Assignments</div>
-        <div class="hero-meta-item">~45 min read</div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Estimated: 3&ndash;4 hours
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          3 Advancement Levels
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          3 Assignments
+        </div>
       </div>
     </div>
   </header>
 
-  <main class="content">
-    <h2>Overview</h2>
-    <p>This chapter covers <strong>building client relationships</strong> as part of the Client Communication Foundations curriculum. You will build practical skills through guided explanations, code examples, and hands-on assignments.</p>
+  <!-- Main Content + Sidebar -->
+  <div class="main-layout">
+    <main class="content">
 
-    <div class="topics-preview">
-      <h3>Topics Covered</h3>
+      <h2 id="why-this-matters">Why This Matters</h2>
+
+      <p>
+        Technical skills get you hired. Relationship skills get you retained. In client services, the
+        difference between a one-time project and a multi-year partnership is rarely about code quality
+        &mdash; it is about the quality of the human connection between your team and theirs. Clients
+        stay with vendors they trust, even when cheaper alternatives exist.
+      </p>
+
+      <p>
+        Building client relationships is not about being charming or entertaining. It is about being
+        reliable, transparent, and genuinely invested in the client's success. Every interaction
+        &mdash; every email, every meeting, every Slack message &mdash; either deposits into or
+        withdraws from the trust account. The professionals who understand this build relationships
+        that survive scope changes, missed deadlines, and budget cuts.
+      </p>
+
+      <div class="callout concept">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Key Insight
+        </div>
+        <p>
+          Research from the Harvard Business Review shows that acquiring a new client costs 5 to 25
+          times more than retaining an existing one. Yet most organizations invest heavily in sales
+          and almost nothing in relationship management. The communication skills in this chapter are
+          your organization's most cost-effective retention tool.
+        </p>
+      </div>
+
+      <p>
+        The relationship you build with a client is not just good for business &mdash; it is good for
+        the work itself. Clients who trust you give you more creative freedom, provide faster feedback,
+        and are more forgiving when things go wrong. Trust is the lubricant that makes project
+        execution smoother in every dimension.
+      </p>
+
+      <hr class="section-divider">
+
+      <h2 id="key-concepts">Key Concepts</h2>
+
+      <h3 id="trust-equation">1. The Trust Equation</h3>
+
+      <p>
+        The Trust Equation, developed by David Maister, Charles Green, and Robert Galford in
+        "The Trusted Advisor," provides a mathematical framework for understanding trust in
+        professional relationships. It identifies four components:
+      </p>
+
+      <div class="diagram">
+<pre>
+  +---------------------------------------------------------------+
+  |                  THE TRUST EQUATION                             |
+  |                                                                 |
+  |              Credibility + Reliability + Intimacy               |
+  |   Trust  =  ─────────────────────────────────────               |
+  |                       Self-Orientation                          |
+  |                                                                 |
+  +---------------------------------------------------------------+
+  |                                                                 |
+  |   CREDIBILITY  (words)                                          |
+  |   "I can trust what she says about the technology."             |
+  |   - Domain expertise demonstrated, not claimed                  |
+  |   - Accurate estimates and honest assessments                   |
+  |   - Willingness to say "I do not know"                          |
+  |                                                                 |
+  |   RELIABILITY  (actions)                                        |
+  |   "I can count on him to deliver what he promises."             |
+  |   - Meeting deadlines consistently                              |
+  |   - Following up when you say you will                          |
+  |   - Small promises kept build big trust                         |
+  |                                                                 |
+  |   INTIMACY  (safety)                                            |
+  |   "I feel safe sharing concerns with this team."                |
+  |   - Handling sensitive information with discretion              |
+  |   - Creating space for honest conversation                      |
+  |   - Remembering personal details and context                    |
+  |                                                                 |
+  |   SELF-ORIENTATION  (motive) - THE DENOMINATOR                  |
+  |   "Are they focused on my success or their own?"                |
+  |   - Lower is better: focus on client outcomes                   |
+  |   - Recommending solutions that benefit the client              |
+  |   - Being honest when a simpler solution exists                 |
+  +---------------------------------------------------------------+
+</pre>
+        <div class="diagram-caption">Figure 1: The Trust Equation &mdash; Credibility + Reliability + Intimacy, divided by Self-Orientation</div>
+      </div>
+
+      <div class="callout important">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Critical Insight
+        </div>
+        <p>
+          Self-orientation is the denominator. It has the greatest impact on trust. A professional who
+          is highly credible, reliable, and personable but clearly motivated by their own interests will
+          still not be trusted. Conversely, a less experienced professional who genuinely puts the
+          client's interests first will often be trusted more than the seasoned expert who seems
+          self-serving.
+        </p>
+      </div>
+
+      <h3 id="expectation-management">2. Expectation Management Framework</h3>
+
+      <p>
+        Most client dissatisfaction comes not from poor work but from misaligned expectations. If a
+        client expects a feature by Friday and you deliver it on Monday, you have failed &mdash; even
+        if the work is excellent. Expectation management is the practice of ensuring that what the
+        client expects and what you deliver are always in alignment.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">framework</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── EXPECTATION MANAGEMENT FRAMEWORK ──────────── */</span>
+
+<span class="hl-keyword">1. SET: Establish clear expectations upfront</span>
+"We will deliver the dashboard MVP by March 15th.
+It will include user authentication, the main
+dashboard view, and the reports page. It will NOT
+include the admin panel or the API integrations
+&mdash; those are scheduled for Sprint 3."
+
+<span class="hl-keyword">2. SIGNAL: Communicate early when reality shifts</span>
+"I wanted to give you an early heads-up that the
+API integration is taking longer than estimated.
+We are currently 2 days behind on that component.
+I have three options to discuss with you..."
+
+<span class="hl-keyword">3. SOLVE: Present options, not just problems</span>
+"Option A: Extend the deadline by 3 days (no cost)
+Option B: Reduce scope to core endpoints only
+Option C: Add a developer for 1 week (+$X cost)
+I recommend Option A because [reasoning]."
+
+<span class="hl-keyword">4. SATISFY: Confirm the resolution meets needs</span>
+"Just confirming: we agreed to Option A, extending
+the deadline to March 18th. I will send daily
+progress updates until delivery. Does that work?"
+</pre>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          The Under-Promise Rule
+        </div>
+        <p>
+          Always add a buffer to your estimates. If you think something will take 3 days, tell the
+          client 4 days. If you deliver in 3 days, you exceed expectations. If you hit a snag and
+          deliver in 4 days, you met expectations. This is not dishonesty &mdash; it is risk management.
+          The buffer accounts for the unknowns that exist in every project.
+        </p>
+      </div>
+
+      <h3 id="proactive-communication">3. Proactive Communication Patterns</h3>
+
+      <p>
+        Reactive communication means the client has to ask for updates. Proactive communication means
+        you provide updates before they are needed. The shift from reactive to proactive is the single
+        biggest trust-builder in client relationships.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">template</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── PROACTIVE UPDATE TEMPLATES ────────────────── */</span>
+
+<span class="hl-keyword">Weekly Status Update (send every Friday afternoon)</span>
+Subject: [Project] Weekly Update &mdash; Week of [Date]
+
+Hi [Client Name],
+
+Here is your weekly update for [Project]:
+
+COMPLETED THIS WEEK:
+- [Feature/task] &mdash; deployed to staging
+- [Feature/task] &mdash; code review complete
+- [Feature/task] &mdash; design approved
+
+IN PROGRESS:
+- [Feature/task] &mdash; 70% complete, on track
+- [Feature/task] &mdash; started, ETA [date]
+
+BLOCKERS / NEEDS YOUR INPUT:
+- [Item] &mdash; need approval by [date]
+- [Item] &mdash; waiting on [resource/access]
+
+NEXT WEEK PLAN:
+- [Feature/task] &mdash; target completion [date]
+- [Feature/task] &mdash; starting [date]
+
+Overall Status: ON TRACK / AT RISK / BLOCKED
+Sprint Burn: [X]% complete, [Y] days remaining
+
+Best,
+[Your name]
+
+<span class="hl-keyword">Early Warning (send immediately when risk is identified)</span>
+Subject: [Project] Heads Up &mdash; [Brief Issue]
+
+Hi [Client Name],
+
+Quick heads up on something I want you to be aware of:
+
+ISSUE: [Brief description]
+IMPACT: [What this affects and by how much]
+OUR PLAN: [What we are doing about it]
+WHAT WE NEED: [Any client input/decision needed]
+TIMELINE: [When we will have more information]
+
+This is not urgent but I wanted to flag it early.
+Happy to discuss on our next call or sooner if needed.
+
+Best,
+[Your name]
+</pre>
+      </div>
+
+      <h3 id="relationship-mapping">4. Relationship Mapping</h3>
+
+      <p>
+        In any client organization, multiple stakeholders have different levels of influence, different
+        communication preferences, and different priorities. Understanding this landscape is critical
+        for effective relationship management.
+      </p>
+
+      <div class="diagram">
+<pre>
+  +---------------------------------------------------------------+
+  |              STAKEHOLDER RELATIONSHIP MAP                       |
+  |                                                                 |
+  |   HIGH INFLUENCE                                                |
+  |   +-----------+  +-----------+                                  |
+  |   |  SPONSOR  |  |  DECISION |                                  |
+  |   |           |  |  MAKER    |                                  |
+  |   | VP of Eng |  | CTO       |                                  |
+  |   | Monthly   |  | Quarterly |                                  |
+  |   | updates   |  | reviews   |                                  |
+  |   +-----------+  +-----------+                                  |
+  |                                                                 |
+  |   MEDIUM INFLUENCE                                              |
+  |   +-----------+  +-----------+  +-----------+                   |
+  |   |  PRODUCT  |  |  TECH     |  |  PROJECT  |                   |
+  |   |  OWNER    |  |  LEAD     |  |  MANAGER  |                   |
+  |   | Weekly    |  | Daily     |  | Daily     |                   |
+  |   | reviews   |  | standups  |  | syncs     |                   |
+  |   +-----------+  +-----------+  +-----------+                   |
+  |                                                                 |
+  |   LOW INFLUENCE (but important for execution)                   |
+  |   +-----------+  +-----------+  +-----------+                   |
+  |   |  END USER |  |  QA TEAM  |  |  DESIGN   |                   |
+  |   | Sprint    |  | Per ticket|  | Per feature|                  |
+  |   | demos     |  |           |  |           |                   |
+  |   +-----------+  +-----------+  +-----------+                   |
+  +---------------------------------------------------------------+
+</pre>
+        <div class="diagram-caption">Figure 2: Stakeholder relationship map &mdash; tailor communication frequency and depth to influence level</div>
+      </div>
+
+      <h3 id="difficult-clients">5. Working with Difficult Client Personalities</h3>
+
+      <p>
+        Difficult clients are rarely difficult people. They are usually people under pressure who
+        express that pressure in ways that are challenging to work with. Understanding the pattern
+        helps you respond effectively.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">framework</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── DIFFICULT CLIENT PLAYBOOK ─────────────────── */</span>
+
+<span class="hl-keyword">The Micromanager</span>
+<span class="hl-function">Pattern:</span> Wants updates on everything, checks in
+  constantly, reviews every small decision.
+<span class="hl-function">Root Cause:</span> Lack of visibility creates anxiety.
+<span class="hl-function">Solution:</span> Over-communicate. Send daily updates
+  unprompted. Share your task board. Make your
+  work visible. As trust builds, they will
+  naturally back off.
+
+<span class="hl-keyword">The Scope Creeper</span>
+<span class="hl-function">Pattern:</span> Constantly adds "just one more thing,"
+  treats every conversation as a feature request.
+<span class="hl-function">Root Cause:</span> No formal change management process.
+<span class="hl-function">Solution:</span> Implement a lightweight change request
+  process. For every new request: "Great idea.
+  Let me estimate the impact on timeline and
+  budget and get back to you by tomorrow."
+
+<span class="hl-keyword">The Silent Approver</span>
+<span class="hl-function">Pattern:</span> Never gives feedback, approves everything
+  quickly, then is unhappy with the result.
+<span class="hl-function">Root Cause:</span> Too busy, does not review, or
+  conflict-avoidant.
+<span class="hl-function">Solution:</span> Make feedback low-effort. Instead of
+  "Do you have feedback?" ask "Which of these
+  two options do you prefer: A or B?" Binary
+  choices are easier than open-ended reviews.
+
+<span class="hl-keyword">The Blame Shifter</span>
+<span class="hl-function">Pattern:</span> When things go wrong, immediately blames
+  the vendor team.
+<span class="hl-function">Root Cause:</span> Internal pressure from their leadership.
+<span class="hl-function">Solution:</span> Document everything. Meeting notes, email
+  trails, decision logs. When blame surfaces,
+  calmly reference the documentation. "I
+  understand the concern. Looking at our meeting
+  notes from [date], we agreed to [decision].
+  Let us focus on solving the current issue."
+</pre>
+      </div>
+
+      <div class="callout danger">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+          Boundary Warning
+        </div>
+        <p>
+          Building relationships does not mean accepting abuse. If a client is consistently
+          disrespectful, uses inappropriate language, or makes unreasonable demands despite
+          clear communication, escalate to your leadership. Your well-being is not negotiable.
+          Professional relationships require mutual respect.
+        </p>
+      </div>
+
+      <h3 id="long-term-partnerships">6. From Project to Partnership</h3>
+
+      <p>
+        The transition from a one-time project engagement to a long-term partnership requires
+        deliberate effort. Here are the practices that signal partnership thinking:
+      </p>
+
       <ul>
-            <li>First impressions</li>
-            <li>trust signals</li>
-            <li>regular check-ins</li>
-            <li>expectation setting</li>
-            <li>boundary management</li>
+        <li><strong>Share industry insights</strong> &mdash; Forward relevant articles, case studies, or conference talks that relate to the client's business. This shows you think about them beyond the current SOW.</li>
+        <li><strong>Suggest improvements unprompted</strong> &mdash; When you notice an opportunity for optimization, bring it up. "I noticed your checkout flow has a 40% drop-off at step 3. Here is a quick analysis of why and what we could do about it."</li>
+        <li><strong>Celebrate their wins</strong> &mdash; When the client achieves a business milestone, acknowledge it. A simple "Congratulations on the Series B" or "Saw the product was featured in TechCrunch" goes a long way.</li>
+        <li><strong>Plan for the future</strong> &mdash; Before the current project ends, propose what comes next. Do not wait for the client to ask &mdash; have a roadmap conversation proactively.</li>
+        <li><strong>Introduce connections</strong> &mdash; If you know someone who could help the client with a challenge outside your scope, make the introduction. This is the ultimate low-self-orientation move.</li>
       </ul>
-    </div>
 
-    <hr class="section-divider">
+      <details>
+        <summary>How to recover a damaged client relationship</summary>
+        <div class="details-body">
+          <p>
+            When a relationship has been damaged &mdash; by missed deadlines, poor communication, or a
+            trust violation &mdash; recovery follows a specific pattern. First, acknowledge the damage
+            without excuses: "We let you down, and I take full responsibility." Second, present a
+            concrete recovery plan with specific commitments. Third, over-deliver on those commitments
+            for the next 2-3 weeks. Fourth, have an honest conversation about whether the relationship
+            can be rebuilt. Some relationships can be repaired. Some cannot. Either way, handling it
+            with professionalism protects your reputation.
+          </p>
+        </div>
+      </details>
 
-    <div class="coming-soon-banner">
-      <h3>Content In Development</h3>
-      <p>Full chapter content with detailed explanations, code examples, video walkthroughs, and assignments is being developed. Check back soon.</p>
-    </div>
+      <details>
+        <summary>Navigating client organizational politics</summary>
+        <div class="details-body">
+          <p>
+            Every client organization has internal politics. Sometimes your primary contact disagrees
+            with their leadership. Sometimes two stakeholders have conflicting priorities. Your role is
+            not to take sides &mdash; it is to make the disagreement visible and help them resolve it.
+            Use your outsider perspective as an advantage: "I have heard two different priorities from
+            the team. Can we align on which takes precedence so we can plan accordingly?"
+          </p>
+        </div>
+      </details>
 
-    <div class="callout tip">
-      <div class="callout-header">What You Will Learn</div>
-      <p>By the end of this chapter, you will understand first impressions, trust signals, regular check-ins, expectation setting, boundary management and be able to apply these concepts in real-world scenarios.</p>
-    </div>
+      <details>
+        <summary>Building rapport in remote relationships</summary>
+        <div class="details-body">
+          <p>
+            Remote relationships require more intentional effort. Spend the first 2-3 minutes of every
+            call on non-work conversation. Ask about their weekend, their local weather, their hobbies.
+            Keep notes on what they share so you can follow up. "How was your daughter's soccer
+            tournament?" shows you listen and care. In remote work, these small moments replace the
+            hallway conversations that build connection in office settings.
+          </p>
+        </div>
+      </details>
 
-  </main>
+      <hr class="section-divider">
 
-  <nav class="footer-nav">
-        <a class="footer-nav-link prev" href="chapter-05.html">
-          <span class="footer-nav-label">&larr; Previous</span>
-          <span class="footer-nav-title">Chapter 05: Giving and Receiving Feedback</span>
+      <h2 id="watch-learn">Watch &amp; Learn</h2>
+
+      <p>These videos cover relationship building and trust in professional settings.</p>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/Unzc731iCUY?rel=0&amp;modestbranding=1"
+            title="Building Client Relationships &mdash; Trust, transparency, and long-term partnership dynamics"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Building Client Relationships &mdash; Trust, transparency, and long-term partnership dynamics
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/eIho2S0ZahI?rel=0&amp;modestbranding=1"
+            title="Interpersonal Skills for Client Services &mdash; From transactional to transformational relationships"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Interpersonal Skills for Client Services &mdash; From transactional to transformational relationships
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="further-reading">Further Reading</h2>
+
+      <p>Resources on trust, relationship management, and client retention.</p>
+
+      <div class="resource-grid">
+        <a class="resource-card" href="https://www.amazon.com/Trusted-Advisor-David-H-Maister/dp/0743212347" target="_blank" rel="noopener">
+          <div class="resource-icon article">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">The Trusted Advisor &mdash; Maister, Green, Galford</div>
+            <div class="resource-desc">The foundational text on building trust in professional services relationships.</div>
+          </div>
         </a>
-        <a class="footer-nav-link next" href="chapter-07.html">
-          <span class="footer-nav-label">Next &rarr;</span>
-          <span class="footer-nav-title">Chapter 07: Documentation Culture</span>
+        <a class="resource-card" href="https://hbr.org/2014/10/the-value-of-keeping-the-right-customers" target="_blank" rel="noopener">
+          <div class="resource-icon article">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">The Value of Keeping the Right Customers (HBR)</div>
+            <div class="resource-desc">Research on why client retention is more valuable than acquisition.</div>
+          </div>
         </a>
-  </nav>
+        <a class="resource-card" href="https://www.amazon.com/Never-Split-Difference-Negotiating-Depended/dp/0062407805" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Never Split the Difference &mdash; Chris Voss</div>
+            <div class="resource-desc">FBI negotiator's guide to communication, empathy, and influence in high-stakes conversations.</div>
+          </div>
+        </a>
+        <a class="resource-card" href="https://www.gallup.com/workplace/236927/employee-engagement-drives-growth.aspx" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Gallup: Engagement Drives Growth</div>
+            <div class="resource-desc">Research connecting engagement, trust, and business outcomes in professional relationships.</div>
+          </div>
+        </a>
+      </div>
 
-  <footer class="footer">
-    ILA (Iksha Learning Academy) &middot; Client Communication Foundations &middot; <a href="index.html">All Chapters</a>
+      <hr class="section-divider">
+
+      <h2 id="assignments">Assignments</h2>
+
+      <p>Complete these in order. Use real client relationships whenever possible.</p>
+
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 1
+          </div>
+          <span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span>
+        </div>
+        <h4>Assess Your Trust Equation</h4>
+        <p>Evaluate one client relationship using the Trust Equation framework and identify areas for improvement.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Select one active client relationship to analyze</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Rate yourself 1-10 on each Trust Equation component (Credibility, Reliability, Intimacy, Self-Orientation)</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Ask a colleague who works with the same client to rate you independently</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Compare scores and identify the biggest gap between self-perception and external perception</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create an action plan with 3 specific behaviors to improve your weakest area</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Review progress after 2 weeks</span></li>
+        </ul>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>Your colleague confirms they can see improvement in the area you targeted, and the client relationship feels measurably stronger.</p>
+        </div>
+      </div>
+
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 2
+          </div>
+          <span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span>
+        </div>
+        <h4>Build a Proactive Communication System</h4>
+        <p>Implement a systematic proactive communication approach for one client engagement.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Set up a weekly status update using the template from this chapter</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Send at least one early warning communication when a risk is identified</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Map the client's stakeholders and define appropriate communication cadence for each</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Track client response patterns &mdash; note which updates get the most engagement</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Adjust your communication approach based on what you learn over 4 weeks</span></li>
+        </ul>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>The client comments positively on communication quality, or metrics show reduced 'where are we on X?' questions from the client.</p>
+        </div>
+      </div>
+
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 3
+          </div>
+          <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Production-Ready</span>
+        </div>
+        <h4>Execute a Relationship Recovery or Deepening Plan</h4>
+        <p>Either recover a struggling client relationship or deepen an existing one into a partnership.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>For recovery: document the relationship damage, create a recovery plan, and execute it over 4 weeks</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>For deepening: identify 3 partnership behaviors from this chapter and implement them consistently</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Share at least 2 unsolicited insights or recommendations with the client</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Facilitate a future-planning conversation about post-project opportunities</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Document what worked, what did not, and lessons learned for your team</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Present a case study of the relationship transformation to your organization</span></li>
+        </ul>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>The client relationship demonstrably improves (measured by NPS, renewal, or expanded scope), and your case study is used as a training resource.</p>
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="self-check">Self-Check</h2>
+
+      <p>Before moving to Chapter 07, assess your relationship skills honestly.</p>
+
+      <details>
+        <summary>Would your client describe you as proactive or reactive?</summary>
+        <div class="details-body">
+          <p>
+            Ask your client directly: "Do you feel you have to ask us for updates, or do we provide
+            them before you need them?" If the answer is the former, implement the weekly status update
+            template immediately. Proactive communication is the fastest path to trust.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Can you name three personal details about your primary client contact?</summary>
+        <div class="details-body">
+          <p>
+            If you cannot, you have not invested enough in the intimacy component of the Trust Equation.
+            Start paying attention during small talk. Take notes after calls. These details make
+            the difference between a transactional relationship and a genuine partnership.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>When was the last time you recommended something that did not benefit you financially?</summary>
+        <div class="details-body">
+          <p>
+            Low self-orientation is the most powerful trust builder. If you have never told a client
+            "You do not need us for this &mdash; here is a simpler solution," you are missing
+            opportunities to build deep, lasting trust. Clients remember when you put their
+            interests first.
+          </p>
+        </div>
+      </details>
+
+    </main>
+
+    <!-- Sidebar: Table of Contents -->
+    <aside class="sidebar">
+      <div class="sidebar-title">On this page</div>
+      <ul class="toc-list">
+        <li class="toc-item"><a href="#why-this-matters">Why This Matters</a></li>
+        <li class="toc-item"><a href="#key-concepts">Key Concepts</a></li>
+        <li class="toc-item"><a href="#trust-equation" style="padding-left: 28px; font-size: 12px;">The Trust Equation</a></li>
+        <li class="toc-item"><a href="#expectation-management" style="padding-left: 28px; font-size: 12px;">Expectation Management</a></li>
+        <li class="toc-item"><a href="#proactive-communication" style="padding-left: 28px; font-size: 12px;">Proactive Communication</a></li>
+        <li class="toc-item"><a href="#relationship-mapping" style="padding-left: 28px; font-size: 12px;">Relationship Mapping</a></li>
+        <li class="toc-item"><a href="#difficult-clients" style="padding-left: 28px; font-size: 12px;">Working with Difficult Clients</a></li>
+        <li class="toc-item"><a href="#long-term-partnerships" style="padding-left: 28px; font-size: 12px;">Long-Term Partnerships</a></li>
+        <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a></li>
+        <li class="toc-item"><a href="#further-reading">Further Reading</a></li>
+        <li class="toc-item"><a href="#assignments">Assignments</a></li>
+        <li class="toc-item"><a href="#self-check">Self-Check</a></li>
+      </ul>
+    </aside>
+  </div>
+
+  <!-- Footer Navigation -->
+  <footer class="chapter-footer">
+    <div class="chapter-footer-inner">
+      <nav class="footer-nav">
+        <a class="footer-nav-link" href="chapter-05.html">
+          <span class="footer-nav-label">&larr; Previous Chapter</span>
+          <span class="footer-nav-title">05: Giving and Receiving Feedback</span>
+        </a>
+        <a class="footer-nav-link" href="chapter-07.html">
+          <span class="footer-nav-label">Next Chapter &rarr;</span>
+          <span class="footer-nav-title">07: Documentation Culture</span>
+        </a>
+      </nav>
+      <div class="footer-brand">
+        ILA (Iksha Learning Academy) &middot; Client Communication Professional Certification &middot; Level 1
+      </div>
+    </div>
   </footer>
 
+  <!-- Scripts -->
   <script>
+    // ── Progress Bar ──
     window.addEventListener('scroll', () => {
-      const h = document.documentElement;
-      const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
-      document.getElementById('progressBar').style.width = Math.min(pct, 100) + '%';
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      document.getElementById('progressBar').style.width = progress + '%';
     });
+
+    // ── Active TOC ──
+    const tocLinks = document.querySelectorAll('.toc-item a');
+    const sections = [];
+
+    tocLinks.forEach(link => {
+      const id = link.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) sections.push({ id, el, link });
+    });
+
+    const observerOptions = {
+      rootMargin: '-80px 0px -60% 0px',
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const item = sections.find(s => s.el === entry.target);
+        if (item) {
+          if (entry.isIntersecting) {
+            tocLinks.forEach(l => l.classList.remove('active'));
+            item.link.classList.add('active');
+          }
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(s => observer.observe(s.el));
+
+    // ── Copy Code ──
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      const text = pre.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.classList.add('copied');
+        btn.textContent = 'Copied!';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.textContent = 'Copy';
+        }, 2000);
+      });
+    }
   </script>
 </body>
 </html>

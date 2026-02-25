@@ -3,236 +3,934 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chapter 07: Transactions and Concurrency &mdash; ILA PostgreSQL Basic</title>
+  <title>Chapter 07: Transactions and Concurrency — ILA PostgreSQL</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
-    :root{--ink:#0f172a;--ink-light:#334155;--ink-muted:#64748b;--surface:#ffffff;--surface-alt:#f8fafc;--surface-warm:#fffbeb;--border:#e2e8f0;--border-light:#f1f5f9;--teal-50:#f0fdfa;--teal-100:#ccfbf1;--teal-200:#99f6e4;--teal-500:#14b8a6;--teal-600:#0d9488;--teal-700:#0f766e;--teal-800:#115e59;--teal-900:#134e4a;--blue-50:#eff6ff;--blue-100:#dbeafe;--blue-500:#3b82f6;--blue-600:#2563eb;--blue-700:#1d4ed8;--amber-50:#fffbeb;--amber-100:#fef3c7;--amber-500:#f59e0b;--amber-600:#d97706;--red-50:#fef2f2;--red-100:#fee2e2;--red-500:#ef4444;--red-600:#dc2626;--purple-50:#faf5ff;--purple-100:#f3e8ff;--purple-500:#a855f7;--purple-600:#9333ea;--font-sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;--font-serif:'Instrument Serif',Georgia,serif;--font-mono:'JetBrains Mono','Fira Code',monospace;--content-max:780px;--sidebar-width:280px;--ease:cubic-bezier(0.4,0,0.2,1)}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}body{font-family:var(--font-sans);font-size:16px;line-height:1.7;color:var(--ink);background:var(--surface)}.progress-bar{position:fixed;top:0;left:0;width:0%;height:3px;background:linear-gradient(90deg,var(--teal-500),var(--blue-500));z-index:1000;transition:width .15s var(--ease)}.top-nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem}.top-nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px}.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--teal-800)}.nav-brand-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--teal-600),var(--teal-800));border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px}.nav-brand-text{font-weight:700;font-size:15px;letter-spacing:-.02em}.nav-chapter-nav{display:flex;align-items:center;gap:8px}.nav-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;color:var(--ink-muted);border:1px solid var(--border);background:#fff;transition:all .2s var(--ease);cursor:pointer}.nav-btn:hover{color:var(--ink);border-color:var(--teal-500);background:var(--teal-50)}.nav-btn.disabled{opacity:.4;pointer-events:none}.nav-current{font-size:13px;font-weight:600;color:var(--ink-light);padding:0 4px}.hero{background:linear-gradient(170deg,var(--teal-50) 0%,var(--surface) 50%,var(--blue-50) 100%);border-bottom:1px solid var(--border);padding:4rem 2rem 3.5rem}.hero-inner{max-width:var(--content-max);margin:0 auto}.hero-chapter-label{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--teal-700);text-transform:uppercase;letter-spacing:.08em;margin-bottom:1rem}.hero-chapter-label span{background:var(--teal-100);padding:3px 10px;border-radius:100px}.hero h1{font-family:var(--font-serif);font-size:clamp(2.4rem,5vw,3.2rem);font-weight:400;line-height:1.15;color:var(--ink);margin-bottom:1rem}.hero-subtitle{font-size:1.15rem;color:var(--ink-light);line-height:1.65;max-width:640px}.hero-meta{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1.5rem}.hero-meta-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-muted)}.hero-meta-item svg{width:16px;height:16px;color:var(--teal-600)}.main-layout{max-width:1200px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:1fr var(--sidebar-width);gap:4rem;align-items:start}.content{padding:3rem 0 6rem;min-width:0}.sidebar{position:sticky;top:76px;padding:2rem 0;max-height:calc(100vh - 76px);overflow-y:auto}.sidebar-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-muted);margin-bottom:1rem;padding-left:14px}.toc-list{list-style:none}.toc-item a{display:block;padding:6px 14px;font-size:13px;color:var(--ink-muted);text-decoration:none;border-left:2px solid transparent;transition:all .2s var(--ease);line-height:1.5}.toc-item a:hover{color:var(--ink);background:var(--surface-alt)}.toc-item a.active{color:var(--teal-700);border-left-color:var(--teal-500);background:var(--teal-50);font-weight:500}.content h2{font-family:var(--font-serif);font-size:1.85rem;font-weight:400;color:var(--ink);margin:3rem 0 1rem;padding-top:1rem;scroll-margin-top:80px}.content h2:first-child{margin-top:0}.content h3{font-size:1.15rem;font-weight:600;color:var(--ink);margin:2rem 0 .75rem;scroll-margin-top:80px}.content p{margin-bottom:1.25rem;color:var(--ink-light)}.content strong{color:var(--ink);font-weight:600}.content a{color:var(--teal-700);text-decoration:underline;text-decoration-color:var(--teal-200);text-underline-offset:3px}.content ul,.content ol{margin-bottom:1.25rem;padding-left:1.5rem}.content li{margin-bottom:.5rem;color:var(--ink-light)}.content li::marker{color:var(--teal-500)}.section-divider{border:none;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:3rem 0}.callout{padding:1.25rem 1.5rem;border-radius:12px;margin-bottom:1.5rem;border:1px solid}.callout-header{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;margin-bottom:.5rem}.callout-header svg{width:18px;height:18px;flex-shrink:0}.callout p:last-child{margin-bottom:0}.callout.concept{background:var(--blue-50);border-color:var(--blue-100)}.callout.concept .callout-header{color:var(--blue-700)}.callout.important{background:var(--amber-50);border-color:var(--amber-100)}.callout.important .callout-header{color:var(--amber-600)}.callout.danger{background:var(--red-50);border-color:var(--red-100)}.callout.danger .callout-header{color:var(--red-600)}.callout.tip{background:var(--purple-50);border-color:var(--purple-100)}.callout.tip .callout-header{color:var(--purple-600)}.callout.success{background:var(--teal-50);border-color:var(--teal-100)}.callout.success .callout-header{color:var(--teal-700)}.code-block{position:relative;margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}.code-header{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:var(--surface-alt);border-bottom:1px solid var(--border);font-size:12px;color:var(--ink-muted)}.code-lang{font-family:var(--font-mono);font-weight:600;text-transform:uppercase;letter-spacing:.05em}.code-copy{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:#fff;font-size:11px;font-family:var(--font-sans);color:var(--ink-muted);cursor:pointer;transition:all .2s var(--ease)}.code-copy:hover{border-color:var(--teal-500);color:var(--teal-700)}.code-copy.copied{background:var(--teal-50);border-color:var(--teal-500);color:var(--teal-700)}pre{margin:0;padding:1.25rem 1.5rem;overflow-x:auto;background:#1e293b;font-family:var(--font-mono);font-size:13.5px;line-height:1.7;color:#e2e8f0}code{font-family:var(--font-mono);font-size:.88em}p code,li code{padding:2px 7px;background:var(--surface-alt);border:1px solid var(--border);border-radius:5px;color:var(--teal-800);font-size:.85em}.hl-keyword{color:#c084fc}.hl-string{color:#86efac}.hl-comment{color:#64748b;font-style:italic}.hl-function{color:#7dd3fc}.hl-number{color:#fbbf24}.hl-flag{color:#f472b6}details{margin-bottom:1.25rem;border:1px solid var(--border);border-radius:12px;overflow:hidden}details[open]{border-color:var(--teal-200)}details summary{padding:1rem 1.25rem;font-weight:600;font-size:15px;cursor:pointer;background:var(--surface-alt);list-style:none;display:flex;align-items:center;gap:10px;user-select:none}details summary::-webkit-details-marker{display:none}details summary::before{content:'';width:20px;height:20px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain;flex-shrink:0;transition:transform .2s var(--ease)}details[open] summary::before{transform:rotate(90deg)}details summary:hover{background:var(--teal-50)}.details-body{padding:1.25rem 1.5rem}.details-body p:last-child{margin-bottom:0}.video-card{margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}.video-wrapper{position:relative;padding-bottom:56.25%;height:0;background:#0f172a}.video-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}.video-caption{padding:12px 16px;background:var(--surface-alt);font-size:13px;color:var(--ink-muted);display:flex;align-items:center;gap:6px}.video-caption svg{width:14px;height:14px;color:var(--red-500)}.resource-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1rem;margin-bottom:1.5rem}.resource-card{display:flex;gap:14px;padding:1rem 1.25rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all .2s var(--ease);background:#fff}.resource-card:hover{border-color:var(--teal-300);background:var(--teal-50);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.04)}.resource-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}.resource-icon.docs{background:var(--blue-50);color:var(--blue-600)}.resource-icon.article{background:var(--amber-50);color:var(--amber-600)}.resource-info{min-width:0}.resource-title{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:2px;line-height:1.4}.resource-desc{font-size:12px;color:var(--ink-muted);line-height:1.5}.assignment{border:2px solid var(--teal-200);border-radius:14px;padding:1.5rem 1.75rem;margin-bottom:1.5rem;background:linear-gradient(135deg,var(--teal-50) 0%,#fff 100%)}.assignment-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}.assignment-label{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--teal-700)}.assignment-difficulty{display:inline-flex;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:600}.difficulty-l1{background:var(--teal-100);color:var(--teal-800)}.difficulty-l2{background:var(--amber-100);color:var(--amber-600)}.difficulty-l3{background:var(--red-100);color:var(--red-600)}.assignment h4{font-size:1.05rem;font-weight:700;margin-bottom:.75rem}.assignment p{font-size:14px}.checklist{list-style:none;padding:0}.checklist li{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border-light);font-size:14px}.checklist li:last-child{border-bottom:none}.check-box{width:20px;height:20px;border-radius:6px;border:2px solid var(--border);flex-shrink:0;margin-top:1px;cursor:pointer;transition:all .15s var(--ease);display:flex;align-items:center;justify-content:center}.check-box:hover{border-color:var(--teal-500)}.check-box.checked{background:var(--teal-500);border-color:var(--teal-500)}.check-box.checked::after{content:'';width:10px;height:10px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain}.diagram{margin:1.5rem 0;padding:2rem;background:var(--surface-alt);border:1px solid var(--border);border-radius:14px;overflow-x:auto}.diagram pre{background:transparent;color:var(--ink);padding:0;font-size:13px;line-height:1.6}.diagram-caption{margin-top:1rem;font-size:12px;color:var(--ink-muted);text-align:center;font-style:italic}.chapter-footer{border-top:1px solid var(--border);padding:3rem 2rem;background:var(--surface-alt)}.chapter-footer-inner{max-width:var(--content-max);margin:0 auto}.footer-nav{display:flex;justify-content:space-between;align-items:center;gap:1rem}.footer-nav-link{display:flex;flex-direction:column;gap:4px;padding:1rem 1.5rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all .2s var(--ease);max-width:320px;background:#fff}.footer-nav-link:hover{border-color:var(--teal-300);box-shadow:0 4px 12px rgba(0,0,0,.04)}.footer-nav-label{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--teal-600)}.footer-nav-title{font-size:15px;font-weight:600;color:var(--ink)}.footer-brand{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border);font-size:13px;color:var(--ink-muted)}@media(max-width:960px){.main-layout{grid-template-columns:1fr}.sidebar{display:none}.resource-grid{grid-template-columns:1fr}}@media(max-width:640px){.hero{padding:2.5rem 1.25rem 2rem}.main-layout{padding:0 1.25rem}.content{padding:2rem 0 4rem}pre{padding:1rem;font-size:12.5px}.footer-nav{flex-direction:column}.footer-nav-link{max-width:100%;width:100%}}@media print{.top-nav,.sidebar,.progress-bar{display:none}.main-layout{display:block}.content{padding:0}.hero{background:#fff;border:none}pre{background:#f1f5f9;color:var(--ink);border:1px solid var(--border)}}
+    /* ═══════════════════════════════════════════════
+       ILA DESIGN SYSTEM — v1.0
+       Iksha Learning Academy
+       ═══════════════════════════════════════════════ */
+
+    :root {
+      --ink:        #0f172a;
+      --ink-light:  #334155;
+      --ink-muted:  #64748b;
+      --surface:    #ffffff;
+      --surface-alt:#f8fafc;
+      --surface-warm:#fffbeb;
+      --border:     #e2e8f0;
+      --border-light:#f1f5f9;
+      --teal-50:  #f0fdfa; --teal-100: #ccfbf1; --teal-200: #99f6e4;
+      --teal-500: #14b8a6; --teal-600: #0d9488; --teal-700: #0f766e;
+      --teal-800: #115e59; --teal-900: #134e4a;
+      --blue-50:  #eff6ff; --blue-100: #dbeafe; --blue-500: #3b82f6;
+      --blue-600: #2563eb; --blue-700: #1d4ed8;
+      --amber-50:  #fffbeb; --amber-100: #fef3c7; --amber-500: #f59e0b; --amber-600: #d97706;
+      --red-50:   #fef2f2; --red-100:  #fee2e2; --red-500:  #ef4444; --red-600:  #dc2626;
+      --purple-50:  #faf5ff; --purple-100: #f3e8ff; --purple-500: #a855f7; --purple-600: #9333ea;
+      --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-serif: 'Instrument Serif', Georgia, serif;
+      --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
+      --content-max: 780px;
+      --sidebar-width: 280px;
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    body { font-family: var(--font-sans); font-size: 16px; line-height: 1.7; color: var(--ink); background: var(--surface); }
+
+    .progress-bar { position: fixed; top: 0; left: 0; width: 0%; height: 3px; background: linear-gradient(90deg, var(--teal-500), var(--blue-500)); z-index: 1000; transition: width 0.15s var(--ease); }
+
+    .top-nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 2rem; }
+    .top-nav-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 56px; }
+    .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--teal-800); }
+    .nav-brand-icon { width: 32px; height: 32px; background: linear-gradient(135deg, var(--teal-600), var(--teal-800)); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 14px; }
+    .nav-brand-text { font-weight: 700; font-size: 15px; letter-spacing: -0.02em; }
+    .nav-chapter-nav { display: flex; align-items: center; gap: 8px; }
+    .nav-btn { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 8px; font-size: 13px; font-weight: 500; text-decoration: none; color: var(--ink-muted); border: 1px solid var(--border); background: white; transition: all 0.2s var(--ease); cursor: pointer; }
+    .nav-btn:hover { color: var(--ink); border-color: var(--teal-500); background: var(--teal-50); }
+    .nav-btn.disabled { opacity: 0.4; pointer-events: none; }
+    .nav-current { font-size: 13px; font-weight: 600; color: var(--ink-light); padding: 0 4px; }
+
+    .hero { background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%); border-bottom: 1px solid var(--border); padding: 4rem 2rem 3.5rem; }
+    .hero-inner { max-width: var(--content-max); margin: 0 auto; }
+    .hero-chapter-label { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--teal-700); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1rem; }
+    .hero-chapter-label span { background: var(--teal-100); padding: 3px 10px; border-radius: 100px; }
+    .hero h1 { font-family: var(--font-serif); font-size: clamp(2.4rem, 5vw, 3.2rem); font-weight: 400; line-height: 1.15; color: var(--ink); margin-bottom: 1rem; }
+    .hero-subtitle { font-size: 1.15rem; color: var(--ink-light); line-height: 1.65; max-width: 640px; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.5rem; }
+    .hero-meta-item { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--ink-muted); }
+    .hero-meta-item svg { width: 16px; height: 16px; color: var(--teal-600); }
+
+    .main-layout { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: grid; grid-template-columns: 1fr var(--sidebar-width); gap: 4rem; align-items: start; }
+    .content { padding: 3rem 0 6rem; min-width: 0; }
+
+    .sidebar { position: sticky; top: 76px; padding: 2rem 0; max-height: calc(100vh - 76px); overflow-y: auto; }
+    .sidebar-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-muted); margin-bottom: 1rem; padding-left: 14px; }
+    .toc-list { list-style: none; }
+    .toc-item a { display: block; padding: 6px 14px; font-size: 13px; color: var(--ink-muted); text-decoration: none; border-left: 2px solid transparent; transition: all 0.2s var(--ease); line-height: 1.5; }
+    .toc-item a:hover { color: var(--ink); background: var(--surface-alt); }
+    .toc-item a.active { color: var(--teal-700); border-left-color: var(--teal-500); background: var(--teal-50); font-weight: 500; }
+
+    .content h2 { font-family: var(--font-serif); font-size: 1.85rem; font-weight: 400; color: var(--ink); margin: 3rem 0 1rem; padding-top: 1rem; scroll-margin-top: 80px; }
+    .content h2:first-child { margin-top: 0; }
+    .content h3 { font-size: 1.15rem; font-weight: 600; color: var(--ink); margin: 2rem 0 0.75rem; scroll-margin-top: 80px; }
+    .content p { margin-bottom: 1.25rem; color: var(--ink-light); }
+    .content strong { color: var(--ink); font-weight: 600; }
+    .content a { color: var(--teal-700); text-decoration: underline; text-decoration-color: var(--teal-200); text-underline-offset: 3px; transition: text-decoration-color 0.2s; }
+    .content a:hover { text-decoration-color: var(--teal-600); }
+    .content ul, .content ol { margin-bottom: 1.25rem; padding-left: 1.5rem; }
+    .content li { margin-bottom: 0.5rem; color: var(--ink-light); }
+    .content li::marker { color: var(--teal-500); }
+
+    .section-divider { border: none; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 3rem 0; }
+
+    .callout { padding: 1.25rem 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; border: 1px solid; position: relative; }
+    .callout-header { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; margin-bottom: 0.5rem; }
+    .callout-header svg { width: 18px; height: 18px; flex-shrink: 0; }
+    .callout p:last-child { margin-bottom: 0; }
+    .callout.concept { background: var(--blue-50); border-color: var(--blue-100); }
+    .callout.concept .callout-header { color: var(--blue-700); }
+    .callout.important { background: var(--amber-50); border-color: var(--amber-100); }
+    .callout.important .callout-header { color: var(--amber-600); }
+    .callout.danger { background: var(--red-50); border-color: var(--red-100); }
+    .callout.danger .callout-header { color: var(--red-600); }
+    .callout.tip { background: var(--purple-50); border-color: var(--purple-100); }
+    .callout.tip .callout-header { color: var(--purple-600); }
+    .callout.success { background: var(--teal-50); border-color: var(--teal-100); }
+    .callout.success .callout-header { color: var(--teal-700); }
+
+    .code-block { position: relative; margin-bottom: 1.5rem; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+    .code-header { display: flex; align-items: center; justify-content: space-between; padding: 8px 16px; background: var(--surface-alt); border-bottom: 1px solid var(--border); font-size: 12px; color: var(--ink-muted); }
+    .code-lang { font-family: var(--font-mono); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+    .code-copy { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border); background: white; font-size: 11px; font-family: var(--font-sans); color: var(--ink-muted); cursor: pointer; transition: all 0.2s var(--ease); }
+    .code-copy:hover { border-color: var(--teal-500); color: var(--teal-700); }
+    .code-copy.copied { background: var(--teal-50); border-color: var(--teal-500); color: var(--teal-700); }
+
+    pre { margin: 0; padding: 1.25rem 1.5rem; overflow-x: auto; background: #1e293b; font-family: var(--font-mono); font-size: 13.5px; line-height: 1.7; color: #e2e8f0; }
+    code { font-family: var(--font-mono); font-size: 0.88em; }
+    p code, li code { padding: 2px 7px; background: var(--surface-alt); border: 1px solid var(--border); border-radius: 5px; color: var(--teal-800); font-size: 0.85em; }
+
+    .hl-keyword  { color: #c084fc; }
+    .hl-string   { color: #86efac; }
+    .hl-comment  { color: #64748b; font-style: italic; }
+    .hl-function { color: #7dd3fc; }
+    .hl-number   { color: #fbbf24; }
+    .hl-flag     { color: #f472b6; }
+
+    details { margin-bottom: 1.25rem; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; transition: border-color 0.2s var(--ease); }
+    details[open] { border-color: var(--teal-200); }
+    details summary { padding: 1rem 1.25rem; font-weight: 600; font-size: 15px; cursor: pointer; background: var(--surface-alt); list-style: none; display: flex; align-items: center; gap: 10px; transition: background 0.2s var(--ease); user-select: none; }
+    details summary::-webkit-details-marker { display: none; }
+    details summary::before { content: ''; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E"); background-size: contain; flex-shrink: 0; transition: transform 0.2s var(--ease); }
+    details[open] summary::before { transform: rotate(90deg); }
+    details summary:hover { background: var(--teal-50); }
+    .details-body { padding: 1.25rem 1.5rem; }
+    .details-body p:last-child { margin-bottom: 0; }
+
+    .video-card { margin-bottom: 1.5rem; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+    .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; background: #0f172a; }
+    .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+    .video-caption { padding: 12px 16px; background: var(--surface-alt); font-size: 13px; color: var(--ink-muted); display: flex; align-items: center; gap: 6px; }
+    .video-caption svg { width: 14px; height: 14px; color: var(--red-500); }
+
+    .resource-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+    .resource-card { display: flex; gap: 14px; padding: 1rem 1.25rem; border: 1px solid var(--border); border-radius: 12px; text-decoration: none; transition: all 0.2s var(--ease); background: white; }
+    .resource-card:hover { border-color: var(--teal-300); background: var(--teal-50); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+    .resource-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 18px; }
+    .resource-icon.docs    { background: var(--blue-50);   color: var(--blue-600); }
+    .resource-icon.video   { background: var(--red-50);    color: var(--red-500); }
+    .resource-icon.github  { background: var(--ink);       color: white; }
+    .resource-icon.article { background: var(--amber-50);  color: var(--amber-600); }
+    .resource-icon.pdf     { background: var(--purple-50); color: var(--purple-600); }
+    .resource-info { min-width: 0; }
+    .resource-title { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 2px; line-height: 1.4; }
+    .resource-desc { font-size: 12px; color: var(--ink-muted); line-height: 1.5; }
+
+    .assignment { border: 2px solid var(--teal-200); border-radius: 14px; padding: 1.5rem 1.75rem; margin-bottom: 1.5rem; background: linear-gradient(135deg, var(--teal-50) 0%, white 100%); }
+    .assignment-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+    .assignment-label { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--teal-700); }
+    .assignment-difficulty { display: inline-flex; padding: 4px 10px; border-radius: 100px; font-size: 11px; font-weight: 600; }
+    .difficulty-l1 { background: var(--teal-100); color: var(--teal-800); }
+    .difficulty-l2 { background: var(--amber-100); color: var(--amber-600); }
+    .difficulty-l3 { background: var(--red-100); color: var(--red-600); }
+    .assignment h4 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.75rem; }
+    .assignment p { font-size: 14px; }
+    .checklist { list-style: none; padding: 0; }
+    .checklist li { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border-light); font-size: 14px; }
+    .checklist li:last-child { border-bottom: none; }
+    .check-box { width: 20px; height: 20px; border-radius: 6px; border: 2px solid var(--border); flex-shrink: 0; margin-top: 1px; cursor: pointer; transition: all 0.15s var(--ease); display: flex; align-items: center; justify-content: center; }
+    .check-box:hover { border-color: var(--teal-500); }
+    .check-box.checked { background: var(--teal-500); border-color: var(--teal-500); }
+    .check-box.checked::after { content: ''; width: 10px; height: 10px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E"); background-size: contain; }
+
+    .diagram { margin: 1.5rem 0; padding: 2rem; background: var(--surface-alt); border: 1px solid var(--border); border-radius: 14px; overflow-x: auto; }
+    .diagram pre { background: transparent; color: var(--ink); padding: 0; font-size: 13px; line-height: 1.6; }
+    .diagram-caption { margin-top: 1rem; font-size: 12px; color: var(--ink-muted); text-align: center; font-style: italic; }
+
+    .chapter-footer { border-top: 1px solid var(--border); padding: 3rem 2rem; background: var(--surface-alt); }
+    .chapter-footer-inner { max-width: var(--content-max); margin: 0 auto; }
+    .footer-nav { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+    .footer-nav-link { display: flex; flex-direction: column; gap: 4px; padding: 1rem 1.5rem; border: 1px solid var(--border); border-radius: 12px; text-decoration: none; transition: all 0.2s var(--ease); max-width: 320px; background: white; }
+    .footer-nav-link:hover { border-color: var(--teal-300); box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+    .footer-nav-label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--teal-600); }
+    .footer-nav-title { font-size: 15px; font-weight: 600; color: var(--ink); }
+    .footer-brand { text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); font-size: 13px; color: var(--ink-muted); }
+
+    @media (max-width: 960px) { .main-layout { grid-template-columns: 1fr; } .sidebar { display: none; } .resource-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 640px) { .hero { padding: 2.5rem 1.25rem 2rem; } .main-layout { padding: 0 1.25rem; } .content { padding: 2rem 0 4rem; } pre { padding: 1rem; font-size: 12.5px; } .footer-nav { flex-direction: column; } .footer-nav-link { max-width: 100%; width: 100%; } }
+    @media print { .top-nav, .sidebar, .progress-bar { display: none; } .main-layout { display: block; } .content { padding: 0; } .hero { background: white; border: none; } pre { background: #f1f5f9; color: var(--ink); border: 1px solid var(--border); } }
   </style>
 </head>
 <body>
   <div class="progress-bar" id="progressBar"></div>
-  <nav class="top-nav"><div class="top-nav-inner"><a class="nav-brand" href="index.html"><div class="nav-brand-icon">ILA</div><span class="nav-brand-text">Iksha Learning Academy</span></a><div class="nav-chapter-nav"><a class="nav-btn" href="chapter-06.html">&larr; Previous</a><span class="nav-current">07 / 08</span><a class="nav-btn" href="chapter-08.html">Next &rarr;</a></div></div></nav>
 
-  <header class="hero"><div class="hero-inner">
-    <div class="hero-chapter-label"><span>Chapter 07</span> &middot; PostgreSQL Basic</div>
-    <h1>Transactions and Concurrency</h1>
-    <p class="hero-subtitle">Understand ACID properties, isolation levels, row-level locking, and deadlock prevention. Learn how PostgreSQL MVCC enables concurrent bid processing without data corruption.</p>
-    <div class="hero-meta">
-      <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Estimated: 3&ndash;4 hours</div>
-      <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>5 Key Concepts</div>
-      <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>3 Assignments</div>
+  <nav class="top-nav">
+    <div class="top-nav-inner">
+      <a class="nav-brand" href="index.html">
+        <div class="nav-brand-icon">ILA</div>
+        <span class="nav-brand-text">Iksha Learning Academy</span>
+      </a>
+      <div class="nav-chapter-nav">
+        <a class="nav-btn" href="chapter-06.html">&larr; Previous</a>
+        <span class="nav-current">07 / 08</span>
+        <a class="nav-btn" href="chapter-08.html">Next &rarr;</a>
+      </div>
     </div>
-  </div></header>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-chapter-label">
+        <span>Chapter 07</span> &middot; Phase 4: Applied PostgreSQL
+      </div>
+      <h1>Transactions and Concurrency</h1>
+      <p class="hero-subtitle">
+        Learn how PostgreSQL keeps data consistent when multiple users read and write
+        simultaneously. Master ACID properties, isolation levels, MVCC internals, locking
+        strategies, and deadlock prevention &mdash; the foundation of reliable data systems.
+      </p>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Estimated: 3&ndash;4 hours
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          3 Advancement Levels
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          3 Assignments
+        </div>
+      </div>
+    </div>
+  </header>
 
   <div class="main-layout">
     <main class="content">
 
       <h2 id="why-this-matters">Why This Matters</h2>
 
-      <p>In an ad bidding platform, multiple operations must succeed or fail together. When a bid is accepted, the system must: (1) record the lead, (2) decrement the campaign budget, (3) update the account balance. If step 2 succeeds but step 3 fails, the account balance is wrong and the advertiser is overcharged. Transactions guarantee atomicity &mdash; all steps succeed or none do.</p>
+      <p>
+        In a single-user system, data consistency is trivial. But the moment two users try to
+        update the same bank balance, book the same airline seat, or decrement the same inventory
+        count, you face the fundamental challenge of concurrent data access. Without transactions
+        and proper isolation, you get lost updates, phantom reads, and corrupted data.
+      </p>
 
-      <p>Concurrency is equally critical. Hundreds of bid requests arrive simultaneously. Without proper isolation, two requests might read the same budget balance, both approve a bid, and overspend the campaign. Understanding isolation levels and PostgreSQL's MVCC architecture prevents these race conditions.</p>
+      <p>
+        PostgreSQL solves this with a sophisticated Multi-Version Concurrency Control (MVCC)
+        system that allows readers and writers to operate simultaneously without blocking each
+        other. Understanding how MVCC works &mdash; and what guarantees each isolation level
+        provides &mdash; is essential for building applications that are both correct and performant
+        under concurrent load.
+      </p>
+
+      <p>
+        This chapter covers the theory and practice of transactions: the ACID properties that define
+        correctness, the isolation levels that control visibility, the locking mechanisms that prevent
+        conflicts, and the deadlock detection system that keeps everything moving.
+      </p>
 
       <div class="callout concept">
-        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>Key Insight</div>
-        <p>ACID is not academic theory &mdash; it is the reason the ad portal can process thousands of concurrent bid requests without data corruption. Atomicity ensures complete operations, Consistency enforces constraints, Isolation prevents race conditions, and Durability guarantees nothing is lost after a crash.</p>
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Key Insight
+        </div>
+        <p>
+          PostgreSQL never lets readers block writers or writers block readers. This is the core
+          advantage of MVCC. While other databases use locking to serialize access, PostgreSQL
+          maintains multiple versions of each row so concurrent transactions can each see a
+          consistent snapshot of the data without waiting.
+        </p>
       </div>
 
       <hr class="section-divider">
 
       <h2 id="key-concepts">Key Concepts</h2>
 
-      <h3 id="acid">1. ACID Properties</h3>
+      <h3 id="acid-properties">1. ACID Properties Explained</h3>
+
+      <p>
+        ACID is the set of guarantees that every relational transaction must provide. These are
+        not optional features &mdash; they are the contract between your application and the
+        database.
+      </p>
 
       <ul>
-        <li><strong>Atomicity</strong> &mdash; A transaction is all-or-nothing. If any statement fails, all changes are rolled back.</li>
-        <li><strong>Consistency</strong> &mdash; Transactions move the database from one valid state to another. Constraints are enforced.</li>
-        <li><strong>Isolation</strong> &mdash; Concurrent transactions don't see each other's uncommitted changes (by default).</li>
-        <li><strong>Durability</strong> &mdash; Once committed, data survives crashes. PostgreSQL uses WAL (Write-Ahead Log).</li>
+        <li><strong>Atomicity</strong> &mdash; A transaction is all-or-nothing. Either every statement succeeds, or none of them take effect. There is no partial commit.</li>
+        <li><strong>Consistency</strong> &mdash; A transaction moves the database from one valid state to another. Constraints (NOT NULL, UNIQUE, FOREIGN KEY, CHECK) are enforced at commit time.</li>
+        <li><strong>Isolation</strong> &mdash; Concurrent transactions behave as if they were running serially. The degree of isolation is configurable via isolation levels.</li>
+        <li><strong>Durability</strong> &mdash; Once a transaction commits, its changes survive even if the server crashes immediately after. PostgreSQL achieves this through Write-Ahead Logging (WAL).</li>
       </ul>
 
-      <div class="code-block"><div class="code-header"><span class="code-lang">sql</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+      <div class="diagram">
 <pre>
-<span class="hl-comment">-- Transaction: accept a bid and update balances atomically</span>
-<span class="hl-keyword">BEGIN</span>;
-
-<span class="hl-comment">-- 1. Insert the lead record</span>
-<span class="hl-keyword">INSERT INTO</span> leads (account_id, campaign_id, lead_type_id, product_type_id, created_at, updated_at)
-<span class="hl-keyword">VALUES</span> (<span class="hl-number">7</span>, <span class="hl-number">42</span>, <span class="hl-number">1</span>, <span class="hl-number">1</span>, <span class="hl-function">NOW</span>(), <span class="hl-function">NOW</span>());
-
-<span class="hl-comment">-- 2. Decrement the account balance</span>
-<span class="hl-keyword">UPDATE</span> account_balances
-<span class="hl-keyword">SET</span> current_balance = current_balance - <span class="hl-number">12.50</span>, updated_at = <span class="hl-function">NOW</span>()
-<span class="hl-keyword">WHERE</span> user_id = <span class="hl-number">7</span>;
-
-<span class="hl-comment">-- 3. If everything succeeds, commit</span>
-<span class="hl-keyword">COMMIT</span>;
-
-<span class="hl-comment">-- If anything fails, roll back EVERYTHING</span>
-<span class="hl-comment">-- ROLLBACK;</span>
-</pre></div>
-
-      <h3 id="isolation-levels">2. Isolation Levels</h3>
-
-      <div class="code-block"><div class="code-header"><span class="code-lang">sql</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-<pre>
-<span class="hl-comment">-- Read Committed (default) — sees committed changes from other transactions</span>
-<span class="hl-keyword">SET TRANSACTION ISOLATION LEVEL READ COMMITTED</span>;
-
-<span class="hl-comment">-- Repeatable Read — snapshot at start, no phantom reads</span>
-<span class="hl-keyword">SET TRANSACTION ISOLATION LEVEL REPEATABLE READ</span>;
-
-<span class="hl-comment">-- Serializable — strongest isolation, transactions run as if sequential</span>
-<span class="hl-keyword">SET TRANSACTION ISOLATION LEVEL SERIALIZABLE</span>;
-
-<span class="hl-comment">-- Check current isolation level</span>
-<span class="hl-keyword">SHOW</span> transaction_isolation;
-</pre></div>
-
-      <h3 id="locking">3. Row-Level Locking</h3>
-
-      <div class="code-block"><div class="code-header"><span class="code-lang">sql</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-<pre>
-<span class="hl-comment">-- SELECT FOR UPDATE: lock the row to prevent concurrent modification</span>
-<span class="hl-keyword">BEGIN</span>;
-<span class="hl-keyword">SELECT</span> current_balance
-<span class="hl-keyword">FROM</span> account_balances
-<span class="hl-keyword">WHERE</span> user_id = <span class="hl-number">7</span>
-<span class="hl-keyword">FOR UPDATE</span>;
-
-<span class="hl-comment">-- Now no other transaction can modify this row until we COMMIT/ROLLBACK</span>
-<span class="hl-keyword">UPDATE</span> account_balances
-<span class="hl-keyword">SET</span> current_balance = current_balance - <span class="hl-number">12.50</span>
-<span class="hl-keyword">WHERE</span> user_id = <span class="hl-number">7</span>;
-<span class="hl-keyword">COMMIT</span>;
-
-<span class="hl-comment">-- SKIP LOCKED: skip rows locked by other transactions (useful for job queues)</span>
-<span class="hl-keyword">SELECT</span> * <span class="hl-keyword">FROM</span> leads
-<span class="hl-keyword">WHERE</span> disposition <span class="hl-keyword">IS NULL</span>
-<span class="hl-keyword">LIMIT</span> <span class="hl-number">1</span>
-<span class="hl-keyword">FOR UPDATE SKIP LOCKED</span>;
-</pre></div>
-
-      <h3 id="deadlocks">4. Deadlock Prevention</h3>
-
-      <p>Deadlocks occur when two transactions each hold a lock the other needs. PostgreSQL detects deadlocks and kills one transaction. Prevent them by always locking resources in the same order.</p>
-
-      <div class="callout danger">
-        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>Deadlock Example</div>
-        <p>Transaction A locks campaign 1, then tries to lock campaign 2. Transaction B locks campaign 2, then tries to lock campaign 1. Both are stuck. PostgreSQL will abort one. Prevention: always lock campaigns in ID order (lock campaign 1 first, then 2).</p>
+  ACID Guarantees in Practice
+ ┌──────────────────────────────────────────────────────────────┐
+ │                                                              │
+ │  BEGIN;                                                      │
+ │    UPDATE accounts SET balance = balance - 100 WHERE id = 1; │
+ │    UPDATE accounts SET balance = balance + 100 WHERE id = 2; │
+ │  COMMIT;                                                     │
+ │                                                              │
+ │  Atomicity:   Both UPDATEs succeed, or neither does          │
+ │  Consistency: Total balance across accounts remains the same │
+ │  Isolation:   Other transactions see the old OR new state    │
+ │  Durability:  After COMMIT, the transfer is permanent        │
+ │                                                              │
+ └──────────────────────────────────────────────────────────────┘
+</pre>
+        <div class="diagram-caption">Figure 1: A money transfer transaction demonstrating all four ACID properties</div>
       </div>
 
-      <h3 id="mvcc">5. MVCC (Multi-Version Concurrency Control)</h3>
+      <h3 id="transaction-syntax">2. Transaction Syntax (BEGIN, COMMIT, ROLLBACK, SAVEPOINT)</h3>
 
-      <p>PostgreSQL uses MVCC to allow readers and writers to operate simultaneously without blocking each other. Instead of locking rows for reads, PostgreSQL keeps multiple versions of each row and shows each transaction the version that was current when the transaction started.</p>
+      <p>
+        PostgreSQL provides full transaction control with <code>BEGIN</code>, <code>COMMIT</code>,
+        <code>ROLLBACK</code>, and <code>SAVEPOINT</code>. Savepoints allow you to roll back part
+        of a transaction without aborting the entire thing &mdash; essential for error handling in
+        complex business logic.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- Basic transaction</span>
+<span class="hl-keyword">BEGIN</span>;
+  <span class="hl-keyword">INSERT INTO</span> orders (customer_id, total_amount, status)
+  <span class="hl-keyword">VALUES</span> (<span class="hl-number">42</span>, <span class="hl-number">199.99</span>, <span class="hl-string">'pending'</span>);
+
+  <span class="hl-keyword">UPDATE</span> inventory
+  <span class="hl-keyword">SET</span> quantity = quantity - <span class="hl-number">1</span>
+  <span class="hl-keyword">WHERE</span> product_id = <span class="hl-number">101</span> <span class="hl-keyword">AND</span> quantity > <span class="hl-number">0</span>;
+<span class="hl-keyword">COMMIT</span>;
+
+<span class="hl-comment">-- Rollback if something goes wrong</span>
+<span class="hl-keyword">BEGIN</span>;
+  <span class="hl-keyword">UPDATE</span> accounts <span class="hl-keyword">SET</span> balance = balance - <span class="hl-number">500</span> <span class="hl-keyword">WHERE</span> id = <span class="hl-number">1</span>;
+  <span class="hl-comment">-- Oops, wrong amount!</span>
+<span class="hl-keyword">ROLLBACK</span>;  <span class="hl-comment">-- Nothing happened. Balance unchanged.</span>
+
+<span class="hl-comment">-- Savepoints for partial rollback</span>
+<span class="hl-keyword">BEGIN</span>;
+  <span class="hl-keyword">INSERT INTO</span> orders (customer_id, total_amount, status)
+  <span class="hl-keyword">VALUES</span> (<span class="hl-number">42</span>, <span class="hl-number">199.99</span>, <span class="hl-string">'pending'</span>);
+
+  <span class="hl-keyword">SAVEPOINT</span> before_notification;
+
+  <span class="hl-keyword">INSERT INTO</span> notifications (user_id, message)
+  <span class="hl-keyword">VALUES</span> (<span class="hl-number">42</span>, <span class="hl-string">'Order placed!'</span>);
+  <span class="hl-comment">-- If notification insert fails:</span>
+  <span class="hl-keyword">ROLLBACK TO SAVEPOINT</span> before_notification;
+  <span class="hl-comment">-- The order INSERT is still intact!</span>
+
+<span class="hl-keyword">COMMIT</span>;  <span class="hl-comment">-- Order is committed even if notification failed</span>
+</pre>
+      </div>
+
+      <div class="callout important">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Error Handling in PostgreSQL
+        </div>
+        <p>
+          In PostgreSQL, any error inside a transaction puts it in an <strong>aborted state</strong>.
+          No further commands will execute until you issue <code>ROLLBACK</code> (or
+          <code>ROLLBACK TO SAVEPOINT</code>). This is different from MySQL, where you can
+          continue after an error. Always use savepoints in application code when you want to
+          handle errors gracefully without aborting the entire transaction.
+        </p>
+      </div>
+
+      <h3 id="isolation-levels">3. Isolation Levels (Read Uncommitted through Serializable)</h3>
+
+      <p>
+        PostgreSQL supports four SQL standard isolation levels, though in practice it treats
+        Read Uncommitted the same as Read Committed (it never allows dirty reads). Each level
+        provides different protections against concurrency anomalies.
+      </p>
+
+      <div class="diagram">
+<pre>
+  Isolation Level        Dirty Read  Non-Repeatable Read  Phantom Read  Serialization Anomaly
+ ┌─────────────────────┬────────────┬────────────────────┬─────────────┬──────────────────────┐
+ │ Read Uncommitted*   │  No**      │  Possible          │  Possible   │  Possible            │
+ │ Read Committed      │  No        │  Possible          │  Possible   │  Possible            │
+ │ Repeatable Read     │  No        │  No                │  No***      │  Possible            │
+ │ Serializable        │  No        │  No                │  No         │  No                  │
+ └─────────────────────┴────────────┴────────────────────┴─────────────┴──────────────────────┘
+  *  PG treats Read Uncommitted as Read Committed
+  ** PG never allows dirty reads at any level
+  *** PG's Repeatable Read also prevents phantoms (stricter than SQL standard)
+</pre>
+        <div class="diagram-caption">Figure 2: Isolation levels and the anomalies they prevent in PostgreSQL</div>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- Set isolation level for a single transaction</span>
+<span class="hl-keyword">BEGIN TRANSACTION ISOLATION LEVEL</span> REPEATABLE READ;
+  <span class="hl-keyword">SELECT</span> balance <span class="hl-keyword">FROM</span> accounts <span class="hl-keyword">WHERE</span> id = <span class="hl-number">1</span>;
+  <span class="hl-comment">-- Even if another transaction commits a change to this row,</span>
+  <span class="hl-comment">-- we will see the same balance throughout our transaction</span>
+  <span class="hl-keyword">SELECT</span> balance <span class="hl-keyword">FROM</span> accounts <span class="hl-keyword">WHERE</span> id = <span class="hl-number">1</span>;
+  <span class="hl-comment">-- Same result as above — snapshot is frozen at BEGIN</span>
+<span class="hl-keyword">COMMIT</span>;
+
+<span class="hl-comment">-- Set default isolation level for a session</span>
+<span class="hl-keyword">SET</span> default_transaction_isolation = <span class="hl-string">'serializable'</span>;
+
+<span class="hl-comment">-- Serializable: prevents ALL anomalies (but may abort transactions)</span>
+<span class="hl-keyword">BEGIN TRANSACTION ISOLATION LEVEL</span> SERIALIZABLE;
+  <span class="hl-keyword">SELECT</span> <span class="hl-function">SUM</span>(balance) <span class="hl-keyword">FROM</span> accounts;
+  <span class="hl-keyword">UPDATE</span> accounts <span class="hl-keyword">SET</span> balance = balance + <span class="hl-number">100</span> <span class="hl-keyword">WHERE</span> id = <span class="hl-number">1</span>;
+<span class="hl-keyword">COMMIT</span>;
+<span class="hl-comment">-- If a concurrent serializable transaction conflicts,</span>
+<span class="hl-comment">-- one of them will get: ERROR: could not serialize access</span>
+<span class="hl-comment">-- Your app must retry the failed transaction!</span>
+
+<span class="hl-comment">-- Check the current isolation level</span>
+<span class="hl-keyword">SHOW</span> transaction_isolation;
+</pre>
+      </div>
 
       <div class="callout tip">
-        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>Pro Tip: MVCC and VACUUM</div>
-        <p>MVCC creates "dead tuples" &mdash; old row versions that no transaction needs anymore. VACUUM reclaims this space. The ad portal relies on autovacuum to keep tables healthy. We will cover VACUUM tuning in the Advanced course (Chapter 06).</p>
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Pro Tip: Read Committed in Practice
+        </div>
+        <p>
+          Read Committed is the default in PostgreSQL. Each <em>statement</em> within the transaction
+          sees the latest committed data at the time that statement starts. This means two identical
+          SELECT statements in the same transaction can return different results if another
+          transaction commits between them. For most web applications, this is perfectly acceptable
+          and provides the best performance/correctness trade-off.
+        </p>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- Demonstrating non-repeatable read under READ COMMITTED</span>
+<span class="hl-comment">-- Session 1:                         Session 2:</span>
+<span class="hl-comment">-- BEGIN;                             BEGIN;</span>
+<span class="hl-comment">-- SELECT balance FROM accounts       </span>
+<span class="hl-comment">--   WHERE id=1;  -- returns 1000    </span>
+<span class="hl-comment">--                                    UPDATE accounts</span>
+<span class="hl-comment">--                                      SET balance=500</span>
+<span class="hl-comment">--                                      WHERE id=1;</span>
+<span class="hl-comment">--                                    COMMIT;</span>
+<span class="hl-comment">-- SELECT balance FROM accounts       </span>
+<span class="hl-comment">--   WHERE id=1;  -- returns 500!    </span>
+<span class="hl-comment">-- (non-repeatable read)              </span>
+<span class="hl-comment">-- COMMIT;                            </span>
+
+<span class="hl-comment">-- Under REPEATABLE READ, the second SELECT still returns 1000</span>
+<span class="hl-comment">-- because the snapshot was taken at BEGIN, not at each statement</span>
+
+<span class="hl-comment">-- Handling serialization failures with retry logic (pseudocode)</span>
+<span class="hl-comment">-- DO $$</span>
+<span class="hl-comment">-- DECLARE max_retries INT := 3;</span>
+<span class="hl-comment">-- BEGIN</span>
+<span class="hl-comment">--   FOR i IN 1..max_retries LOOP</span>
+<span class="hl-comment">--     BEGIN</span>
+<span class="hl-comment">--       -- Your transaction logic here</span>
+<span class="hl-comment">--       RETURN;</span>
+<span class="hl-comment">--     EXCEPTION WHEN serialization_failure THEN</span>
+<span class="hl-comment">--       -- Retry</span>
+<span class="hl-comment">--     END;</span>
+<span class="hl-comment">--   END LOOP;</span>
+<span class="hl-comment">-- END $$;</span>
+</pre>
+      </div>
+
+      <h3 id="mvcc">4. MVCC &mdash; How PostgreSQL Handles Concurrency</h3>
+
+      <p>
+        MVCC (Multi-Version Concurrency Control) is the engine that makes PostgreSQL's concurrency
+        model work. Instead of locking rows to prevent concurrent access, PostgreSQL keeps
+        multiple versions of each row. Each version is tagged with the transaction ID (xid) that
+        created it and the transaction ID that deleted (or updated) it. When a transaction reads
+        data, it only sees row versions committed before its snapshot was taken.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- See the hidden system columns that power MVCC</span>
+<span class="hl-keyword">SELECT</span>
+    xmin,          <span class="hl-comment">-- Transaction ID that created this row version</span>
+    xmax,          <span class="hl-comment">-- Transaction ID that deleted/updated this version (0 = alive)</span>
+    ctid,          <span class="hl-comment">-- Physical location (page, tuple) on disk</span>
+    id,
+    name,
+    balance
+<span class="hl-keyword">FROM</span> accounts
+<span class="hl-keyword">WHERE</span> id = <span class="hl-number">1</span>;
+
+<span class="hl-comment">-- When you UPDATE a row, PostgreSQL:</span>
+<span class="hl-comment">-- 1. Marks the old version with xmax = current_xid</span>
+<span class="hl-comment">-- 2. Creates a NEW version with xmin = current_xid</span>
+<span class="hl-comment">-- 3. The old version remains on disk until VACUUM cleans it up</span>
+
+<span class="hl-keyword">BEGIN</span>;
+  <span class="hl-keyword">UPDATE</span> accounts <span class="hl-keyword">SET</span> balance = <span class="hl-number">500</span> <span class="hl-keyword">WHERE</span> id = <span class="hl-number">1</span>;
+  <span class="hl-comment">-- At this point, two versions of row id=1 exist on disk:</span>
+  <span class="hl-comment">--   Old: xmin=100, xmax=200 (the current transaction)</span>
+  <span class="hl-comment">--   New: xmin=200, xmax=0   (visible after commit)</span>
+<span class="hl-keyword">COMMIT</span>;
+
+<span class="hl-comment">-- Check for bloat from dead tuples</span>
+<span class="hl-keyword">SELECT</span>
+    relname <span class="hl-keyword">AS</span> table_name,
+    n_live_tup,
+    n_dead_tup,
+    <span class="hl-function">ROUND</span>(
+        <span class="hl-number">100.0</span> * n_dead_tup / <span class="hl-function">NULLIF</span>(n_live_tup + n_dead_tup, <span class="hl-number">0</span>), <span class="hl-number">2</span>
+    ) <span class="hl-keyword">AS</span> dead_pct,
+    last_autovacuum
+<span class="hl-keyword">FROM</span> pg_stat_user_tables
+<span class="hl-keyword">ORDER BY</span> n_dead_tup <span class="hl-keyword">DESC</span>
+<span class="hl-keyword">LIMIT</span> <span class="hl-number">10</span>;
+</pre>
+      </div>
+
+      <div class="diagram">
+<pre>
+  MVCC: How an UPDATE Creates Two Row Versions
+ ┌────────────────────────────────────────────────────────────────┐
+ │                                                                │
+ │  Before UPDATE (xid 200):                                      │
+ │  ┌──────────────────────────────────────────┐                  │
+ │  │ xmin=100  xmax=0  │ id=1  balance=1000   │  (live)         │
+ │  └──────────────────────────────────────────┘                  │
+ │                                                                │
+ │  After UPDATE (xid 200), before VACUUM:                        │
+ │  ┌──────────────────────────────────────────┐                  │
+ │  │ xmin=100  xmax=200 │ id=1  balance=1000  │  (dead tuple)   │
+ │  └──────────────────────────────────────────┘                  │
+ │  ┌──────────────────────────────────────────┐                  │
+ │  │ xmin=200  xmax=0   │ id=1  balance=500   │  (live)         │
+ │  └──────────────────────────────────────────┘                  │
+ │                                                                │
+ │  VACUUM removes the dead tuple when no transaction needs it    │
+ │                                                                │
+ └────────────────────────────────────────────────────────────────┘
+</pre>
+        <div class="diagram-caption">Figure 3: MVCC creates a new row version on UPDATE; the old version becomes a dead tuple</div>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Pro Tip: VACUUM and Table Bloat
+        </div>
+        <p>
+          Dead tuples from MVCC accumulate over time and cause table bloat. Autovacuum runs
+          automatically to clean them up, but heavy-write tables may need more aggressive
+          autovacuum settings. Monitor <code>n_dead_tup</code> in <code>pg_stat_user_tables</code>
+          and adjust <code>autovacuum_vacuum_scale_factor</code> if bloat becomes a problem.
+        </p>
+      </div>
+
+      <h3 id="locking">5. Locking Types and Strategies</h3>
+
+      <p>
+        While MVCC eliminates most read/write conflicts, PostgreSQL still uses locks for
+        write/write conflicts and DDL operations. Understanding lock types helps you design
+        applications that avoid unnecessary contention.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- Row-level locks: SELECT ... FOR UPDATE</span>
+<span class="hl-keyword">BEGIN</span>;
+  <span class="hl-keyword">SELECT</span> * <span class="hl-keyword">FROM</span> accounts
+  <span class="hl-keyword">WHERE</span> id = <span class="hl-number">1</span>
+  <span class="hl-keyword">FOR UPDATE</span>;  <span class="hl-comment">-- Lock this row; other FOR UPDATE on same row waits</span>
+
+  <span class="hl-keyword">UPDATE</span> accounts <span class="hl-keyword">SET</span> balance = balance - <span class="hl-number">100</span> <span class="hl-keyword">WHERE</span> id = <span class="hl-number">1</span>;
+<span class="hl-keyword">COMMIT</span>;  <span class="hl-comment">-- Lock released</span>
+
+<span class="hl-comment">-- FOR UPDATE SKIP LOCKED — non-blocking queue pattern</span>
+<span class="hl-keyword">BEGIN</span>;
+  <span class="hl-keyword">SELECT</span> * <span class="hl-keyword">FROM</span> job_queue
+  <span class="hl-keyword">WHERE</span> status = <span class="hl-string">'pending'</span>
+  <span class="hl-keyword">ORDER BY</span> created_at
+  <span class="hl-keyword">LIMIT</span> <span class="hl-number">1</span>
+  <span class="hl-keyword">FOR UPDATE SKIP LOCKED</span>;  <span class="hl-comment">-- Skip rows locked by other workers</span>
+
+  <span class="hl-keyword">UPDATE</span> job_queue <span class="hl-keyword">SET</span> status = <span class="hl-string">'processing'</span> <span class="hl-keyword">WHERE</span> id = <span class="hl-number">123</span>;
+<span class="hl-keyword">COMMIT</span>;
+
+<span class="hl-comment">-- FOR KEY SHARE — weakest lock, allows most concurrent access</span>
+<span class="hl-keyword">SELECT</span> * <span class="hl-keyword">FROM</span> products <span class="hl-keyword">WHERE</span> id = <span class="hl-number">42</span> <span class="hl-keyword">FOR KEY SHARE</span>;
+<span class="hl-comment">-- Prevents DELETE and key updates, but allows non-key column updates</span>
+
+<span class="hl-comment">-- Advisory locks: application-level locking</span>
+<span class="hl-keyword">SELECT</span> <span class="hl-function">pg_advisory_lock</span>(<span class="hl-number">12345</span>);  <span class="hl-comment">-- Acquire named lock</span>
+<span class="hl-comment">-- ... do exclusive work ...</span>
+<span class="hl-keyword">SELECT</span> <span class="hl-function">pg_advisory_unlock</span>(<span class="hl-number">12345</span>);  <span class="hl-comment">-- Release lock</span>
+
+<span class="hl-comment">-- View current locks in the system</span>
+<span class="hl-keyword">SELECT</span>
+    l.pid,
+    l.locktype,
+    l.mode,
+    l.granted,
+    a.query
+<span class="hl-keyword">FROM</span> pg_locks l
+<span class="hl-keyword">JOIN</span> pg_stat_activity a <span class="hl-keyword">ON</span> a.pid = l.pid
+<span class="hl-keyword">WHERE</span> l.locktype = <span class="hl-string">'relation'</span>
+<span class="hl-keyword">ORDER BY</span> l.pid;
+</pre>
+      </div>
+
+      <div class="diagram">
+<pre>
+  PostgreSQL Lock Compatibility Matrix (Row-Level Locks)
+ ┌─────────────────┬──────────┬──────────┬──────────┬──────────┐
+ │ Requested \Held │ KEY SHARE│ SHARE    │NO KEY UPD│ UPDATE   │
+ ├─────────────────┼──────────┼──────────┼──────────┼──────────┤
+ │ FOR KEY SHARE   │    OK    │    OK    │    OK    │  BLOCK   │
+ │ FOR SHARE       │    OK    │    OK    │  BLOCK   │  BLOCK   │
+ │ FOR NO KEY UPD  │    OK    │  BLOCK   │  BLOCK   │  BLOCK   │
+ │ FOR UPDATE      │  BLOCK   │  BLOCK   │  BLOCK   │  BLOCK   │
+ └─────────────────┴──────────┴──────────┴──────────┴──────────┘
+  OK = both locks can coexist | BLOCK = second transaction waits
+</pre>
+        <div class="diagram-caption">Figure 4: Row-level lock compatibility &mdash; weaker locks allow more concurrency</div>
+      </div>
+
+      <div class="callout concept">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          FOR UPDATE SKIP LOCKED
+        </div>
+        <p>
+          The <code>SKIP LOCKED</code> clause is a game-changer for queue-based processing. Instead
+          of blocking when a row is already locked, it simply skips that row and moves to the next
+          one. This allows multiple workers to dequeue jobs concurrently without waiting for each
+          other &mdash; no external queue system (Redis, RabbitMQ) required for many use cases.
+        </p>
+      </div>
+
+      <h3 id="deadlocks">6. Deadlock Detection and Prevention</h3>
+
+      <p>
+        A deadlock occurs when two or more transactions are each waiting for a lock held by
+        the other, creating a circular dependency that can never resolve. PostgreSQL automatically
+        detects deadlocks (checking every <code>deadlock_timeout</code> interval, default 1 second)
+        and aborts the transaction that is easiest to roll back, returning an error to the client.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- Deadlock example (DO NOT do this in production!)</span>
+
+<span class="hl-comment">-- Session 1:                          Session 2:</span>
+<span class="hl-comment">-- BEGIN;                              BEGIN;</span>
+<span class="hl-comment">-- UPDATE accounts SET balance=0       UPDATE accounts SET balance=0</span>
+<span class="hl-comment">--   WHERE id=1;  -- locks row 1         WHERE id=2;  -- locks row 2</span>
+<span class="hl-comment">--</span>
+<span class="hl-comment">-- UPDATE accounts SET balance=0       UPDATE accounts SET balance=0</span>
+<span class="hl-comment">--   WHERE id=2;  -- WAITS (row 2)       WHERE id=1;  -- WAITS (row 1)</span>
+<span class="hl-comment">--</span>
+<span class="hl-comment">-- DEADLOCK! PostgreSQL kills one session with:</span>
+<span class="hl-comment">-- ERROR: deadlock detected</span>
+
+<span class="hl-comment">-- Prevention strategy: always lock rows in the SAME ORDER</span>
+<span class="hl-keyword">BEGIN</span>;
+  <span class="hl-comment">-- Always lock accounts in ascending ID order</span>
+  <span class="hl-keyword">SELECT</span> * <span class="hl-keyword">FROM</span> accounts
+  <span class="hl-keyword">WHERE</span> id <span class="hl-keyword">IN</span> (<span class="hl-number">1</span>, <span class="hl-number">2</span>)
+  <span class="hl-keyword">ORDER BY</span> id  <span class="hl-comment">-- consistent ordering prevents deadlocks</span>
+  <span class="hl-keyword">FOR UPDATE</span>;
+
+  <span class="hl-keyword">UPDATE</span> accounts <span class="hl-keyword">SET</span> balance = balance - <span class="hl-number">100</span> <span class="hl-keyword">WHERE</span> id = <span class="hl-number">1</span>;
+  <span class="hl-keyword">UPDATE</span> accounts <span class="hl-keyword">SET</span> balance = balance + <span class="hl-number">100</span> <span class="hl-keyword">WHERE</span> id = <span class="hl-number">2</span>;
+<span class="hl-keyword">COMMIT</span>;
+
+<span class="hl-comment">-- Configure deadlock detection timeout (default: 1 second)</span>
+<span class="hl-keyword">SHOW</span> deadlock_timeout;
+<span class="hl-keyword">SET</span> deadlock_timeout = <span class="hl-string">'2s'</span>;
+
+<span class="hl-comment">-- Set a statement timeout to prevent long-running lock waits</span>
+<span class="hl-keyword">SET</span> lock_timeout = <span class="hl-string">'5s'</span>;  <span class="hl-comment">-- Abort if we can't get a lock within 5 seconds</span>
+<span class="hl-keyword">SET</span> statement_timeout = <span class="hl-string">'30s'</span>;  <span class="hl-comment">-- Abort any statement running longer than 30s</span>
+
+<span class="hl-comment">-- Find blocked queries</span>
+<span class="hl-keyword">SELECT</span>
+    blocked.pid <span class="hl-keyword">AS</span> blocked_pid,
+    blocked.query <span class="hl-keyword">AS</span> blocked_query,
+    blocking.pid <span class="hl-keyword">AS</span> blocking_pid,
+    blocking.query <span class="hl-keyword">AS</span> blocking_query
+<span class="hl-keyword">FROM</span> pg_stat_activity blocked
+<span class="hl-keyword">JOIN</span> pg_locks bl <span class="hl-keyword">ON</span> bl.pid = blocked.pid <span class="hl-keyword">AND NOT</span> bl.granted
+<span class="hl-keyword">JOIN</span> pg_locks gl <span class="hl-keyword">ON</span> gl.locktype = bl.locktype
+    <span class="hl-keyword">AND</span> gl.database <span class="hl-keyword">IS NOT DISTINCT FROM</span> bl.database
+    <span class="hl-keyword">AND</span> gl.relation <span class="hl-keyword">IS NOT DISTINCT FROM</span> bl.relation
+    <span class="hl-keyword">AND</span> gl.page <span class="hl-keyword">IS NOT DISTINCT FROM</span> bl.page
+    <span class="hl-keyword">AND</span> gl.tuple <span class="hl-keyword">IS NOT DISTINCT FROM</span> bl.tuple
+    <span class="hl-keyword">AND</span> gl.pid != bl.pid
+    <span class="hl-keyword">AND</span> gl.granted
+<span class="hl-keyword">JOIN</span> pg_stat_activity blocking <span class="hl-keyword">ON</span> blocking.pid = gl.pid;
+</pre>
+      </div>
+
+      <div class="callout danger">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+          Deadlock Prevention Rules
+        </div>
+        <p>
+          <strong>Rule 1:</strong> Always acquire locks in a consistent, deterministic order
+          (e.g., ascending primary key). <strong>Rule 2:</strong> Keep transactions short. The
+          longer a transaction holds locks, the higher the chance of a deadlock.
+          <strong>Rule 3:</strong> Set <code>lock_timeout</code> to avoid indefinite waits.
+          <strong>Rule 4:</strong> Your application must be prepared to retry transactions
+          that fail due to deadlocks or serialization errors.
+        </p>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- Optimistic concurrency control pattern</span>
+<span class="hl-comment">-- Instead of locking, use a version column to detect conflicts</span>
+
+<span class="hl-keyword">CREATE TABLE</span> products (
+    id <span class="hl-keyword">SERIAL PRIMARY KEY</span>,
+    name <span class="hl-keyword">TEXT NOT NULL</span>,
+    price <span class="hl-keyword">NUMERIC</span>(<span class="hl-number">10</span>,<span class="hl-number">2</span>),
+    version <span class="hl-keyword">INTEGER NOT NULL DEFAULT</span> <span class="hl-number">1</span>
+);
+
+<span class="hl-comment">-- Read the product and its version</span>
+<span class="hl-keyword">SELECT</span> id, name, price, version <span class="hl-keyword">FROM</span> products <span class="hl-keyword">WHERE</span> id = <span class="hl-number">1</span>;
+<span class="hl-comment">-- Returns: id=1, name='Widget', price=29.99, version=3</span>
+
+<span class="hl-comment">-- Update only if version matches (optimistic lock)</span>
+<span class="hl-keyword">UPDATE</span> products
+<span class="hl-keyword">SET</span> price = <span class="hl-number">34.99</span>, version = version + <span class="hl-number">1</span>
+<span class="hl-keyword">WHERE</span> id = <span class="hl-number">1</span> <span class="hl-keyword">AND</span> version = <span class="hl-number">3</span>;
+<span class="hl-comment">-- If 0 rows updated, another transaction changed it first — retry!</span>
+
+<span class="hl-comment">-- Long-running transaction monitoring</span>
+<span class="hl-keyword">SELECT</span>
+    pid,
+    <span class="hl-function">NOW</span>() - xact_start <span class="hl-keyword">AS</span> transaction_age,
+    state,
+    query
+<span class="hl-keyword">FROM</span> pg_stat_activity
+<span class="hl-keyword">WHERE</span> state != <span class="hl-string">'idle'</span>
+  <span class="hl-keyword">AND</span> xact_start <span class="hl-keyword">IS NOT NULL</span>
+<span class="hl-keyword">ORDER BY</span> xact_start;
+</pre>
       </div>
 
       <hr class="section-divider">
 
       <h2 id="watch-learn">Watch &amp; Learn</h2>
+
+      <p>These videos cover PostgreSQL transactions, MVCC, and concurrency control.</p>
+
       <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/pomxJOFVcQs?rel=0&amp;modestbranding=1" title="PostgreSQL Transactions and ACID" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-caption"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>Hussein Nasser &mdash; ACID properties and transaction management in PostgreSQL</div>
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/4cWkVbC2bNE?rel=0&amp;modestbranding=1" title="PostgreSQL Transactions and MVCC" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          PostgreSQL Transactions, ACID, and MVCC Internals
+        </div>
       </div>
+
       <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/4EajrPgJAk0?rel=0&amp;modestbranding=1" title="Database Isolation Levels" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-caption"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>Hussein Nasser &mdash; Read Committed, Repeatable Read, Serializable explained</div>
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/ztHopE5Wnpc?rel=0&amp;modestbranding=1" title="PostgreSQL Locking and Deadlocks" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          PostgreSQL Locking, Deadlocks, and Concurrency Explained
+        </div>
       </div>
 
       <hr class="section-divider">
 
       <h2 id="further-reading">Further Reading</h2>
+
+      <p>Deep-dive into transaction management, MVCC internals, and concurrency control.</p>
+
       <div class="resource-grid">
-        <a class="resource-card" href="https://www.postgresql.org/docs/current/tutorial-transactions.html" target="_blank" rel="noopener">
+        <a class="resource-card" href="https://www.postgresql.org/docs/current/mvcc.html" target="_blank" rel="noopener">
           <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-          <div class="resource-info"><div class="resource-title">PostgreSQL Docs: Transactions</div><div class="resource-desc">BEGIN, COMMIT, ROLLBACK, and savepoints.</div></div>
+          <div class="resource-info"><div class="resource-title">PostgreSQL Docs: Concurrency Control</div><div class="resource-desc">Official reference for MVCC, transaction isolation, and locking in PostgreSQL.</div></div>
         </a>
         <a class="resource-card" href="https://www.postgresql.org/docs/current/transaction-iso.html" target="_blank" rel="noopener">
           <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-          <div class="resource-info"><div class="resource-title">PostgreSQL Docs: Transaction Isolation</div><div class="resource-desc">Detailed explanation of all isolation levels.</div></div>
+          <div class="resource-info"><div class="resource-title">PostgreSQL Docs: Transaction Isolation</div><div class="resource-desc">Detailed explanation of each isolation level and the anomalies they prevent.</div></div>
         </a>
         <a class="resource-card" href="https://www.postgresql.org/docs/current/explicit-locking.html" target="_blank" rel="noopener">
           <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-          <div class="resource-info"><div class="resource-title">PostgreSQL Docs: Explicit Locking</div><div class="resource-desc">Row-level locks, table locks, and advisory locks.</div></div>
+          <div class="resource-info"><div class="resource-title">PostgreSQL Docs: Explicit Locking</div><div class="resource-desc">Table-level and row-level lock types, advisory locks, and deadlock handling.</div></div>
         </a>
-        <a class="resource-card" href="https://www.postgresql.org/docs/current/mvcc.html" target="_blank" rel="noopener">
+        <a class="resource-card" href="https://pganalyze.com/docs/explain/insights/locks" target="_blank" rel="noopener">
+          <div class="resource-icon article"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <div class="resource-info"><div class="resource-title">pganalyze: Lock Monitoring</div><div class="resource-desc">Monitoring lock contention, identifying blocking queries, and resolving lock issues.</div></div>
+        </a>
+        <a class="resource-card" href="https://use-the-index-luke.com/sql/concurrency" target="_blank" rel="noopener">
+          <div class="resource-icon article"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <div class="resource-info"><div class="resource-title">Use The Index, Luke: Concurrency</div><div class="resource-desc">How indexes interact with locking and how to minimize lock contention with better queries.</div></div>
+        </a>
+        <a class="resource-card" href="https://www.postgresql.org/docs/current/routine-vacuuming.html" target="_blank" rel="noopener">
           <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-          <div class="resource-info"><div class="resource-title">PostgreSQL Docs: MVCC</div><div class="resource-desc">Multi-Version Concurrency Control internals.</div></div>
+          <div class="resource-info"><div class="resource-title">PostgreSQL Docs: Routine Vacuuming</div><div class="resource-desc">VACUUM, autovacuum configuration, and managing dead tuple bloat from MVCC.</div></div>
         </a>
       </div>
 
       <hr class="section-divider">
 
       <h2 id="assignments">Assignments</h2>
+
+      <p>Complete these in order. Use two separate <code>psql</code> sessions to simulate concurrent transactions.</p>
+
       <div class="assignment">
         <div class="assignment-header">
           <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 1</div>
           <span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span>
         </div>
-        <h4>Basic Transaction Operations</h4>
-        <p>Practice BEGIN, COMMIT, and ROLLBACK with ad portal data.</p>
+        <h4>Transaction Basics</h4>
+        <p>Practice BEGIN, COMMIT, ROLLBACK, and SAVEPOINT in real scenarios.</p>
         <ul class="checklist">
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write a transaction that inserts a lead and updates account balance</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Intentionally cause an error mid-transaction and verify ROLLBACK undoes all changes</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Use SAVEPOINT to partially roll back within a transaction</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Check the default isolation level with SHOW transaction_isolation</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Open two psql sessions and observe isolation behavior</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write a transaction that transfers money between two accounts (debit + credit)</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Verify that a ROLLBACK undoes all changes made inside the transaction</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Use a SAVEPOINT to partially roll back a multi-step operation</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Observe that an error aborts the transaction in PostgreSQL (try a constraint violation)</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Examine xmin and xmax system columns before and after an UPDATE</span></li>
         </ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div><p>You can explain what happens when ROLLBACK is called. Savepoints work correctly.</p></div>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div>
+          <p>You can write multi-statement transactions with savepoints and explain what happens to data on COMMIT vs ROLLBACK.</p>
+        </div>
       </div>
+
       <div class="assignment">
         <div class="assignment-header">
           <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 2</div>
           <span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span>
         </div>
-        <h4>Concurrency Control</h4>
-        <p>Handle concurrent access to shared resources.</p>
+        <h4>Isolation Levels and MVCC</h4>
+        <p>Observe concurrency anomalies at different isolation levels using two simultaneous sessions.</p>
         <ul class="checklist">
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Use SELECT FOR UPDATE to safely decrement a campaign budget from two sessions</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Demonstrate a scenario where without FOR UPDATE, two sessions overspend a budget</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Set REPEATABLE READ isolation and observe how it prevents non-repeatable reads</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a SKIP LOCKED query for processing leads like a job queue</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Monitor active locks using pg_locks view</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Demonstrate a non-repeatable read under READ COMMITTED isolation</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Show that REPEATABLE READ prevents the same anomaly</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Trigger a serialization error under SERIALIZABLE isolation and handle it with a retry</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Use pg_stat_activity to observe concurrent transactions in real time</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Monitor dead tuples with pg_stat_user_tables after a batch of updates</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Document the trade-offs between each isolation level for your use case</span></li>
         </ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div><p>Your FOR UPDATE query prevents double-spending. You can explain when to use each isolation level.</p></div>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div>
+          <p>You can explain each isolation level and demonstrate the specific anomalies it prevents using two concurrent sessions.</p>
+        </div>
       </div>
+
       <div class="assignment">
         <div class="assignment-header">
           <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 3</div>
           <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Production-Ready</span>
         </div>
-        <h4>Deadlock Investigation</h4>
-        <p>Understand, reproduce, and prevent deadlocks.</p>
+        <h4>Locking, Deadlocks, and Queue Patterns</h4>
+        <p>Build production-safe concurrency patterns including queue processing and deadlock-free transfers.</p>
         <ul class="checklist">
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Intentionally create a deadlock between two sessions and observe PostgreSQL error message</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Implement a lock-ordering strategy to prevent the deadlock</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write a retry loop (pseudocode) that handles serialization failures</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Query pg_stat_activity to find blocking sessions</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Deliberately create a deadlock between two sessions and observe PostgreSQL's detection</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Rewrite the deadlock scenario to use consistent lock ordering (ascending PK)</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Implement a job queue using SELECT ... FOR UPDATE SKIP LOCKED</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Use advisory locks to implement an application-level mutex</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write a monitoring query to identify blocking locks and long-running transactions</span></li>
         </ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div><p>You can reproduce and resolve a deadlock. Your code handles serialization failures gracefully.</p></div>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div>
+          <p>You can design deadlock-free transaction patterns, implement a lock-based job queue, and monitor locking issues in production.</p>
+        </div>
       </div>
 
       <hr class="section-divider">
 
       <h2 id="self-check">Self-Check</h2>
+
+      <p>Before moving to Chapter 08, honestly answer these questions.</p>
+
       <details>
-        <summary>What does ACID stand for and why does each property matter for ad-tech?</summary>
-        <div class="details-body"><p>Atomicity (bid acceptance is all-or-nothing), Consistency (constraints prevent invalid balances), Isolation (concurrent bids do not interfere), Durability (committed transactions survive crashes). Without ACID, an ad portal would have incorrect balances, lost leads, and data corruption.</p></div>
+        <summary>What happens if a transaction encounters an error in PostgreSQL?</summary>
+        <div class="details-body">
+          <p>Any error inside a transaction puts it into an <strong>aborted state</strong>. No further SQL commands will execute (they all return <code>ERROR: current transaction is aborted</code>) until you issue <code>ROLLBACK</code> or <code>ROLLBACK TO SAVEPOINT</code>. This is by design &mdash; PostgreSQL refuses to continue a transaction that may be in an inconsistent state. Use savepoints when you need to handle errors gracefully without aborting the entire transaction.</p>
+        </div>
       </details>
+
       <details>
-        <summary>What is the difference between READ COMMITTED and REPEATABLE READ?</summary>
-        <div class="details-body"><p>READ COMMITTED (default) sees committed changes from other transactions between statements. REPEATABLE READ takes a snapshot at the start and sees a consistent view throughout. Use REPEATABLE READ for reports that must see consistent data across multiple queries.</p></div>
+        <summary>How does MVCC allow readers to not block writers?</summary>
+        <div class="details-body">
+          <p>When a writer updates a row, it creates a new version of that row (marked with its transaction ID) while leaving the old version intact. Readers running in a different transaction continue to see the old version based on their snapshot. They never need to wait for the writer to commit or roll back. This is why PostgreSQL can achieve high concurrency without read locks. The trade-off is dead tuple accumulation, which VACUUM cleans up.</p>
+        </div>
       </details>
+
       <details>
-        <summary>How does MVCC allow readers and writers to coexist?</summary>
-        <div class="details-body"><p>Instead of blocking readers when a writer modifies a row, PostgreSQL keeps both the old and new version. Readers see the old version; the writer works on the new one. After commit, new readers see the updated version. This is why PostgreSQL rarely has read-write contention.</p></div>
+        <summary>When should you use SERIALIZABLE isolation?</summary>
+        <div class="details-body">
+          <p>Use SERIALIZABLE when your application requires that concurrent transactions produce the same result as some serial (one-at-a-time) execution. This is common in financial systems, reservation systems, and anywhere write-skew anomalies could cause data corruption. The trade-off is that PostgreSQL may abort transactions with serialization errors, so your application must implement retry logic. For most web applications, READ COMMITTED (the default) is sufficient.</p>
+        </div>
       </details>
+
     </main>
 
     <aside class="sidebar">
@@ -240,11 +938,12 @@
       <ul class="toc-list">
         <li class="toc-item"><a href="#why-this-matters">Why This Matters</a></li>
         <li class="toc-item"><a href="#key-concepts">Key Concepts</a></li>
-        <li class="toc-item"><a href="#acid" style="padding-left:28px;font-size:12px">ACID Properties</a></li>
-        <li class="toc-item"><a href="#isolation-levels" style="padding-left:28px;font-size:12px">Isolation Levels</a></li>
-        <li class="toc-item"><a href="#locking" style="padding-left:28px;font-size:12px">Row-Level Locking</a></li>
-        <li class="toc-item"><a href="#deadlocks" style="padding-left:28px;font-size:12px">Deadlock Prevention</a></li>
-        <li class="toc-item"><a href="#mvcc" style="padding-left:28px;font-size:12px">MVCC</a></li>
+        <li class="toc-item"><a href="#acid-properties" style="padding-left: 28px; font-size: 12px;">ACID Properties</a></li>
+        <li class="toc-item"><a href="#transaction-syntax" style="padding-left: 28px; font-size: 12px;">Transaction Syntax</a></li>
+        <li class="toc-item"><a href="#isolation-levels" style="padding-left: 28px; font-size: 12px;">Isolation Levels</a></li>
+        <li class="toc-item"><a href="#mvcc" style="padding-left: 28px; font-size: 12px;">MVCC Internals</a></li>
+        <li class="toc-item"><a href="#locking" style="padding-left: 28px; font-size: 12px;">Locking Strategies</a></li>
+        <li class="toc-item"><a href="#deadlocks" style="padding-left: 28px; font-size: 12px;">Deadlock Prevention</a></li>
         <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a></li>
         <li class="toc-item"><a href="#further-reading">Further Reading</a></li>
         <li class="toc-item"><a href="#assignments">Assignments</a></li>
@@ -253,20 +952,57 @@
     </aside>
   </div>
 
-  <footer class="chapter-footer"><div class="chapter-footer-inner">
-    <nav class="footer-nav">
-      <a class="footer-nav-link" href="chapter-06.html"><span class="footer-nav-label">&larr; Previous Chapter</span><span class="footer-nav-title">06: Indexes and Query Plans</span></a>
-      <a class="footer-nav-link" href="chapter-08.html"><span class="footer-nav-label">Next Chapter &rarr;</span><span class="footer-nav-title">08: Views, Functions, and Triggers</span></a>
-    </nav>
-    <div class="footer-brand">ILA (Iksha Learning Academy) &middot; PostgreSQL Engineering Certification &middot; Basic</div>
-  </div></footer>
+  <footer class="chapter-footer">
+    <div class="chapter-footer-inner">
+      <nav class="footer-nav">
+        <a class="footer-nav-link" href="chapter-06.html">
+          <span class="footer-nav-label">&larr; Previous Chapter</span>
+          <span class="footer-nav-title">06: Indexes and Query Plans</span>
+        </a>
+        <a class="footer-nav-link" href="chapter-08.html">
+          <span class="footer-nav-label">Next Chapter &rarr;</span>
+          <span class="footer-nav-title">08: Views, Functions, and Triggers</span>
+        </a>
+      </nav>
+      <div class="footer-brand">
+        ILA (Iksha Learning Academy) &middot; PostgreSQL Engineering Certification &middot; Level 1
+      </div>
+    </div>
+  </footer>
 
   <script>
-    window.addEventListener('scroll',()=>{const s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight;document.getElementById('progressBar').style.width=(d>0?(s/d)*100:0)+'%'});
-    const tocLinks=document.querySelectorAll('.toc-item a'),sections=[];tocLinks.forEach(link=>{const id=link.getAttribute('href').slice(1),el=document.getElementById(id);if(el)sections.push({id,el,link})});
-    const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{const item=sections.find(s=>s.el===entry.target);if(item&&entry.isIntersecting){tocLinks.forEach(l=>l.classList.remove('active'));item.link.classList.add('active')}})},{rootMargin:'-80px 0px -60% 0px',threshold:0});
-    sections.forEach(s=>observer.observe(s.el));
-    function copyCode(btn){const pre=btn.closest('.code-block').querySelector('pre');navigator.clipboard.writeText(pre.textContent).then(()=>{btn.classList.add('copied');btn.textContent='Copied!';setTimeout(()=>{btn.classList.remove('copied');btn.textContent='Copy'},2000)})}
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      document.getElementById('progressBar').style.width = progress + '%';
+    });
+
+    const tocLinks = document.querySelectorAll('.toc-item a');
+    const sections = [];
+    tocLinks.forEach(link => {
+      const id = link.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) sections.push({ id, el, link });
+    });
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const item = sections.find(s => s.el === entry.target);
+        if (item && entry.isIntersecting) {
+          tocLinks.forEach(l => l.classList.remove('active'));
+          item.link.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-80px 0px -60% 0px', threshold: 0 });
+    sections.forEach(s => observer.observe(s.el));
+
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      navigator.clipboard.writeText(pre.textContent).then(() => {
+        btn.classList.add('copied'); btn.textContent = 'Copied!';
+        setTimeout(() => { btn.classList.remove('copied'); btn.textContent = 'Copy'; }, 2000);
+      });
+    }
   </script>
 </body>
 </html>

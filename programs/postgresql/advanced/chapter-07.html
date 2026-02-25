@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chapter 07: Replication and Failover &mdash; ILA PostgreSQL</title>
+  <title>Chapter 07: Replication and Failover — ILA PostgreSQL Advanced</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
@@ -42,403 +42,164 @@
       --purple-100: #f3e8ff;
       --purple-500: #a855f7;
       --purple-600: #9333ea;
-      --green-50:  #f0fdf4;
-      --green-100: #dcfce7;
-      --green-500: #22c55e;
-      --green-600: #16a34a;
       --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       --font-serif: 'Instrument Serif', Georgia, serif;
       --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
       --content-max: 780px;
+      --sidebar-width: 280px;
       --ease: cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    body { font-family: var(--font-sans); font-size: 16px; line-height: 1.7; color: var(--ink); background: var(--surface); }
 
-    body {
-      font-family: var(--font-sans);
-      font-size: 16px;
-      line-height: 1.7;
-      color: var(--ink);
-      background: var(--surface);
-    }
+    .progress-bar { position: fixed; top: 0; left: 0; width: 0%; height: 3px; background: linear-gradient(90deg, var(--teal-500), var(--blue-500)); z-index: 1000; transition: width 0.15s var(--ease); }
 
-    .progress-bar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 0%;
-      height: 3px;
-      background: linear-gradient(90deg, var(--teal-500), var(--blue-500));
-      z-index: 1000;
-      transition: width 0.15s var(--ease);
-    }
+    .top-nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 2rem; }
+    .top-nav-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 56px; }
+    .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--teal-800); }
+    .nav-brand-icon { width: 32px; height: 32px; background: linear-gradient(135deg, var(--teal-600), var(--teal-800)); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 14px; }
+    .nav-brand-text { font-weight: 700; font-size: 15px; letter-spacing: -0.02em; }
+    .nav-chapter-nav { display: flex; align-items: center; gap: 8px; }
+    .nav-btn { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 8px; font-size: 13px; font-weight: 500; text-decoration: none; color: var(--ink-muted); border: 1px solid var(--border); background: white; transition: all 0.2s var(--ease); cursor: pointer; }
+    .nav-btn:hover { color: var(--ink); border-color: var(--teal-500); background: var(--teal-50); }
+    .nav-btn.disabled { opacity: 0.4; pointer-events: none; }
+    .nav-current { font-size: 13px; font-weight: 600; color: var(--ink-light); padding: 0 4px; }
 
-    .top-nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-      padding: 0 2rem;
-    }
+    .hero { background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%); border-bottom: 1px solid var(--border); padding: 4rem 2rem 3.5rem; }
+    .hero-inner { max-width: var(--content-max); margin: 0 auto; }
+    .hero-chapter-label { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--teal-700); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1rem; }
+    .hero-chapter-label span { background: var(--teal-100); padding: 3px 10px; border-radius: 100px; }
+    .hero h1 { font-family: var(--font-serif); font-size: clamp(2.4rem, 5vw, 3.2rem); font-weight: 400; line-height: 1.15; color: var(--ink); margin-bottom: 1rem; }
+    .hero-subtitle { font-size: 1.15rem; color: var(--ink-light); line-height: 1.65; max-width: 640px; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.5rem; }
+    .hero-meta-item { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--ink-muted); }
+    .hero-meta-item svg { width: 16px; height: 16px; color: var(--teal-600); }
 
-    .top-nav-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 56px;
-    }
+    .main-layout { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: grid; grid-template-columns: 1fr var(--sidebar-width); gap: 4rem; align-items: start; }
+    .content { padding: 3rem 0 6rem; min-width: 0; }
 
-    .nav-brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-      color: var(--teal-800);
-    }
+    .sidebar { position: sticky; top: 76px; padding: 2rem 0; max-height: calc(100vh - 76px); overflow-y: auto; }
+    .sidebar-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-muted); margin-bottom: 1rem; padding-left: 14px; }
+    .toc-list { list-style: none; }
+    .toc-item a { display: block; padding: 6px 14px; font-size: 13px; color: var(--ink-muted); text-decoration: none; border-left: 2px solid transparent; transition: all 0.2s var(--ease); line-height: 1.5; }
+    .toc-item a:hover { color: var(--ink); background: var(--surface-alt); }
+    .toc-item a.active { color: var(--teal-700); border-left-color: var(--teal-500); background: var(--teal-50); font-weight: 500; }
 
-    .nav-brand-icon {
-      width: 32px;
-      height: 32px;
-      background: linear-gradient(135deg, var(--teal-600), var(--teal-800));
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-weight: 800;
-      font-size: 14px;
-    }
-
-    .nav-brand-text {
-      font-weight: 700;
-      font-size: 15px;
-      letter-spacing: -0.02em;
-    }
-
-    .nav-chapter-nav {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .nav-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 14px;
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: 500;
-      text-decoration: none;
-      color: var(--ink-muted);
-      border: 1px solid var(--border);
-      background: white;
-      transition: all 0.2s var(--ease);
-      cursor: pointer;
-    }
-
-    .nav-btn:hover {
-      color: var(--ink);
-      border-color: var(--teal-500);
-      background: var(--teal-50);
-    }
-
-    .nav-btn.disabled {
-      opacity: 0.4;
-      pointer-events: none;
-    }
-
-    .nav-current {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--ink-light);
-      padding: 0 4px;
-    }
-
-    .hero {
-      background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%);
-      border-bottom: 1px solid var(--border);
-      padding: 4rem 2rem 3.5rem;
-    }
-
-    .hero-inner {
-      max-width: var(--content-max);
-      margin: 0 auto;
-    }
-
-    .hero-chapter-label {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--teal-700);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 1rem;
-    }
-
-    .hero-chapter-label span {
-      background: var(--teal-100);
-      padding: 3px 10px;
-      border-radius: 100px;
-    }
-
-    .hero h1 {
-      font-family: var(--font-serif);
-      font-size: clamp(2.4rem, 5vw, 3.2rem);
-      font-weight: 400;
-      line-height: 1.15;
-      color: var(--ink);
-      margin-bottom: 1rem;
-    }
-
-    .hero-subtitle {
-      font-size: 1.15rem;
-      color: var(--ink-light);
-      line-height: 1.65;
-      max-width: 640px;
-    }
-
-    .hero-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-top: 1.5rem;
-    }
-
-    .hero-meta-item {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 13px;
-      color: var(--ink-muted);
-    }
-
-    .content {
-      max-width: var(--content-max);
-      margin: 0 auto;
-      padding: 3rem 2rem 6rem;
-    }
-
-    .content h2 {
-      font-family: var(--font-serif);
-      font-size: 1.85rem;
-      font-weight: 400;
-      color: var(--ink);
-      margin: 3rem 0 1rem;
-      scroll-margin-top: 80px;
-    }
-
+    .content h2 { font-family: var(--font-serif); font-size: 1.85rem; font-weight: 400; color: var(--ink); margin: 3rem 0 1rem; padding-top: 1rem; scroll-margin-top: 80px; }
     .content h2:first-child { margin-top: 0; }
-
-    .content h3 {
-      font-size: 1.15rem;
-      font-weight: 600;
-      color: var(--ink);
-      margin: 2rem 0 0.75rem;
-    }
-
-    .content p {
-      margin-bottom: 1.25rem;
-      color: var(--ink-light);
-    }
-
-    .content ul, .content ol {
-      margin-bottom: 1.25rem;
-      padding-left: 1.5rem;
-    }
-
-    .content li {
-      margin-bottom: 0.5rem;
-      color: var(--ink-light);
-    }
-
+    .content h3 { font-size: 1.15rem; font-weight: 600; color: var(--ink); margin: 2rem 0 0.75rem; scroll-margin-top: 80px; }
+    .content p { margin-bottom: 1.25rem; color: var(--ink-light); }
+    .content strong { color: var(--ink); font-weight: 600; }
+    .content a { color: var(--teal-700); text-decoration: underline; text-decoration-color: var(--teal-200); text-underline-offset: 3px; transition: text-decoration-color 0.2s; }
+    .content a:hover { text-decoration-color: var(--teal-600); }
+    .content ul, .content ol { margin-bottom: 1.25rem; padding-left: 1.5rem; }
+    .content li { margin-bottom: 0.5rem; color: var(--ink-light); }
     .content li::marker { color: var(--teal-500); }
 
-    .callout {
-      padding: 1.25rem 1.5rem;
-      border-radius: 12px;
-      margin-bottom: 1.5rem;
-      border: 1px solid;
-    }
+    .section-divider { border: none; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 3rem 0; }
 
-    .callout-header {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-    }
-
+    .callout { padding: 1.25rem 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; border: 1px solid; position: relative; }
+    .callout-header { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; margin-bottom: 0.5rem; }
+    .callout-header svg { width: 18px; height: 18px; flex-shrink: 0; }
     .callout p:last-child { margin-bottom: 0; }
-
-    .callout.concept {
-      background: var(--blue-50);
-      border-color: var(--blue-100);
-    }
+    .callout.concept { background: var(--blue-50); border-color: var(--blue-100); }
     .callout.concept .callout-header { color: var(--blue-700); }
-
-    .callout.important {
-      background: var(--amber-50);
-      border-color: var(--amber-100);
-    }
+    .callout.important { background: var(--amber-50); border-color: var(--amber-100); }
     .callout.important .callout-header { color: var(--amber-600); }
-
-    .callout.tip {
-      background: var(--purple-50);
-      border-color: var(--purple-100);
-    }
+    .callout.danger { background: var(--red-50); border-color: var(--red-100); }
+    .callout.danger .callout-header { color: var(--red-600); }
+    .callout.tip { background: var(--purple-50); border-color: var(--purple-100); }
     .callout.tip .callout-header { color: var(--purple-600); }
-
-    .callout.success {
-      background: var(--teal-50);
-      border-color: var(--teal-100);
-    }
+    .callout.success { background: var(--teal-50); border-color: var(--teal-100); }
     .callout.success .callout-header { color: var(--teal-700); }
 
-    .section-divider {
-      border: none;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--border), transparent);
-      margin: 3rem 0;
-    }
+    .code-block { position: relative; margin-bottom: 1.5rem; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+    .code-header { display: flex; align-items: center; justify-content: space-between; padding: 8px 16px; background: var(--surface-alt); border-bottom: 1px solid var(--border); font-size: 12px; color: var(--ink-muted); }
+    .code-lang { font-family: var(--font-mono); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+    .code-copy { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border); background: white; font-size: 11px; font-family: var(--font-sans); color: var(--ink-muted); cursor: pointer; transition: all 0.2s var(--ease); }
+    .code-copy:hover { border-color: var(--teal-500); color: var(--teal-700); }
+    .code-copy.copied { background: var(--teal-50); border-color: var(--teal-500); color: var(--teal-700); }
+    pre { margin: 0; padding: 1.25rem 1.5rem; overflow-x: auto; background: #1e293b; font-family: var(--font-mono); font-size: 13.5px; line-height: 1.7; color: #e2e8f0; }
+    code { font-family: var(--font-mono); font-size: 0.88em; }
+    p code, li code { padding: 2px 7px; background: var(--surface-alt); border: 1px solid var(--border); border-radius: 5px; color: var(--teal-800); font-size: 0.85em; }
+    .hl-keyword  { color: #c084fc; }
+    .hl-string   { color: #86efac; }
+    .hl-comment  { color: #64748b; font-style: italic; }
+    .hl-function { color: #7dd3fc; }
+    .hl-number   { color: #fbbf24; }
+    .hl-flag     { color: #f472b6; }
 
-    .coming-soon-banner {
-      background: var(--amber-50);
-      border: 1px solid var(--amber-100);
-      border-radius: 12px;
-      padding: 2.5rem;
-      text-align: center;
-      margin: 2rem 0;
-    }
+    details { margin-bottom: 1.25rem; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; transition: border-color 0.2s var(--ease); }
+    details[open] { border-color: var(--teal-200); }
+    details summary { padding: 1rem 1.25rem; font-weight: 600; font-size: 15px; cursor: pointer; background: var(--surface-alt); list-style: none; display: flex; align-items: center; gap: 10px; transition: background 0.2s var(--ease); user-select: none; }
+    details summary::-webkit-details-marker { display: none; }
+    details summary::before { content: ''; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E"); background-size: contain; flex-shrink: 0; transition: transform 0.2s var(--ease); }
+    details[open] summary::before { transform: rotate(90deg); }
+    details summary:hover { background: var(--teal-50); }
+    .details-body { padding: 1.25rem 1.5rem; }
+    .details-body p:last-child { margin-bottom: 0; }
 
-    .coming-soon-banner h3 {
-      color: var(--amber-600);
-      margin-bottom: 0.5rem;
-    }
+    .video-card { margin-bottom: 1.5rem; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+    .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; background: #0f172a; }
+    .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+    .video-caption { padding: 12px 16px; background: var(--surface-alt); font-size: 13px; color: var(--ink-muted); display: flex; align-items: center; gap: 6px; }
+    .video-caption svg { width: 14px; height: 14px; color: var(--red-500); }
 
-    .coming-soon-banner p {
-      color: var(--ink-muted);
-      margin-bottom: 0;
-    }
+    .resource-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+    .resource-card { display: flex; gap: 14px; padding: 1rem 1.25rem; border: 1px solid var(--border); border-radius: 12px; text-decoration: none; transition: all 0.2s var(--ease); background: white; }
+    .resource-card:hover { border-color: var(--teal-300); background: var(--teal-50); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+    .resource-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 18px; }
+    .resource-icon.docs    { background: var(--blue-50);   color: var(--blue-600); }
+    .resource-icon.video   { background: var(--red-50);    color: var(--red-500); }
+    .resource-icon.github  { background: var(--ink);       color: white; }
+    .resource-icon.article { background: var(--amber-50);  color: var(--amber-600); }
+    .resource-icon.pdf     { background: var(--purple-50); color: var(--purple-600); }
+    .resource-info { min-width: 0; }
+    .resource-title { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 2px; line-height: 1.4; }
+    .resource-desc { font-size: 12px; color: var(--ink-muted); line-height: 1.5; }
 
-    .topics-preview {
-      background: var(--surface-alt);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.5rem 2rem;
-      margin: 1.5rem 0;
-    }
+    .assignment { border: 2px solid var(--teal-200); border-radius: 14px; padding: 1.5rem 1.75rem; margin-bottom: 1.5rem; background: linear-gradient(135deg, var(--teal-50) 0%, white 100%); }
+    .assignment-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+    .assignment-label { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--teal-700); }
+    .assignment-difficulty { display: inline-flex; padding: 4px 10px; border-radius: 100px; font-size: 11px; font-weight: 600; }
+    .difficulty-l1 { background: var(--teal-100); color: var(--teal-800); }
+    .difficulty-l2 { background: var(--amber-100); color: var(--amber-600); }
+    .difficulty-l3 { background: var(--red-100); color: var(--red-600); }
+    .assignment h4 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.75rem; }
+    .assignment p { font-size: 14px; }
+    .checklist { list-style: none; padding: 0; }
+    .checklist li { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border-light); font-size: 14px; }
+    .checklist li:last-child { border-bottom: none; }
+    .check-box { width: 20px; height: 20px; border-radius: 6px; border: 2px solid var(--border); flex-shrink: 0; margin-top: 1px; cursor: pointer; transition: all 0.15s var(--ease); display: flex; align-items: center; justify-content: center; }
+    .check-box:hover { border-color: var(--teal-500); }
+    .check-box.checked { background: var(--teal-500); border-color: var(--teal-500); }
+    .check-box.checked::after { content: ''; width: 10px; height: 10px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E"); background-size: contain; }
 
-    .topics-preview h3 {
-      font-size: 0.95rem;
-      margin-bottom: 0.75rem;
-      color: var(--ink);
-    }
+    .diagram { margin: 1.5rem 0; padding: 2rem; background: var(--surface-alt); border: 1px solid var(--border); border-radius: 14px; overflow-x: auto; }
+    .diagram pre { background: transparent; color: var(--ink); padding: 0; font-size: 13px; line-height: 1.6; }
+    .diagram-caption { margin-top: 1rem; font-size: 12px; color: var(--ink-muted); text-align: center; font-style: italic; }
 
-    .topics-preview ul {
-      list-style: none;
-      padding: 0;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 0.5rem;
-    }
+    .chapter-footer { border-top: 1px solid var(--border); padding: 3rem 2rem; background: var(--surface-alt); }
+    .chapter-footer-inner { max-width: var(--content-max); margin: 0 auto; }
+    .footer-nav { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+    .footer-nav-link { display: flex; flex-direction: column; gap: 4px; padding: 1rem 1.5rem; border: 1px solid var(--border); border-radius: 12px; text-decoration: none; transition: all 0.2s var(--ease); max-width: 320px; background: white; }
+    .footer-nav-link:hover { border-color: var(--teal-300); box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+    .footer-nav-label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--teal-600); }
+    .footer-nav-title { font-size: 15px; font-weight: 600; color: var(--ink); }
+    .footer-brand { text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); font-size: 13px; color: var(--ink-muted); }
 
-    .topics-preview li {
-      font-size: 14px;
-      color: var(--ink-light);
-      padding-left: 1.25rem;
-      position: relative;
-    }
-
-    .topics-preview li::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 8px;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--teal-500);
-    }
-
-    .footer-nav {
-      max-width: var(--content-max);
-      margin: 0 auto;
-      padding: 2rem;
-      display: flex;
-      justify-content: space-between;
-      border-top: 1px solid var(--border);
-    }
-
-    .footer-nav-link {
-      display: flex;
-      flex-direction: column;
-      text-decoration: none;
-      padding: 1rem;
-      border-radius: 12px;
-      transition: background 0.2s var(--ease);
-      max-width: 45%;
-    }
-
-    .footer-nav-link:hover {
-      background: var(--surface-alt);
-    }
-
-    .footer-nav-label {
-      font-size: 12px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--ink-muted);
-      margin-bottom: 4px;
-    }
-
-    .footer-nav-title {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--teal-700);
-    }
-
-    .footer-nav-link.next { text-align: right; margin-left: auto; }
-
-    .footer {
-      text-align: center;
-      padding: 2rem;
-      font-size: 13px;
-      color: var(--ink-muted);
-      border-top: 1px solid var(--border);
-    }
-
-    .footer a {
-      color: var(--teal-700);
-      text-decoration: none;
-    }
-
-    .footer a:hover { text-decoration: underline; }
-
-    @media (max-width: 768px) {
-      .hero { padding: 3rem 1.5rem 2.5rem; }
-      .content { padding: 2rem 1.5rem 4rem; }
-      .hero h1 { font-size: 2rem; }
-      .footer-nav { flex-direction: column; gap: 1rem; }
-      .footer-nav-link { max-width: 100%; }
-      .footer-nav-link.next { text-align: left; }
-    }
+    @media (max-width: 960px) { .main-layout { grid-template-columns: 1fr; } .sidebar { display: none; } .resource-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 640px) { .hero { padding: 2.5rem 1.25rem 2rem; } .main-layout { padding: 0 1.25rem; } .content { padding: 2rem 0 4rem; } pre { padding: 1rem; font-size: 12.5px; } .footer-nav { flex-direction: column; } .footer-nav-link { max-width: 100%; width: 100%; } }
+    @media print { .top-nav, .sidebar, .progress-bar { display: none; } .main-layout { display: block; } .content { padding: 0; } .hero { background: white; border: none; } pre { background: #f1f5f9; color: var(--ink); border: 1px solid var(--border); } }
   </style>
 </head>
 <body>
+  <!-- Progress Bar -->
   <div class="progress-bar" id="progressBar"></div>
 
+  <!-- Top Navigation -->
   <nav class="top-nav">
     <div class="top-nav-inner">
       <a class="nav-brand" href="index.html">
@@ -453,70 +214,695 @@
     </div>
   </nav>
 
+  <!-- Hero -->
   <header class="hero">
     <div class="hero-inner">
       <div class="hero-chapter-label">
-        <span>Chapter 07</span> 
+        <span>Chapter 07</span> &middot; Phase 4: Operations (07/10)
       </div>
       <h1>Replication and Failover</h1>
-      <p class="hero-subtitle">Streaming replication, logical replication, pgBouncer, connection pooling, failover automation</p>
+      <p class="hero-subtitle">
+        Build a highly available PostgreSQL architecture with streaming replication, logical replication for
+        selective table sync, connection pooling with pgBouncer, and automatic failover using Patroni.
+        A single-node database is a single point of failure &mdash; this chapter eliminates it.
+      </p>
       <div class="hero-meta">
-        <div class="hero-meta-item">3 Assignments</div>
-        <div class="hero-meta-item">~45 min read</div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Estimated: 4&ndash;5 days
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          3 Advancement Levels
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          3 Assignments
+        </div>
       </div>
     </div>
   </header>
 
-  <main class="content">
-    <h2>Overview</h2>
-    <p>This chapter covers <strong>replication and failover</strong> as part of the PostgreSQL Engineering curriculum. You will build practical skills through guided explanations, code examples, and hands-on assignments.</p>
+  <!-- Main Content + Sidebar -->
+  <div class="main-layout">
+    <main class="content">
 
-    <div class="topics-preview">
-      <h3>Topics Covered</h3>
-      <ul>
-            <li>Streaming replication</li>
-            <li>logical replication</li>
-            <li>pgBouncer</li>
-            <li>connection pooling</li>
-            <li>failover automation</li>
+      <h2 id="why-this-matters">Why This Matters</h2>
+
+      <p>
+        A database that cannot survive a hardware failure is a liability. Every minute of unplanned downtime
+        costs money, erodes trust, and creates a cascading failure across every service that depends on your
+        data. Replication is how you turn a single database into a resilient cluster that can survive node
+        failures, scale read traffic, and provide zero-data-loss guarantees.
+      </p>
+
+      <p>
+        But replication alone is not enough. Without connection pooling, your application will exhaust
+        PostgreSQL's connection limit under load. Without automatic failover, a primary failure requires
+        manual intervention &mdash; at 3 AM, by an on-call engineer who may not have rehearsed the procedure.
+        This chapter builds the complete high-availability stack.
+      </p>
+
+      <div class="callout concept">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Key Insight
+        </div>
+        <p>
+          High availability is not a feature you add later &mdash; it is an <strong>architecture you design
+          from the start</strong>. Retrofitting replication onto a running production database is orders of
+          magnitude harder than setting it up before you go live.
+        </p>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="key-concepts">Key Concepts</h2>
+
+      <h3 id="streaming-replication">1. Streaming Replication Setup</h3>
+
+      <p>
+        Streaming replication is PostgreSQL's built-in mechanism for maintaining an exact byte-for-byte copy
+        of the primary database on one or more standby servers. The primary ships WAL (Write-Ahead Log)
+        records to the standby in real-time, and the standby replays them to stay in sync.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">conf</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># postgresql.conf — Primary server configuration</span>
+<span class="hl-keyword">wal_level</span> = <span class="hl-string">replica</span>
+<span class="hl-keyword">max_wal_senders</span> = <span class="hl-number">5</span>
+<span class="hl-keyword">wal_keep_size</span> = <span class="hl-string">1GB</span>
+<span class="hl-keyword">synchronous_commit</span> = <span class="hl-string">on</span>
+
+<span class="hl-comment"># For synchronous replication (zero data loss):</span>
+<span class="hl-comment"># synchronous_standby_names = 'standby1'</span>
+
+<span class="hl-comment"># pg_hba.conf — Allow replication connections</span>
+<span class="hl-keyword">host</span>  <span class="hl-string">replication</span>  replicator  <span class="hl-number">10.0.0.0/24</span>  <span class="hl-string">scram-sha-256</span>
+</pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">bash</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># Create a replication user on the primary</span>
+psql <span class="hl-flag">-c</span> <span class="hl-string">"CREATE ROLE replicator WITH REPLICATION LOGIN PASSWORD 'secure_password';"</span>
+
+<span class="hl-comment"># Take a base backup on the standby server</span>
+pg_basebackup <span class="hl-flag">-h</span> primary-host <span class="hl-flag">-U</span> replicator \
+  <span class="hl-flag">-D</span> /var/lib/postgresql/<span class="hl-number">16</span>/main \
+  <span class="hl-flag">-Fp</span> <span class="hl-flag">-Xs</span> <span class="hl-flag">-P</span> <span class="hl-flag">-R</span>
+
+<span class="hl-comment"># The -R flag creates standby.signal and configures</span>
+<span class="hl-comment"># primary_conninfo in postgresql.auto.conf automatically</span>
+</pre>
+      </div>
+
+      <div class="diagram">
+<pre>
+                         WAL Stream
+ ┌──────────────┐  ──────────────────▶  ┌──────────────┐
+ │   PRIMARY    │                       │   STANDBY    │
+ │  (read/write)│                       │  (read-only) │
+ │              │  ◀──────────────────  │              │
+ └──────┬───────┘   feedback/status     └──────────────┘
+        │
+        │  writes
+        ▼
+ ┌──────────────┐
+ │     WAL      │
+ │   Segments   │
+ └──────────────┘
+</pre>
+        <div class="diagram-caption">Figure 1: Streaming replication — primary ships WAL to standby in real-time</div>
+      </div>
+
+      <h3 id="logical-replication">2. Logical Replication</h3>
+
+      <p>
+        While streaming replication copies the entire database cluster, logical replication lets you
+        selectively replicate individual tables or a subset of data. This is invaluable for
+        cross-version upgrades, data federation, and feeding analytics systems.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- On the PUBLISHER (source database)</span>
+<span class="hl-keyword">ALTER SYSTEM SET</span> wal_level = <span class="hl-string">logical</span>;
+<span class="hl-comment">-- Restart PostgreSQL after this change</span>
+
+<span class="hl-comment">-- Create a publication for specific tables</span>
+<span class="hl-keyword">CREATE PUBLICATION</span> analytics_pub
+  <span class="hl-keyword">FOR TABLE</span> orders, users, products
+  <span class="hl-keyword">WITH</span> (publish = <span class="hl-string">'insert, update, delete'</span>);
+
+<span class="hl-comment">-- On the SUBSCRIBER (destination database)</span>
+<span class="hl-keyword">CREATE SUBSCRIPTION</span> analytics_sub
+  <span class="hl-keyword">CONNECTION</span> <span class="hl-string">'host=primary-host dbname=app user=replicator password=secure'</span>
+  <span class="hl-keyword">PUBLICATION</span> analytics_pub;
+
+<span class="hl-comment">-- Monitor replication status</span>
+<span class="hl-keyword">SELECT</span> subname, received_lsn, latest_end_lsn,
+       latest_end_time
+<span class="hl-keyword">FROM</span> pg_stat_subscription;
+</pre>
+      </div>
+
+      <div class="callout important">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Logical vs. Streaming
+        </div>
+        <p>
+          <strong>Streaming replication</strong> replicates the entire cluster and is used for HA/failover.
+          <strong>Logical replication</strong> replicates specific tables and allows writes on both sides.
+          They serve different purposes and can be used together. Logical replication requires
+          <code>wal_level = logical</code> (which is a superset of <code>replica</code>).
+        </p>
+      </div>
+
+      <h3 id="pgbouncer">3. pgBouncer and Connection Pooling</h3>
+
+      <p>
+        PostgreSQL forks a new process for every connection. At 100+ concurrent connections, this becomes
+        a serious resource bottleneck. pgBouncer sits between your application and PostgreSQL, multiplexing
+        many client connections onto a smaller pool of database connections.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">ini</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">; pgbouncer.ini — Connection pooler configuration</span>
+[<span class="hl-keyword">databases</span>]
+<span class="hl-function">app_production</span> = host=<span class="hl-number">127.0.0.1</span> port=<span class="hl-number">5432</span> dbname=app_production
+
+[<span class="hl-keyword">pgbouncer</span>]
+<span class="hl-keyword">listen_addr</span> = <span class="hl-number">0.0.0.0</span>
+<span class="hl-keyword">listen_port</span> = <span class="hl-number">6432</span>
+<span class="hl-keyword">auth_type</span> = <span class="hl-string">scram-sha-256</span>
+<span class="hl-keyword">auth_file</span> = <span class="hl-string">/etc/pgbouncer/userlist.txt</span>
+
+<span class="hl-comment">; Pool mode: transaction is the most common for web apps</span>
+<span class="hl-keyword">pool_mode</span> = <span class="hl-string">transaction</span>
+
+<span class="hl-comment">; Connection limits</span>
+<span class="hl-keyword">default_pool_size</span> = <span class="hl-number">20</span>
+<span class="hl-keyword">max_client_conn</span> = <span class="hl-number">1000</span>
+<span class="hl-keyword">max_db_connections</span> = <span class="hl-number">50</span>
+
+<span class="hl-comment">; Timeouts</span>
+<span class="hl-keyword">server_idle_timeout</span> = <span class="hl-number">300</span>
+<span class="hl-keyword">client_idle_timeout</span> = <span class="hl-number">0</span>
+<span class="hl-keyword">query_timeout</span> = <span class="hl-number">30</span>
+</pre>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Pro Tip
+        </div>
+        <p>
+          Use <code>pool_mode = transaction</code> for web applications. This releases the server connection
+          back to the pool after each transaction completes. Avoid <code>session</code> mode unless you need
+          <code>LISTEN/NOTIFY</code>, prepared statements, or session-level variables. Use
+          <code>statement</code> mode only for simple load balancing with no multi-statement transactions.
+        </p>
+      </div>
+
+      <h3 id="read-replicas">4. Read Replicas for Scaling</h3>
+
+      <p>
+        Once you have streaming replication, your standby servers can serve read-only queries. This offloads
+        analytics, reporting, and search traffic from the primary, freeing it to handle writes. The key
+        challenge is routing: your application must know which queries go to the primary and which go to a replica.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- Enable hot standby reads on the replica</span>
+<span class="hl-comment">-- postgresql.conf on standby:</span>
+<span class="hl-comment">-- hot_standby = on</span>
+
+<span class="hl-comment">-- Check if current server is in recovery (is a replica)</span>
+<span class="hl-keyword">SELECT</span> <span class="hl-function">pg_is_in_recovery</span>();
+<span class="hl-comment">-- Returns true on replicas, false on primary</span>
+
+<span class="hl-comment">-- Check replication lag on the replica</span>
+<span class="hl-keyword">SELECT</span>
+  <span class="hl-function">now</span>() - pg_last_xact_replay_timestamp() <span class="hl-keyword">AS</span> replication_lag,
+  <span class="hl-function">pg_is_in_recovery</span>() <span class="hl-keyword">AS</span> is_replica,
+  <span class="hl-function">pg_last_wal_receive_lsn</span>() <span class="hl-keyword">AS</span> received_lsn,
+  <span class="hl-function">pg_last_wal_replay_lsn</span>() <span class="hl-keyword">AS</span> replayed_lsn;
+
+<span class="hl-comment">-- Check replication status from the primary</span>
+<span class="hl-keyword">SELECT</span> client_addr, state, sent_lsn, write_lsn,
+       flush_lsn, replay_lsn,
+       <span class="hl-function">pg_wal_lsn_diff</span>(sent_lsn, replay_lsn) <span class="hl-keyword">AS</span> byte_lag
+<span class="hl-keyword">FROM</span> pg_stat_replication;
+</pre>
+      </div>
+
+      <h3 id="patroni-failover">5. Automatic Failover with Patroni</h3>
+
+      <p>
+        Patroni is an open-source tool that manages PostgreSQL high availability with automatic failover.
+        It uses a distributed consensus store (etcd, Consul, or ZooKeeper) to elect a leader and
+        automatically promotes a standby to primary when the current primary fails.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">yaml</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># patroni.yml — Patroni configuration</span>
+<span class="hl-keyword">scope</span>: <span class="hl-string">production-cluster</span>
+<span class="hl-keyword">name</span>: <span class="hl-string">node1</span>
+
+<span class="hl-keyword">restapi</span>:
+  <span class="hl-keyword">listen</span>: <span class="hl-string">0.0.0.0:8008</span>
+  <span class="hl-keyword">connect_address</span>: <span class="hl-string">10.0.1.10:8008</span>
+
+<span class="hl-keyword">etcd</span>:
+  <span class="hl-keyword">hosts</span>: <span class="hl-string">10.0.1.50:2379,10.0.1.51:2379,10.0.1.52:2379</span>
+
+<span class="hl-keyword">bootstrap</span>:
+  <span class="hl-keyword">dcs</span>:
+    <span class="hl-keyword">ttl</span>: <span class="hl-number">30</span>
+    <span class="hl-keyword">loop_wait</span>: <span class="hl-number">10</span>
+    <span class="hl-keyword">retry_timeout</span>: <span class="hl-number">10</span>
+    <span class="hl-keyword">maximum_lag_on_failover</span>: <span class="hl-number">1048576</span>  <span class="hl-comment"># 1MB</span>
+    <span class="hl-keyword">postgresql</span>:
+      <span class="hl-keyword">parameters</span>:
+        <span class="hl-keyword">max_connections</span>: <span class="hl-number">200</span>
+        <span class="hl-keyword">shared_buffers</span>: <span class="hl-string">2GB</span>
+        <span class="hl-keyword">wal_level</span>: <span class="hl-string">replica</span>
+        <span class="hl-keyword">max_wal_senders</span>: <span class="hl-number">5</span>
+        <span class="hl-keyword">max_replication_slots</span>: <span class="hl-number">5</span>
+
+<span class="hl-keyword">postgresql</span>:
+  <span class="hl-keyword">listen</span>: <span class="hl-string">0.0.0.0:5432</span>
+  <span class="hl-keyword">connect_address</span>: <span class="hl-string">10.0.1.10:5432</span>
+  <span class="hl-keyword">data_dir</span>: <span class="hl-string">/var/lib/postgresql/16/main</span>
+  <span class="hl-keyword">authentication</span>:
+    <span class="hl-keyword">superuser</span>:
+      <span class="hl-keyword">username</span>: <span class="hl-string">postgres</span>
+      <span class="hl-keyword">password</span>: <span class="hl-string">secure_password</span>
+    <span class="hl-keyword">replication</span>:
+      <span class="hl-keyword">username</span>: <span class="hl-string">replicator</span>
+      <span class="hl-keyword">password</span>: <span class="hl-string">replicator_password</span>
+</pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">bash</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># Check cluster status with patronictl</span>
+patronictl <span class="hl-flag">-c</span> /etc/patroni/patroni.yml list
+
+<span class="hl-comment"># Output:</span>
+<span class="hl-comment"># + Cluster: production-cluster ----+---------+---------+</span>
+<span class="hl-comment"># | Member | Host       | Role    | State   | Lag     |</span>
+<span class="hl-comment"># +--------+------------+---------+---------+---------+</span>
+<span class="hl-comment"># | node1  | 10.0.1.10  | Leader  | running |         |</span>
+<span class="hl-comment"># | node2  | 10.0.1.11  | Replica | running | 0 bytes |</span>
+<span class="hl-comment"># | node3  | 10.0.1.12  | Replica | running | 0 bytes |</span>
+<span class="hl-comment"># +--------+------------+---------+---------+---------+</span>
+
+<span class="hl-comment"># Manual switchover (planned maintenance)</span>
+patronictl <span class="hl-flag">-c</span> /etc/patroni/patroni.yml switchover \
+  <span class="hl-flag">--master</span> node1 <span class="hl-flag">--candidate</span> node2
+</pre>
+      </div>
+
+      <h3 id="monitoring-lag">6. Monitoring Replication Lag</h3>
+
+      <p>
+        Replication lag is the delay between when a change is written on the primary and when it becomes
+        visible on the replica. High lag means stale reads, potential data loss during failover, and
+        unhappy users who see inconsistent data.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- Comprehensive replication monitoring query (run on primary)</span>
+<span class="hl-keyword">SELECT</span>
+  client_addr,
+  application_name,
+  state,
+  sync_state,
+  sent_lsn,
+  write_lsn,
+  flush_lsn,
+  replay_lsn,
+  <span class="hl-function">pg_wal_lsn_diff</span>(sent_lsn, replay_lsn) <span class="hl-keyword">AS</span> replay_lag_bytes,
+  <span class="hl-function">pg_wal_lsn_diff</span>(<span class="hl-function">pg_current_wal_lsn</span>(), sent_lsn) <span class="hl-keyword">AS</span> send_lag_bytes,
+  write_lag,
+  flush_lag,
+  replay_lag
+<span class="hl-keyword">FROM</span> pg_stat_replication
+<span class="hl-keyword">ORDER BY</span> client_addr;
+
+<span class="hl-comment">-- Alert when lag exceeds threshold (use in monitoring)</span>
+<span class="hl-keyword">SELECT</span> client_addr,
+       <span class="hl-function">pg_wal_lsn_diff</span>(sent_lsn, replay_lsn) <span class="hl-keyword">AS</span> lag_bytes
+<span class="hl-keyword">FROM</span> pg_stat_replication
+<span class="hl-keyword">WHERE</span> <span class="hl-function">pg_wal_lsn_diff</span>(sent_lsn, replay_lsn) &gt; <span class="hl-number">10485760</span>;
+<span class="hl-comment">-- Alerts when any replica is more than 10MB behind</span>
+</pre>
+      </div>
+
+      <div class="callout danger">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+          Critical Warning
+        </div>
+        <p>
+          If a replication slot is not consumed (e.g., a replica is offline for days), WAL files accumulate
+          on the primary and will eventually fill the disk. Always monitor
+          <code>pg_replication_slots</code> and drop inactive slots before they cause a disk-full outage
+          on the primary itself.
+        </p>
+      </div>
+
+      <details>
+        <summary>Synchronous vs. asynchronous replication</summary>
+        <div class="details-body">
+          <p>
+            <strong>Asynchronous</strong> (default): The primary does not wait for the standby to confirm
+            receipt of WAL data. Fastest writes, but a primary failure can lose the last few milliseconds
+            of committed transactions.
+          </p>
+          <p>
+            <strong>Synchronous</strong>: The primary waits for at least one standby to confirm it has
+            written the WAL data to disk. Zero data loss, but write latency increases by the network
+            round-trip time. Enable with <code>synchronous_standby_names</code> in <code>postgresql.conf</code>.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Connection routing with HAProxy</summary>
+        <div class="details-body">
+          <p>
+            Use HAProxy to route connections to the current primary, leveraging Patroni's REST API
+            for health checks:
+          </p>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">conf</span>
+              <button class="code-copy" onclick="copyCode(this)">Copy</button>
+            </div>
+<pre>
+<span class="hl-comment"># HAProxy configuration for Patroni</span>
+<span class="hl-keyword">frontend</span> postgres_write
+  <span class="hl-keyword">bind</span> *:<span class="hl-number">5000</span>
+  <span class="hl-keyword">default_backend</span> postgres_primary
+
+<span class="hl-keyword">backend</span> postgres_primary
+  <span class="hl-keyword">option</span> httpchk GET /primary
+  <span class="hl-keyword">http-check</span> expect status <span class="hl-number">200</span>
+  <span class="hl-keyword">server</span> node1 <span class="hl-number">10.0.1.10</span>:<span class="hl-number">5432</span> check port <span class="hl-number">8008</span>
+  <span class="hl-keyword">server</span> node2 <span class="hl-number">10.0.1.11</span>:<span class="hl-number">5432</span> check port <span class="hl-number">8008</span>
+  <span class="hl-keyword">server</span> node3 <span class="hl-number">10.0.1.12</span>:<span class="hl-number">5432</span> check port <span class="hl-number">8008</span>
+</pre>
+          </div>
+        </div>
+      </details>
+
+      <hr class="section-divider">
+
+      <h2 id="watch-learn">Watch &amp; Learn</h2>
+
+      <p>
+        These videos cover the core concepts in this chapter. Watch them before starting the assignments.
+      </p>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/9sMRHZL-tRI?rel=0&amp;modestbranding=1" title="PostgreSQL Replication and High Availability" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          PostgreSQL Streaming Replication and High Availability Architecture
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/HXV3zeQKqGY?rel=0&amp;modestbranding=1" title="pgBouncer and Connection Pooling" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Connection Pooling with pgBouncer and Patroni Failover
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="further-reading">Further Reading</h2>
+
+      <p>Deep-dive into the official documentation and reference material for this chapter's tools.</p>
+
+      <div class="resource-grid">
+        <a class="resource-card" href="https://www.postgresql.org/docs/current/warm-standby.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+          <div class="resource-info"><div class="resource-title">PostgreSQL Docs: High Availability</div><div class="resource-desc">Official documentation covering streaming replication, standby servers, and failover procedures.</div></div>
+        </a>
+        <a class="resource-card" href="https://www.postgresql.org/docs/current/logical-replication.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+          <div class="resource-info"><div class="resource-title">PostgreSQL Docs: Logical Replication</div><div class="resource-desc">Publications, subscriptions, conflict resolution, and selective table replication.</div></div>
+        </a>
+        <a class="resource-card" href="https://www.pgbouncer.org/" target="_blank" rel="noopener">
+          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+          <div class="resource-info"><div class="resource-title">pgBouncer Documentation</div><div class="resource-desc">Connection pooler configuration, pool modes, authentication, and monitoring.</div></div>
+        </a>
+        <a class="resource-card" href="https://github.com/patroni/patroni" target="_blank" rel="noopener">
+          <div class="resource-icon github"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></div>
+          <div class="resource-info"><div class="resource-title">Patroni on GitHub</div><div class="resource-desc">Open-source HA solution for PostgreSQL with automatic failover using distributed consensus.</div></div>
+        </a>
+        <a class="resource-card" href="https://www.postgresql.org/docs/current/monitoring-stats.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+          <div class="resource-info"><div class="resource-title">PostgreSQL Docs: Monitoring Stats</div><div class="resource-desc">pg_stat_replication, pg_stat_wal, and other views for monitoring replication health.</div></div>
+        </a>
+        <a class="resource-card" href="https://www.haproxy.org/" target="_blank" rel="noopener">
+          <div class="resource-icon article"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <div class="resource-info"><div class="resource-title">HAProxy for Database Routing</div><div class="resource-desc">Load balancer configuration for routing reads to replicas and writes to the primary.</div></div>
+        </a>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="assignments">Assignments</h2>
+
+      <p>
+        Complete these in order. Each level builds on the previous one. Submit your work as a GitHub PR
+        with configuration files and a <code>docs/chapter-07.md</code> documenting your replication topology.
+      </p>
+
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 1</div>
+          <span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span>
+        </div>
+        <h4>Streaming Replication with Docker Compose</h4>
+        <p>Set up a primary-standby pair using Docker Compose with streaming replication.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a Docker Compose file with a primary and one standby PostgreSQL instance</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Configure <code>wal_level = replica</code> and create a replication user on the primary</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Use <code>pg_basebackup</code> to initialize the standby from the primary</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Verify: writes on the primary appear on the standby within seconds</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Query <code>pg_stat_replication</code> to confirm the standby is connected and in sync</span></li>
+        </ul>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div>
+          <p>A row inserted on the primary is immediately queryable on the standby, and <code>pg_stat_replication</code> shows zero or near-zero lag.</p>
+        </div>
+      </div>
+
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 2</div>
+          <span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span>
+        </div>
+        <h4>Connection Pooling with pgBouncer</h4>
+        <p>Add pgBouncer in front of your primary and replica to handle connection pooling.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Deploy pgBouncer as a Docker container with <code>transaction</code> pool mode</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Configure <code>default_pool_size</code>, <code>max_client_conn</code>, and authentication</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Run a connection stress test: 200 concurrent clients through pgBouncer with a pool of 20</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Compare connection handling with and without pgBouncer using <code>pgbench</code></span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Monitor pgBouncer stats using <code>SHOW STATS</code> and <code>SHOW POOLS</code></span></li>
+        </ul>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div>
+          <p>Your application handles 200+ concurrent connections through pgBouncer with only 20 actual database connections, and performance metrics show the pooler is working.</p>
+        </div>
+      </div>
+
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 3</div>
+          <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Production-Ready</span>
+        </div>
+        <h4>Automatic Failover with Patroni and HAProxy</h4>
+        <p>Build a complete HA cluster with Patroni, etcd, and HAProxy for automatic failover and connection routing.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Deploy a 3-node Patroni cluster with etcd for consensus</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Configure HAProxy to route writes to the primary and reads to replicas</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Simulate a primary failure (stop the primary container) and verify automatic failover</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Measure failover time and data loss (if any) during the switchover</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Document the entire HA architecture with a runbook for common failure scenarios</span></li>
+        </ul>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div>
+          <p>When you stop the primary node, a replica is automatically promoted within 30 seconds, HAProxy routes traffic to the new primary, and the application experiences minimal downtime.</p>
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="self-check">Self-Check</h2>
+
+      <p>Before moving to Chapter 08, honestly answer these questions. If any answer is "no", go back and fix it.</p>
+
+      <details>
+        <summary>Can you explain the difference between streaming and logical replication?</summary>
+        <div class="details-body">
+          <p>
+            Streaming replication copies the entire WAL byte stream and creates an exact replica of the
+            primary. Logical replication decodes the WAL into logical changes and can replicate specific
+            tables to different databases, even across PostgreSQL versions. Streaming is for HA; logical
+            is for selective data distribution.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>What pool mode should you use for a web application?</summary>
+        <div class="details-body">
+          <p>
+            <code>transaction</code> mode. It releases the server connection after each transaction, allowing
+            many clients to share a small pool. <code>session</code> mode holds the connection for the entire
+            client session and defeats the purpose of pooling for most web apps. <code>statement</code> mode
+            breaks multi-statement transactions.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>What happens if a replication slot consumer goes offline for too long?</summary>
+        <div class="details-body">
+          <p>
+            WAL files accumulate on the primary because PostgreSQL retains them for the slot. This will
+            eventually fill the disk and crash the primary. Always monitor <code>pg_replication_slots</code>
+            for inactive slots and set <code>max_slot_wal_keep_size</code> to limit retention.
+          </p>
+        </div>
+      </details>
+
+    </main>
+
+    <aside class="sidebar">
+      <div class="sidebar-title">On this page</div>
+      <ul class="toc-list">
+        <li class="toc-item"><a href="#why-this-matters">Why This Matters</a></li>
+        <li class="toc-item"><a href="#key-concepts">Key Concepts</a></li>
+        <li class="toc-item"><a href="#streaming-replication" style="padding-left: 28px; font-size: 12px;">Streaming Replication</a></li>
+        <li class="toc-item"><a href="#logical-replication" style="padding-left: 28px; font-size: 12px;">Logical Replication</a></li>
+        <li class="toc-item"><a href="#pgbouncer" style="padding-left: 28px; font-size: 12px;">pgBouncer</a></li>
+        <li class="toc-item"><a href="#read-replicas" style="padding-left: 28px; font-size: 12px;">Read Replicas</a></li>
+        <li class="toc-item"><a href="#patroni-failover" style="padding-left: 28px; font-size: 12px;">Patroni Failover</a></li>
+        <li class="toc-item"><a href="#monitoring-lag" style="padding-left: 28px; font-size: 12px;">Monitoring Lag</a></li>
+        <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a></li>
+        <li class="toc-item"><a href="#further-reading">Further Reading</a></li>
+        <li class="toc-item"><a href="#assignments">Assignments</a></li>
+        <li class="toc-item"><a href="#self-check">Self-Check</a></li>
       </ul>
-    </div>
+    </aside>
+  </div>
 
-    <hr class="section-divider">
-
-    <div class="coming-soon-banner">
-      <h3>Content In Development</h3>
-      <p>Full chapter content with detailed explanations, code examples, video walkthroughs, and assignments is being developed. Check back soon.</p>
-    </div>
-
-    <div class="callout tip">
-      <div class="callout-header">What You Will Learn</div>
-      <p>By the end of this chapter, you will understand streaming replication, logical replication, pgbouncer, connection pooling, failover automation and be able to apply these concepts in real-world scenarios.</p>
-    </div>
-
-  </main>
-
-  <nav class="footer-nav">
-        <a class="footer-nav-link prev" href="chapter-06.html">
-          <span class="footer-nav-label">&larr; Previous</span>
-          <span class="footer-nav-title">Chapter 06: Triggers and Event Systems</span>
+  <footer class="chapter-footer">
+    <div class="chapter-footer-inner">
+      <nav class="footer-nav">
+        <a class="footer-nav-link" href="chapter-06.html">
+          <span class="footer-nav-label">&larr; Previous Chapter</span>
+          <span class="footer-nav-title">06: Triggers and Event Systems</span>
         </a>
-        <a class="footer-nav-link next" href="chapter-08.html">
-          <span class="footer-nav-label">Next &rarr;</span>
-          <span class="footer-nav-title">Chapter 08: Backup and Disaster Recovery</span>
+        <a class="footer-nav-link" href="chapter-08.html">
+          <span class="footer-nav-label">Next Chapter &rarr;</span>
+          <span class="footer-nav-title">08: Backup and Disaster Recovery</span>
         </a>
-  </nav>
-
-  <footer class="footer">
-    ILA (Iksha Learning Academy) &middot; PostgreSQL Engineering &middot; <a href="index.html">All Chapters</a>
+      </nav>
+      <div class="footer-brand">
+        ILA (Iksha Learning Academy) &middot; PostgreSQL Engineering Certification &middot; Level 2
+      </div>
+    </div>
   </footer>
 
   <script>
     window.addEventListener('scroll', () => {
-      const h = document.documentElement;
-      const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
-      document.getElementById('progressBar').style.width = Math.min(pct, 100) + '%';
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      document.getElementById('progressBar').style.width = progress + '%';
     });
+
+    const tocLinks = document.querySelectorAll('.toc-item a');
+    const sections = [];
+    tocLinks.forEach(link => {
+      const id = link.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) sections.push({ id, el, link });
+    });
+    const observerOptions = { rootMargin: '-80px 0px -60% 0px', threshold: 0 };
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const item = sections.find(s => s.el === entry.target);
+        if (item && entry.isIntersecting) {
+          tocLinks.forEach(l => l.classList.remove('active'));
+          item.link.classList.add('active');
+        }
+      });
+    }, observerOptions);
+    sections.forEach(s => observer.observe(s.el));
+
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      navigator.clipboard.writeText(pre.textContent).then(() => {
+        btn.classList.add('copied');
+        btn.textContent = 'Copied!';
+        setTimeout(() => { btn.classList.remove('copied'); btn.textContent = 'Copy'; }, 2000);
+      });
+    }
   </script>
 </body>
 </html>

@@ -7,95 +7,289 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-  <style>:root{--ink:#0f172a;--ink-light:#334155;--ink-muted:#64748b;--surface:#ffffff;--surface-alt:#f8fafc;--surface-warm:#fffbeb;--border:#e2e8f0;--border-light:#f1f5f9;--teal-50:#f0fdfa;--teal-100:#ccfbf1;--teal-200:#99f6e4;--teal-500:#14b8a6;--teal-600:#0d9488;--teal-700:#0f766e;--teal-800:#115e59;--teal-900:#134e4a;--blue-50:#eff6ff;--blue-100:#dbeafe;--blue-500:#3b82f6;--blue-600:#2563eb;--blue-700:#1d4ed8;--amber-50:#fffbeb;--amber-100:#fef3c7;--amber-500:#f59e0b;--amber-600:#d97706;--red-50:#fef2f2;--red-100:#fee2e2;--red-500:#ef4444;--red-600:#dc2626;--purple-50:#faf5ff;--purple-100:#f3e8ff;--purple-500:#a855f7;--purple-600:#9333ea;--font-sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;--font-serif:'Instrument Serif',Georgia,serif;--font-mono:'JetBrains Mono','Fira Code',monospace;--content-max:780px;--sidebar-width:280px;--ease:cubic-bezier(0.4,0,0.2,1)}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}body{font-family:var(--font-sans);font-size:16px;line-height:1.7;color:var(--ink);background:var(--surface)}.progress-bar{position:fixed;top:0;left:0;width:0%;height:3px;background:linear-gradient(90deg,var(--teal-500),var(--blue-500));z-index:1000;transition:width .15s var(--ease)}.top-nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem}.top-nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px}.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--teal-800)}.nav-brand-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--teal-600),var(--teal-800));border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px}.nav-brand-text{font-weight:700;font-size:15px;letter-spacing:-.02em}.nav-chapter-nav{display:flex;align-items:center;gap:8px}.nav-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;color:var(--ink-muted);border:1px solid var(--border);background:#fff;transition:all .2s var(--ease);cursor:pointer}.nav-btn:hover{color:var(--ink);border-color:var(--teal-500);background:var(--teal-50)}.nav-btn.disabled{opacity:.4;pointer-events:none}.nav-current{font-size:13px;font-weight:600;color:var(--ink-light);padding:0 4px}.hero{background:linear-gradient(170deg,var(--teal-50) 0%,var(--surface) 50%,var(--blue-50) 100%);border-bottom:1px solid var(--border);padding:4rem 2rem 3.5rem}.hero-inner{max-width:var(--content-max);margin:0 auto}.hero-chapter-label{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--teal-700);text-transform:uppercase;letter-spacing:.08em;margin-bottom:1rem}.hero-chapter-label span{background:var(--teal-100);padding:3px 10px;border-radius:100px}.hero h1{font-family:var(--font-serif);font-size:clamp(2.4rem,5vw,3.2rem);font-weight:400;line-height:1.15;color:var(--ink);margin-bottom:1rem}.hero-subtitle{font-size:1.15rem;color:var(--ink-light);line-height:1.65;max-width:640px}.hero-meta{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1.5rem}.hero-meta-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-muted)}.hero-meta-item svg{width:16px;height:16px;color:var(--teal-600)}.main-layout{max-width:1200px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:1fr var(--sidebar-width);gap:4rem;align-items:start}.content{padding:3rem 0 6rem;min-width:0}.sidebar{position:sticky;top:76px;padding:2rem 0;max-height:calc(100vh - 76px);overflow-y:auto}.sidebar-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-muted);margin-bottom:1rem;padding-left:14px}.toc-list{list-style:none}.toc-item a{display:block;padding:6px 14px;font-size:13px;color:var(--ink-muted);text-decoration:none;border-left:2px solid transparent;transition:all .2s var(--ease);line-height:1.5}.toc-item a:hover{color:var(--ink);background:var(--surface-alt)}.toc-item a.active{color:var(--teal-700);border-left-color:var(--teal-500);background:var(--teal-50);font-weight:500}.content h2{font-family:var(--font-serif);font-size:1.85rem;font-weight:400;color:var(--ink);margin:3rem 0 1rem;padding-top:1rem;scroll-margin-top:80px}.content h2:first-child{margin-top:0}.content h3{font-size:1.15rem;font-weight:600;color:var(--ink);margin:2rem 0 .75rem;scroll-margin-top:80px}.content p{margin-bottom:1.25rem;color:var(--ink-light)}.content strong{color:var(--ink);font-weight:600}.content a{color:var(--teal-700);text-decoration:underline;text-decoration-color:var(--teal-200);text-underline-offset:3px}.content ul,.content ol{margin-bottom:1.25rem;padding-left:1.5rem}.content li{margin-bottom:.5rem;color:var(--ink-light)}.content li::marker{color:var(--teal-500)}.section-divider{border:none;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:3rem 0}.callout{padding:1.25rem 1.5rem;border-radius:12px;margin-bottom:1.5rem;border:1px solid;position:relative}.callout-header{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;margin-bottom:.5rem}.callout-header svg{width:18px;height:18px;flex-shrink:0}.callout p:last-child{margin-bottom:0}.callout.concept{background:var(--blue-50);border-color:var(--blue-100)}.callout.concept .callout-header{color:var(--blue-700)}.callout.important{background:var(--amber-50);border-color:var(--amber-100)}.callout.important .callout-header{color:var(--amber-600)}.callout.danger{background:var(--red-50);border-color:var(--red-100)}.callout.danger .callout-header{color:var(--red-600)}.callout.tip{background:var(--purple-50);border-color:var(--purple-100)}.callout.tip .callout-header{color:var(--purple-600)}.callout.success{background:var(--teal-50);border-color:var(--teal-100)}.callout.success .callout-header{color:var(--teal-700)}.code-block{position:relative;margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}.code-header{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:var(--surface-alt);border-bottom:1px solid var(--border);font-size:12px;color:var(--ink-muted)}.code-lang{font-family:var(--font-mono);font-weight:600;text-transform:uppercase;letter-spacing:.05em}.code-copy{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:#fff;font-size:11px;font-family:var(--font-sans);color:var(--ink-muted);cursor:pointer;transition:all .2s var(--ease)}.code-copy:hover{border-color:var(--teal-500);color:var(--teal-700)}.code-copy.copied{background:var(--teal-50);border-color:var(--teal-500);color:var(--teal-700)}pre{margin:0;padding:1.25rem 1.5rem;overflow-x:auto;background:#1e293b;font-family:var(--font-mono);font-size:13.5px;line-height:1.7;color:#e2e8f0}code{font-family:var(--font-mono);font-size:.88em}p code,li code{padding:2px 7px;background:var(--surface-alt);border:1px solid var(--border);border-radius:5px;color:var(--teal-800);font-size:.85em}.hl-keyword{color:#c084fc}.hl-string{color:#86efac}.hl-comment{color:#64748b;font-style:italic}.hl-function{color:#7dd3fc}.hl-number{color:#fbbf24}.hl-flag{color:#f472b6}details{margin-bottom:1.25rem;border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .2s var(--ease)}details[open]{border-color:var(--teal-200)}details summary{padding:1rem 1.25rem;font-weight:600;font-size:15px;cursor:pointer;background:var(--surface-alt);list-style:none;display:flex;align-items:center;gap:10px;transition:background .2s var(--ease);user-select:none}details summary::-webkit-details-marker{display:none}details summary::before{content:'';width:20px;height:20px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain;flex-shrink:0;transition:transform .2s var(--ease)}details[open] summary::before{transform:rotate(90deg)}details summary:hover{background:var(--teal-50)}.details-body{padding:1.25rem 1.5rem}.details-body p:last-child{margin-bottom:0}.video-card{margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}.video-wrapper{position:relative;padding-bottom:56.25%;height:0;background:#0f172a}.video-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}.video-caption{padding:12px 16px;background:var(--surface-alt);font-size:13px;color:var(--ink-muted);display:flex;align-items:center;gap:6px}.video-caption svg{width:14px;height:14px;color:var(--red-500)}.resource-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1rem;margin-bottom:1.5rem}.resource-card{display:flex;gap:14px;padding:1rem 1.25rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all .2s var(--ease);background:#fff}.resource-card:hover{border-color:var(--teal-300);background:var(--teal-50);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.04)}.resource-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}.resource-icon.docs{background:var(--blue-50);color:var(--blue-600)}.resource-icon.video{background:var(--red-50);color:var(--red-500)}.resource-icon.github{background:var(--ink);color:#fff}.resource-icon.article{background:var(--amber-50);color:var(--amber-600)}.resource-icon.pdf{background:var(--purple-50);color:var(--purple-600)}.resource-info{min-width:0}.resource-title{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:2px;line-height:1.4}.resource-desc{font-size:12px;color:var(--ink-muted);line-height:1.5}.assignment{border:2px solid var(--teal-200);border-radius:14px;padding:1.5rem 1.75rem;margin-bottom:1.5rem;background:linear-gradient(135deg,var(--teal-50) 0%,#fff 100%)}.assignment-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}.assignment-label{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--teal-700)}.assignment-difficulty{display:inline-flex;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:600}.difficulty-l1{background:var(--teal-100);color:var(--teal-800)}.difficulty-l2{background:var(--amber-100);color:var(--amber-600)}.difficulty-l3{background:var(--red-100);color:var(--red-600)}.assignment h4{font-size:1.05rem;font-weight:700;margin-bottom:.75rem}.assignment p{font-size:14px}.checklist{list-style:none;padding:0}.checklist li{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border-light);font-size:14px}.checklist li:last-child{border-bottom:none}.check-box{width:20px;height:20px;border-radius:6px;border:2px solid var(--border);flex-shrink:0;margin-top:1px;cursor:pointer;transition:all .15s var(--ease);display:flex;align-items:center;justify-content:center}.check-box:hover{border-color:var(--teal-500)}.check-box.checked{background:var(--teal-500);border-color:var(--teal-500)}.check-box.checked::after{content:'';width:10px;height:10px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain}.diagram{margin:1.5rem 0;padding:2rem;background:var(--surface-alt);border:1px solid var(--border);border-radius:14px;overflow-x:auto}.diagram pre{background:transparent;color:var(--ink);padding:0;font-size:13px;line-height:1.6}.chapter-footer{border-top:1px solid var(--border);padding:3rem 2rem;background:var(--surface-alt)}.chapter-footer-inner{max-width:var(--content-max);margin:0 auto}.footer-nav{display:flex;justify-content:space-between;align-items:center;gap:1rem}.footer-nav-link{display:flex;flex-direction:column;gap:4px;padding:1rem 1.5rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all .2s var(--ease);max-width:320px;background:#fff}.footer-nav-link:hover{border-color:var(--teal-300);box-shadow:0 4px 12px rgba(0,0,0,.04)}.footer-nav-label{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--teal-600)}.footer-nav-title{font-size:15px;font-weight:600;color:var(--ink)}.footer-brand{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border);font-size:13px;color:var(--ink-muted)}@media(max-width:960px){.main-layout{grid-template-columns:1fr}.sidebar{display:none}.resource-grid{grid-template-columns:1fr}}@media(max-width:640px){.hero{padding:2.5rem 1.25rem 2rem}.main-layout{padding:0 1.25rem}.content{padding:2rem 0 4rem}pre{padding:1rem;font-size:12.5px}.footer-nav{flex-direction:column}.footer-nav-link{max-width:100%;width:100%}}@media print{.top-nav,.sidebar,.progress-bar{display:none}.main-layout{display:block}.content{padding:0}.hero{background:#fff;border:none}pre{background:#f1f5f9;color:var(--ink);border:1px solid var(--border)}}
+  <style>
+    :root{--ink:#0f172a;--ink-light:#334155;--ink-muted:#64748b;--surface:#ffffff;--surface-alt:#f8fafc;--surface-warm:#fffbeb;--border:#e2e8f0;--border-light:#f1f5f9;--teal-50:#f0fdfa;--teal-100:#ccfbf1;--teal-200:#99f6e4;--teal-500:#14b8a6;--teal-600:#0d9488;--teal-700:#0f766e;--teal-800:#115e59;--teal-900:#134e4a;--blue-50:#eff6ff;--blue-100:#dbeafe;--blue-500:#3b82f6;--blue-600:#2563eb;--blue-700:#1d4ed8;--amber-50:#fffbeb;--amber-100:#fef3c7;--amber-500:#f59e0b;--amber-600:#d97706;--red-50:#fef2f2;--red-100:#fee2e2;--red-500:#ef4444;--red-600:#dc2626;--purple-50:#faf5ff;--purple-100:#f3e8ff;--purple-500:#a855f7;--purple-600:#9333ea;--font-sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;--font-serif:'Instrument Serif',Georgia,serif;--font-mono:'JetBrains Mono','Fira Code',monospace;--content-max:780px;--sidebar-width:280px;--ease:cubic-bezier(0.4,0,0.2,1)}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+    body{font-family:var(--font-sans);font-size:16px;line-height:1.7;color:var(--ink);background:var(--surface)}
+    .progress-bar{position:fixed;top:0;left:0;width:0%;height:3px;background:linear-gradient(90deg,var(--teal-500),var(--blue-500));z-index:1000;transition:width 0.15s var(--ease)}
+    .top-nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem}
+    .top-nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px}
+    .nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--teal-800)}
+    .nav-brand-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--teal-600),var(--teal-800));border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:14px}
+    .nav-brand-text{font-weight:700;font-size:15px;letter-spacing:-0.02em}
+    .nav-chapter-nav{display:flex;align-items:center;gap:8px}
+    .nav-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;color:var(--ink-muted);border:1px solid var(--border);background:white;transition:all 0.2s var(--ease);cursor:pointer}
+    .nav-btn:hover{color:var(--ink);border-color:var(--teal-500);background:var(--teal-50)}
+    .nav-btn.disabled{opacity:0.4;pointer-events:none}
+    .nav-current{font-size:13px;font-weight:600;color:var(--ink-light);padding:0 4px}
+    .hero{background:linear-gradient(170deg,var(--teal-50) 0%,var(--surface) 50%,var(--blue-50) 100%);border-bottom:1px solid var(--border);padding:4rem 2rem 3.5rem}
+    .hero-inner{max-width:var(--content-max);margin:0 auto}
+    .hero-chapter-label{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--teal-700);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:1rem}
+    .hero-chapter-label span{background:var(--teal-100);padding:3px 10px;border-radius:100px}
+    .hero h1{font-family:var(--font-serif);font-size:clamp(2.4rem,5vw,3.2rem);font-weight:400;line-height:1.15;color:var(--ink);margin-bottom:1rem}
+    .hero-subtitle{font-size:1.15rem;color:var(--ink-light);line-height:1.65;max-width:640px}
+    .hero-meta{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1.5rem}
+    .hero-meta-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-muted)}
+    .hero-meta-item svg{width:16px;height:16px;color:var(--teal-600)}
+    .main-layout{max-width:1200px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:1fr var(--sidebar-width);gap:4rem;align-items:start}
+    .content{padding:3rem 0 6rem;min-width:0}
+    .sidebar{position:sticky;top:76px;padding:2rem 0;max-height:calc(100vh - 76px);overflow-y:auto}
+    .sidebar-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--ink-muted);margin-bottom:1rem;padding-left:14px}
+    .toc-list{list-style:none}
+    .toc-item a{display:block;padding:6px 14px;font-size:13px;color:var(--ink-muted);text-decoration:none;border-left:2px solid transparent;transition:all 0.2s var(--ease);line-height:1.5}
+    .toc-item a:hover{color:var(--ink);background:var(--surface-alt)}
+    .toc-item a.active{color:var(--teal-700);border-left-color:var(--teal-500);background:var(--teal-50);font-weight:500}
+    .content h2{font-family:var(--font-serif);font-size:1.85rem;font-weight:400;color:var(--ink);margin:3rem 0 1rem;padding-top:1rem;scroll-margin-top:80px}
+    .content h2:first-child{margin-top:0}
+    .content h3{font-size:1.15rem;font-weight:600;color:var(--ink);margin:2rem 0 0.75rem;scroll-margin-top:80px}
+    .content p{margin-bottom:1.25rem;color:var(--ink-light)}
+    .content strong{color:var(--ink);font-weight:600}
+    .content a{color:var(--teal-700);text-decoration:underline;text-decoration-color:var(--teal-200);text-underline-offset:3px;transition:text-decoration-color 0.2s}
+    .content a:hover{text-decoration-color:var(--teal-600)}
+    .content ul,.content ol{margin-bottom:1.25rem;padding-left:1.5rem}
+    .content li{margin-bottom:0.5rem;color:var(--ink-light)}
+    .content li::marker{color:var(--teal-500)}
+    .section-divider{border:none;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:3rem 0}
+    .callout{padding:1.25rem 1.5rem;border-radius:12px;margin-bottom:1.5rem;border:1px solid;position:relative}
+    .callout-header{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;margin-bottom:0.5rem}
+    .callout-header svg{width:18px;height:18px;flex-shrink:0}
+    .callout p:last-child{margin-bottom:0}
+    .callout.concept{background:var(--blue-50);border-color:var(--blue-100)}
+    .callout.concept .callout-header{color:var(--blue-700)}
+    .callout.important{background:var(--amber-50);border-color:var(--amber-100)}
+    .callout.important .callout-header{color:var(--amber-600)}
+    .callout.danger{background:var(--red-50);border-color:var(--red-100)}
+    .callout.danger .callout-header{color:var(--red-600)}
+    .callout.tip{background:var(--purple-50);border-color:var(--purple-100)}
+    .callout.tip .callout-header{color:var(--purple-600)}
+    .callout.success{background:var(--teal-50);border-color:var(--teal-100)}
+    .callout.success .callout-header{color:var(--teal-700)}
+    .code-block{position:relative;margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}
+    .code-header{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:var(--surface-alt);border-bottom:1px solid var(--border);font-size:12px;color:var(--ink-muted)}
+    .code-lang{font-family:var(--font-mono);font-weight:600;text-transform:uppercase;letter-spacing:0.05em}
+    .code-copy{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:white;font-size:11px;font-family:var(--font-sans);color:var(--ink-muted);cursor:pointer;transition:all 0.2s var(--ease)}
+    .code-copy:hover{border-color:var(--teal-500);color:var(--teal-700)}
+    .code-copy.copied{background:var(--teal-50);border-color:var(--teal-500);color:var(--teal-700)}
+    pre{margin:0;padding:1.25rem 1.5rem;overflow-x:auto;background:#1e293b;font-family:var(--font-mono);font-size:13.5px;line-height:1.7;color:#e2e8f0}
+    code{font-family:var(--font-mono);font-size:0.88em}
+    p code,li code{padding:2px 7px;background:var(--surface-alt);border:1px solid var(--border);border-radius:5px;color:var(--teal-800);font-size:0.85em}
+    .hl-keyword{color:#c084fc}.hl-string{color:#86efac}.hl-comment{color:#64748b;font-style:italic}.hl-function{color:#7dd3fc}.hl-number{color:#fbbf24}.hl-flag{color:#f472b6}
+    details{margin-bottom:1.25rem;border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color 0.2s var(--ease)}
+    details[open]{border-color:var(--teal-200)}
+    details summary{padding:1rem 1.25rem;font-weight:600;font-size:15px;cursor:pointer;background:var(--surface-alt);list-style:none;display:flex;align-items:center;gap:10px;transition:background 0.2s var(--ease);user-select:none}
+    details summary::-webkit-details-marker{display:none}
+    details summary::before{content:'';width:20px;height:20px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain;flex-shrink:0;transition:transform 0.2s var(--ease)}
+    details[open] summary::before{transform:rotate(90deg)}
+    details summary:hover{background:var(--teal-50)}
+    .details-body{padding:1.25rem 1.5rem}
+    .details-body p:last-child{margin-bottom:0}
+    .video-card{margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}
+    .video-wrapper{position:relative;padding-bottom:56.25%;height:0;background:#0f172a}
+    .video-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
+    .video-caption{padding:12px 16px;background:var(--surface-alt);font-size:13px;color:var(--ink-muted);display:flex;align-items:center;gap:6px}
+    .video-caption svg{width:14px;height:14px;color:var(--red-500)}
+    .resource-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1rem;margin-bottom:1.5rem}
+    .resource-card{display:flex;gap:14px;padding:1rem 1.25rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all 0.2s var(--ease);background:white}
+    .resource-card:hover{border-color:var(--teal-300);background:var(--teal-50);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,0.04)}
+    .resource-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}
+    .resource-icon.docs{background:var(--blue-50);color:var(--blue-600)}
+    .resource-icon.article{background:var(--amber-50);color:var(--amber-600)}
+    .resource-icon.github{background:var(--ink);color:white}
+    .resource-info{min-width:0}
+    .resource-title{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:2px;line-height:1.4}
+    .resource-desc{font-size:12px;color:var(--ink-muted);line-height:1.5}
+    .assignment{border:2px solid var(--teal-200);border-radius:14px;padding:1.5rem 1.75rem;margin-bottom:1.5rem;background:linear-gradient(135deg,var(--teal-50) 0%,white 100%)}
+    .assignment-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+    .assignment-label{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--teal-700)}
+    .assignment-difficulty{display:inline-flex;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:600}
+    .difficulty-l1{background:var(--teal-100);color:var(--teal-800)}
+    .difficulty-l2{background:var(--amber-100);color:var(--amber-600)}
+    .difficulty-l3{background:var(--red-100);color:var(--red-600)}
+    .assignment h4{font-size:1.05rem;font-weight:700;margin-bottom:0.75rem}
+    .assignment p{font-size:14px}
+    .checklist{list-style:none;padding:0}
+    .checklist li{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border-light);font-size:14px}
+    .checklist li:last-child{border-bottom:none}
+    .check-box{width:20px;height:20px;border-radius:6px;border:2px solid var(--border);flex-shrink:0;margin-top:1px;cursor:pointer;transition:all 0.15s var(--ease);display:flex;align-items:center;justify-content:center}
+    .check-box:hover{border-color:var(--teal-500)}
+    .check-box.checked{background:var(--teal-500);border-color:var(--teal-500)}
+    .check-box.checked::after{content:'';width:10px;height:10px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain}
+    .diagram{margin:1.5rem 0;padding:2rem;background:var(--surface-alt);border:1px solid var(--border);border-radius:14px;overflow-x:auto}
+    .diagram pre{background:transparent;color:var(--ink);padding:0;font-size:13px;line-height:1.6}
+    .diagram-caption{margin-top:1rem;font-size:12px;color:var(--ink-muted);text-align:center;font-style:italic}
+    .chapter-footer{border-top:1px solid var(--border);padding:3rem 2rem;background:var(--surface-alt)}
+    .chapter-footer-inner{max-width:var(--content-max);margin:0 auto}
+    .footer-nav{display:flex;justify-content:space-between;align-items:center;gap:1rem}
+    .footer-nav-link{display:flex;flex-direction:column;gap:4px;padding:1rem 1.5rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all 0.2s var(--ease);max-width:320px;background:white}
+    .footer-nav-link:hover{border-color:var(--teal-300);box-shadow:0 4px 12px rgba(0,0,0,0.04)}
+    .footer-nav-label{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--teal-600)}
+    .footer-nav-title{font-size:15px;font-weight:600;color:var(--ink)}
+    .footer-brand{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border);font-size:13px;color:var(--ink-muted)}
+    @media(max-width:960px){.main-layout{grid-template-columns:1fr}.sidebar{display:none}.resource-grid{grid-template-columns:1fr}}
+    @media(max-width:640px){.hero{padding:2.5rem 1.25rem 2rem}.main-layout{padding:0 1.25rem}.content{padding:2rem 0 4rem}pre{padding:1rem;font-size:12.5px}.footer-nav{flex-direction:column}.footer-nav-link{max-width:100%;width:100%}}
+    @media print{.top-nav,.sidebar,.progress-bar{display:none}.main-layout{display:block}.content{padding:0}.hero{background:white;border:none}pre{background:#f1f5f9;color:var(--ink);border:1px solid var(--border)}}
   </style>
 </head>
 <body>
   <div class="progress-bar" id="progressBar"></div>
+
   <nav class="top-nav">
     <div class="top-nav-inner">
-      <a class="nav-brand" href="index.html"><div class="nav-brand-icon">ILA</div><span class="nav-brand-text">Iksha Learning Academy</span></a>
-      <div class="nav-chapter-nav"><a class="nav-btn" href="chapter-07.html">&larr; Previous</a><span class="nav-current">08 / 08</span><span class="nav-btn disabled">Next &rarr;</span></div>
+      <a class="nav-brand" href="index.html">
+        <div class="nav-brand-icon">ILA</div>
+        <span class="nav-brand-text">Iksha Learning Academy</span>
+      </a>
+      <div class="nav-chapter-nav">
+        <a class="nav-btn" href="chapter-07.html">&larr; Previous</a>
+        <span class="nav-current">08 / 08</span>
+        <span class="nav-btn disabled">Next &rarr;</span>
+      </div>
     </div>
   </nav>
+
   <header class="hero">
     <div class="hero-inner">
-      <div class="hero-chapter-label"><span>Chapter 08</span> &middot; Phase 4: Production Skills</div>
+      <div class="hero-chapter-label">
+        <span>Chapter 08</span> &middot; Phase 3: Production ML Skills
+      </div>
       <h1>ML Project Lifecycle</h1>
-      <p class="hero-subtitle">Master the engineering side of ML: data pipelines, experiment tracking with MLflow, model versioning, and deployment with FastAPI &mdash; turning notebook prototypes into production systems.</p>
+      <p class="hero-subtitle">
+        Master the end-to-end machine learning workflow &mdash; from problem framing and data collection
+        through model deployment, monitoring, and iteration. This chapter turns you from someone who can
+        build models into someone who can deliver ML solutions that create real business value.
+      </p>
       <div class="hero-meta">
-        <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Estimated: 3&ndash;4 days</div>
-        <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>3 Advancement Levels</div>
-        <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>3 Assignments</div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Estimated: 4&ndash;5 days
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          6 Key Concepts
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          3 Assignments
+        </div>
       </div>
     </div>
   </header>
+
   <div class="main-layout">
     <main class="content">
+
       <h2 id="why-this-matters">Why This Matters</h2>
 
-      <p>Building a model in a notebook is 20% of the work. The other 80% is data pipelines, experiment tracking, model versioning, and deployment. This chapter covers the complete ML lifecycle &mdash; the engineering that turns prototypes into production.</p>
+      <p>
+        The vast majority of machine learning projects never make it to production. Studies consistently report
+        that 80-90% of ML projects fail to deliver business value. The reason is rarely the modeling &mdash;
+        it is everything else: unclear problem definitions, poor data quality, missing deployment
+        infrastructure, and lack of monitoring. This chapter covers the "everything else" that determines
+        whether your model creates value or gathers dust in a notebook.
+      </p>
 
-      <p>The concepts in this chapter will be referenced throughout the rest of the course. Take the time to build deep understanding, not just surface-level familiarity.</p>
+      <p>
+        In the real world, building the model is maybe 20% of the work. Data collection, cleaning, and
+        labeling consume the largest portion of time. Deployment, monitoring, and maintenance consume the
+        most ongoing resources. Understanding the full lifecycle is what makes you a <strong>machine learning
+        engineer</strong> rather than just someone who can call <code>model.fit()</code>.
+      </p>
+
+      <p>
+        This chapter synthesizes everything you have learned in the Basic Track and puts it in the context
+        of a real-world project. You will learn to scope projects, build reproducible pipelines, deploy
+        models as APIs, monitor for degradation, and iterate based on production feedback.
+      </p>
 
       <div class="callout concept">
-        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg> Key Insight</div>
-        <p>The #1 cause of ML project failure is not bad algorithms &mdash; it is bad engineering. Models that cannot be reproduced, retrained, or monitored will fail silently.</p>
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Key Insight
+        </div>
+        <p>
+          The ML lifecycle is a <strong>loop, not a line</strong>. After deployment, production data reveals
+          new patterns, edge cases, and distribution shifts that feed back into the next iteration of data
+          collection and model improvement. The best ML teams optimize for iteration speed rather than
+          first-try perfection. Build something small that works, deploy it, learn from production, and improve.
+        </p>
       </div>
 
       <hr class="section-divider">
 
       <h2 id="key-concepts">Key Concepts</h2>
 
+      <h3 id="problem-framing">1. Problem Framing: From Business Question to ML Task</h3>
 
-      <h3 id="data-pipelines">1. Data Pipelines</h3>
-
-      <p>Data Pipelines is a critical concept in this domain. Understanding it deeply will differentiate you from practitioners who only know the API calls. Let us explore the theory, the implementation, and the practical considerations.</p>
-
-      <p>In practice, data pipelines requires careful attention to both theoretical foundations and engineering details. The code below demonstrates the core patterns you will use in production systems.</p>
+      <p>
+        Before writing any code, you must translate a vague business need into a precise ML problem statement.
+        This is the most important step and the one most frequently skipped. A clear problem frame answers:
+        What are we predicting? What data is available at prediction time? How will the prediction be used?
+        What metric defines success? What is the baseline to beat?
+      </p>
 
       <div class="code-block">
         <div class="code-header">
-          <span class="code-lang">python</span>
+          <span class="code-lang">markdown</span>
           <button class="code-copy" onclick="copyCode(this)">Copy</button>
         </div>
 <pre>
-<span class="hl-keyword">import</span> numpy <span class="hl-keyword">as</span> np
-<span class="hl-keyword">import</span> torch
-<span class="hl-keyword">import</span> torch.nn <span class="hl-keyword">as</span> nn
+<span class="hl-comment"># ML Project Brief Template</span>
 
-<span class="hl-comment"># Data Pipelines — core implementation</span>
-<span class="hl-keyword">class</span> <span class="hl-function">DataPipelines</span>:
-    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, config=<span class="hl-keyword">None</span>):
-        self.config = config or {}
-        self.model = <span class="hl-keyword">None</span>
-        self.history = []
+<span class="hl-keyword">## Problem Statement</span>
+Predict whether a customer will churn within the next 30 days.
 
-    <span class="hl-keyword">def</span> <span class="hl-function">fit</span>(self, X, y):
-        <span class="hl-string">"""Train the model on input data."""</span>
-        <span class="hl-function">print</span>(<span class="hl-string">f"Training on {X.shape[0]} samples..."</span>)
-        <span class="hl-comment"># Implementation specific to Data Pipelines</span>
-        <span class="hl-keyword">return</span> self
+<span class="hl-keyword">## Business Context</span>
+- Current monthly churn rate: 5.2%
+- Cost of acquiring a new customer: $150
+- Cost of retention intervention (phone call + offer): $20
+- A 1% reduction in churn = ~$2M annual savings
 
-    <span class="hl-keyword">def</span> <span class="hl-function">predict</span>(self, X):
-        <span class="hl-string">"""Generate predictions."""</span>
-        <span class="hl-keyword">return</span> self.model(X)
+<span class="hl-keyword">## ML Task Type</span>
+Binary classification (churn=1, retain=0)
 
-    <span class="hl-keyword">def</span> <span class="hl-function">evaluate</span>(self, X, y):
-        <span class="hl-string">"""Evaluate model performance."""</span>
-        preds = self.predict(X)
-        accuracy = (preds == y).mean()
-        <span class="hl-function">print</span>(<span class="hl-string">f"Accuracy: {accuracy:.4f}"</span>)
-        <span class="hl-keyword">return</span> accuracy
+<span class="hl-keyword">## Input Features (available at prediction time)</span>
+- Account age, plan type, monthly spend
+- Usage metrics (last 30/60/90 days)
+- Support ticket count and resolution time
+- Payment history (late payments, failures)
+
+<span class="hl-keyword">## Target Variable</span>
+did_churn: 1 if customer canceled within 30 days of prediction, 0 otherwise
+
+<span class="hl-keyword">## Success Criteria</span>
+- Primary: Recall >= 0.70 (catch 70% of churners)
+- Constraint: Precision >= 0.30 (limit false alarm interventions)
+- Must beat baseline: predict churn for customers with < 2 months tenure
+
+<span class="hl-keyword">## Deployment Plan</span>
+- Batch prediction: daily scoring of all active customers
+- Output: probability score + binary flag for the intervention queue
+- Latency requirement: N/A (batch, nightly)
 </pre>
       </div>
 
+      <div class="callout important">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Not Every Problem Needs ML
+        </div>
+        <p>
+          Before building a model, ask: <strong>can this be solved with simple rules or heuristics?</strong>
+          If customers who have not logged in for 60 days churn at 80%, a simple rule is good enough. ML
+          adds value when patterns are complex, high-dimensional, and change over time. A model that barely
+          beats a rules-based baseline is usually not worth the deployment and maintenance complexity.
+        </p>
+      </div>
 
-      <h3 id="experiment-tracking">2. Experiment Tracking</h3>
+      <h3 id="data-pipeline">2. Data Pipelines: Collection, Validation, and Feature Stores</h3>
 
-      <p>Experiment Tracking is a critical concept in this domain. Understanding it deeply will differentiate you from practitioners who only know the API calls. Let us explore the theory, the implementation, and the practical considerations.</p>
-
-      <p>In practice, experiment tracking requires careful attention to both theoretical foundations and engineering details. The code below demonstrates the core patterns you will use in production systems.</p>
+      <p>
+        Production ML systems need <strong>reproducible data pipelines</strong> that reliably transform
+        raw data into model-ready features. This involves data validation (catching schema changes and
+        quality issues), feature engineering (transforming raw signals into predictive features), and feature
+        storage (ensuring train-time and serve-time features are computed identically).
+      </p>
 
       <div class="code-block">
         <div class="code-header">
@@ -103,42 +297,75 @@
           <button class="code-copy" onclick="copyCode(this)">Copy</button>
         </div>
 <pre>
-<span class="hl-keyword">import</span> numpy <span class="hl-keyword">as</span> np
-<span class="hl-keyword">import</span> torch
-<span class="hl-keyword">import</span> torch.nn <span class="hl-keyword">as</span> nn
+<span class="hl-keyword">from</span> sklearn.pipeline <span class="hl-keyword">import</span> Pipeline
+<span class="hl-keyword">from</span> sklearn.compose <span class="hl-keyword">import</span> ColumnTransformer
+<span class="hl-keyword">from</span> sklearn.preprocessing <span class="hl-keyword">import</span> StandardScaler, OneHotEncoder
+<span class="hl-keyword">from</span> sklearn.impute <span class="hl-keyword">import</span> SimpleImputer
+<span class="hl-keyword">import</span> joblib
 
-<span class="hl-comment"># Experiment Tracking — core implementation</span>
-<span class="hl-keyword">class</span> <span class="hl-function">ExperimentTracking</span>:
-    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, config=<span class="hl-keyword">None</span>):
-        self.config = config or {}
-        self.model = <span class="hl-keyword">None</span>
-        self.history = []
+<span class="hl-comment"># Define feature preprocessing as a reproducible pipeline</span>
+numeric_features = [<span class="hl-string">'age'</span>, <span class="hl-string">'monthly_spend'</span>, <span class="hl-string">'usage_days'</span>, <span class="hl-string">'support_tickets'</span>]
+categorical_features = [<span class="hl-string">'plan_type'</span>, <span class="hl-string">'region'</span>, <span class="hl-string">'device_type'</span>]
 
-    <span class="hl-keyword">def</span> <span class="hl-function">fit</span>(self, X, y):
-        <span class="hl-string">"""Train the model on input data."""</span>
-        <span class="hl-function">print</span>(<span class="hl-string">f"Training on {X.shape[0]} samples..."</span>)
-        <span class="hl-comment"># Implementation specific to Experiment Tracking</span>
-        <span class="hl-keyword">return</span> self
+numeric_transformer = Pipeline(steps=[
+    (<span class="hl-string">'imputer'</span>, SimpleImputer(strategy=<span class="hl-string">'median'</span>)),
+    (<span class="hl-string">'scaler'</span>, StandardScaler())
+])
 
-    <span class="hl-keyword">def</span> <span class="hl-function">predict</span>(self, X):
-        <span class="hl-string">"""Generate predictions."""</span>
-        <span class="hl-keyword">return</span> self.model(X)
+categorical_transformer = Pipeline(steps=[
+    (<span class="hl-string">'imputer'</span>, SimpleImputer(strategy=<span class="hl-string">'constant'</span>, fill_value=<span class="hl-string">'missing'</span>)),
+    (<span class="hl-string">'encoder'</span>, OneHotEncoder(handle_unknown=<span class="hl-string">'ignore'</span>, sparse_output=<span class="hl-keyword">False</span>))
+])
 
-    <span class="hl-keyword">def</span> <span class="hl-function">evaluate</span>(self, X, y):
-        <span class="hl-string">"""Evaluate model performance."""</span>
-        preds = self.predict(X)
-        accuracy = (preds == y).mean()
-        <span class="hl-function">print</span>(<span class="hl-string">f"Accuracy: {accuracy:.4f}"</span>)
-        <span class="hl-keyword">return</span> accuracy
+preprocessor = ColumnTransformer(transformers=[
+    (<span class="hl-string">'num'</span>, numeric_transformer, numeric_features),
+    (<span class="hl-string">'cat'</span>, categorical_transformer, categorical_features)
+])
+
+<span class="hl-comment"># Full pipeline: preprocessing + model in one serializable object</span>
+<span class="hl-keyword">from</span> sklearn.ensemble <span class="hl-keyword">import</span> GradientBoostingClassifier
+
+full_pipeline = Pipeline(steps=[
+    (<span class="hl-string">'preprocessor'</span>, preprocessor),
+    (<span class="hl-string">'classifier'</span>, GradientBoostingClassifier(
+        n_estimators=<span class="hl-number">200</span>, max_depth=<span class="hl-number">5</span>, learning_rate=<span class="hl-number">0.1</span>
+    ))
+])
+
+<span class="hl-comment"># Train — preprocessor learns statistics from training data only</span>
+full_pipeline.fit(X_train, y_train)
+
+<span class="hl-comment"># Save entire pipeline for deployment (model + preprocessing)</span>
+joblib.dump(full_pipeline, <span class="hl-string">'churn_model_pipeline.joblib'</span>)
+
+<span class="hl-comment"># Load and predict in production — same preprocessing guaranteed</span>
+loaded_pipeline = joblib.load(<span class="hl-string">'churn_model_pipeline.joblib'</span>)
+predictions = loaded_pipeline.predict_proba(new_data)[:, <span class="hl-number">1</span>]
 </pre>
       </div>
 
+      <div class="callout tip">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Pro Tip: Training-Serving Skew
+        </div>
+        <p>
+          The number one cause of model degradation in production is <strong>training-serving skew</strong>:
+          features computed differently at training time vs. serving time. Using <code>sklearn.pipeline.Pipeline</code>
+          ensures the exact same transformations are applied everywhere. For complex setups, consider a
+          <strong>feature store</strong> like Feast that serves pre-computed features identically to both
+          training and inference.
+        </p>
+      </div>
 
-      <h3 id="model-versioning">3. Model Versioning</h3>
+      <h3 id="experiment-tracking">3. Experiment Tracking and Reproducibility</h3>
 
-      <p>Model Versioning is a critical concept in this domain. Understanding it deeply will differentiate you from practitioners who only know the API calls. Let us explore the theory, the implementation, and the practical considerations.</p>
-
-      <p>In practice, model versioning requires careful attention to both theoretical foundations and engineering details. The code below demonstrates the core patterns you will use in production systems.</p>
+      <p>
+        Professional ML development requires tracking every experiment: which data was used, which
+        hyperparameters were tried, what the results were, and which code produced them. Without this
+        discipline, you will quickly lose track of what worked and why, making it impossible to reproduce
+        results or explain your model to stakeholders.
+      </p>
 
       <div class="code-block">
         <div class="code-header">
@@ -146,42 +373,50 @@
           <button class="code-copy" onclick="copyCode(this)">Copy</button>
         </div>
 <pre>
-<span class="hl-keyword">import</span> numpy <span class="hl-keyword">as</span> np
-<span class="hl-keyword">import</span> torch
-<span class="hl-keyword">import</span> torch.nn <span class="hl-keyword">as</span> nn
+<span class="hl-keyword">import</span> mlflow
+<span class="hl-keyword">import</span> mlflow.sklearn
+<span class="hl-keyword">from</span> sklearn.metrics <span class="hl-keyword">import</span> f1_score, recall_score, precision_score
 
-<span class="hl-comment"># Model Versioning — core implementation</span>
-<span class="hl-keyword">class</span> <span class="hl-function">ModelVersioning</span>:
-    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, config=<span class="hl-keyword">None</span>):
-        self.config = config or {}
-        self.model = <span class="hl-keyword">None</span>
-        self.history = []
+<span class="hl-comment"># Set up experiment tracking</span>
+mlflow.set_experiment(<span class="hl-string">"churn-prediction"</span>)
 
-    <span class="hl-keyword">def</span> <span class="hl-function">fit</span>(self, X, y):
-        <span class="hl-string">"""Train the model on input data."""</span>
-        <span class="hl-function">print</span>(<span class="hl-string">f"Training on {X.shape[0]} samples..."</span>)
-        <span class="hl-comment"># Implementation specific to Model Versioning</span>
-        <span class="hl-keyword">return</span> self
+<span class="hl-keyword">with</span> mlflow.start_run(run_name=<span class="hl-string">"gbm-v2-tuned"</span>):
+    <span class="hl-comment"># Log parameters</span>
+    mlflow.log_param(<span class="hl-string">"model_type"</span>, <span class="hl-string">"GradientBoosting"</span>)
+    mlflow.log_param(<span class="hl-string">"n_estimators"</span>, <span class="hl-number">200</span>)
+    mlflow.log_param(<span class="hl-string">"max_depth"</span>, <span class="hl-number">5</span>)
+    mlflow.log_param(<span class="hl-string">"learning_rate"</span>, <span class="hl-number">0.1</span>)
+    mlflow.log_param(<span class="hl-string">"train_samples"</span>, len(X_train))
 
-    <span class="hl-keyword">def</span> <span class="hl-function">predict</span>(self, X):
-        <span class="hl-string">"""Generate predictions."""</span>
-        <span class="hl-keyword">return</span> self.model(X)
+    <span class="hl-comment"># Train model</span>
+    full_pipeline.fit(X_train, y_train)
 
-    <span class="hl-keyword">def</span> <span class="hl-function">evaluate</span>(self, X, y):
-        <span class="hl-string">"""Evaluate model performance."""</span>
-        preds = self.predict(X)
-        accuracy = (preds == y).mean()
-        <span class="hl-function">print</span>(<span class="hl-string">f"Accuracy: {accuracy:.4f}"</span>)
-        <span class="hl-keyword">return</span> accuracy
+    <span class="hl-comment"># Evaluate on validation set</span>
+    y_pred = full_pipeline.predict(X_val)
+
+    <span class="hl-comment"># Log metrics</span>
+    mlflow.log_metric(<span class="hl-string">"val_f1"</span>, f1_score(y_val, y_pred))
+    mlflow.log_metric(<span class="hl-string">"val_recall"</span>, recall_score(y_val, y_pred))
+    mlflow.log_metric(<span class="hl-string">"val_precision"</span>, precision_score(y_val, y_pred))
+
+    <span class="hl-comment"># Log the model artifact for later retrieval</span>
+    mlflow.sklearn.log_model(full_pipeline, <span class="hl-string">"model"</span>)
+
+    <span class="hl-comment"># Log custom artifacts (plots, data samples)</span>
+    mlflow.log_artifact(<span class="hl-string">"evaluation_curves.png"</span>)
+
+    <span class="hl-function">print</span>(<span class="hl-string">f"Run ID: {mlflow.active_run().info.run_id}"</span>)
 </pre>
       </div>
 
+      <h3 id="model-deployment">4. Model Deployment: Serving Predictions in Production</h3>
 
-      <h3 id="deployment">4. Deployment Basics</h3>
-
-      <p>Deployment Basics is a critical concept in this domain. Understanding it deeply will differentiate you from practitioners who only know the API calls. Let us explore the theory, the implementation, and the practical considerations.</p>
-
-      <p>In practice, deployment basics requires careful attention to both theoretical foundations and engineering details. The code below demonstrates the core patterns you will use in production systems.</p>
+      <p>
+        A trained model sitting in a Jupyter notebook creates zero business value. Deployment is the process
+        of making your model available to serve predictions. The two primary patterns are <strong>batch
+        prediction</strong> (score all data at regular intervals) and <strong>real-time inference</strong>
+        (serve predictions on demand via an API).
+      </p>
 
       <div class="code-block">
         <div class="code-header">
@@ -189,42 +424,59 @@
           <button class="code-copy" onclick="copyCode(this)">Copy</button>
         </div>
 <pre>
-<span class="hl-keyword">import</span> numpy <span class="hl-keyword">as</span> np
-<span class="hl-keyword">import</span> torch
-<span class="hl-keyword">import</span> torch.nn <span class="hl-keyword">as</span> nn
+<span class="hl-comment"># Real-time serving with FastAPI</span>
+<span class="hl-keyword">from</span> fastapi <span class="hl-keyword">import</span> FastAPI
+<span class="hl-keyword">from</span> pydantic <span class="hl-keyword">import</span> BaseModel
+<span class="hl-keyword">import</span> joblib
+<span class="hl-keyword">import</span> pandas <span class="hl-keyword">as</span> pd
 
-<span class="hl-comment"># Deployment Basics — core implementation</span>
-<span class="hl-keyword">class</span> <span class="hl-function">Deployment</span>:
-    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, config=<span class="hl-keyword">None</span>):
-        self.config = config or {}
-        self.model = <span class="hl-keyword">None</span>
-        self.history = []
+app = FastAPI(title=<span class="hl-string">"Churn Prediction API"</span>)
+model = joblib.load(<span class="hl-string">"churn_model_pipeline.joblib"</span>)
 
-    <span class="hl-keyword">def</span> <span class="hl-function">fit</span>(self, X, y):
-        <span class="hl-string">"""Train the model on input data."""</span>
-        <span class="hl-function">print</span>(<span class="hl-string">f"Training on {X.shape[0]} samples..."</span>)
-        <span class="hl-comment"># Implementation specific to Deployment Basics</span>
-        <span class="hl-keyword">return</span> self
+<span class="hl-keyword">class</span> <span class="hl-function">CustomerFeatures</span>(BaseModel):
+    age: <span class="hl-function">int</span>
+    monthly_spend: <span class="hl-function">float</span>
+    usage_days: <span class="hl-function">int</span>
+    support_tickets: <span class="hl-function">int</span>
+    plan_type: <span class="hl-function">str</span>
+    region: <span class="hl-function">str</span>
+    device_type: <span class="hl-function">str</span>
 
-    <span class="hl-keyword">def</span> <span class="hl-function">predict</span>(self, X):
-        <span class="hl-string">"""Generate predictions."""</span>
-        <span class="hl-keyword">return</span> self.model(X)
+<span class="hl-keyword">class</span> <span class="hl-function">PredictionResponse</span>(BaseModel):
+    churn_probability: <span class="hl-function">float</span>
+    will_churn: <span class="hl-function">bool</span>
+    risk_tier: <span class="hl-function">str</span>
 
-    <span class="hl-keyword">def</span> <span class="hl-function">evaluate</span>(self, X, y):
-        <span class="hl-string">"""Evaluate model performance."""</span>
-        preds = self.predict(X)
-        accuracy = (preds == y).mean()
-        <span class="hl-function">print</span>(<span class="hl-string">f"Accuracy: {accuracy:.4f}"</span>)
-        <span class="hl-keyword">return</span> accuracy
+@app.post(<span class="hl-string">"/predict"</span>, response_model=PredictionResponse)
+<span class="hl-keyword">def</span> <span class="hl-function">predict_churn</span>(features: CustomerFeatures):
+    df = pd.DataFrame([features.dict()])
+    proba = model.predict_proba(df)[<span class="hl-number">0</span>, <span class="hl-number">1</span>]
+
+    <span class="hl-keyword">if</span> proba > <span class="hl-number">0.8</span>: risk_tier = <span class="hl-string">"critical"</span>
+    <span class="hl-keyword">elif</span> proba > <span class="hl-number">0.5</span>: risk_tier = <span class="hl-string">"high"</span>
+    <span class="hl-keyword">elif</span> proba > <span class="hl-number">0.3</span>: risk_tier = <span class="hl-string">"medium"</span>
+    <span class="hl-keyword">else</span>: risk_tier = <span class="hl-string">"low"</span>
+
+    <span class="hl-keyword">return</span> PredictionResponse(
+        churn_probability=<span class="hl-function">round</span>(<span class="hl-function">float</span>(proba), <span class="hl-number">4</span>),
+        will_churn=proba > <span class="hl-number">0.5</span>,
+        risk_tier=risk_tier
+    )
+
+@app.get(<span class="hl-string">"/health"</span>)
+<span class="hl-keyword">def</span> <span class="hl-function">health_check</span>():
+    <span class="hl-keyword">return</span> {<span class="hl-string">"status"</span>: <span class="hl-string">"healthy"</span>, <span class="hl-string">"model_version"</span>: <span class="hl-string">"v2.1"</span>}
 </pre>
       </div>
 
+      <h3 id="monitoring">5. Model Monitoring and Drift Detection</h3>
 
-      <h3 id="testing">5. Testing ML Systems</h3>
-
-      <p>Testing ML Systems is a critical concept in this domain. Understanding it deeply will differentiate you from practitioners who only know the API calls. Let us explore the theory, the implementation, and the practical considerations.</p>
-
-      <p>In practice, testing ml systems requires careful attention to both theoretical foundations and engineering details. The code below demonstrates the core patterns you will use in production systems.</p>
+      <p>
+        Models degrade over time. The world changes, user behavior shifts, and the data distribution your
+        model was trained on no longer matches production data. This is called <strong>data drift</strong>
+        or <strong>concept drift</strong>. Without monitoring, you will not know your model is failing until
+        the business impact becomes obvious &mdash; which might be months too late.
+      </p>
 
       <div class="code-block">
         <div class="code-header">
@@ -233,175 +485,320 @@
         </div>
 <pre>
 <span class="hl-keyword">import</span> numpy <span class="hl-keyword">as</span> np
-<span class="hl-keyword">import</span> torch
-<span class="hl-keyword">import</span> torch.nn <span class="hl-keyword">as</span> nn
+<span class="hl-keyword">from</span> scipy <span class="hl-keyword">import</span> stats
 
-<span class="hl-comment"># Testing ML Systems — core implementation</span>
-<span class="hl-keyword">class</span> <span class="hl-function">Testing</span>:
-    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, config=<span class="hl-keyword">None</span>):
-        self.config = config or {}
-        self.model = <span class="hl-keyword">None</span>
-        self.history = []
+<span class="hl-keyword">class</span> <span class="hl-function">ModelMonitor</span>:
+    <span class="hl-string">"""Monitor model performance and data drift in production."""</span>
 
-    <span class="hl-keyword">def</span> <span class="hl-function">fit</span>(self, X, y):
-        <span class="hl-string">"""Train the model on input data."""</span>
-        <span class="hl-function">print</span>(<span class="hl-string">f"Training on {X.shape[0]} samples..."</span>)
-        <span class="hl-comment"># Implementation specific to Testing ML Systems</span>
-        <span class="hl-keyword">return</span> self
+    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, reference_data, feature_names):
+        self.reference = reference_data
+        self.feature_names = feature_names
+        self.alerts = []
 
-    <span class="hl-keyword">def</span> <span class="hl-function">predict</span>(self, X):
-        <span class="hl-string">"""Generate predictions."""</span>
-        <span class="hl-keyword">return</span> self.model(X)
+    <span class="hl-keyword">def</span> <span class="hl-function">detect_data_drift</span>(self, production_data, threshold=<span class="hl-number">0.05</span>):
+        <span class="hl-string">"""Use Kolmogorov-Smirnov test to detect feature distribution shifts."""</span>
+        drift_report = {}
+        <span class="hl-keyword">for</span> i, feature <span class="hl-keyword">in</span> <span class="hl-function">enumerate</span>(self.feature_names):
+            stat, p_value = stats.ks_2samp(
+                self.reference[:, i], production_data[:, i]
+            )
+            drifted = p_value < threshold
+            drift_report[feature] = {
+                <span class="hl-string">'ks_statistic'</span>: <span class="hl-function">round</span>(stat, <span class="hl-number">4</span>),
+                <span class="hl-string">'p_value'</span>: <span class="hl-function">round</span>(p_value, <span class="hl-number">4</span>),
+                <span class="hl-string">'drifted'</span>: drifted
+            }
+            <span class="hl-keyword">if</span> drifted:
+                self.alerts.append(<span class="hl-string">f"DRIFT: {feature} (p={p_value:.4f})"</span>)
+        <span class="hl-keyword">return</span> drift_report
 
-    <span class="hl-keyword">def</span> <span class="hl-function">evaluate</span>(self, X, y):
-        <span class="hl-string">"""Evaluate model performance."""</span>
-        preds = self.predict(X)
-        accuracy = (preds == y).mean()
-        <span class="hl-function">print</span>(<span class="hl-string">f"Accuracy: {accuracy:.4f}"</span>)
-        <span class="hl-keyword">return</span> accuracy
+    <span class="hl-keyword">def</span> <span class="hl-function">monitor_predictions</span>(self, predictions, window=<span class="hl-number">1000</span>):
+        <span class="hl-string">"""Track prediction distribution over time."""</span>
+        recent = predictions[-window:]
+        <span class="hl-keyword">return</span> {
+            <span class="hl-string">'mean_pred'</span>: np.mean(recent),
+            <span class="hl-string">'std_pred'</span>: np.std(recent),
+            <span class="hl-string">'positive_rate'</span>: np.mean(recent > <span class="hl-number">0.5</span>),
+        }
 </pre>
       </div>
 
+      <div class="callout danger">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Silent Model Failure
+        </div>
+        <p>
+          The most dangerous failure mode is <strong>silent failure</strong>: the model continues to serve
+          predictions with no errors, but they are increasingly wrong. Without monitoring input distributions,
+          output patterns, and (when possible) actual outcomes, you have no way to detect this. At minimum,
+          track: prediction distribution, feature distributions, latency, and error rates.
+        </p>
+      </div>
 
-      <h3 id="monitoring-intro">6. Monitoring Introduction</h3>
+      <h3 id="iteration-cicd">6. CI/CD for ML and Continuous Improvement</h3>
 
-      <p>Monitoring Introduction is a critical concept in this domain. Understanding it deeply will differentiate you from practitioners who only know the API calls. Let us explore the theory, the implementation, and the practical considerations.</p>
+      <p>
+        ML systems need automated testing and deployment just like traditional software &mdash; but with
+        additional concerns. Beyond unit tests and integration tests, ML pipelines need <strong>data
+        validation tests</strong>, <strong>model performance gates</strong> (does the new model beat the
+        current one?), and <strong>fairness/bias checks</strong>. This practice is called <strong>MLOps</strong>.
+      </p>
 
-      <p>In practice, monitoring introduction requires careful attention to both theoretical foundations and engineering details. The code below demonstrates the core patterns you will use in production systems.</p>
+      <div class="diagram">
+<pre>
+  ML PROJECT LIFECYCLE (ITERATIVE)
+
+  +------------------+     +------------------+     +------------------+
+  |  1. PROBLEM      |     |  2. DATA         |     |  3. FEATURE      |
+  |     FRAMING      |---->|     PIPELINE      |---->|     ENGINEERING  |
+  |  - Business goal |     |  - Collection     |     |  - Transform     |
+  |  - ML task type  |     |  - Validation     |     |  - Feature store |
+  |  - Success metric|     |  - Versioning     |     |  - Selection     |
+  +------------------+     +------------------+     +------------------+
+                                                            |
+         +--------------------------------------------------+
+         v
+  +------------------+     +------------------+     +------------------+
+  |  4. MODEL        |     |  5. DEPLOYMENT   |     |  6. MONITORING   |
+  |     TRAINING     |---->|     & SERVING    |---->|     & FEEDBACK   |
+  |  - Experiment    |     |  - API / Batch   |     |  - Data drift    |
+  |  - Validation    |     |  - Docker / K8s  |     |  - Performance   |
+  |  - Selection     |     |  - A/B testing   |     |  - Alerting      |
+  +------------------+     +------------------+     +------------------+
+                                                            |
+         +--------------------------------------------------+
+         |   Feedback loop: production insights drive
+         +-> next iteration of data collection + modeling
+</pre>
+        <div class="diagram-caption">
+          Fig 1. The ML lifecycle is iterative. Production feedback drives continuous improvement.
+        </div>
+      </div>
 
       <div class="code-block">
         <div class="code-header">
-          <span class="code-lang">python</span>
+          <span class="code-lang">yaml</span>
           <button class="code-copy" onclick="copyCode(this)">Copy</button>
         </div>
 <pre>
-<span class="hl-keyword">import</span> numpy <span class="hl-keyword">as</span> np
-<span class="hl-keyword">import</span> torch
-<span class="hl-keyword">import</span> torch.nn <span class="hl-keyword">as</span> nn
+<span class="hl-comment"># .github/workflows/ml-pipeline.yml — CI/CD for ML</span>
+<span class="hl-keyword">name</span>: ML Pipeline
+<span class="hl-keyword">on</span>:
+  push:
+    branches: [main]
 
-<span class="hl-comment"># Monitoring Introduction — core implementation</span>
-<span class="hl-keyword">class</span> <span class="hl-function">MonitoringIntro</span>:
-    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, config=<span class="hl-keyword">None</span>):
-        self.config = config or {}
-        self.model = <span class="hl-keyword">None</span>
-        self.history = []
-
-    <span class="hl-keyword">def</span> <span class="hl-function">fit</span>(self, X, y):
-        <span class="hl-string">"""Train the model on input data."""</span>
-        <span class="hl-function">print</span>(<span class="hl-string">f"Training on {X.shape[0]} samples..."</span>)
-        <span class="hl-comment"># Implementation specific to Monitoring Introduction</span>
-        <span class="hl-keyword">return</span> self
-
-    <span class="hl-keyword">def</span> <span class="hl-function">predict</span>(self, X):
-        <span class="hl-string">"""Generate predictions."""</span>
-        <span class="hl-keyword">return</span> self.model(X)
-
-    <span class="hl-keyword">def</span> <span class="hl-function">evaluate</span>(self, X, y):
-        <span class="hl-string">"""Evaluate model performance."""</span>
-        preds = self.predict(X)
-        accuracy = (preds == y).mean()
-        <span class="hl-function">print</span>(<span class="hl-string">f"Accuracy: {accuracy:.4f}"</span>)
-        <span class="hl-keyword">return</span> accuracy
+<span class="hl-keyword">jobs</span>:
+  <span class="hl-function">test-and-validate</span>:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Run unit tests
+        run: pytest tests/unit/ -v
+      - name: Run data validation
+        run: pytest tests/data_validation/ -v
+      - name: Train and evaluate model
+        run: python train.py --config config/production.yaml
+      - name: Model quality gate
+        run: |
+          python scripts/quality_gate.py \
+            --min-recall <span class="hl-number">0.70</span> \
+            --min-precision <span class="hl-number">0.30</span> \
+            --metrics-file results/metrics.json
 </pre>
+      </div>
+
+      <div class="callout concept">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          The MLOps Maturity Model
+        </div>
+        <p>
+          <strong>Level 0:</strong> Manual ML in Jupyter notebooks, no automation.
+          <strong>Level 1:</strong> ML pipeline automation, experiment tracking, automated training.
+          <strong>Level 2:</strong> CI/CD for ML, automated testing, model registry, monitoring dashboards.
+          <strong>Level 3:</strong> Automated retraining triggered by drift detection, A/B testing, full feature store.
+          Most teams should aim for Level 1-2 before attempting Level 3.
+        </p>
       </div>
 
       <hr class="section-divider">
+
       <h2 id="watch-learn">Watch &amp; Learn</h2>
-      <p>These videos cover core concepts. Watch before starting assignments.</p>
+
+      <p>
+        These resources cover the practical reality of deploying ML systems and the MLOps practices that
+        make them sustainable over time.
+      </p>
+
       <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/9BgIDqAzfuA?rel=0&amp;modestbranding=1" title="MLflow Tutorial &mdash; Experiment tracking and model management" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-caption"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg> MLflow Tutorial &mdash; Experiment tracking and model management</div>
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0&amp;modestbranding=1" title="ML System Design" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Stanford MLSys Seminars &mdash; Designing and deploying ML systems in production environments
+        </div>
       </div>
+
       <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/irgWkGEkKp0?rel=0&amp;modestbranding=1" title="FastAPI Tutorial &mdash; Building APIs for ML model serving" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-caption"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg> FastAPI Tutorial &mdash; Building APIs for ML model serving</div>
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0&amp;modestbranding=1" title="MLOps Best Practices" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          DataTalks &mdash; MLOps Zoomcamp: experiment tracking, model deployment, and production monitoring
+        </div>
       </div>
 
       <hr class="section-divider">
+
       <h2 id="further-reading">Further Reading</h2>
-      <p>Deep-dive into official documentation and reference material.</p>
-      <div class="resource-grid">
-        <a class="resource-card" href="https://mlflow.org/docs/latest/tutorials-and-examples/index.html" target="_blank" rel="noopener">
-          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-          <div class="resource-info"><div class="resource-title">MLflow Tutorials</div><div class="resource-desc">Experiment tracking, model registry, and deployment.</div></div>
-        </a>
-        <a class="resource-card" href="https://scikit-learn.org/stable/modules/compose.html" target="_blank" rel="noopener">
-          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-          <div class="resource-info"><div class="resource-title">Scikit-Learn: Pipelines</div><div class="resource-desc">Pipeline and ColumnTransformer reference.</div></div>
-        </a>
-        <a class="resource-card" href="https://fastapi.tiangolo.com/tutorial/" target="_blank" rel="noopener">
-          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-          <div class="resource-info"><div class="resource-title">FastAPI Tutorial</div><div class="resource-desc">Building APIs with automatic docs and type validation.</div></div>
-        </a>
-        <a class="resource-card" href="https://madewithml.com/" target="_blank" rel="noopener">
-          <div class="resource-icon article"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
-          <div class="resource-info"><div class="resource-title">Made With ML</div><div class="resource-desc">Production ML: testing, monitoring, deployment.</div></div>
-        </a>
 
+      <p>Go deeper into production ML engineering with these essential resources.</p>
+
+      <div class="resource-grid">
+        <a class="resource-card" href="https://madewithml.com/" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Made With ML (Goku Mohandas)</div>
+            <div class="resource-desc">Comprehensive MLOps course covering the full lifecycle from design to deployment and monitoring.</div>
+          </div>
+        </a>
+        <a class="resource-card" href="https://ml-ops.org/" target="_blank" rel="noopener">
+          <div class="resource-icon article">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">MLOps.org Principles</div>
+            <div class="resource-desc">Community-driven collection of MLOps best practices, patterns, and tool comparisons.</div>
+          </div>
+        </a>
+        <a class="resource-card" href="https://fastapi.tiangolo.com/" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">FastAPI Documentation</div>
+            <div class="resource-desc">Modern Python web framework for building ML serving APIs with automatic validation and docs.</div>
+          </div>
+        </a>
       </div>
+
       <hr class="section-divider">
+
       <h2 id="assignments">Assignments</h2>
-      <p>Complete these in order. Each level builds on the previous one.</p>
+
+      <p>These assignments synthesize the entire Basic Track into real-world project practice.</p>
+
       <div class="assignment">
-        <div class="assignment-header"><div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 1</div><span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span></div>
-        <h4>Core Implementation: Data Pipelines</h4>
-        <p>Build foundational understanding by implementing core concepts from scratch.</p>
-        <ul class="checklist">          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Implement the core concepts from Data Pipelines</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a working example demonstrating Experiment Tracking</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write comprehensive unit tests for your implementation</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Document your code with docstrings and comments</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Run benchmarks and record performance metrics</span></li></ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div><p>Your implementation passes all tests and you can explain every line of code.</p></div>
+        <div class="assignment-header">
+          <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 1</div>
+          <span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span>
+        </div>
+        <h4>Write an ML Project Brief</h4>
+        <p>Choose a Kaggle dataset and write a complete project brief before touching any code.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Select a dataset and define the business problem it could solve</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Specify the ML task type, target variable, and available features</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Choose primary and secondary evaluation metrics with justification</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Define a simple baseline and estimate its performance</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Outline the deployment strategy: batch vs. real-time, update frequency</span></li>
+        </ul>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div>
+          <p>Your project brief is detailed enough that another data scientist could start working on it without additional clarification.</p>
+        </div>
       </div>
+
       <div class="assignment">
-        <div class="assignment-header"><div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 2</div><span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span></div>
-        <h4>Applied Project: ML Project Lifecycle in Practice</h4>
-        <p>Apply the concepts to a real-world dataset and compare approaches systematically.</p>
-        <ul class="checklist">          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Build a complete pipeline integrating Data Pipelines and Experiment Tracking</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Apply Model Versioning on a real-world dataset</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Compare at least 3 different approaches and document tradeoffs</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create visualizations that tell a clear story about your results</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write a 200-word analysis of your findings</span></li></ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div><p>Your comparison clearly identifies the best approach with supporting evidence and visualizations.</p></div>
+        <div class="assignment-header">
+          <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 2</div>
+          <span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span>
+        </div>
+        <h4>End-to-End ML Pipeline with Experiment Tracking</h4>
+        <p>Implement the project from your brief with proper pipelines, experiment tracking, and evaluation.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Build a scikit-learn Pipeline combining preprocessing and modeling</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Track at least 5 experiments in MLflow with different models/hyperparameters</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Use cross-validation and proper train/val/test splits throughout</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Select the best model and evaluate on the held-out test set exactly once</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Save the final pipeline with <code>joblib</code> and verify reproducibility</span></li>
+        </ul>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div>
+          <p>All experiments are tracked in MLflow. The final model beats the baseline. The saved pipeline loads and produces identical predictions.</p>
+        </div>
       </div>
+
       <div class="assignment">
-        <div class="assignment-header"><div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 3</div><span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Production-Ready</span></div>
-        <h4>Production System: End-to-End ML Project Lifecycle</h4>
-        <p>Build a production-quality system that demonstrates mastery of all concepts in this chapter.</p>
-        <ul class="checklist">          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Design a production-ready system incorporating ml project lifecycle best practices</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Implement error handling, logging, and configuration management</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a comprehensive test suite with edge cases</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write documentation for future maintainers</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Deploy or package your solution for team use</span></li></ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div><p>Your system is documented, tested, and could be handed to a colleague for production use.</p></div>
+        <div class="assignment-header">
+          <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 3</div>
+          <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Production-Ready</span>
+        </div>
+        <h4>Deploy Model as API with Docker and Monitoring</h4>
+        <p>Deploy your model as a containerized FastAPI service with input validation and drift detection.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a FastAPI app that serves predictions via a POST endpoint</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Add Pydantic input validation and a health check endpoint</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Containerize with Docker and test locally</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Implement basic monitoring: log predictions and detect input data drift</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write a load test script that sends 100 requests and measures P95 latency</span></li>
+        </ul>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div>
+          <p>Your Docker container starts, serves predictions at <code>/predict</code>, passes the health check, and P95 latency is under 100ms.</p>
+        </div>
       </div>
+
       <hr class="section-divider">
+
       <h2 id="self-check">Self-Check</h2>
-      <p>Before moving on, honestly answer these. If any answer is "no," go back and practice.</p>
+
+      <p>This is the final chapter of the Basic Track. These questions test whether you are ready for the Advanced Track.</p>
+
       <details>
-        <summary>Can you explain Data Pipelines to a colleague without consulting notes?</summary>
-        <div class="details-body"><p>Try explaining the core concept, why it matters, and when to use it. If you need to look things up, spend more time with the material. True understanding means you can teach it.</p></div>
+        <summary>Can you translate a business problem into an ML task with clear success criteria?</summary>
+        <div class="details-body"><p>You should be able to identify the prediction target, determine the task type, select appropriate metrics, define a baseline, and specify deployment requirements. If a stakeholder says "we need to reduce churn," you should know exactly what questions to ask and what to write in the project brief.</p></div>
       </details>
+
       <details>
-        <summary>Can you implement Experiment Tracking from memory?</summary>
-        <div class="details-body"><p>Open a blank notebook and try to implement the core algorithm without any reference. The act of writing code from memory reveals gaps in understanding that reading alone will not expose.</p></div>
+        <summary>Do you understand why sklearn Pipelines prevent data leakage?</summary>
+        <div class="details-body"><p>A Pipeline ensures preprocessing steps are <strong>fit only on training data</strong> during <code>.fit()</code>, then applied to validation/test data during <code>.predict()</code>. Without it, you might accidentally fit a scaler on the entire dataset, leaking test set information into training and producing inflated metrics.</p></div>
       </details>
+
       <details>
-        <summary>Do you understand when Model Versioning would fail?</summary>
-        <div class="details-body"><p>Knowing when a technique works is important, but knowing when it fails is more important. Every algorithm has assumptions and limitations. If you cannot list at least 3 failure modes, review the material.</p></div>
+        <summary>Can you deploy a model as a REST API using FastAPI?</summary>
+        <div class="details-body"><p>You should be able to create a FastAPI app with a POST endpoint that accepts JSON features, passes them through a loaded model pipeline, and returns predictions. You should know Pydantic for validation, <code>joblib</code> for model loading, and Docker for containerization.</p></div>
       </details>
+
+      <details>
+        <summary>Do you know how to detect when a deployed model is degrading?</summary>
+        <div class="details-body"><p>Monitor for: (1) <strong>Data drift</strong> &mdash; input feature distributions shifting (KS-test or PSI). (2) <strong>Prediction drift</strong> &mdash; output distribution changing over time. (3) <strong>Performance drift</strong> &mdash; when ground truth becomes available, compare predicted vs. actual outcomes. Set up alerts for all three.</p></div>
+      </details>
+
+      <details>
+        <summary>Can you explain the full ML lifecycle from problem to production to iteration?</summary>
+        <div class="details-body"><p>The lifecycle: (1) Problem framing, (2) Data collection and validation, (3) Feature engineering, (4) Model training with experiment tracking, (5) Evaluation and selection, (6) Deployment, (7) Monitoring for drift, (8) Iteration based on production feedback. It is a loop, not a line. You should describe what happens at each stage and what tools you would use.</p></div>
+      </details>
+
     </main>
+
     <aside class="sidebar">
       <div class="sidebar-title">On this page</div>
       <ul class="toc-list">
         <li class="toc-item"><a href="#why-this-matters">Why This Matters</a></li>
         <li class="toc-item"><a href="#key-concepts">Key Concepts</a></li>
-        <li class="toc-item"><a href="#data-pipelines" style="padding-left:28px;font-size:12px">Data Pipelines</a></li>
-        <li class="toc-item"><a href="#experiment-tracking" style="padding-left:28px;font-size:12px">Experiment Tracking</a></li>
-        <li class="toc-item"><a href="#model-versioning" style="padding-left:28px;font-size:12px">Model Versioning</a></li>
-        <li class="toc-item"><a href="#deployment" style="padding-left:28px;font-size:12px">Deployment Basics</a></li>
-        <li class="toc-item"><a href="#testing" style="padding-left:28px;font-size:12px">Testing ML Systems</a></li>
-        <li class="toc-item"><a href="#monitoring-intro" style="padding-left:28px;font-size:12px">Monitoring Introduction</a></li>
+        <li class="toc-item"><a href="#problem-framing" style="padding-left: 28px; font-size: 12px;">Problem Framing</a></li>
+        <li class="toc-item"><a href="#data-pipeline" style="padding-left: 28px; font-size: 12px;">Data Pipelines</a></li>
+        <li class="toc-item"><a href="#experiment-tracking" style="padding-left: 28px; font-size: 12px;">Experiment Tracking</a></li>
+        <li class="toc-item"><a href="#model-deployment" style="padding-left: 28px; font-size: 12px;">Model Deployment</a></li>
+        <li class="toc-item"><a href="#monitoring" style="padding-left: 28px; font-size: 12px;">Monitoring &amp; Drift</a></li>
+        <li class="toc-item"><a href="#iteration-cicd" style="padding-left: 28px; font-size: 12px;">CI/CD for ML</a></li>
         <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a></li>
         <li class="toc-item"><a href="#further-reading">Further Reading</a></li>
         <li class="toc-item"><a href="#assignments">Assignments</a></li>
@@ -409,15 +806,25 @@
       </ul>
     </aside>
   </div>
+
   <footer class="chapter-footer">
     <div class="chapter-footer-inner">
-      <nav class="footer-nav"><a class="footer-nav-link" href="chapter-07.html"><span class="footer-nav-label">&larr; Previous Chapter</span><span class="footer-nav-title">07: Model Evaluation and Tuning</span></a><div></div></nav>
-      <div class="footer-brand">ILA (Iksha Learning Academy) &middot; AI &amp; Machine Learning Certification &middot; Basic Track</div>
+      <nav class="footer-nav">
+        <a class="footer-nav-link" href="chapter-07.html">
+          <span class="footer-nav-label">&larr; Previous Chapter</span>
+          <span class="footer-nav-title">07: Model Evaluation and Tuning</span>
+        </a>
+        <div></div>
+      </nav>
+      <div class="footer-brand">
+        ILA (Iksha Learning Academy) &middot; AI &amp; Machine Learning Certification &middot; Basic Track
+      </div>
     </div>
   </footer>
+
   <script>
-    window.addEventListener('scroll',()=>{const s=window.scrollY;const d=document.documentElement.scrollHeight-window.innerHeight;document.getElementById('progressBar').style.width=(d>0?(s/d)*100:0)+'%'});
-    const tocLinks=document.querySelectorAll('.toc-item a');const sections=[];tocLinks.forEach(l=>{const id=l.getAttribute('href').slice(1);const el=document.getElementById(id);if(el)sections.push({id,el,link:l})});
+    window.addEventListener('scroll',()=>{const s=window.scrollY;const d=document.documentElement.scrollHeight-window.innerHeight;const p=d>0?(s/d)*100:0;document.getElementById('progressBar').style.width=p+'%'});
+    const tocLinks=document.querySelectorAll('.toc-item a');const sections=[];tocLinks.forEach(link=>{const id=link.getAttribute('href').slice(1);const el=document.getElementById(id);if(el)sections.push({id,el,link})});
     const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{const item=sections.find(s=>s.el===entry.target);if(item&&entry.isIntersecting){tocLinks.forEach(l=>l.classList.remove('active'));item.link.classList.add('active')}})},{rootMargin:'-80px 0px -60% 0px',threshold:0});
     sections.forEach(s=>observer.observe(s.el));
     function copyCode(btn){const pre=btn.closest('.code-block').querySelector('pre');navigator.clipboard.writeText(pre.textContent).then(()=>{btn.classList.add('copied');btn.textContent='Copied!';setTimeout(()=>{btn.classList.remove('copied');btn.textContent='Copy'},2000)})}

@@ -8,7 +8,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
+    /* ═══════════════════════════════════════════════
+       ILA DESIGN SYSTEM — v1.0
+       Iksha Learning Academy
+       ═══════════════════════════════════════════════ */
+
     :root {
+      /* Palette */
       --ink:        #0f172a;
       --ink-light:  #334155;
       --ink-muted:  #64748b;
@@ -17,6 +23,8 @@
       --surface-warm:#fffbeb;
       --border:     #e2e8f0;
       --border-light:#f1f5f9;
+
+      /* Brand */
       --teal-50:  #f0fdfa;
       --teal-100: #ccfbf1;
       --teal-200: #99f6e4;
@@ -25,36 +33,48 @@
       --teal-700: #0f766e;
       --teal-800: #115e59;
       --teal-900: #134e4a;
+
       --blue-50:  #eff6ff;
       --blue-100: #dbeafe;
       --blue-500: #3b82f6;
       --blue-600: #2563eb;
       --blue-700: #1d4ed8;
+
       --amber-50:  #fffbeb;
       --amber-100: #fef3c7;
       --amber-500: #f59e0b;
       --amber-600: #d97706;
+
       --red-50:   #fef2f2;
       --red-100:  #fee2e2;
       --red-500:  #ef4444;
       --red-600:  #dc2626;
+
       --purple-50:  #faf5ff;
       --purple-100: #f3e8ff;
       --purple-500: #a855f7;
       --purple-600: #9333ea;
-      --green-50:  #f0fdf4;
-      --green-100: #dcfce7;
-      --green-500: #22c55e;
-      --green-600: #16a34a;
+
+      /* Typography */
       --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       --font-serif: 'Instrument Serif', Georgia, serif;
       --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
+
+      /* Spacing */
       --content-max: 780px;
+      --sidebar-width: 280px;
+
+      /* Transitions */
       --ease: cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
 
     body {
       font-family: var(--font-sans);
@@ -64,6 +84,7 @@
       background: var(--surface);
     }
 
+    /* ── PROGRESS BAR ─────────────────────────── */
     .progress-bar {
       position: fixed;
       top: 0;
@@ -75,6 +96,7 @@
       transition: width 0.15s var(--ease);
     }
 
+    /* ── TOP NAV ──────────────────────────────── */
     .top-nav {
       position: sticky;
       top: 0;
@@ -162,6 +184,7 @@
       padding: 0 4px;
     }
 
+    /* ── HERO ─────────────────────────────────── */
     .hero {
       background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%);
       border-bottom: 1px solid var(--border);
@@ -222,33 +245,117 @@
       color: var(--ink-muted);
     }
 
-    .content {
-      max-width: var(--content-max);
-      margin: 0 auto;
-      padding: 3rem 2rem 6rem;
+    .hero-meta-item svg {
+      width: 16px;
+      height: 16px;
+      color: var(--teal-600);
     }
 
+    /* ── MAIN LAYOUT ──────────────────────────── */
+    .main-layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr var(--sidebar-width);
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .content {
+      padding: 3rem 0 6rem;
+      min-width: 0;
+    }
+
+    /* ── SIDEBAR TOC ──────────────────────────── */
+    .sidebar {
+      position: sticky;
+      top: 76px;
+      padding: 2rem 0;
+      max-height: calc(100vh - 76px);
+      overflow-y: auto;
+    }
+
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-muted);
+      margin-bottom: 1rem;
+      padding-left: 14px;
+    }
+
+    .toc-list {
+      list-style: none;
+    }
+
+    .toc-item a {
+      display: block;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--ink-muted);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: all 0.2s var(--ease);
+      line-height: 1.5;
+    }
+
+    .toc-item a:hover {
+      color: var(--ink);
+      background: var(--surface-alt);
+    }
+
+    .toc-item a.active {
+      color: var(--teal-700);
+      border-left-color: var(--teal-500);
+      background: var(--teal-50);
+      font-weight: 500;
+    }
+
+    /* ── TYPOGRAPHY ────────────────────────────── */
     .content h2 {
       font-family: var(--font-serif);
       font-size: 1.85rem;
       font-weight: 400;
       color: var(--ink);
       margin: 3rem 0 1rem;
+      padding-top: 1rem;
       scroll-margin-top: 80px;
     }
 
-    .content h2:first-child { margin-top: 0; }
+    .content h2:first-child {
+      margin-top: 0;
+    }
 
     .content h3 {
       font-size: 1.15rem;
       font-weight: 600;
       color: var(--ink);
       margin: 2rem 0 0.75rem;
+      scroll-margin-top: 80px;
     }
 
     .content p {
       margin-bottom: 1.25rem;
       color: var(--ink-light);
+    }
+
+    .content strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .content a {
+      color: var(--teal-700);
+      text-decoration: underline;
+      text-decoration-color: var(--teal-200);
+      text-underline-offset: 3px;
+      transition: text-decoration-color 0.2s;
+    }
+
+    .content a:hover {
+      text-decoration-color: var(--teal-600);
     }
 
     .content ul, .content ol {
@@ -261,13 +368,25 @@
       color: var(--ink-light);
     }
 
-    .content li::marker { color: var(--teal-500); }
+    .content li::marker {
+      color: var(--teal-500);
+    }
 
+    /* ── SECTION DIVIDER ──────────────────────── */
+    .section-divider {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 3rem 0;
+    }
+
+    /* ── CALLOUT BOXES ────────────────────────── */
     .callout {
       padding: 1.25rem 1.5rem;
       border-radius: 12px;
       margin-bottom: 1.5rem;
       border: 1px solid;
+      position: relative;
     }
 
     .callout-header {
@@ -277,6 +396,12 @@
       font-size: 14px;
       font-weight: 600;
       margin-bottom: 0.5rem;
+    }
+
+    .callout-header svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
     }
 
     .callout p:last-child { margin-bottom: 0; }
@@ -293,6 +418,12 @@
     }
     .callout.important .callout-header { color: var(--amber-600); }
 
+    .callout.danger {
+      background: var(--red-50);
+      border-color: var(--red-100);
+    }
+    .callout.danger .callout-header { color: var(--red-600); }
+
     .callout.tip {
       background: var(--purple-50);
       border-color: var(--purple-100);
@@ -305,93 +436,402 @@
     }
     .callout.success .callout-header { color: var(--teal-700); }
 
-    .section-divider {
-      border: none;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--border), transparent);
-      margin: 3rem 0;
-    }
-
-    .coming-soon-banner {
-      background: var(--amber-50);
-      border: 1px solid var(--amber-100);
+    /* ── CODE BLOCKS ──────────────────────────── */
+    .code-block {
+      position: relative;
+      margin-bottom: 1.5rem;
       border-radius: 12px;
-      padding: 2.5rem;
-      text-align: center;
-      margin: 2rem 0;
+      overflow: hidden;
+      border: 1px solid var(--border);
     }
 
-    .coming-soon-banner h3 {
-      color: var(--amber-600);
-      margin-bottom: 0.5rem;
-    }
-
-    .coming-soon-banner p {
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+      background: var(--surface-alt);
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
       color: var(--ink-muted);
-      margin-bottom: 0;
     }
 
-    .topics-preview {
+    .code-lang {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .code-copy {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: white;
+      font-size: 11px;
+      font-family: var(--font-sans);
+      color: var(--ink-muted);
+      cursor: pointer;
+      transition: all 0.2s var(--ease);
+    }
+
+    .code-copy:hover {
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    .code-copy.copied {
+      background: var(--teal-50);
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    pre {
+      margin: 0;
+      padding: 1.25rem 1.5rem;
+      overflow-x: auto;
+      background: #1e293b;
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: #e2e8f0;
+    }
+
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.88em;
+    }
+
+    p code, li code {
+      padding: 2px 7px;
       background: var(--surface-alt);
       border: 1px solid var(--border);
+      border-radius: 5px;
+      color: var(--teal-800);
+      font-size: 0.85em;
+    }
+
+    /* Syntax highlights (minimal) */
+    .hl-keyword  { color: #c084fc; }
+    .hl-string   { color: #86efac; }
+    .hl-comment  { color: #64748b; font-style: italic; }
+    .hl-function { color: #7dd3fc; }
+    .hl-number   { color: #fbbf24; }
+    .hl-flag     { color: #f472b6; }
+
+    /* ── COLLAPSIBLE (DETAILS) ────────────────── */
+    details {
+      margin-bottom: 1.25rem;
+      border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 1.5rem 2rem;
-      margin: 1.5rem 0;
+      overflow: hidden;
+      transition: border-color 0.2s var(--ease);
     }
 
-    .topics-preview h3 {
-      font-size: 0.95rem;
-      margin-bottom: 0.75rem;
+    details[open] {
+      border-color: var(--teal-200);
+    }
+
+    details summary {
+      padding: 1rem 1.25rem;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      background: var(--surface-alt);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.2s var(--ease);
+      user-select: none;
+    }
+
+    details summary::-webkit-details-marker { display: none; }
+
+    details summary::before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+      flex-shrink: 0;
+      transition: transform 0.2s var(--ease);
+    }
+
+    details[open] summary::before {
+      transform: rotate(90deg);
+    }
+
+    details summary:hover {
+      background: var(--teal-50);
+    }
+
+    .details-body {
+      padding: 1.25rem 1.5rem;
+    }
+
+    .details-body p:last-child { margin-bottom: 0; }
+
+    /* ── VIDEO EMBED ──────────────────────────── */
+    .video-card {
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      background: #0f172a;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .video-caption {
+      padding: 12px 16px;
+      background: var(--surface-alt);
+      font-size: 13px;
+      color: var(--ink-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .video-caption svg {
+      width: 14px;
+      height: 14px;
+      color: var(--red-500);
+    }
+
+    /* ── RESOURCE CARDS ───────────────────────── */
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .resource-card {
+      display: flex;
+      gap: 14px;
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      background: white;
+    }
+
+    .resource-card:hover {
+      border-color: var(--teal-300);
+      background: var(--teal-50);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .resource-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 18px;
+    }
+
+    .resource-icon.docs    { background: var(--blue-50);   color: var(--blue-600); }
+    .resource-icon.video   { background: var(--red-50);    color: var(--red-500); }
+    .resource-icon.github  { background: var(--ink);       color: white; }
+    .resource-icon.article { background: var(--amber-50);  color: var(--amber-600); }
+    .resource-icon.pdf     { background: var(--purple-50); color: var(--purple-600); }
+
+    .resource-info {
+      min-width: 0;
+    }
+
+    .resource-title {
+      font-size: 14px;
+      font-weight: 600;
       color: var(--ink);
+      margin-bottom: 2px;
+      line-height: 1.4;
     }
 
-    .topics-preview ul {
+    .resource-desc {
+      font-size: 12px;
+      color: var(--ink-muted);
+      line-height: 1.5;
+    }
+
+    /* ── ASSIGNMENT CARDS ─────────────────────── */
+    .assignment {
+      border: 2px solid var(--teal-200);
+      border-radius: 14px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--teal-50) 0%, white 100%);
+    }
+
+    .assignment-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .assignment-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--teal-700);
+    }
+
+    .assignment-difficulty {
+      display: inline-flex;
+      padding: 4px 10px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .difficulty-l1 { background: var(--teal-100); color: var(--teal-800); }
+    .difficulty-l2 { background: var(--amber-100); color: var(--amber-600); }
+    .difficulty-l3 { background: var(--red-100); color: var(--red-600); }
+
+    .assignment h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .assignment p {
+      font-size: 14px;
+    }
+
+    /* ── CHECKLIST ────────────────────────────── */
+    .checklist {
       list-style: none;
       padding: 0;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 0.5rem;
     }
 
-    .topics-preview li {
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-light);
       font-size: 14px;
-      color: var(--ink-light);
-      padding-left: 1.25rem;
-      position: relative;
     }
 
-    .topics-preview li::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 8px;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
+    .checklist li:last-child { border-bottom: none; }
+
+    .check-box {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      border: 2px solid var(--border);
+      flex-shrink: 0;
+      margin-top: 1px;
+      cursor: pointer;
+      transition: all 0.15s var(--ease);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .check-box:hover { border-color: var(--teal-500); }
+
+    .check-box.checked {
       background: var(--teal-500);
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+    }
+
+    /* ── DIAGRAM ──────────────────────────────── */
+    .diagram {
+      margin: 1.5rem 0;
+      padding: 2rem;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow-x: auto;
+    }
+
+    .diagram pre {
+      background: transparent;
+      color: var(--ink);
+      padding: 0;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .diagram-caption {
+      margin-top: 1rem;
+      font-size: 12px;
+      color: var(--ink-muted);
+      text-align: center;
+      font-style: italic;
+    }
+
+    /* ── FOOTER ───────────────────────────────── */
+    .chapter-footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      background: var(--surface-alt);
+    }
+
+    .chapter-footer-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
     }
 
     .footer-nav {
-      max-width: var(--content-max);
-      margin: 0 auto;
-      padding: 2rem;
       display: flex;
       justify-content: space-between;
-      border-top: 1px solid var(--border);
+      align-items: center;
+      gap: 1rem;
     }
 
     .footer-nav-link {
       display: flex;
       flex-direction: column;
-      text-decoration: none;
-      padding: 1rem;
+      gap: 4px;
+      padding: 1rem 1.5rem;
+      border: 1px solid var(--border);
       border-radius: 12px;
-      transition: background 0.2s var(--ease);
-      max-width: 45%;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      max-width: 320px;
+      background: white;
     }
 
     .footer-nav-link:hover {
-      background: var(--surface-alt);
+      border-color: var(--teal-300);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
     }
 
     .footer-nav-label {
@@ -399,40 +839,47 @@
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.06em;
-      color: var(--ink-muted);
-      margin-bottom: 4px;
+      color: var(--teal-600);
     }
 
     .footer-nav-title {
       font-size: 15px;
       font-weight: 600;
-      color: var(--teal-700);
+      color: var(--ink);
     }
 
-    .footer-nav-link.next { text-align: right; margin-left: auto; }
-
-    .footer {
+    .footer-brand {
       text-align: center;
-      padding: 2rem;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
       font-size: 13px;
       color: var(--ink-muted);
-      border-top: 1px solid var(--border);
     }
 
-    .footer a {
-      color: var(--teal-700);
-      text-decoration: none;
+    /* ── RESPONSIVE ───────────────────────────── */
+    @media (max-width: 960px) {
+      .main-layout { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .resource-grid { grid-template-columns: 1fr; }
     }
 
-    .footer a:hover { text-decoration: underline; }
+    @media (max-width: 640px) {
+      .hero { padding: 2.5rem 1.25rem 2rem; }
+      .main-layout { padding: 0 1.25rem; }
+      .content { padding: 2rem 0 4rem; }
+      pre { padding: 1rem; font-size: 12.5px; }
+      .footer-nav { flex-direction: column; }
+      .footer-nav-link { max-width: 100%; width: 100%; }
+    }
 
-    @media (max-width: 768px) {
-      .hero { padding: 3rem 1.5rem 2.5rem; }
-      .content { padding: 2rem 1.5rem 4rem; }
-      .hero h1 { font-size: 2rem; }
-      .footer-nav { flex-direction: column; gap: 1rem; }
-      .footer-nav-link { max-width: 100%; }
-      .footer-nav-link.next { text-align: left; }
+    /* ── PRINT ────────────────────────────────── */
+    @media print {
+      .top-nav, .sidebar, .progress-bar { display: none; }
+      .main-layout { display: block; }
+      .content { padding: 0; }
+      .hero { background: white; border: none; }
+      pre { background: #f1f5f9; color: var(--ink); border: 1px solid var(--border); }
     }
   </style>
 </head>
@@ -446,9 +893,9 @@
         <span class="nav-brand-text">Iksha Learning Academy</span>
       </a>
       <div class="nav-chapter-nav">
-        <a class="nav-btn" href="chapter-07.html">&larr; Previous</a>
+        <a class="nav-btn" href="chapter-07.html">&larr; Cross-Cultural Negotiations</a>
         <span class="nav-current">08 / 10</span>
-        <a class="nav-btn" href="chapter-09.html">Next &rarr;</a>
+        <a class="nav-btn" href="chapter-09.html">Negotiation Leadership &rarr;</a>
       </div>
     </div>
   </nav>
@@ -456,66 +903,735 @@
   <header class="hero">
     <div class="hero-inner">
       <div class="hero-chapter-label">
-        <span>Chapter 08</span> 
+        <span>Chapter 08</span> &middot; High-Stakes Negotiation
       </div>
       <h1>Crisis and High-Pressure Negotiations</h1>
-      <p class="hero-subtitle">Hostile situations, media pressure, regulatory confrontations, damage control</p>
+      <p class="hero-subtitle">
+        When the stakes are existential &mdash; a critical customer threatening to leave, a co-founder dispute, a hostile acquisition attempt, or a regulatory crisis &mdash; standard negotiation tactics break down. This chapter teaches you to maintain strategic clarity under extreme pressure, manage your own emotional responses, and negotiate effectively when time is short and consequences are irreversible.
+      </p>
       <div class="hero-meta">
-        <div class="hero-meta-item">3 Assignments</div>
-        <div class="hero-meta-item">~45 min read</div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Estimated: 60&ndash;80 min
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          6 Key Concepts
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          3 Assignments
+        </div>
       </div>
     </div>
   </header>
 
-  <main class="content">
-    <h2>Overview</h2>
-    <p>This chapter covers <strong>crisis and high-pressure negotiations</strong> as part of the Advanced Negotiations curriculum. You will build practical skills through guided explanations, code examples, and hands-on assignments.</p>
+  <div class="main-layout">
+    <main class="content">
 
-    <div class="topics-preview">
-      <h3>Topics Covered</h3>
-      <ul>
-            <li>Hostile situations</li>
-            <li>media pressure</li>
-            <li>regulatory confrontations</li>
-            <li>damage control</li>
+      <h2 id="why-this-matters">Why This Matters</h2>
+
+      <p>
+        Every startup will face at least one existential negotiation &mdash; a moment where the outcome of a single conversation determines whether the company survives, pivots, or dies. It might be a lead investor pulling out mid-round, a key enterprise customer demanding a massive concession to renew, a co-founder demanding a buyout, or a regulatory body threatening to shut down your core product. In these moments, the negotiation skills you have practiced in lower-stakes settings are tested in ways that no simulation can fully replicate.
+      </p>
+
+      <p>
+        Research from Harvard's Program on Negotiation reveals that <strong>negotiators under acute time pressure make concessions 30-40% larger than those negotiating without deadlines</strong>. The combination of high stakes, time pressure, emotional intensity, and incomplete information creates a cognitive environment where your brain's threat response system actively works against your strategic interests. Understanding this biology is the first step to counteracting it.
+      </p>
+
+      <p>
+        This chapter equips you with crisis-specific frameworks drawn from hostage negotiation, military decision-making, and emergency management. You will learn the neuroscience of pressure, develop a personal crisis negotiation protocol, master de-escalation techniques, and practice making high-quality decisions when the clock is running and the stakes are highest. The goal is not to eliminate pressure &mdash; it is to build the capacity to think clearly within it.
+      </p>
+
+      <div class="callout danger">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Critical Warning
+        </div>
+        <p>
+          The most dangerous decision in a crisis negotiation is the one you make in the <strong>first five minutes</strong>. Your amygdala fires before your prefrontal cortex engages. The techniques in this chapter are designed to create space between the trigger event and your response &mdash; that space is where strategic decisions are made.
+        </p>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="key-concepts">Key Concepts</h2>
+
+      <h3 id="pressure-neuroscience">1. The Neuroscience of Negotiating Under Pressure</h3>
+
+      <p>
+        When you receive a crisis trigger &mdash; your largest customer emails that they are canceling, your investor calls to say the round is collapsing, your co-founder announces they are leaving &mdash; your brain enters a threat response state. Understanding what happens physiologically gives you the tools to counteract it.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Framework</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── The Pressure Response Cascade ────────────────────────── */</span>
+
+<span class="hl-keyword">STAGE 1: TRIGGER (0-2 seconds)</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  What happens: Amygdala detects threat before conscious awareness
+  Physiological: Cortisol and adrenaline spike
+  Cognitive:     Tunnel vision, loss of peripheral awareness
+  Behavioral:    Fight (aggressive response) or Flight (avoidance)
+
+  <span class="hl-function">Negotiation Risk:</span> You say something reactive that
+  damages the relationship or gives away leverage
+
+<span class="hl-keyword">STAGE 2: EMOTIONAL FLOODING (2-90 seconds)</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  What happens: Emotional brain overwhelms rational brain
+  Physiological: Heart rate above 100 BPM, shallow breathing
+  Cognitive:     Black-and-white thinking, catastrophizing
+  Behavioral:    Snap decisions, over-concession, or aggression
+
+  <span class="hl-function">Negotiation Risk:</span> You accept terrible terms because your
+  brain is telling you "survival requires immediate action"
+
+<span class="hl-keyword">STAGE 3: RECOVERY (90 seconds - 20 minutes)</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  What happens: Prefrontal cortex re-engages
+  Physiological: Heart rate begins to normalize
+  Cognitive:     Analytical thinking becomes possible again
+  Behavioral:    Strategic options become visible
+
+  <span class="hl-function">Negotiation Opportunity:</span> This is when you can start
+  making real decisions. Your goal is to REACH THIS STAGE
+  before committing to any course of action.
+
+<span class="hl-keyword">THE 90-SECOND RULE:</span>
+  Neurochemically, a strong emotion lasts approximately
+  90 seconds if you do not re-trigger it with thoughts.
+  <span class="hl-string">Your job: Buy 90 seconds before making any commitment.</span>
+  Say: "I need to process this. Can I call you back in 30 minutes?"
+  Say: "This is important enough that I want to give it proper thought."
+  Say: "Let me check with my team and get back to you by [time]."
+</pre>
+      </div>
+
+      <p>
+        The neuroscience is clear: your prefrontal cortex &mdash; the part of the brain responsible for strategic thinking, cost-benefit analysis, and long-term planning &mdash; is literally offline during the first 90 seconds of a crisis trigger. Any commitment you make during this window is being made by the oldest, most reactive part of your brain. This is why the single most important skill in crisis negotiation is not what you say, but <strong>what you do not say</strong> in the first few minutes.
+      </p>
+
+      <h3 id="crisis-protocol">2. The Crisis Negotiation Protocol (CNP)</h3>
+
+      <p>
+        Professional hostage negotiators and military commanders do not rely on improvisation in crisis situations. They follow protocols that have been rehearsed and internalized. The Crisis Negotiation Protocol adapts these principles for business contexts where the stakes are extreme but lives are not at immediate risk.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Protocol</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── Crisis Negotiation Protocol (CNP) ───────────────────── */</span>
+
+<span class="hl-keyword">STEP 1: STABILIZE (Minutes 0-30)</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Objective: Prevent immediate damage. Buy time.
+  Actions:
+  - Acknowledge the situation without committing to action
+  - Do NOT make concessions, promises, or threats
+  - Signal that you take the situation seriously
+  - Request time to formulate a proper response
+
+  Script: "I hear you, and I take this very seriously.
+          This is important enough that I want to make
+          sure we handle it thoughtfully. Can we schedule
+          a dedicated conversation in [timeframe]?"
+
+<span class="hl-keyword">STEP 2: ASSESS (Minutes 30-120)</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Objective: Understand what is actually happening vs. what you fear.
+  Actions:
+  - Separate facts from interpretations
+  - Identify the other side's real interests (vs. stated position)
+  - Evaluate your BATNA under crisis conditions
+  - Determine the true deadline (often later than it seems)
+  - Consult trusted advisors (attorney, board member, mentor)
+
+  Key Question: "What is the WORST that happens if I take
+  24 more hours before responding?"
+
+<span class="hl-keyword">STEP 3: STRATEGIZE (Hours 2-24)</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Objective: Develop options before committing to any single path.
+  Actions:
+  - Generate at least THREE possible responses
+  - Evaluate each against your long-term interests (not just crisis relief)
+  - Identify the minimum concession that addresses their core concern
+  - Prepare your opening position and walk-away point
+  - Role-play the conversation with a trusted colleague
+
+<span class="hl-keyword">STEP 4: ENGAGE (When ready, not when pressured)</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Objective: Negotiate from prepared position, not reactive desperation.
+  Actions:
+  - Lead with empathy and understanding of their position
+  - Present your proposed solution as serving mutual interests
+  - Use conditional language: "If we can do X, would you be open to Y?"
+  - Maintain composure regardless of their emotional state
+  - Document all agreements in writing before ending the conversation
+
+<span class="hl-keyword">STEP 5: DEBRIEF (After resolution)</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Objective: Extract lessons to prevent recurrence and improve response.
+  Actions:
+  - What triggered the crisis?
+  - What early warning signs did we miss?
+  - What would we do differently?
+  - What systemic changes would prevent this type of crisis?
+</pre>
+      </div>
+
+      <h3 id="de-escalation">3. De-Escalation Techniques for Business Negotiations</h3>
+
+      <p>
+        When the other side is emotional, aggressive, or issuing ultimatums, your first job is not to solve the problem &mdash; it is to <strong>reduce the emotional temperature</strong> so that problem-solving becomes possible. These techniques are adapted from hostage negotiation and crisis counseling.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Negotiation Script</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── De-Escalation Techniques ────────────────────────────── */</span>
+
+<span class="hl-keyword">TECHNIQUE 1: TACTICAL EMPATHY (from Chris Voss)</span>
+  Them: "This is completely unacceptable! We trusted you
+        and you've failed to deliver. We're pulling our
+        business unless this is fixed TODAY."
+
+  You:  "It sounds like you feel we've broken your trust,
+        and I understand why this situation is frustrating.
+        You made a commitment to your stakeholders based
+        on our promises, and right now it feels like
+        we've put you in a difficult position."
+
+  <span class="hl-function">Why it works:</span> Labeling their emotion accurately makes
+  them feel heard. People de-escalate when they believe
+  the other side truly understands their frustration.
+  You have NOT agreed to their demands — only acknowledged
+  their emotional experience.
+
+<span class="hl-keyword">TECHNIQUE 2: THE STRATEGIC PAUSE</span>
+  Them: "We need an answer RIGHT NOW or we walk."
+
+  You:  [5-second pause]
+        "I respect the urgency you're feeling. And because
+        this relationship matters to us, I want to give you
+        a response that actually solves the problem, not just
+        one that sounds good in the moment. Can we take
+        two hours to put together a real solution?"
+
+  <span class="hl-function">Why it works:</span> Silence after a demand disrupts the
+  pressure pattern. Most people fill the silence by
+  softening their position. The reframe ("because this
+  matters") turns their urgency into your commitment.
+
+<span class="hl-keyword">TECHNIQUE 3: THE INTERESTS BEHIND THE ULTIMATUM</span>
+  Them: "Drop your price by 40% or we're done."
+
+  You:  "Help me understand what's driving that number.
+        Is it a budget ceiling you've been given, a
+        competitive offer you've received, or a change
+        in the value you're seeing from our product?"
+
+  <span class="hl-function">Why it works:</span> Ultimatums are positions. Behind every
+  position is an interest. Understanding the interest
+  opens doors that the position closed. Maybe the 40%
+  isn't about price — it's about justifying the budget
+  to their CFO. A restructured payment plan might solve
+  the same problem at a smaller discount.
+
+<span class="hl-keyword">TECHNIQUE 4: THE CONTROLLED INFORMATION RELEASE</span>
+  Context: You have information that changes the dynamic,
+  but releasing it all at once could trigger defensiveness.
+
+  You:  "Before we make any decisions, there's some context
+        I think would be helpful. Can I share what we've
+        been seeing on our end? I think it might change
+        how both of us think about the best path forward."
+
+  <span class="hl-function">Why it works:</span> Frames new information as collaborative
+  rather than confrontational. "Both of us" signals
+  partnership, not adversarial positioning.
+</pre>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Pro Tip
+        </div>
+        <p>
+          <strong>The person who controls the pace of a crisis negotiation controls the outcome.</strong> When the other side is pushing for immediate action, your most powerful move is to slow things down. Every minute you buy is a minute for your prefrontal cortex to engage, for your team to assess options, and for the other side's emotional intensity to naturally decrease.
+        </p>
+      </div>
+
+      <h3 id="high-stakes-scenarios">4. High-Stakes Scenario Playbooks</h3>
+
+      <p>
+        While every crisis is unique, certain patterns recur frequently in the startup world. Having a pre-planned framework for each type of crisis reduces cognitive load when it actually happens, freeing your brain to focus on the specific nuances of the situation rather than figuring out the basic approach from scratch.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Playbook</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── High-Stakes Scenario Playbooks ──────────────────────── */</span>
+
+<span class="hl-keyword">SCENARIO A: KEY CUSTOMER THREATENING TO LEAVE</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Common Trigger: Service failure, competitor offer, internal champion leaves
+  Time Pressure:  30-90 days (typical contract notice period)
+  Your Leverage:  Switching costs, relationship depth, product lock-in
+
+  Playbook:
+  1. Stabilize: Acknowledge concern, request meeting with decision-maker
+  2. Diagnose: Is this about price, service, product, or politics?
+  3. Respond:
+     - If price → Restructure deal (longer term, different tier)
+     - If service → Dedicated account team, SLA improvements
+     - If product → Roadmap commitment with milestones
+     - If politics → New champion building, executive-to-executive
+  4. Never: Match a competitor's price dollar-for-dollar without
+     getting something in return (longer term, case study, referral)
+
+<span class="hl-keyword">SCENARIO B: CO-FOUNDER DISPUTE</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Common Trigger: Vision disagreement, workload imbalance, equity dispute
+  Time Pressure:  Weeks to months (but feels urgent)
+  Your Leverage:  Operating agreement terms, vesting schedules
+
+  Playbook:
+  1. Stabilize: Separate the emotional from the structural
+  2. Bring in a neutral third party (advisor, mediator, attorney)
+  3. Focus on interests: What does each founder actually NEED?
+  4. Options: Revised roles, buyout, vesting acceleration, mediation
+  5. Never: Have this conversation without legal counsel
+  6. Never: Let it fester — unresolved co-founder conflicts kill startups
+
+<span class="hl-keyword">SCENARIO C: INVESTOR PULLING OUT MID-ROUND</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Common Trigger: Market conditions, due diligence findings, GP change
+  Time Pressure:  Days to weeks (runway dependent)
+  Your Leverage:  Other investor interest, company momentum, information
+
+  Playbook:
+  1. Stabilize: Do NOT let panic spread to team or other investors
+  2. Understand: Is this salvageable or final? What changed?
+  3. If salvageable → Address concerns directly, offer additional diligence
+  4. If final → Immediately activate backup investor relationships
+  5. Consider: Bridge round, revenue-based financing, strategic investor
+  6. Never: Reveal desperation to remaining investors
+  7. Never: Accept dramatically worse terms without exploring alternatives
+</pre>
+      </div>
+
+      <h3 id="emotional-management">5. Emotional Self-Management Under Fire</h3>
+
+      <p>
+        The most technically skilled negotiator in the world will make poor decisions if they cannot manage their own emotional state. In crisis negotiations, emotional self-management is not a nice-to-have &mdash; it is the <strong>foundational capability</strong> upon which all other skills depend.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Framework</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── Emotional Self-Management Toolkit ────────────────────── */</span>
+
+<span class="hl-keyword">TECHNIQUE 1: PHYSIOLOGICAL RESET</span>
+  When: Heart racing, hands shaking, voice tightening
+  Action: Box breathing (4-4-4-4)
+  - Inhale for 4 seconds
+  - Hold for 4 seconds
+  - Exhale for 4 seconds
+  - Hold for 4 seconds
+  - Repeat 3 times (takes 48 seconds total)
+  <span class="hl-function">Effect:</span> Activates parasympathetic nervous system,
+  reduces cortisol, restores prefrontal cortex function
+
+<span class="hl-keyword">TECHNIQUE 2: COGNITIVE REFRAMING</span>
+  When: Catastrophizing ("We're going to lose everything")
+  Action: Challenge the story with three questions:
+  - "What do I KNOW vs. what am I ASSUMING?"
+  - "What is the MOST LIKELY outcome (not worst case)?"
+  - "What can I CONTROL in this situation right now?"
+  <span class="hl-function">Effect:</span> Moves brain from threat response to problem-solving
+
+<span class="hl-keyword">TECHNIQUE 3: THE BALCONY (from William Ury)</span>
+  When: You feel yourself getting pulled into the emotional vortex
+  Action: Mentally "go to the balcony" — observe the negotiation
+  from above, as if watching a play
+  - What is the other person really saying?
+  - What am I feeling, and is that feeling serving me?
+  - What would a wise advisor tell me to do right now?
+  <span class="hl-function">Effect:</span> Creates psychological distance that enables
+  strategic thinking even during emotional conversations
+
+<span class="hl-keyword">TECHNIQUE 4: THE PREPARATION ANCHOR</span>
+  When: You feel yourself drifting from your strategy
+  Action: Before the negotiation, write three things on a card:
+  - Your BATNA (what you will do if this fails)
+  - Your reservation price (the worst deal you will accept)
+  - Your core message (the one thing you must communicate)
+  Keep this card visible during the conversation
+  <span class="hl-function">Effect:</span> Physical anchor prevents emotional drift from
+  your prepared strategy
+</pre>
+      </div>
+
+      <h3 id="crisis-case-study">6. Case Study: Saving a Collapsing Series B Round</h3>
+
+      <p>
+        A real-world scenario demonstrates these frameworks in action. CloudSync, a Series A startup with $8M ARR, was in the final stages of a $30M Series B when the lead investor pulled out after a market downturn. The CEO had 45 days of runway remaining.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Case Study</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── CloudSync: Saving a Collapsing Series B ─────────────── */</span>
+
+<span class="hl-keyword">DAY 1: THE CRISIS</span>
+  Lead investor (TechVentures) calls CEO at 7 AM:
+  "Market conditions have changed. We're pulling our term sheet."
+  Impact: $30M round collapses. 45 days of runway. 85 employees.
+
+<span class="hl-keyword">CEO'S RESPONSE (Using CNP):</span>
+
+  <span class="hl-function">STABILIZE (Day 1):</span>
+  - CEO takes 2 hours before responding substantively
+  - Calls board chair and attorney for counsel
+  - Does NOT tell team or other investors yet
+  - Responds to TechVentures: "I understand. Can we meet
+    tomorrow to discuss? I want to understand your perspective
+    and explore whether there is any version of this that works."
+
+  <span class="hl-function">ASSESS (Days 1-3):</span>
+  - Is TechVentures persuadable? → Probably not (firm-wide freeze)
+  - Other investors in round? → Two co-investors were committed
+  - Alternative lead investors? → Three warm relationships
+  - Bridge options? → Existing investors might bridge $3-5M
+  - Revenue acceleration? → Two enterprise deals near close ($1.2M)
+
+  <span class="hl-function">STRATEGIZE (Days 3-5):</span>
+  Option A: Convince co-investors to increase and lead → Low probability
+  Option B: Find new lead investor at lower valuation → 4-6 week timeline
+  Option C: Bridge from existing investors + revenue push → Buys 6 months
+  <span class="hl-string">Decision: Pursue B and C simultaneously</span>
+
+  <span class="hl-function">ENGAGE (Days 5-40):</span>
+  - Approaches existing investors: "We need a $4M bridge at current
+    terms. In exchange, you get pro-rata in the next round and
+    information rights on the enterprise pipeline."
+  - Approaches new lead: "Our metrics are strong — $8M ARR growing
+    120% YoY. Market timing creates an opportunity for a new lead
+    investor at a fair valuation."
+  - Closes two enterprise deals early by offering annual prepayment
+    discount: $1.1M in immediate cash
+
+<span class="hl-keyword">OUTCOME (Day 42):</span>
+  - $3.5M bridge secured from existing investors
+  - New lead investor found at 15% lower valuation (vs. 40% lower
+    if they had appeared desperate)
+  - $25M round closes 60 days after original collapse
+  - Company survives with 70 of 85 employees retained
+
+<span class="hl-keyword">KEY LESSONS:</span>
+  1. The 2-hour pause on Day 1 prevented a panic response
+  2. Pursuing multiple options simultaneously preserved leverage
+  3. Accelerating revenue reduced dependency on investor timeline
+  4. Controlled information release prevented market panic
+  5. The final outcome was worse than the original deal but
+     far better than what desperation would have produced
+</pre>
+      </div>
+
+      <div class="callout concept">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          The Crisis Paradox
+        </div>
+        <p>
+          In a crisis negotiation, the action that feels most urgent is almost always the wrong one. <strong>The right move in a crisis is to slow down when every instinct tells you to speed up.</strong> The CloudSync CEO's two-hour pause on Day 1 was the single most important decision in the entire crisis &mdash; it created space for strategic thinking that shaped every subsequent move.
+        </p>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="watch-learn">Watch &amp; Learn</h2>
+
+      <p>These videos demonstrate crisis negotiation principles applied in both business and high-stakes environments.</p>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/guZa7mQV1l0?rel=0&amp;modestbranding=1" title="Chris Voss - Never Split the Difference" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Chris Voss &mdash; "Never Split the Difference" at Google. FBI hostage negotiator's tactical empathy techniques applied to business crises.
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/RfTalFEeKKE?rel=0&amp;modestbranding=1" title="William Ury - Getting Past No" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          William Ury &mdash; "Getting Past No." The "go to the balcony" technique and breakthrough strategies for adversarial negotiations.
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="further-reading">Further Reading</h2>
+      <p>Essential resources for developing crisis negotiation mastery.</p>
+
+      <div class="resource-grid">
+        <a class="resource-card" href="https://www.amazon.com/Never-Split-Difference-Negotiating-Depended/dp/0062407805" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Never Split the Difference &mdash; Chris Voss</div>
+            <div class="resource-desc">FBI hostage negotiator's guide to tactical empathy, labeling, and calibrated questions. The definitive text on high-pressure negotiation.</div>
+          </div>
+        </a>
+        <a class="resource-card" href="https://www.amazon.com/Getting-Past-No-Negotiating-Difficult/dp/0553371312" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Getting Past No &mdash; William Ury</div>
+            <div class="resource-desc">The sequel to Getting to Yes, focused specifically on breaking through barriers in difficult and adversarial negotiations.</div>
+          </div>
+        </a>
+        <a class="resource-card" href="https://hbr.org/2001/01/negotiating-under-pressure" target="_blank" rel="noopener">
+          <div class="resource-icon article">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">HBR: Negotiating Under Pressure</div>
+            <div class="resource-desc">Harvard Business Review research on cognitive biases that emerge under time pressure and how experienced negotiators overcome them.</div>
+          </div>
+        </a>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="assignments">Assignments</h2>
+      <p>Complete these assignments in order. Each develops your ability to maintain strategic clarity under increasing pressure.</p>
+
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 1
+          </div>
+          <span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span>
+        </div>
+        <h4>Personal Crisis Response Audit</h4>
+        <p>Reflect on a past high-pressure negotiation (or stressful business conversation) and analyze your response using the neuroscience framework from this chapter.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Describe the trigger event and your immediate physiological response (heart rate, breathing, tension)</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Identify which stage of the Pressure Response Cascade you were in when you made your first significant decision</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Evaluate: Did you act during emotional flooding or after recovery? How did this affect the outcome?</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write down three specific techniques from this chapter you would use if you could replay the situation</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a personal "crisis card" with your BATNA, reservation price, and core message for one upcoming high-stakes situation</span></li>
+        </ul>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>You have a written audit of a past crisis response, identification of where it went wrong or right neurologically, and a personal crisis card ready for future use.</p>
+        </div>
+      </div>
+
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 2
+          </div>
+          <span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Applied</span>
+        </div>
+        <h4>Crisis De-Escalation Role-Play</h4>
+        <p>With a partner, role-play a customer crisis scenario. Partner A plays an angry enterprise customer who is threatening to leave. Partner B plays the account executive who must de-escalate and save the relationship.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Partner A: Open aggressively with a specific complaint and an ultimatum ("Fix this by Friday or we leave")</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Partner B: Use tactical empathy, the strategic pause, and interests-behind-the-ultimatum techniques</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Conduct the role-play for 20 minutes. Partner A should gradually de-escalate only when genuinely persuaded</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Document which techniques worked, which failed, and at what point the emotional temperature shifted</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Swap roles and repeat. Compare how the experience of being the "angry" party changes your perspective as the de-escalator</span></li>
+        </ul>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>You have completed both rounds, documented de-escalation turning points, and can explain which techniques are most effective for different types of anger.</p>
+        </div>
+      </div>
+
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 3
+          </div>
+          <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Strategic</span>
+        </div>
+        <h4>Full Crisis Simulation: Collapsing Funding Round</h4>
+        <p>Simulate the CloudSync scenario. You are the CEO with 45 days of runway after your lead investor pulls out. Work through all five steps of the Crisis Negotiation Protocol and produce a complete crisis response plan.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write the initial stabilization response to the departing investor (exact language you would use)</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Complete a crisis assessment: facts vs. assumptions, true deadline, available options, BATNA under crisis conditions</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Develop three distinct strategic options and evaluate each against long-term interests (not just survival)</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write the engagement scripts for: (a) existing investors requesting a bridge, (b) new potential lead investors, (c) board communication</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write a debrief report identifying systemic changes that would prevent this type of crisis in the future</span></li>
+        </ul>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>You have a complete crisis response plan with stabilization language, assessment documentation, three strategic options with evaluation, engagement scripts, and a systemic prevention report.</p>
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="self-check">Self-Check</h2>
+      <p>Before moving to Chapter 09, honestly answer these questions.</p>
+
+      <details>
+        <summary>Can you explain the 90-second rule and why buying time is your most important crisis tool?</summary>
+        <div class="details-body">
+          <p>A strong emotional response lasts approximately 90 seconds neurochemically if not re-triggered. Buying time before making any commitment allows your prefrontal cortex to re-engage, transforming reactive decisions into strategic ones. The pause is not weakness &mdash; it is the most disciplined response available.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Could you walk through all five steps of the Crisis Negotiation Protocol from memory?</summary>
+        <div class="details-body">
+          <p>The five steps are: (1) Stabilize &mdash; acknowledge without committing, buy time; (2) Assess &mdash; separate facts from assumptions, evaluate BATNA; (3) Strategize &mdash; develop at least three options; (4) Engage &mdash; negotiate from a prepared position; (5) Debrief &mdash; extract lessons and prevent recurrence.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Can you use tactical empathy to de-escalate an angry counterpart?</summary>
+        <div class="details-body">
+          <p>Tactical empathy involves labeling the other person's emotion accurately without agreeing to their demands. "It sounds like you feel we've broken your trust" acknowledges their experience. People de-escalate when they feel genuinely understood, creating space for problem-solving.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Do you know how to uncover the interest behind an ultimatum?</summary>
+        <div class="details-body">
+          <p>Ultimatums are positions, not interests. Behind "Drop your price 40% or we leave" might be a budget ceiling, a competitive offer, or internal politics. Ask diagnostic questions to understand the underlying need, which often reveals solutions the ultimatum did not envision.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Can you identify which crisis playbook to apply for common startup crises?</summary>
+        <div class="details-body">
+          <p>The three core playbooks cover: (A) Key customer threatening to leave &mdash; diagnose the real cause, restructure the deal; (B) Co-founder dispute &mdash; bring in a neutral third party, focus on interests; (C) Investor pulling out &mdash; pursue multiple alternatives simultaneously, control information flow. Each has specific steps tailored to the crisis type.</p>
+        </div>
+      </details>
+
+    </main>
+
+    <aside class="sidebar">
+      <div class="sidebar-title">On this page</div>
+      <ul class="toc-list">
+        <li class="toc-item"><a href="#why-this-matters">Why This Matters</a></li>
+        <li class="toc-item"><a href="#key-concepts">Key Concepts</a></li>
+        <li class="toc-item"><a href="#pressure-neuroscience" style="padding-left: 28px; font-size: 12px;">Neuroscience of Pressure</a></li>
+        <li class="toc-item"><a href="#crisis-protocol" style="padding-left: 28px; font-size: 12px;">Crisis Protocol</a></li>
+        <li class="toc-item"><a href="#de-escalation" style="padding-left: 28px; font-size: 12px;">De-Escalation</a></li>
+        <li class="toc-item"><a href="#high-stakes-scenarios" style="padding-left: 28px; font-size: 12px;">Scenario Playbooks</a></li>
+        <li class="toc-item"><a href="#emotional-management" style="padding-left: 28px; font-size: 12px;">Emotional Management</a></li>
+        <li class="toc-item"><a href="#crisis-case-study" style="padding-left: 28px; font-size: 12px;">Case Study</a></li>
+        <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a></li>
+        <li class="toc-item"><a href="#further-reading">Further Reading</a></li>
+        <li class="toc-item"><a href="#assignments">Assignments</a></li>
+        <li class="toc-item"><a href="#self-check">Self-Check</a></li>
       </ul>
-    </div>
+    </aside>
+  </div>
 
-    <hr class="section-divider">
-
-    <div class="coming-soon-banner">
-      <h3>Content In Development</h3>
-      <p>Full chapter content with detailed explanations, code examples, video walkthroughs, and assignments is being developed. Check back soon.</p>
-    </div>
-
-    <div class="callout tip">
-      <div class="callout-header">What You Will Learn</div>
-      <p>By the end of this chapter, you will understand hostile situations, media pressure, regulatory confrontations, damage control and be able to apply these concepts in real-world scenarios.</p>
-    </div>
-
-  </main>
-
-  <nav class="footer-nav">
-        <a class="footer-nav-link prev" href="chapter-07.html">
-          <span class="footer-nav-label">&larr; Previous</span>
-          <span class="footer-nav-title">Chapter 07: Cross-Cultural Negotiations</span>
+  <footer class="chapter-footer">
+    <div class="chapter-footer-inner">
+      <nav class="footer-nav">
+        <a class="footer-nav-link" href="chapter-07.html">
+          <span class="footer-nav-label">&larr; Previous Chapter</span>
+          <span class="footer-nav-title">07: Cross-Cultural Negotiations</span>
         </a>
-        <a class="footer-nav-link next" href="chapter-09.html">
-          <span class="footer-nav-label">Next &rarr;</span>
-          <span class="footer-nav-title">Chapter 09: Negotiation Leadership</span>
+        <a class="footer-nav-link" href="chapter-09.html">
+          <span class="footer-nav-label">Next Chapter &rarr;</span>
+          <span class="footer-nav-title">09: Negotiation Leadership</span>
         </a>
-  </nav>
-
-  <footer class="footer">
-    ILA (Iksha Learning Academy) &middot; Advanced Negotiations &middot; <a href="index.html">All Chapters</a>
+      </nav>
+      <div class="footer-brand">ILA (Iksha Learning Academy) &middot; Negotiations &middot; Advanced Track</div>
+    </div>
   </footer>
 
   <script>
+    /* ── Progress Bar ───────────────────────── */
     window.addEventListener('scroll', () => {
-      const h = document.documentElement;
-      const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
-      document.getElementById('progressBar').style.width = Math.min(pct, 100) + '%';
+      const s = window.scrollY;
+      const d = document.documentElement.scrollHeight - window.innerHeight;
+      document.getElementById('progressBar').style.width = (d > 0 ? (s / d) * 100 : 0) + '%';
     });
+
+    /* ── Active TOC Tracking ────────────────── */
+    const tocLinks = document.querySelectorAll('.toc-item a');
+    const sections = [];
+    tocLinks.forEach(link => {
+      const id = link.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) sections.push({ id, el, link });
+    });
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const item = sections.find(s => s.el === entry.target);
+        if (item && entry.isIntersecting) {
+          tocLinks.forEach(l => l.classList.remove('active'));
+          item.link.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-80px 0px -60% 0px', threshold: 0 });
+
+    sections.forEach(s => observer.observe(s.el));
+
+    /* ── Copy Code Button ───────────────────── */
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      navigator.clipboard.writeText(pre.textContent).then(() => {
+        btn.classList.add('copied');
+        btn.textContent = 'Copied!';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.textContent = 'Copy';
+        }, 2000);
+      });
+    }
   </script>
 </body>
 </html>

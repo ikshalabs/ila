@@ -3,327 +3,1477 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chapter 04: Status Reporting and Updates — ILA Client Communication</title>
+  <title>Chapter 04: Presentations and Demos &mdash; ILA Client Communication</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
-    :root{--ink:#0f172a;--ink-light:#334155;--ink-muted:#64748b;--surface:#ffffff;--surface-alt:#f8fafc;--surface-warm:#fffbeb;--border:#e2e8f0;--border-light:#f1f5f9;--teal-50:#f0fdfa;--teal-100:#ccfbf1;--teal-200:#99f6e4;--teal-500:#14b8a6;--teal-600:#0d9488;--teal-700:#0f766e;--teal-800:#115e59;--teal-900:#134e4a;--blue-50:#eff6ff;--blue-100:#dbeafe;--blue-500:#3b82f6;--blue-600:#2563eb;--blue-700:#1d4ed8;--amber-50:#fffbeb;--amber-100:#fef3c7;--amber-500:#f59e0b;--amber-600:#d97706;--red-50:#fef2f2;--red-100:#fee2e2;--red-500:#ef4444;--red-600:#dc2626;--purple-50:#faf5ff;--purple-100:#f3e8ff;--purple-500:#a855f7;--purple-600:#9333ea;--font-sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;--font-serif:'Instrument Serif',Georgia,serif;--font-mono:'JetBrains Mono','Fira Code',monospace;--content-max:780px;--sidebar-width:280px;--ease:cubic-bezier(0.4,0,0.2,1)}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}body{font-family:var(--font-sans);font-size:16px;line-height:1.7;color:var(--ink);background:var(--surface)}.progress-bar{position:fixed;top:0;left:0;width:0%;height:3px;background:linear-gradient(90deg,var(--teal-500),var(--blue-500));z-index:1000;transition:width .15s var(--ease)}.top-nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem}.top-nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px}.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--teal-800)}.nav-brand-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--teal-600),var(--teal-800));border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px}.nav-brand-text{font-weight:700;font-size:15px;letter-spacing:-.02em}.nav-chapter-nav{display:flex;align-items:center;gap:8px}.nav-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;color:var(--ink-muted);border:1px solid var(--border);background:#fff;transition:all .2s var(--ease);cursor:pointer}.nav-btn:hover{color:var(--ink);border-color:var(--teal-500);background:var(--teal-50)}.nav-btn.disabled{opacity:.4;pointer-events:none}.nav-current{font-size:13px;font-weight:600;color:var(--ink-light);padding:0 4px}.hero{background:linear-gradient(170deg,var(--teal-50) 0%,var(--surface) 50%,var(--blue-50) 100%);border-bottom:1px solid var(--border);padding:4rem 2rem 3.5rem}.hero-inner{max-width:var(--content-max);margin:0 auto}.hero-chapter-label{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--teal-700);text-transform:uppercase;letter-spacing:.08em;margin-bottom:1rem}.hero-chapter-label span{background:var(--teal-100);padding:3px 10px;border-radius:100px}.hero h1{font-family:var(--font-serif);font-size:clamp(2.4rem,5vw,3.2rem);font-weight:400;line-height:1.15;color:var(--ink);margin-bottom:1rem}.hero-subtitle{font-size:1.15rem;color:var(--ink-light);line-height:1.65;max-width:640px}.hero-meta{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1.5rem}.hero-meta-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-muted)}.hero-meta-item svg{width:16px;height:16px;color:var(--teal-600)}.main-layout{max-width:1200px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:1fr var(--sidebar-width);gap:4rem;align-items:start}.content{padding:3rem 0 6rem;min-width:0}.sidebar{position:sticky;top:76px;padding:2rem 0;max-height:calc(100vh - 76px);overflow-y:auto}.sidebar-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-muted);margin-bottom:1rem;padding-left:14px}.toc-list{list-style:none}.toc-item a{display:block;padding:6px 14px;font-size:13px;color:var(--ink-muted);text-decoration:none;border-left:2px solid transparent;transition:all .2s var(--ease);line-height:1.5}.toc-item a:hover{color:var(--ink);background:var(--surface-alt)}.toc-item a.active{color:var(--teal-700);border-left-color:var(--teal-500);background:var(--teal-50);font-weight:500}.content h2{font-family:var(--font-serif);font-size:1.85rem;font-weight:400;color:var(--ink);margin:3rem 0 1rem;padding-top:1rem;scroll-margin-top:80px}.content h2:first-child{margin-top:0}.content h3{font-size:1.15rem;font-weight:600;color:var(--ink);margin:2rem 0 .75rem;scroll-margin-top:80px}.content p{margin-bottom:1.25rem;color:var(--ink-light)}.content strong{color:var(--ink);font-weight:600}.content a{color:var(--teal-700);text-decoration:underline;text-decoration-color:var(--teal-200);text-underline-offset:3px;transition:text-decoration-color .2s}.content a:hover{text-decoration-color:var(--teal-600)}.content ul,.content ol{margin-bottom:1.25rem;padding-left:1.5rem}.content li{margin-bottom:.5rem;color:var(--ink-light)}.content li::marker{color:var(--teal-500)}.section-divider{border:none;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:3rem 0}.callout{padding:1.25rem 1.5rem;border-radius:12px;margin-bottom:1.5rem;border:1px solid;position:relative}.callout-header{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;margin-bottom:.5rem}.callout-header svg{width:18px;height:18px;flex-shrink:0}.callout p:last-child{margin-bottom:0}.callout.concept{background:var(--blue-50);border-color:var(--blue-100)}.callout.concept .callout-header{color:var(--blue-700)}.callout.important{background:var(--amber-50);border-color:var(--amber-100)}.callout.important .callout-header{color:var(--amber-600)}.callout.danger{background:var(--red-50);border-color:var(--red-100)}.callout.danger .callout-header{color:var(--red-600)}.callout.tip{background:var(--purple-50);border-color:var(--purple-100)}.callout.tip .callout-header{color:var(--purple-600)}.callout.success{background:var(--teal-50);border-color:var(--teal-100)}.callout.success .callout-header{color:var(--teal-700)}.code-block{position:relative;margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}.code-header{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:var(--surface-alt);border-bottom:1px solid var(--border);font-size:12px;color:var(--ink-muted)}.code-lang{font-family:var(--font-mono);font-weight:600;text-transform:uppercase;letter-spacing:.05em}.code-copy{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:#fff;font-size:11px;font-family:var(--font-sans);color:var(--ink-muted);cursor:pointer;transition:all .2s var(--ease)}.code-copy:hover{border-color:var(--teal-500);color:var(--teal-700)}.code-copy.copied{background:var(--teal-50);border-color:var(--teal-500);color:var(--teal-700)}pre{margin:0;padding:1.25rem 1.5rem;overflow-x:auto;background:#1e293b;font-family:var(--font-mono);font-size:13.5px;line-height:1.7;color:#e2e8f0}code{font-family:var(--font-mono);font-size:.88em}p code,li code{padding:2px 7px;background:var(--surface-alt);border:1px solid var(--border);border-radius:5px;color:var(--teal-800);font-size:.85em}.hl-keyword{color:#c084fc}.hl-string{color:#86efac}.hl-comment{color:#64748b;font-style:italic}.hl-function{color:#7dd3fc}.hl-number{color:#fbbf24}.hl-flag{color:#f472b6}details{margin-bottom:1.25rem;border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .2s var(--ease)}details[open]{border-color:var(--teal-200)}details summary{padding:1rem 1.25rem;font-weight:600;font-size:15px;cursor:pointer;background:var(--surface-alt);list-style:none;display:flex;align-items:center;gap:10px;transition:background .2s var(--ease);user-select:none}details summary::-webkit-details-marker{display:none}details summary::before{content:'';width:20px;height:20px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain;flex-shrink:0;transition:transform .2s var(--ease)}details[open] summary::before{transform:rotate(90deg)}details summary:hover{background:var(--teal-50)}.details-body{padding:1.25rem 1.5rem}.details-body p:last-child{margin-bottom:0}.video-card{margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}.video-wrapper{position:relative;padding-bottom:56.25%;height:0;background:#0f172a}.video-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}.video-caption{padding:12px 16px;background:var(--surface-alt);font-size:13px;color:var(--ink-muted);display:flex;align-items:center;gap:6px}.video-caption svg{width:14px;height:14px;color:var(--red-500)}.resource-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1rem;margin-bottom:1.5rem}.resource-card{display:flex;gap:14px;padding:1rem 1.25rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all .2s var(--ease);background:#fff}.resource-card:hover{border-color:var(--teal-300);background:var(--teal-50);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.04)}.resource-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}.resource-icon.docs{background:var(--blue-50);color:var(--blue-600)}.resource-icon.video{background:var(--red-50);color:var(--red-500)}.resource-icon.article{background:var(--amber-50);color:var(--amber-600)}.resource-icon.book{background:var(--teal-50);color:var(--teal-700)}.resource-info{min-width:0}.resource-title{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:2px;line-height:1.4}.resource-desc{font-size:12px;color:var(--ink-muted);line-height:1.5}.assignment{border:2px solid var(--teal-200);border-radius:14px;padding:1.5rem 1.75rem;margin-bottom:1.5rem;background:linear-gradient(135deg,var(--teal-50) 0%,#fff 100%)}.assignment-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}.assignment-label{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--teal-700)}.assignment-difficulty{display:inline-flex;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:600}.difficulty-l1{background:var(--teal-100);color:var(--teal-800)}.difficulty-l2{background:var(--amber-100);color:var(--amber-600)}.difficulty-l3{background:var(--red-100);color:var(--red-600)}.assignment h4{font-size:1.05rem;font-weight:700;margin-bottom:.75rem}.assignment p{font-size:14px}.checklist{list-style:none;padding:0}.checklist li{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border-light);font-size:14px}.checklist li:last-child{border-bottom:none}.check-box{width:20px;height:20px;border-radius:6px;border:2px solid var(--border);flex-shrink:0;margin-top:1px;cursor:pointer;transition:all .15s var(--ease);display:flex;align-items:center;justify-content:center}.check-box:hover{border-color:var(--teal-500)}.check-box.checked{background:var(--teal-500);border-color:var(--teal-500)}.check-box.checked::after{content:'';width:10px;height:10px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain}.diagram{margin:1.5rem 0;padding:2rem;background:var(--surface-alt);border:1px solid var(--border);border-radius:14px;overflow-x:auto}.diagram pre{background:transparent;color:var(--ink);padding:0;font-size:13px;line-height:1.6}.diagram-caption{margin-top:1rem;font-size:12px;color:var(--ink-muted);text-align:center;font-style:italic}.chapter-footer{border-top:1px solid var(--border);padding:3rem 2rem;background:var(--surface-alt)}.chapter-footer-inner{max-width:var(--content-max);margin:0 auto}.footer-nav{display:flex;justify-content:space-between;align-items:center;gap:1rem}.footer-nav-link{display:flex;flex-direction:column;gap:4px;padding:1rem 1.5rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all .2s var(--ease);max-width:320px;background:#fff}.footer-nav-link:hover{border-color:var(--teal-300);box-shadow:0 4px 12px rgba(0,0,0,.04)}.footer-nav-label{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--teal-600)}.footer-nav-title{font-size:15px;font-weight:600;color:var(--ink)}.footer-brand{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border);font-size:13px;color:var(--ink-muted)}@media(max-width:960px){.main-layout{grid-template-columns:1fr}.sidebar{display:none}.resource-grid{grid-template-columns:1fr}}@media(max-width:640px){.hero{padding:2.5rem 1.25rem 2rem}.main-layout{padding:0 1.25rem}.content{padding:2rem 0 4rem}pre{padding:1rem;font-size:12.5px}.footer-nav{flex-direction:column}.footer-nav-link{max-width:100%;width:100%}}@media print{.top-nav,.sidebar,.progress-bar{display:none}.main-layout{display:block}.content{padding:0}.hero{background:#fff;border:none}pre{background:#f1f5f9;color:var(--ink);border:1px solid var(--border)}}
+    /* ═══════════════════════════════════════════════
+       ILA DESIGN SYSTEM — v1.0
+       Iksha Learning Academy
+       ═══════════════════════════════════════════════ */
+
+    :root {
+      /* Palette */
+      --ink:        #0f172a;
+      --ink-light:  #334155;
+      --ink-muted:  #64748b;
+      --surface:    #ffffff;
+      --surface-alt:#f8fafc;
+      --surface-warm:#fffbeb;
+      --border:     #e2e8f0;
+      --border-light:#f1f5f9;
+
+      /* Brand */
+      --teal-50:  #f0fdfa;
+      --teal-100: #ccfbf1;
+      --teal-200: #99f6e4;
+      --teal-500: #14b8a6;
+      --teal-600: #0d9488;
+      --teal-700: #0f766e;
+      --teal-800: #115e59;
+      --teal-900: #134e4a;
+
+      --blue-50:  #eff6ff;
+      --blue-100: #dbeafe;
+      --blue-500: #3b82f6;
+      --blue-600: #2563eb;
+      --blue-700: #1d4ed8;
+
+      --amber-50:  #fffbeb;
+      --amber-100: #fef3c7;
+      --amber-500: #f59e0b;
+      --amber-600: #d97706;
+
+      --red-50:   #fef2f2;
+      --red-100:  #fee2e2;
+      --red-500:  #ef4444;
+      --red-600:  #dc2626;
+
+      --purple-50:  #faf5ff;
+      --purple-100: #f3e8ff;
+      --purple-500: #a855f7;
+      --purple-600: #9333ea;
+
+      /* Typography */
+      --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-serif: 'Instrument Serif', Georgia, serif;
+      --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
+
+      /* Spacing */
+      --content-max: 780px;
+      --sidebar-width: 280px;
+
+      /* Transitions */
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--ink);
+      background: var(--surface);
+    }
+
+    /* ── PROGRESS BAR ─────────────────────────── */
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--teal-500), var(--blue-500));
+      z-index: 1000;
+      transition: width 0.15s var(--ease);
+    }
+
+    /* ── TOP NAV ──────────────────────────────── */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+    }
+
+    .top-nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--teal-800);
+    }
+
+    .nav-brand-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--teal-600), var(--teal-800));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .nav-brand-text {
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-chapter-nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      color: var(--ink-muted);
+      border: 1px solid var(--border);
+      background: white;
+      transition: all 0.2s var(--ease);
+      cursor: pointer;
+    }
+
+    .nav-btn:hover {
+      color: var(--ink);
+      border-color: var(--teal-500);
+      background: var(--teal-50);
+    }
+
+    .nav-btn.disabled {
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    .nav-current {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink-light);
+      padding: 0 4px;
+    }
+
+    /* ── HERO ─────────────────────────────────── */
+    .hero {
+      background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 4rem 2rem 3.5rem;
+    }
+
+    .hero-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
+    }
+
+    .hero-chapter-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--teal-700);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 1rem;
+    }
+
+    .hero-chapter-label span {
+      background: var(--teal-100);
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+
+    .hero h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(2.4rem, 5vw, 3.2rem);
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: 1rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: var(--ink-light);
+      line-height: 1.65;
+      max-width: 640px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .hero-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
+    .hero-meta-item svg {
+      width: 16px;
+      height: 16px;
+      color: var(--teal-600);
+    }
+
+    /* ── MAIN LAYOUT ──────────────────────────── */
+    .main-layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr var(--sidebar-width);
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .content {
+      padding: 3rem 0 6rem;
+      min-width: 0;
+    }
+
+    /* ── SIDEBAR TOC ──────────────────────────── */
+    .sidebar {
+      position: sticky;
+      top: 76px;
+      padding: 2rem 0;
+      max-height: calc(100vh - 76px);
+      overflow-y: auto;
+    }
+
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-muted);
+      margin-bottom: 1rem;
+      padding-left: 14px;
+    }
+
+    .toc-list {
+      list-style: none;
+    }
+
+    .toc-item a {
+      display: block;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--ink-muted);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: all 0.2s var(--ease);
+      line-height: 1.5;
+    }
+
+    .toc-item a:hover {
+      color: var(--ink);
+      background: var(--surface-alt);
+    }
+
+    .toc-item a.active {
+      color: var(--teal-700);
+      border-left-color: var(--teal-500);
+      background: var(--teal-50);
+      font-weight: 500;
+    }
+
+    /* ── TYPOGRAPHY ────────────────────────────── */
+    .content h2 {
+      font-family: var(--font-serif);
+      font-size: 1.85rem;
+      font-weight: 400;
+      color: var(--ink);
+      margin: 3rem 0 1rem;
+      padding-top: 1rem;
+      scroll-margin-top: 80px;
+    }
+
+    .content h2:first-child {
+      margin-top: 0;
+    }
+
+    .content h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 2rem 0 0.75rem;
+      scroll-margin-top: 80px;
+    }
+
+    .content p {
+      margin-bottom: 1.25rem;
+      color: var(--ink-light);
+    }
+
+    .content strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .content a {
+      color: var(--teal-700);
+      text-decoration: underline;
+      text-decoration-color: var(--teal-200);
+      text-underline-offset: 3px;
+      transition: text-decoration-color 0.2s;
+    }
+
+    .content a:hover {
+      text-decoration-color: var(--teal-600);
+    }
+
+    .content ul, .content ol {
+      margin-bottom: 1.25rem;
+      padding-left: 1.5rem;
+    }
+
+    .content li {
+      margin-bottom: 0.5rem;
+      color: var(--ink-light);
+    }
+
+    .content li::marker {
+      color: var(--teal-500);
+    }
+
+    /* ── SECTION DIVIDER ──────────────────────── */
+    .section-divider {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 3rem 0;
+    }
+
+    /* ── CALLOUT BOXES ────────────────────────── */
+    .callout {
+      padding: 1.25rem 1.5rem;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+      border: 1px solid;
+      position: relative;
+    }
+
+    .callout-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .callout-header svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    .callout p:last-child { margin-bottom: 0; }
+
+    .callout.concept {
+      background: var(--blue-50);
+      border-color: var(--blue-100);
+    }
+    .callout.concept .callout-header { color: var(--blue-700); }
+
+    .callout.important {
+      background: var(--amber-50);
+      border-color: var(--amber-100);
+    }
+    .callout.important .callout-header { color: var(--amber-600); }
+
+    .callout.danger {
+      background: var(--red-50);
+      border-color: var(--red-100);
+    }
+    .callout.danger .callout-header { color: var(--red-600); }
+
+    .callout.tip {
+      background: var(--purple-50);
+      border-color: var(--purple-100);
+    }
+    .callout.tip .callout-header { color: var(--purple-600); }
+
+    .callout.success {
+      background: var(--teal-50);
+      border-color: var(--teal-100);
+    }
+    .callout.success .callout-header { color: var(--teal-700); }
+
+    /* ── CODE BLOCKS ──────────────────────────── */
+    .code-block {
+      position: relative;
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+      background: var(--surface-alt);
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--ink-muted);
+    }
+
+    .code-lang {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .code-copy {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: white;
+      font-size: 11px;
+      font-family: var(--font-sans);
+      color: var(--ink-muted);
+      cursor: pointer;
+      transition: all 0.2s var(--ease);
+    }
+
+    .code-copy:hover {
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    .code-copy.copied {
+      background: var(--teal-50);
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    pre {
+      margin: 0;
+      padding: 1.25rem 1.5rem;
+      overflow-x: auto;
+      background: #1e293b;
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: #e2e8f0;
+    }
+
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.88em;
+    }
+
+    p code, li code {
+      padding: 2px 7px;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      color: var(--teal-800);
+      font-size: 0.85em;
+    }
+
+    /* Syntax highlights */
+    .hl-keyword  { color: #c084fc; }
+    .hl-string   { color: #86efac; }
+    .hl-comment  { color: #64748b; font-style: italic; }
+    .hl-function { color: #7dd3fc; }
+    .hl-number   { color: #fbbf24; }
+    .hl-flag     { color: #f472b6; }
+
+    /* ── COLLAPSIBLE (DETAILS) ────────────────── */
+    details {
+      margin-bottom: 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.2s var(--ease);
+    }
+
+    details[open] {
+      border-color: var(--teal-200);
+    }
+
+    details summary {
+      padding: 1rem 1.25rem;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      background: var(--surface-alt);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.2s var(--ease);
+      user-select: none;
+    }
+
+    details summary::-webkit-details-marker { display: none; }
+
+    details summary::before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+      flex-shrink: 0;
+      transition: transform 0.2s var(--ease);
+    }
+
+    details[open] summary::before {
+      transform: rotate(90deg);
+    }
+
+    details summary:hover {
+      background: var(--teal-50);
+    }
+
+    .details-body {
+      padding: 1.25rem 1.5rem;
+    }
+
+    .details-body p:last-child { margin-bottom: 0; }
+
+    /* ── VIDEO EMBED ──────────────────────────── */
+    .video-card {
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      background: #0f172a;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .video-caption {
+      padding: 12px 16px;
+      background: var(--surface-alt);
+      font-size: 13px;
+      color: var(--ink-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .video-caption svg {
+      width: 14px;
+      height: 14px;
+      color: var(--red-500);
+    }
+
+    /* ── RESOURCE CARDS ───────────────────────── */
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .resource-card {
+      display: flex;
+      gap: 14px;
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      background: white;
+    }
+
+    .resource-card:hover {
+      border-color: var(--teal-300);
+      background: var(--teal-50);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .resource-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 18px;
+    }
+
+    .resource-icon.docs    { background: var(--blue-50);   color: var(--blue-600); }
+    .resource-icon.video   { background: var(--red-50);    color: var(--red-500); }
+    .resource-icon.github  { background: var(--ink);       color: white; }
+    .resource-icon.article { background: var(--amber-50);  color: var(--amber-600); }
+    .resource-icon.pdf     { background: var(--purple-50); color: var(--purple-600); }
+
+    .resource-info {
+      min-width: 0;
+    }
+
+    .resource-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 2px;
+      line-height: 1.4;
+    }
+
+    .resource-desc {
+      font-size: 12px;
+      color: var(--ink-muted);
+      line-height: 1.5;
+    }
+
+    /* ── ASSIGNMENT CARDS ─────────────────────── */
+    .assignment {
+      border: 2px solid var(--teal-200);
+      border-radius: 14px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--teal-50) 0%, white 100%);
+    }
+
+    .assignment-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .assignment-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--teal-700);
+    }
+
+    .assignment-difficulty {
+      display: inline-flex;
+      padding: 4px 10px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .difficulty-l1 { background: var(--teal-100); color: var(--teal-800); }
+    .difficulty-l2 { background: var(--amber-100); color: var(--amber-600); }
+    .difficulty-l3 { background: var(--red-100); color: var(--red-600); }
+
+    .assignment h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .assignment p {
+      font-size: 14px;
+    }
+
+    .checklist {
+      list-style: none;
+      padding: 0;
+    }
+
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-light);
+      font-size: 14px;
+    }
+
+    .checklist li:last-child { border-bottom: none; }
+
+    .check-box {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      border: 2px solid var(--border);
+      flex-shrink: 0;
+      margin-top: 1px;
+      cursor: pointer;
+      transition: all 0.15s var(--ease);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .check-box:hover {
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked {
+      background: var(--teal-500);
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+    }
+
+    /* ── ARCHITECTURE DIAGRAM ─────────────────── */
+    .diagram {
+      margin: 1.5rem 0;
+      padding: 2rem;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow-x: auto;
+    }
+
+    .diagram pre {
+      background: transparent;
+      color: var(--ink);
+      padding: 0;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .diagram-caption {
+      margin-top: 1rem;
+      font-size: 12px;
+      color: var(--ink-muted);
+      text-align: center;
+      font-style: italic;
+    }
+
+    /* ── FOOTER ───────────────────────────────── */
+    .chapter-footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      background: var(--surface-alt);
+    }
+
+    .chapter-footer-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
+    }
+
+    .footer-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .footer-nav-link {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 1rem 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      max-width: 320px;
+      background: white;
+    }
+
+    .footer-nav-link:hover {
+      border-color: var(--teal-300);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .footer-nav-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--teal-600);
+    }
+
+    .footer-nav-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .footer-brand {
+      text-align: center;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
+    /* ── RESPONSIVE ───────────────────────────── */
+    @media (max-width: 960px) {
+      .main-layout {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        display: none;
+      }
+      .resource-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero { padding: 2.5rem 1.25rem 2rem; }
+      .main-layout { padding: 0 1.25rem; }
+      .content { padding: 2rem 0 4rem; }
+      pre { padding: 1rem; font-size: 12.5px; }
+      .footer-nav { flex-direction: column; }
+      .footer-nav-link { max-width: 100%; width: 100%; }
+    }
+
+    /* ── PRINT ────────────────────────────────── */
+    @media print {
+      .top-nav, .sidebar, .progress-bar { display: none; }
+      .main-layout { display: block; }
+      .content { padding: 0; }
+      .hero { background: white; border: none; }
+      pre { background: #f1f5f9; color: var(--ink); border: 1px solid var(--border); }
+    }
   </style>
 </head>
 <body>
+  <!-- Progress Bar -->
   <div class="progress-bar" id="progressBar"></div>
-  <nav class="top-nav"><div class="top-nav-inner"><a class="nav-brand" href="index.html"><div class="nav-brand-icon">ILA</div><span class="nav-brand-text">Iksha Learning Academy</span></a><div class="nav-chapter-nav"><a class="nav-btn" href="chapter-03.html">&larr; Previous</a><span class="nav-current">04 / 08</span><a class="nav-btn" href="chapter-05.html">Next &rarr;</a></div></div></nav>
 
-  <header class="hero"><div class="hero-inner">
-    <div class="hero-chapter-label"><span>Chapter 04</span> &middot; Communication Foundations</div>
-    <h1>Status Reporting and Updates</h1>
-    <p class="hero-subtitle">Master the art of keeping stakeholders informed without drowning them in detail. In startups where transparency builds trust and silence breeds anxiety, your status updates are the heartbeat of every client relationship.</p>
-    <div class="hero-meta">
-      <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Estimated: 3&ndash;4 hours</div>
-      <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>5 Key Concepts</div>
-      <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>3 Assignments</div>
+  <!-- Top Navigation -->
+  <nav class="top-nav">
+    <div class="top-nav-inner">
+      <a class="nav-brand" href="index.html">
+        <div class="nav-brand-icon">ILA</div>
+        <span class="nav-brand-text">Iksha Learning Academy</span>
+      </a>
+      <div class="nav-chapter-nav">
+        <a class="nav-btn" href="chapter-03.html">&larr; Previous</a>
+        <span class="nav-current">04 / 08</span>
+        <a class="nav-btn" href="chapter-05.html">Next &rarr;</a>
+      </div>
     </div>
-  </div></header>
+  </nav>
 
+  <!-- Hero -->
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-chapter-label">
+        <span>Chapter 04</span> &middot; Phase 2: Verbal Communication
+      </div>
+      <h1>Presentations and Demos</h1>
+      <p class="hero-subtitle">
+        Deliver client presentations and product demos that inform, persuade, and build confidence. Learn to structure narratives, handle live demonstrations, and recover gracefully when things go wrong.
+      </p>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Estimated: 3&ndash;4 hours
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          3 Advancement Levels
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          3 Assignments
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content + Sidebar -->
   <div class="main-layout">
     <main class="content">
 
       <h2 id="why-this-matters">Why This Matters</h2>
 
-      <p>The number one reason clients lose confidence in their service providers is not poor technical work &mdash; it is poor communication. Specifically, it is the feeling of being in the dark. When a client has to ask "What is the status?" that is already a failure. A well-designed status reporting system means stakeholders never have to wonder where things stand.</p>
+      <p>
+        A product demo is the moment where months of development work either clicks for the client
+        or falls flat. No amount of technical excellence matters if you cannot demonstrate it
+        compellingly. The best code in the world is invisible to clients &mdash; what they see is
+        the demo, the presentation, and the story you tell about what you built and why it matters.
+      </p>
 
-      <p>At startups, status reporting serves a dual purpose. Externally, it builds client trust and demonstrates professionalism. Internally, it creates accountability and surfaces risks early. A team that reports status consistently catches problems when they are small and fixable, not when they have become crises.</p>
-
-      <p>The paradox of status updates is that the people who need them most (executives, clients) have the least time to read them. Your update must be both comprehensive enough to answer questions and concise enough to be read in under 2 minutes. That is a design challenge, not a writing challenge.</p>
+      <p>
+        Presentations and demos serve different purposes in the client relationship. A presentation
+        communicates strategy, progress, or decisions. A demo shows working software. Both require
+        preparation, structure, and the ability to read the room and adapt in real time. The
+        professional who masters both becomes the person clients trust to represent the project
+        to their own leadership.
+      </p>
 
       <div class="callout concept">
-        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>Key Insight</div>
-        <p>The best status update is one that <strong>prevents a meeting</strong>. If your weekly update is so clear and complete that stakeholders do not need to schedule a sync to understand project health, you have saved everyone time and demonstrated mastery of asynchronous communication.</p>
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Key Insight
+        </div>
+        <p>
+          The purpose of a demo is not to show every feature you built. It is to show the features
+          that matter most to the client's business goals, in a narrative that connects technical
+          work to business value. A focused 10-minute demo of 3 features always beats a 45-minute
+          walkthrough of 20 features.
+        </p>
       </div>
 
       <hr class="section-divider">
 
       <h2 id="key-concepts">Key Concepts</h2>
 
-      <h3 id="rag-status">1. RAG Status and Traffic Light Reporting</h3>
+      <h3 id="presentation-structure">1. The Presentation Structure Framework</h3>
 
-      <p>The <strong>RAG (Red-Amber-Green)</strong> system is the universal language of project health. It gives stakeholders an instant visual signal before they read a single word. Here is what each status means in practice:</p>
+      <p>
+        Every client presentation should follow a predictable structure. This is not about being
+        formulaic &mdash; it is about reducing cognitive load for the audience so they can focus
+        on your content rather than trying to figure out where you are going.
+      </p>
 
       <div class="diagram">
 <pre>
- STATUS    MEANING                        ACTION REQUIRED
- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
- GREEN     On track. No blockers.         None. Proceed as planned.
-           Milestones being hit.          Read for awareness only.
-
- AMBER     At risk. Issues identified     Attention needed. Review
-           but manageable. May need       the flagged risks and
-           intervention if unchecked.     provide input if requested.
-
- RED       Off track. Critical blocker    Immediate action required.
-           or significant scope/timeline  Decision or escalation
-           impact. Cannot self-resolve.   needed from stakeholders.
+  ┌─────────────────────────────────────────────────────────────┐
+  │          CLIENT PRESENTATION STRUCTURE                       │
+  ├─────────────────────────────────────────────────────────────┤
+  │                                                              │
+  │  1. CONTEXT (2 min)                                          │
+  │     "Here is where we are and why we are meeting"            │
+  │     - Project timeline reminder                              │
+  │     - What we promised to deliver by now                     │
+  │     - What we will cover today                               │
+  │                                                              │
+  │  2. DEMONSTRATION (10-20 min)                                │
+  │     "Here is what we built"                                  │
+  │     - Live walkthrough of working features                   │
+  │     - Connected to user stories / business goals             │
+  │     - Pause for questions between features                   │
+  │                                                              │
+  │  3. DECISIONS (5-10 min)                                     │
+  │     "Here is what we need from you"                          │
+  │     - Options requiring client input                         │
+  │     - Recommendation with rationale                          │
+  │     - Timeline impact of each option                         │
+  │                                                              │
+  │  4. NEXT STEPS (3 min)                                       │
+  │     "Here is what happens next"                              │
+  │     - Upcoming sprint goals                                  │
+  │     - Key dates and milestones                               │
+  │     - Action items with owners                               │
+  │                                                              │
+  └─────────────────────────────────────────────────────────────┘
 </pre>
-        <div class="diagram-caption">Figure 1: RAG status definitions and expected stakeholder response</div>
+        <div class="diagram-caption">Figure 1: The four-part presentation structure for client demos</div>
       </div>
 
-      <div class="callout important">
-        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Watch Out</div>
-        <p>The most common mistake is <strong>"watermelon reporting"</strong> &mdash; green on the outside, red on the inside. Teams report green status because they do not want to alarm stakeholders, while privately knowing the project is in trouble. This destroys trust the moment the truth comes out. A timely amber is always better than a late red. Stakeholders can handle bad news. They cannot handle surprises.</p>
-      </div>
+      <h3 id="demo-preparation">2. Demo Preparation Checklist</h3>
 
-      <h3 id="weekly-update">2. The Weekly Status Update Template</h3>
-
-      <p>A weekly status update should follow a consistent format that stakeholders learn to scan quickly. Here is the template used by high-performing startup teams:</p>
+      <p>
+        A live demo that breaks during a client presentation is embarrassing but recoverable. A
+        demo that breaks because you did not prepare is unprofessional. Here is the preparation
+        checklist that prevents 95% of demo failures:
+      </p>
 
       <div class="code-block">
-        <div class="code-header"><span class="code-lang">WEEKLY STATUS UPDATE TEMPLATE</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <div class="code-header">
+          <span class="code-lang">framework</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
 <pre>
-<span class="hl-keyword">PROJECT:</span> <span class="hl-string">[Client Name] — [Project Name]</span>
-<span class="hl-keyword">WEEK:</span>    <span class="hl-string">March 3 – March 7, 2025</span>
-<span class="hl-keyword">STATUS:</span>  <span class="hl-string">AMBER</span> (was Green last week)
-<span class="hl-keyword">AUTHOR:</span>  <span class="hl-string">[Your Name]</span>
+<span class="hl-comment">/* ── DEMO PREPARATION CHECKLIST ────────────────── */</span>
 
-<span class="hl-function">EXECUTIVE SUMMARY (3 sentences max):</span>
-Sprint 14 is 70% complete. Dashboard feature is on track
-for Thursday demo. SSO integration is at risk due to a
-dependency on the client's identity provider configuration.
+<span class="hl-keyword">24 Hours Before:</span>
+[ ] Demo environment is seeded with realistic data
+[ ] All features work end-to-end (run through once)
+[ ] Test data includes the client's brand/names if possible
+[ ] Screen resolution set to presentation-friendly size
+[ ] Browser bookmarks organized for quick navigation
+[ ] Notifications disabled (Slack, email, OS)
 
-<span class="hl-function">WHAT WE ACCOMPLISHED THIS WEEK:</span>
-- Campaign analytics dashboard: core charts complete,
-  entering QA (on track)
-- API pagination: deployed to staging, performance
-  testing in progress (on track)
-- Client onboarding flow: Figma mockups approved,
-  development starting Monday (on track)
+<span class="hl-keyword">1 Hour Before:</span>
+[ ] Run through the entire demo script once
+[ ] Test screen sharing with a colleague
+[ ] Check audio and video quality
+[ ] Close all unnecessary browser tabs and apps
+[ ] Prepare backup screenshots in case live demo fails
+[ ] Have the demo URL and credentials written down
 
-<span class="hl-function">WHAT IS PLANNED FOR NEXT WEEK:</span>
-- Dashboard demo with client (Thursday 2 PM ET)
-- SSO integration kickoff (pending client config)
-- Begin Phase 3 planning with product team
+<span class="hl-keyword">5 Minutes Before:</span>
+[ ] Open the demo environment in the browser
+[ ] Navigate to the starting point of the demo
+[ ] Ensure your name and role are visible in the call
+[ ] Take a deep breath. You are prepared.
+</pre>
+      </div>
 
-<span class="hl-function">RISKS AND BLOCKERS:</span>
-- [AMBER] SSO integration blocked on client providing
-  SAML metadata. Requested March 1, not yet received.
-  Impact: 3-day delay to Phase 2 completion if not
-  received by Wednesday.
-  Mitigation: Alex emailed client IT team directly.
-  Escalation: Will escalate to Sarah (client PM) if
-  no response by Tuesday EOD.
+      <h3 id="storytelling">3. Technical Storytelling</h3>
 
-<span class="hl-function">METRICS:</span>
-- Sprint velocity: 28/34 story points complete
-- Open bugs: 3 (1 critical, 2 minor)
-- Test coverage: 87% (target: 85%)
+      <p>
+        The difference between a good demo and a great demo is narrative. Instead of walking
+        through features in isolation, connect them into a user story that the client cares about.
+      </p>
 
-<span class="hl-function">DECISIONS NEEDED:</span>
-- Should we proceed with SSO using a mock IdP for the
-  demo, or wait for the real configuration?
-  Decision needed by: Wednesday March 5
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">template</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── DEMO NARRATIVE TEMPLATE ───────────────────── */</span>
+
+<span class="hl-keyword">Instead of:</span>
+"Here is the login page. You can enter email and
+password. There is also a forgot password link.
+Next, here is the dashboard..."
+
+<span class="hl-keyword">Try:</span>
+"Let me walk you through what Sarah, one of your
+account managers, would experience on a typical
+Monday morning.
+
+Sarah opens the app and logs in. Notice the
+dashboard immediately shows her the three accounts
+that need attention today &mdash; these are sorted
+by urgency based on the rules we discussed last
+sprint.
+
+She clicks into Acme Corp and sees the renewal is
+due in 14 days. The system has already drafted a
+renewal proposal based on their usage data. Sarah
+reviews it, makes one adjustment, and sends it
+directly from the platform.
+
+That workflow &mdash; from login to sent proposal &mdash;
+took under 2 minutes. Last week it took Sarah about
+45 minutes to pull the same data from three different
+spreadsheets."
 </pre>
       </div>
 
       <div class="callout tip">
-        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>Pro Tip</div>
-        <p>Put the executive summary at the top. Many stakeholders will read only those 3 sentences. If they want more detail, they will scroll down. If your summary is clear enough, most will not need to. This is the BLUF (Bottom Line Up Front) principle from military communication.</p>
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Pro Tip
+        </div>
+        <p>
+          Name your demo user after someone the client knows (with permission). When the client's own
+          team member is the protagonist of the demo story, engagement increases dramatically. They
+          stop evaluating features and start imagining themselves using the product.
+        </p>
       </div>
 
-      <h3 id="stakeholder-updates">3. Tailoring Updates for Different Audiences</h3>
+      <h3 id="live-demo-recovery">4. Recovering from Demo Failures</h3>
 
-      <p>Not all stakeholders need the same information. A developer wants technical details. A project manager wants timeline and scope. A VP wants business impact and risk. The same project might need three different update formats:</p>
-
-      <ul>
-        <li><strong>Technical team update:</strong> Sprint board status, PR reviews needed, technical blockers, architecture decisions. Delivered via Slack or standup.</li>
-        <li><strong>Client project manager update:</strong> Weekly status email with RAG, accomplishments, plans, risks, and decisions needed. Delivered via email.</li>
-        <li><strong>Executive stakeholder update:</strong> Monthly or bi-weekly summary with business metrics, milestone progress, budget status, and strategic risks. Delivered via email or dashboard.</li>
-      </ul>
+      <p>
+        Live demos break. It happens to everyone. The difference between a junior and a senior
+        professional is how they handle it. Here is the recovery playbook:
+      </p>
 
       <div class="code-block">
-        <div class="code-header"><span class="code-lang">EXECUTIVE SUMMARY — DIFFERENT AUDIENCES</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <div class="code-header">
+          <span class="code-lang">framework</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
 <pre>
-<span class="hl-comment">/* Same project, three different summaries: */</span>
+<span class="hl-comment">/* ── DEMO RECOVERY PLAYBOOK ────────────────────── */</span>
 
-<span class="hl-keyword">FOR ENGINEERING TEAM:</span>
-"Dashboard API endpoints are deployed to staging. Need
-code review on PR #847 (pagination) and PR #852 (chart
-data aggregation). Redis caching layer is performing well
-under load testing — p95 response time is 45ms."
+<span class="hl-keyword">Level 1: Minor Glitch (page slow to load)</span>
+<span class="hl-function">Action:</span> Narrate while waiting: "This is loading
+real data from the production database, which is
+why it takes a moment. In the live environment
+with CDN caching, this loads in under a second."
 
-<span class="hl-keyword">FOR CLIENT PROJECT MANAGER:</span>
-"The analytics dashboard is on track for Thursday's demo.
-Two of three planned features are complete and in QA. The
-SSO integration is at risk — we need your IT team's SAML
-configuration by Wednesday to avoid a 3-day delay."
+<span class="hl-keyword">Level 2: Feature Not Working</span>
+<span class="hl-function">Action:</span> Switch to backup: "Let me show you this
+from our pre-recorded walkthrough instead."
+(Pull up the screenshots or video you prepared.)
+"The functionality is identical &mdash; this is just
+an environment issue we will resolve after the call."
 
-<span class="hl-keyword">FOR CLIENT VP:</span>
-"Phase 2 is 70% complete and on track for the March 14
-milestone. The analytics dashboard will be demo-ready
-Thursday. One risk to flag: SSO integration depends on
-a configuration we have requested from your IT team."
+<span class="hl-keyword">Level 3: Environment is Completely Down</span>
+<span class="hl-function">Action:</span> Pivot to presentation mode: "It looks like
+our demo environment is having issues. Rather than
+waste your time waiting, let me walk you through
+the features using the screenshots we prepared.
+I will schedule a follow-up demo for Thursday so
+you can see it live."
+
+<span class="hl-keyword">In ALL cases:</span>
+- Stay calm. Your tone sets the room's tone.
+- Do NOT apologize excessively. One "sorry about
+  that" is sufficient.
+- Do NOT blame infrastructure/DevOps/anyone.
+- Pivot quickly. Every second of silence erodes
+  confidence.
 </pre>
       </div>
 
-      <h3 id="dashboards">4. Building Status Dashboards</h3>
+      <h3 id="slide-design">5. Slide Design Principles for Client Presentations</h3>
 
-      <p>For ongoing engagements, a real-time dashboard is more effective than weekly emails. It provides stakeholders with self-service access to project health, reducing the need for status meetings and email threads. Key dashboard components:</p>
+      <p>
+        Slides are supporting visual aids, not the presentation itself. When clients are reading
+        your slides instead of listening to you, your slides have too much text.
+      </p>
 
       <ul>
-        <li><strong>Overall health indicator:</strong> RAG status with a one-line explanation.</li>
-        <li><strong>Milestone timeline:</strong> Visual Gantt chart or roadmap showing planned vs. actual dates.</li>
-        <li><strong>Sprint progress:</strong> Burndown chart or progress bar for the current sprint.</li>
-        <li><strong>Open risks:</strong> Table with severity, owner, and mitigation status.</li>
-        <li><strong>Key metrics:</strong> Velocity trend, bug count trend, test coverage over time.</li>
+        <li><strong>One idea per slide</strong> &mdash; If a slide makes two points, make two slides</li>
+        <li><strong>Maximum 6 words in a heading</strong> &mdash; Headlines should be scannable, not paragraphs</li>
+        <li><strong>Use screenshots, not descriptions</strong> &mdash; "Here is the dashboard" with a screenshot beats "The dashboard displays user metrics including..."</li>
+        <li><strong>Data over adjectives</strong> &mdash; "Load time: 1.2s (was 4.0s)" beats "Significantly faster loading"</li>
+        <li><strong>Consistent branding</strong> &mdash; Use the client's colors and logo where appropriate</li>
       </ul>
 
-      <div class="callout tip">
-        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>Pro Tip</div>
-        <p>Tools like Notion, Linear, or Jira with shared views make dashboard creation straightforward. The key is to keep it simple — a dashboard with 50 charts is worse than no dashboard. Start with 4-5 widgets and add more only when stakeholders request them.</p>
-      </div>
+      <h3 id="qa-handling">6. Handling Questions During Presentations</h3>
 
-      <h3 id="cadence">5. Communication Cadence Design</h3>
-
-      <p>The right reporting cadence depends on the project phase, stakeholder anxiety level, and the nature of the engagement. Here is a framework for designing your cadence:</p>
+      <p>
+        Questions during a demo are a sign of engagement, not interruption. Handle them
+        strategically:
+      </p>
 
       <div class="code-block">
-        <div class="code-header"><span class="code-lang">COMMUNICATION CADENCE FRAMEWORK</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <div class="code-header">
+          <span class="code-lang">framework</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
 <pre>
-<span class="hl-keyword">PROJECT PHASE        CADENCE          FORMAT</span>
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<span class="hl-comment">/* ── Q&A HANDLING STRATEGIES ───────────────────── */</span>
 
-<span class="hl-function">Kickoff (Week 1-2)</span>
-  Internal:          Daily standup     Slack/meeting
-  Client:            2x per week       Email + call
-  Executive:         Weekly            Email summary
+<span class="hl-keyword">Quick Question (answer in 30 seconds or less):</span>
+Answer immediately. It shows confidence and keeps
+the flow going. "Great question &mdash; yes, that
+field is configurable. Admins can change it in the
+settings panel."
 
-<span class="hl-function">Active Development (Week 3+)</span>
-  Internal:          Daily standup     Slack/meeting
-  Client:            Weekly            Email update
-  Executive:         Bi-weekly         Email/dashboard
+<span class="hl-keyword">Detailed Question (needs more than 30 seconds):</span>
+Defer gracefully: "That is an important question
+that deserves a thorough answer. Let me make a
+note and we will come back to it after the demo
+so we do not lose our flow."
 
-<span class="hl-function">Pre-Launch (Final 2 weeks)</span>
-  Internal:          Daily standup     Slack/meeting
-  Client:            Daily brief       Email/Slack
-  Executive:         2x per week       Email + call
+<span class="hl-keyword">Question You Cannot Answer:</span>
+Be honest and specific: "I do not have that answer
+right now, but I will get back to you by end of
+day today with the details."
 
-<span class="hl-function">Crisis/Red Status</span>
-  Internal:          2x daily          Slack + call
-  Client:            Daily             Email + call
-  Executive:         Daily             Email + call
-
-<span class="hl-comment">/* Rule of thumb: increase frequency when
-   anxiety is high, decrease when trust is
-   established and things are stable. */</span>
+<span class="hl-keyword">Hostile or Skeptical Question:</span>
+Acknowledge the concern: "That is a valid concern.
+Here is how we have addressed it..." If you have
+not addressed it: "You are right to flag that. Let
+me take it back to the team and include it in our
+next sprint planning."
 </pre>
       </div>
 
       <details>
-        <summary>What to do when there is nothing to report</summary>
-        <div class="details-body"><p>Send the update anyway. "No news" is still news. A brief message like "Week 12 Update: All workstreams are on track. No blockers or risks to flag. Sprint 14 is proceeding as planned. Next milestone: Dashboard demo on Thursday" takes 30 seconds to write and prevents the client from wondering if you forgot about them.</p></div>
+        <summary>Should you allow questions during or after the demo?</summary>
+        <div class="details-body">
+          <p>
+            It depends on the audience size and the demo length. For small groups (2-4 people), allow
+            questions throughout &mdash; it creates a collaborative feel. For larger groups (5+) or
+            longer demos (30+ minutes), set expectations at the start: "I will pause for questions
+            after each major section. Please hold detailed questions until then."
+          </p>
+        </div>
       </details>
 
       <details>
-        <summary>How to report bad news without causing panic</summary>
-        <div class="details-body"><p>Lead with the impact, then the cause, then the solution. Example: "The launch date is at risk of slipping by 3-5 days. The root cause is a third-party API rate limit issue we discovered during load testing. We have two mitigation options: (1) implement client-side caching to reduce API calls by 60%, or (2) request a rate limit increase from the vendor. We recommend Option 1 and can implement it by Friday." This format shows control and competence even in a bad situation.</p></div>
+        <summary>What if the client asks for a feature that is not planned?</summary>
+        <div class="details-body">
+          <p>
+            Never say no in the moment. Say: "That is a great idea. Let me capture it so we can
+            evaluate the scope and timeline impact." After the meeting, assess whether it fits the
+            current engagement scope and follow up with a clear yes/no and reasoning.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>How do you handle a client who keeps interrupting the demo?</summary>
+        <div class="details-body">
+          <p>
+            Frequent interruptions usually mean the client is excited or confused. If excited, lean
+            into it &mdash; their engagement is valuable. If confused, stop the demo and ask: "I want
+            to make sure this is clear. Should I slow down or take a different approach?" Never
+            bulldoze through a demo while the audience is lost.
+          </p>
+        </div>
       </details>
 
       <hr class="section-divider">
 
       <h2 id="watch-learn">Watch &amp; Learn</h2>
-      <p>These videos cover status reporting and stakeholder communication techniques.</p>
+
+      <p>These videos cover presentation skills and demo techniques for client settings.</p>
 
       <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/LFbKLVSJxGM?rel=0&modestbranding=1" title="How to Write a Project Status Report" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-caption"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>Project Management Academy — How to Write Status Reports That Get Read</div>
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/GlSCMx5_bWA?rel=0&amp;modestbranding=1"
+            title="Presentations and Demos &mdash; How to deliver compelling client presentations"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Presentations and Demos &mdash; How to deliver compelling client presentations
+        </div>
       </div>
 
       <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/R8dYLbJiTUE?rel=0&modestbranding=1" title="BLUF Communication Method" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-caption"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>Communication Strategies — The BLUF Method for Clear Updates</div>
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/LLiJYvzm0ko?rel=0&amp;modestbranding=1"
+            title="Technical Storytelling &mdash; Connecting development work to business outcomes"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Technical Storytelling &mdash; Connecting development work to business outcomes
+        </div>
       </div>
 
       <hr class="section-divider">
 
       <h2 id="further-reading">Further Reading</h2>
-      <p>Resources to deepen your status reporting and stakeholder communication skills.</p>
+
+      <p>Resources on presentation skills, demo techniques, and visual communication.</p>
+
       <div class="resource-grid">
-        <a class="resource-card" href="https://www.amazon.com/Smart-Brevity-Power-Saying-More/dp/1523516976" target="_blank" rel="noopener"><div class="resource-icon book"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><div class="resource-info"><div class="resource-title">Smart Brevity — VandeHei, Allen, Schwartz</div><div class="resource-desc">The Axios framework for saying more with less. Directly applicable to status updates and executive summaries.</div></div></a>
-        <a class="resource-card" href="https://hbr.org/2016/11/how-to-write-email-with-military-precision" target="_blank" rel="noopener"><div class="resource-icon article"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div class="resource-info"><div class="resource-title">How to Write Email with Military Precision (HBR)</div><div class="resource-desc">The BLUF method and structured communication approach adapted from military operations.</div></div></a>
-        <a class="resource-card" href="https://basecamp.com/shapeup" target="_blank" rel="noopener"><div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><div class="resource-info"><div class="resource-title">Shape Up — Basecamp</div><div class="resource-desc">Basecamp's approach to project management includes excellent frameworks for progress tracking and hill charts.</div></div></a>
-        <a class="resource-card" href="https://www.amazon.com/Measure-What-Matters-Google-Foundation/dp/0525536221" target="_blank" rel="noopener"><div class="resource-icon book"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><div class="resource-info"><div class="resource-title">Measure What Matters — John Doerr</div><div class="resource-desc">OKR framework that provides the metrics foundation for meaningful status reporting.</div></div></a>
+        <a class="resource-card" href="https://www.amazon.com/Presentation-Zen-Simple-Design-Delivery/dp/0135800919" target="_blank" rel="noopener">
+          <div class="resource-icon article">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Presentation Zen &mdash; Garr Reynolds</div>
+            <div class="resource-desc">The definitive guide to clean, effective presentation design and delivery.</div>
+          </div>
+        </a>
+        <a class="resource-card" href="https://hbr.org/2013/06/how-to-give-a-killer-presentation" target="_blank" rel="noopener">
+          <div class="resource-icon article">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">How to Give a Killer Presentation (HBR)</div>
+            <div class="resource-desc">Chris Anderson of TED shares his framework for compelling presentations.</div>
+          </div>
+        </a>
+        <a class="resource-card" href="https://www.duarte.com/resources/" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Duarte Presentation Resources</div>
+            <div class="resource-desc">Templates, guides, and frameworks for storytelling through presentations.</div>
+          </div>
+        </a>
+        <a class="resource-card" href="https://demofest.com/" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">DemoFest Best Practices</div>
+            <div class="resource-desc">Community resources on delivering effective software demonstrations.</div>
+          </div>
+        </a>
       </div>
 
       <hr class="section-divider">
 
       <h2 id="assignments">Assignments</h2>
-      <p>Complete these assignments in order. Use real project data wherever possible.</p>
+
+      <p>Complete these assignments in order. Practice with real audiences whenever possible.</p>
 
       <div class="assignment">
-        <div class="assignment-header"><div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Assignment 1</div><span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span></div>
-        <h4>Write Your First Weekly Status Update</h4>
-        <p>Create a complete weekly status update for a real or simulated project using the template from this chapter.</p>
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 1
+          </div>
+          <span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span>
+        </div>
+        <h4>Prepare and Deliver a 10-Minute Demo</h4>
+        <p>Select a feature from a current or recent project and deliver a structured demo to a peer.</p>
         <ul class="checklist">
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Choose a real project you are working on (or create a realistic simulation)</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write a complete status update with all sections: summary, accomplishments, plans, risks, metrics</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Apply RAG status with honest assessment (resist the temptation to default to green)</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write the same update tailored for 2 different audiences (PM and executive)</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Have a colleague read both versions and confirm they are appropriately tailored</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Follow the four-part presentation structure (Context, Demo, Decisions, Next Steps)</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Use the demo preparation checklist to prepare your environment</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Tell a user story instead of listing features</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Prepare backup screenshots in case of technical failure</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Time your demo to ensure it fits within 10 minutes</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Have a peer watch and give feedback on clarity and pacing</span></li>
         </ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Done when</div><p>You have two versions of the same status update tailored for different audiences, and a colleague confirms the executive version can be read in under 90 seconds.</p></div>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>A peer watches your demo and confirms it was clear, well-paced, and connected features to business value.</p>
+        </div>
       </div>
 
       <div class="assignment">
-        <div class="assignment-header"><div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Assignment 2</div><span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span></div>
-        <h4>Establish a 4-Week Reporting Cadence</h4>
-        <p>Implement the weekly status template for a real engagement and maintain it for 4 consecutive weeks.</p>
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 2
+          </div>
+          <span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span>
+        </div>
+        <h4>Deliver a Demo with Live Q&A</h4>
+        <p>Present a sprint demo to a client or simulate a client audience and handle questions in real time.</p>
         <ul class="checklist">
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Set up a recurring calendar reminder for status update creation (e.g., every Friday at 3 PM)</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Send 4 consecutive weekly status updates to your stakeholders</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Include at least one Amber or Red status during the 4 weeks (do not hide risks)</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Track how many status-related questions you receive between updates</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>After 4 weeks, ask stakeholders for feedback on the format and adjust</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Present at least 3 features using the narrative storytelling approach</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Handle at least 2 questions using the Q&A framework from this chapter</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Include one feature that requires a client decision and present options</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Recover from at least one simulated technical issue (have a colleague cause one)</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Send follow-up notes within 2 hours including demo highlights and decisions</span></li>
         </ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Done when</div><p>You have 4 weeks of consistent status updates and can demonstrate that ad-hoc status questions from stakeholders decreased over the period.</p></div>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>The audience rates the demo 8/10 or higher for clarity, and all questions were handled professionally.</p>
+        </div>
       </div>
 
       <div class="assignment">
-        <div class="assignment-header"><div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Assignment 3</div><span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Leadership</span></div>
-        <h4>Build a Self-Service Project Dashboard</h4>
-        <p>Create a real-time project dashboard that stakeholders can access anytime without requesting an update.</p>
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 3
+          </div>
+          <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Production-Ready</span>
+        </div>
+        <h4>Build a Demo Kit for Your Team</h4>
+        <p>Create a reusable demo preparation system that your entire team can use for client presentations.</p>
         <ul class="checklist">
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Choose a dashboard tool (Notion, Linear, Jira, or a custom solution)</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Implement the 5 core widgets: health indicator, timeline, sprint progress, risks, metrics</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Share the dashboard with stakeholders and provide a 5-minute walkthrough</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Maintain the dashboard for 2 weeks and track stakeholder usage</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Document your team's communication cadence design and share it as a template</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a demo preparation checklist template that works for your project</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Build a library of narrative templates for common feature types</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a backup strategy (screenshots, recordings) for every demo environment</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Document Q&A handling guidelines with examples specific to your domain</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Train at least one team member to deliver demos using your kit</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Collect feedback from three demo sessions and iterate on the kit</span></li>
         </ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Done when</div><p>Your dashboard is live, stakeholders have accessed it independently, and you have a documented communication cadence that can be replicated for new projects.</p></div>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>Two team members successfully deliver client demos using your demo kit without your guidance.</p>
+        </div>
       </div>
 
       <hr class="section-divider">
 
       <h2 id="self-check">Self-Check</h2>
-      <p>Before moving to Chapter 05, honestly answer these questions.</p>
 
-      <details><summary>Can you write a status update that prevents a meeting?</summary><div class="details-body"><p>Look at your last status update. If a stakeholder read only your executive summary, would they know the project health, the key risk, and what they need to do? If not, your summary needs more signal and less noise. A good test: could your summary be read aloud in 15 seconds and still convey the essential information?</p></div></details>
+      <p>Before moving to Chapter 05, assess yourself against these criteria.</p>
 
-      <details><summary>Are you reporting risks early enough?</summary><div class="details-body"><p>Think about the last time something went wrong on a project. When did you first know it was a risk? When did you first report it to stakeholders? If there was a gap of more than one reporting cycle, you are holding risks too long. The moment you identify a potential problem, it should appear in your next update — even if you are still assessing the impact.</p></div></details>
+      <details>
+        <summary>Can you deliver a focused demo in under 15 minutes?</summary>
+        <div class="details-body">
+          <p>
+            Time yourself. If your demos consistently run over 15 minutes, you are probably showing
+            too many features. Pick the top 3 that align with the client's priorities and save the
+            rest for follow-up documentation or a separate session.
+          </p>
+        </div>
+      </details>
 
-      <details><summary>Do your updates tailor detail level to the audience?</summary><div class="details-body"><p>Compare your last update to an executive with your last update to a technical team. Are they meaningfully different in length, vocabulary, and focus? If they look the same, you are either over-communicating to executives or under-communicating to your team. The executive version should be 50% shorter and focus on business impact.</p></div></details>
+      <details>
+        <summary>Do you have a backup plan for every demo?</summary>
+        <div class="details-body">
+          <p>
+            For every feature you plan to demo live, you should have a screenshot or short recording
+            ready. This is not pessimism &mdash; it is professionalism. The best presenters are the
+            ones who prepare for failure and recover seamlessly.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Do you tell stories or list features?</summary>
+        <div class="details-body">
+          <p>
+            Record yourself giving a demo and watch it back. Are you saying "Here is feature X, here
+            is feature Y" or are you saying "Here is what happens when your user does Z"? The latter
+            is always more engaging and memorable for the client.
+          </p>
+        </div>
+      </details>
 
     </main>
 
+    <!-- Sidebar: Table of Contents -->
     <aside class="sidebar">
       <div class="sidebar-title">On this page</div>
       <ul class="toc-list">
         <li class="toc-item"><a href="#why-this-matters">Why This Matters</a></li>
         <li class="toc-item"><a href="#key-concepts">Key Concepts</a></li>
-        <li class="toc-item"><a href="#rag-status" style="padding-left:28px;font-size:12px">RAG Status</a></li>
-        <li class="toc-item"><a href="#weekly-update" style="padding-left:28px;font-size:12px">Weekly Update Template</a></li>
-        <li class="toc-item"><a href="#stakeholder-updates" style="padding-left:28px;font-size:12px">Audience Tailoring</a></li>
-        <li class="toc-item"><a href="#dashboards" style="padding-left:28px;font-size:12px">Status Dashboards</a></li>
-        <li class="toc-item"><a href="#cadence" style="padding-left:28px;font-size:12px">Communication Cadence</a></li>
+        <li class="toc-item"><a href="#presentation-structure" style="padding-left: 28px; font-size: 12px;">Presentation Structure</a></li>
+        <li class="toc-item"><a href="#demo-preparation" style="padding-left: 28px; font-size: 12px;">Demo Preparation</a></li>
+        <li class="toc-item"><a href="#storytelling" style="padding-left: 28px; font-size: 12px;">Technical Storytelling</a></li>
+        <li class="toc-item"><a href="#live-demo-recovery" style="padding-left: 28px; font-size: 12px;">Live Demo Recovery</a></li>
+        <li class="toc-item"><a href="#slide-design" style="padding-left: 28px; font-size: 12px;">Slide Design Principles</a></li>
+        <li class="toc-item"><a href="#qa-handling" style="padding-left: 28px; font-size: 12px;">Q&amp;A Handling</a></li>
         <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a></li>
         <li class="toc-item"><a href="#further-reading">Further Reading</a></li>
         <li class="toc-item"><a href="#assignments">Assignments</a></li>
@@ -332,16 +1482,77 @@ a configuration we have requested from your IT team."
     </aside>
   </div>
 
-  <footer class="chapter-footer"><div class="chapter-footer-inner">
-    <nav class="footer-nav">
-      <a class="footer-nav-link" href="chapter-03.html"><span class="footer-nav-label">&larr; Previous Chapter</span><span class="footer-nav-title">03: Giving and Receiving Feedback</span></a>
-      <a class="footer-nav-link" href="chapter-05.html"><span class="footer-nav-label">Next Chapter &rarr;</span><span class="footer-nav-title">05: Technical Writing for Non-Technical Audiences</span></a>
-    </nav>
-    <div class="footer-brand">ILA (Iksha Learning Academy) &middot; Client Communication &middot; Basic</div>
-  </div></footer>
+  <!-- Footer Navigation -->
+  <footer class="chapter-footer">
+    <div class="chapter-footer-inner">
+      <nav class="footer-nav">
+        <a class="footer-nav-link" href="chapter-03.html">
+          <span class="footer-nav-label">&larr; Previous Chapter</span>
+          <span class="footer-nav-title">03: Meeting Management</span>
+        </a>
+        <a class="footer-nav-link" href="chapter-05.html">
+          <span class="footer-nav-label">Next Chapter &rarr;</span>
+          <span class="footer-nav-title">05: Giving and Receiving Feedback</span>
+        </a>
+      </nav>
+      <div class="footer-brand">
+        ILA (Iksha Learning Academy) &middot; Client Communication Professional Certification &middot; Level 1
+      </div>
+    </div>
+  </footer>
 
+  <!-- Scripts -->
   <script>
-    window.addEventListener('scroll',()=>{const s=window.scrollY;const d=document.documentElement.scrollHeight-window.innerHeight;const p=d>0?(s/d)*100:0;document.getElementById('progressBar').style.width=p+'%'});const tocLinks=document.querySelectorAll('.toc-item a');const sections=[];tocLinks.forEach(link=>{const id=link.getAttribute('href').slice(1);const el=document.getElementById(id);if(el)sections.push({id,el,link})});const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{const item=sections.find(s=>s.el===entry.target);if(item&&entry.isIntersecting){tocLinks.forEach(l=>l.classList.remove('active'));item.link.classList.add('active')}})},{rootMargin:'-80px 0px -60% 0px',threshold:0});sections.forEach(s=>observer.observe(s.el));function copyCode(btn){const pre=btn.closest('.code-block').querySelector('pre');navigator.clipboard.writeText(pre.textContent).then(()=>{btn.classList.add('copied');btn.textContent='Copied!';setTimeout(()=>{btn.classList.remove('copied');btn.textContent='Copy'},2000)})}
+    // ── Progress Bar ──
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      document.getElementById('progressBar').style.width = progress + '%';
+    });
+
+    // ── Active TOC ──
+    const tocLinks = document.querySelectorAll('.toc-item a');
+    const sections = [];
+
+    tocLinks.forEach(link => {
+      const id = link.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) sections.push({ id, el, link });
+    });
+
+    const observerOptions = {
+      rootMargin: '-80px 0px -60% 0px',
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const item = sections.find(s => s.el === entry.target);
+        if (item) {
+          if (entry.isIntersecting) {
+            tocLinks.forEach(l => l.classList.remove('active'));
+            item.link.classList.add('active');
+          }
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(s => observer.observe(s.el));
+
+    // ── Copy Code ──
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      const text = pre.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.classList.add('copied');
+        btn.textContent = 'Copied!';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.textContent = 'Copy';
+        }, 2000);
+      });
+    }
   </script>
 </body>
 </html>

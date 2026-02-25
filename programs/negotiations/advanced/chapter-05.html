@@ -8,7 +8,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
+    /* ═══════════════════════════════════════════════
+       ILA DESIGN SYSTEM — v1.0
+       Iksha Learning Academy
+       ═══════════════════════════════════════════════ */
+
     :root {
+      /* Palette */
       --ink:        #0f172a;
       --ink-light:  #334155;
       --ink-muted:  #64748b;
@@ -17,6 +23,8 @@
       --surface-warm:#fffbeb;
       --border:     #e2e8f0;
       --border-light:#f1f5f9;
+
+      /* Brand */
       --teal-50:  #f0fdfa;
       --teal-100: #ccfbf1;
       --teal-200: #99f6e4;
@@ -25,36 +33,48 @@
       --teal-700: #0f766e;
       --teal-800: #115e59;
       --teal-900: #134e4a;
+
       --blue-50:  #eff6ff;
       --blue-100: #dbeafe;
       --blue-500: #3b82f6;
       --blue-600: #2563eb;
       --blue-700: #1d4ed8;
+
       --amber-50:  #fffbeb;
       --amber-100: #fef3c7;
       --amber-500: #f59e0b;
       --amber-600: #d97706;
+
       --red-50:   #fef2f2;
       --red-100:  #fee2e2;
       --red-500:  #ef4444;
       --red-600:  #dc2626;
+
       --purple-50:  #faf5ff;
       --purple-100: #f3e8ff;
       --purple-500: #a855f7;
       --purple-600: #9333ea;
-      --green-50:  #f0fdf4;
-      --green-100: #dcfce7;
-      --green-500: #22c55e;
-      --green-600: #16a34a;
+
+      /* Typography */
       --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       --font-serif: 'Instrument Serif', Georgia, serif;
       --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
+
+      /* Spacing */
       --content-max: 780px;
+      --sidebar-width: 280px;
+
+      /* Transitions */
       --ease: cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
 
     body {
       font-family: var(--font-sans);
@@ -64,6 +84,7 @@
       background: var(--surface);
     }
 
+    /* ── PROGRESS BAR ─────────────────────────── */
     .progress-bar {
       position: fixed;
       top: 0;
@@ -75,6 +96,7 @@
       transition: width 0.15s var(--ease);
     }
 
+    /* ── TOP NAV ──────────────────────────────── */
     .top-nav {
       position: sticky;
       top: 0;
@@ -162,6 +184,7 @@
       padding: 0 4px;
     }
 
+    /* ── HERO ─────────────────────────────────── */
     .hero {
       background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%);
       border-bottom: 1px solid var(--border);
@@ -222,18 +245,82 @@
       color: var(--ink-muted);
     }
 
-    .content {
-      max-width: var(--content-max);
-      margin: 0 auto;
-      padding: 3rem 2rem 6rem;
+    .hero-meta-item svg {
+      width: 16px;
+      height: 16px;
+      color: var(--teal-600);
     }
 
+    /* ── MAIN LAYOUT ──────────────────────────── */
+    .main-layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr var(--sidebar-width);
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .content {
+      padding: 3rem 0 6rem;
+      min-width: 0;
+    }
+
+    /* ── SIDEBAR TOC ──────────────────────────── */
+    .sidebar {
+      position: sticky;
+      top: 76px;
+      padding: 2rem 0;
+      max-height: calc(100vh - 76px);
+      overflow-y: auto;
+    }
+
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-muted);
+      margin-bottom: 1rem;
+      padding-left: 14px;
+    }
+
+    .toc-list {
+      list-style: none;
+    }
+
+    .toc-item a {
+      display: block;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--ink-muted);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: all 0.2s var(--ease);
+      line-height: 1.5;
+    }
+
+    .toc-item a:hover {
+      color: var(--ink);
+      background: var(--surface-alt);
+    }
+
+    .toc-item a.active {
+      color: var(--teal-700);
+      border-left-color: var(--teal-500);
+      background: var(--teal-50);
+      font-weight: 500;
+    }
+
+    /* ── TYPOGRAPHY ────────────────────────────── */
     .content h2 {
       font-family: var(--font-serif);
       font-size: 1.85rem;
       font-weight: 400;
       color: var(--ink);
       margin: 3rem 0 1rem;
+      padding-top: 1rem;
       scroll-margin-top: 80px;
     }
 
@@ -244,201 +331,159 @@
       font-weight: 600;
       color: var(--ink);
       margin: 2rem 0 0.75rem;
+      scroll-margin-top: 80px;
     }
 
-    .content p {
-      margin-bottom: 1.25rem;
-      color: var(--ink-light);
-    }
+    .content p { margin-bottom: 1.25rem; color: var(--ink-light); }
+    .content strong { color: var(--ink); font-weight: 600; }
 
-    .content ul, .content ol {
-      margin-bottom: 1.25rem;
-      padding-left: 1.5rem;
+    .content a {
+      color: var(--teal-700);
+      text-decoration: underline;
+      text-decoration-color: var(--teal-200);
+      text-underline-offset: 3px;
+      transition: text-decoration-color 0.2s;
     }
+    .content a:hover { text-decoration-color: var(--teal-600); }
 
-    .content li {
-      margin-bottom: 0.5rem;
-      color: var(--ink-light);
-    }
-
+    .content ul, .content ol { margin-bottom: 1.25rem; padding-left: 1.5rem; }
+    .content li { margin-bottom: 0.5rem; color: var(--ink-light); }
     .content li::marker { color: var(--teal-500); }
 
-    .callout {
-      padding: 1.25rem 1.5rem;
-      border-radius: 12px;
-      margin-bottom: 1.5rem;
-      border: 1px solid;
-    }
-
-    .callout-header {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-    }
-
-    .callout p:last-child { margin-bottom: 0; }
-
-    .callout.concept {
-      background: var(--blue-50);
-      border-color: var(--blue-100);
-    }
-    .callout.concept .callout-header { color: var(--blue-700); }
-
-    .callout.important {
-      background: var(--amber-50);
-      border-color: var(--amber-100);
-    }
-    .callout.important .callout-header { color: var(--amber-600); }
-
-    .callout.tip {
-      background: var(--purple-50);
-      border-color: var(--purple-100);
-    }
-    .callout.tip .callout-header { color: var(--purple-600); }
-
-    .callout.success {
-      background: var(--teal-50);
-      border-color: var(--teal-100);
-    }
-    .callout.success .callout-header { color: var(--teal-700); }
-
     .section-divider {
-      border: none;
-      height: 1px;
+      border: none; height: 1px;
       background: linear-gradient(90deg, transparent, var(--border), transparent);
       margin: 3rem 0;
     }
 
-    .coming-soon-banner {
-      background: var(--amber-50);
-      border: 1px solid var(--amber-100);
-      border-radius: 12px;
-      padding: 2.5rem;
-      text-align: center;
-      margin: 2rem 0;
+    /* ── CALLOUT BOXES ────────────────────────── */
+    .callout { padding: 1.25rem 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; border: 1px solid; position: relative; }
+    .callout-header { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; margin-bottom: 0.5rem; }
+    .callout-header svg { width: 18px; height: 18px; flex-shrink: 0; }
+    .callout p:last-child { margin-bottom: 0; }
+    .callout.concept { background: var(--blue-50); border-color: var(--blue-100); }
+    .callout.concept .callout-header { color: var(--blue-700); }
+    .callout.important { background: var(--amber-50); border-color: var(--amber-100); }
+    .callout.important .callout-header { color: var(--amber-600); }
+    .callout.danger { background: var(--red-50); border-color: var(--red-100); }
+    .callout.danger .callout-header { color: var(--red-600); }
+    .callout.tip { background: var(--purple-50); border-color: var(--purple-100); }
+    .callout.tip .callout-header { color: var(--purple-600); }
+    .callout.success { background: var(--teal-50); border-color: var(--teal-100); }
+    .callout.success .callout-header { color: var(--teal-700); }
+
+    /* ── CODE BLOCKS ──────────────────────────── */
+    .code-block { position: relative; margin-bottom: 1.5rem; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+    .code-header { display: flex; align-items: center; justify-content: space-between; padding: 8px 16px; background: var(--surface-alt); border-bottom: 1px solid var(--border); font-size: 12px; color: var(--ink-muted); }
+    .code-lang { font-family: var(--font-mono); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+    .code-copy { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border); background: white; font-size: 11px; font-family: var(--font-sans); color: var(--ink-muted); cursor: pointer; transition: all 0.2s var(--ease); }
+    .code-copy:hover { border-color: var(--teal-500); color: var(--teal-700); }
+    .code-copy.copied { background: var(--teal-50); border-color: var(--teal-500); color: var(--teal-700); }
+
+    pre { margin: 0; padding: 1.25rem 1.5rem; overflow-x: auto; background: #1e293b; font-family: var(--font-mono); font-size: 13.5px; line-height: 1.7; color: #e2e8f0; }
+    code { font-family: var(--font-mono); font-size: 0.88em; }
+    p code, li code { padding: 2px 7px; background: var(--surface-alt); border: 1px solid var(--border); border-radius: 5px; color: var(--teal-800); font-size: 0.85em; }
+
+    .hl-keyword  { color: #c084fc; }
+    .hl-string   { color: #86efac; }
+    .hl-comment  { color: #64748b; font-style: italic; }
+    .hl-function { color: #7dd3fc; }
+    .hl-number   { color: #fbbf24; }
+    .hl-flag     { color: #f472b6; }
+
+    /* ── COLLAPSIBLE ──────────────────────────── */
+    details { margin-bottom: 1.25rem; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; transition: border-color 0.2s var(--ease); }
+    details[open] { border-color: var(--teal-200); }
+    details summary { padding: 1rem 1.25rem; font-weight: 600; font-size: 15px; cursor: pointer; background: var(--surface-alt); list-style: none; display: flex; align-items: center; gap: 10px; transition: background 0.2s var(--ease); user-select: none; }
+    details summary::-webkit-details-marker { display: none; }
+    details summary::before { content: ''; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E"); background-size: contain; flex-shrink: 0; transition: transform 0.2s var(--ease); }
+    details[open] summary::before { transform: rotate(90deg); }
+    details summary:hover { background: var(--teal-50); }
+    .details-body { padding: 1.25rem 1.5rem; }
+    .details-body p:last-child { margin-bottom: 0; }
+
+    /* ── VIDEO EMBED ──────────────────────────── */
+    .video-card { margin-bottom: 1.5rem; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+    .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; background: #0f172a; }
+    .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+    .video-caption { padding: 12px 16px; background: var(--surface-alt); font-size: 13px; color: var(--ink-muted); display: flex; align-items: center; gap: 6px; }
+    .video-caption svg { width: 14px; height: 14px; color: var(--red-500); }
+
+    /* ── RESOURCE CARDS ───────────────────────── */
+    .resource-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+    .resource-card { display: flex; gap: 14px; padding: 1rem 1.25rem; border: 1px solid var(--border); border-radius: 12px; text-decoration: none; transition: all 0.2s var(--ease); background: white; }
+    .resource-card:hover { border-color: var(--teal-300); background: var(--teal-50); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+    .resource-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 18px; }
+    .resource-icon.docs    { background: var(--blue-50);   color: var(--blue-600); }
+    .resource-icon.video   { background: var(--red-50);    color: var(--red-500); }
+    .resource-icon.github  { background: var(--ink);       color: white; }
+    .resource-icon.article { background: var(--amber-50);  color: var(--amber-600); }
+    .resource-icon.pdf     { background: var(--purple-50); color: var(--purple-600); }
+    .resource-info { min-width: 0; }
+    .resource-title { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 2px; line-height: 1.4; }
+    .resource-desc { font-size: 12px; color: var(--ink-muted); line-height: 1.5; }
+
+    /* ── ASSIGNMENT CARDS ─────────────────────── */
+    .assignment { border: 2px solid var(--teal-200); border-radius: 14px; padding: 1.5rem 1.75rem; margin-bottom: 1.5rem; background: linear-gradient(135deg, var(--teal-50) 0%, white 100%); }
+    .assignment-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+    .assignment-label { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--teal-700); }
+    .assignment-difficulty { display: inline-flex; padding: 4px 10px; border-radius: 100px; font-size: 11px; font-weight: 600; }
+    .difficulty-l1 { background: var(--teal-100); color: var(--teal-800); }
+    .difficulty-l2 { background: var(--amber-100); color: var(--amber-600); }
+    .difficulty-l3 { background: var(--red-100); color: var(--red-600); }
+    .assignment h4 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.75rem; }
+    .assignment p { font-size: 14px; }
+    .checklist { list-style: none; padding: 0; }
+    .checklist li { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border-light); font-size: 14px; }
+    .checklist li:last-child { border-bottom: none; }
+    .check-box { width: 20px; height: 20px; border-radius: 6px; border: 2px solid var(--border); flex-shrink: 0; margin-top: 1px; cursor: pointer; transition: all 0.15s var(--ease); display: flex; align-items: center; justify-content: center; }
+    .check-box:hover { border-color: var(--teal-500); }
+    .check-box.checked { background: var(--teal-500); border-color: var(--teal-500); }
+    .check-box.checked::after { content: ''; width: 10px; height: 10px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E"); background-size: contain; }
+
+    /* ── DIAGRAM ──────────────────────────────── */
+    .diagram { margin: 1.5rem 0; padding: 2rem; background: var(--surface-alt); border: 1px solid var(--border); border-radius: 14px; overflow-x: auto; }
+    .diagram pre { background: transparent; color: var(--ink); padding: 0; font-size: 13px; line-height: 1.6; }
+    .diagram-caption { margin-top: 1rem; font-size: 12px; color: var(--ink-muted); text-align: center; font-style: italic; }
+
+    /* ── FOOTER ───────────────────────────────── */
+    .chapter-footer { border-top: 1px solid var(--border); padding: 3rem 2rem; background: var(--surface-alt); }
+    .chapter-footer-inner { max-width: var(--content-max); margin: 0 auto; }
+    .footer-nav { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+    .footer-nav-link { display: flex; flex-direction: column; gap: 4px; padding: 1rem 1.5rem; border: 1px solid var(--border); border-radius: 12px; text-decoration: none; transition: all 0.2s var(--ease); max-width: 320px; background: white; }
+    .footer-nav-link:hover { border-color: var(--teal-300); box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+    .footer-nav-label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--teal-600); }
+    .footer-nav-title { font-size: 15px; font-weight: 600; color: var(--ink); }
+    .footer-brand { text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); font-size: 13px; color: var(--ink-muted); }
+
+    /* ── RESPONSIVE ───────────────────────────── */
+    @media (max-width: 960px) {
+      .main-layout { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .resource-grid { grid-template-columns: 1fr; }
     }
-
-    .coming-soon-banner h3 {
-      color: var(--amber-600);
-      margin-bottom: 0.5rem;
+    @media (max-width: 640px) {
+      .hero { padding: 2.5rem 1.25rem 2rem; }
+      .main-layout { padding: 0 1.25rem; }
+      .content { padding: 2rem 0 4rem; }
+      pre { padding: 1rem; font-size: 12.5px; }
+      .footer-nav { flex-direction: column; }
+      .footer-nav-link { max-width: 100%; width: 100%; }
     }
-
-    .coming-soon-banner p {
-      color: var(--ink-muted);
-      margin-bottom: 0;
-    }
-
-    .topics-preview {
-      background: var(--surface-alt);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.5rem 2rem;
-      margin: 1.5rem 0;
-    }
-
-    .topics-preview h3 {
-      font-size: 0.95rem;
-      margin-bottom: 0.75rem;
-      color: var(--ink);
-    }
-
-    .topics-preview ul {
-      list-style: none;
-      padding: 0;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 0.5rem;
-    }
-
-    .topics-preview li {
-      font-size: 14px;
-      color: var(--ink-light);
-      padding-left: 1.25rem;
-      position: relative;
-    }
-
-    .topics-preview li::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 8px;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--teal-500);
-    }
-
-    .footer-nav {
-      max-width: var(--content-max);
-      margin: 0 auto;
-      padding: 2rem;
-      display: flex;
-      justify-content: space-between;
-      border-top: 1px solid var(--border);
-    }
-
-    .footer-nav-link {
-      display: flex;
-      flex-direction: column;
-      text-decoration: none;
-      padding: 1rem;
-      border-radius: 12px;
-      transition: background 0.2s var(--ease);
-      max-width: 45%;
-    }
-
-    .footer-nav-link:hover {
-      background: var(--surface-alt);
-    }
-
-    .footer-nav-label {
-      font-size: 12px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--ink-muted);
-      margin-bottom: 4px;
-    }
-
-    .footer-nav-title {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--teal-700);
-    }
-
-    .footer-nav-link.next { text-align: right; margin-left: auto; }
-
-    .footer {
-      text-align: center;
-      padding: 2rem;
-      font-size: 13px;
-      color: var(--ink-muted);
-      border-top: 1px solid var(--border);
-    }
-
-    .footer a {
-      color: var(--teal-700);
-      text-decoration: none;
-    }
-
-    .footer a:hover { text-decoration: underline; }
-
-    @media (max-width: 768px) {
-      .hero { padding: 3rem 1.5rem 2.5rem; }
-      .content { padding: 2rem 1.5rem 4rem; }
-      .hero h1 { font-size: 2rem; }
-      .footer-nav { flex-direction: column; gap: 1rem; }
-      .footer-nav-link { max-width: 100%; }
-      .footer-nav-link.next { text-align: left; }
+    @media print {
+      .top-nav, .sidebar, .progress-bar { display: none; }
+      .main-layout { display: block; }
+      .content { padding: 0; }
+      .hero { background: white; border: none; }
+      pre { background: #f1f5f9; color: var(--ink); border: 1px solid var(--border); }
     }
   </style>
 </head>
 <body>
+  <!-- Progress Bar -->
   <div class="progress-bar" id="progressBar"></div>
 
+  <!-- Top Navigation -->
   <nav class="top-nav">
     <div class="top-nav-inner">
       <a class="nav-brand" href="index.html">
@@ -453,69 +498,621 @@
     </div>
   </nav>
 
+  <!-- Hero -->
   <header class="hero">
     <div class="hero-inner">
       <div class="hero-chapter-label">
-        <span>Chapter 05</span> 
+        <span>Chapter 05</span> &middot; Revenue Strategy
       </div>
       <h1>Enterprise Sales Negotiations</h1>
-      <p class="hero-subtitle">Procurement processes, RFP responses, multi-stakeholder alignment, contract structuring</p>
+      <p class="hero-subtitle">
+        Enterprise deals are where startups generate transformative revenue &mdash; and where negotiations become multi-stakeholder, multi-month chess matches. Learn to navigate procurement departments, manage buying committees, structure complex pricing models, and close six- and seven-figure contracts without giving away your margins or your product roadmap.
+      </p>
       <div class="hero-meta">
-        <div class="hero-meta-item">3 Assignments</div>
-        <div class="hero-meta-item">~45 min read</div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Estimated: 60&ndash;80 min
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          6 Key Concepts
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          3 Assignments
+        </div>
       </div>
     </div>
   </header>
 
-  <main class="content">
-    <h2>Overview</h2>
-    <p>This chapter covers <strong>enterprise sales negotiations</strong> as part of the Advanced Negotiations curriculum. You will build practical skills through guided explanations, code examples, and hands-on assignments.</p>
+  <!-- Main Content + Sidebar -->
+  <div class="main-layout">
+    <main class="content">
 
-    <div class="topics-preview">
-      <h3>Topics Covered</h3>
-      <ul>
-            <li>Procurement processes</li>
-            <li>RFP responses</li>
-            <li>multi-stakeholder alignment</li>
-            <li>contract structuring</li>
+      <h2 id="why-this-matters">Why This Matters</h2>
+
+      <p>
+        Enterprise sales represent the largest individual revenue opportunities for most startups, but they are also the most complex negotiations you will encounter. Unlike self-serve or SMB sales where decisions happen quickly and involve one or two people, enterprise deals typically involve <strong>5&ndash;12 stakeholders</strong> across multiple departments, procurement cycles that stretch 3&ndash;9 months, and contract terms that are negotiated line by line by professional buyers whose full-time job is getting the best deal for their organization.
+      </p>
+
+      <p>
+        The stakes are asymmetric. For the startup, a single enterprise deal might represent 20&ndash;40% of annual revenue. For the enterprise buyer, your product is one of hundreds of vendor decisions they make each year. This asymmetry gives the buyer significant leverage &mdash; they know you need the deal more than they need you. They will use this leverage to demand discounts, favorable payment terms, extensive customization, and contractual protections that can destroy your margins if you are not prepared.
+      </p>
+
+      <p>
+        This chapter teaches you to navigate the enterprise sales negotiation from initial contact through signed contract. You will learn to identify and influence all stakeholders in the buying committee, structure pricing that protects your margins while demonstrating value, handle procurement objections and tactics, negotiate contract terms that do not create operational nightmares, and build the long-term relationships that turn one-time customers into multi-year expansion accounts.
+      </p>
+
+      <div class="callout concept">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Key Insight
+        </div>
+        <p>
+          <strong>In enterprise sales, you are never negotiating with one person.</strong> Even when a single champion is driving the deal internally, their procurement team, legal department, CFO, and IT security team each have veto power and different priorities. Your job is to negotiate simultaneously with all of them &mdash; through your champion. Win the champion's trust, arm them with the information they need to sell internally, and help them navigate their own organization.
+        </p>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="key-concepts">Key Concepts</h2>
+
+      <h3 id="buying-committee">1. Mapping the Enterprise Buying Committee</h3>
+
+      <p>
+        Every enterprise purchase involves a buying committee &mdash; a group of stakeholders who collectively influence or control the purchasing decision. Understanding who is on this committee, what each person cares about, and how decisions flow between them is the single most important skill in enterprise sales negotiation. Without this map, you are negotiating blind.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Framework</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── Enterprise Buying Committee Map ──────────────────────── */</span>
+
+<span class="hl-keyword">ROLE: ECONOMIC BUYER</span> (controls the budget)
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Who:      VP/C-level who signs the check
+  Cares about: ROI, total cost of ownership, business impact metrics
+  Negotiate: Value-based pricing, ROI guarantees, payment terms
+  Access:   Usually late in process. Your champion must sell them.
+
+<span class="hl-keyword">ROLE: USER BUYER</span> (will use the product daily)
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Who:      Team leads and individual contributors who will use your product
+  Cares about: Ease of use, feature set, workflow integration
+  Negotiate: Feature requests, training, onboarding support
+  Access:   Often your first contact. Convert them into internal champions.
+
+<span class="hl-keyword">ROLE: TECHNICAL BUYER</span> (evaluates technical fit)
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Who:      IT, security, architecture teams
+  Cares about: Integration, security, compliance, scalability
+  Negotiate: Technical requirements, SLAs, data handling, APIs
+  Access:   Critical gate &mdash; can kill deals silently if not engaged early.
+
+<span class="hl-keyword">ROLE: PROCUREMENT</span> (negotiates terms and pricing)
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Who:      Professional buyers whose job is to reduce vendor costs
+  Cares about: Price reduction, favorable terms, risk mitigation
+  Negotiate: Discounts (sparingly), payment terms, contract length
+  Access:   Usually enters late. Prepare for them before they appear.
+
+<span class="hl-keyword">ROLE: LEGAL</span> (reviews contracts)
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Who:      In-house or external legal counsel
+  Cares about: Liability, indemnification, IP ownership, data privacy
+  Negotiate: Contract terms, limitation of liability, SLA penalties
+  Access:   Can add weeks or months to the deal. Engage proactively.
+
+<span class="hl-keyword">ROLE: CHAMPION</span> (your internal advocate)
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Who:      The person inside the enterprise who wants your product to win
+  Cares about: Looking good internally, solving their team's problem
+  Your job: Arm them with ROI data, competitive comparisons, and
+            talking points for every other stakeholder in the committee
+</pre>
+      </div>
+
+      <h3 id="pricing-strategy">2. Enterprise Pricing Strategy and Negotiation</h3>
+
+      <p>
+        Pricing is the most visible part of any enterprise negotiation and the area where startups make the most costly mistakes. The most common error is discounting too quickly &mdash; offering price reductions before understanding what the buyer truly values. Enterprise buyers expect to negotiate on price, but <strong>every dollar you discount comes directly from your margin</strong>. Your goal is to negotiate on value, not price, and to structure deals that protect your economics while giving the buyer what they need to justify the purchase internally.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Strategy</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── Enterprise Pricing Negotiation Framework ─────────────── */</span>
+
+<span class="hl-keyword">RULE 1: NEVER LEAD WITH PRICE</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Establish value before discussing price. Quantify the problem
+  your product solves in dollar terms:
+  "Your team spends 400 hours/month on manual reporting.
+  At $75/hr loaded cost, that's $30K/month. Our platform
+  reduces that by 80%, saving $288K/year. Our price is $120K/year."
+
+<span class="hl-keyword">RULE 2: DISCOUNT STRUCTURE, NOT PRICE</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Instead of reducing your per-unit price, negotiate on:
+  - Contract length: 3-year deal at 15% less per year vs. 1-year
+  - Payment terms: Annual upfront at 10% discount vs. monthly
+  - Volume tiers: Lower per-seat price at higher seat count
+  - Scope reduction: Remove features/services to hit a lower price
+  This protects your unit economics while giving the buyer a "win."
+
+<span class="hl-keyword">RULE 3: THE CONCESSION EXCHANGE</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Never give a discount without getting something in return:
+  "We can offer 10% off if you sign a 2-year commitment"
+  "We can waive the implementation fee for a case study and referral"
+  "We can include premium support if you commit to 100+ seats"
+
+<span class="hl-keyword">RULE 4: ANCHOR HIGH, JUSTIFY WITH VALUE</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Your initial price should be your list price (no preemptive discounts).
+  If they push back, justify with value, not with a lower number.
+  "Our pricing reflects the $288K in annual savings plus the
+  compliance risk reduction. What specifically seems high to you?"
+
+<span class="hl-keyword">RULE 5: KNOW YOUR WALK-AWAY POINT</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Before entering any pricing negotiation, calculate:
+  - Your cost to serve this customer (implementation, support, infra)
+  - Your minimum acceptable margin (typically 60%+ for SaaS)
+  - The precedent this deal sets for future enterprise customers
+  <span class="hl-flag">A bad deal at negative margin is worse than no deal at all.</span>
+</pre>
+      </div>
+
+      <h3 id="procurement-tactics">3. Handling Procurement Tactics</h3>
+
+      <p>
+        Enterprise procurement professionals are trained negotiators who use specific, repeatable tactics to extract concessions from vendors. Recognizing these tactics allows you to respond strategically rather than reactively. The most important thing to remember is that procurement's job is to get the best deal &mdash; their tactics are not personal, and you should not take them personally.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Tactics</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── Common Procurement Tactics and Responses ─────────────── */</span>
+
+<span class="hl-keyword">TACTIC: "WE HAVE A COMPETING OFFER AT 40% LESS"</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  <span class="hl-flag">Reality:</span> May be true, may be fabricated, may be comparing apples to oranges
+  <span class="hl-function">Response:</span> "I'd love to understand the comparison. Can you share the
+  competing proposal so we can compare apples to apples? Our pricing
+  includes [list unique value] which competitors typically charge extra for."
+
+<span class="hl-keyword">TACTIC: "YOU NEED TO DO BETTER ON PRICE TO MOVE FORWARD"</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  <span class="hl-flag">Reality:</span> They want to see if you will negotiate against yourself
+  <span class="hl-function">Response:</span> "Help me understand what 'better' means. Is it the total
+  price, the per-user cost, the payment terms, or the contract length?
+  If I know what matters most, I can see what we can do."
+
+<span class="hl-keyword">TACTIC: "OUR BUDGET IS ONLY $X" (budget anchoring)</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  <span class="hl-flag">Reality:</span> Budgets are often flexible for the right solution
+  <span class="hl-function">Response:</span> "Let's design a solution that fits within $X. We can
+  start with [reduced scope] and expand as you see value. We can
+  also structure payment across fiscal years if that helps."
+
+<span class="hl-keyword">TACTIC: "WE NEED 30% DISCOUNT AS A STANDARD POLICY"</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  <span class="hl-flag">Reality:</span> Some enterprises have mandatory discount requirements
+  <span class="hl-function">Response:</span> Raise your list price by 30% before the proposal so the
+  "discount" brings you to your actual target price. This is standard
+  practice that both sides understand (though never say it explicitly).
+
+<span class="hl-keyword">TACTIC: SILENCE / DELAYED RESPONSE</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  <span class="hl-flag">Reality:</span> They want you to panic and offer concessions unprompted
+  <span class="hl-function">Response:</span> Wait. Do not send follow-up emails offering discounts.
+  After 5-7 business days, reach out to your champion (not procurement)
+  to understand the internal status. "Is there anything I can help
+  clarify to keep the process moving?"
+</pre>
+      </div>
+
+      <h3 id="contract-terms">4. Contract Terms That Matter</h3>
+
+      <p>
+        Enterprise contracts contain dozens of provisions, and each one is negotiable. Procurement and legal teams will push for terms that maximize their protection and minimize their risk &mdash; often at your expense. Understanding which terms have the highest business impact lets you focus your negotiation energy where it matters most and concede on terms that are less consequential.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Contract</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── High-Impact Enterprise Contract Terms ────────────────── */</span>
+
+<span class="hl-keyword">TERM: LIMITATION OF LIABILITY</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  What: Cap on damages if something goes wrong
+  They want: Unlimited liability or 10x contract value
+  You want:  1x annual contract value cap (industry standard for SaaS)
+  Negotiate: "Our liability cap reflects our pricing. Unlimited liability
+  would require us to price like an insurance company, not a software vendor."
+
+<span class="hl-keyword">TERM: INDEMNIFICATION</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━</span>
+  What: Who pays if a third party sues over your product
+  They want: Broad indemnification for any claim related to your product
+  You want:  Indemnification only for IP infringement claims you cause
+  Negotiate: Accept IP indemnification, resist operational indemnification
+
+<span class="hl-keyword">TERM: SERVICE LEVEL AGREEMENTS (SLAs)</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  What: Guaranteed uptime and performance metrics
+  They want: 99.99% uptime with financial penalties for any breach
+  You want:  99.9% uptime with service credits (not cash penalties)
+  Negotiate: Credits against future invoices, not refunds. Exclude
+  planned maintenance and force majeure from SLA calculations.
+
+<span class="hl-keyword">TERM: TERMINATION FOR CONVENIENCE</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  What: Right to cancel the contract without cause
+  They want: 30-day termination for convenience, full refund
+  You want:  Termination only for cause, or 90-day notice with no refund
+  Negotiate: If they insist on convenience termination, require minimum
+  commitment period (12 months) and payment for services already rendered.
+
+<span class="hl-keyword">TERM: AUTO-RENEWAL AND PRICE INCREASES</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  What: How the contract renews and whether prices can increase
+  You want:  Auto-renewal with 3-5% annual price increase cap
+  They want: Renewal at same price with right to renegotiate
+  Negotiate: Lock in multi-year pricing with a built-in escalator.
+</pre>
+      </div>
+
+      <h3 id="enterprise-timeline">5. Managing the Enterprise Sales Timeline</h3>
+
+      <p>
+        Enterprise deals take time &mdash; typically 3&ndash;9 months from first contact to signed contract. Many startups lose deals not because their product is inferior or their price is too high, but because they fail to manage the timeline effectively. Deals stall, champions lose momentum, budgets get reallocated, and competitors gain time to respond. Proactive timeline management is the difference between closing and losing.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Process</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── Enterprise Deal Timeline Management ──────────────────── */</span>
+
+<span class="hl-keyword">STAGE 1: DISCOVERY (Weeks 1-3)</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  [ ] Identify all stakeholders in the buying committee
+  [ ] Understand the business problem in their words (not yours)
+  [ ] Quantify the cost of the status quo in dollar terms
+  [ ] Map the decision-making process and timeline
+  [ ] Identify the budget owner and budget cycle
+
+<span class="hl-keyword">STAGE 2: EVALUATION (Weeks 3-8)</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  [ ] Demo tailored to each stakeholder group's priorities
+  [ ] Technical evaluation / proof of concept with IT team
+  [ ] Provide ROI analysis with customer-specific data
+  [ ] Reference calls with similar customers
+  [ ] Address security and compliance requirements proactively
+
+<span class="hl-keyword">STAGE 3: PROPOSAL (Weeks 8-12)</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  [ ] Submit proposal with 3 pricing options (good/better/best)
+  [ ] Include implementation timeline and success metrics
+  [ ] Arm your champion with internal selling materials
+  [ ] Pre-negotiate key contract terms before legal gets the document
+  [ ] Create urgency: "This pricing is valid until [date]"
+
+<span class="hl-keyword">STAGE 4: NEGOTIATION (Weeks 12-16)</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  [ ] Respond to procurement requests within 24 hours
+  [ ] Track all contract redlines in a single document
+  [ ] Escalate stalled negotiations through your champion
+  [ ] Maintain parallel workstreams (legal, technical, commercial)
+  [ ] Set a mutual close date and work backward from it
+
+<span class="hl-keyword">STAGE 5: CLOSE AND ONBOARD (Weeks 16-20)</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  [ ] Final contract review with your legal counsel
+  [ ] Obtain all required signatures (may need multiple approvers)
+  [ ] Transition immediately to customer success for onboarding
+  [ ] Set 30/60/90-day check-in cadence
+  [ ] Begin expansion planning from day one
+</pre>
+      </div>
+
+      <h3 id="expansion">6. Land-and-Expand Strategy</h3>
+
+      <p>
+        The most successful enterprise sales organizations do not just close deals &mdash; they expand them. A land-and-expand strategy means starting with a smaller initial deal (the "land") and then growing the account over time through additional users, departments, products, or use cases (the "expand"). This approach reduces the risk for the buyer, shortens the initial sales cycle, and creates a growth trajectory that can turn a $50K initial deal into a $500K annual relationship within 2&ndash;3 years.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Strategy</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── Land-and-Expand Negotiation Strategy ─────────────────── */</span>
+
+<span class="hl-keyword">THE LAND: Structure the Initial Deal for Growth</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  - Start with one team or department (lower risk for buyer)
+  - Include clear success metrics tied to expansion triggers
+  - Build in volume pricing tiers that incentivize growth
+  - Negotiate enterprise-wide terms now (even if starting small)
+  - Include a pilot-to-production conversion clause
+
+<span class="hl-keyword">THE EXPAND: Systematic Account Growth</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  <span class="hl-function">Month 1-3:</span>  Deliver exceptional value to the initial team
+  <span class="hl-function">Month 3-6:</span>  Document wins and ROI, share with adjacent teams
+  <span class="hl-function">Month 6-9:</span>  Introduce product to 2-3 additional departments
+  <span class="hl-function">Month 9-12:</span> Negotiate enterprise-wide license or expansion deal
+  <span class="hl-function">Year 2+:</span>    Add new products, premium tiers, or professional services
+
+  <span class="hl-keyword">Key metric:</span> Net Revenue Retention &gt; 120%
+  (existing customers spend 20%+ more each year)
+
+<span class="hl-keyword">NEGOTIATION TACTICS FOR EXPANSION</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  "We agreed on per-seat pricing when you had 50 users.
+  At 200 users, we can offer a 20% per-seat reduction
+  for an enterprise license. This locks in pricing for
+  3 years and gives you unlimited growth within your org."
+</pre>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Pro Tip
+        </div>
+        <p>
+          <strong>The best enterprise deals are not sold &mdash; they are bought.</strong> Your job is not to convince the buyer they need your product. Your job is to help them build the internal business case, navigate their own procurement process, and justify the purchase to their leadership. When you position yourself as a partner who helps them succeed internally, the negotiation becomes collaborative rather than adversarial.
+        </p>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="watch-learn">Watch &amp; Learn</h2>
+
+      <p>These videos explore enterprise sales dynamics, pricing strategy, and the art of navigating complex multi-stakeholder negotiations.</p>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/5aOGl4Lc6dI?rel=0&amp;modestbranding=1" title="Enterprise Sales for Startups" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Enterprise sales strategies for startups &mdash; how to navigate buying committees, procurement processes, and multi-stakeholder negotiations.
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/NzAjOFnLLO8?rel=0&amp;modestbranding=1" title="SaaS Pricing Strategy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          SaaS pricing strategy deep dive &mdash; value-based pricing, discount structures, and protecting margins in enterprise negotiations.
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="further-reading">Further Reading</h2>
+
+      <p>Essential reading for mastering enterprise sales negotiations and complex deal structures.</p>
+
+      <div class="resource-grid">
+        <a class="resource-card" href="https://www.amazon.com/Challenger-Sale-Control-Customer-Conversation/dp/1591844355" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">The Challenger Sale &mdash; Dixon &amp; Adamson</div>
+            <div class="resource-desc">Research-backed framework for enterprise selling. Teaches how to challenge customer thinking and take control of conversations.</div>
+          </div>
+        </a>
+        <a class="resource-card" href="https://www.amazon.com/SPIN-Selling-Neil-Rackham/dp/0070511136" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">SPIN Selling &mdash; Neil Rackham</div>
+            <div class="resource-desc">The classic enterprise sales methodology based on questioning technique. Situation, Problem, Implication, Need-Payoff framework.</div>
+          </div>
+        </a>
+        <a class="resource-card" href="https://www.amazon.com/Monetizing-Innovation-Companies-Design-Product/dp/1119240867" target="_blank" rel="noopener">
+          <div class="resource-icon article">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Monetizing Innovation &mdash; Ramanujam &amp; Tacke</div>
+            <div class="resource-desc">Simon-Kucher's guide to pricing strategy. Essential reading on value-based pricing and willingness-to-pay research.</div>
+          </div>
+        </a>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="assignments">Assignments</h2>
+
+      <p>These assignments build your enterprise negotiation skills through research, analysis, and simulation.</p>
+
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 1
+          </div>
+          <span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span>
+        </div>
+        <h4>Buying Committee Analysis</h4>
+        <p>For a real or hypothetical enterprise deal, map the complete buying committee using the framework from this chapter.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Identify at least 5 stakeholders across different roles (economic buyer, user buyer, technical buyer, procurement, legal)</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Document each stakeholder's priorities, concerns, and potential objections</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Map the decision-making flow: who influences whom, and who has veto power</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Identify your champion and list 3 specific ways you will arm them for internal selling</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a stakeholder engagement plan with specific touchpoints and messaging for each role</span></li>
+        </ul>
+        <div class="callout success" style="margin-top:1rem;margin-bottom:0">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>You have a complete buying committee map with stakeholder profiles, decision flow, and a targeted engagement plan.</p>
+        </div>
+      </div>
+
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 2
+          </div>
+          <span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Applied</span>
+        </div>
+        <h4>Pricing and Procurement Simulation</h4>
+        <p>Create a 3-tier pricing proposal for an enterprise deal and prepare responses to the 5 most common procurement tactics from this chapter.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Design 3 pricing tiers (good/better/best) with clear feature differentiation and volume incentives</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Calculate your cost to serve, minimum margin, and walk-away price for each tier</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write scripted responses to each of the 5 procurement tactics covered in this chapter</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Prepare 3 concession exchanges (what you give and what you get in return)</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Build an ROI calculator that quantifies the value of your product for the specific customer</span></li>
+        </ul>
+        <div class="callout success" style="margin-top:1rem;margin-bottom:0">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>You have a complete pricing proposal, procurement response scripts, concession exchange strategies, and an ROI calculator.</p>
+        </div>
+      </div>
+
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 3
+          </div>
+          <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Strategic</span>
+        </div>
+        <h4>Full Enterprise Deal Simulation</h4>
+        <p>Simulate a complete enterprise sales negotiation with 3+ participants playing different roles in the buying committee. Navigate from proposal to signed contract.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create role briefs for: seller (startup AE), champion (dept head), procurement, and economic buyer</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Conduct a 60-minute negotiation spanning pricing, contract terms, and implementation timeline</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Navigate at least 3 procurement tactics and 2 contract term objections during the simulation</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Produce a final contract summary with agreed pricing, terms, and implementation plan</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Debrief as a group: What worked? Where did the seller give too much? Where did they hold firm?</span></li>
+        </ul>
+        <div class="callout success" style="margin-top:1rem;margin-bottom:0">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>You have completed a multi-party enterprise negotiation simulation, produced a contract summary, and documented lessons learned from all perspectives.</p>
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="self-check">Self-Check</h2>
+
+      <p>Before moving to Chapter 06, test your understanding of enterprise sales negotiations.</p>
+
+      <details>
+        <summary>Can you name the 5 key roles in an enterprise buying committee and what each cares about?</summary>
+        <div class="details-body">
+          <p>The five key roles are: (1) Economic Buyer &mdash; controls the budget, cares about ROI and business impact; (2) User Buyer &mdash; will use the product daily, cares about features and ease of use; (3) Technical Buyer &mdash; evaluates technical fit, cares about security, integration, and scalability; (4) Procurement &mdash; negotiates terms and pricing, cares about cost reduction and risk mitigation; (5) Legal &mdash; reviews contracts, cares about liability, IP, and data privacy. Your Champion is the internal advocate who helps you navigate all of them.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>What are the 5 rules of enterprise pricing negotiation?</summary>
+        <div class="details-body">
+          <p>(1) Never lead with price &mdash; establish value first. (2) Discount structure, not price &mdash; change contract length, payment terms, or scope instead of per-unit price. (3) The concession exchange &mdash; never give without getting. (4) Anchor high, justify with value. (5) Know your walk-away point &mdash; calculate cost to serve, minimum margin, and precedent impact before negotiating.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>How should you respond when procurement says "We have a competing offer at 40% less"?</summary>
+        <div class="details-body">
+          <p>Ask for specifics rather than immediately dropping your price: "I would love to understand the comparison. Can you share the competing proposal so we can compare apples to apples? Our pricing includes [specific unique features/services] which competitors typically charge extra for." This forces them to substantiate the claim and shifts the conversation from price to value differentiation.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>What is a land-and-expand strategy and why is it effective?</summary>
+        <div class="details-body">
+          <p>Land-and-expand means starting with a smaller initial deal (one team or department) and growing the account over time through additional users, departments, and products. It is effective because it reduces the buyer's initial risk, shortens the first sales cycle, lets you prove value before asking for more commitment, and creates a growth trajectory that can multiply the deal size 5-10x within 2-3 years. The key metric is Net Revenue Retention above 120%.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>What limitation of liability cap should you aim for in an enterprise SaaS contract?</summary>
+        <div class="details-body">
+          <p>The industry standard for SaaS is 1x the annual contract value. Enterprise buyers will often push for unlimited liability or 5-10x, which creates existential risk for a startup. Your response: "Our liability cap reflects our pricing. Unlimited liability would require us to price like an insurance company, not a software vendor." Accept carve-outs for IP infringement and willful misconduct if needed, but protect the general liability cap.</p>
+        </div>
+      </details>
+
+    </main>
+
+    <aside class="sidebar">
+      <div class="sidebar-title">On this page</div>
+      <ul class="toc-list">
+        <li class="toc-item"><a href="#why-this-matters">Why This Matters</a></li>
+        <li class="toc-item"><a href="#key-concepts">Key Concepts</a></li>
+        <li class="toc-item"><a href="#buying-committee" style="padding-left:28px;font-size:12px">Buying Committee</a></li>
+        <li class="toc-item"><a href="#pricing-strategy" style="padding-left:28px;font-size:12px">Pricing Strategy</a></li>
+        <li class="toc-item"><a href="#procurement-tactics" style="padding-left:28px;font-size:12px">Procurement Tactics</a></li>
+        <li class="toc-item"><a href="#contract-terms" style="padding-left:28px;font-size:12px">Contract Terms</a></li>
+        <li class="toc-item"><a href="#enterprise-timeline" style="padding-left:28px;font-size:12px">Deal Timeline</a></li>
+        <li class="toc-item"><a href="#expansion" style="padding-left:28px;font-size:12px">Land-and-Expand</a></li>
+        <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a></li>
+        <li class="toc-item"><a href="#further-reading">Further Reading</a></li>
+        <li class="toc-item"><a href="#assignments">Assignments</a></li>
+        <li class="toc-item"><a href="#self-check">Self-Check</a></li>
       </ul>
-    </div>
+    </aside>
+  </div>
 
-    <hr class="section-divider">
-
-    <div class="coming-soon-banner">
-      <h3>Content In Development</h3>
-      <p>Full chapter content with detailed explanations, code examples, video walkthroughs, and assignments is being developed. Check back soon.</p>
-    </div>
-
-    <div class="callout tip">
-      <div class="callout-header">What You Will Learn</div>
-      <p>By the end of this chapter, you will understand procurement processes, rfp responses, multi-stakeholder alignment, contract structuring and be able to apply these concepts in real-world scenarios.</p>
-    </div>
-
-  </main>
-
-  <nav class="footer-nav">
-        <a class="footer-nav-link prev" href="chapter-04.html">
-          <span class="footer-nav-label">&larr; Previous</span>
-          <span class="footer-nav-title">Chapter 04: Equity and Co-Founder Agreements</span>
+  <footer class="chapter-footer">
+    <div class="chapter-footer-inner">
+      <nav class="footer-nav">
+        <a class="footer-nav-link" href="chapter-04.html">
+          <span class="footer-nav-label">&larr; Previous Chapter</span>
+          <span class="footer-nav-title">04: Equity and Co-Founder Agreements</span>
         </a>
-        <a class="footer-nav-link next" href="chapter-06.html">
-          <span class="footer-nav-label">Next &rarr;</span>
-          <span class="footer-nav-title">Chapter 06: Strategic Partnerships</span>
+        <a class="footer-nav-link" href="chapter-06.html">
+          <span class="footer-nav-label">Next Chapter &rarr;</span>
+          <span class="footer-nav-title">06: Strategic Partnerships</span>
         </a>
-  </nav>
-
-  <footer class="footer">
-    ILA (Iksha Learning Academy) &middot; Advanced Negotiations &middot; <a href="index.html">All Chapters</a>
+      </nav>
+      <div class="footer-brand">ILA (Iksha Learning Academy) &middot; Advanced Negotiations &middot; Advanced Track</div>
+    </div>
   </footer>
 
   <script>
-    window.addEventListener('scroll', () => {
-      const h = document.documentElement;
-      const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
-      document.getElementById('progressBar').style.width = Math.min(pct, 100) + '%';
-    });
+    window.addEventListener('scroll',()=>{const s=window.scrollY;const d=document.documentElement.scrollHeight-window.innerHeight;document.getElementById('progressBar').style.width=(d>0?(s/d)*100:0)+'%'});
+    const tocLinks=document.querySelectorAll('.toc-item a');const secs=[];tocLinks.forEach(l=>{const id=l.getAttribute('href').slice(1);const el=document.getElementById(id);if(el)secs.push({id,el,link:l})});
+    const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{const it=secs.find(s=>s.el===e.target);if(it&&e.isIntersecting){tocLinks.forEach(l=>l.classList.remove('active'));it.link.classList.add('active')}})},{rootMargin:'-80px 0px -60% 0px',threshold:0});secs.forEach(s=>obs.observe(s.el));
+    function copyCode(btn){const pre=btn.closest('.code-block').querySelector('pre');navigator.clipboard.writeText(pre.textContent).then(()=>{btn.classList.add('copied');btn.textContent='Copied!';setTimeout(()=>{btn.classList.remove('copied');btn.textContent='Copy'},2000)})}
   </script>
 </body>
 </html>

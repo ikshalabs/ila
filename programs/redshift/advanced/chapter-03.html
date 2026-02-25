@@ -8,7 +8,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
+    /* ═══════════════════════════════════════════════
+       ILA DESIGN SYSTEM — v1.0
+       Iksha Learning Academy
+       ═══════════════════════════════════════════════ */
+
     :root {
+      /* Palette */
       --ink:        #0f172a;
       --ink-light:  #334155;
       --ink-muted:  #64748b;
@@ -17,6 +23,8 @@
       --surface-warm:#fffbeb;
       --border:     #e2e8f0;
       --border-light:#f1f5f9;
+
+      /* Brand */
       --teal-50:  #f0fdfa;
       --teal-100: #ccfbf1;
       --teal-200: #99f6e4;
@@ -25,36 +33,54 @@
       --teal-700: #0f766e;
       --teal-800: #115e59;
       --teal-900: #134e4a;
+
       --blue-50:  #eff6ff;
       --blue-100: #dbeafe;
       --blue-500: #3b82f6;
       --blue-600: #2563eb;
       --blue-700: #1d4ed8;
+
       --amber-50:  #fffbeb;
       --amber-100: #fef3c7;
       --amber-500: #f59e0b;
       --amber-600: #d97706;
+
       --red-50:   #fef2f2;
       --red-100:  #fee2e2;
       --red-500:  #ef4444;
       --red-600:  #dc2626;
+
       --purple-50:  #faf5ff;
       --purple-100: #f3e8ff;
       --purple-500: #a855f7;
       --purple-600: #9333ea;
-      --green-50:  #f0fdf4;
-      --green-100: #dcfce7;
-      --green-500: #22c55e;
-      --green-600: #16a34a;
+
+      /* Typography */
       --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       --font-serif: 'Instrument Serif', Georgia, serif;
       --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
+
+      /* Spacing */
       --content-max: 780px;
+      --sidebar-width: 280px;
+
+      /* Transitions */
       --ease: cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
 
     body {
       font-family: var(--font-sans);
@@ -64,6 +90,7 @@
       background: var(--surface);
     }
 
+    /* ── PROGRESS BAR ─────────────────────────── */
     .progress-bar {
       position: fixed;
       top: 0;
@@ -75,11 +102,12 @@
       transition: width 0.15s var(--ease);
     }
 
+    /* ── TOP NAV ──────────────────────────────── */
     .top-nav {
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(255,255,255,0.92);
+      background: rgba(255, 255, 255, 0.92);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
@@ -162,6 +190,7 @@
       padding: 0 4px;
     }
 
+    /* ── HERO ─────────────────────────────────── */
     .hero {
       background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%);
       border-bottom: 1px solid var(--border);
@@ -222,28 +251,95 @@
       color: var(--ink-muted);
     }
 
-    .content {
-      max-width: var(--content-max);
-      margin: 0 auto;
-      padding: 3rem 2rem 6rem;
+    .hero-meta-item svg {
+      width: 16px;
+      height: 16px;
+      color: var(--teal-600);
     }
 
+    /* ── MAIN LAYOUT ──────────────────────────── */
+    .main-layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr var(--sidebar-width);
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .content {
+      padding: 3rem 0 6rem;
+      min-width: 0;
+    }
+
+    /* ── SIDEBAR TOC ──────────────────────────── */
+    .sidebar {
+      position: sticky;
+      top: 76px;
+      padding: 2rem 0;
+      max-height: calc(100vh - 76px);
+      overflow-y: auto;
+    }
+
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-muted);
+      margin-bottom: 1rem;
+      padding-left: 14px;
+    }
+
+    .toc-list {
+      list-style: none;
+    }
+
+    .toc-item a {
+      display: block;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--ink-muted);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: all 0.2s var(--ease);
+      line-height: 1.5;
+    }
+
+    .toc-item a:hover {
+      color: var(--ink);
+      background: var(--surface-alt);
+    }
+
+    .toc-item a.active {
+      color: var(--teal-700);
+      border-left-color: var(--teal-500);
+      background: var(--teal-50);
+      font-weight: 500;
+    }
+
+    /* ── TYPOGRAPHY ────────────────────────────── */
     .content h2 {
       font-family: var(--font-serif);
       font-size: 1.85rem;
       font-weight: 400;
       color: var(--ink);
       margin: 3rem 0 1rem;
+      padding-top: 1rem;
       scroll-margin-top: 80px;
     }
 
-    .content h2:first-child { margin-top: 0; }
+    .content h2:first-child {
+      margin-top: 0;
+    }
 
     .content h3 {
       font-size: 1.15rem;
       font-weight: 600;
       color: var(--ink);
       margin: 2rem 0 0.75rem;
+      scroll-margin-top: 80px;
     }
 
     .content p {
@@ -251,7 +347,25 @@
       color: var(--ink-light);
     }
 
-    .content ul, .content ol {
+    .content strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .content a {
+      color: var(--teal-700);
+      text-decoration: underline;
+      text-decoration-color: var(--teal-200);
+      text-underline-offset: 3px;
+      transition: text-decoration-color 0.2s;
+    }
+
+    .content a:hover {
+      text-decoration-color: var(--teal-600);
+    }
+
+    .content ul,
+    .content ol {
       margin-bottom: 1.25rem;
       padding-left: 1.5rem;
     }
@@ -261,13 +375,25 @@
       color: var(--ink-light);
     }
 
-    .content li::marker { color: var(--teal-500); }
+    .content li::marker {
+      color: var(--teal-500);
+    }
 
+    /* ── SECTION DIVIDER ──────────────────────── */
+    .section-divider {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 3rem 0;
+    }
+
+    /* ── CALLOUT BOXES ────────────────────────── */
     .callout {
       padding: 1.25rem 1.5rem;
       border-radius: 12px;
       margin-bottom: 1.5rem;
       border: 1px solid;
+      position: relative;
     }
 
     .callout-header {
@@ -279,119 +405,513 @@
       margin-bottom: 0.5rem;
     }
 
-    .callout p:last-child { margin-bottom: 0; }
+    .callout-header svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    .callout p:last-child {
+      margin-bottom: 0;
+    }
 
     .callout.concept {
       background: var(--blue-50);
       border-color: var(--blue-100);
     }
-    .callout.concept .callout-header { color: var(--blue-700); }
+
+    .callout.concept .callout-header {
+      color: var(--blue-700);
+    }
 
     .callout.important {
       background: var(--amber-50);
       border-color: var(--amber-100);
     }
-    .callout.important .callout-header { color: var(--amber-600); }
+
+    .callout.important .callout-header {
+      color: var(--amber-600);
+    }
+
+    .callout.danger {
+      background: var(--red-50);
+      border-color: var(--red-100);
+    }
+
+    .callout.danger .callout-header {
+      color: var(--red-600);
+    }
 
     .callout.tip {
       background: var(--purple-50);
       border-color: var(--purple-100);
     }
-    .callout.tip .callout-header { color: var(--purple-600); }
+
+    .callout.tip .callout-header {
+      color: var(--purple-600);
+    }
 
     .callout.success {
       background: var(--teal-50);
       border-color: var(--teal-100);
     }
-    .callout.success .callout-header { color: var(--teal-700); }
 
-    .section-divider {
-      border: none;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--border), transparent);
-      margin: 3rem 0;
+    .callout.success .callout-header {
+      color: var(--teal-700);
     }
 
-    .coming-soon-banner {
-      background: var(--amber-50);
-      border: 1px solid var(--amber-100);
+    /* ── CODE BLOCKS ──────────────────────────── */
+    .code-block {
+      position: relative;
+      margin-bottom: 1.5rem;
       border-radius: 12px;
-      padding: 2.5rem;
-      text-align: center;
-      margin: 2rem 0;
+      overflow: hidden;
+      border: 1px solid var(--border);
     }
 
-    .coming-soon-banner h3 {
-      color: var(--amber-600);
-      margin-bottom: 0.5rem;
-    }
-
-    .coming-soon-banner p {
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+      background: var(--surface-alt);
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
       color: var(--ink-muted);
+    }
+
+    .code-lang {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .code-copy {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: white;
+      font-size: 11px;
+      font-family: var(--font-sans);
+      color: var(--ink-muted);
+      cursor: pointer;
+      transition: all 0.2s var(--ease);
+    }
+
+    .code-copy:hover {
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    .code-copy.copied {
+      background: var(--teal-50);
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    pre {
+      margin: 0;
+      padding: 1.25rem 1.5rem;
+      overflow-x: auto;
+      background: #1e293b;
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: #e2e8f0;
+    }
+
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.88em;
+    }
+
+    p code,
+    li code {
+      padding: 2px 7px;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      color: var(--teal-800);
+      font-size: 0.85em;
+    }
+
+    /* Syntax highlights (minimal) */
+    .hl-keyword {
+      color: #c084fc;
+    }
+
+    .hl-string {
+      color: #86efac;
+    }
+
+    .hl-comment {
+      color: #64748b;
+      font-style: italic;
+    }
+
+    .hl-function {
+      color: #7dd3fc;
+    }
+
+    .hl-number {
+      color: #fbbf24;
+    }
+
+    .hl-flag {
+      color: #f472b6;
+    }
+
+    /* ── COLLAPSIBLE (DETAILS) ────────────────── */
+    details {
+      margin-bottom: 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.2s var(--ease);
+    }
+
+    details[open] {
+      border-color: var(--teal-200);
+    }
+
+    details summary {
+      padding: 1rem 1.25rem;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      background: var(--surface-alt);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.2s var(--ease);
+      user-select: none;
+    }
+
+    details summary::-webkit-details-marker {
+      display: none;
+    }
+
+    details summary::before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+      flex-shrink: 0;
+      transition: transform 0.2s var(--ease);
+    }
+
+    details[open] summary::before {
+      transform: rotate(90deg);
+    }
+
+    details summary:hover {
+      background: var(--teal-50);
+    }
+
+    .details-body {
+      padding: 1.25rem 1.5rem;
+    }
+
+    .details-body p:last-child {
       margin-bottom: 0;
     }
 
-    .topics-preview {
+    /* ── VIDEO EMBED ──────────────────────────── */
+    .video-card {
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      background: #0f172a;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .video-caption {
+      padding: 12px 16px;
       background: var(--surface-alt);
+      font-size: 13px;
+      color: var(--ink-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .video-caption svg {
+      width: 14px;
+      height: 14px;
+      color: var(--red-500);
+    }
+
+    /* ── RESOURCE CARDS ───────────────────────── */
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .resource-card {
+      display: flex;
+      gap: 14px;
+      padding: 1rem 1.25rem;
       border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 1.5rem 2rem;
-      margin: 1.5rem 0;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      background: white;
     }
 
-    .topics-preview h3 {
-      font-size: 0.95rem;
-      margin-bottom: 0.75rem;
+    .resource-card:hover {
+      border-color: var(--teal-300);
+      background: var(--teal-50);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    }
+
+    .resource-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 18px;
+    }
+
+    .resource-icon.docs {
+      background: var(--blue-50);
+      color: var(--blue-600);
+    }
+
+    .resource-icon.video {
+      background: var(--red-50);
+      color: var(--red-500);
+    }
+
+    .resource-icon.github {
+      background: var(--ink);
+      color: white;
+    }
+
+    .resource-icon.article {
+      background: var(--amber-50);
+      color: var(--amber-600);
+    }
+
+    .resource-icon.pdf {
+      background: var(--purple-50);
+      color: var(--purple-600);
+    }
+
+    .resource-info {
+      min-width: 0;
+    }
+
+    .resource-title {
+      font-size: 14px;
+      font-weight: 600;
       color: var(--ink);
+      margin-bottom: 2px;
+      line-height: 1.4;
     }
 
-    .topics-preview ul {
+    .resource-desc {
+      font-size: 12px;
+      color: var(--ink-muted);
+      line-height: 1.5;
+    }
+
+    /* ── ASSIGNMENT CARDS ─────────────────────── */
+    .assignment {
+      border: 2px solid var(--teal-200);
+      border-radius: 14px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--teal-50) 0%, white 100%);
+    }
+
+    .assignment-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .assignment-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--teal-700);
+    }
+
+    .assignment-difficulty {
+      display: inline-flex;
+      padding: 4px 10px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .difficulty-l1 {
+      background: var(--teal-100);
+      color: var(--teal-800);
+    }
+
+    .difficulty-l2 {
+      background: var(--amber-100);
+      color: var(--amber-600);
+    }
+
+    .difficulty-l3 {
+      background: var(--red-100);
+      color: var(--red-600);
+    }
+
+    .assignment h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .assignment p {
+      font-size: 14px;
+    }
+
+    .checklist {
       list-style: none;
       padding: 0;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 0.5rem;
     }
 
-    .topics-preview li {
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-light);
       font-size: 14px;
-      color: var(--ink-light);
-      padding-left: 1.25rem;
-      position: relative;
     }
 
-    .topics-preview li::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 8px;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
+    .checklist li:last-child {
+      border-bottom: none;
+    }
+
+    .check-box {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      border: 2px solid var(--border);
+      flex-shrink: 0;
+      margin-top: 1px;
+      cursor: pointer;
+      transition: all 0.15s var(--ease);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .check-box:hover {
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked {
       background: var(--teal-500);
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+    }
+
+    /* ── ARCHITECTURE DIAGRAM ─────────────────── */
+    .diagram {
+      margin: 1.5rem 0;
+      padding: 2rem;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow-x: auto;
+    }
+
+    .diagram pre {
+      background: transparent;
+      color: var(--ink);
+      padding: 0;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .diagram-caption {
+      margin-top: 1rem;
+      font-size: 12px;
+      color: var(--ink-muted);
+      text-align: center;
+      font-style: italic;
+    }
+
+    /* ── FOOTER ───────────────────────────────── */
+    .chapter-footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      background: var(--surface-alt);
+    }
+
+    .chapter-footer-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
     }
 
     .footer-nav {
-      max-width: var(--content-max);
-      margin: 0 auto;
-      padding: 2rem;
       display: flex;
       justify-content: space-between;
-      border-top: 1px solid var(--border);
+      align-items: center;
+      gap: 1rem;
     }
 
     .footer-nav-link {
       display: flex;
       flex-direction: column;
-      text-decoration: none;
-      padding: 1rem;
+      gap: 4px;
+      padding: 1rem 1.5rem;
+      border: 1px solid var(--border);
       border-radius: 12px;
-      transition: background 0.2s var(--ease);
-      max-width: 45%;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      max-width: 320px;
+      background: white;
     }
 
     .footer-nav-link:hover {
-      background: var(--surface-alt);
+      border-color: var(--teal-300);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
     }
 
     .footer-nav-label {
@@ -399,49 +919,104 @@
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.06em;
-      color: var(--ink-muted);
-      margin-bottom: 4px;
+      color: var(--teal-600);
     }
 
     .footer-nav-title {
       font-size: 15px;
       font-weight: 600;
-      color: var(--teal-700);
+      color: var(--ink);
     }
 
-    .footer-nav-link.next { text-align: right; margin-left: auto; }
-
-    .footer {
+    .footer-brand {
       text-align: center;
-      padding: 2rem;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
       font-size: 13px;
       color: var(--ink-muted);
-      border-top: 1px solid var(--border);
     }
 
-    .footer a {
-      color: var(--teal-700);
-      text-decoration: none;
+    /* ── RESPONSIVE ───────────────────────────── */
+    @media (max-width: 960px) {
+      .main-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        display: none;
+      }
+
+      .resource-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
-    .footer a:hover { text-decoration: underline; }
+    @media (max-width: 640px) {
+      .hero {
+        padding: 2.5rem 1.25rem 2rem;
+      }
 
-    @media (max-width: 768px) {
-      .hero { padding: 3rem 1.5rem 2.5rem; }
-      .content { padding: 2rem 1.5rem 4rem; }
-      .hero h1 { font-size: 2rem; }
-      .footer-nav { flex-direction: column; gap: 1rem; }
-      .footer-nav-link { max-width: 100%; }
-      .footer-nav-link.next { text-align: left; }
+      .main-layout {
+        padding: 0 1.25rem;
+      }
+
+      .content {
+        padding: 2rem 0 4rem;
+      }
+
+      pre {
+        padding: 1rem;
+        font-size: 12.5px;
+      }
+
+      .footer-nav {
+        flex-direction: column;
+      }
+
+      .footer-nav-link {
+        max-width: 100%;
+        width: 100%;
+      }
+    }
+
+    /* ── PRINT ────────────────────────────────── */
+    @media print {
+      .top-nav,
+      .sidebar,
+      .progress-bar {
+        display: none;
+      }
+
+      .main-layout {
+        display: block;
+      }
+
+      .content {
+        padding: 0;
+      }
+
+      .hero {
+        background: white;
+        border: none;
+      }
+
+      pre {
+        background: #f1f5f9;
+        color: var(--ink);
+        border: 1px solid var(--border);
+      }
     }
   </style>
 </head>
 <body>
+  <!-- Progress Bar -->
   <div class="progress-bar" id="progressBar"></div>
 
+  <!-- Top Navigation -->
   <nav class="top-nav">
     <div class="top-nav-inner">
-      <a class="nav-brand" href="index.html">
+      <a class="nav-brand" href="../index.html">
         <div class="nav-brand-icon">ILA</div>
         <span class="nav-brand-text">Iksha Learning Academy</span>
       </a>
@@ -453,70 +1028,819 @@
     </div>
   </nav>
 
+  <!-- Hero -->
   <header class="hero">
     <div class="hero-inner">
       <div class="hero-chapter-label">
-        <span>Chapter 03</span> 
+        <span>Chapter 03</span> &middot; Redshift Advanced
       </div>
       <h1>Multi-Dimensional Fact Tables</h1>
-      <p class="hero-subtitle">Click facts, conversion facts, revenue facts, dimension conformance, grain definition</p>
+      <p class="hero-subtitle">
+        Master dimensional modeling in Redshift &mdash; star schemas, fact table types (transaction,
+        periodic snapshot, accumulating snapshot), dimension tables, slowly changing dimensions (SCD),
+        and constellation schemas for complex analytics workloads.
+      </p>
       <div class="hero-meta">
-        <div class="hero-meta-item">3 Assignments</div>
-        <div class="hero-meta-item">~45 min read</div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Estimated: 60&ndash;80 min
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          5 Key Concepts
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          3 Assignments
+        </div>
       </div>
     </div>
   </header>
 
-  <main class="content">
-    <h2>Overview</h2>
-    <p>This chapter covers <strong>multi-dimensional fact tables</strong> as part of the Redshift Engineering curriculum. You will build practical skills through guided explanations, code examples, and hands-on assignments.</p>
+  <!-- Main Content + Sidebar -->
+  <div class="main-layout">
+    <main class="content">
 
-    <div class="topics-preview">
-      <h3>Topics Covered</h3>
+      <h2 id="why-this-matters">Why This Matters</h2>
+
+      <p>
+        A data warehouse is only as useful as its data model. Without a coherent dimensional model, analysts
+        spend more time figuring out how to join tables than answering business questions. Dimensional modeling
+        &mdash; pioneered by Ralph Kimball &mdash; organizes data into <strong>fact tables</strong> (measurements
+        and metrics) surrounded by <strong>dimension tables</strong> (descriptive context). This approach
+        makes queries intuitive, enables fast aggregations, and maps directly to how business users think
+        about their data.
+      </p>
+
+      <p>
+        In Redshift, dimensional modeling is not just a design philosophy &mdash; it directly impacts query
+        performance. The choice of distribution keys, sort keys, and table structure must align with your
+        dimensional model. A well-designed star schema in Redshift can deliver sub-second query times on
+        billions of rows. A poorly designed one forces expensive redistribution and cross-node shuffles
+        on every query.
+      </p>
+
+      <div class="callout concept">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Key Insight
+        </div>
+        <p>
+          Dimensional modeling is not about normalization &mdash; it is about <strong>query usability</strong>.
+          In a star schema, dimension tables are intentionally denormalized so that every query against the
+          fact table needs at most one join per dimension. This trades storage efficiency for query simplicity
+          and performance, which is exactly the right trade-off for an analytical warehouse.
+        </p>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="key-concepts">Key Concepts</h2>
+
+      <h3 id="star-schema">1. Star Schema Fundamentals</h3>
+
+      <p>
+        A star schema places a central fact table at its core, surrounded by dimension tables that radiate
+        outward like points of a star. The fact table contains the measurable, numeric data (impressions,
+        clicks, revenue, bid prices) along with foreign keys to each dimension. The dimension tables provide
+        the descriptive attributes (campaign name, advertiser, device type, geography) that give context
+        to those measurements.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- Central fact table: one row per ad impression event</span>
+<span class="hl-keyword">CREATE TABLE</span> analytics.fact_impressions (
+    impression_id       <span class="hl-function">BIGINT</span>        <span class="hl-keyword">IDENTITY</span>(<span class="hl-number">1</span>,<span class="hl-number">1</span>),
+    date_key            <span class="hl-function">INTEGER</span>       <span class="hl-keyword">NOT NULL</span>,
+    campaign_key        <span class="hl-function">INTEGER</span>       <span class="hl-keyword">NOT NULL</span>,
+    creative_key        <span class="hl-function">INTEGER</span>       <span class="hl-keyword">NOT NULL</span>,
+    publisher_key       <span class="hl-function">INTEGER</span>       <span class="hl-keyword">NOT NULL</span>,
+    geo_key             <span class="hl-function">INTEGER</span>       <span class="hl-keyword">NOT NULL</span>,
+    device_key          <span class="hl-function">INTEGER</span>       <span class="hl-keyword">NOT NULL</span>,
+    <span class="hl-comment">-- Measures</span>
+    impressions         <span class="hl-function">INTEGER</span>       <span class="hl-keyword">NOT NULL DEFAULT</span> <span class="hl-number">1</span>,
+    clicks              <span class="hl-function">INTEGER</span>       <span class="hl-keyword">NOT NULL DEFAULT</span> <span class="hl-number">0</span>,
+    conversions         <span class="hl-function">INTEGER</span>       <span class="hl-keyword">NOT NULL DEFAULT</span> <span class="hl-number">0</span>,
+    bid_price_cpm       <span class="hl-function">DECIMAL</span>(<span class="hl-number">10</span>,<span class="hl-number">4</span>),
+    win_price_cpm       <span class="hl-function">DECIMAL</span>(<span class="hl-number">10</span>,<span class="hl-number">4</span>),
+    revenue             <span class="hl-function">DECIMAL</span>(<span class="hl-number">12</span>,<span class="hl-number">4</span>)
+)
+<span class="hl-keyword">DISTSTYLE</span> KEY
+<span class="hl-keyword">DISTKEY</span> (campaign_key)
+<span class="hl-keyword">SORTKEY</span> (date_key, campaign_key);
+
+<span class="hl-comment">-- Dimension: Date (distributed to ALL nodes for local joins)</span>
+<span class="hl-keyword">CREATE TABLE</span> analytics.dim_date (
+    date_key            <span class="hl-function">INTEGER</span>       <span class="hl-keyword">PRIMARY KEY</span>,
+    full_date           <span class="hl-function">DATE</span>          <span class="hl-keyword">NOT NULL</span>,
+    day_of_week         <span class="hl-function">VARCHAR</span>(<span class="hl-number">10</span>),
+    day_of_month        <span class="hl-function">INTEGER</span>,
+    week_of_year        <span class="hl-function">INTEGER</span>,
+    month_number        <span class="hl-function">INTEGER</span>,
+    month_name          <span class="hl-function">VARCHAR</span>(<span class="hl-number">15</span>),
+    quarter             <span class="hl-function">INTEGER</span>,
+    year                <span class="hl-function">INTEGER</span>,
+    is_weekend          <span class="hl-function">BOOLEAN</span>,
+    is_holiday          <span class="hl-function">BOOLEAN</span>,
+    fiscal_quarter      <span class="hl-function">VARCHAR</span>(<span class="hl-number">6</span>)
+)
+<span class="hl-keyword">DISTSTYLE</span> ALL;
+</pre>
+      </div>
+
+      <div class="diagram">
+<pre>
+                        ┌──────────────┐
+                        │  dim_date    │
+                        │  date_key PK │
+                        └──────┬───────┘
+                               │
+  ┌──────────────┐    ┌────────┴─────────┐    ┌───────────────┐
+  │ dim_campaign │    │ fact_impressions  │    │ dim_publisher │
+  │ campaign_key │────│ date_key      FK │────│ publisher_key │
+  │ PK           │    │ campaign_key  FK │    │ PK            │
+  └──────────────┘    │ creative_key  FK │    └───────────────┘
+                      │ publisher_key FK │
+  ┌──────────────┐    │ geo_key       FK │    ┌───────────────┐
+  │ dim_creative │    │ device_key    FK │    │ dim_geo       │
+  │ creative_key │────│                  │────│ geo_key       │
+  │ PK           │    │ impressions      │    │ PK            │
+  └──────────────┘    │ clicks           │    └───────────────┘
+                      │ revenue          │
+                      └────────┬─────────┘
+                               │
+                        ┌──────┴───────┐
+                        │  dim_device  │
+                        │  device_key  │
+                        │  PK          │
+                        └──────────────┘
+</pre>
+        <div class="diagram-caption">Figure 1: Star schema with central fact table and surrounding dimension tables</div>
+      </div>
+
+      <h3 id="fact-table-types">2. Fact Table Types</h3>
+
+      <p>
+        Not all fact tables record the same kind of information. Kimball identifies three fundamental types,
+        each suited to different analytical questions. Understanding which type to use for each business
+        process is one of the most important modeling decisions you will make.
+      </p>
+
+      <p>
+        <strong>Transaction fact tables</strong> record one row per discrete event. An ad impression, a click,
+        a bid request &mdash; each event generates exactly one row. These tables grow the fastest but support
+        the most granular analysis. They are the default starting point for most data warehouses.
+      </p>
+
+      <p>
+        <strong>Periodic snapshot fact tables</strong> capture the state of a metric at regular intervals.
+        Instead of recording every individual impression, you record the total impressions per campaign per
+        day. These are smaller than transaction tables and ideal for trend analysis and dashboards that show
+        daily, weekly, or monthly aggregates.
+      </p>
+
+      <p>
+        <strong>Accumulating snapshot fact tables</strong> track the lifecycle of a process that has a defined
+        beginning and end. In ad-tech, this could track a conversion funnel: impression date, click date,
+        landing page visit date, and conversion date. Each row is updated as the entity progresses through
+        pipeline stages.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- Periodic snapshot: daily campaign performance</span>
+<span class="hl-keyword">CREATE TABLE</span> analytics.fact_daily_campaign_snapshot (
+    snapshot_date_key   <span class="hl-function">INTEGER</span>       <span class="hl-keyword">NOT NULL</span>,
+    campaign_key        <span class="hl-function">INTEGER</span>       <span class="hl-keyword">NOT NULL</span>,
+    total_impressions   <span class="hl-function">BIGINT</span>,
+    total_clicks        <span class="hl-function">BIGINT</span>,
+    total_conversions   <span class="hl-function">INTEGER</span>,
+    total_spend         <span class="hl-function">DECIMAL</span>(<span class="hl-number">14</span>,<span class="hl-number">4</span>),
+    avg_cpm             <span class="hl-function">DECIMAL</span>(<span class="hl-number">10</span>,<span class="hl-number">4</span>),
+    avg_ctr             <span class="hl-function">DECIMAL</span>(<span class="hl-number">8</span>,<span class="hl-number">6</span>),
+    remaining_budget    <span class="hl-function">DECIMAL</span>(<span class="hl-number">14</span>,<span class="hl-number">4</span>),
+    <span class="hl-keyword">PRIMARY KEY</span> (snapshot_date_key, campaign_key)
+)
+<span class="hl-keyword">DISTSTYLE</span> KEY
+<span class="hl-keyword">DISTKEY</span> (campaign_key)
+<span class="hl-keyword">SORTKEY</span> (snapshot_date_key);
+
+<span class="hl-comment">-- Accumulating snapshot: conversion funnel tracking</span>
+<span class="hl-keyword">CREATE TABLE</span> analytics.fact_conversion_funnel (
+    funnel_id           <span class="hl-function">BIGINT</span>        <span class="hl-keyword">IDENTITY</span>(<span class="hl-number">1</span>,<span class="hl-number">1</span>),
+    user_key            <span class="hl-function">INTEGER</span>       <span class="hl-keyword">NOT NULL</span>,
+    campaign_key        <span class="hl-function">INTEGER</span>       <span class="hl-keyword">NOT NULL</span>,
+    impression_date_key <span class="hl-function">INTEGER</span>,
+    click_date_key      <span class="hl-function">INTEGER</span>,
+    visit_date_key      <span class="hl-function">INTEGER</span>,
+    conversion_date_key <span class="hl-function">INTEGER</span>,
+    days_to_click       <span class="hl-function">INTEGER</span>,
+    days_to_convert     <span class="hl-function">INTEGER</span>,
+    conversion_revenue  <span class="hl-function">DECIMAL</span>(<span class="hl-number">12</span>,<span class="hl-number">4</span>),
+    funnel_status       <span class="hl-function">VARCHAR</span>(<span class="hl-number">20</span>)
+)
+<span class="hl-keyword">DISTSTYLE</span> KEY
+<span class="hl-keyword">DISTKEY</span> (campaign_key)
+<span class="hl-keyword">SORTKEY</span> (impression_date_key);
+</pre>
+      </div>
+
+      <h3 id="dimension-tables">3. Dimension Tables and DISTSTYLE ALL</h3>
+
+      <p>
+        Dimension tables are typically small relative to fact tables &mdash; a campaign dimension might
+        have 50,000 rows while the impression fact has 50 billion. In Redshift, you should distribute
+        small dimension tables using <code>DISTSTYLE ALL</code>, which places a complete copy of the
+        table on every compute node. This eliminates network redistribution when joining the fact table
+        to the dimension &mdash; every slice can perform the join locally.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- Campaign dimension with denormalized attributes</span>
+<span class="hl-keyword">CREATE TABLE</span> analytics.dim_campaign (
+    campaign_key        <span class="hl-function">INTEGER</span>       <span class="hl-keyword">PRIMARY KEY</span>,
+    campaign_id         <span class="hl-function">INTEGER</span>       <span class="hl-keyword">NOT NULL</span>,
+    campaign_name       <span class="hl-function">VARCHAR</span>(<span class="hl-number">256</span>)  <span class="hl-keyword">NOT NULL</span>,
+    advertiser_name     <span class="hl-function">VARCHAR</span>(<span class="hl-number">256</span>),
+    advertiser_industry <span class="hl-function">VARCHAR</span>(<span class="hl-number">100</span>),
+    campaign_type       <span class="hl-function">VARCHAR</span>(<span class="hl-number">50</span>),
+    campaign_objective  <span class="hl-function">VARCHAR</span>(<span class="hl-number">50</span>),
+    start_date          <span class="hl-function">DATE</span>,
+    end_date            <span class="hl-function">DATE</span>,
+    total_budget        <span class="hl-function">DECIMAL</span>(<span class="hl-number">14</span>,<span class="hl-number">4</span>),
+    daily_budget_cap    <span class="hl-function">DECIMAL</span>(<span class="hl-number">10</span>,<span class="hl-number">4</span>),
+    target_audience     <span class="hl-function">VARCHAR</span>(<span class="hl-number">500</span>),
+    is_active           <span class="hl-function">BOOLEAN</span>,
+    <span class="hl-comment">-- SCD Type 2 metadata</span>
+    effective_date      <span class="hl-function">DATE</span>          <span class="hl-keyword">NOT NULL</span>,
+    expiration_date     <span class="hl-function">DATE</span>          <span class="hl-keyword">NOT NULL DEFAULT</span> <span class="hl-string">'9999-12-31'</span>,
+    is_current          <span class="hl-function">BOOLEAN</span>       <span class="hl-keyword">NOT NULL DEFAULT TRUE</span>
+)
+<span class="hl-keyword">DISTSTYLE</span> ALL
+<span class="hl-keyword">SORTKEY</span> (campaign_key);
+
+<span class="hl-comment">-- Geography dimension</span>
+<span class="hl-keyword">CREATE TABLE</span> analytics.dim_geo (
+    geo_key             <span class="hl-function">INTEGER</span>       <span class="hl-keyword">PRIMARY KEY</span>,
+    country_code        <span class="hl-function">CHAR</span>(<span class="hl-number">2</span>),
+    country_name        <span class="hl-function">VARCHAR</span>(<span class="hl-number">100</span>),
+    region              <span class="hl-function">VARCHAR</span>(<span class="hl-number">100</span>),
+    city                <span class="hl-function">VARCHAR</span>(<span class="hl-number">100</span>),
+    dma_code            <span class="hl-function">VARCHAR</span>(<span class="hl-number">10</span>),
+    dma_name            <span class="hl-function">VARCHAR</span>(<span class="hl-number">100</span>),
+    timezone            <span class="hl-function">VARCHAR</span>(<span class="hl-number">50</span>)
+)
+<span class="hl-keyword">DISTSTYLE</span> ALL;
+</pre>
+      </div>
+
+      <div class="callout important">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Important
+        </div>
+        <p>
+          Only use <code>DISTSTYLE ALL</code> for tables under approximately 3 million rows. Larger tables
+          consume significant memory on every node and slow down writes because every insert, update, or
+          delete must be replicated to all nodes. If a dimension exceeds this threshold, use
+          <code>DISTSTYLE KEY</code> matching the fact table's distribution key for co-located joins.
+        </p>
+      </div>
+
+      <h3 id="scd-types">4. Slowly Changing Dimensions (SCD)</h3>
+
+      <p>
+        Dimension attributes change over time. A campaign's budget gets adjusted mid-flight. An advertiser
+        rebrands. A publisher changes its content category. <strong>Slowly Changing Dimensions</strong> (SCD)
+        define how your warehouse handles these changes. The three most common types are:
+      </p>
+
       <ul>
-            <li>Click facts</li>
-            <li>conversion facts</li>
-            <li>revenue facts</li>
-            <li>dimension conformance</li>
-            <li>grain definition</li>
+        <li><strong>SCD Type 1 (Overwrite)</strong> &mdash; Simply update the dimension record in place. You lose the history but always have the current value. Use this for corrections (fixing a typo in a campaign name).</li>
+        <li><strong>SCD Type 2 (Add New Row)</strong> &mdash; Insert a new row with the updated values and mark the old row as expired. Preserves full history. Use this for attributes where historical accuracy matters (budget changes that affect past reporting).</li>
+        <li><strong>SCD Type 3 (Add Column)</strong> &mdash; Add a "previous value" column alongside the current value. Preserves exactly one level of history. Rarely used in practice because it only tracks one change.</li>
       </ul>
-    </div>
 
-    <hr class="section-divider">
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- SCD Type 2: expire old record and insert new one</span>
+<span class="hl-keyword">CREATE OR REPLACE PROCEDURE</span> etl.apply_scd2_campaign(
+    p_campaign_id    <span class="hl-function">INTEGER</span>,
+    p_campaign_name  <span class="hl-function">VARCHAR</span>(<span class="hl-number">256</span>),
+    p_budget         <span class="hl-function">DECIMAL</span>(<span class="hl-number">14</span>,<span class="hl-number">4</span>),
+    p_effective_date <span class="hl-function">DATE</span>
+)
+<span class="hl-keyword">AS</span> $$
+<span class="hl-keyword">DECLARE</span>
+    v_max_key <span class="hl-function">INTEGER</span>;
+<span class="hl-keyword">BEGIN</span>
+    <span class="hl-comment">-- Step 1: Expire the current record</span>
+    <span class="hl-keyword">UPDATE</span> analytics.dim_campaign
+    <span class="hl-keyword">SET</span>
+        expiration_date = p_effective_date - <span class="hl-number">1</span>,
+        is_current = <span class="hl-keyword">FALSE</span>
+    <span class="hl-keyword">WHERE</span> campaign_id = p_campaign_id
+      <span class="hl-keyword">AND</span> is_current = <span class="hl-keyword">TRUE</span>;
 
-    <div class="coming-soon-banner">
-      <h3>Content In Development</h3>
-      <p>Full chapter content with detailed explanations, code examples, video walkthroughs, and assignments is being developed. Check back soon.</p>
-    </div>
+    <span class="hl-comment">-- Step 2: Generate next surrogate key</span>
+    <span class="hl-keyword">SELECT</span> <span class="hl-function">COALESCE</span>(<span class="hl-function">MAX</span>(campaign_key), <span class="hl-number">0</span>) + <span class="hl-number">1</span>
+    <span class="hl-keyword">INTO</span> v_max_key
+    <span class="hl-keyword">FROM</span> analytics.dim_campaign;
 
-    <div class="callout tip">
-      <div class="callout-header">What You Will Learn</div>
-      <p>By the end of this chapter, you will understand click facts, conversion facts, revenue facts, dimension conformance, grain definition and be able to apply these concepts in real-world scenarios.</p>
-    </div>
+    <span class="hl-comment">-- Step 3: Insert new version</span>
+    <span class="hl-keyword">INSERT INTO</span> analytics.dim_campaign
+        (campaign_key, campaign_id, campaign_name, total_budget,
+         effective_date, expiration_date, is_current)
+    <span class="hl-keyword">VALUES</span>
+        (v_max_key, p_campaign_id, p_campaign_name, p_budget,
+         p_effective_date, <span class="hl-string">'9999-12-31'</span>, <span class="hl-keyword">TRUE</span>);
+<span class="hl-keyword">END</span>;
+$$ <span class="hl-keyword">LANGUAGE</span> plpgsql;
+</pre>
+      </div>
 
-  </main>
+      <div class="callout tip">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Pro Tip
+        </div>
+        <p>
+          When querying SCD Type 2 dimensions, always filter by <code>is_current = TRUE</code> for
+          current-state queries, or join on the date range (<code>effective_date &lt;= event_date AND
+          expiration_date >= event_date</code>) for historical accuracy. Create a view that defaults to
+          the current version so analysts do not accidentally get duplicated results from historical rows.
+        </p>
+      </div>
 
-  <nav class="footer-nav">
-        <a class="footer-nav-link prev" href="chapter-02.html">
-          <span class="footer-nav-label">&larr; Previous</span>
-          <span class="footer-nav-title">Chapter 02: Stored Procedures for ETL</span>
+      <h3 id="constellation-schema">5. Constellation Schema</h3>
+
+      <p>
+        A constellation schema (also called a galaxy schema) extends the star schema by sharing dimension
+        tables across multiple fact tables. In ad-tech, you might have separate fact tables for impressions,
+        clicks, and conversions, but they all share the same campaign, publisher, and date dimensions. This
+        avoids dimension duplication and ensures consistent definitions across all metrics.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- Constellation schema: multiple fact tables sharing dimensions</span>
+
+<span class="hl-comment">-- Fact: Clicks (shares dim_campaign, dim_date, dim_publisher)</span>
+<span class="hl-keyword">CREATE TABLE</span> analytics.fact_clicks (
+    click_id            <span class="hl-function">BIGINT</span>        <span class="hl-keyword">IDENTITY</span>(<span class="hl-number">1</span>,<span class="hl-number">1</span>),
+    date_key            <span class="hl-function">INTEGER</span>       <span class="hl-keyword">NOT NULL</span>,
+    campaign_key        <span class="hl-function">INTEGER</span>       <span class="hl-keyword">NOT NULL</span>,
+    creative_key        <span class="hl-function">INTEGER</span>       <span class="hl-keyword">NOT NULL</span>,
+    publisher_key       <span class="hl-function">INTEGER</span>       <span class="hl-keyword">NOT NULL</span>,
+    impression_id       <span class="hl-function">BIGINT</span>,
+    click_timestamp     <span class="hl-function">TIMESTAMP</span>,
+    landing_page_url    <span class="hl-function">VARCHAR</span>(<span class="hl-number">2000</span>),
+    cost_per_click      <span class="hl-function">DECIMAL</span>(<span class="hl-number">10</span>,<span class="hl-number">4</span>)
+)
+<span class="hl-keyword">DISTSTYLE</span> KEY
+<span class="hl-keyword">DISTKEY</span> (campaign_key)
+<span class="hl-keyword">SORTKEY</span> (date_key, campaign_key);
+
+<span class="hl-comment">-- Fact: Conversions (shares dim_campaign, dim_date)</span>
+<span class="hl-keyword">CREATE TABLE</span> analytics.fact_conversions (
+    conversion_id       <span class="hl-function">BIGINT</span>        <span class="hl-keyword">IDENTITY</span>(<span class="hl-number">1</span>,<span class="hl-number">1</span>),
+    date_key            <span class="hl-function">INTEGER</span>       <span class="hl-keyword">NOT NULL</span>,
+    campaign_key        <span class="hl-function">INTEGER</span>       <span class="hl-keyword">NOT NULL</span>,
+    click_id            <span class="hl-function">BIGINT</span>,
+    conversion_type     <span class="hl-function">VARCHAR</span>(<span class="hl-number">50</span>),
+    conversion_value    <span class="hl-function">DECIMAL</span>(<span class="hl-number">12</span>,<span class="hl-number">4</span>),
+    attribution_model   <span class="hl-function">VARCHAR</span>(<span class="hl-number">30</span>)
+)
+<span class="hl-keyword">DISTSTYLE</span> KEY
+<span class="hl-keyword">DISTKEY</span> (campaign_key)
+<span class="hl-keyword">SORTKEY</span> (date_key);
+
+<span class="hl-comment">-- Query across constellation: full funnel analysis</span>
+<span class="hl-keyword">SELECT</span>
+    dd.full_date,
+    dc.campaign_name,
+    dc.advertiser_name,
+    <span class="hl-function">SUM</span>(fi.impressions) <span class="hl-keyword">AS</span> impressions,
+    <span class="hl-function">COUNT</span>(<span class="hl-keyword">DISTINCT</span> fcl.click_id) <span class="hl-keyword">AS</span> clicks,
+    <span class="hl-function">COUNT</span>(<span class="hl-keyword">DISTINCT</span> fcv.conversion_id) <span class="hl-keyword">AS</span> conversions,
+    <span class="hl-function">SUM</span>(fcv.conversion_value) <span class="hl-keyword">AS</span> total_revenue
+<span class="hl-keyword">FROM</span> analytics.fact_impressions fi
+<span class="hl-keyword">JOIN</span> analytics.dim_date dd <span class="hl-keyword">ON</span> fi.date_key = dd.date_key
+<span class="hl-keyword">JOIN</span> analytics.dim_campaign dc <span class="hl-keyword">ON</span> fi.campaign_key = dc.campaign_key
+<span class="hl-keyword">LEFT JOIN</span> analytics.fact_clicks fcl
+    <span class="hl-keyword">ON</span> fi.impression_id = fcl.impression_id
+<span class="hl-keyword">LEFT JOIN</span> analytics.fact_conversions fcv
+    <span class="hl-keyword">ON</span> fcl.click_id = fcv.click_id
+<span class="hl-keyword">WHERE</span> dd.full_date <span class="hl-keyword">BETWEEN</span> <span class="hl-string">'2025-06-01'</span> <span class="hl-keyword">AND</span> <span class="hl-string">'2025-06-30'</span>
+  <span class="hl-keyword">AND</span> dc.is_current = <span class="hl-keyword">TRUE</span>
+<span class="hl-keyword">GROUP BY</span> dd.full_date, dc.campaign_name, dc.advertiser_name
+<span class="hl-keyword">ORDER BY</span> dd.full_date, impressions <span class="hl-keyword">DESC</span>;
+</pre>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="watch-learn">Watch &amp; Learn</h2>
+
+      <p>
+        These videos cover dimensional modeling principles and their application in cloud data warehouses
+        like Redshift.
+      </p>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/lWwFJV_9PoE?rel=0&amp;modestbranding=1"
+            title="Dimensional Modeling in Cloud Warehouses"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          AWS re:Invent &mdash; Dimensional Modeling and Schema Design for Amazon Redshift
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/dfo4J5ZhlKI?rel=0&amp;modestbranding=1"
+            title="Star Schema Design Patterns"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Data Warehouse Toolkit &mdash; Star Schema Design Patterns and Best Practices
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="further-reading">Further Reading</h2>
+
+      <p>Official documentation and authoritative references on dimensional modeling in Redshift.</p>
+
+      <div class="resource-grid">
+        <a class="resource-card" href="https://docs.aws.amazon.com/redshift/latest/dg/c_best-practices-best-dist-key.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Distribution Key Best Practices</div>
+            <div class="resource-desc">AWS guidance on choosing distribution styles and keys for fact and dimension tables.</div>
+          </div>
         </a>
-        <a class="footer-nav-link next" href="chapter-04.html">
-          <span class="footer-nav-label">Next &rarr;</span>
-          <span class="footer-nav-title">Chapter 04: Aggregation and Refresh Strategies</span>
-        </a>
-  </nav>
 
-  <footer class="footer">
-    ILA (Iksha Learning Academy) &middot; Redshift Engineering &middot; <a href="index.html">All Chapters</a>
+        <a class="resource-card" href="https://docs.aws.amazon.com/redshift/latest/dg/c_best-practices-sort-key.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Sort Key Best Practices</div>
+            <div class="resource-desc">How to choose sort keys for fact tables to maximize zone map effectiveness.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/" target="_blank" rel="noopener">
+          <div class="resource-icon article">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Kimball Dimensional Modeling Techniques</div>
+            <div class="resource-desc">The definitive reference for fact table types, SCDs, and constellation schemas.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://docs.aws.amazon.com/redshift/latest/dg/c_designing-tables-best-practices.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Redshift Table Design Best Practices</div>
+            <div class="resource-desc">Comprehensive guide to designing tables in Redshift for optimal query performance.</div>
+          </div>
+        </a>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="assignments">Assignments</h2>
+
+      <p>
+        Complete these assignments to practice building dimensional models in Redshift. Each assignment
+        builds on the schema definitions from the Key Concepts section.
+      </p>
+
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 1
+          </div>
+          <span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span>
+        </div>
+        <h4>Build a Star Schema for Ad Impressions</h4>
+        <p>Create a complete star schema with one fact table and five dimension tables.</p>
+
+        <ul class="checklist">
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Create <code>dim_date</code>, <code>dim_campaign</code>, <code>dim_creative</code>, <code>dim_publisher</code>, and <code>dim_geo</code> tables with <code>DISTSTYLE ALL</code></span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Create <code>fact_impressions</code> with surrogate key foreign keys to each dimension</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Populate the date dimension with 3 years of dates (2024-2026)</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Write and run a multi-dimension join query that aggregates impressions by campaign, month, and geography</span>
+          </li>
+        </ul>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            Your star schema query joins the fact table to all five dimensions without triggering
+            redistribution in the <code>EXPLAIN</code> plan (verify with <code>DS_DIST_NONE</code>
+            or <code>DS_DIST_ALL_NONE</code> in the plan output).
+          </p>
+        </div>
+      </div>
+
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 2
+          </div>
+          <span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span>
+        </div>
+        <h4>Implement SCD Type 2 for Campaign Dimension</h4>
+        <p>Build a stored procedure that correctly maintains historical versions of campaign records.</p>
+
+        <ul class="checklist">
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Add <code>effective_date</code>, <code>expiration_date</code>, and <code>is_current</code> columns to <code>dim_campaign</code></span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Write the SCD Type 2 procedure that expires the old record and inserts the new version</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Create a view <code>dim_campaign_current</code> that only shows current records</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Test by changing a campaign's budget twice and verifying three versions exist</span>
+          </li>
+        </ul>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            A query joining <code>fact_impressions</code> to <code>dim_campaign</code> using the date-range
+            join returns the correct historical campaign name for impressions from before the name change.
+          </p>
+        </div>
+      </div>
+
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 3
+          </div>
+          <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Production-Ready</span>
+        </div>
+        <h4>Build a Constellation Schema with Full Funnel Analytics</h4>
+        <p>Design and implement a constellation schema with impression, click, and conversion fact tables sharing common dimensions.</p>
+
+        <ul class="checklist">
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Create <code>fact_clicks</code> and <code>fact_conversions</code> with consistent dimension keys</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Build a daily periodic snapshot table that aggregates impressions, clicks, and conversions per campaign</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Write a stored procedure that refreshes the periodic snapshot from the three fact tables</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Create a full-funnel query that calculates CTR, conversion rate, and ROAS across all three fact tables</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Verify with <code>EXPLAIN</code> that all joins use co-located distribution (no broadcasting)</span>
+          </li>
+        </ul>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            Your constellation schema supports a single query that shows impressions, clicks, conversions,
+            CTR, conversion rate, and ROAS per campaign per day &mdash; and the query plan shows no
+            cross-node data redistribution.
+          </p>
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="self-check">Self-Check</h2>
+
+      <p>Before moving to Chapter 04, honestly answer these questions. If any answer is unclear, revisit the relevant section.</p>
+
+      <details>
+        <summary>What is the difference between a transaction fact table and a periodic snapshot fact table?</summary>
+        <div class="details-body">
+          <p>
+            A transaction fact table records one row per event (impression, click, purchase). It captures the
+            finest grain of detail and grows rapidly. A periodic snapshot records the state of a metric at
+            regular intervals (daily totals, weekly averages). Snapshots are smaller and faster for trend
+            analysis but lose event-level granularity. Use transaction facts for drill-down analysis and
+            periodic snapshots for dashboards.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Why should dimension tables use DISTSTYLE ALL in Redshift?</summary>
+        <div class="details-body">
+          <p>
+            <code>DISTSTYLE ALL</code> places a complete copy of the dimension table on every compute node.
+            This means every slice can join locally to the fact table without network redistribution. Since
+            dimension tables are typically small (thousands to low millions of rows), the storage overhead
+            is minimal but the query performance improvement is significant &mdash; especially for star
+            schema queries that join one fact to multiple dimensions.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>When would you use SCD Type 2 versus SCD Type 1?</summary>
+        <div class="details-body">
+          <p>
+            Use SCD Type 2 when you need to preserve the historical value at the time an event occurred.
+            For example, if a campaign's budget changed mid-month, you want impressions before the change
+            to be associated with the old budget and impressions after with the new budget. Use SCD Type 1
+            when the change is a correction (fixing a typo) and you want all historical facts to reflect
+            the corrected value.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>What is a constellation schema and when is it preferable to a single star schema?</summary>
+        <div class="details-body">
+          <p>
+            A constellation schema uses multiple fact tables that share common dimension tables. It is
+            preferable when your warehouse models multiple business processes (impressions, clicks,
+            conversions) that share the same dimensions (campaigns, dates, publishers) but measure
+            different things. Sharing dimensions ensures consistent definitions and enables cross-process
+            analytics like full-funnel analysis.
+          </p>
+        </div>
+      </details>
+
+    </main>
+
+    <!-- Sidebar: Table of Contents -->
+    <aside class="sidebar">
+      <div class="sidebar-title">On this page</div>
+      <ul class="toc-list">
+        <li class="toc-item"><a href="#why-this-matters">Why This Matters</a></li>
+        <li class="toc-item"><a href="#key-concepts">Key Concepts</a></li>
+        <li class="toc-item"><a href="#star-schema" style="padding-left: 28px; font-size: 12px;">Star Schema</a></li>
+        <li class="toc-item"><a href="#fact-table-types" style="padding-left: 28px; font-size: 12px;">Fact Table Types</a></li>
+        <li class="toc-item"><a href="#dimension-tables" style="padding-left: 28px; font-size: 12px;">Dimension Tables</a></li>
+        <li class="toc-item"><a href="#scd-types" style="padding-left: 28px; font-size: 12px;">SCD Types</a></li>
+        <li class="toc-item"><a href="#constellation-schema" style="padding-left: 28px; font-size: 12px;">Constellation Schema</a></li>
+        <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a></li>
+        <li class="toc-item"><a href="#further-reading">Further Reading</a></li>
+        <li class="toc-item"><a href="#assignments">Assignments</a></li>
+        <li class="toc-item"><a href="#self-check">Self-Check</a></li>
+      </ul>
+    </aside>
+  </div>
+
+  <!-- Footer Navigation -->
+  <footer class="chapter-footer">
+    <div class="chapter-footer-inner">
+      <nav class="footer-nav">
+        <a class="footer-nav-link" href="chapter-02.html">
+          <span class="footer-nav-label">&larr; Previous Chapter</span>
+          <span class="footer-nav-title">02: Stored Procedures for ETL</span>
+        </a>
+        <a class="footer-nav-link" href="chapter-04.html">
+          <span class="footer-nav-label">Next Chapter &rarr;</span>
+          <span class="footer-nav-title">04: Aggregation and Refresh Strategies</span>
+        </a>
+      </nav>
+      <div class="footer-brand">
+        ILA (Iksha Learning Academy) &middot; Redshift Advanced &middot; Advanced Track
+      </div>
+    </div>
   </footer>
 
   <script>
+    // ── Progress Bar ──
     window.addEventListener('scroll', () => {
-      const h = document.documentElement;
-      const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
-      document.getElementById('progressBar').style.width = Math.min(pct, 100) + '%';
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      document.getElementById('progressBar').style.width = progress + '%';
     });
+
+    // ── Active TOC ──
+    const tocLinks = document.querySelectorAll('.toc-item a');
+    const sections = [];
+
+    tocLinks.forEach(link => {
+      const id = link.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) sections.push({ id, el, link });
+    });
+
+    const observerOptions = {
+      rootMargin: '-80px 0px -60% 0px',
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const item = sections.find(s => s.el === entry.target);
+        if (item) {
+          if (entry.isIntersecting) {
+            tocLinks.forEach(l => l.classList.remove('active'));
+            item.link.classList.add('active');
+          }
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(s => observer.observe(s.el));
+
+    // ── Copy Code ──
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      const text = pre.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.classList.add('copied');
+        btn.textContent = 'Copied!';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.textContent = 'Copy';
+        }, 2000);
+      });
+    }
   </script>
 </body>
 </html>

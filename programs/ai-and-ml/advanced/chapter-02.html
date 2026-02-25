@@ -3,99 +3,983 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chapter 02: Transfer Learning and Fine-Tuning &mdash; ILA AI &amp; Machine Learning</title>
+  <title>Chapter 02: Transformers and Large Language Models — ILA AI & ML</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-  <style>:root{--ink:#0f172a;--ink-light:#334155;--ink-muted:#64748b;--surface:#ffffff;--surface-alt:#f8fafc;--surface-warm:#fffbeb;--border:#e2e8f0;--border-light:#f1f5f9;--teal-50:#f0fdfa;--teal-100:#ccfbf1;--teal-200:#99f6e4;--teal-500:#14b8a6;--teal-600:#0d9488;--teal-700:#0f766e;--teal-800:#115e59;--teal-900:#134e4a;--blue-50:#eff6ff;--blue-100:#dbeafe;--blue-500:#3b82f6;--blue-600:#2563eb;--blue-700:#1d4ed8;--amber-50:#fffbeb;--amber-100:#fef3c7;--amber-500:#f59e0b;--amber-600:#d97706;--red-50:#fef2f2;--red-100:#fee2e2;--red-500:#ef4444;--red-600:#dc2626;--purple-50:#faf5ff;--purple-100:#f3e8ff;--purple-500:#a855f7;--purple-600:#9333ea;--font-sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;--font-serif:'Instrument Serif',Georgia,serif;--font-mono:'JetBrains Mono','Fira Code',monospace;--content-max:780px;--sidebar-width:280px;--ease:cubic-bezier(0.4,0,0.2,1)}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}body{font-family:var(--font-sans);font-size:16px;line-height:1.7;color:var(--ink);background:var(--surface)}.progress-bar{position:fixed;top:0;left:0;width:0%;height:3px;background:linear-gradient(90deg,var(--teal-500),var(--blue-500));z-index:1000;transition:width .15s var(--ease)}.top-nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem}.top-nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px}.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--teal-800)}.nav-brand-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--teal-600),var(--teal-800));border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px}.nav-brand-text{font-weight:700;font-size:15px;letter-spacing:-.02em}.nav-chapter-nav{display:flex;align-items:center;gap:8px}.nav-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;color:var(--ink-muted);border:1px solid var(--border);background:#fff;transition:all .2s var(--ease);cursor:pointer}.nav-btn:hover{color:var(--ink);border-color:var(--teal-500);background:var(--teal-50)}.nav-btn.disabled{opacity:.4;pointer-events:none}.nav-current{font-size:13px;font-weight:600;color:var(--ink-light);padding:0 4px}.hero{background:linear-gradient(170deg,var(--teal-50) 0%,var(--surface) 50%,var(--blue-50) 100%);border-bottom:1px solid var(--border);padding:4rem 2rem 3.5rem}.hero-inner{max-width:var(--content-max);margin:0 auto}.hero-chapter-label{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--teal-700);text-transform:uppercase;letter-spacing:.08em;margin-bottom:1rem}.hero-chapter-label span{background:var(--teal-100);padding:3px 10px;border-radius:100px}.hero h1{font-family:var(--font-serif);font-size:clamp(2.4rem,5vw,3.2rem);font-weight:400;line-height:1.15;color:var(--ink);margin-bottom:1rem}.hero-subtitle{font-size:1.15rem;color:var(--ink-light);line-height:1.65;max-width:640px}.hero-meta{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1.5rem}.hero-meta-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-muted)}.hero-meta-item svg{width:16px;height:16px;color:var(--teal-600)}.main-layout{max-width:1200px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:1fr var(--sidebar-width);gap:4rem;align-items:start}.content{padding:3rem 0 6rem;min-width:0}.sidebar{position:sticky;top:76px;padding:2rem 0;max-height:calc(100vh - 76px);overflow-y:auto}.sidebar-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-muted);margin-bottom:1rem;padding-left:14px}.toc-list{list-style:none}.toc-item a{display:block;padding:6px 14px;font-size:13px;color:var(--ink-muted);text-decoration:none;border-left:2px solid transparent;transition:all .2s var(--ease);line-height:1.5}.toc-item a:hover{color:var(--ink);background:var(--surface-alt)}.toc-item a.active{color:var(--teal-700);border-left-color:var(--teal-500);background:var(--teal-50);font-weight:500}.content h2{font-family:var(--font-serif);font-size:1.85rem;font-weight:400;color:var(--ink);margin:3rem 0 1rem;padding-top:1rem;scroll-margin-top:80px}.content h2:first-child{margin-top:0}.content h3{font-size:1.15rem;font-weight:600;color:var(--ink);margin:2rem 0 .75rem;scroll-margin-top:80px}.content p{margin-bottom:1.25rem;color:var(--ink-light)}.content strong{color:var(--ink);font-weight:600}.content a{color:var(--teal-700);text-decoration:underline;text-decoration-color:var(--teal-200);text-underline-offset:3px}.content ul,.content ol{margin-bottom:1.25rem;padding-left:1.5rem}.content li{margin-bottom:.5rem;color:var(--ink-light)}.content li::marker{color:var(--teal-500)}.section-divider{border:none;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:3rem 0}.callout{padding:1.25rem 1.5rem;border-radius:12px;margin-bottom:1.5rem;border:1px solid;position:relative}.callout-header{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;margin-bottom:.5rem}.callout-header svg{width:18px;height:18px;flex-shrink:0}.callout p:last-child{margin-bottom:0}.callout.concept{background:var(--blue-50);border-color:var(--blue-100)}.callout.concept .callout-header{color:var(--blue-700)}.callout.important{background:var(--amber-50);border-color:var(--amber-100)}.callout.important .callout-header{color:var(--amber-600)}.callout.danger{background:var(--red-50);border-color:var(--red-100)}.callout.danger .callout-header{color:var(--red-600)}.callout.tip{background:var(--purple-50);border-color:var(--purple-100)}.callout.tip .callout-header{color:var(--purple-600)}.callout.success{background:var(--teal-50);border-color:var(--teal-100)}.callout.success .callout-header{color:var(--teal-700)}.code-block{position:relative;margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}.code-header{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:var(--surface-alt);border-bottom:1px solid var(--border);font-size:12px;color:var(--ink-muted)}.code-lang{font-family:var(--font-mono);font-weight:600;text-transform:uppercase;letter-spacing:.05em}.code-copy{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:#fff;font-size:11px;font-family:var(--font-sans);color:var(--ink-muted);cursor:pointer;transition:all .2s var(--ease)}.code-copy:hover{border-color:var(--teal-500);color:var(--teal-700)}.code-copy.copied{background:var(--teal-50);border-color:var(--teal-500);color:var(--teal-700)}pre{margin:0;padding:1.25rem 1.5rem;overflow-x:auto;background:#1e293b;font-family:var(--font-mono);font-size:13.5px;line-height:1.7;color:#e2e8f0}code{font-family:var(--font-mono);font-size:.88em}p code,li code{padding:2px 7px;background:var(--surface-alt);border:1px solid var(--border);border-radius:5px;color:var(--teal-800);font-size:.85em}.hl-keyword{color:#c084fc}.hl-string{color:#86efac}.hl-comment{color:#64748b;font-style:italic}.hl-function{color:#7dd3fc}.hl-number{color:#fbbf24}.hl-flag{color:#f472b6}details{margin-bottom:1.25rem;border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .2s var(--ease)}details[open]{border-color:var(--teal-200)}details summary{padding:1rem 1.25rem;font-weight:600;font-size:15px;cursor:pointer;background:var(--surface-alt);list-style:none;display:flex;align-items:center;gap:10px;transition:background .2s var(--ease);user-select:none}details summary::-webkit-details-marker{display:none}details summary::before{content:'';width:20px;height:20px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain;flex-shrink:0;transition:transform .2s var(--ease)}details[open] summary::before{transform:rotate(90deg)}details summary:hover{background:var(--teal-50)}.details-body{padding:1.25rem 1.5rem}.details-body p:last-child{margin-bottom:0}.video-card{margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}.video-wrapper{position:relative;padding-bottom:56.25%;height:0;background:#0f172a}.video-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}.video-caption{padding:12px 16px;background:var(--surface-alt);font-size:13px;color:var(--ink-muted);display:flex;align-items:center;gap:6px}.video-caption svg{width:14px;height:14px;color:var(--red-500)}.resource-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1rem;margin-bottom:1.5rem}.resource-card{display:flex;gap:14px;padding:1rem 1.25rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all .2s var(--ease);background:#fff}.resource-card:hover{border-color:var(--teal-300);background:var(--teal-50);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.04)}.resource-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}.resource-icon.docs{background:var(--blue-50);color:var(--blue-600)}.resource-icon.video{background:var(--red-50);color:var(--red-500)}.resource-icon.github{background:var(--ink);color:#fff}.resource-icon.article{background:var(--amber-50);color:var(--amber-600)}.resource-icon.pdf{background:var(--purple-50);color:var(--purple-600)}.resource-info{min-width:0}.resource-title{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:2px;line-height:1.4}.resource-desc{font-size:12px;color:var(--ink-muted);line-height:1.5}.assignment{border:2px solid var(--teal-200);border-radius:14px;padding:1.5rem 1.75rem;margin-bottom:1.5rem;background:linear-gradient(135deg,var(--teal-50) 0%,#fff 100%)}.assignment-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}.assignment-label{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--teal-700)}.assignment-difficulty{display:inline-flex;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:600}.difficulty-l1{background:var(--teal-100);color:var(--teal-800)}.difficulty-l2{background:var(--amber-100);color:var(--amber-600)}.difficulty-l3{background:var(--red-100);color:var(--red-600)}.assignment h4{font-size:1.05rem;font-weight:700;margin-bottom:.75rem}.assignment p{font-size:14px}.checklist{list-style:none;padding:0}.checklist li{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border-light);font-size:14px}.checklist li:last-child{border-bottom:none}.check-box{width:20px;height:20px;border-radius:6px;border:2px solid var(--border);flex-shrink:0;margin-top:1px;cursor:pointer;transition:all .15s var(--ease);display:flex;align-items:center;justify-content:center}.check-box:hover{border-color:var(--teal-500)}.check-box.checked{background:var(--teal-500);border-color:var(--teal-500)}.check-box.checked::after{content:'';width:10px;height:10px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain}.diagram{margin:1.5rem 0;padding:2rem;background:var(--surface-alt);border:1px solid var(--border);border-radius:14px;overflow-x:auto}.diagram pre{background:transparent;color:var(--ink);padding:0;font-size:13px;line-height:1.6}.chapter-footer{border-top:1px solid var(--border);padding:3rem 2rem;background:var(--surface-alt)}.chapter-footer-inner{max-width:var(--content-max);margin:0 auto}.footer-nav{display:flex;justify-content:space-between;align-items:center;gap:1rem}.footer-nav-link{display:flex;flex-direction:column;gap:4px;padding:1rem 1.5rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all .2s var(--ease);max-width:320px;background:#fff}.footer-nav-link:hover{border-color:var(--teal-300);box-shadow:0 4px 12px rgba(0,0,0,.04)}.footer-nav-label{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--teal-600)}.footer-nav-title{font-size:15px;font-weight:600;color:var(--ink)}.footer-brand{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border);font-size:13px;color:var(--ink-muted)}@media(max-width:960px){.main-layout{grid-template-columns:1fr}.sidebar{display:none}.resource-grid{grid-template-columns:1fr}}@media(max-width:640px){.hero{padding:2.5rem 1.25rem 2rem}.main-layout{padding:0 1.25rem}.content{padding:2rem 0 4rem}pre{padding:1rem;font-size:12.5px}.footer-nav{flex-direction:column}.footer-nav-link{max-width:100%;width:100%}}@media print{.top-nav,.sidebar,.progress-bar{display:none}.main-layout{display:block}.content{padding:0}.hero{background:#fff;border:none}pre{background:#f1f5f9;color:var(--ink);border:1px solid var(--border)}}
+  <style>
+    /* ═══════════════════════════════════════════════
+       ILA DESIGN SYSTEM — v1.0
+       Iksha Learning Academy
+       ═══════════════════════════════════════════════ */
+
+    :root {
+      /* Palette */
+      --ink:        #0f172a;
+      --ink-light:  #334155;
+      --ink-muted:  #64748b;
+      --surface:    #ffffff;
+      --surface-alt:#f8fafc;
+      --surface-warm:#fffbeb;
+      --border:     #e2e8f0;
+      --border-light:#f1f5f9;
+
+      /* Brand */
+      --teal-50:  #f0fdfa;
+      --teal-100: #ccfbf1;
+      --teal-200: #99f6e4;
+      --teal-500: #14b8a6;
+      --teal-600: #0d9488;
+      --teal-700: #0f766e;
+      --teal-800: #115e59;
+      --teal-900: #134e4a;
+
+      --blue-50:  #eff6ff;
+      --blue-100: #dbeafe;
+      --blue-500: #3b82f6;
+      --blue-600: #2563eb;
+      --blue-700: #1d4ed8;
+
+      --amber-50:  #fffbeb;
+      --amber-100: #fef3c7;
+      --amber-500: #f59e0b;
+      --amber-600: #d97706;
+
+      --red-50:   #fef2f2;
+      --red-100:  #fee2e2;
+      --red-500:  #ef4444;
+      --red-600:  #dc2626;
+
+      --purple-50:  #faf5ff;
+      --purple-100: #f3e8ff;
+      --purple-500: #a855f7;
+      --purple-600: #9333ea;
+
+      /* Typography */
+      --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-serif: 'Instrument Serif', Georgia, serif;
+      --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
+
+      /* Spacing */
+      --content-max: 780px;
+      --sidebar-width: 280px;
+
+      /* Transitions */
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--ink);
+      background: var(--surface);
+    }
+
+    /* ── PROGRESS BAR ─────────────────────────── */
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--teal-500), var(--blue-500));
+      z-index: 1000;
+      transition: width 0.15s var(--ease);
+    }
+
+    /* ── TOP NAV ──────────────────────────────── */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+    }
+
+    .top-nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--teal-800);
+    }
+
+    .nav-brand-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--teal-600), var(--teal-800));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .nav-brand-text {
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-chapter-nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      color: var(--ink-muted);
+      border: 1px solid var(--border);
+      background: white;
+      transition: all 0.2s var(--ease);
+      cursor: pointer;
+    }
+
+    .nav-btn:hover {
+      color: var(--ink);
+      border-color: var(--teal-500);
+      background: var(--teal-50);
+    }
+
+    .nav-btn.disabled {
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    .nav-current {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink-light);
+      padding: 0 4px;
+    }
+
+    /* ── HERO ─────────────────────────────────── */
+    .hero {
+      background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 4rem 2rem 3.5rem;
+    }
+
+    .hero-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
+    }
+
+    .hero-chapter-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--teal-700);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 1rem;
+    }
+
+    .hero-chapter-label span {
+      background: var(--teal-100);
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+
+    .hero h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(2.4rem, 5vw, 3.2rem);
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: 1rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: var(--ink-light);
+      line-height: 1.65;
+      max-width: 640px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .hero-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
+    .hero-meta-item svg {
+      width: 16px;
+      height: 16px;
+      color: var(--teal-600);
+    }
+
+    /* ── MAIN LAYOUT ──────────────────────────── */
+    .main-layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr var(--sidebar-width);
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .content {
+      padding: 3rem 0 6rem;
+      min-width: 0;
+    }
+
+    /* ── SIDEBAR TOC ──────────────────────────── */
+    .sidebar {
+      position: sticky;
+      top: 76px;
+      padding: 2rem 0;
+      max-height: calc(100vh - 76px);
+      overflow-y: auto;
+    }
+
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-muted);
+      margin-bottom: 1rem;
+      padding-left: 14px;
+    }
+
+    .toc-list {
+      list-style: none;
+    }
+
+    .toc-item a {
+      display: block;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--ink-muted);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: all 0.2s var(--ease);
+      line-height: 1.5;
+    }
+
+    .toc-item a:hover {
+      color: var(--ink);
+      background: var(--surface-alt);
+    }
+
+    .toc-item a.active {
+      color: var(--teal-700);
+      border-left-color: var(--teal-500);
+      background: var(--teal-50);
+      font-weight: 500;
+    }
+
+    /* ── TYPOGRAPHY ────────────────────────────── */
+    .content h2 {
+      font-family: var(--font-serif);
+      font-size: 1.85rem;
+      font-weight: 400;
+      color: var(--ink);
+      margin: 3rem 0 1rem;
+      padding-top: 1rem;
+      scroll-margin-top: 80px;
+    }
+
+    .content h2:first-child {
+      margin-top: 0;
+    }
+
+    .content h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 2rem 0 0.75rem;
+      scroll-margin-top: 80px;
+    }
+
+    .content p {
+      margin-bottom: 1.25rem;
+      color: var(--ink-light);
+    }
+
+    .content strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .content a {
+      color: var(--teal-700);
+      text-decoration: underline;
+      text-decoration-color: var(--teal-200);
+      text-underline-offset: 3px;
+      transition: text-decoration-color 0.2s;
+    }
+
+    .content a:hover {
+      text-decoration-color: var(--teal-600);
+    }
+
+    .content ul, .content ol {
+      margin-bottom: 1.25rem;
+      padding-left: 1.5rem;
+    }
+
+    .content li {
+      margin-bottom: 0.5rem;
+      color: var(--ink-light);
+    }
+
+    .content li::marker {
+      color: var(--teal-500);
+    }
+
+    /* ── SECTION DIVIDER ──────────────────────── */
+    .section-divider {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 3rem 0;
+    }
+
+    /* ── CALLOUT BOXES ────────────────────────── */
+    .callout {
+      padding: 1.25rem 1.5rem;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+      border: 1px solid;
+      position: relative;
+    }
+
+    .callout-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .callout-header svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    .callout p:last-child { margin-bottom: 0; }
+
+    .callout.concept {
+      background: var(--blue-50);
+      border-color: var(--blue-100);
+    }
+    .callout.concept .callout-header { color: var(--blue-700); }
+
+    .callout.important {
+      background: var(--amber-50);
+      border-color: var(--amber-100);
+    }
+    .callout.important .callout-header { color: var(--amber-600); }
+
+    .callout.danger {
+      background: var(--red-50);
+      border-color: var(--red-100);
+    }
+    .callout.danger .callout-header { color: var(--red-600); }
+
+    .callout.tip {
+      background: var(--purple-50);
+      border-color: var(--purple-100);
+    }
+    .callout.tip .callout-header { color: var(--purple-600); }
+
+    .callout.success {
+      background: var(--teal-50);
+      border-color: var(--teal-100);
+    }
+    .callout.success .callout-header { color: var(--teal-700); }
+
+    /* ── CODE BLOCKS ──────────────────────────── */
+    .code-block {
+      position: relative;
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+      background: var(--surface-alt);
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--ink-muted);
+    }
+
+    .code-lang {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .code-copy {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: white;
+      font-size: 11px;
+      font-family: var(--font-sans);
+      color: var(--ink-muted);
+      cursor: pointer;
+      transition: all 0.2s var(--ease);
+    }
+
+    .code-copy:hover {
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    .code-copy.copied {
+      background: var(--teal-50);
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    pre {
+      margin: 0;
+      padding: 1.25rem 1.5rem;
+      overflow-x: auto;
+      background: #1e293b;
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: #e2e8f0;
+    }
+
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.88em;
+    }
+
+    p code, li code {
+      padding: 2px 7px;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      color: var(--teal-800);
+      font-size: 0.85em;
+    }
+
+    /* Syntax highlights (minimal) */
+    .hl-keyword  { color: #c084fc; }
+    .hl-string   { color: #86efac; }
+    .hl-comment  { color: #64748b; font-style: italic; }
+    .hl-function { color: #7dd3fc; }
+    .hl-number   { color: #fbbf24; }
+    .hl-flag     { color: #f472b6; }
+
+    /* ── COLLAPSIBLE (DETAILS) ────────────────── */
+    details {
+      margin-bottom: 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.2s var(--ease);
+    }
+
+    details[open] {
+      border-color: var(--teal-200);
+    }
+
+    details summary {
+      padding: 1rem 1.25rem;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      background: var(--surface-alt);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.2s var(--ease);
+      user-select: none;
+    }
+
+    details summary::-webkit-details-marker { display: none; }
+
+    details summary::before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+      flex-shrink: 0;
+      transition: transform 0.2s var(--ease);
+    }
+
+    details[open] summary::before {
+      transform: rotate(90deg);
+    }
+
+    details summary:hover {
+      background: var(--teal-50);
+    }
+
+    .details-body {
+      padding: 1.25rem 1.5rem;
+    }
+
+    .details-body p:last-child { margin-bottom: 0; }
+
+    /* ── VIDEO EMBED ──────────────────────────── */
+    .video-card {
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      background: #0f172a;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .video-caption {
+      padding: 12px 16px;
+      background: var(--surface-alt);
+      font-size: 13px;
+      color: var(--ink-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .video-caption svg {
+      width: 14px;
+      height: 14px;
+      color: var(--red-500);
+    }
+
+    /* ── RESOURCE CARDS ───────────────────────── */
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .resource-card {
+      display: flex;
+      gap: 14px;
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      background: white;
+    }
+
+    .resource-card:hover {
+      border-color: var(--teal-300);
+      background: var(--teal-50);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .resource-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 18px;
+    }
+
+    .resource-icon.docs    { background: var(--blue-50);   color: var(--blue-600); }
+    .resource-icon.video   { background: var(--red-50);    color: var(--red-500); }
+    .resource-icon.github  { background: var(--ink);       color: white; }
+    .resource-icon.article { background: var(--amber-50);  color: var(--amber-600); }
+    .resource-icon.pdf     { background: var(--purple-50); color: var(--purple-600); }
+
+    .resource-info {
+      min-width: 0;
+    }
+
+    .resource-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 2px;
+      line-height: 1.4;
+    }
+
+    .resource-desc {
+      font-size: 12px;
+      color: var(--ink-muted);
+      line-height: 1.5;
+    }
+
+    /* ── ASSIGNMENT CARDS ─────────────────────── */
+    .assignment {
+      border: 2px solid var(--teal-200);
+      border-radius: 14px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--teal-50) 0%, white 100%);
+    }
+
+    .assignment-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .assignment-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--teal-700);
+    }
+
+    .assignment-difficulty {
+      display: inline-flex;
+      padding: 4px 10px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .difficulty-l1 { background: var(--teal-100); color: var(--teal-800); }
+    .difficulty-l2 { background: var(--amber-100); color: var(--amber-600); }
+    .difficulty-l3 { background: var(--red-100); color: var(--red-600); }
+
+    .assignment h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .assignment p {
+      font-size: 14px;
+    }
+
+    .checklist {
+      list-style: none;
+      padding: 0;
+    }
+
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-light);
+      font-size: 14px;
+    }
+
+    .checklist li:last-child { border-bottom: none; }
+
+    .check-box {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      border: 2px solid var(--border);
+      flex-shrink: 0;
+      margin-top: 1px;
+      cursor: pointer;
+      transition: all 0.15s var(--ease);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .check-box:hover {
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked {
+      background: var(--teal-500);
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+    }
+
+    /* ── ARCHITECTURE DIAGRAM ─────────────────── */
+    .diagram {
+      margin: 1.5rem 0;
+      padding: 2rem;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow-x: auto;
+    }
+
+    .diagram pre {
+      background: transparent;
+      color: var(--ink);
+      padding: 0;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .diagram-caption {
+      margin-top: 1rem;
+      font-size: 12px;
+      color: var(--ink-muted);
+      text-align: center;
+      font-style: italic;
+    }
+
+    /* ── FOOTER ───────────────────────────────── */
+    .chapter-footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      background: var(--surface-alt);
+    }
+
+    .chapter-footer-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
+    }
+
+    .footer-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .footer-nav-link {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 1rem 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      max-width: 320px;
+      background: white;
+    }
+
+    .footer-nav-link:hover {
+      border-color: var(--teal-300);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .footer-nav-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--teal-600);
+    }
+
+    .footer-nav-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .footer-brand {
+      text-align: center;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
+    /* ── RESPONSIVE ───────────────────────────── */
+    @media (max-width: 960px) {
+      .main-layout {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        display: none;
+      }
+      .resource-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero { padding: 2.5rem 1.25rem 2rem; }
+      .main-layout { padding: 0 1.25rem; }
+      .content { padding: 2rem 0 4rem; }
+      pre { padding: 1rem; font-size: 12.5px; }
+      .footer-nav { flex-direction: column; }
+      .footer-nav-link { max-width: 100%; width: 100%; }
+    }
+
+    /* ── PRINT ────────────────────────────────── */
+    @media print {
+      .top-nav, .sidebar, .progress-bar { display: none; }
+      .main-layout { display: block; }
+      .content { padding: 0; }
+      .hero { background: white; border: none; }
+      pre { background: #f1f5f9; color: var(--ink); border: 1px solid var(--border); }
+    }
   </style>
 </head>
 <body>
   <div class="progress-bar" id="progressBar"></div>
+
   <nav class="top-nav">
     <div class="top-nav-inner">
-      <a class="nav-brand" href="index.html"><div class="nav-brand-icon">ILA</div><span class="nav-brand-text">Iksha Learning Academy</span></a>
-      <div class="nav-chapter-nav"><a class="nav-btn" href="chapter-01.html">&larr; Previous</a><span class="nav-current">02 / 10</span><a class="nav-btn" href="chapter-03.html">Next &rarr;</a></div>
+      <a class="nav-brand" href="index.html">
+        <div class="nav-brand-icon">ILA</div>
+        <span class="nav-brand-text">Iksha Learning Academy</span>
+      </a>
+      <div class="nav-chapter-nav">
+        <a class="nav-btn" href="chapter-01.html">&larr; Previous</a>
+        <span class="nav-current">02 / 10</span>
+        <a class="nav-btn" href="chapter-03.html">Next &rarr;</a>
+      </div>
     </div>
   </nav>
+
   <header class="hero">
     <div class="hero-inner">
-      <div class="hero-chapter-label"><span>Chapter 02</span> &middot; Phase 1: Advanced Architectures</div>
-      <h1>Transfer Learning and Fine-Tuning</h1>
-      <p class="hero-subtitle">Leverage pre-trained models for your tasks: domain adaptation strategies, feature extraction vs fine-tuning, few-shot learning, and practical techniques for limited data scenarios.</p>
+      <div class="hero-chapter-label">
+        <span>Chapter 02</span> &middot; Phase 1: Advanced Architectures
+      </div>
+      <h1>Transformers and Large Language Models</h1>
+      <p class="hero-subtitle">
+        Understand the architecture that redefined NLP and is now conquering vision, audio, and robotics.
+        From self-attention mechanics to fine-tuning billion-parameter models with LoRA, this chapter gives
+        you the working knowledge to build on top of LLMs rather than just calling APIs.
+      </p>
       <div class="hero-meta">
-        <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Estimated: 3&ndash;4 days</div>
-        <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>3 Advancement Levels</div>
-        <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>3 Assignments</div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Estimated: 4&ndash;5 days
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          6 Core Concepts
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          3 Assignments
+        </div>
       </div>
     </div>
   </header>
+
   <div class="main-layout">
     <main class="content">
+
       <h2 id="why-this-matters">Why This Matters</h2>
 
-      <p>Training from scratch requires massive data and compute. Transfer learning lets you leverage pre-trained models, fine-tuning them for your specific task with much less data. This is how most production ML systems are built today.</p>
+      <p>
+        The Transformer architecture, introduced in the 2017 paper "Attention Is All You Need," replaced
+        recurrent networks as the dominant sequence model almost overnight. Its key innovation &mdash;
+        replacing sequential computation with parallel self-attention &mdash; enables training on sequences
+        of unprecedented length and unlocks massive parallelism on modern GPUs.
+      </p>
 
-      <p>The concepts in this chapter will be referenced throughout the rest of the course. Take the time to build deep understanding, not just surface-level familiarity.</p>
+      <p>
+        Today, Transformers are not just an NLP architecture. They power vision models (ViT), protein
+        folding (AlphaFold), code generation (Codex), and multimodal systems (GPT-4, Gemini). Understanding
+        the Transformer deeply &mdash; not just at the API level, but at the weight-matrix level &mdash; is
+        the single most important skill for a modern ML engineer.
+      </p>
 
       <div class="callout concept">
-        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg> Key Insight</div>
-        <p>Fine-tuning the last few layers of a pre-trained model often outperforms training from scratch, even with 10x less data. The pre-trained features capture universal patterns that transfer across domains.</p>
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Key Insight
+        </div>
+        <p>
+          Transformers replaced recurrence with <strong>attention</strong>, making every position in a sequence
+          directly accessible to every other position. This removes the sequential bottleneck of RNNs/LSTMs and
+          makes training embarrassingly parallel. The cost is quadratic memory in sequence length &mdash; a
+          trade-off that drives much of current research (FlashAttention, ring attention, sparse attention).
+        </p>
       </div>
 
       <hr class="section-divider">
 
       <h2 id="key-concepts">Key Concepts</h2>
 
+      <h3 id="self-attention">1. Self-Attention Mechanism</h3>
 
-      <h3 id="pretrained-models">1. Pre-trained Models</h3>
-
-      <p>Pre-trained Models is a critical concept in this domain. Understanding it deeply will differentiate you from practitioners who only know the API calls. Let us explore the theory, the implementation, and the practical considerations.</p>
-
-      <p>In practice, pre-trained models requires careful attention to both theoretical foundations and engineering details. The code below demonstrates the core patterns you will use in production systems.</p>
-
-      <div class="code-block">
-        <div class="code-header">
-          <span class="code-lang">python</span>
-          <button class="code-copy" onclick="copyCode(this)">Copy</button>
-        </div>
-<pre>
-<span class="hl-keyword">import</span> numpy <span class="hl-keyword">as</span> np
-<span class="hl-keyword">import</span> torch
-<span class="hl-keyword">import</span> torch.nn <span class="hl-keyword">as</span> nn
-
-<span class="hl-comment"># Pre-trained Models — core implementation</span>
-<span class="hl-keyword">class</span> <span class="hl-function">PretrainedModels</span>:
-    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, config=<span class="hl-keyword">None</span>):
-        self.config = config or {}
-        self.model = <span class="hl-keyword">None</span>
-        self.history = []
-
-    <span class="hl-keyword">def</span> <span class="hl-function">fit</span>(self, X, y):
-        <span class="hl-string">"""Train the model on input data."""</span>
-        <span class="hl-function">print</span>(<span class="hl-string">f"Training on {X.shape[0]} samples..."</span>)
-        <span class="hl-comment"># Implementation specific to Pre-trained Models</span>
-        <span class="hl-keyword">return</span> self
-
-    <span class="hl-keyword">def</span> <span class="hl-function">predict</span>(self, X):
-        <span class="hl-string">"""Generate predictions."""</span>
-        <span class="hl-keyword">return</span> self.model(X)
-
-    <span class="hl-keyword">def</span> <span class="hl-function">evaluate</span>(self, X, y):
-        <span class="hl-string">"""Evaluate model performance."""</span>
-        preds = self.predict(X)
-        accuracy = (preds == y).mean()
-        <span class="hl-function">print</span>(<span class="hl-string">f"Accuracy: {accuracy:.4f}"</span>)
-        <span class="hl-keyword">return</span> accuracy
-</pre>
-      </div>
-
-
-      <h3 id="fine-tuning">2. Fine-Tuning Strategies</h3>
-
-      <p>Fine-Tuning Strategies is a critical concept in this domain. Understanding it deeply will differentiate you from practitioners who only know the API calls. Let us explore the theory, the implementation, and the practical considerations.</p>
-
-      <p>In practice, fine-tuning strategies requires careful attention to both theoretical foundations and engineering details. The code below demonstrates the core patterns you will use in production systems.</p>
+      <p>
+        Self-attention computes relationships between all pairs of positions in a sequence. Each token
+        generates three vectors: a <strong>query</strong> (what am I looking for?), a <strong>key</strong>
+        (what do I represent?), and a <strong>value</strong> (what information do I carry?). The attention
+        weight between two positions is the softmax-normalized dot product of the query of one position
+        with the key of the other, scaled by the square root of the key dimension.
+      </p>
 
       <div class="code-block">
         <div class="code-header">
@@ -103,42 +987,76 @@
           <button class="code-copy" onclick="copyCode(this)">Copy</button>
         </div>
 <pre>
-<span class="hl-keyword">import</span> numpy <span class="hl-keyword">as</span> np
 <span class="hl-keyword">import</span> torch
 <span class="hl-keyword">import</span> torch.nn <span class="hl-keyword">as</span> nn
+<span class="hl-keyword">import</span> torch.nn.functional <span class="hl-keyword">as</span> F
+<span class="hl-keyword">import</span> math
 
-<span class="hl-comment"># Fine-Tuning Strategies — core implementation</span>
-<span class="hl-keyword">class</span> <span class="hl-function">FineTuning</span>:
-    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, config=<span class="hl-keyword">None</span>):
-        self.config = config or {}
-        self.model = <span class="hl-keyword">None</span>
-        self.history = []
+<span class="hl-keyword">class</span> <span class="hl-function">SelfAttention</span>(nn.Module):
+    <span class="hl-string">"""Single-head self-attention with causal masking support."""</span>
 
-    <span class="hl-keyword">def</span> <span class="hl-function">fit</span>(self, X, y):
-        <span class="hl-string">"""Train the model on input data."""</span>
-        <span class="hl-function">print</span>(<span class="hl-string">f"Training on {X.shape[0]} samples..."</span>)
-        <span class="hl-comment"># Implementation specific to Fine-Tuning Strategies</span>
-        <span class="hl-keyword">return</span> self
+    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, d_model, dropout=<span class="hl-number">0.1</span>):
+        <span class="hl-function">super</span>().__init__()
+        self.d_model = d_model
+        self.qkv = nn.Linear(d_model, <span class="hl-number">3</span> * d_model)
+        self.proj = nn.Linear(d_model, d_model)
+        self.dropout = nn.Dropout(dropout)
 
-    <span class="hl-keyword">def</span> <span class="hl-function">predict</span>(self, X):
-        <span class="hl-string">"""Generate predictions."""</span>
-        <span class="hl-keyword">return</span> self.model(X)
+    <span class="hl-keyword">def</span> <span class="hl-function">forward</span>(self, x, causal=<span class="hl-keyword">False</span>):
+        B, T, C = x.shape
 
-    <span class="hl-keyword">def</span> <span class="hl-function">evaluate</span>(self, X, y):
-        <span class="hl-string">"""Evaluate model performance."""</span>
-        preds = self.predict(X)
-        accuracy = (preds == y).mean()
-        <span class="hl-function">print</span>(<span class="hl-string">f"Accuracy: {accuracy:.4f}"</span>)
-        <span class="hl-keyword">return</span> accuracy
+        <span class="hl-comment"># Compute Q, K, V in a single matrix multiply</span>
+        qkv = self.qkv(x).reshape(B, T, <span class="hl-number">3</span>, C).permute(<span class="hl-number">2</span>, <span class="hl-number">0</span>, <span class="hl-number">1</span>, <span class="hl-number">3</span>)
+        q, k, v = qkv[<span class="hl-number">0</span>], qkv[<span class="hl-number">1</span>], qkv[<span class="hl-number">2</span>]
+
+        <span class="hl-comment"># Scaled dot-product attention</span>
+        scores = torch.matmul(q, k.transpose(-<span class="hl-number">2</span>, -<span class="hl-number">1</span>)) / math.sqrt(C)
+
+        <span class="hl-comment"># Causal mask: prevent attending to future tokens</span>
+        <span class="hl-keyword">if</span> causal:
+            mask = torch.triu(torch.ones(T, T, device=x.device), diagonal=<span class="hl-number">1</span>).bool()
+            scores = scores.masked_fill(mask, <span class="hl-keyword">float</span>(<span class="hl-string">'-inf'</span>))
+
+        attn = F.softmax(scores, dim=-<span class="hl-number">1</span>)
+        attn = self.dropout(attn)
+
+        out = torch.matmul(attn, v)
+        <span class="hl-keyword">return</span> self.proj(out)
 </pre>
       </div>
 
+      <h3 id="transformer-architecture">2. Transformer Architecture</h3>
 
-      <h3 id="domain-adaptation">3. Domain Adaptation</h3>
+      <p>
+        The full Transformer consists of an <strong>encoder</strong> (bidirectional attention over input)
+        and a <strong>decoder</strong> (causal attention over output, with cross-attention to encoder).
+        Each layer contains multi-head self-attention followed by a position-wise feed-forward network,
+        with layer normalization and residual connections wrapping both sub-layers.
+      </p>
 
-      <p>Domain Adaptation is a critical concept in this domain. Understanding it deeply will differentiate you from practitioners who only know the API calls. Let us explore the theory, the implementation, and the practical considerations.</p>
+      <div class="diagram">
+<pre>
+  ┌─────────────────────────────────────────────────┐
+  │               Transformer Block                  │
+  │                                                  │
+  │  Input ──▶ LayerNorm ──▶ Multi-Head Attention    │
+  │    │                          │                  │
+  │    └────────── (+) ◀──────────┘  (residual)      │
+  │                 │                                │
+  │                 ▼                                │
+  │         LayerNorm ──▶ Feed-Forward (MLP)         │
+  │    │                          │                  │
+  │    └────────── (+) ◀──────────┘  (residual)      │
+  │                 │                                │
+  │                 ▼                                │
+  │              Output                              │
+  └─────────────────────────────────────────────────┘
 
-      <p>In practice, domain adaptation requires careful attention to both theoretical foundations and engineering details. The code below demonstrates the core patterns you will use in production systems.</p>
+  Feed-Forward: Linear(d_model, 4*d_model) -> GELU -> Linear(4*d_model, d_model)
+  Positional encoding added to input embeddings (sinusoidal or learned)
+</pre>
+        <div class="diagram-caption">Figure 1: A single Transformer block with pre-norm architecture (used in GPT-2+)</div>
+      </div>
 
       <div class="code-block">
         <div class="code-header">
@@ -146,42 +1064,93 @@
           <button class="code-copy" onclick="copyCode(this)">Copy</button>
         </div>
 <pre>
-<span class="hl-keyword">import</span> numpy <span class="hl-keyword">as</span> np
 <span class="hl-keyword">import</span> torch
 <span class="hl-keyword">import</span> torch.nn <span class="hl-keyword">as</span> nn
 
-<span class="hl-comment"># Domain Adaptation — core implementation</span>
-<span class="hl-keyword">class</span> <span class="hl-function">DomainAdaptation</span>:
-    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, config=<span class="hl-keyword">None</span>):
-        self.config = config or {}
-        self.model = <span class="hl-keyword">None</span>
-        self.history = []
+<span class="hl-keyword">class</span> <span class="hl-function">TransformerBlock</span>(nn.Module):
+    <span class="hl-string">"""Pre-norm Transformer block (GPT-2 style)."""</span>
 
-    <span class="hl-keyword">def</span> <span class="hl-function">fit</span>(self, X, y):
-        <span class="hl-string">"""Train the model on input data."""</span>
-        <span class="hl-function">print</span>(<span class="hl-string">f"Training on {X.shape[0]} samples..."</span>)
-        <span class="hl-comment"># Implementation specific to Domain Adaptation</span>
-        <span class="hl-keyword">return</span> self
+    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, d_model, n_heads, dropout=<span class="hl-number">0.1</span>):
+        <span class="hl-function">super</span>().__init__()
+        self.ln1 = nn.LayerNorm(d_model)
+        self.attn = nn.MultiheadAttention(d_model, n_heads,
+                                          dropout=dropout, batch_first=<span class="hl-keyword">True</span>)
+        self.ln2 = nn.LayerNorm(d_model)
+        self.mlp = nn.Sequential(
+            nn.Linear(d_model, <span class="hl-number">4</span> * d_model),
+            nn.GELU(),
+            nn.Dropout(dropout),
+            nn.Linear(<span class="hl-number">4</span> * d_model, d_model),
+            nn.Dropout(dropout),
+        )
 
-    <span class="hl-keyword">def</span> <span class="hl-function">predict</span>(self, X):
-        <span class="hl-string">"""Generate predictions."""</span>
-        <span class="hl-keyword">return</span> self.model(X)
+    <span class="hl-keyword">def</span> <span class="hl-function">forward</span>(self, x, attn_mask=<span class="hl-keyword">None</span>):
+        <span class="hl-comment"># Self-attention with residual</span>
+        normed = self.ln1(x)
+        attn_out, _ = self.attn(normed, normed, normed, attn_mask=attn_mask)
+        x = x + attn_out
 
-    <span class="hl-keyword">def</span> <span class="hl-function">evaluate</span>(self, X, y):
-        <span class="hl-string">"""Evaluate model performance."""</span>
-        preds = self.predict(X)
-        accuracy = (preds == y).mean()
-        <span class="hl-function">print</span>(<span class="hl-string">f"Accuracy: {accuracy:.4f}"</span>)
-        <span class="hl-keyword">return</span> accuracy
+        <span class="hl-comment"># Feed-forward with residual</span>
+        x = x + self.mlp(self.ln2(x))
+        <span class="hl-keyword">return</span> x
+
+
+<span class="hl-keyword">class</span> <span class="hl-function">GPTModel</span>(nn.Module):
+    <span class="hl-string">"""Minimal GPT-style decoder-only Transformer."""</span>
+
+    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, vocab_size, d_model=<span class="hl-number">768</span>, n_heads=<span class="hl-number">12</span>,
+                 n_layers=<span class="hl-number">12</span>, max_seq_len=<span class="hl-number">1024</span>, dropout=<span class="hl-number">0.1</span>):
+        <span class="hl-function">super</span>().__init__()
+        self.token_emb = nn.Embedding(vocab_size, d_model)
+        self.pos_emb = nn.Embedding(max_seq_len, d_model)
+        self.drop = nn.Dropout(dropout)
+
+        self.blocks = nn.ModuleList([
+            TransformerBlock(d_model, n_heads, dropout)
+            <span class="hl-keyword">for</span> _ <span class="hl-keyword">in</span> <span class="hl-function">range</span>(n_layers)
+        ])
+
+        self.ln_f = nn.LayerNorm(d_model)
+        self.head = nn.Linear(d_model, vocab_size, bias=<span class="hl-keyword">False</span>)
+
+        <span class="hl-comment"># Weight tying: share embedding and output projection</span>
+        self.head.weight = self.token_emb.weight
+
+    <span class="hl-keyword">def</span> <span class="hl-function">forward</span>(self, idx):
+        B, T = idx.shape
+        positions = torch.arange(T, device=idx.device).unsqueeze(<span class="hl-number">0</span>)
+
+        x = self.drop(self.token_emb(idx) + self.pos_emb(positions))
+
+        <span class="hl-comment"># Causal mask for autoregressive generation</span>
+        causal_mask = torch.triu(
+            torch.ones(T, T, device=idx.device), diagonal=<span class="hl-number">1</span>
+        ).bool()
+
+        <span class="hl-keyword">for</span> block <span class="hl-keyword">in</span> self.blocks:
+            x = block(x, attn_mask=causal_mask)
+
+        x = self.ln_f(x)
+        logits = self.head(x)
+        <span class="hl-keyword">return</span> logits
 </pre>
       </div>
 
+      <h3 id="bert-mlm">3. BERT and Masked Language Modeling</h3>
 
-      <h3 id="few-shot">4. Few-Shot Learning</h3>
+      <p>
+        BERT (Bidirectional Encoder Representations from Transformers) uses the encoder side of the
+        Transformer. Its pre-training objective is <strong>Masked Language Modeling (MLM)</strong>: randomly
+        mask 15% of input tokens and train the model to predict them. Because attention is bidirectional,
+        BERT can use both left and right context to fill in the blanks, producing rich contextual embeddings.
+      </p>
 
-      <p>Few-Shot Learning is a critical concept in this domain. Understanding it deeply will differentiate you from practitioners who only know the API calls. Let us explore the theory, the implementation, and the practical considerations.</p>
-
-      <p>In practice, few-shot learning requires careful attention to both theoretical foundations and engineering details. The code below demonstrates the core patterns you will use in production systems.</p>
+      <p>
+        BERT also uses a <strong>Next Sentence Prediction (NSP)</strong> task during pre-training, though
+        later work (RoBERTa) showed this was unnecessary. The key insight is that bidirectional context
+        produces better representations for understanding tasks (classification, NER, QA) than unidirectional
+        models, at the cost of not being able to generate text autoregressively.
+      </p>
 
       <div class="code-block">
         <div class="code-header">
@@ -189,42 +1158,56 @@
           <button class="code-copy" onclick="copyCode(this)">Copy</button>
         </div>
 <pre>
-<span class="hl-keyword">import</span> numpy <span class="hl-keyword">as</span> np
+<span class="hl-keyword">from</span> transformers <span class="hl-keyword">import</span> BertTokenizer, BertForMaskedLM
 <span class="hl-keyword">import</span> torch
-<span class="hl-keyword">import</span> torch.nn <span class="hl-keyword">as</span> nn
 
-<span class="hl-comment"># Few-Shot Learning — core implementation</span>
-<span class="hl-keyword">class</span> <span class="hl-function">FewShot</span>:
-    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, config=<span class="hl-keyword">None</span>):
-        self.config = config or {}
-        self.model = <span class="hl-keyword">None</span>
-        self.history = []
+<span class="hl-comment"># Load pre-trained BERT</span>
+tokenizer = BertTokenizer.from_pretrained(<span class="hl-string">'bert-base-uncased'</span>)
+model = BertForMaskedLM.from_pretrained(<span class="hl-string">'bert-base-uncased'</span>)
 
-    <span class="hl-keyword">def</span> <span class="hl-function">fit</span>(self, X, y):
-        <span class="hl-string">"""Train the model on input data."""</span>
-        <span class="hl-function">print</span>(<span class="hl-string">f"Training on {X.shape[0]} samples..."</span>)
-        <span class="hl-comment"># Implementation specific to Few-Shot Learning</span>
-        <span class="hl-keyword">return</span> self
+<span class="hl-comment"># Masked language modeling example</span>
+text = <span class="hl-string">"The capital of France is [MASK]."</span>
+inputs = tokenizer(text, return_tensors=<span class="hl-string">'pt'</span>)
 
-    <span class="hl-keyword">def</span> <span class="hl-function">predict</span>(self, X):
-        <span class="hl-string">"""Generate predictions."""</span>
-        <span class="hl-keyword">return</span> self.model(X)
+<span class="hl-keyword">with</span> torch.no_grad():
+    outputs = model(**inputs)
+    predictions = outputs.logits
 
-    <span class="hl-keyword">def</span> <span class="hl-function">evaluate</span>(self, X, y):
-        <span class="hl-string">"""Evaluate model performance."""</span>
-        preds = self.predict(X)
-        accuracy = (preds == y).mean()
-        <span class="hl-function">print</span>(<span class="hl-string">f"Accuracy: {accuracy:.4f}"</span>)
-        <span class="hl-keyword">return</span> accuracy
+<span class="hl-comment"># Get the predicted token for [MASK]</span>
+mask_idx = (inputs[<span class="hl-string">'input_ids'</span>] == tokenizer.mask_token_id).nonzero(as_tuple=<span class="hl-keyword">True</span>)[<span class="hl-number">1</span>]
+predicted_id = predictions[<span class="hl-number">0</span>, mask_idx].argmax(dim=-<span class="hl-number">1</span>)
+predicted_token = tokenizer.decode(predicted_id)
+<span class="hl-function">print</span>(<span class="hl-string">f"Predicted: </span>{predicted_token}<span class="hl-string">"</span>)  <span class="hl-comment"># "paris"</span>
+
+
+<span class="hl-comment"># Fine-tuning BERT for classification</span>
+<span class="hl-keyword">from</span> transformers <span class="hl-keyword">import</span> BertForSequenceClassification
+
+classifier = BertForSequenceClassification.from_pretrained(
+    <span class="hl-string">'bert-base-uncased'</span>, num_labels=<span class="hl-number">3</span>
+)
+
+<span class="hl-comment"># The [CLS] token embedding is used as the sentence representation</span>
+<span class="hl-comment"># A classification head (linear layer) is added on top</span>
+inputs = tokenizer(<span class="hl-string">"This movie was excellent!"</span>, return_tensors=<span class="hl-string">'pt'</span>)
+outputs = classifier(**inputs)
+logits = outputs.logits  <span class="hl-comment"># shape: (1, 3) for 3 classes</span>
 </pre>
       </div>
 
+      <h3 id="gpt-autoregressive">4. GPT and Autoregressive Generation</h3>
 
-      <h3 id="data-augmentation">5. Advanced Data Augmentation</h3>
+      <p>
+        GPT (Generative Pre-trained Transformer) uses the decoder side with <strong>causal masking</strong>:
+        each token can only attend to tokens that came before it. This enables autoregressive text generation
+        &mdash; predicting one token at a time, feeding each prediction back as input for the next step.
+      </p>
 
-      <p>Advanced Data Augmentation is a critical concept in this domain. Understanding it deeply will differentiate you from practitioners who only know the API calls. Let us explore the theory, the implementation, and the practical considerations.</p>
-
-      <p>In practice, advanced data augmentation requires careful attention to both theoretical foundations and engineering details. The code below demonstrates the core patterns you will use in production systems.</p>
+      <p>
+        The pre-training objective is simply <strong>next-token prediction</strong>: given a sequence of tokens,
+        predict the next one. This seemingly simple objective, applied to massive datasets with massive models,
+        produces emergent capabilities including reasoning, coding, and following complex instructions.
+      </p>
 
       <div class="code-block">
         <div class="code-header">
@@ -232,42 +1215,66 @@
           <button class="code-copy" onclick="copyCode(this)">Copy</button>
         </div>
 <pre>
-<span class="hl-keyword">import</span> numpy <span class="hl-keyword">as</span> np
 <span class="hl-keyword">import</span> torch
-<span class="hl-keyword">import</span> torch.nn <span class="hl-keyword">as</span> nn
 
-<span class="hl-comment"># Advanced Data Augmentation — core implementation</span>
-<span class="hl-keyword">class</span> <span class="hl-function">DataAugmentation</span>:
-    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, config=<span class="hl-keyword">None</span>):
-        self.config = config or {}
-        self.model = <span class="hl-keyword">None</span>
-        self.history = []
+<span class="hl-keyword">def</span> <span class="hl-function">generate</span>(model, tokenizer, prompt, max_tokens=<span class="hl-number">100</span>, temperature=<span class="hl-number">0.8</span>, top_k=<span class="hl-number">50</span>):
+    <span class="hl-string">"""Autoregressive text generation with top-k sampling."""</span>
+    model.<span class="hl-function">eval</span>()
+    input_ids = tokenizer.encode(prompt, return_tensors=<span class="hl-string">'pt'</span>)
 
-    <span class="hl-keyword">def</span> <span class="hl-function">fit</span>(self, X, y):
-        <span class="hl-string">"""Train the model on input data."""</span>
-        <span class="hl-function">print</span>(<span class="hl-string">f"Training on {X.shape[0]} samples..."</span>)
-        <span class="hl-comment"># Implementation specific to Advanced Data Augmentation</span>
-        <span class="hl-keyword">return</span> self
+    <span class="hl-keyword">for</span> _ <span class="hl-keyword">in</span> <span class="hl-function">range</span>(max_tokens):
+        <span class="hl-keyword">with</span> torch.no_grad():
+            logits = model(input_ids).logits[:, -<span class="hl-number">1</span>, :]  <span class="hl-comment"># last position</span>
 
-    <span class="hl-keyword">def</span> <span class="hl-function">predict</span>(self, X):
-        <span class="hl-string">"""Generate predictions."""</span>
-        <span class="hl-keyword">return</span> self.model(X)
+        <span class="hl-comment"># Temperature scaling</span>
+        logits = logits / temperature
 
-    <span class="hl-keyword">def</span> <span class="hl-function">evaluate</span>(self, X, y):
-        <span class="hl-string">"""Evaluate model performance."""</span>
-        preds = self.predict(X)
-        accuracy = (preds == y).mean()
-        <span class="hl-function">print</span>(<span class="hl-string">f"Accuracy: {accuracy:.4f}"</span>)
-        <span class="hl-keyword">return</span> accuracy
+        <span class="hl-comment"># Top-k filtering</span>
+        top_k_logits, top_k_indices = torch.topk(logits, top_k)
+        probs = torch.softmax(top_k_logits, dim=-<span class="hl-number">1</span>)
+
+        <span class="hl-comment"># Sample from the filtered distribution</span>
+        next_token_idx = torch.multinomial(probs, num_samples=<span class="hl-number">1</span>)
+        next_token = top_k_indices.gather(-<span class="hl-number">1</span>, next_token_idx)
+
+        input_ids = torch.cat([input_ids, next_token], dim=-<span class="hl-number">1</span>)
+
+        <span class="hl-comment"># Stop if we generate end-of-text token</span>
+        <span class="hl-keyword">if</span> next_token.item() == tokenizer.eos_token_id:
+            <span class="hl-keyword">break</span>
+
+    <span class="hl-keyword">return</span> tokenizer.decode(input_ids[<span class="hl-number">0</span>])
 </pre>
       </div>
 
+      <div class="callout important">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Temperature and Sampling
+        </div>
+        <p>
+          <strong>Temperature</strong> controls randomness: lower values (0.1&ndash;0.3) produce more deterministic
+          outputs, while higher values (0.8&ndash;1.2) produce more creative but potentially incoherent text.
+          <strong>Top-k</strong> limits sampling to the k most likely tokens, preventing the model from choosing
+          extremely unlikely tokens. <strong>Top-p</strong> (nucleus sampling) adaptively selects the smallest
+          set of tokens whose cumulative probability exceeds p.
+        </p>
+      </div>
 
-      <h3 id="knowledge-distillation">6. Knowledge Distillation</h3>
+      <h3 id="fine-tuning">5. Fine-Tuning Strategies (LoRA, QLoRA)</h3>
 
-      <p>Knowledge Distillation is a critical concept in this domain. Understanding it deeply will differentiate you from practitioners who only know the API calls. Let us explore the theory, the implementation, and the practical considerations.</p>
+      <p>
+        Fine-tuning a full LLM requires updating billions of parameters, which demands enormous GPU memory.
+        <strong>Parameter-Efficient Fine-Tuning (PEFT)</strong> methods solve this by updating only a small
+        subset of parameters while keeping the original weights frozen.
+      </p>
 
-      <p>In practice, knowledge distillation requires careful attention to both theoretical foundations and engineering details. The code below demonstrates the core patterns you will use in production systems.</p>
+      <p>
+        <strong>LoRA (Low-Rank Adaptation)</strong> injects trainable low-rank matrices into attention layers.
+        Instead of updating the full weight matrix W, LoRA adds a decomposition BA where B and A are much
+        smaller. <strong>QLoRA</strong> goes further by quantizing the frozen weights to 4-bit precision,
+        reducing memory by 4x while maintaining fine-tuning quality.
+      </p>
 
       <div class="code-block">
         <div class="code-header">
@@ -275,133 +1282,304 @@
           <button class="code-copy" onclick="copyCode(this)">Copy</button>
         </div>
 <pre>
-<span class="hl-keyword">import</span> numpy <span class="hl-keyword">as</span> np
+<span class="hl-keyword">from</span> peft <span class="hl-keyword">import</span> LoraConfig, get_peft_model, TaskType
+<span class="hl-keyword">from</span> transformers <span class="hl-keyword">import</span> AutoModelForCausalLM, AutoTokenizer
 <span class="hl-keyword">import</span> torch
-<span class="hl-keyword">import</span> torch.nn <span class="hl-keyword">as</span> nn
 
-<span class="hl-comment"># Knowledge Distillation — core implementation</span>
-<span class="hl-keyword">class</span> <span class="hl-function">KnowledgeDistillation</span>:
-    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, config=<span class="hl-keyword">None</span>):
-        self.config = config or {}
-        self.model = <span class="hl-keyword">None</span>
-        self.history = []
+<span class="hl-comment"># Load base model</span>
+model_name = <span class="hl-string">"meta-llama/Llama-2-7b-hf"</span>
+model = AutoModelForCausalLM.from_pretrained(
+    model_name,
+    torch_dtype=torch.float16,
+    device_map=<span class="hl-string">"auto"</span>,
+)
 
-    <span class="hl-keyword">def</span> <span class="hl-function">fit</span>(self, X, y):
-        <span class="hl-string">"""Train the model on input data."""</span>
-        <span class="hl-function">print</span>(<span class="hl-string">f"Training on {X.shape[0]} samples..."</span>)
-        <span class="hl-comment"># Implementation specific to Knowledge Distillation</span>
-        <span class="hl-keyword">return</span> self
+<span class="hl-comment"># Configure LoRA</span>
+lora_config = LoraConfig(
+    task_type=TaskType.CAUSAL_LM,
+    r=<span class="hl-number">16</span>,                  <span class="hl-comment"># rank of the low-rank matrices</span>
+    lora_alpha=<span class="hl-number">32</span>,          <span class="hl-comment"># scaling factor</span>
+    lora_dropout=<span class="hl-number">0.05</span>,      <span class="hl-comment"># dropout on LoRA layers</span>
+    target_modules=[        <span class="hl-comment"># which layers to adapt</span>
+        <span class="hl-string">"q_proj"</span>, <span class="hl-string">"v_proj"</span>,
+        <span class="hl-string">"k_proj"</span>, <span class="hl-string">"o_proj"</span>,
+    ],
+)
 
-    <span class="hl-keyword">def</span> <span class="hl-function">predict</span>(self, X):
-        <span class="hl-string">"""Generate predictions."""</span>
-        <span class="hl-keyword">return</span> self.model(X)
+<span class="hl-comment"># Apply LoRA — only 0.1% of parameters are trainable!</span>
+model = get_peft_model(model, lora_config)
+model.print_trainable_parameters()
+<span class="hl-comment"># Output: trainable params: 4,194,304 || all params: 6,742,609,920 || 0.06%</span>
 
-    <span class="hl-keyword">def</span> <span class="hl-function">evaluate</span>(self, X, y):
-        <span class="hl-string">"""Evaluate model performance."""</span>
-        preds = self.predict(X)
-        accuracy = (preds == y).mean()
-        <span class="hl-function">print</span>(<span class="hl-string">f"Accuracy: {accuracy:.4f}"</span>)
-        <span class="hl-keyword">return</span> accuracy
+<span class="hl-comment"># QLoRA: load in 4-bit and fine-tune with LoRA</span>
+<span class="hl-keyword">from</span> transformers <span class="hl-keyword">import</span> BitsAndBytesConfig
+
+bnb_config = BitsAndBytesConfig(
+    load_in_4bit=<span class="hl-keyword">True</span>,
+    bnb_4bit_quant_type=<span class="hl-string">"nf4"</span>,           <span class="hl-comment"># NormalFloat4 quantization</span>
+    bnb_4bit_compute_dtype=torch.float16,
+    bnb_4bit_use_double_quant=<span class="hl-keyword">True</span>,    <span class="hl-comment"># nested quantization</span>
+)
+
+model_4bit = AutoModelForCausalLM.from_pretrained(
+    model_name,
+    quantization_config=bnb_config,
+    device_map=<span class="hl-string">"auto"</span>,
+)
 </pre>
       </div>
+
+      <h3 id="prompt-engineering">6. Prompt Engineering</h3>
+
+      <p>
+        Prompt engineering is the art of crafting inputs that elicit the best possible outputs from LLMs.
+        Unlike fine-tuning, it requires no parameter updates &mdash; you shape the model's behavior entirely
+        through the text you provide. Effective prompt engineering combines clear instructions, relevant
+        context, and structured output formatting.
+      </p>
+
+      <ul>
+        <li><strong>Zero-shot</strong> &mdash; provide only instructions, no examples. Works for simple tasks with capable models.</li>
+        <li><strong>Few-shot</strong> &mdash; include 2&ndash;5 input/output examples before your query. Dramatically improves consistency.</li>
+        <li><strong>Chain-of-thought (CoT)</strong> &mdash; ask the model to reason step-by-step. Unlocks complex reasoning in large models.</li>
+        <li><strong>System prompts</strong> &mdash; set the model's persona, constraints, and output format at the system level.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">python</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-keyword">import</span> openai
+
+<span class="hl-comment"># Few-shot prompt with chain-of-thought</span>
+messages = [
+    {<span class="hl-string">"role"</span>: <span class="hl-string">"system"</span>, <span class="hl-string">"content"</span>: <span class="hl-string">"""You are a data analyst.
+When analyzing data, think step-by-step:
+1. Identify the key variables
+2. Note any patterns or anomalies
+3. Draw a conclusion with confidence level"""</span>},
+    {<span class="hl-string">"role"</span>: <span class="hl-string">"user"</span>, <span class="hl-string">"content"</span>: <span class="hl-string">"""Revenue: Q1=$10M, Q2=$12M, Q3=$9M, Q4=$15M.
+Analyze the trend."""</span>},
+    {<span class="hl-string">"role"</span>: <span class="hl-string">"assistant"</span>, <span class="hl-string">"content"</span>: <span class="hl-string">"""Step 1: Key variables — quarterly revenue over one year.
+Step 2: Q1->Q2 grew 20%, Q2->Q3 dropped 25%, Q3->Q4 surged 67%.
+Step 3: Not a linear trend — looks seasonal with a strong Q4.
+Confidence: Medium (one year of data is insufficient for robust trend)."""</span>},
+    {<span class="hl-string">"role"</span>: <span class="hl-string">"user"</span>, <span class="hl-string">"content"</span>: <span class="hl-string">"""Users: Jan=1000, Feb=1200, Mar=1500, Apr=2000, May=2800.
+Analyze the trend."""</span>},
+]
+
+<span class="hl-comment"># Structured output with JSON mode</span>
+response = openai.chat.completions.create(
+    model=<span class="hl-string">"gpt-4"</span>,
+    messages=messages,
+    temperature=<span class="hl-number">0.3</span>,  <span class="hl-comment"># low temperature for analytical tasks</span>
+)
+
+<span class="hl-function">print</span>(response.choices[<span class="hl-number">0</span>].message.content)
+</pre>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Pro Tip
+        </div>
+        <p>
+          The most common prompt engineering mistake is being <em>vague</em>. Instead of "summarize this text,"
+          say "summarize in 3 bullet points, each under 20 words, focusing on actionable insights for a product
+          manager." Specificity is the single biggest lever for prompt quality.
+        </p>
+      </div>
+
+      <details>
+        <summary>How does positional encoding work in Transformers?</summary>
+        <div class="details-body">
+          <p>
+            Unlike RNNs, Transformers have no built-in notion of sequence order. Positional encodings inject
+            position information by adding a position-dependent vector to each token embedding. The original
+            paper used sinusoidal functions; modern models (GPT-2+) typically learn position embeddings.
+            RoPE (Rotary Position Embeddings) encodes position in the attention computation itself, enabling
+            better extrapolation to longer sequences.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>What is the KV cache and why does it matter for inference?</summary>
+        <div class="details-body">
+          <p>
+            During autoregressive generation, each new token requires attending to all previous tokens. Without
+            caching, you would recompute the key and value projections for the entire sequence at every step.
+            The <strong>KV cache</strong> stores previously computed keys and values, so each generation step
+            only computes K and V for the new token and appends them to the cache. This reduces generation
+            from O(n^2) to O(n) per step, but consumes significant GPU memory for long sequences.
+          </p>
+        </div>
+      </details>
 
       <hr class="section-divider">
+
       <h2 id="watch-learn">Watch &amp; Learn</h2>
-      <p>These videos cover core concepts. Watch before starting assignments.</p>
+
+      <p>
+        This video provides a comprehensive walkthrough of the Transformer architecture, from self-attention
+        to full encoder-decoder models.
+      </p>
+
       <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/BqqfQnyjmgg?rel=0&amp;modestbranding=1" title="Sentdex &mdash; Transfer Learning with PyTorch: practical fine-tuning guide" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-caption"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg> Sentdex &mdash; Transfer Learning with PyTorch: practical fine-tuning guide</div>
-      </div>
-      <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/yM8jEBBm0gA?rel=0&amp;modestbranding=1" title="Weights and Biases &mdash; Few-Shot Learning: meta-learning approaches" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-caption"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg> Weights and Biases &mdash; Few-Shot Learning: meta-learning approaches</div>
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/SZorAJ4I-sA?rel=0&amp;modestbranding=1"
+            title="Transformers and Large Language Models"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Transformers and Large Language Models &mdash; architecture deep-dive with code walkthroughs
+        </div>
       </div>
 
       <hr class="section-divider">
+
       <h2 id="further-reading">Further Reading</h2>
-      <p>Deep-dive into official documentation and reference material.</p>
+
+      <p>Essential papers and documentation for mastering Transformers and LLMs.</p>
+
       <div class="resource-grid">
-        <a class="resource-card" href="https://huggingface.co/docs/transformers/training" target="_blank" rel="noopener">
-          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-          <div class="resource-info"><div class="resource-title">HuggingFace: Fine-Tuning Guide</div><div class="resource-desc">Official guide to fine-tuning pre-trained models.</div></div>
+        <a class="resource-card" href="https://arxiv.org/abs/1706.03762" target="_blank" rel="noopener">
+          <div class="resource-icon pdf"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <div class="resource-info"><div class="resource-title">Attention Is All You Need (Vaswani et al.)</div><div class="resource-desc">The original Transformer paper. The most cited ML paper of the decade.</div></div>
+        </a>
+        <a class="resource-card" href="https://arxiv.org/abs/1810.04805" target="_blank" rel="noopener">
+          <div class="resource-icon pdf"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <div class="resource-info"><div class="resource-title">BERT: Pre-training of Deep Bidirectional Transformers</div><div class="resource-desc">The paper that brought pre-train/fine-tune to NLP. Introduced masked language modeling.</div></div>
         </a>
         <a class="resource-card" href="https://arxiv.org/abs/2106.09685" target="_blank" rel="noopener">
-          <div class="resource-icon article"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
-          <div class="resource-info"><div class="resource-title">LoRA Paper</div><div class="resource-desc">Low-Rank Adaptation for efficient fine-tuning.</div></div>
+          <div class="resource-icon pdf"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <div class="resource-info"><div class="resource-title">LoRA: Low-Rank Adaptation of Large Language Models</div><div class="resource-desc">Parameter-efficient fine-tuning that trains &lt;1% of parameters with minimal quality loss.</div></div>
         </a>
-        <a class="resource-card" href="https://pytorch.org/tutorials/beginner/transfer_learning_tutorial.html" target="_blank" rel="noopener">
+        <a class="resource-card" href="https://huggingface.co/docs/transformers/" target="_blank" rel="noopener">
           <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-          <div class="resource-info"><div class="resource-title">PyTorch Transfer Learning Tutorial</div><div class="resource-desc">Official tutorial on fine-tuning and feature extraction.</div></div>
+          <div class="resource-info"><div class="resource-title">Hugging Face Transformers Documentation</div><div class="resource-desc">The de-facto library for working with pre-trained models. Covers training, inference, and PEFT.</div></div>
         </a>
-        <a class="resource-card" href="https://github.com/huggingface/peft" target="_blank" rel="noopener">
-          <div class="resource-icon github"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
-          <div class="resource-info"><div class="resource-title">PEFT Library</div><div class="resource-desc">Parameter-Efficient Fine-Tuning methods.</div></div>
+        <a class="resource-card" href="https://jalammar.github.io/illustrated-transformer/" target="_blank" rel="noopener">
+          <div class="resource-icon article"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <div class="resource-info"><div class="resource-title">The Illustrated Transformer (Jay Alammar)</div><div class="resource-desc">Visual walkthrough of every component. The best conceptual explanation available.</div></div>
         </a>
+        <a class="resource-card" href="https://github.com/karpathy/nanoGPT" target="_blank" rel="noopener">
+          <div class="resource-icon github"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.083-.73.083-.73 1.205.085 1.838 1.237 1.838 1.237 1.07 1.834 2.807 1.304 3.492.997.108-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg></div>
+          <div class="resource-info"><div class="resource-title">nanoGPT (Andrej Karpathy)</div><div class="resource-desc">Minimal GPT implementation in ~300 lines. The best way to learn Transformers by building one.</div></div>
+        </a>
+      </div>
 
-      </div>
       <hr class="section-divider">
+
       <h2 id="assignments">Assignments</h2>
-      <p>Complete these in order. Each level builds on the previous one.</p>
+
+      <p>Complete these in order. Each builds on the previous level.</p>
+
       <div class="assignment">
-        <div class="assignment-header"><div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 1</div><span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span></div>
-        <h4>Core Implementation: Pre-trained Models</h4>
-        <p>Build foundational understanding by implementing core concepts from scratch.</p>
-        <ul class="checklist">          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Implement the core concepts from Pre-trained Models</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a working example demonstrating Fine-Tuning Strategies</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write comprehensive unit tests for your implementation</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Document your code with docstrings and comments</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Run benchmarks and record performance metrics</span></li></ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div><p>Your implementation passes all tests and you can explain every line of code.</p></div>
+        <div class="assignment-header">
+          <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 1</div>
+          <span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span>
+        </div>
+        <h4>Build a Mini-GPT from Scratch</h4>
+        <p>Implement a decoder-only Transformer and train it on a small text corpus for character-level generation.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Implement <code>TransformerBlock</code> with multi-head attention, FFN, LayerNorm, and residuals</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Build a <code>GPTModel</code> with token embeddings, position embeddings, and a language model head</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Implement causal masking for autoregressive training</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Train on a text dataset (Shakespeare, Wikipedia subset) and generate coherent text</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Implement temperature-controlled sampling with top-k filtering</span></li>
+        </ul>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div>
+          <p>Your model generates text that is grammatically plausible (even if nonsensical) and training loss decreases steadily.</p>
+        </div>
       </div>
+
       <div class="assignment">
-        <div class="assignment-header"><div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 2</div><span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span></div>
-        <h4>Applied Project: Transfer Learning and Fine-Tuning in Practice</h4>
-        <p>Apply the concepts to a real-world dataset and compare approaches systematically.</p>
-        <ul class="checklist">          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Build a complete pipeline integrating Pre-trained Models and Fine-Tuning Strategies</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Apply Domain Adaptation on a real-world dataset</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Compare at least 3 different approaches and document tradeoffs</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create visualizations that tell a clear story about your results</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write a 200-word analysis of your findings</span></li></ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div><p>Your comparison clearly identifies the best approach with supporting evidence and visualizations.</p></div>
+        <div class="assignment-header">
+          <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 2</div>
+          <span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span>
+        </div>
+        <h4>Fine-Tune an LLM with LoRA</h4>
+        <p>Fine-tune a pre-trained language model on a domain-specific dataset using parameter-efficient methods.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Load a pre-trained model (GPT-2 or Llama-2-7b) with Hugging Face Transformers</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Apply LoRA using the PEFT library with rank 16 on attention projections</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Prepare a domain-specific dataset with proper tokenization and formatting</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Train with gradient accumulation and evaluate on held-out examples</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Compare generation quality: base model vs. LoRA fine-tuned model</span></li>
+        </ul>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div>
+          <p>Your fine-tuned model clearly outperforms the base model on domain-specific prompts with quantitative metrics.</p>
+        </div>
       </div>
+
       <div class="assignment">
-        <div class="assignment-header"><div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 3</div><span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Production-Ready</span></div>
-        <h4>Production System: End-to-End Transfer Learning and Fine-Tuning</h4>
-        <p>Build a production-quality system that demonstrates mastery of all concepts in this chapter.</p>
-        <ul class="checklist">          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Design a production-ready system incorporating transfer learning and fine-tuning best practices</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Implement error handling, logging, and configuration management</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a comprehensive test suite with edge cases</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write documentation for future maintainers</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Deploy or package your solution for team use</span></li></ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div><p>Your system is documented, tested, and could be handed to a colleague for production use.</p></div>
+        <div class="assignment-header">
+          <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 3</div>
+          <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Production-Ready</span>
+        </div>
+        <h4>Build an Evaluation Framework for LLM Outputs</h4>
+        <p>Create a systematic evaluation pipeline for LLM quality across multiple dimensions.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Implement automated metrics: perplexity, BLEU, ROUGE, BERTScore</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Build a prompt engineering test suite with 50+ test cases across task types</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Implement LLM-as-judge evaluation with rubric-based scoring</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Compare at least 3 prompt strategies (zero-shot, few-shot, CoT) on the same tasks</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Produce a report with statistical significance tests on evaluation results</span></li>
+        </ul>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div>
+          <p>Your evaluation framework produces reproducible quality scores and your report identifies the best strategy per task type.</p>
+        </div>
       </div>
+
       <hr class="section-divider">
+
       <h2 id="self-check">Self-Check</h2>
-      <p>Before moving on, honestly answer these. If any answer is "no," go back and practice.</p>
+
+      <p>Before moving to Chapter 03, honestly answer these questions.</p>
+
       <details>
-        <summary>Can you explain Pre-trained Models to a colleague without consulting notes?</summary>
-        <div class="details-body"><p>Try explaining the core concept, why it matters, and when to use it. If you need to look things up, spend more time with the material. True understanding means you can teach it.</p></div>
+        <summary>Can you explain why Transformers use scaled dot-product attention?</summary>
+        <div class="details-body"><p>Scaling by sqrt(d_k) prevents the dot products from becoming large, which would push the softmax into regions with extremely small gradients. Without scaling, training becomes unstable as model dimension increases.</p></div>
       </details>
       <details>
-        <summary>Can you implement Fine-Tuning Strategies from memory?</summary>
-        <div class="details-body"><p>Open a blank notebook and try to implement the core algorithm without any reference. The act of writing code from memory reveals gaps in understanding that reading alone will not expose.</p></div>
+        <summary>What is the difference between BERT and GPT at the architecture level?</summary>
+        <div class="details-body"><p>BERT uses the Transformer encoder with bidirectional attention (every token sees every other token). GPT uses the Transformer decoder with causal masking (each token only sees previous tokens). This makes BERT better for understanding tasks and GPT better for generation tasks.</p></div>
       </details>
       <details>
-        <summary>Do you understand when Domain Adaptation would fail?</summary>
-        <div class="details-body"><p>Knowing when a technique works is important, but knowing when it fails is more important. Every algorithm has assumptions and limitations. If you cannot list at least 3 failure modes, review the material.</p></div>
+        <summary>Can you explain how LoRA reduces the number of trainable parameters?</summary>
+        <div class="details-body"><p>Instead of updating a full d x d weight matrix (d^2 parameters), LoRA decomposes the update into two matrices: A (d x r) and B (r x d), where r is much smaller than d. This reduces trainable parameters from d^2 to 2*d*r. With d=4096 and r=16, that is a 128x reduction.</p></div>
       </details>
+      <details>
+        <summary>When should you use fine-tuning vs. prompt engineering?</summary>
+        <div class="details-body"><p>Use prompt engineering first &mdash; it is faster, cheaper, and requires no training data. Use fine-tuning when: (1) you need consistent formatting or style, (2) you have domain-specific knowledge not in the base model, (3) prompt engineering cannot achieve the required quality, or (4) you need to reduce per-query token costs with shorter prompts.</p></div>
+      </details>
+
     </main>
+
     <aside class="sidebar">
       <div class="sidebar-title">On this page</div>
       <ul class="toc-list">
         <li class="toc-item"><a href="#why-this-matters">Why This Matters</a></li>
         <li class="toc-item"><a href="#key-concepts">Key Concepts</a></li>
-        <li class="toc-item"><a href="#pretrained-models" style="padding-left:28px;font-size:12px">Pre-trained Models</a></li>
-        <li class="toc-item"><a href="#fine-tuning" style="padding-left:28px;font-size:12px">Fine-Tuning Strategies</a></li>
-        <li class="toc-item"><a href="#domain-adaptation" style="padding-left:28px;font-size:12px">Domain Adaptation</a></li>
-        <li class="toc-item"><a href="#few-shot" style="padding-left:28px;font-size:12px">Few-Shot Learning</a></li>
-        <li class="toc-item"><a href="#data-augmentation" style="padding-left:28px;font-size:12px">Advanced Data Augmentation</a></li>
-        <li class="toc-item"><a href="#knowledge-distillation" style="padding-left:28px;font-size:12px">Knowledge Distillation</a></li>
+        <li class="toc-item"><a href="#self-attention" style="padding-left:28px;font-size:12px">Self-Attention Mechanism</a></li>
+        <li class="toc-item"><a href="#transformer-architecture" style="padding-left:28px;font-size:12px">Transformer Architecture</a></li>
+        <li class="toc-item"><a href="#bert-mlm" style="padding-left:28px;font-size:12px">BERT and MLM</a></li>
+        <li class="toc-item"><a href="#gpt-autoregressive" style="padding-left:28px;font-size:12px">GPT and Autoregressive</a></li>
+        <li class="toc-item"><a href="#fine-tuning" style="padding-left:28px;font-size:12px">Fine-Tuning (LoRA, QLoRA)</a></li>
+        <li class="toc-item"><a href="#prompt-engineering" style="padding-left:28px;font-size:12px">Prompt Engineering</a></li>
         <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a></li>
         <li class="toc-item"><a href="#further-reading">Further Reading</a></li>
         <li class="toc-item"><a href="#assignments">Assignments</a></li>
@@ -409,15 +1587,29 @@
       </ul>
     </aside>
   </div>
+
   <footer class="chapter-footer">
     <div class="chapter-footer-inner">
-      <nav class="footer-nav"><a class="footer-nav-link" href="chapter-01.html"><span class="footer-nav-label">&larr; Previous Chapter</span><span class="footer-nav-title">01: Advanced Deep Learning Architectures</span></a><a class="footer-nav-link" href="chapter-03.html"><span class="footer-nav-label">Next Chapter &rarr;</span><span class="footer-nav-title">03: Natural Language Processing</span></a></nav>
-      <div class="footer-brand">ILA (Iksha Learning Academy) &middot; AI &amp; Machine Learning Certification &middot; Advanced Track</div>
+      <nav class="footer-nav">
+        <a class="footer-nav-link" href="chapter-01.html">
+          <span class="footer-nav-label">&larr; Previous Chapter</span>
+          <span class="footer-nav-title">01: Advanced Neural Architectures</span>
+        </a>
+        <a class="footer-nav-link" href="chapter-03.html">
+          <span class="footer-nav-label">Next Chapter &rarr;</span>
+          <span class="footer-nav-title">03: Generative Models</span>
+        </a>
+      </nav>
+      <div class="footer-brand">
+        ILA (Iksha Learning Academy) &middot; AI &amp; ML Engineering Certification &middot; Level 2
+      </div>
     </div>
   </footer>
+
   <script>
-    window.addEventListener('scroll',()=>{const s=window.scrollY;const d=document.documentElement.scrollHeight-window.innerHeight;document.getElementById('progressBar').style.width=(d>0?(s/d)*100:0)+'%'});
-    const tocLinks=document.querySelectorAll('.toc-item a');const sections=[];tocLinks.forEach(l=>{const id=l.getAttribute('href').slice(1);const el=document.getElementById(id);if(el)sections.push({id,el,link:l})});
+    window.addEventListener('scroll',()=>{const s=window.scrollY;const d=document.documentElement.scrollHeight-window.innerHeight;const p=d>0?(s/d)*100:0;document.getElementById('progressBar').style.width=p+'%'});
+    const tocLinks=document.querySelectorAll('.toc-item a');const sections=[];
+    tocLinks.forEach(link=>{const id=link.getAttribute('href').slice(1);const el=document.getElementById(id);if(el)sections.push({id,el,link})});
     const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{const item=sections.find(s=>s.el===entry.target);if(item&&entry.isIntersecting){tocLinks.forEach(l=>l.classList.remove('active'));item.link.classList.add('active')}})},{rootMargin:'-80px 0px -60% 0px',threshold:0});
     sections.forEach(s=>observer.observe(s.el));
     function copyCode(btn){const pre=btn.closest('.code-block').querySelector('pre');navigator.clipboard.writeText(pre.textContent).then(()=>{btn.classList.add('copied');btn.textContent='Copied!';setTimeout(()=>{btn.classList.remove('copied');btn.textContent='Copy'},2000)})}

@@ -3,304 +3,1190 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chapter 05: Aggregation and Window Functions &mdash; ILA PostgreSQL Basic</title>
+  <title>Chapter 05: Aggregation and Window Functions — ILA PostgreSQL</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
-    :root{--ink:#0f172a;--ink-light:#334155;--ink-muted:#64748b;--surface:#ffffff;--surface-alt:#f8fafc;--surface-warm:#fffbeb;--border:#e2e8f0;--border-light:#f1f5f9;--teal-50:#f0fdfa;--teal-100:#ccfbf1;--teal-200:#99f6e4;--teal-500:#14b8a6;--teal-600:#0d9488;--teal-700:#0f766e;--teal-800:#115e59;--teal-900:#134e4a;--blue-50:#eff6ff;--blue-100:#dbeafe;--blue-500:#3b82f6;--blue-600:#2563eb;--blue-700:#1d4ed8;--amber-50:#fffbeb;--amber-100:#fef3c7;--amber-500:#f59e0b;--amber-600:#d97706;--red-50:#fef2f2;--red-100:#fee2e2;--red-500:#ef4444;--red-600:#dc2626;--purple-50:#faf5ff;--purple-100:#f3e8ff;--purple-500:#a855f7;--purple-600:#9333ea;--font-sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;--font-serif:'Instrument Serif',Georgia,serif;--font-mono:'JetBrains Mono','Fira Code',monospace;--content-max:780px;--sidebar-width:280px;--ease:cubic-bezier(0.4,0,0.2,1)}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}body{font-family:var(--font-sans);font-size:16px;line-height:1.7;color:var(--ink);background:var(--surface)}.progress-bar{position:fixed;top:0;left:0;width:0%;height:3px;background:linear-gradient(90deg,var(--teal-500),var(--blue-500));z-index:1000;transition:width .15s var(--ease)}.top-nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem}.top-nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px}.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--teal-800)}.nav-brand-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--teal-600),var(--teal-800));border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px}.nav-brand-text{font-weight:700;font-size:15px;letter-spacing:-.02em}.nav-chapter-nav{display:flex;align-items:center;gap:8px}.nav-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;color:var(--ink-muted);border:1px solid var(--border);background:#fff;transition:all .2s var(--ease);cursor:pointer}.nav-btn:hover{color:var(--ink);border-color:var(--teal-500);background:var(--teal-50)}.nav-btn.disabled{opacity:.4;pointer-events:none}.nav-current{font-size:13px;font-weight:600;color:var(--ink-light);padding:0 4px}.hero{background:linear-gradient(170deg,var(--teal-50) 0%,var(--surface) 50%,var(--blue-50) 100%);border-bottom:1px solid var(--border);padding:4rem 2rem 3.5rem}.hero-inner{max-width:var(--content-max);margin:0 auto}.hero-chapter-label{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--teal-700);text-transform:uppercase;letter-spacing:.08em;margin-bottom:1rem}.hero-chapter-label span{background:var(--teal-100);padding:3px 10px;border-radius:100px}.hero h1{font-family:var(--font-serif);font-size:clamp(2.4rem,5vw,3.2rem);font-weight:400;line-height:1.15;color:var(--ink);margin-bottom:1rem}.hero-subtitle{font-size:1.15rem;color:var(--ink-light);line-height:1.65;max-width:640px}.hero-meta{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1.5rem}.hero-meta-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-muted)}.hero-meta-item svg{width:16px;height:16px;color:var(--teal-600)}.main-layout{max-width:1200px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:1fr var(--sidebar-width);gap:4rem;align-items:start}.content{padding:3rem 0 6rem;min-width:0}.sidebar{position:sticky;top:76px;padding:2rem 0;max-height:calc(100vh - 76px);overflow-y:auto}.sidebar-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-muted);margin-bottom:1rem;padding-left:14px}.toc-list{list-style:none}.toc-item a{display:block;padding:6px 14px;font-size:13px;color:var(--ink-muted);text-decoration:none;border-left:2px solid transparent;transition:all .2s var(--ease);line-height:1.5}.toc-item a:hover{color:var(--ink);background:var(--surface-alt)}.toc-item a.active{color:var(--teal-700);border-left-color:var(--teal-500);background:var(--teal-50);font-weight:500}.content h2{font-family:var(--font-serif);font-size:1.85rem;font-weight:400;color:var(--ink);margin:3rem 0 1rem;padding-top:1rem;scroll-margin-top:80px}.content h2:first-child{margin-top:0}.content h3{font-size:1.15rem;font-weight:600;color:var(--ink);margin:2rem 0 .75rem;scroll-margin-top:80px}.content p{margin-bottom:1.25rem;color:var(--ink-light)}.content strong{color:var(--ink);font-weight:600}.content a{color:var(--teal-700);text-decoration:underline;text-decoration-color:var(--teal-200);text-underline-offset:3px}.content ul,.content ol{margin-bottom:1.25rem;padding-left:1.5rem}.content li{margin-bottom:.5rem;color:var(--ink-light)}.content li::marker{color:var(--teal-500)}.section-divider{border:none;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:3rem 0}.callout{padding:1.25rem 1.5rem;border-radius:12px;margin-bottom:1.5rem;border:1px solid}.callout-header{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;margin-bottom:.5rem}.callout-header svg{width:18px;height:18px;flex-shrink:0}.callout p:last-child{margin-bottom:0}.callout.concept{background:var(--blue-50);border-color:var(--blue-100)}.callout.concept .callout-header{color:var(--blue-700)}.callout.important{background:var(--amber-50);border-color:var(--amber-100)}.callout.important .callout-header{color:var(--amber-600)}.callout.danger{background:var(--red-50);border-color:var(--red-100)}.callout.danger .callout-header{color:var(--red-600)}.callout.tip{background:var(--purple-50);border-color:var(--purple-100)}.callout.tip .callout-header{color:var(--purple-600)}.callout.success{background:var(--teal-50);border-color:var(--teal-100)}.callout.success .callout-header{color:var(--teal-700)}.code-block{position:relative;margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}.code-header{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:var(--surface-alt);border-bottom:1px solid var(--border);font-size:12px;color:var(--ink-muted)}.code-lang{font-family:var(--font-mono);font-weight:600;text-transform:uppercase;letter-spacing:.05em}.code-copy{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:#fff;font-size:11px;font-family:var(--font-sans);color:var(--ink-muted);cursor:pointer;transition:all .2s var(--ease)}.code-copy:hover{border-color:var(--teal-500);color:var(--teal-700)}.code-copy.copied{background:var(--teal-50);border-color:var(--teal-500);color:var(--teal-700)}pre{margin:0;padding:1.25rem 1.5rem;overflow-x:auto;background:#1e293b;font-family:var(--font-mono);font-size:13.5px;line-height:1.7;color:#e2e8f0}code{font-family:var(--font-mono);font-size:.88em}p code,li code{padding:2px 7px;background:var(--surface-alt);border:1px solid var(--border);border-radius:5px;color:var(--teal-800);font-size:.85em}.hl-keyword{color:#c084fc}.hl-string{color:#86efac}.hl-comment{color:#64748b;font-style:italic}.hl-function{color:#7dd3fc}.hl-number{color:#fbbf24}.hl-flag{color:#f472b6}details{margin-bottom:1.25rem;border:1px solid var(--border);border-radius:12px;overflow:hidden}details[open]{border-color:var(--teal-200)}details summary{padding:1rem 1.25rem;font-weight:600;font-size:15px;cursor:pointer;background:var(--surface-alt);list-style:none;display:flex;align-items:center;gap:10px;user-select:none}details summary::-webkit-details-marker{display:none}details summary::before{content:'';width:20px;height:20px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain;flex-shrink:0;transition:transform .2s var(--ease)}details[open] summary::before{transform:rotate(90deg)}details summary:hover{background:var(--teal-50)}.details-body{padding:1.25rem 1.5rem}.details-body p:last-child{margin-bottom:0}.video-card{margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}.video-wrapper{position:relative;padding-bottom:56.25%;height:0;background:#0f172a}.video-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}.video-caption{padding:12px 16px;background:var(--surface-alt);font-size:13px;color:var(--ink-muted);display:flex;align-items:center;gap:6px}.video-caption svg{width:14px;height:14px;color:var(--red-500)}.resource-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1rem;margin-bottom:1.5rem}.resource-card{display:flex;gap:14px;padding:1rem 1.25rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all .2s var(--ease);background:#fff}.resource-card:hover{border-color:var(--teal-300);background:var(--teal-50);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.04)}.resource-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}.resource-icon.docs{background:var(--blue-50);color:var(--blue-600)}.resource-icon.article{background:var(--amber-50);color:var(--amber-600)}.resource-info{min-width:0}.resource-title{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:2px;line-height:1.4}.resource-desc{font-size:12px;color:var(--ink-muted);line-height:1.5}.assignment{border:2px solid var(--teal-200);border-radius:14px;padding:1.5rem 1.75rem;margin-bottom:1.5rem;background:linear-gradient(135deg,var(--teal-50) 0%,#fff 100%)}.assignment-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}.assignment-label{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--teal-700)}.assignment-difficulty{display:inline-flex;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:600}.difficulty-l1{background:var(--teal-100);color:var(--teal-800)}.difficulty-l2{background:var(--amber-100);color:var(--amber-600)}.difficulty-l3{background:var(--red-100);color:var(--red-600)}.assignment h4{font-size:1.05rem;font-weight:700;margin-bottom:.75rem}.assignment p{font-size:14px}.checklist{list-style:none;padding:0}.checklist li{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border-light);font-size:14px}.checklist li:last-child{border-bottom:none}.check-box{width:20px;height:20px;border-radius:6px;border:2px solid var(--border);flex-shrink:0;margin-top:1px;cursor:pointer;transition:all .15s var(--ease);display:flex;align-items:center;justify-content:center}.check-box:hover{border-color:var(--teal-500)}.check-box.checked{background:var(--teal-500);border-color:var(--teal-500)}.check-box.checked::after{content:'';width:10px;height:10px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain}.diagram{margin:1.5rem 0;padding:2rem;background:var(--surface-alt);border:1px solid var(--border);border-radius:14px;overflow-x:auto}.diagram pre{background:transparent;color:var(--ink);padding:0;font-size:13px;line-height:1.6}.diagram-caption{margin-top:1rem;font-size:12px;color:var(--ink-muted);text-align:center;font-style:italic}.chapter-footer{border-top:1px solid var(--border);padding:3rem 2rem;background:var(--surface-alt)}.chapter-footer-inner{max-width:var(--content-max);margin:0 auto}.footer-nav{display:flex;justify-content:space-between;align-items:center;gap:1rem}.footer-nav-link{display:flex;flex-direction:column;gap:4px;padding:1rem 1.5rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all .2s var(--ease);max-width:320px;background:#fff}.footer-nav-link:hover{border-color:var(--teal-300);box-shadow:0 4px 12px rgba(0,0,0,.04)}.footer-nav-label{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--teal-600)}.footer-nav-title{font-size:15px;font-weight:600;color:var(--ink)}.footer-brand{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border);font-size:13px;color:var(--ink-muted)}@media(max-width:960px){.main-layout{grid-template-columns:1fr}.sidebar{display:none}.resource-grid{grid-template-columns:1fr}}@media(max-width:640px){.hero{padding:2.5rem 1.25rem 2rem}.main-layout{padding:0 1.25rem}.content{padding:2rem 0 4rem}pre{padding:1rem;font-size:12.5px}.footer-nav{flex-direction:column}.footer-nav-link{max-width:100%;width:100%}}@media print{.top-nav,.sidebar,.progress-bar{display:none}.main-layout{display:block}.content{padding:0}.hero{background:#fff;border:none}pre{background:#f1f5f9;color:var(--ink);border:1px solid var(--border)}}
+    /* ═══════════════════════════════════════════════
+       ILA DESIGN SYSTEM — v1.0
+       Iksha Learning Academy
+       ═══════════════════════════════════════════════ */
+
+    :root {
+      /* Palette */
+      --ink:        #0f172a;
+      --ink-light:  #334155;
+      --ink-muted:  #64748b;
+      --surface:    #ffffff;
+      --surface-alt:#f8fafc;
+      --surface-warm:#fffbeb;
+      --border:     #e2e8f0;
+      --border-light:#f1f5f9;
+
+      /* Brand */
+      --teal-50:  #f0fdfa;
+      --teal-100: #ccfbf1;
+      --teal-200: #99f6e4;
+      --teal-500: #14b8a6;
+      --teal-600: #0d9488;
+      --teal-700: #0f766e;
+      --teal-800: #115e59;
+      --teal-900: #134e4a;
+
+      --blue-50:  #eff6ff;
+      --blue-100: #dbeafe;
+      --blue-500: #3b82f6;
+      --blue-600: #2563eb;
+      --blue-700: #1d4ed8;
+
+      --amber-50:  #fffbeb;
+      --amber-100: #fef3c7;
+      --amber-500: #f59e0b;
+      --amber-600: #d97706;
+
+      --red-50:   #fef2f2;
+      --red-100:  #fee2e2;
+      --red-500:  #ef4444;
+      --red-600:  #dc2626;
+
+      --purple-50:  #faf5ff;
+      --purple-100: #f3e8ff;
+      --purple-500: #a855f7;
+      --purple-600: #9333ea;
+
+      /* Typography */
+      --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-serif: 'Instrument Serif', Georgia, serif;
+      --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
+
+      /* Spacing */
+      --content-max: 780px;
+      --sidebar-width: 280px;
+
+      /* Transitions */
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--ink);
+      background: var(--surface);
+    }
+
+    /* ── PROGRESS BAR ─────────────────────────── */
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--teal-500), var(--blue-500));
+      z-index: 1000;
+      transition: width 0.15s var(--ease);
+    }
+
+    /* ── TOP NAV ──────────────────────────────── */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+    }
+
+    .top-nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--teal-800);
+    }
+
+    .nav-brand-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--teal-600), var(--teal-800));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .nav-brand-text {
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-chapter-nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      color: var(--ink-muted);
+      border: 1px solid var(--border);
+      background: white;
+      transition: all 0.2s var(--ease);
+      cursor: pointer;
+    }
+
+    .nav-btn:hover {
+      color: var(--ink);
+      border-color: var(--teal-500);
+      background: var(--teal-50);
+    }
+
+    .nav-btn.disabled {
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    .nav-current {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink-light);
+      padding: 0 4px;
+    }
+
+    /* ── HERO ─────────────────────────────────── */
+    .hero {
+      background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 4rem 2rem 3.5rem;
+    }
+
+    .hero-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
+    }
+
+    .hero-chapter-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--teal-700);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 1rem;
+    }
+
+    .hero-chapter-label span {
+      background: var(--teal-100);
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+
+    .hero h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(2.4rem, 5vw, 3.2rem);
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: 1rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: var(--ink-light);
+      line-height: 1.65;
+      max-width: 640px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .hero-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
+    .hero-meta-item svg {
+      width: 16px;
+      height: 16px;
+      color: var(--teal-600);
+    }
+
+    /* ── MAIN LAYOUT ──────────────────────────── */
+    .main-layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr var(--sidebar-width);
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .content {
+      padding: 3rem 0 6rem;
+      min-width: 0;
+    }
+
+    /* ── SIDEBAR TOC ──────────────────────────── */
+    .sidebar {
+      position: sticky;
+      top: 76px;
+      padding: 2rem 0;
+      max-height: calc(100vh - 76px);
+      overflow-y: auto;
+    }
+
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-muted);
+      margin-bottom: 1rem;
+      padding-left: 14px;
+    }
+
+    .toc-list {
+      list-style: none;
+    }
+
+    .toc-item a {
+      display: block;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--ink-muted);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: all 0.2s var(--ease);
+      line-height: 1.5;
+    }
+
+    .toc-item a:hover {
+      color: var(--ink);
+      background: var(--surface-alt);
+    }
+
+    .toc-item a.active {
+      color: var(--teal-700);
+      border-left-color: var(--teal-500);
+      background: var(--teal-50);
+      font-weight: 500;
+    }
+
+    /* ── TYPOGRAPHY ────────────────────────────── */
+    .content h2 {
+      font-family: var(--font-serif);
+      font-size: 1.85rem;
+      font-weight: 400;
+      color: var(--ink);
+      margin: 3rem 0 1rem;
+      padding-top: 1rem;
+      scroll-margin-top: 80px;
+    }
+
+    .content h2:first-child { margin-top: 0; }
+
+    .content h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 2rem 0 0.75rem;
+      scroll-margin-top: 80px;
+    }
+
+    .content p { margin-bottom: 1.25rem; color: var(--ink-light); }
+    .content strong { color: var(--ink); font-weight: 600; }
+
+    .content a {
+      color: var(--teal-700);
+      text-decoration: underline;
+      text-decoration-color: var(--teal-200);
+      text-underline-offset: 3px;
+      transition: text-decoration-color 0.2s;
+    }
+    .content a:hover { text-decoration-color: var(--teal-600); }
+
+    .content ul, .content ol { margin-bottom: 1.25rem; padding-left: 1.5rem; }
+    .content li { margin-bottom: 0.5rem; color: var(--ink-light); }
+    .content li::marker { color: var(--teal-500); }
+
+    .section-divider {
+      border: none; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 3rem 0;
+    }
+
+    /* ── CALLOUT BOXES ────────────────────────── */
+    .callout { padding: 1.25rem 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; border: 1px solid; position: relative; }
+    .callout-header { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; margin-bottom: 0.5rem; }
+    .callout-header svg { width: 18px; height: 18px; flex-shrink: 0; }
+    .callout p:last-child { margin-bottom: 0; }
+    .callout.concept { background: var(--blue-50); border-color: var(--blue-100); }
+    .callout.concept .callout-header { color: var(--blue-700); }
+    .callout.important { background: var(--amber-50); border-color: var(--amber-100); }
+    .callout.important .callout-header { color: var(--amber-600); }
+    .callout.danger { background: var(--red-50); border-color: var(--red-100); }
+    .callout.danger .callout-header { color: var(--red-600); }
+    .callout.tip { background: var(--purple-50); border-color: var(--purple-100); }
+    .callout.tip .callout-header { color: var(--purple-600); }
+    .callout.success { background: var(--teal-50); border-color: var(--teal-100); }
+    .callout.success .callout-header { color: var(--teal-700); }
+
+    /* ── CODE BLOCKS ──────────────────────────── */
+    .code-block { position: relative; margin-bottom: 1.5rem; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+    .code-header { display: flex; align-items: center; justify-content: space-between; padding: 8px 16px; background: var(--surface-alt); border-bottom: 1px solid var(--border); font-size: 12px; color: var(--ink-muted); }
+    .code-lang { font-family: var(--font-mono); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+    .code-copy { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border); background: white; font-size: 11px; font-family: var(--font-sans); color: var(--ink-muted); cursor: pointer; transition: all 0.2s var(--ease); }
+    .code-copy:hover { border-color: var(--teal-500); color: var(--teal-700); }
+    .code-copy.copied { background: var(--teal-50); border-color: var(--teal-500); color: var(--teal-700); }
+
+    pre { margin: 0; padding: 1.25rem 1.5rem; overflow-x: auto; background: #1e293b; font-family: var(--font-mono); font-size: 13.5px; line-height: 1.7; color: #e2e8f0; }
+    code { font-family: var(--font-mono); font-size: 0.88em; }
+    p code, li code { padding: 2px 7px; background: var(--surface-alt); border: 1px solid var(--border); border-radius: 5px; color: var(--teal-800); font-size: 0.85em; }
+
+    .hl-keyword  { color: #c084fc; }
+    .hl-string   { color: #86efac; }
+    .hl-comment  { color: #64748b; font-style: italic; }
+    .hl-function { color: #7dd3fc; }
+    .hl-number   { color: #fbbf24; }
+    .hl-flag     { color: #f472b6; }
+
+    /* ── COLLAPSIBLE ──────────────────────────── */
+    details { margin-bottom: 1.25rem; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; transition: border-color 0.2s var(--ease); }
+    details[open] { border-color: var(--teal-200); }
+    details summary { padding: 1rem 1.25rem; font-weight: 600; font-size: 15px; cursor: pointer; background: var(--surface-alt); list-style: none; display: flex; align-items: center; gap: 10px; transition: background 0.2s var(--ease); user-select: none; }
+    details summary::-webkit-details-marker { display: none; }
+    details summary::before { content: ''; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E"); background-size: contain; flex-shrink: 0; transition: transform 0.2s var(--ease); }
+    details[open] summary::before { transform: rotate(90deg); }
+    details summary:hover { background: var(--teal-50); }
+    .details-body { padding: 1.25rem 1.5rem; }
+    .details-body p:last-child { margin-bottom: 0; }
+
+    /* ── VIDEO EMBED ──────────────────────────── */
+    .video-card { margin-bottom: 1.5rem; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+    .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; background: #0f172a; }
+    .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+    .video-caption { padding: 12px 16px; background: var(--surface-alt); font-size: 13px; color: var(--ink-muted); display: flex; align-items: center; gap: 6px; }
+    .video-caption svg { width: 14px; height: 14px; color: var(--red-500); }
+
+    /* ── RESOURCE CARDS ───────────────────────── */
+    .resource-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+    .resource-card { display: flex; gap: 14px; padding: 1rem 1.25rem; border: 1px solid var(--border); border-radius: 12px; text-decoration: none; transition: all 0.2s var(--ease); background: white; }
+    .resource-card:hover { border-color: var(--teal-300); background: var(--teal-50); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+    .resource-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 18px; }
+    .resource-icon.docs    { background: var(--blue-50);   color: var(--blue-600); }
+    .resource-icon.video   { background: var(--red-50);    color: var(--red-500); }
+    .resource-icon.github  { background: var(--ink);       color: white; }
+    .resource-icon.article { background: var(--amber-50);  color: var(--amber-600); }
+    .resource-icon.pdf     { background: var(--purple-50); color: var(--purple-600); }
+    .resource-info { min-width: 0; }
+    .resource-title { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 2px; line-height: 1.4; }
+    .resource-desc { font-size: 12px; color: var(--ink-muted); line-height: 1.5; }
+
+    /* ── ASSIGNMENT CARDS ─────────────────────── */
+    .assignment { border: 2px solid var(--teal-200); border-radius: 14px; padding: 1.5rem 1.75rem; margin-bottom: 1.5rem; background: linear-gradient(135deg, var(--teal-50) 0%, white 100%); }
+    .assignment-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+    .assignment-label { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--teal-700); }
+    .assignment-difficulty { display: inline-flex; padding: 4px 10px; border-radius: 100px; font-size: 11px; font-weight: 600; }
+    .difficulty-l1 { background: var(--teal-100); color: var(--teal-800); }
+    .difficulty-l2 { background: var(--amber-100); color: var(--amber-600); }
+    .difficulty-l3 { background: var(--red-100); color: var(--red-600); }
+    .assignment h4 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.75rem; }
+    .assignment p { font-size: 14px; }
+    .checklist { list-style: none; padding: 0; }
+    .checklist li { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border-light); font-size: 14px; }
+    .checklist li:last-child { border-bottom: none; }
+    .check-box { width: 20px; height: 20px; border-radius: 6px; border: 2px solid var(--border); flex-shrink: 0; margin-top: 1px; cursor: pointer; transition: all 0.15s var(--ease); display: flex; align-items: center; justify-content: center; }
+    .check-box:hover { border-color: var(--teal-500); }
+    .check-box.checked { background: var(--teal-500); border-color: var(--teal-500); }
+    .check-box.checked::after { content: ''; width: 10px; height: 10px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E"); background-size: contain; }
+
+    /* ── DIAGRAM ───────────────────────────────── */
+    .diagram { margin: 1.5rem 0; padding: 2rem; background: var(--surface-alt); border: 1px solid var(--border); border-radius: 14px; overflow-x: auto; }
+    .diagram pre { background: transparent; color: var(--ink); padding: 0; font-size: 13px; line-height: 1.6; }
+    .diagram-caption { margin-top: 1rem; font-size: 12px; color: var(--ink-muted); text-align: center; font-style: italic; }
+
+    /* ── FOOTER ───────────────────────────────── */
+    .chapter-footer { border-top: 1px solid var(--border); padding: 3rem 2rem; background: var(--surface-alt); }
+    .chapter-footer-inner { max-width: var(--content-max); margin: 0 auto; }
+    .footer-nav { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+    .footer-nav-link { display: flex; flex-direction: column; gap: 4px; padding: 1rem 1.5rem; border: 1px solid var(--border); border-radius: 12px; text-decoration: none; transition: all 0.2s var(--ease); max-width: 320px; background: white; }
+    .footer-nav-link:hover { border-color: var(--teal-300); box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+    .footer-nav-label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--teal-600); }
+    .footer-nav-title { font-size: 15px; font-weight: 600; color: var(--ink); }
+    .footer-brand { text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); font-size: 13px; color: var(--ink-muted); }
+
+    /* ── RESPONSIVE ───────────────────────────── */
+    @media (max-width: 960px) {
+      .main-layout { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .resource-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .hero { padding: 2.5rem 1.25rem 2rem; }
+      .main-layout { padding: 0 1.25rem; }
+      .content { padding: 2rem 0 4rem; }
+      pre { padding: 1rem; font-size: 12.5px; }
+      .footer-nav { flex-direction: column; }
+      .footer-nav-link { max-width: 100%; width: 100%; }
+    }
+    @media print {
+      .top-nav, .sidebar, .progress-bar { display: none; }
+      .main-layout { display: block; }
+      .content { padding: 0; }
+      .hero { background: white; border: none; }
+      pre { background: #f1f5f9; color: var(--ink); border: 1px solid var(--border); }
+    }
   </style>
 </head>
 <body>
+  <!-- Progress Bar -->
   <div class="progress-bar" id="progressBar"></div>
-  <nav class="top-nav"><div class="top-nav-inner"><a class="nav-brand" href="index.html"><div class="nav-brand-icon">ILA</div><span class="nav-brand-text">Iksha Learning Academy</span></a><div class="nav-chapter-nav"><a class="nav-btn" href="chapter-04.html">&larr; Previous</a><span class="nav-current">05 / 08</span><a class="nav-btn" href="chapter-06.html">Next &rarr;</a></div></div></nav>
 
-  <header class="hero"><div class="hero-inner">
-    <div class="hero-chapter-label"><span>Chapter 05</span> &middot; PostgreSQL Basic</div>
-    <h1>Aggregation and Window Functions</h1>
-    <p class="hero-subtitle">Master GROUP BY, HAVING, and aggregate functions for ad-tech reporting. Learn window functions for rankings, running totals, and moving averages that power campaign dashboards.</p>
-    <div class="hero-meta">
-      <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Estimated: 3&ndash;4 hours</div>
-      <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>5 Key Concepts</div>
-      <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>3 Assignments</div>
+  <!-- Top Navigation -->
+  <nav class="top-nav">
+    <div class="top-nav-inner">
+      <a class="nav-brand" href="index.html">
+        <div class="nav-brand-icon">ILA</div>
+        <span class="nav-brand-text">Iksha Learning Academy</span>
+      </a>
+      <div class="nav-chapter-nav">
+        <a class="nav-btn" href="chapter-04.html">&larr; Previous</a>
+        <span class="nav-current">05 / 08</span>
+        <a class="nav-btn" href="chapter-06.html">Next &rarr;</a>
+      </div>
     </div>
-  </div></header>
+  </nav>
 
+  <!-- Hero -->
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-chapter-label">
+        <span>Chapter 05</span> &middot; Phase 3: Intermediate SQL
+      </div>
+      <h1>Aggregation and Window Functions</h1>
+      <p class="hero-subtitle">
+        Move beyond row-level queries into the world of grouped summaries, running totals,
+        and ranked result sets. Aggregation and window functions are the tools that turn raw
+        data into business intelligence &mdash; the queries that power every dashboard, report,
+        and analytics pipeline.
+      </p>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Estimated: 3&ndash;4 hours
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          3 Advancement Levels
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          3 Assignments
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content + Sidebar -->
   <div class="main-layout">
     <main class="content">
 
+      <!-- ════════════════════════════════════════
+           SECTION 1: WHY THIS MATTERS
+           ════════════════════════════════════════ -->
       <h2 id="why-this-matters">Why This Matters</h2>
 
-      <p>Every ad-tech dashboard is powered by aggregation. "Total leads this month," "average bid price per campaign," "top 5 accounts by spend" &mdash; these all require GROUP BY, aggregate functions, and increasingly, window functions. Without aggregation skills, you cannot build the reports that drive business decisions.</p>
+      <p>
+        Nearly every business question boils down to aggregation: "How many orders did we get last month?"
+        "What is the average revenue per customer?" "Who are our top 10 sellers?" Without <code>GROUP BY</code>,
+        <code>SUM</code>, and <code>COUNT</code>, you would need to pull every row into application code and
+        aggregate manually &mdash; a pattern that is both slow and error-prone at scale.
+      </p>
 
-      <p>Window functions are PostgreSQL's secret weapon for analytics. They let you compute running totals, rankings, moving averages, and percentage-of-total calculations without collapsing rows &mdash; something that would otherwise require complex self-joins or application-level processing.</p>
+      <p>
+        Window functions take this a step further. They let you compute running totals, rank rows within
+        partitions, and calculate moving averages &mdash; all without collapsing the result set. Before
+        window functions existed in SQL, these calculations required self-joins or procedural code that was
+        difficult to write, difficult to debug, and difficult to optimize.
+      </p>
+
+      <p>
+        PostgreSQL has had full window function support since version 8.4 (2009), and its implementation
+        is one of the most complete in any relational database. Understanding these features is the
+        dividing line between writing basic queries and writing queries that can drive dashboards,
+        financial reports, and real-time analytics.
+      </p>
 
       <div class="callout concept">
-        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>Key Insight</div>
-        <p>The difference between GROUP BY and window functions is fundamental: GROUP BY collapses rows (10 campaigns become 1 summary row per account), while window functions add computed columns to every row (10 campaigns remain 10 rows, each annotated with its rank, running total, or percentage of account budget).</p>
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Key Insight
+        </div>
+        <p>
+          Aggregate functions collapse rows into a single result per group. Window functions compute a
+          value for every row while still giving you access to the individual row data. The difference
+          is <strong>OVER()</strong> &mdash; that single clause is what separates aggregation from
+          windowing.
+        </p>
       </div>
 
       <hr class="section-divider">
 
+      <!-- ════════════════════════════════════════
+           SECTION 2: KEY CONCEPTS
+           ════════════════════════════════════════ -->
       <h2 id="key-concepts">Key Concepts</h2>
 
-      <h3 id="group-by">1. GROUP BY and Aggregate Functions</h3>
+      <h3 id="group-by-basics">1. GROUP BY Basics</h3>
 
-      <div class="code-block"><div class="code-header"><span class="code-lang">sql</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+      <p>
+        The <code>GROUP BY</code> clause collapses rows that share the same values in the specified
+        columns into a single summary row. Every column in your <code>SELECT</code> list must either
+        appear in the <code>GROUP BY</code> clause or be wrapped in an aggregate function. Violating
+        this rule produces an error in PostgreSQL (unlike MySQL in permissive mode, which silently
+        returns indeterminate values).
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
 <pre>
-<span class="hl-comment">-- Count campaigns per account</span>
+<span class="hl-comment">-- Count orders per customer</span>
 <span class="hl-keyword">SELECT</span>
-    account_id,
-    <span class="hl-function">COUNT</span>(*) <span class="hl-keyword">AS</span> campaign_count,
-    <span class="hl-function">SUM</span>(monthly_budget) <span class="hl-keyword">AS</span> total_budget,
-    <span class="hl-function">AVG</span>(base_price) <span class="hl-keyword">AS</span> avg_price,
-    <span class="hl-function">MIN</span>(base_price) <span class="hl-keyword">AS</span> min_price,
-    <span class="hl-function">MAX</span>(base_price) <span class="hl-keyword">AS</span> max_price
-<span class="hl-keyword">FROM</span> campaigns
-<span class="hl-keyword">WHERE</span> discarded_at <span class="hl-keyword">IS NULL</span>
-<span class="hl-keyword">GROUP BY</span> account_id
-<span class="hl-keyword">ORDER BY</span> total_budget <span class="hl-keyword">DESC</span>;
+    customer_id,
+    <span class="hl-function">COUNT</span>(*) <span class="hl-keyword">AS</span> order_count
+<span class="hl-keyword">FROM</span> orders
+<span class="hl-keyword">GROUP BY</span> customer_id
+<span class="hl-keyword">ORDER BY</span> order_count <span class="hl-keyword">DESC</span>;
 
-<span class="hl-comment">-- Daily lead volume for a campaign</span>
+<span class="hl-comment">-- Revenue by product category and month</span>
 <span class="hl-keyword">SELECT</span>
-    <span class="hl-function">DATE</span>(created_at) <span class="hl-keyword">AS</span> lead_date,
-    <span class="hl-function">COUNT</span>(*) <span class="hl-keyword">AS</span> daily_leads
-<span class="hl-keyword">FROM</span> leads
-<span class="hl-keyword">WHERE</span> campaign_id = <span class="hl-number">42</span>
-<span class="hl-keyword">GROUP BY</span> <span class="hl-function">DATE</span>(created_at)
-<span class="hl-keyword">ORDER BY</span> lead_date <span class="hl-keyword">DESC</span>;
-</pre></div>
+    p.category,
+    <span class="hl-function">DATE_TRUNC</span>(<span class="hl-string">'month'</span>, o.created_at) <span class="hl-keyword">AS</span> order_month,
+    <span class="hl-function">SUM</span>(oi.quantity * oi.unit_price) <span class="hl-keyword">AS</span> total_revenue,
+    <span class="hl-function">COUNT</span>(<span class="hl-keyword">DISTINCT</span> o.id) <span class="hl-keyword">AS</span> order_count
+<span class="hl-keyword">FROM</span> order_items oi
+<span class="hl-keyword">JOIN</span> orders o <span class="hl-keyword">ON</span> o.id = oi.order_id
+<span class="hl-keyword">JOIN</span> products p <span class="hl-keyword">ON</span> p.id = oi.product_id
+<span class="hl-keyword">GROUP BY</span> p.category, order_month
+<span class="hl-keyword">ORDER BY</span> p.category, order_month;
+</pre>
+      </div>
 
-      <h3 id="having">2. HAVING &mdash; Filtering Aggregated Results</h3>
-
-      <div class="code-block"><div class="code-header"><span class="code-lang">sql</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+      <div class="diagram">
 <pre>
-<span class="hl-comment">-- Accounts with more than 5 active campaigns</span>
-<span class="hl-keyword">SELECT</span>
-    a.company_name,
-    <span class="hl-function">COUNT</span>(c.id) <span class="hl-keyword">AS</span> campaign_count,
-    <span class="hl-function">SUM</span>(c.monthly_budget) <span class="hl-keyword">AS</span> total_budget
-<span class="hl-keyword">FROM</span> accounts a
-<span class="hl-keyword">JOIN</span> campaigns c <span class="hl-keyword">ON</span> c.account_id = a.id
-<span class="hl-keyword">WHERE</span> c.active = <span class="hl-keyword">TRUE</span> <span class="hl-keyword">AND</span> c.discarded_at <span class="hl-keyword">IS NULL</span>
-<span class="hl-keyword">GROUP BY</span> a.id, a.company_name
-<span class="hl-keyword">HAVING</span> <span class="hl-function">COUNT</span>(c.id) > <span class="hl-number">5</span>
-<span class="hl-keyword">ORDER BY</span> campaign_count <span class="hl-keyword">DESC</span>;
+  Raw Rows (orders table)              Grouped Result
+ ┌────────────┬────────────┐         ┌────────────┬─────────────┐
+ │ customer_id│ order_total│         │ customer_id│ order_count │
+ ├────────────┼────────────┤         ├────────────┼─────────────┤
+ │     1      │   50.00    │         │     1      │      3      │
+ │     1      │   75.00    │  ─────▶ │     2      │      2      │
+ │     1      │   30.00    │         │     3      │      1      │
+ │     2      │  120.00    │         └────────────┴─────────────┘
+ │     2      │   45.00    │
+ │     3      │   90.00    │         GROUP BY collapses rows
+ └────────────┴────────────┘         sharing the same customer_id
+</pre>
+        <div class="diagram-caption">Figure 1: GROUP BY collapses multiple rows into summary rows per group</div>
+      </div>
 
-<span class="hl-comment">-- Campaigns where average bid price exceeds $20</span>
-<span class="hl-keyword">SELECT</span>
-    c.name,
-    <span class="hl-function">AVG</span>(ag.base_bid_price) <span class="hl-keyword">AS</span> avg_bid
-<span class="hl-keyword">FROM</span> campaigns c
-<span class="hl-keyword">JOIN</span> ad_groups ag <span class="hl-keyword">ON</span> ag.campaign_id = c.id
-<span class="hl-keyword">WHERE</span> ag.discarded_at <span class="hl-keyword">IS NULL</span>
-<span class="hl-keyword">GROUP BY</span> c.id, c.name
-<span class="hl-keyword">HAVING</span> <span class="hl-function">AVG</span>(ag.base_bid_price) > <span class="hl-number">20.00</span>;
-</pre></div>
+      <h3 id="aggregate-functions">2. Aggregate Functions (COUNT, SUM, AVG, MIN, MAX)</h3>
 
-      <h3 id="window-functions">3. Window Functions</h3>
+      <p>
+        PostgreSQL provides a rich set of aggregate functions. The five most commonly used are
+        <code>COUNT</code>, <code>SUM</code>, <code>AVG</code>, <code>MIN</code>, and <code>MAX</code>.
+        Each of these ignores <code>NULL</code> values except <code>COUNT(*)</code>, which counts all rows
+        regardless of NULLs. Understanding this NULL behavior is critical for accurate reporting.
+      </p>
 
-      <p>Window functions perform calculations across a set of rows related to the current row, without collapsing the result set. They use the <code>OVER()</code> clause.</p>
-
-      <div class="code-block"><div class="code-header"><span class="code-lang">sql</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
 <pre>
-<span class="hl-comment">-- Running total of monthly budget per account</span>
+<span class="hl-comment">-- Full aggregate summary for each department</span>
 <span class="hl-keyword">SELECT</span>
-    account_id,
-    name,
-    monthly_budget,
-    <span class="hl-function">SUM</span>(monthly_budget) <span class="hl-keyword">OVER</span> (
-        <span class="hl-keyword">PARTITION BY</span> account_id
-        <span class="hl-keyword">ORDER BY</span> created_at
-    ) <span class="hl-keyword">AS</span> running_total
-<span class="hl-keyword">FROM</span> campaigns
-<span class="hl-keyword">WHERE</span> discarded_at <span class="hl-keyword">IS NULL</span>;
+    department_id,
+    <span class="hl-function">COUNT</span>(*) <span class="hl-keyword">AS</span> employee_count,
+    <span class="hl-function">COUNT</span>(manager_id) <span class="hl-keyword">AS</span> with_manager,
+    <span class="hl-function">ROUND</span>(<span class="hl-function">SUM</span>(salary), <span class="hl-number">2</span>) <span class="hl-keyword">AS</span> total_payroll,
+    <span class="hl-function">ROUND</span>(<span class="hl-function">AVG</span>(salary), <span class="hl-number">2</span>) <span class="hl-keyword">AS</span> avg_salary,
+    <span class="hl-function">MIN</span>(salary) <span class="hl-keyword">AS</span> lowest_salary,
+    <span class="hl-function">MAX</span>(salary) <span class="hl-keyword">AS</span> highest_salary,
+    <span class="hl-function">MAX</span>(salary) - <span class="hl-function">MIN</span>(salary) <span class="hl-keyword">AS</span> salary_range
+<span class="hl-keyword">FROM</span> employees
+<span class="hl-keyword">GROUP BY</span> department_id
+<span class="hl-keyword">ORDER BY</span> total_payroll <span class="hl-keyword">DESC</span>;
 
-<span class="hl-comment">-- Each campaign's budget as percentage of its account's total</span>
+<span class="hl-comment">-- Using FILTER clause for conditional aggregation (PostgreSQL 9.4+)</span>
 <span class="hl-keyword">SELECT</span>
-    name,
-    monthly_budget,
-    <span class="hl-function">SUM</span>(monthly_budget) <span class="hl-keyword">OVER</span> (<span class="hl-keyword">PARTITION BY</span> account_id) <span class="hl-keyword">AS</span> account_total,
+    <span class="hl-function">COUNT</span>(*) <span class="hl-keyword">AS</span> total_orders,
+    <span class="hl-function">COUNT</span>(*) <span class="hl-keyword">FILTER</span> (<span class="hl-keyword">WHERE</span> status = <span class="hl-string">'completed'</span>) <span class="hl-keyword">AS</span> completed,
+    <span class="hl-function">COUNT</span>(*) <span class="hl-keyword">FILTER</span> (<span class="hl-keyword">WHERE</span> status = <span class="hl-string">'cancelled'</span>) <span class="hl-keyword">AS</span> cancelled,
     <span class="hl-function">ROUND</span>(
-        monthly_budget * <span class="hl-number">100.0</span> / <span class="hl-function">SUM</span>(monthly_budget) <span class="hl-keyword">OVER</span> (<span class="hl-keyword">PARTITION BY</span> account_id),
-        <span class="hl-number">1</span>
-    ) <span class="hl-keyword">AS</span> pct_of_account
-<span class="hl-keyword">FROM</span> campaigns
-<span class="hl-keyword">WHERE</span> discarded_at <span class="hl-keyword">IS NULL</span>;
-</pre></div>
+        <span class="hl-number">100.0</span> * <span class="hl-function">COUNT</span>(*) <span class="hl-keyword">FILTER</span> (<span class="hl-keyword">WHERE</span> status = <span class="hl-string">'completed'</span>)
+        / <span class="hl-function">NULLIF</span>(<span class="hl-function">COUNT</span>(*), <span class="hl-number">0</span>), <span class="hl-number">1</span>
+    ) <span class="hl-keyword">AS</span> completion_rate_pct
+<span class="hl-keyword">FROM</span> orders
+<span class="hl-keyword">WHERE</span> created_at >= <span class="hl-string">'2025-01-01'</span>;
+</pre>
+      </div>
 
-      <h3 id="ranking">4. Ranking Functions</h3>
+      <div class="callout tip">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Pro Tip
+        </div>
+        <p>
+          The <code>FILTER</code> clause is a PostgreSQL extension that replaces the classic
+          <code>CASE WHEN ... THEN 1 END</code> pattern inside aggregates. It is cleaner to read,
+          easier to maintain, and the query planner can sometimes optimize it more efficiently.
+          Always wrap denominators with <code>NULLIF(expr, 0)</code> to avoid division-by-zero errors.
+        </p>
+      </div>
 
-      <div class="code-block"><div class="code-header"><span class="code-lang">sql</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+      <h3 id="having-vs-where">3. HAVING vs WHERE</h3>
+
+      <p>
+        A common source of confusion is when to use <code>WHERE</code> versus <code>HAVING</code>.
+        The rule is straightforward: <code>WHERE</code> filters individual rows <strong>before</strong>
+        grouping. <code>HAVING</code> filters groups <strong>after</strong> aggregation. You cannot
+        reference aggregate functions in a <code>WHERE</code> clause.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
 <pre>
-<span class="hl-comment">-- Rank ad groups by bid price within each campaign</span>
+<span class="hl-comment">-- WHERE filters rows BEFORE grouping</span>
+<span class="hl-comment">-- HAVING filters groups AFTER aggregation</span>
 <span class="hl-keyword">SELECT</span>
-    campaign_id,
-    ad_group_name,
-    base_bid_price,
-    <span class="hl-function">ROW_NUMBER</span>() <span class="hl-keyword">OVER</span> (<span class="hl-keyword">PARTITION BY</span> campaign_id <span class="hl-keyword">ORDER BY</span> base_bid_price <span class="hl-keyword">DESC</span>) <span class="hl-keyword">AS</span> row_num,
-    <span class="hl-function">RANK</span>() <span class="hl-keyword">OVER</span> (<span class="hl-keyword">PARTITION BY</span> campaign_id <span class="hl-keyword">ORDER BY</span> base_bid_price <span class="hl-keyword">DESC</span>) <span class="hl-keyword">AS</span> rank,
-    <span class="hl-function">DENSE_RANK</span>() <span class="hl-keyword">OVER</span> (<span class="hl-keyword">PARTITION BY</span> campaign_id <span class="hl-keyword">ORDER BY</span> base_bid_price <span class="hl-keyword">DESC</span>) <span class="hl-keyword">AS</span> dense_rank
-<span class="hl-keyword">FROM</span> ad_groups
-<span class="hl-keyword">WHERE</span> active = <span class="hl-keyword">TRUE</span> <span class="hl-keyword">AND</span> discarded_at <span class="hl-keyword">IS NULL</span>;
+    customer_id,
+    <span class="hl-function">COUNT</span>(*) <span class="hl-keyword">AS</span> order_count,
+    <span class="hl-function">SUM</span>(total_amount) <span class="hl-keyword">AS</span> lifetime_value
+<span class="hl-keyword">FROM</span> orders
+<span class="hl-keyword">WHERE</span> status != <span class="hl-string">'cancelled'</span>       <span class="hl-comment">-- Row-level filter (runs before GROUP BY)</span>
+<span class="hl-keyword">GROUP BY</span> customer_id
+<span class="hl-keyword">HAVING</span> <span class="hl-function">COUNT</span>(*) >= <span class="hl-number">5</span>             <span class="hl-comment">-- Group-level filter (runs after GROUP BY)</span>
+   <span class="hl-keyword">AND</span> <span class="hl-function">SUM</span>(total_amount) > <span class="hl-number">500</span>    <span class="hl-comment">-- Another group-level filter</span>
+<span class="hl-keyword">ORDER BY</span> lifetime_value <span class="hl-keyword">DESC</span>;
 
-<span class="hl-comment">-- Top 3 campaigns per account by budget</span>
-<span class="hl-keyword">SELECT</span> * <span class="hl-keyword">FROM</span> (
+<span class="hl-comment">-- Find products ordered in more than 3 distinct months</span>
+<span class="hl-keyword">SELECT</span>
+    p.name,
+    <span class="hl-function">COUNT</span>(<span class="hl-keyword">DISTINCT</span> <span class="hl-function">DATE_TRUNC</span>(<span class="hl-string">'month'</span>, o.created_at)) <span class="hl-keyword">AS</span> active_months
+<span class="hl-keyword">FROM</span> products p
+<span class="hl-keyword">JOIN</span> order_items oi <span class="hl-keyword">ON</span> oi.product_id = p.id
+<span class="hl-keyword">JOIN</span> orders o <span class="hl-keyword">ON</span> o.id = oi.order_id
+<span class="hl-keyword">GROUP BY</span> p.id, p.name
+<span class="hl-keyword">HAVING</span> <span class="hl-function">COUNT</span>(<span class="hl-keyword">DISTINCT</span> <span class="hl-function">DATE_TRUNC</span>(<span class="hl-string">'month'</span>, o.created_at)) > <span class="hl-number">3</span>;
+</pre>
+      </div>
+
+      <div class="diagram">
+<pre>
+  SQL Logical Execution Order
+ ┌──────────────────────────────────────────────────────────┐
+ │  1. FROM / JOIN       ── assemble source rows             │
+ │  2. WHERE             ── filter individual rows            │
+ │  3. GROUP BY          ── collapse into groups              │
+ │  4. HAVING            ── filter groups by aggregate result │
+ │  5. WINDOW            ── compute window functions          │
+ │  6. SELECT            ── compute output expressions        │
+ │  7. DISTINCT          ── remove duplicate rows             │
+ │  8. ORDER BY          ── sort the final result set         │
+ │  9. LIMIT / OFFSET    ── paginate                          │
+ └──────────────────────────────────────────────────────────┘
+</pre>
+        <div class="diagram-caption">Figure 2: Logical execution order &mdash; WHERE runs before GROUP BY; HAVING runs after</div>
+      </div>
+
+      <h3 id="window-functions-intro">4. Window Functions Introduction (OVER, PARTITION BY)</h3>
+
+      <p>
+        Window functions perform a calculation across a set of rows related to the current row &mdash;
+        without collapsing those rows into a single output. The key syntax element is the <code>OVER()</code>
+        clause, which defines the "window" of rows the function sees. You can partition the window with
+        <code>PARTITION BY</code> and order it with <code>ORDER BY</code>.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- Compare each employee's salary to their department average</span>
+<span class="hl-keyword">SELECT</span>
+    name,
+    department_id,
+    salary,
+    <span class="hl-function">AVG</span>(salary) <span class="hl-keyword">OVER</span> (
+        <span class="hl-keyword">PARTITION BY</span> department_id
+    ) <span class="hl-keyword">AS</span> dept_avg_salary,
+    salary - <span class="hl-function">AVG</span>(salary) <span class="hl-keyword">OVER</span> (
+        <span class="hl-keyword">PARTITION BY</span> department_id
+    ) <span class="hl-keyword">AS</span> diff_from_avg
+<span class="hl-keyword">FROM</span> employees
+<span class="hl-keyword">ORDER BY</span> department_id, salary <span class="hl-keyword">DESC</span>;
+
+<span class="hl-comment">-- Each order with the customer's total and percentage of their total</span>
+<span class="hl-keyword">SELECT</span>
+    id <span class="hl-keyword">AS</span> order_id,
+    customer_id,
+    total_amount,
+    <span class="hl-function">SUM</span>(total_amount) <span class="hl-keyword">OVER</span> (
+        <span class="hl-keyword">PARTITION BY</span> customer_id
+    ) <span class="hl-keyword">AS</span> customer_lifetime,
+    <span class="hl-function">ROUND</span>(
+        <span class="hl-number">100.0</span> * total_amount /
+        <span class="hl-function">SUM</span>(total_amount) <span class="hl-keyword">OVER</span> (<span class="hl-keyword">PARTITION BY</span> customer_id), <span class="hl-number">2</span>
+    ) <span class="hl-keyword">AS</span> pct_of_lifetime
+<span class="hl-keyword">FROM</span> orders
+<span class="hl-keyword">WHERE</span> status = <span class="hl-string">'completed'</span>
+<span class="hl-keyword">ORDER BY</span> customer_id, total_amount <span class="hl-keyword">DESC</span>;
+</pre>
+      </div>
+
+      <div class="callout important">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Common Mistake
+        </div>
+        <p>
+          You cannot use window functions in a <code>WHERE</code> or <code>HAVING</code> clause.
+          Window functions are evaluated after <code>WHERE</code>, <code>GROUP BY</code>, and
+          <code>HAVING</code> in the SQL execution order. If you need to filter on a window function
+          result, wrap the query in a CTE or subquery and filter in the outer query.
+        </p>
+      </div>
+
+      <h3 id="ranking-functions">5. Ranking Functions (ROW_NUMBER, RANK, DENSE_RANK, NTILE)</h3>
+
+      <p>
+        Ranking functions assign a position number to each row within its partition. The three main
+        ranking functions differ only in how they handle ties:
+      </p>
+
+      <ul>
+        <li><strong>ROW_NUMBER()</strong> &mdash; Always unique; tied rows get arbitrary sequential numbers.</li>
+        <li><strong>RANK()</strong> &mdash; Ties share the same rank; the next rank skips (1, 2, 2, 4).</li>
+        <li><strong>DENSE_RANK()</strong> &mdash; Ties share the same rank; no gaps (1, 2, 2, 3).</li>
+        <li><strong>NTILE(n)</strong> &mdash; Distributes rows into <em>n</em> roughly equal-sized buckets.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- Compare all three ranking functions side by side</span>
+<span class="hl-keyword">SELECT</span>
+    name,
+    department_id,
+    salary,
+    <span class="hl-function">ROW_NUMBER</span>() <span class="hl-keyword">OVER</span> (
+        <span class="hl-keyword">PARTITION BY</span> department_id <span class="hl-keyword">ORDER BY</span> salary <span class="hl-keyword">DESC</span>
+    ) <span class="hl-keyword">AS</span> row_num,
+    <span class="hl-function">RANK</span>() <span class="hl-keyword">OVER</span> (
+        <span class="hl-keyword">PARTITION BY</span> department_id <span class="hl-keyword">ORDER BY</span> salary <span class="hl-keyword">DESC</span>
+    ) <span class="hl-keyword">AS</span> rnk,
+    <span class="hl-function">DENSE_RANK</span>() <span class="hl-keyword">OVER</span> (
+        <span class="hl-keyword">PARTITION BY</span> department_id <span class="hl-keyword">ORDER BY</span> salary <span class="hl-keyword">DESC</span>
+    ) <span class="hl-keyword">AS</span> dense_rnk
+<span class="hl-keyword">FROM</span> employees
+<span class="hl-keyword">ORDER BY</span> department_id, salary <span class="hl-keyword">DESC</span>;
+
+<span class="hl-comment">-- Top 3 products per category by revenue</span>
+<span class="hl-keyword">WITH</span> ranked_products <span class="hl-keyword">AS</span> (
     <span class="hl-keyword">SELECT</span>
-        account_id, name, monthly_budget,
+        p.category,
+        p.name,
+        <span class="hl-function">SUM</span>(oi.quantity * oi.unit_price) <span class="hl-keyword">AS</span> revenue,
         <span class="hl-function">ROW_NUMBER</span>() <span class="hl-keyword">OVER</span> (
-            <span class="hl-keyword">PARTITION BY</span> account_id
-            <span class="hl-keyword">ORDER BY</span> monthly_budget <span class="hl-keyword">DESC</span>
+            <span class="hl-keyword">PARTITION BY</span> p.category
+            <span class="hl-keyword">ORDER BY</span> <span class="hl-function">SUM</span>(oi.quantity * oi.unit_price) <span class="hl-keyword">DESC</span>
         ) <span class="hl-keyword">AS</span> rn
-    <span class="hl-keyword">FROM</span> campaigns
-    <span class="hl-keyword">WHERE</span> discarded_at <span class="hl-keyword">IS NULL</span>
-) ranked
-<span class="hl-keyword">WHERE</span> rn &lt;= <span class="hl-number">3</span>;
-</pre></div>
+    <span class="hl-keyword">FROM</span> products p
+    <span class="hl-keyword">JOIN</span> order_items oi <span class="hl-keyword">ON</span> oi.product_id = p.id
+    <span class="hl-keyword">GROUP BY</span> p.category, p.name
+)
+<span class="hl-keyword">SELECT</span> category, name, revenue
+<span class="hl-keyword">FROM</span> ranked_products
+<span class="hl-keyword">WHERE</span> rn &lt;= <span class="hl-number">3</span>
+<span class="hl-keyword">ORDER BY</span> category, revenue <span class="hl-keyword">DESC</span>;
 
-      <h3 id="lag-lead">5. LAG, LEAD, and Moving Averages</h3>
+<span class="hl-comment">-- NTILE: distribute customers into 4 spending quartiles</span>
+<span class="hl-keyword">SELECT</span>
+    customer_id,
+    <span class="hl-function">SUM</span>(total_amount) <span class="hl-keyword">AS</span> lifetime_value,
+    <span class="hl-function">NTILE</span>(<span class="hl-number">4</span>) <span class="hl-keyword">OVER</span> (
+        <span class="hl-keyword">ORDER BY</span> <span class="hl-function">SUM</span>(total_amount) <span class="hl-keyword">DESC</span>
+    ) <span class="hl-keyword">AS</span> spending_quartile
+<span class="hl-keyword">FROM</span> orders
+<span class="hl-keyword">WHERE</span> status = <span class="hl-string">'completed'</span>
+<span class="hl-keyword">GROUP BY</span> customer_id
+<span class="hl-keyword">ORDER BY</span> lifetime_value <span class="hl-keyword">DESC</span>;
+</pre>
+      </div>
 
-      <div class="code-block"><div class="code-header"><span class="code-lang">sql</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+      <h3 id="running-totals">6. Running Totals and Moving Averages</h3>
+
+      <p>
+        By adding an <code>ORDER BY</code> inside the <code>OVER()</code> clause, aggregate window
+        functions compute a running (cumulative) result. You can further control the window frame
+        with <code>ROWS BETWEEN</code> or <code>RANGE BETWEEN</code> to build moving averages and
+        other sliding-window calculations.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
 <pre>
-<span class="hl-comment">-- Bid change history: show old and new bid side by side</span>
-<span class="hl-keyword">SELECT</span>
-    ad_group_id,
-    new_bid,
-    <span class="hl-function">LAG</span>(new_bid) <span class="hl-keyword">OVER</span> (<span class="hl-keyword">PARTITION BY</span> ad_group_id <span class="hl-keyword">ORDER BY</span> created_at) <span class="hl-keyword">AS</span> previous_bid,
-    new_bid - <span class="hl-function">LAG</span>(new_bid) <span class="hl-keyword">OVER</span> (<span class="hl-keyword">PARTITION BY</span> ad_group_id <span class="hl-keyword">ORDER BY</span> created_at) <span class="hl-keyword">AS</span> change,
-    created_at
-<span class="hl-keyword">FROM</span> ad_group_bid_change_histories
-<span class="hl-keyword">ORDER BY</span> ad_group_id, created_at;
-
-<span class="hl-comment">-- 7-day moving average of daily lead count</span>
-<span class="hl-keyword">SELECT</span>
-    lead_date,
-    daily_leads,
-    <span class="hl-function">AVG</span>(daily_leads) <span class="hl-keyword">OVER</span> (
-        <span class="hl-keyword">ORDER BY</span> lead_date
-        <span class="hl-keyword">ROWS BETWEEN</span> <span class="hl-number">6</span> <span class="hl-keyword">PRECEDING AND CURRENT ROW</span>
-    ) <span class="hl-keyword">AS</span> moving_avg_7d
-<span class="hl-keyword">FROM</span> (
-    <span class="hl-keyword">SELECT</span> <span class="hl-function">DATE</span>(created_at) <span class="hl-keyword">AS</span> lead_date, <span class="hl-function">COUNT</span>(*) <span class="hl-keyword">AS</span> daily_leads
-    <span class="hl-keyword">FROM</span> leads
+<span class="hl-comment">-- Running total of daily revenue</span>
+<span class="hl-keyword">WITH</span> daily_totals <span class="hl-keyword">AS</span> (
+    <span class="hl-keyword">SELECT</span>
+        <span class="hl-function">DATE</span>(created_at) <span class="hl-keyword">AS</span> order_date,
+        <span class="hl-function">SUM</span>(total_amount) <span class="hl-keyword">AS</span> daily_revenue
+    <span class="hl-keyword">FROM</span> orders
+    <span class="hl-keyword">WHERE</span> created_at >= <span class="hl-string">'2025-01-01'</span>
     <span class="hl-keyword">GROUP BY</span> <span class="hl-function">DATE</span>(created_at)
-) daily;
-</pre></div>
+)
+<span class="hl-keyword">SELECT</span>
+    order_date,
+    daily_revenue,
+    <span class="hl-function">SUM</span>(daily_revenue) <span class="hl-keyword">OVER</span> (
+        <span class="hl-keyword">ORDER BY</span> order_date
+        <span class="hl-keyword">ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW</span>
+    ) <span class="hl-keyword">AS</span> cumulative_revenue
+<span class="hl-keyword">FROM</span> daily_totals
+<span class="hl-keyword">ORDER BY</span> order_date;
+
+<span class="hl-comment">-- 7-day moving average of daily revenue</span>
+<span class="hl-keyword">WITH</span> daily_totals <span class="hl-keyword">AS</span> (
+    <span class="hl-keyword">SELECT</span>
+        <span class="hl-function">DATE</span>(created_at) <span class="hl-keyword">AS</span> order_date,
+        <span class="hl-function">SUM</span>(total_amount) <span class="hl-keyword">AS</span> daily_revenue
+    <span class="hl-keyword">FROM</span> orders
+    <span class="hl-keyword">GROUP BY</span> <span class="hl-function">DATE</span>(created_at)
+)
+<span class="hl-keyword">SELECT</span>
+    order_date,
+    daily_revenue,
+    <span class="hl-function">ROUND</span>(
+        <span class="hl-function">AVG</span>(daily_revenue) <span class="hl-keyword">OVER</span> (
+            <span class="hl-keyword">ORDER BY</span> order_date
+            <span class="hl-keyword">ROWS BETWEEN</span> <span class="hl-number">6</span> <span class="hl-keyword">PRECEDING AND CURRENT ROW</span>
+        ), <span class="hl-number">2</span>
+    ) <span class="hl-keyword">AS</span> moving_avg_7d
+<span class="hl-keyword">FROM</span> daily_totals
+<span class="hl-keyword">ORDER BY</span> order_date;
+
+<span class="hl-comment">-- LAG / LEAD: compare with previous and next row values</span>
+<span class="hl-keyword">WITH</span> daily_totals <span class="hl-keyword">AS</span> (
+    <span class="hl-keyword">SELECT</span>
+        <span class="hl-function">DATE</span>(created_at) <span class="hl-keyword">AS</span> order_date,
+        <span class="hl-function">SUM</span>(total_amount) <span class="hl-keyword">AS</span> daily_revenue
+    <span class="hl-keyword">FROM</span> orders
+    <span class="hl-keyword">GROUP BY</span> <span class="hl-function">DATE</span>(created_at)
+)
+<span class="hl-keyword">SELECT</span>
+    order_date,
+    daily_revenue,
+    <span class="hl-function">LAG</span>(daily_revenue, <span class="hl-number">1</span>) <span class="hl-keyword">OVER</span> (<span class="hl-keyword">ORDER BY</span> order_date) <span class="hl-keyword">AS</span> prev_day_revenue,
+    <span class="hl-function">ROUND</span>(
+        <span class="hl-number">100.0</span> * (daily_revenue - <span class="hl-function">LAG</span>(daily_revenue, <span class="hl-number">1</span>) <span class="hl-keyword">OVER</span> (<span class="hl-keyword">ORDER BY</span> order_date))
+        / <span class="hl-function">NULLIF</span>(<span class="hl-function">LAG</span>(daily_revenue, <span class="hl-number">1</span>) <span class="hl-keyword">OVER</span> (<span class="hl-keyword">ORDER BY</span> order_date), <span class="hl-number">0</span>),
+        <span class="hl-number">2</span>
+    ) <span class="hl-keyword">AS</span> day_over_day_pct
+<span class="hl-keyword">FROM</span> daily_totals
+<span class="hl-keyword">ORDER BY</span> order_date;
+</pre>
+      </div>
+
+      <div class="callout concept">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Frame Specification
+        </div>
+        <p>
+          The default window frame when <code>ORDER BY</code> is present is
+          <code>RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW</code>. If two rows share the
+          same <code>ORDER BY</code> value, <code>RANGE</code> includes both in the same frame.
+          To get strictly row-by-row accumulation, use <code>ROWS BETWEEN</code> instead.
+          For a 7-day moving average, use <code>ROWS BETWEEN 6 PRECEDING AND CURRENT ROW</code>.
+        </p>
+      </div>
 
       <hr class="section-divider">
 
+      <!-- ════════════════════════════════════════
+           SECTION 3: WATCH & LEARN
+           ════════════════════════════════════════ -->
       <h2 id="watch-learn">Watch &amp; Learn</h2>
+
+      <p>
+        These videos cover aggregation and window functions in depth. Watch them before starting
+        the assignments to build intuition for partitioning and framing.
+      </p>
+
       <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/Ww71knvhQ-s?rel=0&amp;modestbranding=1" title="PostgreSQL Window Functions" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-caption"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>Hussein Nasser &mdash; Window functions explained with ROW_NUMBER, RANK, LAG, LEAD</div>
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/HXV3zeQKqGY?rel=0&amp;modestbranding=1"
+            title="SQL Aggregation and GROUP BY"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          SQL Aggregation, GROUP BY, and HAVING &mdash; Complete Tutorial
+        </div>
       </div>
+
       <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/zAmJPdHEJSs?rel=0&amp;modestbranding=1" title="SQL GROUP BY and Aggregation" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-caption"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>Web Dev Simplified &mdash; GROUP BY, HAVING, COUNT, SUM, AVG with practical examples</div>
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/7S_tz1z_5bA?rel=0&amp;modestbranding=1"
+            title="SQL Window Functions Tutorial"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Window Functions in PostgreSQL &mdash; ROW_NUMBER, RANK, LAG, LEAD Explained
+        </div>
       </div>
 
       <hr class="section-divider">
 
+      <!-- ════════════════════════════════════════
+           SECTION 4: FURTHER READING
+           ════════════════════════════════════════ -->
       <h2 id="further-reading">Further Reading</h2>
+
+      <p>Deep-dive into the official documentation and reference material for aggregation and window functions.</p>
+
       <div class="resource-grid">
-        <a class="resource-card" href="https://www.postgresql.org/docs/current/tutorial-agg.html" target="_blank" rel="noopener">
-          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-          <div class="resource-info"><div class="resource-title">PostgreSQL Docs: Aggregate Functions</div><div class="resource-desc">Tutorial on COUNT, SUM, AVG, MIN, MAX with GROUP BY.</div></div>
-        </a>
         <a class="resource-card" href="https://www.postgresql.org/docs/current/functions-aggregate.html" target="_blank" rel="noopener">
           <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-          <div class="resource-info"><div class="resource-title">PostgreSQL Docs: Aggregate Function Reference</div><div class="resource-desc">Complete list of built-in aggregate functions.</div></div>
+          <div class="resource-info">
+            <div class="resource-title">PostgreSQL Docs: Aggregate Functions</div>
+            <div class="resource-desc">Official reference for COUNT, SUM, AVG, and all built-in aggregate functions.</div>
+          </div>
         </a>
         <a class="resource-card" href="https://www.postgresql.org/docs/current/tutorial-window.html" target="_blank" rel="noopener">
           <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-          <div class="resource-info"><div class="resource-title">PostgreSQL Docs: Window Functions Tutorial</div><div class="resource-desc">Official tutorial on window functions with OVER, PARTITION BY, ORDER BY.</div></div>
+          <div class="resource-info">
+            <div class="resource-title">PostgreSQL Docs: Window Functions Tutorial</div>
+            <div class="resource-desc">Official tutorial covering OVER, PARTITION BY, ORDER BY, and frame specifications.</div>
+          </div>
         </a>
-        <a class="resource-card" href="https://www.postgresql.org/docs/current/functions-window.html" target="_blank" rel="noopener">
+        <a class="resource-card" href="https://www.postgresql.org/docs/current/sql-expressions.html#SYNTAX-WINDOW-FUNCTIONS" target="_blank" rel="noopener">
           <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-          <div class="resource-info"><div class="resource-title">PostgreSQL Docs: Window Function Reference</div><div class="resource-desc">ROW_NUMBER, RANK, DENSE_RANK, LAG, LEAD, NTILE reference.</div></div>
+          <div class="resource-info">
+            <div class="resource-title">PostgreSQL Docs: Window Function Syntax</div>
+            <div class="resource-desc">Full syntax reference for window function calls, named windows, and frame clauses.</div>
+          </div>
+        </a>
+        <a class="resource-card" href="https://use-the-index-luke.com/sql/partial-results/window-functions" target="_blank" rel="noopener">
+          <div class="resource-icon article"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <div class="resource-info">
+            <div class="resource-title">Use The Index, Luke: Window Functions</div>
+            <div class="resource-desc">How window functions interact with indexes and query performance optimizations.</div>
+          </div>
+        </a>
+        <a class="resource-card" href="https://pganalyze.com/docs/explain/insights/window-functions" target="_blank" rel="noopener">
+          <div class="resource-icon article"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <div class="resource-info">
+            <div class="resource-title">pganalyze: Window Function Query Plans</div>
+            <div class="resource-desc">Reading EXPLAIN output for window function queries and optimizing sort operations.</div>
+          </div>
+        </a>
+        <a class="resource-card" href="https://www.postgresql.org/docs/current/queries-table-expressions.html#QUERIES-GROUPING-SETS" target="_blank" rel="noopener">
+          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+          <div class="resource-info">
+            <div class="resource-title">PostgreSQL Docs: GROUPING SETS, CUBE, ROLLUP</div>
+            <div class="resource-desc">Advanced grouping for multi-dimensional aggregation, subtotals, and grand totals.</div>
+          </div>
         </a>
       </div>
 
       <hr class="section-divider">
 
+      <!-- ════════════════════════════════════════
+           SECTION 5: ASSIGNMENTS
+           ════════════════════════════════════════ -->
       <h2 id="assignments">Assignments</h2>
 
+      <p>
+        Complete these in order. Each level builds on the previous one. Run each query in
+        <code>psql</code> or your preferred SQL client and verify the output.
+      </p>
+
+      <!-- Assignment 1 -->
       <div class="assignment">
         <div class="assignment-header">
           <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 1</div>
           <span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span>
         </div>
         <h4>Basic Aggregation Queries</h4>
-        <p>Write GROUP BY queries answering common ad-tech business questions.</p>
+        <p>Build GROUP BY queries on a sample e-commerce dataset. Focus on aggregate functions and HAVING filters.</p>
         <ul class="checklist">
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Count campaigns per account with total budget</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Daily lead count for a specific campaign</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Average bid price per campaign using ad_groups table</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Find accounts with total monthly budget exceeding $50,000 using HAVING</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Calculate the min, max, and average lead count across all campaigns</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write a query that counts orders per customer, sorted by order count descending</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Compute total revenue, average order value, and order count per product category</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Use HAVING to find customers with more than 5 orders worth over $500 total</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Use the FILTER clause to compute completed vs cancelled counts in one query</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Group orders by month using DATE_TRUNC and compute monthly revenue</span></li>
         </ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div><p>Each query uses appropriate aggregate functions. HAVING filters correctly on computed values.</p></div>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div>
+          <p>You can write GROUP BY queries with multiple aggregate functions and correctly apply WHERE for row filtering and HAVING for group filtering.</p>
+        </div>
       </div>
+
+      <!-- Assignment 2 -->
       <div class="assignment">
         <div class="assignment-header">
           <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 2</div>
           <span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span>
         </div>
-        <h4>Window Functions for Campaign Analytics</h4>
-        <p>Use window functions to build rich per-row analytics.</p>
+        <h4>Window Functions and Rankings</h4>
+        <p>Use window functions to rank, compare, and analyze rows within partitions without losing row-level detail.</p>
         <ul class="checklist">
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Rank campaigns by budget within each account using ROW_NUMBER</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Calculate each campaign budget as percentage of account total</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Use LAG to show bid price changes over time from ad_group_bid_change_histories</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Build a "top 3 ad groups per campaign by bid price" query</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>7-day moving average of daily lead volume</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Rank employees by salary within each department using ROW_NUMBER, RANK, and DENSE_RANK</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write a "top N per group" query returning the 3 highest-revenue products per category</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Compare each employee salary to their department average using a window AVG</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Use NTILE(4) to segment customers into spending quartiles</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Use LAG and LEAD to compute day-over-day revenue changes</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Explain in writing why each ranking function produces different results for ties</span></li>
         </ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div><p>Window queries return all original rows with computed columns. Moving average is correct.</p></div>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div>
+          <p>You can produce analytical reports combining row-level detail with partition-level summaries in the same result set.</p>
+        </div>
       </div>
+
+      <!-- Assignment 3 -->
       <div class="assignment">
         <div class="assignment-header">
           <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 3</div>
           <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Production-Ready</span>
         </div>
-        <h4>Executive Dashboard Queries</h4>
-        <p>Build the SQL queries that power an executive analytics dashboard.</p>
+        <h4>Financial Dashboard Queries</h4>
+        <p>Build queries suitable for powering a real financial dashboard with running totals, moving averages, and cohort analysis.</p>
         <ul class="checklist">
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Account leaderboard: rank accounts by total leads, show running total</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Campaign performance: each campaign with rank, pct-of-account, and comparison to prior month</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Bid optimization report: ad groups ranked by match_rate with cumulative distribution</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Cohort analysis: accounts grouped by activation_month with retention over time</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Build a cumulative revenue query with running totals over daily aggregates</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Compute 7-day and 30-day moving averages of daily revenue using ROWS BETWEEN</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a monthly cohort retention query using FIRST_VALUE and date arithmetic</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Use GROUPING SETS to produce a report with subtotals and a grand total row</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Profile each query with EXPLAIN ANALYZE and document sort and hash operations</span></li>
         </ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div><p>Dashboard queries run in under 1 second on your sample data. Each includes at least one window function.</p></div>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div>
+          <p>Your queries could be dropped into a production analytics pipeline. You can explain window frame specifications and their impact on running totals vs moving averages.</p>
+        </div>
       </div>
 
       <hr class="section-divider">
 
+      <!-- ════════════════════════════════════════
+           SECTION 6: SELF-CHECK
+           ════════════════════════════════════════ -->
       <h2 id="self-check">Self-Check</h2>
+
+      <p>Before moving to Chapter 06, honestly answer these questions. If any answer is uncertain, revisit the relevant concept.</p>
 
       <details>
         <summary>What is the difference between WHERE and HAVING?</summary>
-        <div class="details-body"><p>WHERE filters individual rows BEFORE grouping. HAVING filters groups AFTER aggregation. You cannot use aggregate functions in WHERE (e.g., WHERE COUNT(*) > 5 is invalid). Use HAVING COUNT(*) > 5 instead.</p></div>
+        <div class="details-body">
+          <p><code>WHERE</code> filters individual rows before grouping occurs. It cannot reference aggregate functions. <code>HAVING</code> filters groups after aggregation and can reference aggregate results like <code>COUNT(*) > 5</code>. Best practice is to use <code>WHERE</code> to exclude irrelevant rows early (reducing the data that needs grouping) and <code>HAVING</code> to filter the resulting groups.</p>
+        </div>
       </details>
+
       <details>
-        <summary>When would you use RANK vs ROW_NUMBER vs DENSE_RANK?</summary>
-        <div class="details-body"><p>ROW_NUMBER assigns unique sequential numbers (1,2,3) even for ties. RANK assigns the same number for ties but skips (1,1,3). DENSE_RANK assigns the same for ties without skipping (1,1,2). Use ROW_NUMBER for pagination, RANK for competitive rankings, DENSE_RANK for grading.</p></div>
+        <summary>When would you use RANK instead of ROW_NUMBER?</summary>
+        <div class="details-body">
+          <p>Use <code>RANK()</code> when ties matter and you want tied rows to share the same position (e.g., two students both scored 95 and should both be rank 1, with the next student at rank 3). Use <code>ROW_NUMBER()</code> when you need a unique sequential number regardless of ties &mdash; for example, to select exactly the top N rows from each partition. Use <code>DENSE_RANK()</code> when you want tie-sharing without gaps (1, 2, 2, 3 instead of 1, 2, 2, 4).</p>
+        </div>
       </details>
+
       <details>
-        <summary>How does PARTITION BY differ from GROUP BY?</summary>
-        <div class="details-body"><p>GROUP BY collapses rows into summary groups (100 rows become 5 group rows). PARTITION BY in a window function divides rows into partitions for calculation but keeps all 100 original rows. Each row gets the computed value for its partition.</p></div>
+        <summary>How does a window frame specification affect SUM() OVER()?</summary>
+        <div class="details-body">
+          <p>Without a frame specification, <code>SUM() OVER(ORDER BY col)</code> defaults to <code>RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW</code>, producing a running total. But with RANGE, rows sharing the same ORDER BY value are lumped together. For strictly row-by-row accumulation, use <code>ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW</code>. For sliding windows like a 7-day moving average, use <code>ROWS BETWEEN 6 PRECEDING AND CURRENT ROW</code>.</p>
+        </div>
       </details>
+
     </main>
 
+    <!-- Sidebar: Table of Contents -->
     <aside class="sidebar">
       <div class="sidebar-title">On this page</div>
       <ul class="toc-list">
         <li class="toc-item"><a href="#why-this-matters">Why This Matters</a></li>
         <li class="toc-item"><a href="#key-concepts">Key Concepts</a></li>
-        <li class="toc-item"><a href="#group-by" style="padding-left:28px;font-size:12px">GROUP BY &amp; Aggregates</a></li>
-        <li class="toc-item"><a href="#having" style="padding-left:28px;font-size:12px">HAVING</a></li>
-        <li class="toc-item"><a href="#window-functions" style="padding-left:28px;font-size:12px">Window Functions</a></li>
-        <li class="toc-item"><a href="#ranking" style="padding-left:28px;font-size:12px">Ranking Functions</a></li>
-        <li class="toc-item"><a href="#lag-lead" style="padding-left:28px;font-size:12px">LAG, LEAD &amp; Moving Avg</a></li>
+        <li class="toc-item"><a href="#group-by-basics" style="padding-left: 28px; font-size: 12px;">GROUP BY Basics</a></li>
+        <li class="toc-item"><a href="#aggregate-functions" style="padding-left: 28px; font-size: 12px;">Aggregate Functions</a></li>
+        <li class="toc-item"><a href="#having-vs-where" style="padding-left: 28px; font-size: 12px;">HAVING vs WHERE</a></li>
+        <li class="toc-item"><a href="#window-functions-intro" style="padding-left: 28px; font-size: 12px;">Window Functions</a></li>
+        <li class="toc-item"><a href="#ranking-functions" style="padding-left: 28px; font-size: 12px;">Ranking Functions</a></li>
+        <li class="toc-item"><a href="#running-totals" style="padding-left: 28px; font-size: 12px;">Running Totals</a></li>
         <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a></li>
         <li class="toc-item"><a href="#further-reading">Further Reading</a></li>
         <li class="toc-item"><a href="#assignments">Assignments</a></li>
@@ -309,20 +1195,67 @@
     </aside>
   </div>
 
-  <footer class="chapter-footer"><div class="chapter-footer-inner">
-    <nav class="footer-nav">
-      <a class="footer-nav-link" href="chapter-04.html"><span class="footer-nav-label">&larr; Previous Chapter</span><span class="footer-nav-title">04: Joins and Subqueries</span></a>
-      <a class="footer-nav-link" href="chapter-06.html"><span class="footer-nav-label">Next Chapter &rarr;</span><span class="footer-nav-title">06: Indexes and Query Plans</span></a>
-    </nav>
-    <div class="footer-brand">ILA (Iksha Learning Academy) &middot; PostgreSQL Engineering Certification &middot; Basic</div>
-  </div></footer>
+  <!-- Footer Navigation -->
+  <footer class="chapter-footer">
+    <div class="chapter-footer-inner">
+      <nav class="footer-nav">
+        <a class="footer-nav-link" href="chapter-04.html">
+          <span class="footer-nav-label">&larr; Previous Chapter</span>
+          <span class="footer-nav-title">04: Joins and Subqueries</span>
+        </a>
+        <a class="footer-nav-link" href="chapter-06.html">
+          <span class="footer-nav-label">Next Chapter &rarr;</span>
+          <span class="footer-nav-title">06: Indexes and Query Plans</span>
+        </a>
+      </nav>
+      <div class="footer-brand">
+        ILA (Iksha Learning Academy) &middot; PostgreSQL Engineering Certification &middot; Level 1
+      </div>
+    </div>
+  </footer>
 
+  <!-- ════════════════════════════════════════
+       SCRIPTS
+       ════════════════════════════════════════ -->
   <script>
-    window.addEventListener('scroll',()=>{const s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight;document.getElementById('progressBar').style.width=(d>0?(s/d)*100:0)+'%'});
-    const tocLinks=document.querySelectorAll('.toc-item a'),sections=[];tocLinks.forEach(link=>{const id=link.getAttribute('href').slice(1),el=document.getElementById(id);if(el)sections.push({id,el,link})});
-    const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{const item=sections.find(s=>s.el===entry.target);if(item&&entry.isIntersecting){tocLinks.forEach(l=>l.classList.remove('active'));item.link.classList.add('active')}})},{rootMargin:'-80px 0px -60% 0px',threshold:0});
-    sections.forEach(s=>observer.observe(s.el));
-    function copyCode(btn){const pre=btn.closest('.code-block').querySelector('pre');navigator.clipboard.writeText(pre.textContent).then(()=>{btn.classList.add('copied');btn.textContent='Copied!';setTimeout(()=>{btn.classList.remove('copied');btn.textContent='Copy'},2000)})}
+    // ── Progress Bar ──
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      document.getElementById('progressBar').style.width = progress + '%';
+    });
+
+    // ── Active TOC ──
+    const tocLinks = document.querySelectorAll('.toc-item a');
+    const sections = [];
+    tocLinks.forEach(link => {
+      const id = link.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) sections.push({ id, el, link });
+    });
+    const observerOptions = { rootMargin: '-80px 0px -60% 0px', threshold: 0 };
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const item = sections.find(s => s.el === entry.target);
+        if (item && entry.isIntersecting) {
+          tocLinks.forEach(l => l.classList.remove('active'));
+          item.link.classList.add('active');
+        }
+      });
+    }, observerOptions);
+    sections.forEach(s => observer.observe(s.el));
+
+    // ── Copy Code ──
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      const text = pre.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.classList.add('copied');
+        btn.textContent = 'Copied!';
+        setTimeout(() => { btn.classList.remove('copied'); btn.textContent = 'Copy'; }, 2000);
+      });
+    }
   </script>
 </body>
 </html>

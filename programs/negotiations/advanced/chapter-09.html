@@ -8,7 +8,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
+    /* ═══════════════════════════════════════════════
+       ILA DESIGN SYSTEM — v1.0
+       Iksha Learning Academy
+       ═══════════════════════════════════════════════ */
+
     :root {
+      /* Palette */
       --ink:        #0f172a;
       --ink-light:  #334155;
       --ink-muted:  #64748b;
@@ -17,6 +23,8 @@
       --surface-warm:#fffbeb;
       --border:     #e2e8f0;
       --border-light:#f1f5f9;
+
+      /* Brand */
       --teal-50:  #f0fdfa;
       --teal-100: #ccfbf1;
       --teal-200: #99f6e4;
@@ -25,36 +33,52 @@
       --teal-700: #0f766e;
       --teal-800: #115e59;
       --teal-900: #134e4a;
+
       --blue-50:  #eff6ff;
       --blue-100: #dbeafe;
       --blue-500: #3b82f6;
       --blue-600: #2563eb;
       --blue-700: #1d4ed8;
+
       --amber-50:  #fffbeb;
       --amber-100: #fef3c7;
       --amber-500: #f59e0b;
       --amber-600: #d97706;
+
       --red-50:   #fef2f2;
       --red-100:  #fee2e2;
       --red-500:  #ef4444;
       --red-600:  #dc2626;
+
       --purple-50:  #faf5ff;
       --purple-100: #f3e8ff;
       --purple-500: #a855f7;
       --purple-600: #9333ea;
-      --green-50:  #f0fdf4;
-      --green-100: #dcfce7;
-      --green-500: #22c55e;
-      --green-600: #16a34a;
+
+      /* Typography */
       --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       --font-serif: 'Instrument Serif', Georgia, serif;
       --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
+
+      /* Spacing */
       --content-max: 780px;
+      --sidebar-width: 280px;
+
+      /* Transitions */
       --ease: cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
 
     body {
       font-family: var(--font-sans);
@@ -64,6 +88,7 @@
       background: var(--surface);
     }
 
+    /* ── PROGRESS BAR ─────────────────────────── */
     .progress-bar {
       position: fixed;
       top: 0;
@@ -75,6 +100,7 @@
       transition: width 0.15s var(--ease);
     }
 
+    /* ── TOP NAV ──────────────────────────────── */
     .top-nav {
       position: sticky;
       top: 0;
@@ -162,6 +188,7 @@
       padding: 0 4px;
     }
 
+    /* ── HERO ─────────────────────────────────── */
     .hero {
       background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%);
       border-bottom: 1px solid var(--border);
@@ -222,33 +249,117 @@
       color: var(--ink-muted);
     }
 
-    .content {
-      max-width: var(--content-max);
-      margin: 0 auto;
-      padding: 3rem 2rem 6rem;
+    .hero-meta-item svg {
+      width: 16px;
+      height: 16px;
+      color: var(--teal-600);
     }
 
+    /* ── MAIN LAYOUT ──────────────────────────── */
+    .main-layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr var(--sidebar-width);
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .content {
+      padding: 3rem 0 6rem;
+      min-width: 0;
+    }
+
+    /* ── SIDEBAR TOC ──────────────────────────── */
+    .sidebar {
+      position: sticky;
+      top: 76px;
+      padding: 2rem 0;
+      max-height: calc(100vh - 76px);
+      overflow-y: auto;
+    }
+
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-muted);
+      margin-bottom: 1rem;
+      padding-left: 14px;
+    }
+
+    .toc-list {
+      list-style: none;
+    }
+
+    .toc-item a {
+      display: block;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--ink-muted);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: all 0.2s var(--ease);
+      line-height: 1.5;
+    }
+
+    .toc-item a:hover {
+      color: var(--ink);
+      background: var(--surface-alt);
+    }
+
+    .toc-item a.active {
+      color: var(--teal-700);
+      border-left-color: var(--teal-500);
+      background: var(--teal-50);
+      font-weight: 500;
+    }
+
+    /* ── TYPOGRAPHY ────────────────────────────── */
     .content h2 {
       font-family: var(--font-serif);
       font-size: 1.85rem;
       font-weight: 400;
       color: var(--ink);
       margin: 3rem 0 1rem;
+      padding-top: 1rem;
       scroll-margin-top: 80px;
     }
 
-    .content h2:first-child { margin-top: 0; }
+    .content h2:first-child {
+      margin-top: 0;
+    }
 
     .content h3 {
       font-size: 1.15rem;
       font-weight: 600;
       color: var(--ink);
       margin: 2rem 0 0.75rem;
+      scroll-margin-top: 80px;
     }
 
     .content p {
       margin-bottom: 1.25rem;
       color: var(--ink-light);
+    }
+
+    .content strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .content a {
+      color: var(--teal-700);
+      text-decoration: underline;
+      text-decoration-color: var(--teal-200);
+      text-underline-offset: 3px;
+      transition: text-decoration-color 0.2s;
+    }
+
+    .content a:hover {
+      text-decoration-color: var(--teal-600);
     }
 
     .content ul, .content ol {
@@ -261,13 +372,25 @@
       color: var(--ink-light);
     }
 
-    .content li::marker { color: var(--teal-500); }
+    .content li::marker {
+      color: var(--teal-500);
+    }
 
+    /* ── SECTION DIVIDER ──────────────────────── */
+    .section-divider {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 3rem 0;
+    }
+
+    /* ── CALLOUT BOXES ────────────────────────── */
     .callout {
       padding: 1.25rem 1.5rem;
       border-radius: 12px;
       margin-bottom: 1.5rem;
       border: 1px solid;
+      position: relative;
     }
 
     .callout-header {
@@ -279,119 +402,464 @@
       margin-bottom: 0.5rem;
     }
 
-    .callout p:last-child { margin-bottom: 0; }
+    .callout-header svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    .callout p:last-child {
+      margin-bottom: 0;
+    }
 
     .callout.concept {
       background: var(--blue-50);
       border-color: var(--blue-100);
     }
-    .callout.concept .callout-header { color: var(--blue-700); }
+
+    .callout.concept .callout-header {
+      color: var(--blue-700);
+    }
 
     .callout.important {
       background: var(--amber-50);
       border-color: var(--amber-100);
     }
-    .callout.important .callout-header { color: var(--amber-600); }
+
+    .callout.important .callout-header {
+      color: var(--amber-600);
+    }
+
+    .callout.danger {
+      background: var(--red-50);
+      border-color: var(--red-100);
+    }
+
+    .callout.danger .callout-header {
+      color: var(--red-600);
+    }
 
     .callout.tip {
       background: var(--purple-50);
       border-color: var(--purple-100);
     }
-    .callout.tip .callout-header { color: var(--purple-600); }
+
+    .callout.tip .callout-header {
+      color: var(--purple-600);
+    }
 
     .callout.success {
       background: var(--teal-50);
       border-color: var(--teal-100);
     }
-    .callout.success .callout-header { color: var(--teal-700); }
 
-    .section-divider {
-      border: none;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--border), transparent);
-      margin: 3rem 0;
+    .callout.success .callout-header {
+      color: var(--teal-700);
     }
 
-    .coming-soon-banner {
-      background: var(--amber-50);
-      border: 1px solid var(--amber-100);
+    /* ── CODE BLOCKS ──────────────────────────── */
+    .code-block {
+      position: relative;
+      margin-bottom: 1.5rem;
       border-radius: 12px;
-      padding: 2.5rem;
-      text-align: center;
-      margin: 2rem 0;
+      overflow: hidden;
+      border: 1px solid var(--border);
     }
 
-    .coming-soon-banner h3 {
-      color: var(--amber-600);
-      margin-bottom: 0.5rem;
-    }
-
-    .coming-soon-banner p {
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+      background: var(--surface-alt);
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
       color: var(--ink-muted);
+    }
+
+    .code-lang {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .code-copy {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: white;
+      font-size: 11px;
+      font-family: var(--font-sans);
+      color: var(--ink-muted);
+      cursor: pointer;
+      transition: all 0.2s var(--ease);
+    }
+
+    .code-copy:hover {
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    .code-copy.copied {
+      background: var(--teal-50);
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    pre {
+      margin: 0;
+      padding: 1.25rem 1.5rem;
+      overflow-x: auto;
+      background: #1e293b;
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: #e2e8f0;
+    }
+
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.88em;
+    }
+
+    p code, li code {
+      padding: 2px 7px;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      color: var(--teal-800);
+      font-size: 0.85em;
+    }
+
+    /* Syntax highlights (minimal) */
+    .hl-keyword  { color: #c084fc; }
+    .hl-string   { color: #86efac; }
+    .hl-comment  { color: #64748b; font-style: italic; }
+    .hl-function { color: #7dd3fc; }
+    .hl-number   { color: #fbbf24; }
+    .hl-flag     { color: #f472b6; }
+
+    /* ── COLLAPSIBLE (DETAILS) ────────────────── */
+    details {
+      margin-bottom: 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.2s var(--ease);
+    }
+
+    details[open] {
+      border-color: var(--teal-200);
+    }
+
+    details summary {
+      padding: 1rem 1.25rem;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      background: var(--surface-alt);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.2s var(--ease);
+      user-select: none;
+    }
+
+    details summary::-webkit-details-marker {
+      display: none;
+    }
+
+    details summary::before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+      flex-shrink: 0;
+      transition: transform 0.2s var(--ease);
+    }
+
+    details[open] summary::before {
+      transform: rotate(90deg);
+    }
+
+    details summary:hover {
+      background: var(--teal-50);
+    }
+
+    .details-body {
+      padding: 1.25rem 1.5rem;
+    }
+
+    .details-body p:last-child {
       margin-bottom: 0;
     }
 
-    .topics-preview {
+    /* ── VIDEO EMBED ──────────────────────────── */
+    .video-card {
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      background: #0f172a;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .video-caption {
+      padding: 12px 16px;
       background: var(--surface-alt);
+      font-size: 13px;
+      color: var(--ink-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .video-caption svg {
+      width: 14px;
+      height: 14px;
+      color: var(--red-500);
+    }
+
+    /* ── RESOURCE CARDS ───────────────────────── */
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .resource-card {
+      display: flex;
+      gap: 14px;
+      padding: 1rem 1.25rem;
       border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 1.5rem 2rem;
-      margin: 1.5rem 0;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      background: white;
     }
 
-    .topics-preview h3 {
-      font-size: 0.95rem;
-      margin-bottom: 0.75rem;
+    .resource-card:hover {
+      border-color: var(--teal-300);
+      background: var(--teal-50);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .resource-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 18px;
+    }
+
+    .resource-icon.docs    { background: var(--blue-50);   color: var(--blue-600); }
+    .resource-icon.video   { background: var(--red-50);    color: var(--red-500); }
+    .resource-icon.github  { background: var(--ink);       color: white; }
+    .resource-icon.article { background: var(--amber-50);  color: var(--amber-600); }
+    .resource-icon.pdf     { background: var(--purple-50); color: var(--purple-600); }
+
+    .resource-info {
+      min-width: 0;
+    }
+
+    .resource-title {
+      font-size: 14px;
+      font-weight: 600;
       color: var(--ink);
+      margin-bottom: 2px;
+      line-height: 1.4;
     }
 
-    .topics-preview ul {
+    .resource-desc {
+      font-size: 12px;
+      color: var(--ink-muted);
+      line-height: 1.5;
+    }
+
+    /* ── ASSIGNMENT CARDS ─────────────────────── */
+    .assignment {
+      border: 2px solid var(--teal-200);
+      border-radius: 14px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--teal-50) 0%, white 100%);
+    }
+
+    .assignment-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .assignment-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--teal-700);
+    }
+
+    .assignment-difficulty {
+      display: inline-flex;
+      padding: 4px 10px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .difficulty-l1 { background: var(--teal-100); color: var(--teal-800); }
+    .difficulty-l2 { background: var(--amber-100); color: var(--amber-600); }
+    .difficulty-l3 { background: var(--red-100); color: var(--red-600); }
+
+    .assignment h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .assignment p {
+      font-size: 14px;
+    }
+
+    .checklist {
       list-style: none;
       padding: 0;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 0.5rem;
     }
 
-    .topics-preview li {
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-light);
       font-size: 14px;
-      color: var(--ink-light);
-      padding-left: 1.25rem;
-      position: relative;
     }
 
-    .topics-preview li::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 8px;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
+    .checklist li:last-child {
+      border-bottom: none;
+    }
+
+    .check-box {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      border: 2px solid var(--border);
+      flex-shrink: 0;
+      margin-top: 1px;
+      cursor: pointer;
+      transition: all 0.15s var(--ease);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .check-box:hover {
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked {
       background: var(--teal-500);
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+    }
+
+    /* ── ARCHITECTURE DIAGRAM ─────────────────── */
+    .diagram {
+      margin: 1.5rem 0;
+      padding: 2rem;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow-x: auto;
+    }
+
+    .diagram pre {
+      background: transparent;
+      color: var(--ink);
+      padding: 0;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .diagram-caption {
+      margin-top: 1rem;
+      font-size: 12px;
+      color: var(--ink-muted);
+      text-align: center;
+      font-style: italic;
+    }
+
+    /* ── FOOTER ───────────────────────────────── */
+    .chapter-footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      background: var(--surface-alt);
+    }
+
+    .chapter-footer-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
     }
 
     .footer-nav {
-      max-width: var(--content-max);
-      margin: 0 auto;
-      padding: 2rem;
       display: flex;
       justify-content: space-between;
-      border-top: 1px solid var(--border);
+      align-items: center;
+      gap: 1rem;
     }
 
     .footer-nav-link {
       display: flex;
       flex-direction: column;
-      text-decoration: none;
-      padding: 1rem;
+      gap: 4px;
+      padding: 1rem 1.5rem;
+      border: 1px solid var(--border);
       border-radius: 12px;
-      transition: background 0.2s var(--ease);
-      max-width: 45%;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      max-width: 320px;
+      background: white;
     }
 
     .footer-nav-link:hover {
-      background: var(--surface-alt);
+      border-color: var(--teal-300);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
     }
 
     .footer-nav-label {
@@ -399,46 +867,99 @@
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.06em;
-      color: var(--ink-muted);
-      margin-bottom: 4px;
+      color: var(--teal-600);
     }
 
     .footer-nav-title {
       font-size: 15px;
       font-weight: 600;
-      color: var(--teal-700);
+      color: var(--ink);
     }
 
-    .footer-nav-link.next { text-align: right; margin-left: auto; }
-
-    .footer {
+    .footer-brand {
       text-align: center;
-      padding: 2rem;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
       font-size: 13px;
       color: var(--ink-muted);
-      border-top: 1px solid var(--border);
     }
 
-    .footer a {
-      color: var(--teal-700);
-      text-decoration: none;
+    /* ── RESPONSIVE ───────────────────────────── */
+    @media (max-width: 960px) {
+      .main-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        display: none;
+      }
+
+      .resource-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
-    .footer a:hover { text-decoration: underline; }
+    @media (max-width: 640px) {
+      .hero {
+        padding: 2.5rem 1.25rem 2rem;
+      }
 
-    @media (max-width: 768px) {
-      .hero { padding: 3rem 1.5rem 2.5rem; }
-      .content { padding: 2rem 1.5rem 4rem; }
-      .hero h1 { font-size: 2rem; }
-      .footer-nav { flex-direction: column; gap: 1rem; }
-      .footer-nav-link { max-width: 100%; }
-      .footer-nav-link.next { text-align: left; }
+      .main-layout {
+        padding: 0 1.25rem;
+      }
+
+      .content {
+        padding: 2rem 0 4rem;
+      }
+
+      pre {
+        padding: 1rem;
+        font-size: 12.5px;
+      }
+
+      .footer-nav {
+        flex-direction: column;
+      }
+
+      .footer-nav-link {
+        max-width: 100%;
+        width: 100%;
+      }
+    }
+
+    /* ── PRINT ────────────────────────────────── */
+    @media print {
+      .top-nav, .sidebar, .progress-bar {
+        display: none;
+      }
+
+      .main-layout {
+        display: block;
+      }
+
+      .content {
+        padding: 0;
+      }
+
+      .hero {
+        background: white;
+        border: none;
+      }
+
+      pre {
+        background: #f1f5f9;
+        color: var(--ink);
+        border: 1px solid var(--border);
+      }
     }
   </style>
 </head>
 <body>
+  <!-- Progress Bar -->
   <div class="progress-bar" id="progressBar"></div>
 
+  <!-- Top Navigation -->
   <nav class="top-nav">
     <div class="top-nav-inner">
       <a class="nav-brand" href="index.html">
@@ -446,76 +967,623 @@
         <span class="nav-brand-text">Iksha Learning Academy</span>
       </a>
       <div class="nav-chapter-nav">
-        <a class="nav-btn" href="chapter-08.html">&larr; Previous</a>
+        <a class="nav-btn" href="chapter-08.html">&larr; Crisis and High-Pressure Negotiations</a>
         <span class="nav-current">09 / 10</span>
-        <a class="nav-btn" href="chapter-10.html">Next &rarr;</a>
+        <a class="nav-btn" href="chapter-10.html">Master Simulation and Capstone &rarr;</a>
       </div>
     </div>
   </nav>
 
+  <!-- Hero -->
   <header class="hero">
     <div class="hero-inner">
       <div class="hero-chapter-label">
-        <span>Chapter 09</span> 
+        <span>Chapter 09</span> &middot; Phase 3: Leadership &amp; Mastery
       </div>
       <h1>Negotiation Leadership</h1>
-      <p class="hero-subtitle">Building negotiation culture, training teams, institutional knowledge, ethics and reputation</p>
+      <p class="hero-subtitle">
+        Transition from individual negotiator to negotiation leader &mdash; learn to build and
+        manage negotiation teams, coach junior negotiators, create organizational negotiation
+        cultures, delegate effectively at the table, and establish mentoring frameworks that
+        multiply your impact across an entire organization.
+      </p>
       <div class="hero-meta">
-        <div class="hero-meta-item">3 Assignments</div>
-        <div class="hero-meta-item">~45 min read</div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Estimated: 3&ndash;4 days
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          3 Advancement Levels
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          3 Assignments
+        </div>
       </div>
     </div>
   </header>
 
-  <main class="content">
-    <h2>Overview</h2>
-    <p>This chapter covers <strong>negotiation leadership</strong> as part of the Advanced Negotiations curriculum. You will build practical skills through guided explanations, code examples, and hands-on assignments.</p>
+  <!-- Main Content + Sidebar -->
+  <div class="main-layout">
+    <main class="content">
 
-    <div class="topics-preview">
-      <h3>Topics Covered</h3>
-      <ul>
-            <li>Building negotiation culture</li>
-            <li>training teams</li>
-            <li>institutional knowledge</li>
-            <li>ethics and reputation</li>
+      <h2 id="why-this-matters">Why This Matters</h2>
+
+      <p>
+        There comes a point in every negotiator's career where personal skill is no longer the
+        bottleneck. You can be the best individual negotiator in your organization, but if you
+        cannot build teams that negotiate well without you, your impact will always be limited to
+        the deals you personally sit in. <strong>Negotiation leadership</strong> is the discipline
+        of multiplying your negotiation capabilities across people, processes, and culture.
+      </p>
+
+      <p>
+        Organizations that treat negotiation as an individual skill rather than an organizational
+        capability leave enormous value on the table. Research from the Harvard Negotiation Project
+        consistently shows that companies with structured negotiation programs &mdash; where teams
+        prepare together, share learnings systematically, and have coaching infrastructure &mdash;
+        achieve 15-30% better outcomes than those relying on individual heroics. The difference
+        is not talent. It is systems.
+      </p>
+
+      <p>
+        This chapter bridges the gap between being an excellent negotiator and being someone who
+        builds excellent negotiation organizations. You will learn the frameworks for team
+        composition, the coaching methodologies that accelerate skill development, the cultural
+        elements that distinguish negotiation-savvy organizations, and the delegation strategies
+        that let you lead from behind the scenes while your team performs at the table.
+      </p>
+
+      <div class="callout concept">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Key Insight
+        </div>
+        <p>
+          The best negotiation leaders spend more time preparing their teams than negotiating
+          themselves. Like a coach who watches from the sideline while players execute the game
+          plan, a negotiation leader's greatest value comes from designing the strategy, selecting
+          the right team members, and debriefing after each session &mdash; not from being the
+          loudest voice at the table.
+        </p>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="key-concepts">Key Concepts</h2>
+
+      <h3 id="building-teams">1. Building Negotiation Teams</h3>
+
+      <p>
+        A negotiation team is not simply a group of people who show up to a meeting. It is a
+        carefully composed unit where each member plays a specific role that contributes to the
+        overall strategy. The most effective negotiation teams have clear role definitions: a
+        <strong>lead negotiator</strong> who manages the conversation, a <strong>subject matter
+        expert</strong> who handles technical details, an <strong>observer</strong> who reads
+        the room and takes notes, and a <strong>decision maker</strong> who has final authority.
+      </p>
+
+      <p>
+        Team composition should be driven by the negotiation context. Complex multi-issue deals
+        require larger teams with diverse expertise. Simple procurement negotiations may need
+        only two people. The cardinal rule is that everyone at the table must have a defined role
+        and understand the strategy. A team member without a role is a liability &mdash; they
+        may accidentally reveal information, contradict the lead, or create openings the other
+        side can exploit.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">framework</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+NEGOTIATION TEAM ROLE MATRIX
+═══════════════════════════════════════════════════════════════
+
+Role               Responsibilities                   Speaks When
+────────────────   ─────────────────────────────────   ────────────────
+Lead Negotiator    Manages agenda, makes proposals,    Primary voice
+                   controls pace, reads the room
+
+Subject Expert     Provides technical answers,         When asked by lead
+                   validates claims, spots errors       or on pre-agreed
+                   in counterparty's data               topics
+
+Observer/Analyst   Takes detailed notes, tracks        During breaks only
+                   concessions, monitors body           (reports to team)
+                   language, identifies patterns
+
+Decision Maker     Authorizes final terms,             Sparingly and with
+                   provides strategic direction,        authority; silence
+                   may not attend all sessions          signals importance
+
+Relationship Mgr   Maintains rapport between           During social
+                   sessions, handles informal           moments and
+                   communication, manages               between-session
+                   between-meeting follow-ups            contacts
+</pre>
+      </div>
+
+      <div class="callout important">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          The Biggest Team Mistake
+        </div>
+        <p>
+          The most common failure in team negotiations is lack of internal alignment. If your team
+          has not agreed on priorities, BATNA, reservation price, and opening strategy <strong>before</strong>
+          sitting down with the other side, internal disagreements will surface during the negotiation
+          itself. The other side will see your team's uncertainty and exploit it. Always conduct a
+          thorough team alignment session before any external meeting.
+        </p>
+      </div>
+
+      <h3 id="coaching-negotiators">2. Coaching and Developing Negotiators</h3>
+
+      <p>
+        Coaching negotiators is fundamentally different from coaching other business skills. Negotiation
+        is performance under pressure with real stakes, which means coaching must address both
+        <strong>tactical competence</strong> (what to say and when) and <strong>emotional regulation</strong>
+        (managing anxiety, frustration, and the temptation to concede prematurely). The best
+        negotiation coaches use a structured approach that combines pre-negotiation preparation,
+        real-time observation, and post-negotiation debriefing.
+      </p>
+
+      <p>
+        The <strong>See One, Do One, Lead One</strong> progression is the gold standard for negotiation
+        skill development. In the first phase, the junior negotiator observes an experienced
+        negotiator in action, taking notes on strategy, tactics, and interpersonal dynamics. In the
+        second phase, they take the lead role with the coach present as observer and safety net. In
+        the final phase, they lead independently while coaching another junior negotiator, which
+        solidifies their own understanding through teaching.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">framework</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+NEGOTIATION COACHING CYCLE
+═══════════════════════════════════════════════════════════════
+
+Phase 1: PRE-NEGOTIATION COACHING
+  - Review the negotiation context and stakeholders together
+  - Help the negotiator identify interests (theirs and counterparty's)
+  - Develop the strategy document: opening, concessions, walk-away
+  - Role-play critical moments: opening, responding to anchors, closing
+  - Ask: "What is your biggest fear about this negotiation?"
+
+Phase 2: REAL-TIME OBSERVATION
+  - Attend the session as a silent observer (or monitor remotely)
+  - Take detailed notes on: language used, emotional shifts, missed cues
+  - Track the concession pattern and information exchange
+  - Note moments where the strategy was followed and where it deviated
+  - NEVER intervene unless the negotiator explicitly signals for help
+
+Phase 3: POST-NEGOTIATION DEBRIEF
+  - Start with: "What do you think went well?"
+  - Share specific observations (not judgments)
+  - Identify one skill to improve for next time (just one)
+  - Connect the experience to broader negotiation principles
+  - Document learnings for the organizational knowledge base
+</pre>
+      </div>
+
+      <h3 id="negotiation-culture">3. Building a Negotiation Culture</h3>
+
+      <p>
+        A negotiation culture is an organizational environment where negotiation is treated as a
+        core competency rather than an incidental activity. In these organizations, preparation is
+        expected (not optional), debriefs are standard practice, negotiation data is tracked and
+        shared, and continuous improvement is built into the workflow. Building this culture requires
+        visible leadership commitment, structural support, and consistent reinforcement.
+      </p>
+
+      <p>
+        The three pillars of a negotiation culture are <strong>shared language</strong> (everyone
+        uses the same concepts and frameworks), <strong>institutional memory</strong> (lessons
+        from past negotiations are captured and accessible), and <strong>psychological safety</strong>
+        (team members can report failures without blame, because failures are the richest source
+        of learning). Without all three pillars, negotiation capability remains stuck at the
+        individual level and walks out the door when people leave.
+      </p>
+
+      <div class="callout tip">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Pro Tip
+        </div>
+        <p>
+          Start building negotiation culture by making post-negotiation debriefs mandatory and
+          blame-free. The single highest-leverage activity for organizational learning is a
+          structured 30-minute debrief within 48 hours of every significant negotiation. Use a
+          simple template: What was our goal? What happened? What did we learn? What will we do
+          differently next time?
+        </p>
+      </div>
+
+      <h3 id="delegation">4. Strategic Delegation at the Table</h3>
+
+      <p>
+        Delegation in negotiation is not about offloading work. It is about <strong>strategic
+        positioning</strong>. The person who speaks is perceived as the decision maker, and being
+        perceived as the decision maker limits your flexibility. By delegating the lead negotiator
+        role to a team member, you create a built-in escalation mechanism: "I need to check with
+        my principal" is a legitimate and powerful move that buys time, creates distance, and
+        prevents premature commitments.
+      </p>
+
+      <p>
+        Effective delegation requires clear authority boundaries. Your delegate needs to know exactly
+        what they can agree to without checking back, what requires a break for consultation, and
+        what is an absolute deal-breaker. These boundaries should be documented in a pre-negotiation
+        brief and rehearsed through role-play. The worst outcome is a delegate who exceeds their
+        authority and commits to terms you cannot honor &mdash; this damages trust and credibility
+        with the counterparty.
+      </p>
+
+      <h3 id="mentoring-frameworks">5. Mentoring Frameworks for Long-Term Development</h3>
+
+      <p>
+        While coaching is tactical and session-specific, mentoring is strategic and career-spanning.
+        A negotiation mentor helps a mentee develop their overall negotiation philosophy, build
+        confidence in high-stakes situations, navigate organizational politics around deals, and
+        develop the judgment that only comes from accumulated experience. The mentor does not tell
+        the mentee what to do &mdash; they help the mentee develop the thinking frameworks to
+        figure it out themselves.
+      </p>
+
+      <p>
+        The most effective mentoring relationships follow a structured cadence: monthly one-on-one
+        meetings, joint preparation for the mentee's most important negotiations, access to the
+        mentor for real-time advice during critical moments, and quarterly reviews of the mentee's
+        negotiation portfolio. The mentor should also expose the mentee to progressively more
+        complex negotiation scenarios, expanding their comfort zone gradually rather than throwing
+        them into the deep end.
+      </p>
+
+      <div class="diagram">
+<pre>
+  Negotiation Leadership Maturity Model
+  ═══════════════════════════════════════════════════
+
+  Level 5: ORGANIZATIONAL CAPABILITY
+  ┌─────────────────────────────────────────────┐
+  │  Negotiation is a core organizational       │
+  │  competency with training, metrics, and     │
+  │  continuous improvement systems              │
+  └───────────────────────┬─────────────────────┘
+                          │
+  Level 4: TEAM LEADERSHIP
+  ┌─────────────────────────────────────────────┐
+  │  You lead negotiation teams, coach others,  │
+  │  and delegate effectively at the table       │
+  └───────────────────────┬─────────────────────┘
+                          │
+  Level 3: STRATEGIC NEGOTIATION
+  ┌─────────────────────────────────────────────┐
+  │  You plan multi-session strategies,          │
+  │  manage complex stakeholder landscapes       │
+  └───────────────────────┬─────────────────────┘
+                          │
+  Level 2: SKILLED EXECUTION
+  ┌─────────────────────────────────────────────┐
+  │  You apply frameworks, read the room,        │
+  │  and adapt tactics in real-time               │
+  └───────────────────────┬─────────────────────┘
+                          │
+  Level 1: FOUNDATIONAL KNOWLEDGE
+  ┌─────────────────────────────────────────────┐
+  │  You understand concepts, BATNA, ZOPA,       │
+  │  and basic interest-based negotiation         │
+  └─────────────────────────────────────────────┘
+</pre>
+        <div class="diagram-caption">Figure 1: The five levels of negotiation maturity &mdash; this chapter focuses on Levels 4 and 5</div>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="watch-learn">Watch &amp; Learn</h2>
+
+      <p>
+        These videos cover negotiation leadership, team dynamics, and coaching methodologies from
+        experienced practitioners and researchers.
+      </p>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/RfTalFEeKKE?rel=0&amp;modestbranding=1"
+            title="William Ury - The Power of Listening"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          William Ury &mdash; The Power of Listening (TEDx, on how leaders create space for others to negotiate effectively)
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/MjhDkNmtjy0?rel=0&amp;modestbranding=1"
+            title="Chris Voss on Leadership and Negotiation"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Chris Voss &mdash; Leadership Lessons from Hostage Negotiation (on building teams and coaching under pressure)
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="further-reading">Further Reading</h2>
+
+      <p>Deep-dive into leadership, coaching, and organizational negotiation capability building.</p>
+
+      <div class="resource-grid">
+        <a class="resource-card" href="https://www.pon.harvard.edu/daily/negotiation-skills-daily/" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Harvard PON: Negotiation Skills Daily</div>
+            <div class="resource-desc">Daily articles from the Program on Negotiation covering leadership, team dynamics, and strategy.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://hbr.org/topic/subject/negotiation" target="_blank" rel="noopener">
+          <div class="resource-icon article">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">HBR: Negotiation Articles</div>
+            <div class="resource-desc">Harvard Business Review's negotiation collection with focus on leadership and organizational strategy.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://www.beyondintractability.org/essay/team-negotiation" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Beyond Intractability: Team Negotiation</div>
+            <div class="resource-desc">Academic resource on team composition, role assignment, and coordination in negotiation teams.</div>
+          </div>
+        </a>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="assignments">Assignments</h2>
+
+      <p>Complete these in order. Each level builds on the previous one and requires interaction with other learners or colleagues.</p>
+
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 1
+          </div>
+          <span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span>
+        </div>
+        <h4>Team Composition and Role Design</h4>
+        <p>Design a negotiation team structure for a complex multi-issue business scenario.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Select a real or realistic business negotiation scenario with at least 4 issues on the table</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Design a 4-person team with clear role definitions, speaking protocols, and authority boundaries</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a pre-negotiation brief document that includes strategy, priorities, BATNA, and walk-away points</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Design the internal communication protocol (hand signals, break requests, note-passing rules)</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write a post-negotiation debrief template with at least 10 structured questions</span></li>
+        </ul>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>Your team design document is complete and could be handed to four people who have never met, enabling them to function as a coordinated negotiation team within one preparation session.</p>
+        </div>
+      </div>
+
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 2
+          </div>
+          <span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span>
+        </div>
+        <h4>Coaching Session Design and Execution</h4>
+        <p>Design and run a complete coaching cycle for a colleague or peer preparing for a real negotiation.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Identify a colleague who has an upcoming negotiation and offer to coach them through it</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Conduct a 60-minute pre-negotiation coaching session using the structured framework from this chapter</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Observe the negotiation (live or via debrief) and document at least 10 specific behavioral observations</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Run a 45-minute post-negotiation debrief focused on one specific improvement area</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write a coaching report summarizing strengths, development areas, and recommended next steps</span></li>
+        </ul>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>Your coachee reports feeling better prepared and more confident. Your coaching report identifies specific, actionable improvement areas with concrete exercises for development.</p>
+        </div>
+      </div>
+
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 3
+          </div>
+          <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Production-Ready</span>
+        </div>
+        <h4>Organizational Negotiation Capability Program</h4>
+        <p>Design a complete negotiation capability program for your organization or a fictional company.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Conduct an audit of current negotiation practices: who negotiates, how they prepare, what they track</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Design a three-tier training curriculum (foundational, advanced, leadership) with learning objectives</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a negotiation knowledge management system: templates, playbooks, case studies, lessons learned</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Define negotiation metrics and KPIs that the organization should track (beyond just deal value)</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write a 12-month implementation roadmap with milestones, resource requirements, and success criteria</span></li>
+        </ul>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>Your program design is complete enough to present to a CEO or VP of Strategy. It includes a clear business case, implementation timeline, resource requirements, and measurable outcomes.</p>
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="self-check">Self-Check</h2>
+
+      <p>Before moving to Chapter 10, honestly answer these questions. If any answer is "no", go back and practice more.</p>
+
+      <details>
+        <summary>Can you design a negotiation team with clear roles and communication protocols?</summary>
+        <div class="details-body">
+          <p>Given any business negotiation scenario, you should be able to determine the optimal team size, assign specific roles (lead, expert, observer, decision maker), establish speaking rules, and design internal signaling mechanisms. If you cannot do this for a scenario you have never seen before, practice with different types of negotiations until the pattern becomes automatic.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Can you coach someone through a negotiation using the three-phase coaching cycle?</summary>
+        <div class="details-body">
+          <p>Pre-negotiation coaching, real-time observation, and post-negotiation debriefing are three distinct skills. You should be able to conduct each phase with a clear structure, open-ended questions, and a focus on the coachee's development rather than your own opinions about what they should have done.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Can you identify the three pillars of negotiation culture and assess an organization against them?</summary>
+        <div class="details-body">
+          <p>Shared language, institutional memory, and psychological safety are the three pillars. For any organization, you should be able to assess whether each pillar is present, partially present, or absent, and recommend specific actions to strengthen each one. If you cannot articulate what "institutional memory" looks like in practice, review the negotiation culture section.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Do you understand when and how to delegate negotiation authority?</summary>
+        <div class="details-body">
+          <p>Delegation is strategic, not administrative. You should understand that putting a delegate in the lead role creates negotiation advantages (escalation mechanism, emotional distance, time for reflection). You should also be able to define clear authority boundaries for a delegate: what they can agree to, what requires consultation, and what is off-limits.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Can you distinguish between coaching and mentoring, and know when each is appropriate?</summary>
+        <div class="details-body">
+          <p>Coaching is tactical and session-specific: it helps someone perform better in a specific negotiation. Mentoring is strategic and career-spanning: it helps someone develop their overall negotiation philosophy and judgment over time. Both are essential, but they serve different purposes and require different approaches. If this distinction is not clear, review the mentoring frameworks section.</p>
+        </div>
+      </details>
+
+    </main>
+
+    <!-- Sidebar: Table of Contents -->
+    <aside class="sidebar">
+      <div class="sidebar-title">On this page</div>
+      <ul class="toc-list">
+        <li class="toc-item"><a href="#why-this-matters">Why This Matters</a></li>
+        <li class="toc-item"><a href="#key-concepts">Key Concepts</a></li>
+        <li class="toc-item"><a href="#building-teams" style="padding-left: 28px; font-size: 12px;">Building Teams</a></li>
+        <li class="toc-item"><a href="#coaching-negotiators" style="padding-left: 28px; font-size: 12px;">Coaching Negotiators</a></li>
+        <li class="toc-item"><a href="#negotiation-culture" style="padding-left: 28px; font-size: 12px;">Negotiation Culture</a></li>
+        <li class="toc-item"><a href="#delegation" style="padding-left: 28px; font-size: 12px;">Strategic Delegation</a></li>
+        <li class="toc-item"><a href="#mentoring-frameworks" style="padding-left: 28px; font-size: 12px;">Mentoring Frameworks</a></li>
+        <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a></li>
+        <li class="toc-item"><a href="#further-reading">Further Reading</a></li>
+        <li class="toc-item"><a href="#assignments">Assignments</a></li>
+        <li class="toc-item"><a href="#self-check">Self-Check</a></li>
       </ul>
-    </div>
+    </aside>
+  </div>
 
-    <hr class="section-divider">
-
-    <div class="coming-soon-banner">
-      <h3>Content In Development</h3>
-      <p>Full chapter content with detailed explanations, code examples, video walkthroughs, and assignments is being developed. Check back soon.</p>
-    </div>
-
-    <div class="callout tip">
-      <div class="callout-header">What You Will Learn</div>
-      <p>By the end of this chapter, you will understand building negotiation culture, training teams, institutional knowledge, ethics and reputation and be able to apply these concepts in real-world scenarios.</p>
-    </div>
-
-  </main>
-
-  <nav class="footer-nav">
-        <a class="footer-nav-link prev" href="chapter-08.html">
-          <span class="footer-nav-label">&larr; Previous</span>
-          <span class="footer-nav-title">Chapter 08: Crisis and High-Pressure Negotiations</span>
+  <!-- Footer Navigation -->
+  <footer class="chapter-footer">
+    <div class="chapter-footer-inner">
+      <nav class="footer-nav">
+        <a class="footer-nav-link" href="chapter-08.html">
+          <span class="footer-nav-label">&larr; Previous Chapter</span>
+          <span class="footer-nav-title">08: Crisis and High-Pressure Negotiations</span>
         </a>
-        <a class="footer-nav-link next" href="chapter-10.html">
-          <span class="footer-nav-label">Next &rarr;</span>
-          <span class="footer-nav-title">Chapter 10: Master Simulation and Capstone</span>
+        <a class="footer-nav-link" href="chapter-10.html">
+          <span class="footer-nav-label">Next Chapter &rarr;</span>
+          <span class="footer-nav-title">10: Master Simulation and Capstone</span>
         </a>
-  </nav>
-
-  <footer class="footer">
-    ILA (Iksha Learning Academy) &middot; Advanced Negotiations &middot; <a href="index.html">All Chapters</a>
+      </nav>
+      <div class="footer-brand">
+        ILA (Iksha Learning Academy) &middot; Negotiations Certification &middot; Level 2
+      </div>
+    </div>
   </footer>
 
+  <!-- ════════════════════════════════════════
+       SCRIPTS
+       ════════════════════════════════════════ -->
   <script>
+    // ── Progress Bar ──
     window.addEventListener('scroll', () => {
-      const h = document.documentElement;
-      const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
-      document.getElementById('progressBar').style.width = Math.min(pct, 100) + '%';
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      document.getElementById('progressBar').style.width = progress + '%';
     });
+
+    // ── Active TOC ──
+    const tocLinks = document.querySelectorAll('.toc-item a');
+    const sections = [];
+
+    tocLinks.forEach(link => {
+      const id = link.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) sections.push({ id, el, link });
+    });
+
+    const observerOptions = {
+      rootMargin: '-80px 0px -60% 0px',
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const item = sections.find(s => s.el === entry.target);
+        if (item) {
+          if (entry.isIntersecting) {
+            tocLinks.forEach(l => l.classList.remove('active'));
+            item.link.classList.add('active');
+          }
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(s => observer.observe(s.el));
+
+    // ── Copy Code ──
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      const text = pre.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.classList.add('copied');
+        btn.textContent = 'Copied!';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.textContent = 'Copy';
+        }, 2000);
+      });
+    }
   </script>
 </body>
 </html>

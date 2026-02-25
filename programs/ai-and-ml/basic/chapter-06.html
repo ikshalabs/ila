@@ -3,56 +3,268 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chapter 06: Deep Learning with PyTorch &mdash; ILA AI &amp; Machine Learning</title>
+  <title>Chapter 06: CNNs and Computer Vision &mdash; ILA AI &amp; Machine Learning</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-  <style>:root{--ink:#0f172a;--ink-light:#334155;--ink-muted:#64748b;--surface:#ffffff;--surface-alt:#f8fafc;--surface-warm:#fffbeb;--border:#e2e8f0;--border-light:#f1f5f9;--teal-50:#f0fdfa;--teal-100:#ccfbf1;--teal-200:#99f6e4;--teal-500:#14b8a6;--teal-600:#0d9488;--teal-700:#0f766e;--teal-800:#115e59;--teal-900:#134e4a;--blue-50:#eff6ff;--blue-100:#dbeafe;--blue-500:#3b82f6;--blue-600:#2563eb;--blue-700:#1d4ed8;--amber-50:#fffbeb;--amber-100:#fef3c7;--amber-500:#f59e0b;--amber-600:#d97706;--red-50:#fef2f2;--red-100:#fee2e2;--red-500:#ef4444;--red-600:#dc2626;--purple-50:#faf5ff;--purple-100:#f3e8ff;--purple-500:#a855f7;--purple-600:#9333ea;--font-sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;--font-serif:'Instrument Serif',Georgia,serif;--font-mono:'JetBrains Mono','Fira Code',monospace;--content-max:780px;--sidebar-width:280px;--ease:cubic-bezier(0.4,0,0.2,1)}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}body{font-family:var(--font-sans);font-size:16px;line-height:1.7;color:var(--ink);background:var(--surface)}.progress-bar{position:fixed;top:0;left:0;width:0%;height:3px;background:linear-gradient(90deg,var(--teal-500),var(--blue-500));z-index:1000;transition:width .15s var(--ease)}.top-nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem}.top-nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px}.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--teal-800)}.nav-brand-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--teal-600),var(--teal-800));border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px}.nav-brand-text{font-weight:700;font-size:15px;letter-spacing:-.02em}.nav-chapter-nav{display:flex;align-items:center;gap:8px}.nav-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;color:var(--ink-muted);border:1px solid var(--border);background:#fff;transition:all .2s var(--ease);cursor:pointer}.nav-btn:hover{color:var(--ink);border-color:var(--teal-500);background:var(--teal-50)}.nav-btn.disabled{opacity:.4;pointer-events:none}.nav-current{font-size:13px;font-weight:600;color:var(--ink-light);padding:0 4px}.hero{background:linear-gradient(170deg,var(--teal-50) 0%,var(--surface) 50%,var(--blue-50) 100%);border-bottom:1px solid var(--border);padding:4rem 2rem 3.5rem}.hero-inner{max-width:var(--content-max);margin:0 auto}.hero-chapter-label{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--teal-700);text-transform:uppercase;letter-spacing:.08em;margin-bottom:1rem}.hero-chapter-label span{background:var(--teal-100);padding:3px 10px;border-radius:100px}.hero h1{font-family:var(--font-serif);font-size:clamp(2.4rem,5vw,3.2rem);font-weight:400;line-height:1.15;color:var(--ink);margin-bottom:1rem}.hero-subtitle{font-size:1.15rem;color:var(--ink-light);line-height:1.65;max-width:640px}.hero-meta{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1.5rem}.hero-meta-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-muted)}.hero-meta-item svg{width:16px;height:16px;color:var(--teal-600)}.main-layout{max-width:1200px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:1fr var(--sidebar-width);gap:4rem;align-items:start}.content{padding:3rem 0 6rem;min-width:0}.sidebar{position:sticky;top:76px;padding:2rem 0;max-height:calc(100vh - 76px);overflow-y:auto}.sidebar-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-muted);margin-bottom:1rem;padding-left:14px}.toc-list{list-style:none}.toc-item a{display:block;padding:6px 14px;font-size:13px;color:var(--ink-muted);text-decoration:none;border-left:2px solid transparent;transition:all .2s var(--ease);line-height:1.5}.toc-item a:hover{color:var(--ink);background:var(--surface-alt)}.toc-item a.active{color:var(--teal-700);border-left-color:var(--teal-500);background:var(--teal-50);font-weight:500}.content h2{font-family:var(--font-serif);font-size:1.85rem;font-weight:400;color:var(--ink);margin:3rem 0 1rem;padding-top:1rem;scroll-margin-top:80px}.content h2:first-child{margin-top:0}.content h3{font-size:1.15rem;font-weight:600;color:var(--ink);margin:2rem 0 .75rem;scroll-margin-top:80px}.content p{margin-bottom:1.25rem;color:var(--ink-light)}.content strong{color:var(--ink);font-weight:600}.content a{color:var(--teal-700);text-decoration:underline;text-decoration-color:var(--teal-200);text-underline-offset:3px}.content ul,.content ol{margin-bottom:1.25rem;padding-left:1.5rem}.content li{margin-bottom:.5rem;color:var(--ink-light)}.content li::marker{color:var(--teal-500)}.section-divider{border:none;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:3rem 0}.callout{padding:1.25rem 1.5rem;border-radius:12px;margin-bottom:1.5rem;border:1px solid;position:relative}.callout-header{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;margin-bottom:.5rem}.callout-header svg{width:18px;height:18px;flex-shrink:0}.callout p:last-child{margin-bottom:0}.callout.concept{background:var(--blue-50);border-color:var(--blue-100)}.callout.concept .callout-header{color:var(--blue-700)}.callout.important{background:var(--amber-50);border-color:var(--amber-100)}.callout.important .callout-header{color:var(--amber-600)}.callout.danger{background:var(--red-50);border-color:var(--red-100)}.callout.danger .callout-header{color:var(--red-600)}.callout.tip{background:var(--purple-50);border-color:var(--purple-100)}.callout.tip .callout-header{color:var(--purple-600)}.callout.success{background:var(--teal-50);border-color:var(--teal-100)}.callout.success .callout-header{color:var(--teal-700)}.code-block{position:relative;margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}.code-header{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:var(--surface-alt);border-bottom:1px solid var(--border);font-size:12px;color:var(--ink-muted)}.code-lang{font-family:var(--font-mono);font-weight:600;text-transform:uppercase;letter-spacing:.05em}.code-copy{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:#fff;font-size:11px;font-family:var(--font-sans);color:var(--ink-muted);cursor:pointer;transition:all .2s var(--ease)}.code-copy:hover{border-color:var(--teal-500);color:var(--teal-700)}.code-copy.copied{background:var(--teal-50);border-color:var(--teal-500);color:var(--teal-700)}pre{margin:0;padding:1.25rem 1.5rem;overflow-x:auto;background:#1e293b;font-family:var(--font-mono);font-size:13.5px;line-height:1.7;color:#e2e8f0}code{font-family:var(--font-mono);font-size:.88em}p code,li code{padding:2px 7px;background:var(--surface-alt);border:1px solid var(--border);border-radius:5px;color:var(--teal-800);font-size:.85em}.hl-keyword{color:#c084fc}.hl-string{color:#86efac}.hl-comment{color:#64748b;font-style:italic}.hl-function{color:#7dd3fc}.hl-number{color:#fbbf24}.hl-flag{color:#f472b6}details{margin-bottom:1.25rem;border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .2s var(--ease)}details[open]{border-color:var(--teal-200)}details summary{padding:1rem 1.25rem;font-weight:600;font-size:15px;cursor:pointer;background:var(--surface-alt);list-style:none;display:flex;align-items:center;gap:10px;transition:background .2s var(--ease);user-select:none}details summary::-webkit-details-marker{display:none}details summary::before{content:'';width:20px;height:20px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain;flex-shrink:0;transition:transform .2s var(--ease)}details[open] summary::before{transform:rotate(90deg)}details summary:hover{background:var(--teal-50)}.details-body{padding:1.25rem 1.5rem}.details-body p:last-child{margin-bottom:0}.video-card{margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}.video-wrapper{position:relative;padding-bottom:56.25%;height:0;background:#0f172a}.video-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}.video-caption{padding:12px 16px;background:var(--surface-alt);font-size:13px;color:var(--ink-muted);display:flex;align-items:center;gap:6px}.video-caption svg{width:14px;height:14px;color:var(--red-500)}.resource-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1rem;margin-bottom:1.5rem}.resource-card{display:flex;gap:14px;padding:1rem 1.25rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all .2s var(--ease);background:#fff}.resource-card:hover{border-color:var(--teal-300);background:var(--teal-50);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.04)}.resource-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}.resource-icon.docs{background:var(--blue-50);color:var(--blue-600)}.resource-icon.video{background:var(--red-50);color:var(--red-500)}.resource-icon.github{background:var(--ink);color:#fff}.resource-icon.article{background:var(--amber-50);color:var(--amber-600)}.resource-icon.pdf{background:var(--purple-50);color:var(--purple-600)}.resource-info{min-width:0}.resource-title{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:2px;line-height:1.4}.resource-desc{font-size:12px;color:var(--ink-muted);line-height:1.5}.assignment{border:2px solid var(--teal-200);border-radius:14px;padding:1.5rem 1.75rem;margin-bottom:1.5rem;background:linear-gradient(135deg,var(--teal-50) 0%,#fff 100%)}.assignment-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}.assignment-label{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--teal-700)}.assignment-difficulty{display:inline-flex;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:600}.difficulty-l1{background:var(--teal-100);color:var(--teal-800)}.difficulty-l2{background:var(--amber-100);color:var(--amber-600)}.difficulty-l3{background:var(--red-100);color:var(--red-600)}.assignment h4{font-size:1.05rem;font-weight:700;margin-bottom:.75rem}.assignment p{font-size:14px}.checklist{list-style:none;padding:0}.checklist li{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border-light);font-size:14px}.checklist li:last-child{border-bottom:none}.check-box{width:20px;height:20px;border-radius:6px;border:2px solid var(--border);flex-shrink:0;margin-top:1px;cursor:pointer;transition:all .15s var(--ease);display:flex;align-items:center;justify-content:center}.check-box:hover{border-color:var(--teal-500)}.check-box.checked{background:var(--teal-500);border-color:var(--teal-500)}.check-box.checked::after{content:'';width:10px;height:10px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain}.diagram{margin:1.5rem 0;padding:2rem;background:var(--surface-alt);border:1px solid var(--border);border-radius:14px;overflow-x:auto}.diagram pre{background:transparent;color:var(--ink);padding:0;font-size:13px;line-height:1.6}.chapter-footer{border-top:1px solid var(--border);padding:3rem 2rem;background:var(--surface-alt)}.chapter-footer-inner{max-width:var(--content-max);margin:0 auto}.footer-nav{display:flex;justify-content:space-between;align-items:center;gap:1rem}.footer-nav-link{display:flex;flex-direction:column;gap:4px;padding:1rem 1.5rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all .2s var(--ease);max-width:320px;background:#fff}.footer-nav-link:hover{border-color:var(--teal-300);box-shadow:0 4px 12px rgba(0,0,0,.04)}.footer-nav-label{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--teal-600)}.footer-nav-title{font-size:15px;font-weight:600;color:var(--ink)}.footer-brand{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border);font-size:13px;color:var(--ink-muted)}@media(max-width:960px){.main-layout{grid-template-columns:1fr}.sidebar{display:none}.resource-grid{grid-template-columns:1fr}}@media(max-width:640px){.hero{padding:2.5rem 1.25rem 2rem}.main-layout{padding:0 1.25rem}.content{padding:2rem 0 4rem}pre{padding:1rem;font-size:12.5px}.footer-nav{flex-direction:column}.footer-nav-link{max-width:100%;width:100%}}@media print{.top-nav,.sidebar,.progress-bar{display:none}.main-layout{display:block}.content{padding:0}.hero{background:#fff;border:none}pre{background:#f1f5f9;color:var(--ink);border:1px solid var(--border)}}
+  <style>
+    /* ═══════════════════════════════════════════════
+       ILA DESIGN SYSTEM — v1.0
+       Iksha Learning Academy
+       ═══════════════════════════════════════════════ */
+
+    :root {
+      --ink: #0f172a; --ink-light: #334155; --ink-muted: #64748b;
+      --surface: #ffffff; --surface-alt: #f8fafc; --surface-warm: #fffbeb;
+      --border: #e2e8f0; --border-light: #f1f5f9;
+      --teal-50: #f0fdfa; --teal-100: #ccfbf1; --teal-200: #99f6e4;
+      --teal-500: #14b8a6; --teal-600: #0d9488; --teal-700: #0f766e;
+      --teal-800: #115e59; --teal-900: #134e4a;
+      --blue-50: #eff6ff; --blue-100: #dbeafe; --blue-500: #3b82f6;
+      --blue-600: #2563eb; --blue-700: #1d4ed8;
+      --amber-50: #fffbeb; --amber-100: #fef3c7; --amber-500: #f59e0b; --amber-600: #d97706;
+      --red-50: #fef2f2; --red-100: #fee2e2; --red-500: #ef4444; --red-600: #dc2626;
+      --purple-50: #faf5ff; --purple-100: #f3e8ff; --purple-500: #a855f7; --purple-600: #9333ea;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-serif: 'Instrument Serif', Georgia, serif;
+      --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+      --content-max: 780px; --sidebar-width: 280px;
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    body { font-family: var(--font-sans); font-size: 16px; line-height: 1.7; color: var(--ink); background: var(--surface); }
+
+    .progress-bar { position: fixed; top: 0; left: 0; width: 0%; height: 3px; background: linear-gradient(90deg, var(--teal-500), var(--blue-500)); z-index: 1000; transition: width 0.15s var(--ease); }
+    .top-nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 2rem; }
+    .top-nav-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 56px; }
+    .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--teal-800); }
+    .nav-brand-icon { width: 32px; height: 32px; background: linear-gradient(135deg, var(--teal-600), var(--teal-800)); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 14px; }
+    .nav-brand-text { font-weight: 700; font-size: 15px; letter-spacing: -0.02em; }
+    .nav-chapter-nav { display: flex; align-items: center; gap: 8px; }
+    .nav-btn { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 8px; font-size: 13px; font-weight: 500; text-decoration: none; color: var(--ink-muted); border: 1px solid var(--border); background: white; transition: all 0.2s var(--ease); cursor: pointer; }
+    .nav-btn:hover { color: var(--ink); border-color: var(--teal-500); background: var(--teal-50); }
+    .nav-btn.disabled { opacity: 0.4; pointer-events: none; }
+    .nav-current { font-size: 13px; font-weight: 600; color: var(--ink-light); padding: 0 4px; }
+
+    .hero { background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%); border-bottom: 1px solid var(--border); padding: 4rem 2rem 3.5rem; }
+    .hero-inner { max-width: var(--content-max); margin: 0 auto; }
+    .hero-chapter-label { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--teal-700); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1rem; }
+    .hero-chapter-label span { background: var(--teal-100); padding: 3px 10px; border-radius: 100px; }
+    .hero h1 { font-family: var(--font-serif); font-size: clamp(2.4rem, 5vw, 3.2rem); font-weight: 400; line-height: 1.15; color: var(--ink); margin-bottom: 1rem; }
+    .hero-subtitle { font-size: 1.15rem; color: var(--ink-light); line-height: 1.65; max-width: 640px; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.5rem; }
+    .hero-meta-item { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--ink-muted); }
+    .hero-meta-item svg { width: 16px; height: 16px; color: var(--teal-600); }
+
+    .main-layout { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: grid; grid-template-columns: 1fr var(--sidebar-width); gap: 4rem; align-items: start; }
+    .content { padding: 3rem 0 6rem; min-width: 0; }
+    .sidebar { position: sticky; top: 76px; padding: 2rem 0; max-height: calc(100vh - 76px); overflow-y: auto; }
+    .sidebar-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-muted); margin-bottom: 1rem; padding-left: 14px; }
+    .toc-list { list-style: none; }
+    .toc-item a { display: block; padding: 6px 14px; font-size: 13px; color: var(--ink-muted); text-decoration: none; border-left: 2px solid transparent; transition: all 0.2s var(--ease); line-height: 1.5; }
+    .toc-item a:hover { color: var(--ink); background: var(--surface-alt); }
+    .toc-item a.active { color: var(--teal-700); border-left-color: var(--teal-500); background: var(--teal-50); font-weight: 500; }
+
+    .content h2 { font-family: var(--font-serif); font-size: 1.85rem; font-weight: 400; color: var(--ink); margin: 3rem 0 1rem; padding-top: 1rem; scroll-margin-top: 80px; }
+    .content h2:first-child { margin-top: 0; }
+    .content h3 { font-size: 1.15rem; font-weight: 600; color: var(--ink); margin: 2rem 0 0.75rem; scroll-margin-top: 80px; }
+    .content p { margin-bottom: 1.25rem; color: var(--ink-light); }
+    .content strong { color: var(--ink); font-weight: 600; }
+    .content a { color: var(--teal-700); text-decoration: underline; text-decoration-color: var(--teal-200); text-underline-offset: 3px; transition: text-decoration-color 0.2s; }
+    .content a:hover { text-decoration-color: var(--teal-600); }
+    .content ul, .content ol { margin-bottom: 1.25rem; padding-left: 1.5rem; }
+    .content li { margin-bottom: 0.5rem; color: var(--ink-light); }
+    .content li::marker { color: var(--teal-500); }
+
+    .section-divider { border: none; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 3rem 0; }
+    .callout { padding: 1.25rem 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; border: 1px solid; position: relative; }
+    .callout-header { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; margin-bottom: 0.5rem; }
+    .callout-header svg { width: 18px; height: 18px; flex-shrink: 0; }
+    .callout p:last-child { margin-bottom: 0; }
+    .callout.concept { background: var(--blue-50); border-color: var(--blue-100); } .callout.concept .callout-header { color: var(--blue-700); }
+    .callout.important { background: var(--amber-50); border-color: var(--amber-100); } .callout.important .callout-header { color: var(--amber-600); }
+    .callout.danger { background: var(--red-50); border-color: var(--red-100); } .callout.danger .callout-header { color: var(--red-600); }
+    .callout.tip { background: var(--purple-50); border-color: var(--purple-100); } .callout.tip .callout-header { color: var(--purple-600); }
+    .callout.success { background: var(--teal-50); border-color: var(--teal-100); } .callout.success .callout-header { color: var(--teal-700); }
+
+    .code-block { position: relative; margin-bottom: 1.5rem; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+    .code-header { display: flex; align-items: center; justify-content: space-between; padding: 8px 16px; background: var(--surface-alt); border-bottom: 1px solid var(--border); font-size: 12px; color: var(--ink-muted); }
+    .code-lang { font-family: var(--font-mono); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+    .code-copy { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border); background: white; font-size: 11px; font-family: var(--font-sans); color: var(--ink-muted); cursor: pointer; transition: all 0.2s var(--ease); }
+    .code-copy:hover { border-color: var(--teal-500); color: var(--teal-700); }
+    .code-copy.copied { background: var(--teal-50); border-color: var(--teal-500); color: var(--teal-700); }
+    pre { margin: 0; padding: 1.25rem 1.5rem; overflow-x: auto; background: #1e293b; font-family: var(--font-mono); font-size: 13.5px; line-height: 1.7; color: #e2e8f0; }
+    code { font-family: var(--font-mono); font-size: 0.88em; }
+    p code, li code { padding: 2px 7px; background: var(--surface-alt); border: 1px solid var(--border); border-radius: 5px; color: var(--teal-800); font-size: 0.85em; }
+    .hl-keyword { color: #c084fc; } .hl-string { color: #86efac; } .hl-comment { color: #64748b; font-style: italic; } .hl-function { color: #7dd3fc; } .hl-number { color: #fbbf24; } .hl-flag { color: #f472b6; }
+
+    details { margin-bottom: 1.25rem; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; transition: border-color 0.2s var(--ease); }
+    details[open] { border-color: var(--teal-200); }
+    details summary { padding: 1rem 1.25rem; font-weight: 600; font-size: 15px; cursor: pointer; background: var(--surface-alt); list-style: none; display: flex; align-items: center; gap: 10px; transition: background 0.2s var(--ease); user-select: none; }
+    details summary::-webkit-details-marker { display: none; }
+    details summary::before { content: ''; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E"); background-size: contain; flex-shrink: 0; transition: transform 0.2s var(--ease); }
+    details[open] summary::before { transform: rotate(90deg); }
+    details summary:hover { background: var(--teal-50); }
+    .details-body { padding: 1.25rem 1.5rem; }
+    .details-body p:last-child { margin-bottom: 0; }
+
+    .video-card { margin-bottom: 1.5rem; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+    .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; background: #0f172a; }
+    .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+    .video-caption { padding: 12px 16px; background: var(--surface-alt); font-size: 13px; color: var(--ink-muted); display: flex; align-items: center; gap: 6px; }
+    .video-caption svg { width: 14px; height: 14px; color: var(--red-500); }
+
+    .resource-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+    .resource-card { display: flex; gap: 14px; padding: 1rem 1.25rem; border: 1px solid var(--border); border-radius: 12px; text-decoration: none; transition: all 0.2s var(--ease); background: white; }
+    .resource-card:hover { border-color: var(--teal-300); background: var(--teal-50); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+    .resource-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 18px; }
+    .resource-icon.docs { background: var(--blue-50); color: var(--blue-600); }
+    .resource-icon.video { background: var(--red-50); color: var(--red-500); }
+    .resource-icon.github { background: var(--ink); color: white; }
+    .resource-icon.article { background: var(--amber-50); color: var(--amber-600); }
+    .resource-info { min-width: 0; }
+    .resource-title { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 2px; line-height: 1.4; }
+    .resource-desc { font-size: 12px; color: var(--ink-muted); line-height: 1.5; }
+
+    .assignment { border: 2px solid var(--teal-200); border-radius: 14px; padding: 1.5rem 1.75rem; margin-bottom: 1.5rem; background: linear-gradient(135deg, var(--teal-50) 0%, white 100%); }
+    .assignment-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+    .assignment-label { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--teal-700); }
+    .assignment-difficulty { display: inline-flex; padding: 4px 10px; border-radius: 100px; font-size: 11px; font-weight: 600; }
+    .difficulty-l1 { background: var(--teal-100); color: var(--teal-800); } .difficulty-l2 { background: var(--amber-100); color: var(--amber-600); } .difficulty-l3 { background: var(--red-100); color: var(--red-600); }
+    .assignment h4 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.75rem; }
+    .assignment p { font-size: 14px; }
+    .checklist { list-style: none; padding: 0; }
+    .checklist li { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border-light); font-size: 14px; }
+    .checklist li:last-child { border-bottom: none; }
+    .check-box { width: 20px; height: 20px; border-radius: 6px; border: 2px solid var(--border); flex-shrink: 0; margin-top: 1px; cursor: pointer; transition: all 0.15s var(--ease); display: flex; align-items: center; justify-content: center; }
+    .check-box:hover { border-color: var(--teal-500); }
+    .check-box.checked { background: var(--teal-500); border-color: var(--teal-500); }
+    .check-box.checked::after { content: ''; width: 10px; height: 10px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E"); background-size: contain; }
+
+    .diagram { margin: 1.5rem 0; padding: 2rem; background: var(--surface-alt); border: 1px solid var(--border); border-radius: 14px; overflow-x: auto; }
+    .diagram pre { background: transparent; color: var(--ink); padding: 0; font-size: 13px; line-height: 1.6; }
+    .diagram-caption { margin-top: 1rem; font-size: 12px; color: var(--ink-muted); text-align: center; font-style: italic; }
+
+    .chapter-footer { border-top: 1px solid var(--border); padding: 3rem 2rem; background: var(--surface-alt); }
+    .chapter-footer-inner { max-width: var(--content-max); margin: 0 auto; }
+    .footer-nav { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+    .footer-nav-link { display: flex; flex-direction: column; gap: 4px; padding: 1rem 1.5rem; border: 1px solid var(--border); border-radius: 12px; text-decoration: none; transition: all 0.2s var(--ease); max-width: 320px; background: white; }
+    .footer-nav-link:hover { border-color: var(--teal-300); box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+    .footer-nav-label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--teal-600); }
+    .footer-nav-title { font-size: 15px; font-weight: 600; color: var(--ink); }
+    .footer-brand { text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); font-size: 13px; color: var(--ink-muted); }
+
+    @media (max-width: 960px) { .main-layout { grid-template-columns: 1fr; } .sidebar { display: none; } .resource-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 640px) { .hero { padding: 2.5rem 1.25rem 2rem; } .main-layout { padding: 0 1.25rem; } .content { padding: 2rem 0 4rem; } pre { padding: 1rem; font-size: 12.5px; } .footer-nav { flex-direction: column; } .footer-nav-link { max-width: 100%; width: 100%; } }
+    @media print { .top-nav, .sidebar, .progress-bar { display: none; } .main-layout { display: block; } .content { padding: 0; } .hero { background: white; border: none; } pre { background: #f1f5f9; color: var(--ink); border: 1px solid var(--border); } }
   </style>
 </head>
 <body>
   <div class="progress-bar" id="progressBar"></div>
+
   <nav class="top-nav">
     <div class="top-nav-inner">
-      <a class="nav-brand" href="index.html"><div class="nav-brand-icon">ILA</div><span class="nav-brand-text">Iksha Learning Academy</span></a>
-      <div class="nav-chapter-nav"><a class="nav-btn" href="chapter-05.html">&larr; Previous</a><span class="nav-current">06 / 08</span><a class="nav-btn" href="chapter-07.html">Next &rarr;</a></div>
+      <a class="nav-brand" href="index.html">
+        <div class="nav-brand-icon">ILA</div>
+        <span class="nav-brand-text">Iksha Learning Academy</span>
+      </a>
+      <div class="nav-chapter-nav">
+        <a class="nav-btn" href="chapter-05.html">&larr; Previous</a>
+        <span class="nav-current">06 / 08</span>
+        <a class="nav-btn" href="chapter-07.html">Next &rarr;</a>
+      </div>
     </div>
   </nav>
+
   <header class="hero">
     <div class="hero-inner">
-      <div class="hero-chapter-label"><span>Chapter 06</span> &middot; Phase 3: Deep Learning</div>
-      <h1>Deep Learning with PyTorch</h1>
-      <p class="hero-subtitle">Transition from NumPy to PyTorch: tensors, automatic differentiation, nn.Module, convolutional neural networks, and the complete training loop for image classification.</p>
+      <div class="hero-chapter-label">
+        <span>Chapter 06</span> &middot; Phase 3: Deep Learning
+      </div>
+      <h1>CNNs and Computer Vision</h1>
+      <p class="hero-subtitle">
+        Learn how convolutional neural networks see the world &mdash; from filters and feature maps
+        to building image classifiers from scratch with PyTorch and leveraging pre-trained models
+        through transfer learning.
+      </p>
       <div class="hero-meta">
-        <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Estimated: 3&ndash;4 days</div>
-        <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>3 Advancement Levels</div>
-        <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>3 Assignments</div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Estimated: 4&ndash;5 days
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          6 Core Concepts
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          3 Assignments
+        </div>
       </div>
     </div>
   </header>
+
   <div class="main-layout">
     <main class="content">
+
       <h2 id="why-this-matters">Why This Matters</h2>
 
-      <p>PyTorch is the dominant deep learning framework in research and production. It provides automatic differentiation, GPU acceleration, and a rich ecosystem. Understanding PyTorch means you can implement any architecture from recent papers and train it efficiently.</p>
+      <p>
+        Computer vision is one of the most successful applications of deep learning. From autonomous vehicles
+        recognizing pedestrians to medical imaging detecting tumors, CNNs have revolutionized how machines
+        interpret visual data. Understanding convolutional layers, pooling operations, and modern architectures
+        gives you the foundation to tackle any image-based ML problem.
+      </p>
 
-      <p>The concepts in this chapter will be referenced throughout the rest of the course. Take the time to build deep understanding, not just surface-level familiarity.</p>
+      <p>
+        More importantly, the concept of <strong>transfer learning</strong> &mdash; taking a model trained on
+        millions of images and fine-tuning it for your specific task &mdash; means you rarely need to train
+        from scratch. A pre-trained ResNet or EfficientNet can be adapted to classify your custom images with
+        only hundreds of examples and minutes of training time.
+      </p>
 
       <div class="callout concept">
-        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg> Key Insight</div>
-        <p>PyTorch follows a define-by-run paradigm: the computational graph is built dynamically as you execute code. This makes debugging intuitive. Your PyTorch code IS the model definition.</p>
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Key Insight
+        </div>
+        <p>
+          CNNs exploit a fundamental property of images: <strong>spatial locality</strong>. Nearby pixels
+          are more related to each other than distant pixels. By using small filters that slide across
+          the image, CNNs can learn local patterns (edges, textures) that compose into higher-level
+          features (shapes, objects) layer by layer.
+        </p>
       </div>
 
       <hr class="section-divider">
 
       <h2 id="key-concepts">Key Concepts</h2>
 
+      <h3 id="conv-layers">1. Convolutional Layers and Filters</h3>
 
-      <h3 id="tensors">1. Tensors and Operations</h3>
+      <p>
+        A convolutional layer applies a set of learnable <strong>filters</strong> (also called kernels) to the
+        input. Each filter slides across the image, computing a dot product at every position, producing a
+        <strong>feature map</strong>. Early layers learn simple patterns like edges and corners; deeper layers
+        learn complex compositions like eyes, wheels, or letters.
+      </p>
 
-      <p>Tensors and Operations is a critical concept in this domain. Understanding it deeply will differentiate you from practitioners who only know the API calls. Let us explore the theory, the implementation, and the practical considerations.</p>
+      <div class="diagram">
+<pre>
+  Input Image (3x32x32)        Filter (3x3)        Feature Map
+  ┌────────────────┐         ┌─────────┐         ┌──────────────┐
+  │                │   *     │ -1  0  1│    =    │              │
+  │   RGB pixels   │         │ -2  0  2│         │  Edge-detect │
+  │   (3 channels) │         │ -1  0  1│         │  activations │
+  └────────────────┘         └─────────┘         └──────────────┘
 
-      <p>In practice, tensors and operations requires careful attention to both theoretical foundations and engineering details. The code below demonstrates the core patterns you will use in production systems.</p>
+  Conv2d(in_channels=3, out_channels=32, kernel_size=3, padding=1)
+  Parameters: 32 filters * (3 * 3 * 3 + 1 bias) = 896
+</pre>
+        <div class="diagram-caption">Figure 1: A convolutional filter slides across the input to produce a feature map</div>
+      </div>
 
       <div class="code-block">
         <div class="code-header">
@@ -61,97 +273,40 @@
         </div>
 <pre>
 <span class="hl-keyword">import</span> torch
-
-<span class="hl-comment"># Creating tensors — PyTorch's fundamental data structure</span>
-x = torch.tensor([<span class="hl-number">1.0</span>, <span class="hl-number">2.0</span>, <span class="hl-number">3.0</span>])
-W = torch.randn(<span class="hl-number">3</span>, <span class="hl-number">4</span>)
-zeros = torch.zeros(<span class="hl-number">5</span>, <span class="hl-number">5</span>)
-
-<span class="hl-comment"># GPU acceleration</span>
-device = torch.device(<span class="hl-string">"cuda"</span> <span class="hl-keyword">if</span> torch.cuda.is_available() <span class="hl-keyword">else</span> <span class="hl-string">"cpu"</span>)
-x_gpu = x.to(device)
-
-<span class="hl-comment"># Operations work like NumPy</span>
-result = W @ x
-reshaped = W.reshape(<span class="hl-number">2</span>, <span class="hl-number">6</span>)
-numpy_arr = W.numpy()
-</pre>
-      </div>
-
-
-      <h3 id="autograd">2. Autograd</h3>
-
-      <p>Autograd is a critical concept in this domain. Understanding it deeply will differentiate you from practitioners who only know the API calls. Let us explore the theory, the implementation, and the practical considerations.</p>
-
-      <p>In practice, autograd requires careful attention to both theoretical foundations and engineering details. The code below demonstrates the core patterns you will use in production systems.</p>
-
-      <div class="code-block">
-        <div class="code-header">
-          <span class="code-lang">python</span>
-          <button class="code-copy" onclick="copyCode(this)">Copy</button>
-        </div>
-<pre>
-<span class="hl-comment"># Autograd tracks operations for automatic differentiation</span>
-x = torch.tensor([<span class="hl-number">2.0</span>, <span class="hl-number">3.0</span>], requires_grad=<span class="hl-keyword">True</span>)
-y = x[<span class="hl-number">0</span>]**<span class="hl-number">2</span> + <span class="hl-number">3</span> * x[<span class="hl-number">1</span>]
-y.backward()
-<span class="hl-function">print</span>(<span class="hl-string">f"dy/dx = {x.grad}"</span>)  <span class="hl-comment"># tensor([4., 3.])</span>
-
-<span class="hl-comment"># Linear regression with autograd</span>
-w = torch.randn(<span class="hl-number">1</span>, requires_grad=<span class="hl-keyword">True</span>)
-b = torch.randn(<span class="hl-number">1</span>, requires_grad=<span class="hl-keyword">True</span>)
-X = torch.randn(<span class="hl-number">100</span>, <span class="hl-number">1</span>)
-y_true = <span class="hl-number">3</span> * X + <span class="hl-number">2</span>
-
-<span class="hl-keyword">for</span> _ <span class="hl-keyword">in</span> <span class="hl-function">range</span>(<span class="hl-number">100</span>):
-    loss = ((X * w + b - y_true)**<span class="hl-number">2</span>).mean()
-    loss.backward()
-    <span class="hl-keyword">with</span> torch.no_grad():
-        w -= <span class="hl-number">0.1</span> * w.grad; b -= <span class="hl-number">0.1</span> * b.grad
-        w.grad.zero_(); b.grad.zero_()
-</pre>
-      </div>
-
-
-      <h3 id="nn-module">3. Building with nn.Module</h3>
-
-      <p>Building with nn.Module is a critical concept in this domain. Understanding it deeply will differentiate you from practitioners who only know the API calls. Let us explore the theory, the implementation, and the practical considerations.</p>
-
-      <p>In practice, building with nn.module requires careful attention to both theoretical foundations and engineering details. The code below demonstrates the core patterns you will use in production systems.</p>
-
-      <div class="code-block">
-        <div class="code-header">
-          <span class="code-lang">python</span>
-          <button class="code-copy" onclick="copyCode(this)">Copy</button>
-        </div>
-<pre>
 <span class="hl-keyword">import</span> torch.nn <span class="hl-keyword">as</span> nn
-<span class="hl-keyword">import</span> torch.nn.functional <span class="hl-keyword">as</span> F
 
-<span class="hl-keyword">class</span> <span class="hl-function">Classifier</span>(nn.Module):
-    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, in_dim, hidden, n_classes):
-        <span class="hl-function">super</span>().__init__()
-        self.fc1 = nn.Linear(in_dim, hidden)
-        self.fc2 = nn.Linear(hidden, hidden)
-        self.fc3 = nn.Linear(hidden, n_classes)
-        self.dropout = nn.Dropout(<span class="hl-number">0.3</span>)
+<span class="hl-comment"># Understanding convolution dimensions</span>
+conv = nn.<span class="hl-function">Conv2d</span>(
+    in_channels=<span class="hl-number">3</span>,       <span class="hl-comment"># RGB input</span>
+    out_channels=<span class="hl-number">32</span>,     <span class="hl-comment"># 32 learned filters</span>
+    kernel_size=<span class="hl-number">3</span>,       <span class="hl-comment"># 3x3 filter</span>
+    stride=<span class="hl-number">1</span>,            <span class="hl-comment"># Move 1 pixel at a time</span>
+    padding=<span class="hl-number">1</span>            <span class="hl-comment"># Preserve spatial dimensions</span>
+)
 
-    <span class="hl-keyword">def</span> <span class="hl-function">forward</span>(self, x):
-        x = F.relu(self.fc1(x))
-        x = self.dropout(F.relu(self.fc2(x)))
-        <span class="hl-keyword">return</span> self.fc3(x)
+<span class="hl-comment"># Simulate a batch of 4 RGB images, 32x32 pixels</span>
+x = torch.<span class="hl-function">randn</span>(<span class="hl-number">4</span>, <span class="hl-number">3</span>, <span class="hl-number">32</span>, <span class="hl-number">32</span>)  <span class="hl-comment"># (batch, channels, height, width)</span>
+output = <span class="hl-function">conv</span>(x)
 
-model = Classifier(<span class="hl-number">784</span>, <span class="hl-number">256</span>, <span class="hl-number">10</span>)
-<span class="hl-function">print</span>(<span class="hl-string">f"Params: {sum(p.numel() for p in model.parameters()):,}"</span>)
+<span class="hl-function">print</span>(<span class="hl-string">f"Input shape:  {x.shape}"</span>)        <span class="hl-comment"># [4, 3, 32, 32]</span>
+<span class="hl-function">print</span>(<span class="hl-string">f"Output shape: {output.shape}"</span>)   <span class="hl-comment"># [4, 32, 32, 32]</span>
+<span class="hl-function">print</span>(<span class="hl-string">f"Parameters:   {sum(p.numel() for p in conv.parameters())}"</span>)
 </pre>
       </div>
 
+      <h3 id="pooling-architecture">2. Pooling and Architecture Patterns</h3>
 
-      <h3 id="cnn">4. Convolutional Neural Networks</h3>
+      <p>
+        <strong>Pooling layers</strong> reduce spatial dimensions while retaining the most important information.
+        Max pooling takes the maximum value in each window, effectively keeping the strongest activations.
+        This makes the network more robust to small translations and reduces computation.
+      </p>
 
-      <p>Convolutional Neural Networks is a critical concept in this domain. Understanding it deeply will differentiate you from practitioners who only know the API calls. Let us explore the theory, the implementation, and the practical considerations.</p>
-
-      <p>In practice, convolutional neural networks requires careful attention to both theoretical foundations and engineering details. The code below demonstrates the core patterns you will use in production systems.</p>
+      <p>
+        The standard CNN architecture pattern is: <strong>Conv &rarr; ReLU &rarr; Pool</strong>, repeated
+        with increasing filter counts. As spatial dimensions shrink, channel count grows, creating a pyramid
+        of increasingly abstract feature representations.
+      </p>
 
       <div class="code-block">
         <div class="code-header">
@@ -159,30 +314,50 @@ model = Classifier(<span class="hl-number">784</span>, <span class="hl-number">2
           <button class="code-copy" onclick="copyCode(this)">Copy</button>
         </div>
 <pre>
-<span class="hl-keyword">class</span> <span class="hl-function">ConvNet</span>(nn.Module):
-    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self):
-        <span class="hl-function">super</span>().__init__()
-        self.conv1 = nn.Conv2d(<span class="hl-number">1</span>, <span class="hl-number">32</span>, <span class="hl-number">3</span>, padding=<span class="hl-number">1</span>)
-        self.conv2 = nn.Conv2d(<span class="hl-number">32</span>, <span class="hl-number">64</span>, <span class="hl-number">3</span>, padding=<span class="hl-number">1</span>)
-        self.pool = nn.MaxPool2d(<span class="hl-number">2</span>)
-        self.fc1 = nn.Linear(<span class="hl-number">64</span>*<span class="hl-number">7</span>*<span class="hl-number">7</span>, <span class="hl-number">128</span>)
-        self.fc2 = nn.Linear(<span class="hl-number">128</span>, <span class="hl-number">10</span>)
+<span class="hl-comment"># Common CNN building blocks</span>
+<span class="hl-keyword">class</span> <span class="hl-function">ConvBlock</span>(nn.Module):
+    <span class="hl-string">"""Conv -> BatchNorm -> ReLU -> MaxPool"""</span>
+
+    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, in_ch, out_ch, pool=<span class="hl-keyword">True</span>):
+        <span class="hl-function">super</span>().<span class="hl-function">__init__</span>()
+        layers = [
+            nn.<span class="hl-function">Conv2d</span>(in_ch, out_ch, kernel_size=<span class="hl-number">3</span>, padding=<span class="hl-number">1</span>),
+            nn.<span class="hl-function">BatchNorm2d</span>(out_ch),
+            nn.<span class="hl-function">ReLU</span>(inplace=<span class="hl-keyword">True</span>),
+        ]
+        <span class="hl-keyword">if</span> pool:
+            layers.<span class="hl-function">append</span>(nn.<span class="hl-function">MaxPool2d</span>(kernel_size=<span class="hl-number">2</span>, stride=<span class="hl-number">2</span>))
+        self.block = nn.<span class="hl-function">Sequential</span>(*layers)
 
     <span class="hl-keyword">def</span> <span class="hl-function">forward</span>(self, x):
-        x = self.pool(F.relu(self.conv1(x)))
-        x = self.pool(F.relu(self.conv2(x)))
-        x = x.view(x.size(<span class="hl-number">0</span>), -<span class="hl-number">1</span>)
-        x = F.relu(self.fc1(x))
-        <span class="hl-keyword">return</span> self.fc2(x)
+        <span class="hl-keyword">return</span> self.<span class="hl-function">block</span>(x)
+
+<span class="hl-comment"># Example: input 3x32x32</span>
+block = <span class="hl-function">ConvBlock</span>(<span class="hl-number">3</span>, <span class="hl-number">32</span>)
+x = torch.<span class="hl-function">randn</span>(<span class="hl-number">1</span>, <span class="hl-number">3</span>, <span class="hl-number">32</span>, <span class="hl-number">32</span>)
+<span class="hl-function">print</span>(<span class="hl-string">f"After ConvBlock: {block(x).shape}"</span>)  <span class="hl-comment"># [1, 32, 16, 16]</span>
 </pre>
       </div>
 
+      <div class="callout tip">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Pro Tip
+        </div>
+        <p>
+          Always use <code>BatchNorm2d</code> after convolutions. It normalizes activations, stabilizes
+          training, and often allows you to use higher learning rates. The pattern
+          <strong>Conv &rarr; BN &rarr; ReLU</strong> is the standard building block of modern CNNs.
+        </p>
+      </div>
 
-      <h3 id="training-loop">5. The Training Loop</h3>
+      <h3 id="cnn-from-scratch">3. Building a CNN from Scratch (PyTorch)</h3>
 
-      <p>The Training Loop is a critical concept in this domain. Understanding it deeply will differentiate you from practitioners who only know the API calls. Let us explore the theory, the implementation, and the practical considerations.</p>
-
-      <p>In practice, the training loop requires careful attention to both theoretical foundations and engineering details. The code below demonstrates the core patterns you will use in production systems.</p>
+      <p>
+        Let us build a complete CNN for CIFAR-10 classification (10 classes of 32x32 color images). The
+        architecture follows the pyramid pattern: progressively more filters and smaller spatial dimensions,
+        ending with a fully connected classifier.
+      </p>
 
       <div class="code-block">
         <div class="code-header">
@@ -190,32 +365,58 @@ model = Classifier(<span class="hl-number">784</span>, <span class="hl-number">2
           <button class="code-copy" onclick="copyCode(this)">Copy</button>
         </div>
 <pre>
+<span class="hl-keyword">import</span> torch
+<span class="hl-keyword">import</span> torch.nn <span class="hl-keyword">as</span> nn
+<span class="hl-keyword">import</span> torch.optim <span class="hl-keyword">as</span> optim
 <span class="hl-keyword">from</span> torchvision <span class="hl-keyword">import</span> datasets, transforms
 <span class="hl-keyword">from</span> torch.utils.data <span class="hl-keyword">import</span> DataLoader
 
-transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((<span class="hl-number">0.1307</span>,), (<span class="hl-number">0.3081</span>,))])
-train = datasets.MNIST(<span class="hl-string">"./data"</span>, train=<span class="hl-keyword">True</span>, download=<span class="hl-keyword">True</span>, transform=transform)
-loader = DataLoader(train, batch_size=<span class="hl-number">64</span>, shuffle=<span class="hl-keyword">True</span>)
+<span class="hl-keyword">class</span> <span class="hl-function">SimpleCNN</span>(nn.Module):
+    <span class="hl-string">"""A simple CNN for CIFAR-10 classification."""</span>
 
-model = ConvNet(); criterion = nn.CrossEntropyLoss()
-optimizer = torch.optim.Adam(model.parameters(), lr=<span class="hl-number">0.001</span>)
+    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, num_classes=<span class="hl-number">10</span>):
+        <span class="hl-function">super</span>().<span class="hl-function">__init__</span>()
 
-<span class="hl-keyword">for</span> epoch <span class="hl-keyword">in</span> <span class="hl-function">range</span>(<span class="hl-number">5</span>):
-    model.train()
-    <span class="hl-keyword">for</span> X, y <span class="hl-keyword">in</span> loader:
-        optimizer.zero_grad()
-        loss = criterion(model(X), y)
-        loss.backward()
-        optimizer.step()
+        <span class="hl-comment"># Feature extractor: Conv blocks with increasing channels</span>
+        self.features = nn.<span class="hl-function">Sequential</span>(
+            <span class="hl-comment"># Block 1: 3 -> 32 channels, 32x32 -> 16x16</span>
+            nn.<span class="hl-function">Conv2d</span>(<span class="hl-number">3</span>, <span class="hl-number">32</span>, kernel_size=<span class="hl-number">3</span>, padding=<span class="hl-number">1</span>),
+            nn.<span class="hl-function">BatchNorm2d</span>(<span class="hl-number">32</span>),
+            nn.<span class="hl-function">ReLU</span>(inplace=<span class="hl-keyword">True</span>),
+            nn.<span class="hl-function">MaxPool2d</span>(<span class="hl-number">2</span>, <span class="hl-number">2</span>),
+
+            <span class="hl-comment"># Block 2: 32 -> 64 channels, 16x16 -> 8x8</span>
+            nn.<span class="hl-function">Conv2d</span>(<span class="hl-number">32</span>, <span class="hl-number">64</span>, kernel_size=<span class="hl-number">3</span>, padding=<span class="hl-number">1</span>),
+            nn.<span class="hl-function">BatchNorm2d</span>(<span class="hl-number">64</span>),
+            nn.<span class="hl-function">ReLU</span>(inplace=<span class="hl-keyword">True</span>),
+            nn.<span class="hl-function">MaxPool2d</span>(<span class="hl-number">2</span>, <span class="hl-number">2</span>),
+
+            <span class="hl-comment"># Block 3: 64 -> 128 channels, 8x8 -> 4x4</span>
+            nn.<span class="hl-function">Conv2d</span>(<span class="hl-number">64</span>, <span class="hl-number">128</span>, kernel_size=<span class="hl-number">3</span>, padding=<span class="hl-number">1</span>),
+            nn.<span class="hl-function">BatchNorm2d</span>(<span class="hl-number">128</span>),
+            nn.<span class="hl-function">ReLU</span>(inplace=<span class="hl-keyword">True</span>),
+            nn.<span class="hl-function">MaxPool2d</span>(<span class="hl-number">2</span>, <span class="hl-number">2</span>),
+        )
+
+        <span class="hl-comment"># Classifier</span>
+        self.classifier = nn.<span class="hl-function">Sequential</span>(
+            nn.<span class="hl-function">Flatten</span>(),
+            nn.<span class="hl-function">Linear</span>(<span class="hl-number">128</span> * <span class="hl-number">4</span> * <span class="hl-number">4</span>, <span class="hl-number">256</span>),
+            nn.<span class="hl-function">ReLU</span>(inplace=<span class="hl-keyword">True</span>),
+            nn.<span class="hl-function">Dropout</span>(<span class="hl-number">0.5</span>),
+            nn.<span class="hl-function">Linear</span>(<span class="hl-number">256</span>, num_classes),
+        )
+
+    <span class="hl-keyword">def</span> <span class="hl-function">forward</span>(self, x):
+        x = self.<span class="hl-function">features</span>(x)
+        x = self.<span class="hl-function">classifier</span>(x)
+        <span class="hl-keyword">return</span> x
+
+model = <span class="hl-function">SimpleCNN</span>()
+total_params = <span class="hl-function">sum</span>(p.<span class="hl-function">numel</span>() <span class="hl-keyword">for</span> p <span class="hl-keyword">in</span> model.<span class="hl-function">parameters</span>())
+<span class="hl-function">print</span>(<span class="hl-string">f"Total parameters: {total_params:,}"</span>)
 </pre>
       </div>
-
-
-      <h3 id="data-loading">6. DataLoaders and Transforms</h3>
-
-      <p>DataLoaders and Transforms is a critical concept in this domain. Understanding it deeply will differentiate you from practitioners who only know the API calls. Let us explore the theory, the implementation, and the practical considerations.</p>
-
-      <p>In practice, dataloaders and transforms requires careful attention to both theoretical foundations and engineering details. The code below demonstrates the core patterns you will use in production systems.</p>
 
       <div class="code-block">
         <div class="code-header">
@@ -223,128 +424,363 @@ optimizer = torch.optim.Adam(model.parameters(), lr=<span class="hl-number">0.00
           <button class="code-copy" onclick="copyCode(this)">Copy</button>
         </div>
 <pre>
-<span class="hl-keyword">from</span> torch.utils.data <span class="hl-keyword">import</span> Dataset
+<span class="hl-comment"># Training loop</span>
+<span class="hl-keyword">def</span> <span class="hl-function">train_one_epoch</span>(model, loader, criterion, optimizer, device):
+    model.<span class="hl-function">train</span>()
+    running_loss = <span class="hl-number">0.0</span>
+    correct = <span class="hl-number">0</span>
+    total = <span class="hl-number">0</span>
 
-<span class="hl-keyword">class</span> <span class="hl-function">CustomDataset</span>(Dataset):
-    <span class="hl-keyword">def</span> <span class="hl-function">__init__</span>(self, X, y, transform=<span class="hl-keyword">None</span>):
-        self.X = torch.FloatTensor(X)
-        self.y = torch.LongTensor(y)
-        self.transform = transform
+    <span class="hl-keyword">for</span> images, labels <span class="hl-keyword">in</span> loader:
+        images, labels = images.<span class="hl-function">to</span>(device), labels.<span class="hl-function">to</span>(device)
 
-    <span class="hl-keyword">def</span> <span class="hl-function">__len__</span>(self): <span class="hl-keyword">return</span> len(self.X)
+        optimizer.<span class="hl-function">zero_grad</span>()
+        outputs = <span class="hl-function">model</span>(images)
+        loss = <span class="hl-function">criterion</span>(outputs, labels)
+        loss.<span class="hl-function">backward</span>()
+        optimizer.<span class="hl-function">step</span>()
 
-    <span class="hl-keyword">def</span> <span class="hl-function">__getitem__</span>(self, idx):
-        x = self.X[idx]
-        <span class="hl-keyword">if</span> self.transform: x = self.transform(x)
-        <span class="hl-keyword">return</span> x, self.y[idx]
+        running_loss += loss.<span class="hl-function">item</span>() * images.<span class="hl-function">size</span>(<span class="hl-number">0</span>)
+        _, predicted = outputs.<span class="hl-function">max</span>(<span class="hl-number">1</span>)
+        total += labels.<span class="hl-function">size</span>(<span class="hl-number">0</span>)
+        correct += predicted.<span class="hl-function">eq</span>(labels).<span class="hl-function">sum</span>().<span class="hl-function">item</span>()
 
-<span class="hl-comment"># Data augmentation for images</span>
-aug = transforms.Compose([
-    transforms.RandomHorizontalFlip(),
-    transforms.RandomRotation(<span class="hl-number">10</span>),
-    transforms.ColorJitter(brightness=<span class="hl-number">0.2</span>),
-    transforms.ToTensor(),
+    <span class="hl-keyword">return</span> running_loss / total, correct / total
+
+<span class="hl-comment"># Setup</span>
+device = torch.<span class="hl-function">device</span>(<span class="hl-string">'cuda'</span> <span class="hl-keyword">if</span> torch.cuda.<span class="hl-function">is_available</span>() <span class="hl-keyword">else</span> <span class="hl-string">'cpu'</span>)
+model = <span class="hl-function">SimpleCNN</span>().<span class="hl-function">to</span>(device)
+criterion = nn.<span class="hl-function">CrossEntropyLoss</span>()
+optimizer = optim.<span class="hl-function">Adam</span>(model.<span class="hl-function">parameters</span>(), lr=<span class="hl-number">1e-3</span>)
+
+<span class="hl-comment"># Train for 20 epochs</span>
+<span class="hl-keyword">for</span> epoch <span class="hl-keyword">in</span> <span class="hl-function">range</span>(<span class="hl-number">20</span>):
+    loss, acc = <span class="hl-function">train_one_epoch</span>(model, train_loader, criterion, optimizer, device)
+    <span class="hl-function">print</span>(<span class="hl-string">f"Epoch {epoch+1:2d} | Loss: {loss:.4f} | Acc: {acc:.4f}"</span>)
+</pre>
+      </div>
+
+      <h3 id="transfer-learning">4. Transfer Learning with Pre-trained Models</h3>
+
+      <p>
+        Instead of training from random weights, <strong>transfer learning</strong> starts with a model
+        pre-trained on ImageNet (1.2 million images, 1000 classes). You replace the final classification
+        layer and fine-tune on your dataset. This works because early CNN layers learn universal features
+        (edges, textures) that transfer across domains.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">python</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-keyword">import</span> torchvision.models <span class="hl-keyword">as</span> models
+
+<span class="hl-comment"># Load a pre-trained ResNet-18</span>
+model = models.<span class="hl-function">resnet18</span>(weights=models.ResNet18_Weights.IMAGENET1K_V1)
+
+<span class="hl-comment"># Freeze all layers (use pre-trained features as-is)</span>
+<span class="hl-keyword">for</span> param <span class="hl-keyword">in</span> model.<span class="hl-function">parameters</span>():
+    param.requires_grad = <span class="hl-keyword">False</span>
+
+<span class="hl-comment"># Replace the final fully connected layer for our task</span>
+num_features = model.fc.in_features
+model.fc = nn.<span class="hl-function">Sequential</span>(
+    nn.<span class="hl-function">Dropout</span>(<span class="hl-number">0.3</span>),
+    nn.<span class="hl-function">Linear</span>(num_features, <span class="hl-number">10</span>)   <span class="hl-comment"># 10 classes for CIFAR-10</span>
+)
+
+<span class="hl-comment"># Only the new fc layer has requires_grad=True</span>
+trainable = <span class="hl-function">sum</span>(p.<span class="hl-function">numel</span>() <span class="hl-keyword">for</span> p <span class="hl-keyword">in</span> model.<span class="hl-function">parameters</span>() <span class="hl-keyword">if</span> p.requires_grad)
+total = <span class="hl-function">sum</span>(p.<span class="hl-function">numel</span>() <span class="hl-keyword">for</span> p <span class="hl-keyword">in</span> model.<span class="hl-function">parameters</span>())
+<span class="hl-function">print</span>(<span class="hl-string">f"Trainable: {trainable:,} / {total:,} ({trainable/total:.1%})"</span>)
+</pre>
+      </div>
+
+      <div class="callout important">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Input Size Matters
+        </div>
+        <p>
+          Pre-trained models expect specific input sizes and normalization. ResNet expects 224x224 images
+          normalized with ImageNet mean <code>[0.485, 0.456, 0.406]</code> and std
+          <code>[0.229, 0.224, 0.225]</code>. Always match these preprocessing steps when using
+          pre-trained weights, or the learned features will be meaningless.
+        </p>
+      </div>
+
+      <h3 id="data-augmentation">5. Data Augmentation Strategies</h3>
+
+      <p>
+        Data augmentation artificially expands your training set by applying random transformations to
+        images: flipping, rotation, cropping, color jittering. This teaches the model invariance to these
+        transformations and dramatically reduces overfitting, especially with small datasets.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">python</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-keyword">from</span> torchvision <span class="hl-keyword">import</span> transforms
+
+<span class="hl-comment"># Training transforms: aggressive augmentation</span>
+train_transform = transforms.<span class="hl-function">Compose</span>([
+    transforms.<span class="hl-function">RandomResizedCrop</span>(<span class="hl-number">224</span>, scale=(<span class="hl-number">0.8</span>, <span class="hl-number">1.0</span>)),
+    transforms.<span class="hl-function">RandomHorizontalFlip</span>(p=<span class="hl-number">0.5</span>),
+    transforms.<span class="hl-function">RandomRotation</span>(<span class="hl-number">15</span>),
+    transforms.<span class="hl-function">ColorJitter</span>(
+        brightness=<span class="hl-number">0.2</span>, contrast=<span class="hl-number">0.2</span>,
+        saturation=<span class="hl-number">0.2</span>, hue=<span class="hl-number">0.1</span>
+    ),
+    transforms.<span class="hl-function">RandomAffine</span>(degrees=<span class="hl-number">0</span>, translate=(<span class="hl-number">0.1</span>, <span class="hl-number">0.1</span>)),
+    transforms.<span class="hl-function">ToTensor</span>(),
+    transforms.<span class="hl-function">Normalize</span>(
+        mean=[<span class="hl-number">0.485</span>, <span class="hl-number">0.456</span>, <span class="hl-number">0.406</span>],
+        std=[<span class="hl-number">0.229</span>, <span class="hl-number">0.224</span>, <span class="hl-number">0.225</span>]
+    ),
+])
+
+<span class="hl-comment"># Validation transforms: NO augmentation, just resize and normalize</span>
+val_transform = transforms.<span class="hl-function">Compose</span>([
+    transforms.<span class="hl-function">Resize</span>(<span class="hl-number">256</span>),
+    transforms.<span class="hl-function">CenterCrop</span>(<span class="hl-number">224</span>),
+    transforms.<span class="hl-function">ToTensor</span>(),
+    transforms.<span class="hl-function">Normalize</span>(
+        mean=[<span class="hl-number">0.485</span>, <span class="hl-number">0.456</span>, <span class="hl-number">0.406</span>],
+        std=[<span class="hl-number">0.229</span>, <span class="hl-number">0.224</span>, <span class="hl-number">0.225</span>]
+    ),
 ])
 </pre>
       </div>
 
+      <h3 id="classification-pipeline">6. Image Classification Pipeline</h3>
+
+      <p>
+        A complete image classification pipeline combines data loading, augmentation, model definition,
+        training loop, and evaluation into a reproducible workflow. Here is the full pipeline putting
+        all the pieces together.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">python</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-keyword">from</span> torch.utils.data <span class="hl-keyword">import</span> DataLoader
+<span class="hl-keyword">from</span> torchvision <span class="hl-keyword">import</span> datasets
+<span class="hl-keyword">import</span> torch
+
+<span class="hl-comment"># Load datasets with transforms</span>
+train_dataset = datasets.<span class="hl-function">CIFAR10</span>(
+    root=<span class="hl-string">'./data'</span>, train=<span class="hl-keyword">True</span>,
+    transform=train_transform, download=<span class="hl-keyword">True</span>
+)
+test_dataset = datasets.<span class="hl-function">CIFAR10</span>(
+    root=<span class="hl-string">'./data'</span>, train=<span class="hl-keyword">False</span>,
+    transform=val_transform, download=<span class="hl-keyword">True</span>
+)
+
+<span class="hl-comment"># DataLoaders</span>
+train_loader = <span class="hl-function">DataLoader</span>(train_dataset, batch_size=<span class="hl-number">64</span>, shuffle=<span class="hl-keyword">True</span>, num_workers=<span class="hl-number">4</span>)
+test_loader = <span class="hl-function">DataLoader</span>(test_dataset, batch_size=<span class="hl-number">64</span>, shuffle=<span class="hl-keyword">False</span>, num_workers=<span class="hl-number">4</span>)
+
+<span class="hl-comment"># Evaluation function</span>
+<span class="hl-keyword">def</span> <span class="hl-function">evaluate</span>(model, loader, device):
+    model.<span class="hl-function">eval</span>()
+    correct = <span class="hl-number">0</span>
+    total = <span class="hl-number">0</span>
+    <span class="hl-keyword">with</span> torch.<span class="hl-function">no_grad</span>():
+        <span class="hl-keyword">for</span> images, labels <span class="hl-keyword">in</span> loader:
+            images, labels = images.<span class="hl-function">to</span>(device), labels.<span class="hl-function">to</span>(device)
+            outputs = <span class="hl-function">model</span>(images)
+            _, predicted = outputs.<span class="hl-function">max</span>(<span class="hl-number">1</span>)
+            total += labels.<span class="hl-function">size</span>(<span class="hl-number">0</span>)
+            correct += predicted.<span class="hl-function">eq</span>(labels).<span class="hl-function">sum</span>().<span class="hl-function">item</span>()
+    <span class="hl-keyword">return</span> correct / total
+
+test_acc = <span class="hl-function">evaluate</span>(model, test_loader, device)
+<span class="hl-function">print</span>(<span class="hl-string">f"Test Accuracy: {test_acc:.4f}"</span>)
+</pre>
+      </div>
+
+      <details>
+        <summary>How do I choose which pre-trained model to use?</summary>
+        <div class="details-body">
+          <p>
+            <strong>ResNet-18/34:</strong> Good starting point, fast training, solid baseline.
+            <strong>ResNet-50:</strong> More capacity, standard for most tasks.
+            <strong>EfficientNet:</strong> Best accuracy-efficiency tradeoff.
+            <strong>Vision Transformer (ViT):</strong> State-of-the-art but needs more data.
+            Start with ResNet-18 and upgrade only if accuracy is insufficient.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Should I freeze or fine-tune all layers?</summary>
+        <div class="details-body">
+          <p>
+            Start by freezing all layers except the final classifier (feature extraction). If accuracy
+            plateaus, unfreeze the last few convolutional blocks and fine-tune with a very small learning
+            rate (1e-5). This two-stage approach prevents catastrophic forgetting of pre-trained features.
+          </p>
+        </div>
+      </details>
+
       <hr class="section-divider">
+
       <h2 id="watch-learn">Watch &amp; Learn</h2>
-      <p>These videos cover core concepts. Watch before starting assignments.</p>
+
+      <p>
+        These videos provide visual explanations of how convolutions work and how CNNs learn hierarchical
+        features from images.
+      </p>
+
       <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/c36lUUr864M?rel=0&amp;modestbranding=1" title="Patrick Loeber &mdash; PyTorch Tutorial: full course for beginners" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-caption"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg> Patrick Loeber &mdash; PyTorch Tutorial: full course for beginners</div>
-      </div>
-      <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/V_xro1bcAuA?rel=0&amp;modestbranding=1" title="Sentdex &mdash; PyTorch CNNs: building and training convolutional networks" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-caption"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg> Sentdex &mdash; PyTorch CNNs: building and training convolutional networks</div>
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/fNxaJsNG3-s?rel=0&amp;modestbranding=1"
+            title="CNNs Explained"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Convolutional Neural Networks &mdash; How filters learn to detect features in images
+        </div>
       </div>
 
       <hr class="section-divider">
+
       <h2 id="further-reading">Further Reading</h2>
-      <p>Deep-dive into official documentation and reference material.</p>
-      <div class="resource-grid">
-        <a class="resource-card" href="https://pytorch.org/tutorials/beginner/deep_learning_60min_blitz.html" target="_blank" rel="noopener">
-          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-          <div class="resource-info"><div class="resource-title">PyTorch 60-Minute Blitz</div><div class="resource-desc">Official tutorial: tensors, autograd, neural networks, and training.</div></div>
-        </a>
-        <a class="resource-card" href="https://pytorch.org/docs/stable/nn.html" target="_blank" rel="noopener">
-          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-          <div class="resource-info"><div class="resource-title">PyTorch nn Module Reference</div><div class="resource-desc">Complete API for layers, losses, and containers.</div></div>
-        </a>
-        <a class="resource-card" href="https://d2l.ai/chapter_convolutional-neural-networks/" target="_blank" rel="noopener">
-          <div class="resource-icon article"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
-          <div class="resource-info"><div class="resource-title">Dive into Deep Learning: CNNs</div><div class="resource-desc">Free textbook on convolutions, pooling, and modern CNN architectures.</div></div>
-        </a>
-        <a class="resource-card" href="https://github.com/pytorch/examples" target="_blank" rel="noopener">
-          <div class="resource-icon github"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
-          <div class="resource-info"><div class="resource-title">PyTorch Official Examples</div><div class="resource-desc">Code examples for MNIST, ImageNet, and language models.</div></div>
-        </a>
 
+      <div class="resource-grid">
+        <a class="resource-card" href="https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+          <div class="resource-info"><div class="resource-title">PyTorch CIFAR-10 Tutorial</div><div class="resource-desc">Official PyTorch tutorial for training an image classifier from scratch.</div></div>
+        </a>
+        <a class="resource-card" href="https://pytorch.org/tutorials/beginner/transfer_learning_tutorial.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+          <div class="resource-info"><div class="resource-title">PyTorch Transfer Learning Tutorial</div><div class="resource-desc">Fine-tuning and feature extraction with pre-trained models.</div></div>
+        </a>
+        <a class="resource-card" href="https://cs231n.github.io/" target="_blank" rel="noopener">
+          <div class="resource-icon article"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <div class="resource-info"><div class="resource-title">Stanford CS231n: CNNs for Visual Recognition</div><div class="resource-desc">Comprehensive course notes covering CNN architectures, training, and visualization.</div></div>
+        </a>
+        <a class="resource-card" href="https://pytorch.org/vision/stable/models.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+          <div class="resource-info"><div class="resource-title">TorchVision: Pre-trained Models</div><div class="resource-desc">Full list of available pre-trained models with accuracy benchmarks.</div></div>
+        </a>
       </div>
+
       <hr class="section-divider">
+
       <h2 id="assignments">Assignments</h2>
-      <p>Complete these in order. Each level builds on the previous one.</p>
+
+      <p>Complete these in order. Submit your work as a Jupyter notebook or Python scripts with clear output.</p>
+
       <div class="assignment">
-        <div class="assignment-header"><div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 1</div><span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span></div>
-        <h4>Core Implementation: Tensors and Operations</h4>
-        <p>Build foundational understanding by implementing core concepts from scratch.</p>
-        <ul class="checklist">          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Implement the core concepts from Tensors and Operations</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a working example demonstrating Autograd</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write comprehensive unit tests for your implementation</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Document your code with docstrings and comments</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Run benchmarks and record performance metrics</span></li></ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div><p>Your implementation passes all tests and you can explain every line of code.</p></div>
+        <div class="assignment-header">
+          <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 1</div>
+          <span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span>
+        </div>
+        <h4>Build and Train a CNN on CIFAR-10</h4>
+        <p>Build a CNN from scratch in PyTorch and train it on CIFAR-10 to understand the full training loop.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Implement the <code>SimpleCNN</code> architecture with 3 conv blocks</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Set up DataLoaders with basic transforms (ToTensor + Normalize)</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Train for 20 epochs and plot training loss and accuracy per epoch</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Evaluate on the test set and print per-class accuracy</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Visualize sample predictions (correct and incorrect) with their images</span></li>
+        </ul>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div>
+          <p>Your CNN trains successfully, achieves above 70% test accuracy, and you can explain what each layer does.</p>
+        </div>
       </div>
+
       <div class="assignment">
-        <div class="assignment-header"><div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 2</div><span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span></div>
-        <h4>Applied Project: Deep Learning with PyTorch in Practice</h4>
-        <p>Apply the concepts to a real-world dataset and compare approaches systematically.</p>
-        <ul class="checklist">          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Build a complete pipeline integrating Tensors and Operations and Autograd</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Apply Building with nn.Module on a real-world dataset</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Compare at least 3 different approaches and document tradeoffs</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create visualizations that tell a clear story about your results</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write a 200-word analysis of your findings</span></li></ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div><p>Your comparison clearly identifies the best approach with supporting evidence and visualizations.</p></div>
+        <div class="assignment-header">
+          <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 2</div>
+          <span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span>
+        </div>
+        <h4>Transfer Learning with Data Augmentation</h4>
+        <p>Use a pre-trained ResNet and aggressive data augmentation to achieve high accuracy with minimal training.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Load pre-trained ResNet-18 and replace the final FC layer</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Implement training and validation augmentation pipelines</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Train with frozen features, then fine-tune the last 2 blocks</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Compare accuracy: from-scratch CNN vs frozen transfer vs fine-tuned</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Plot confusion matrix and identify the hardest class pairs</span></li>
+        </ul>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div>
+          <p>Transfer learning outperforms your from-scratch model, and you can explain why fine-tuning helps.</p>
+        </div>
       </div>
+
       <div class="assignment">
-        <div class="assignment-header"><div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 3</div><span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Production-Ready</span></div>
-        <h4>Production System: End-to-End Deep Learning with PyTorch</h4>
-        <p>Build a production-quality system that demonstrates mastery of all concepts in this chapter.</p>
-        <ul class="checklist">          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Design a production-ready system incorporating deep learning with pytorch best practices</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Implement error handling, logging, and configuration management</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a comprehensive test suite with edge cases</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write documentation for future maintainers</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Deploy or package your solution for team use</span></li></ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0"><div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div><p>Your system is documented, tested, and could be handed to a colleague for production use.</p></div>
+        <div class="assignment-header">
+          <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 3</div>
+          <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Production-Ready</span>
+        </div>
+        <h4>Custom Image Classification Pipeline</h4>
+        <p>Build an end-to-end pipeline on a custom dataset with model saving and inference.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Download a custom dataset (e.g., flowers, food, animals) from Kaggle or use <code>ImageFolder</code></span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Implement a training pipeline with learning rate scheduling and early stopping</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Compare at least 3 pre-trained models (ResNet, EfficientNet, etc.)</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Save the best model with <code>torch.save</code> and write a prediction function</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create an inference script that classifies a single image from a file path</span></li>
+        </ul>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div>
+          <p>You have a saved model and a working inference script that classifies any input image.</p>
+        </div>
       </div>
+
       <hr class="section-divider">
+
       <h2 id="self-check">Self-Check</h2>
-      <p>Before moving on, honestly answer these. If any answer is "no," go back and practice.</p>
+
+      <p>Before moving to Chapter 07, honestly answer these questions.</p>
+
       <details>
-        <summary>Can you explain Tensors and Operations to a colleague without consulting notes?</summary>
-        <div class="details-body"><p>Try explaining the core concept, why it matters, and when to use it. If you need to look things up, spend more time with the material. True understanding means you can teach it.</p></div>
+        <summary>Can you explain what a convolutional layer does with correct dimensions?</summary>
+        <div class="details-body"><p>A Conv2d(in_channels, out_channels, kernel_size) applies out_channels filters of size kernel_size x kernel_size to the input. With padding=1 and stride=1, spatial dimensions are preserved. Each filter produces one feature map.</p></div>
       </details>
+
       <details>
-        <summary>Can you implement Autograd from memory?</summary>
-        <div class="details-body"><p>Open a blank notebook and try to implement the core algorithm without any reference. The act of writing code from memory reveals gaps in understanding that reading alone will not expose.</p></div>
+        <summary>Do you understand when to use transfer learning vs training from scratch?</summary>
+        <div class="details-body"><p>Use transfer learning when: you have limited data (less than 10K images), your domain is similar to ImageNet (natural images), or you need fast results. Train from scratch when: your data is very different from natural images (medical scans, satellite), or you have massive datasets (100K+).</p></div>
       </details>
+
       <details>
-        <summary>Do you understand when Building with nn.Module would fail?</summary>
-        <div class="details-body"><p>Knowing when a technique works is important, but knowing when it fails is more important. Every algorithm has assumptions and limitations. If you cannot list at least 3 failure modes, review the material.</p></div>
+        <summary>Can you write a complete PyTorch training loop from memory?</summary>
+        <div class="details-body"><p>The core loop: model.train(), zero_grad, forward pass, compute loss, backward, optimizer step. Evaluation: model.eval(), torch.no_grad() context, compute metrics. You should be able to write both without looking at documentation.</p></div>
       </details>
+
     </main>
+
     <aside class="sidebar">
       <div class="sidebar-title">On this page</div>
       <ul class="toc-list">
         <li class="toc-item"><a href="#why-this-matters">Why This Matters</a></li>
         <li class="toc-item"><a href="#key-concepts">Key Concepts</a></li>
-        <li class="toc-item"><a href="#tensors" style="padding-left:28px;font-size:12px">Tensors and Operations</a></li>
-        <li class="toc-item"><a href="#autograd" style="padding-left:28px;font-size:12px">Autograd</a></li>
-        <li class="toc-item"><a href="#nn-module" style="padding-left:28px;font-size:12px">Building with nn.Module</a></li>
-        <li class="toc-item"><a href="#cnn" style="padding-left:28px;font-size:12px">Convolutional Neural Networks</a></li>
-        <li class="toc-item"><a href="#training-loop" style="padding-left:28px;font-size:12px">The Training Loop</a></li>
-        <li class="toc-item"><a href="#data-loading" style="padding-left:28px;font-size:12px">DataLoaders and Transforms</a></li>
+        <li class="toc-item"><a href="#conv-layers" style="padding-left: 28px; font-size: 12px;">Convolutional Layers</a></li>
+        <li class="toc-item"><a href="#pooling-architecture" style="padding-left: 28px; font-size: 12px;">Pooling and Architecture</a></li>
+        <li class="toc-item"><a href="#cnn-from-scratch" style="padding-left: 28px; font-size: 12px;">CNN from Scratch</a></li>
+        <li class="toc-item"><a href="#transfer-learning" style="padding-left: 28px; font-size: 12px;">Transfer Learning</a></li>
+        <li class="toc-item"><a href="#data-augmentation" style="padding-left: 28px; font-size: 12px;">Data Augmentation</a></li>
+        <li class="toc-item"><a href="#classification-pipeline" style="padding-left: 28px; font-size: 12px;">Classification Pipeline</a></li>
         <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a></li>
         <li class="toc-item"><a href="#further-reading">Further Reading</a></li>
         <li class="toc-item"><a href="#assignments">Assignments</a></li>
@@ -352,18 +788,46 @@ aug = transforms.Compose([
       </ul>
     </aside>
   </div>
+
   <footer class="chapter-footer">
     <div class="chapter-footer-inner">
-      <nav class="footer-nav"><a class="footer-nav-link" href="chapter-05.html"><span class="footer-nav-label">&larr; Previous Chapter</span><span class="footer-nav-title">05: Neural Network Foundations</span></a><a class="footer-nav-link" href="chapter-07.html"><span class="footer-nav-label">Next Chapter &rarr;</span><span class="footer-nav-title">07: Model Evaluation and Tuning</span></a></nav>
-      <div class="footer-brand">ILA (Iksha Learning Academy) &middot; AI &amp; Machine Learning Certification &middot; Basic Track</div>
+      <nav class="footer-nav">
+        <a class="footer-nav-link" href="chapter-05.html">
+          <span class="footer-nav-label">&larr; Previous Chapter</span>
+          <span class="footer-nav-title">05: Neural Network Fundamentals</span>
+        </a>
+        <a class="footer-nav-link" href="chapter-07.html">
+          <span class="footer-nav-label">Next Chapter &rarr;</span>
+          <span class="footer-nav-title">07: NLP and Text Processing</span>
+        </a>
+      </nav>
+      <div class="footer-brand">
+        ILA (Iksha Learning Academy) &middot; AI &amp; ML Engineering Certification &middot; Level 1
+      </div>
     </div>
   </footer>
+
   <script>
-    window.addEventListener('scroll',()=>{const s=window.scrollY;const d=document.documentElement.scrollHeight-window.innerHeight;document.getElementById('progressBar').style.width=(d>0?(s/d)*100:0)+'%'});
-    const tocLinks=document.querySelectorAll('.toc-item a');const sections=[];tocLinks.forEach(l=>{const id=l.getAttribute('href').slice(1);const el=document.getElementById(id);if(el)sections.push({id,el,link:l})});
-    const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{const item=sections.find(s=>s.el===entry.target);if(item&&entry.isIntersecting){tocLinks.forEach(l=>l.classList.remove('active'));item.link.classList.add('active')}})},{rootMargin:'-80px 0px -60% 0px',threshold:0});
-    sections.forEach(s=>observer.observe(s.el));
-    function copyCode(btn){const pre=btn.closest('.code-block').querySelector('pre');navigator.clipboard.writeText(pre.textContent).then(()=>{btn.classList.add('copied');btn.textContent='Copied!';setTimeout(()=>{btn.classList.remove('copied');btn.textContent='Copy'},2000)})}
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      document.getElementById('progressBar').style.width = progress + '%';
+    });
+
+    const tocLinks = document.querySelectorAll('.toc-item a');
+    const sections = [];
+    tocLinks.forEach(link => { const id = link.getAttribute('href').slice(1); const el = document.getElementById(id); if (el) sections.push({ id, el, link }); });
+    const observer = new IntersectionObserver(entries => { entries.forEach(entry => { const item = sections.find(s => s.el === entry.target); if (item && entry.isIntersecting) { tocLinks.forEach(l => l.classList.remove('active')); item.link.classList.add('active'); } }); }, { rootMargin: '-80px 0px -60% 0px', threshold: 0 });
+    sections.forEach(s => observer.observe(s.el));
+
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      navigator.clipboard.writeText(pre.textContent).then(() => {
+        btn.classList.add('copied'); btn.textContent = 'Copied!';
+        setTimeout(() => { btn.classList.remove('copied'); btn.textContent = 'Copy'; }, 2000);
+      });
+    }
   </script>
 </body>
 </html>

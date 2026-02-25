@@ -8,14 +8,899 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
-    :root{--ink:#0f172a;--ink-light:#334155;--ink-muted:#64748b;--surface:#ffffff;--surface-alt:#f8fafc;--surface-warm:#fffbeb;--border:#e2e8f0;--border-light:#f1f5f9;--teal-50:#f0fdfa;--teal-100:#ccfbf1;--teal-200:#99f6e4;--teal-500:#14b8a6;--teal-600:#0d9488;--teal-700:#0f766e;--teal-800:#115e59;--teal-900:#134e4a;--blue-50:#eff6ff;--blue-100:#dbeafe;--blue-500:#3b82f6;--blue-600:#2563eb;--blue-700:#1d4ed8;--amber-50:#fffbeb;--amber-100:#fef3c7;--amber-500:#f59e0b;--amber-600:#d97706;--red-50:#fef2f2;--red-100:#fee2e2;--red-500:#ef4444;--red-600:#dc2626;--purple-50:#faf5ff;--purple-100:#f3e8ff;--purple-500:#a855f7;--purple-600:#9333ea;--font-sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;--font-serif:'Instrument Serif',Georgia,serif;--font-mono:'JetBrains Mono','Fira Code',monospace;--content-max:780px;--sidebar-width:280px;--ease:cubic-bezier(0.4,0,0.2,1)}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}body{font-family:var(--font-sans);font-size:16px;line-height:1.7;color:var(--ink);background:var(--surface)}.progress-bar{position:fixed;top:0;left:0;width:0%;height:3px;background:linear-gradient(90deg,var(--teal-500),var(--blue-500));z-index:1000;transition:width .15s var(--ease)}.top-nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem}.top-nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px}.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--teal-800)}.nav-brand-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--teal-600),var(--teal-800));border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px}.nav-brand-text{font-weight:700;font-size:15px;letter-spacing:-.02em}.nav-chapter-nav{display:flex;align-items:center;gap:8px}.nav-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;color:var(--ink-muted);border:1px solid var(--border);background:#fff;transition:all .2s var(--ease);cursor:pointer}.nav-btn:hover{color:var(--ink);border-color:var(--teal-500);background:var(--teal-50)}.nav-btn.disabled{opacity:.4;pointer-events:none}.nav-current{font-size:13px;font-weight:600;color:var(--ink-light);padding:0 4px}.hero{background:linear-gradient(170deg,var(--teal-50) 0%,var(--surface) 50%,var(--blue-50) 100%);border-bottom:1px solid var(--border);padding:4rem 2rem 3.5rem}.hero-inner{max-width:var(--content-max);margin:0 auto}.hero-chapter-label{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--teal-700);text-transform:uppercase;letter-spacing:.08em;margin-bottom:1rem}.hero-chapter-label span{background:var(--teal-100);padding:3px 10px;border-radius:100px}.hero h1{font-family:var(--font-serif);font-size:clamp(2.4rem,5vw,3.2rem);font-weight:400;line-height:1.15;color:var(--ink);margin-bottom:1rem}.hero-subtitle{font-size:1.15rem;color:var(--ink-light);line-height:1.65;max-width:640px}.hero-meta{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1.5rem}.hero-meta-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-muted)}.hero-meta-item svg{width:16px;height:16px;color:var(--teal-600)}.main-layout{max-width:1200px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:1fr var(--sidebar-width);gap:4rem;align-items:start}.content{padding:3rem 0 6rem;min-width:0}.sidebar{position:sticky;top:76px;padding:2rem 0;max-height:calc(100vh - 76px);overflow-y:auto}.sidebar-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-muted);margin-bottom:1rem;padding-left:14px}.toc-list{list-style:none}.toc-item a{display:block;padding:6px 14px;font-size:13px;color:var(--ink-muted);text-decoration:none;border-left:2px solid transparent;transition:all .2s var(--ease);line-height:1.5}.toc-item a:hover{color:var(--ink);background:var(--surface-alt)}.toc-item a.active{color:var(--teal-700);border-left-color:var(--teal-500);background:var(--teal-50);font-weight:500}.content h2{font-family:var(--font-serif);font-size:1.85rem;font-weight:400;color:var(--ink);margin:3rem 0 1rem;padding-top:1rem;scroll-margin-top:80px}.content h2:first-child{margin-top:0}.content h3{font-size:1.15rem;font-weight:600;color:var(--ink);margin:2rem 0 .75rem;scroll-margin-top:80px}.content p{margin-bottom:1.25rem;color:var(--ink-light)}.content strong{color:var(--ink);font-weight:600}.content a{color:var(--teal-700);text-decoration:underline;text-decoration-color:var(--teal-200);text-underline-offset:3px;transition:text-decoration-color .2s}.content a:hover{text-decoration-color:var(--teal-600)}.content ul,.content ol{margin-bottom:1.25rem;padding-left:1.5rem}.content li{margin-bottom:.5rem;color:var(--ink-light)}.content li::marker{color:var(--teal-500)}.section-divider{border:none;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:3rem 0}.callout{padding:1.25rem 1.5rem;border-radius:12px;margin-bottom:1.5rem;border:1px solid;position:relative}.callout-header{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;margin-bottom:.5rem}.callout-header svg{width:18px;height:18px;flex-shrink:0}.callout p:last-child{margin-bottom:0}.callout.concept{background:var(--blue-50);border-color:var(--blue-100)}.callout.concept .callout-header{color:var(--blue-700)}.callout.important{background:var(--amber-50);border-color:var(--amber-100)}.callout.important .callout-header{color:var(--amber-600)}.callout.danger{background:var(--red-50);border-color:var(--red-100)}.callout.danger .callout-header{color:var(--red-600)}.callout.tip{background:var(--purple-50);border-color:var(--purple-100)}.callout.tip .callout-header{color:var(--purple-600)}.callout.success{background:var(--teal-50);border-color:var(--teal-100)}.callout.success .callout-header{color:var(--teal-700)}.code-block{position:relative;margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}.code-header{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:var(--surface-alt);border-bottom:1px solid var(--border);font-size:12px;color:var(--ink-muted)}.code-lang{font-family:var(--font-mono);font-weight:600;text-transform:uppercase;letter-spacing:.05em}.code-copy{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:#fff;font-size:11px;font-family:var(--font-sans);color:var(--ink-muted);cursor:pointer;transition:all .2s var(--ease)}.code-copy:hover{border-color:var(--teal-500);color:var(--teal-700)}.code-copy.copied{background:var(--teal-50);border-color:var(--teal-500);color:var(--teal-700)}pre{margin:0;padding:1.25rem 1.5rem;overflow-x:auto;background:#1e293b;font-family:var(--font-mono);font-size:13.5px;line-height:1.7;color:#e2e8f0}code{font-family:var(--font-mono);font-size:.88em}p code,li code{padding:2px 7px;background:var(--surface-alt);border:1px solid var(--border);border-radius:5px;color:var(--teal-800);font-size:.85em}.hl-keyword{color:#c084fc}.hl-string{color:#86efac}.hl-comment{color:#64748b;font-style:italic}.hl-function{color:#7dd3fc}.hl-number{color:#fbbf24}.hl-flag{color:#f472b6}details{margin-bottom:1.25rem;border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .2s var(--ease)}details[open]{border-color:var(--teal-200)}details summary{padding:1rem 1.25rem;font-weight:600;font-size:15px;cursor:pointer;background:var(--surface-alt);list-style:none;display:flex;align-items:center;gap:10px;transition:background .2s var(--ease);user-select:none}details summary::-webkit-details-marker{display:none}details summary::before{content:'';width:20px;height:20px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain;flex-shrink:0;transition:transform .2s var(--ease)}details[open] summary::before{transform:rotate(90deg)}details summary:hover{background:var(--teal-50)}.details-body{padding:1.25rem 1.5rem}.details-body p:last-child{margin-bottom:0}.video-card{margin-bottom:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}.video-wrapper{position:relative;padding-bottom:56.25%;height:0;background:#0f172a}.video-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}.video-caption{padding:12px 16px;background:var(--surface-alt);font-size:13px;color:var(--ink-muted);display:flex;align-items:center;gap:6px}.video-caption svg{width:14px;height:14px;color:var(--red-500)}.resource-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1rem;margin-bottom:1.5rem}.resource-card{display:flex;gap:14px;padding:1rem 1.25rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all .2s var(--ease);background:#fff}.resource-card:hover{border-color:var(--teal-300);background:var(--teal-50);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.04)}.resource-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}.resource-icon.docs{background:var(--blue-50);color:var(--blue-600)}.resource-icon.video{background:var(--red-50);color:var(--red-500)}.resource-icon.article{background:var(--amber-50);color:var(--amber-600)}.resource-icon.pdf{background:var(--purple-50);color:var(--purple-600)}.resource-info{min-width:0}.resource-title{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:2px;line-height:1.4}.resource-desc{font-size:12px;color:var(--ink-muted);line-height:1.5}.assignment{border:2px solid var(--teal-200);border-radius:14px;padding:1.5rem 1.75rem;margin-bottom:1.5rem;background:linear-gradient(135deg,var(--teal-50) 0%,#fff 100%)}.assignment-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}.assignment-label{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--teal-700)}.assignment-difficulty{display:inline-flex;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:600}.difficulty-l1{background:var(--teal-100);color:var(--teal-800)}.difficulty-l2{background:var(--amber-100);color:var(--amber-600)}.difficulty-l3{background:var(--red-100);color:var(--red-600)}.assignment h4{font-size:1.05rem;font-weight:700;margin-bottom:.75rem}.assignment p{font-size:14px}.checklist{list-style:none;padding:0}.checklist li{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border-light);font-size:14px}.checklist li:last-child{border-bottom:none}.check-box{width:20px;height:20px;border-radius:6px;border:2px solid var(--border);flex-shrink:0;margin-top:1px;cursor:pointer;transition:all .15s var(--ease);display:flex;align-items:center;justify-content:center}.check-box:hover{border-color:var(--teal-500)}.check-box.checked{background:var(--teal-500);border-color:var(--teal-500)}.check-box.checked::after{content:'';width:10px;height:10px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");background-size:contain}.diagram{margin:1.5rem 0;padding:2rem;background:var(--surface-alt);border:1px solid var(--border);border-radius:14px;overflow-x:auto}.diagram pre{background:transparent;color:var(--ink);padding:0;font-size:13px;line-height:1.6}.diagram-caption{margin-top:1rem;font-size:12px;color:var(--ink-muted);text-align:center;font-style:italic}.chapter-footer{border-top:1px solid var(--border);padding:3rem 2rem;background:var(--surface-alt)}.chapter-footer-inner{max-width:var(--content-max);margin:0 auto}.footer-nav{display:flex;justify-content:space-between;align-items:center;gap:1rem}.footer-nav-link{display:flex;flex-direction:column;gap:4px;padding:1rem 1.5rem;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:all .2s var(--ease);max-width:320px;background:#fff}.footer-nav-link:hover{border-color:var(--teal-300);box-shadow:0 4px 12px rgba(0,0,0,.04)}.footer-nav-label{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--teal-600)}.footer-nav-title{font-size:15px;font-weight:600;color:var(--ink)}.footer-brand{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border);font-size:13px;color:var(--ink-muted)}@media(max-width:960px){.main-layout{grid-template-columns:1fr}.sidebar{display:none}.resource-grid{grid-template-columns:1fr}}@media(max-width:640px){.hero{padding:2.5rem 1.25rem 2rem}.main-layout{padding:0 1.25rem}.content{padding:2rem 0 4rem}pre{padding:1rem;font-size:12.5px}.footer-nav{flex-direction:column}.footer-nav-link{max-width:100%;width:100%}}@media print{.top-nav,.sidebar,.progress-bar{display:none}.main-layout{display:block}.content{padding:0}.hero{background:#fff;border:none}pre{background:#f1f5f9;color:var(--ink);border:1px solid var(--border)}}
+    /* ═══════════════════════════════════════════════
+       ILA DESIGN SYSTEM — v1.0
+       Iksha Learning Academy
+       ═══════════════════════════════════════════════ */
+
+    :root {
+      /* Palette */
+      --ink:        #0f172a;
+      --ink-light:  #334155;
+      --ink-muted:  #64748b;
+      --surface:    #ffffff;
+      --surface-alt:#f8fafc;
+      --surface-warm:#fffbeb;
+      --border:     #e2e8f0;
+      --border-light:#f1f5f9;
+
+      /* Brand */
+      --teal-50:  #f0fdfa;
+      --teal-100: #ccfbf1;
+      --teal-200: #99f6e4;
+      --teal-500: #14b8a6;
+      --teal-600: #0d9488;
+      --teal-700: #0f766e;
+      --teal-800: #115e59;
+      --teal-900: #134e4a;
+
+      --blue-50:  #eff6ff;
+      --blue-100: #dbeafe;
+      --blue-500: #3b82f6;
+      --blue-600: #2563eb;
+      --blue-700: #1d4ed8;
+
+      --amber-50:  #fffbeb;
+      --amber-100: #fef3c7;
+      --amber-500: #f59e0b;
+      --amber-600: #d97706;
+
+      --red-50:   #fef2f2;
+      --red-100:  #fee2e2;
+      --red-500:  #ef4444;
+      --red-600:  #dc2626;
+
+      --purple-50:  #faf5ff;
+      --purple-100: #f3e8ff;
+      --purple-500: #a855f7;
+      --purple-600: #9333ea;
+
+      /* Typography */
+      --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-serif: 'Instrument Serif', Georgia, serif;
+      --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
+
+      /* Spacing */
+      --content-max: 780px;
+      --sidebar-width: 280px;
+
+      /* Transitions */
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--ink);
+      background: var(--surface);
+    }
+
+    /* ── PROGRESS BAR ─────────────────────────── */
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--teal-500), var(--blue-500));
+      z-index: 1000;
+      transition: width 0.15s var(--ease);
+    }
+
+    /* ── TOP NAV ──────────────────────────────── */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+    }
+
+    .top-nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--teal-800);
+    }
+
+    .nav-brand-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--teal-600), var(--teal-800));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .nav-brand-text {
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-chapter-nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      color: var(--ink-muted);
+      border: 1px solid var(--border);
+      background: white;
+      transition: all 0.2s var(--ease);
+      cursor: pointer;
+    }
+
+    .nav-btn:hover {
+      color: var(--ink);
+      border-color: var(--teal-500);
+      background: var(--teal-50);
+    }
+
+    .nav-btn.disabled {
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    .nav-current {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink-light);
+      padding: 0 4px;
+    }
+
+    /* ── HERO ─────────────────────────────────── */
+    .hero {
+      background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 4rem 2rem 3.5rem;
+    }
+
+    .hero-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
+    }
+
+    .hero-chapter-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--teal-700);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 1rem;
+    }
+
+    .hero-chapter-label span {
+      background: var(--teal-100);
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+
+    .hero h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(2.4rem, 5vw, 3.2rem);
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: 1rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: var(--ink-light);
+      line-height: 1.65;
+      max-width: 640px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .hero-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
+    .hero-meta-item svg {
+      width: 16px;
+      height: 16px;
+      color: var(--teal-600);
+    }
+
+    /* ── MAIN LAYOUT ──────────────────────────── */
+    .main-layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr var(--sidebar-width);
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .content {
+      padding: 3rem 0 6rem;
+      min-width: 0;
+    }
+
+    /* ── SIDEBAR TOC ──────────────────────────── */
+    .sidebar {
+      position: sticky;
+      top: 76px;
+      padding: 2rem 0;
+      max-height: calc(100vh - 76px);
+      overflow-y: auto;
+    }
+
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-muted);
+      margin-bottom: 1rem;
+      padding-left: 14px;
+    }
+
+    .toc-list {
+      list-style: none;
+    }
+
+    .toc-item a {
+      display: block;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--ink-muted);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: all 0.2s var(--ease);
+      line-height: 1.5;
+    }
+
+    .toc-item a:hover {
+      color: var(--ink);
+      background: var(--surface-alt);
+    }
+
+    .toc-item a.active {
+      color: var(--teal-700);
+      border-left-color: var(--teal-500);
+      background: var(--teal-50);
+      font-weight: 500;
+    }
+
+    /* ── TYPOGRAPHY ────────────────────────────── */
+    .content h2 {
+      font-family: var(--font-serif);
+      font-size: 1.85rem;
+      font-weight: 400;
+      color: var(--ink);
+      margin: 3rem 0 1rem;
+      padding-top: 1rem;
+      scroll-margin-top: 80px;
+    }
+
+    .content h2:first-child {
+      margin-top: 0;
+    }
+
+    .content h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 2rem 0 0.75rem;
+      scroll-margin-top: 80px;
+    }
+
+    .content p {
+      margin-bottom: 1.25rem;
+      color: var(--ink-light);
+    }
+
+    .content strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .content a {
+      color: var(--teal-700);
+      text-decoration: underline;
+      text-decoration-color: var(--teal-200);
+      text-underline-offset: 3px;
+      transition: text-decoration-color 0.2s;
+    }
+
+    .content a:hover {
+      text-decoration-color: var(--teal-600);
+    }
+
+    .content ul, .content ol {
+      margin-bottom: 1.25rem;
+      padding-left: 1.5rem;
+    }
+
+    .content li {
+      margin-bottom: 0.5rem;
+      color: var(--ink-light);
+    }
+
+    .content li::marker {
+      color: var(--teal-500);
+    }
+
+    /* ── SECTION DIVIDER ──────────────────────── */
+    .section-divider {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 3rem 0;
+    }
+
+    /* ── CALLOUT BOXES ────────────────────────── */
+    .callout {
+      padding: 1.25rem 1.5rem;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+      border: 1px solid;
+      position: relative;
+    }
+
+    .callout-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .callout-header svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    .callout p:last-child { margin-bottom: 0; }
+
+    .callout.concept {
+      background: var(--blue-50);
+      border-color: var(--blue-100);
+    }
+    .callout.concept .callout-header { color: var(--blue-700); }
+
+    .callout.important {
+      background: var(--amber-50);
+      border-color: var(--amber-100);
+    }
+    .callout.important .callout-header { color: var(--amber-600); }
+
+    .callout.danger {
+      background: var(--red-50);
+      border-color: var(--red-100);
+    }
+    .callout.danger .callout-header { color: var(--red-600); }
+
+    .callout.tip {
+      background: var(--purple-50);
+      border-color: var(--purple-100);
+    }
+    .callout.tip .callout-header { color: var(--purple-600); }
+
+    .callout.success {
+      background: var(--teal-50);
+      border-color: var(--teal-100);
+    }
+    .callout.success .callout-header { color: var(--teal-700); }
+
+    /* ── CODE BLOCKS ──────────────────────────── */
+    .code-block {
+      position: relative;
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+      background: var(--surface-alt);
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--ink-muted);
+    }
+
+    .code-lang {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .code-copy {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: white;
+      font-size: 11px;
+      font-family: var(--font-sans);
+      color: var(--ink-muted);
+      cursor: pointer;
+      transition: all 0.2s var(--ease);
+    }
+
+    .code-copy:hover {
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    .code-copy.copied {
+      background: var(--teal-50);
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    pre {
+      margin: 0;
+      padding: 1.25rem 1.5rem;
+      overflow-x: auto;
+      background: #1e293b;
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: #e2e8f0;
+    }
+
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.88em;
+    }
+
+    p code, li code {
+      padding: 2px 7px;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      color: var(--teal-800);
+      font-size: 0.85em;
+    }
+
+    /* Syntax highlights (minimal) */
+    .hl-keyword  { color: #c084fc; }
+    .hl-string   { color: #86efac; }
+    .hl-comment  { color: #64748b; font-style: italic; }
+    .hl-function { color: #7dd3fc; }
+    .hl-number   { color: #fbbf24; }
+    .hl-flag     { color: #f472b6; }
+
+    /* ── COLLAPSIBLE (DETAILS) ────────────────── */
+    details {
+      margin-bottom: 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.2s var(--ease);
+    }
+
+    details[open] {
+      border-color: var(--teal-200);
+    }
+
+    details summary {
+      padding: 1rem 1.25rem;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      background: var(--surface-alt);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.2s var(--ease);
+      user-select: none;
+    }
+
+    details summary::-webkit-details-marker { display: none; }
+
+    details summary::before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+      flex-shrink: 0;
+      transition: transform 0.2s var(--ease);
+    }
+
+    details[open] summary::before {
+      transform: rotate(90deg);
+    }
+
+    details summary:hover {
+      background: var(--teal-50);
+    }
+
+    .details-body {
+      padding: 1.25rem 1.5rem;
+    }
+
+    .details-body p:last-child { margin-bottom: 0; }
+
+    /* ── VIDEO EMBED ──────────────────────────── */
+    .video-card {
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      background: #0f172a;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .video-caption {
+      padding: 12px 16px;
+      background: var(--surface-alt);
+      font-size: 13px;
+      color: var(--ink-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .video-caption svg {
+      width: 14px;
+      height: 14px;
+      color: var(--red-500);
+    }
+
+    /* ── RESOURCE CARDS ───────────────────────── */
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .resource-card {
+      display: flex;
+      gap: 14px;
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      background: white;
+    }
+
+    .resource-card:hover {
+      border-color: var(--teal-300);
+      background: var(--teal-50);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .resource-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 18px;
+    }
+
+    .resource-icon.docs    { background: var(--blue-50);   color: var(--blue-600); }
+    .resource-icon.video   { background: var(--red-50);    color: var(--red-500); }
+    .resource-icon.github  { background: var(--ink);       color: white; }
+    .resource-icon.article { background: var(--amber-50);  color: var(--amber-600); }
+    .resource-icon.pdf     { background: var(--purple-50); color: var(--purple-600); }
+
+    .resource-info {
+      min-width: 0;
+    }
+
+    .resource-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 2px;
+      line-height: 1.4;
+    }
+
+    .resource-desc {
+      font-size: 12px;
+      color: var(--ink-muted);
+      line-height: 1.5;
+    }
+
+    /* ── ASSIGNMENT CARDS ─────────────────────── */
+    .assignment {
+      border: 2px solid var(--teal-200);
+      border-radius: 14px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--teal-50) 0%, white 100%);
+    }
+
+    .assignment-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .assignment-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--teal-700);
+    }
+
+    .assignment-difficulty {
+      display: inline-flex;
+      padding: 4px 10px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .difficulty-l1 { background: var(--teal-100); color: var(--teal-800); }
+    .difficulty-l2 { background: var(--amber-100); color: var(--amber-600); }
+    .difficulty-l3 { background: var(--red-100); color: var(--red-600); }
+
+    .assignment h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .assignment p {
+      font-size: 14px;
+    }
+
+    .checklist {
+      list-style: none;
+      padding: 0;
+    }
+
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-light);
+      font-size: 14px;
+    }
+
+    .checklist li:last-child { border-bottom: none; }
+
+    .check-box {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      border: 2px solid var(--border);
+      flex-shrink: 0;
+      margin-top: 1px;
+      cursor: pointer;
+      transition: all 0.15s var(--ease);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .check-box:hover {
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked {
+      background: var(--teal-500);
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+    }
+
+    /* ── DIAGRAM ──────────────────────────────── */
+    .diagram {
+      margin: 1.5rem 0;
+      padding: 2rem;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow-x: auto;
+    }
+
+    .diagram pre {
+      background: transparent;
+      color: var(--ink);
+      padding: 0;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .diagram-caption {
+      margin-top: 1rem;
+      font-size: 12px;
+      color: var(--ink-muted);
+      text-align: center;
+      font-style: italic;
+    }
+
+    /* ── FOOTER ───────────────────────────────── */
+    .chapter-footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      background: var(--surface-alt);
+    }
+
+    .chapter-footer-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
+    }
+
+    .footer-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .footer-nav-link {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 1rem 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      max-width: 320px;
+      background: white;
+    }
+
+    .footer-nav-link:hover {
+      border-color: var(--teal-300);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .footer-nav-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--teal-600);
+    }
+
+    .footer-nav-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .footer-brand {
+      text-align: center;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
+    /* ── RESPONSIVE ───────────────────────────── */
+    @media (max-width: 960px) {
+      .main-layout {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        display: none;
+      }
+      .resource-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero { padding: 2.5rem 1.25rem 2rem; }
+      .main-layout { padding: 0 1.25rem; }
+      .content { padding: 2rem 0 4rem; }
+      pre { padding: 1rem; font-size: 12.5px; }
+      .footer-nav { flex-direction: column; }
+      .footer-nav-link { max-width: 100%; width: 100%; }
+    }
+
+    /* ── PRINT ────────────────────────────────── */
+    @media print {
+      .top-nav, .sidebar, .progress-bar { display: none; }
+      .main-layout { display: block; }
+      .content { padding: 0; }
+      .hero { background: white; border: none; }
+      pre { background: #f1f5f9; color: var(--ink); border: 1px solid var(--border); }
+    }
   </style>
 </head>
 <body>
+  <!-- Progress Bar -->
   <div class="progress-bar" id="progressBar"></div>
+
+  <!-- Top Navigation -->
   <nav class="top-nav">
     <div class="top-nav-inner">
-      <a class="nav-brand" href="index.html"><div class="nav-brand-icon">ILA</div><span class="nav-brand-text">Iksha Learning Academy</span></a>
+      <a class="nav-brand" href="index.html">
+        <div class="nav-brand-icon">ILA</div>
+        <span class="nav-brand-text">Iksha Learning Academy</span>
+      </a>
       <div class="nav-chapter-nav">
         <a class="nav-btn" href="chapter-03.html">&larr; Previous</a>
         <span class="nav-current">04 / 08</span>
@@ -24,43 +909,82 @@
     </div>
   </nav>
 
+  <!-- Hero -->
   <header class="hero">
     <div class="hero-inner">
-      <div class="hero-chapter-label"><span>Chapter 04</span> &middot; Negotiation Foundations</div>
+      <div class="hero-chapter-label">
+        <span>Chapter 04</span> &middot; Psychological Leverage
+      </div>
       <h1>Anchoring and Framing</h1>
-      <p class="hero-subtitle">First offers shape entire negotiations. Learn the psychology of anchoring bias, how to set and respond to anchors, reframe conversations, leverage value framing, and use loss aversion to your advantage in every startup deal.</p>
+      <p class="hero-subtitle">
+        First offers shape entire negotiations. Learn the psychology of anchoring bias, how to set and respond to anchors strategically, reframe conversations to change perception, leverage value framing, and use loss aversion ethically in every startup deal.
+      </p>
       <div class="hero-meta">
-        <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Estimated: 45&ndash;60 min</div>
-        <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> 4 Key Concepts</div>
-        <div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> 3 Assignments</div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Estimated: 50&ndash;65 min
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          6 Key Concepts
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          3 Assignments
+        </div>
       </div>
     </div>
   </header>
 
+  <!-- Main Content + Sidebar -->
   <div class="main-layout">
     <main class="content">
 
+      <!-- ════════════════════════════════════════
+           SECTION 1: WHY THIS MATTERS
+           ════════════════════════════════════════ -->
       <h2 id="why-this-matters">Why This Matters</h2>
 
-      <p>Research by Daniel Kahneman and Amos Tversky demonstrated that the first number mentioned in a negotiation disproportionately influences the final outcome &mdash; even when that number is arbitrary. This is <strong>anchoring bias</strong>, and it is one of the most powerful and well-documented cognitive biases in negotiation science.</p>
+      <p>
+        In 1974, psychologists Daniel Kahneman and Amos Tversky published a landmark study demonstrating that people's numerical estimates are heavily influenced by an initial reference point &mdash; even when that reference is completely arbitrary. They asked participants to spin a wheel rigged to land on either 10 or 65, then estimate the percentage of African countries in the United Nations. Those who saw 65 estimated 45%. Those who saw 10 estimated 25%. A random number on a wheel shaped "informed" guesses by twenty percentage points. This is the <strong>anchoring effect</strong>, and it operates in every negotiation you will ever have.
+      </p>
 
-      <p>In startup negotiations, anchors are everywhere: the first salary number a candidate mentions, the initial valuation a founder proposes, the sticker price on a SaaS vendor's website. Whether you set the anchor or respond to one determines how the rest of the negotiation unfolds. Understanding framing &mdash; how the same deal can feel like a gain or a loss depending on presentation &mdash; amplifies this power exponentially.</p>
+      <p>
+        Research consistently shows that the party who makes the first offer in a negotiation captures more value, on average, than the party who responds. A meta-analysis of 43 negotiation studies found that <strong>first offers explain approximately 50% of the variance in final settlement prices</strong>. This means the opening number is, statistically, the single most predictive factor in where a deal lands. When a vendor opens with $50,000 for a software contract, that number becomes the gravitational center of the conversation. Even if their floor is $28,000, your counter-offer is pulled toward their anchor.
+      </p>
+
+      <p>
+        Framing is anchoring's close cousin. The way an option is presented &mdash; as a gain versus a loss, as an investment versus a cost, as a limited opportunity versus a standard offer &mdash; dramatically changes how people evaluate identical information. Together, anchoring and framing are arguably the two most powerful psychological tools in a negotiator's arsenal. This chapter teaches you to deploy them ethically and to recognize when they are being used against you.
+      </p>
 
       <div class="callout concept">
-        <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg> Key Insight</div>
-        <p><strong>The first offer in a negotiation typically accounts for 50-85% of the variance in the final outcome.</strong> This means your opening number matters more than every argument, concession, and counter-offer that follows. Learning to set strategic anchors is not optional &mdash; it is the highest-leverage negotiation skill you can develop.</p>
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Key Insight
+        </div>
+        <p>
+          <strong>The first offer in a negotiation typically accounts for 50-85% of the variance in the final outcome.</strong> This means your opening number matters more than every argument, concession, and counter-offer that follows combined. Learning to set strategic anchors is not optional &mdash; it is the highest-leverage negotiation skill you can develop.
+        </p>
       </div>
 
       <hr class="section-divider">
 
+      <!-- ════════════════════════════════════════
+           SECTION 2: KEY CONCEPTS
+           ════════════════════════════════════════ -->
       <h2 id="key-concepts">Key Concepts</h2>
 
       <h3 id="anchoring-bias">1. The Science of Anchoring</h3>
 
-      <p>Anchoring bias occurs when people rely too heavily on the first piece of information they encounter (the "anchor") when making decisions. In negotiations, whoever sets the first concrete number creates a gravitational pull that both parties orbit around for the rest of the conversation.</p>
+      <p>
+        Anchoring bias occurs when people rely too heavily on the first piece of information they encounter (the "anchor") when making decisions. In negotiations, whoever sets the first concrete number creates a gravitational pull that both parties orbit around for the rest of the conversation. Even experts &mdash; real estate agents, judges, doctors &mdash; are affected by anchoring, often without realizing it.
+      </p>
 
       <div class="code-block">
-        <div class="code-header"><span class="code-lang">Framework</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <div class="code-header">
+          <span class="code-lang">Framework</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
 <pre>
 <span class="hl-comment">/* ── Anchoring: How First Offers Shape Outcomes ──────────── */</span>
 
@@ -82,29 +1006,44 @@
 <span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
   When sellers made the first offer, final prices
   were higher than when buyers made the first offer.
-  
+
   The party that anchors first captures more value
   in 85% of negotiations studied.
 
 <span class="hl-keyword">STARTUP APPLICATION:</span>
   When to anchor first:
-  <span class="hl-string">✓</span> You have strong market data to justify your number
-  <span class="hl-string">✓</span> You know the ZOPA range from research  
-  <span class="hl-string">✓</span> You want to control the frame of the negotiation
+  <span class="hl-string">+</span> You have strong market data to justify your number
+  <span class="hl-string">+</span> You know the ZOPA range from research
+  <span class="hl-string">+</span> You want to control the frame of the negotiation
 
   When to let them anchor first:
-  <span class="hl-string">✓</span> You have very limited information about their range
-  <span class="hl-string">✓</span> They might anchor higher (if selling) than you expected
-  <span class="hl-string">✓</span> You want to gather information before committing
+  <span class="hl-string">+</span> You have very limited information about their range
+  <span class="hl-string">+</span> They might anchor higher (if selling) than you expected
+  <span class="hl-string">+</span> You want to gather information before committing
 </pre>
+      </div>
+
+      <div class="callout important">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Common Startup Mistake
+        </div>
+        <p>
+          Many founders walk into investor meetings without a clear valuation anchor. When an investor asks "What valuation are you thinking?" and the founder says "Well, what do you think is fair?" &mdash; they have just handed the most powerful negotiation lever to the other side. Always have your anchor prepared, even if you are uncertain about it.
+        </p>
       </div>
 
       <h3 id="setting-anchors">2. Setting Strategic Anchors</h3>
 
-      <p>A good anchor is aggressive enough to capture value but justifiable enough that it doesn't destroy credibility. The sweet spot is a number that makes the other side pause and recalculate &mdash; not laugh and walk away.</p>
+      <p>
+        A good anchor is aggressive enough to capture value but justifiable enough that it does not destroy credibility. The sweet spot is a number that makes the other side pause and recalculate &mdash; not laugh and walk away. The best anchors are accompanied by a rationale that makes the number feel researched rather than arbitrary.
+      </p>
 
       <div class="code-block">
-        <div class="code-header"><span class="code-lang">Template</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <div class="code-header">
+          <span class="code-lang">Template</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
 <pre>
 <span class="hl-comment">/* ── Strategic Anchor Setting Framework ───────────────────── */</span>
 
@@ -142,12 +1081,27 @@
 </pre>
       </div>
 
+      <div class="callout tip">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          The Precision Effect
+        </div>
+        <p>
+          Research by Malia Mason at Columbia Business School shows that <strong>precise numbers are more powerful anchors than round numbers</strong>. Asking for $87,500 is perceived as more informed and researched than asking for $90,000 &mdash; even though it is a lower number. The precision signals that you have done your homework and arrived at the figure through analysis.
+        </p>
+      </div>
+
       <h3 id="reframing">3. Reframing the Conversation</h3>
 
-      <p>Reframing is the art of presenting the same information in a different context to change how it is perceived. In negotiations, reframing can transform a deadlock into a breakthrough by shifting the other party's mental reference point.</p>
+      <p>
+        Reframing is the art of presenting the same information in a different context to change how it is perceived. In negotiations, reframing can transform a deadlock into a breakthrough by shifting the other party's mental reference point. Kahneman and Tversky's <strong>prospect theory</strong> demonstrated that people are loss-averse: losing $100 feels roughly twice as painful as gaining $100 feels good. This asymmetry is the engine behind effective framing.
+      </p>
 
       <div class="code-block">
-        <div class="code-header"><span class="code-lang">Scenario</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <div class="code-header">
+          <span class="code-lang">Scenario</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
 <pre>
 <span class="hl-comment">/* ── Reframing Techniques for Startups ────────────────────── */</span>
 
@@ -156,14 +1110,14 @@
   Customer: "Your product costs $5,000/month."
   Reframe:  "It's an investment of $165/day that saves your
             team 20 hours per week — that's $8.25/hour saved."
-  <span class="hl-function">→ Shifts from total cost to per-unit value</span>
+  <span class="hl-function">Shifts from total cost to per-unit value</span>
 
 <span class="hl-keyword">TECHNIQUE 2: Loss vs. Gain Reframe</span>
 <span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
   Instead of: "You'll save $50,000 by switching to us."
   Reframe:    "Every month you delay costs your team $4,200
               in lost productivity."
-  <span class="hl-function">→ Loss aversion: people feel losses 2x as much as gains</span>
+  <span class="hl-function">Loss aversion: people feel losses 2x as much as gains</span>
 
 <span class="hl-keyword">TECHNIQUE 3: Percentage vs. Absolute Reframe</span>
 <span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
@@ -171,7 +1125,7 @@
   "Save 35% on your infrastructure costs"
   For large amounts, use absolutes:
   "Save $420,000 per year on engineering time"
-  <span class="hl-function">→ Pick whichever feels bigger</span>
+  <span class="hl-function">Pick whichever number feels bigger</span>
 
 <span class="hl-keyword">TECHNIQUE 4: Comparison Reframe</span>
 <span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
@@ -179,23 +1133,101 @@
   Reframe:    "That's less than half the cost of the
               junior engineer you'd need to build this
               in-house — and it ships next week."
-  <span class="hl-function">→ Compare to a more expensive alternative</span>
+  <span class="hl-function">Compare to a more expensive alternative</span>
+
+<span class="hl-keyword">TECHNIQUE 5: Optionality Reframe</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Present three options where the middle is your target:
+  Option A: Basic    — $20K (stripped down, feels inadequate)
+  Option B: Standard — $45K (your actual target, "just right")
+  Option C: Premium  — $80K (full suite, feels excessive)
+  <span class="hl-function">The "Goldilocks effect" — most people choose the middle</span>
 </pre>
       </div>
 
-      <h3 id="loss-aversion">4. Leveraging Loss Aversion</h3>
+      <h3 id="counter-anchoring">4. Counter-Anchoring: Defending Against Aggressive Openers</h3>
 
-      <p>Daniel Kahneman's research proved that people feel the pain of losing something roughly twice as intensely as the pleasure of gaining the same thing. In negotiations, this means framing proposals in terms of what the other side stands to lose is significantly more persuasive than framing them in terms of what they stand to gain.</p>
+      <p>
+        When someone anchors aggressively against you, the worst thing you can do is make a small counter-offer close to their anchor. This is called <strong>insufficient adjustment</strong> &mdash; you stay too close to their gravitational pull. Instead, you need to counter-anchor: reset the frame entirely with your own reference point.
+      </p>
 
       <div class="code-block">
-        <div class="code-header"><span class="code-lang">Framework</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <div class="code-header">
+          <span class="code-lang">Script</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── Counter-Anchoring Techniques ─────────────────────────── */</span>
+
+<span class="hl-keyword">TECHNIQUE 1: Acknowledge and Redirect</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Them:  "We're looking for $120,000 for this annual contract."
+
+  You:   "I appreciate you sharing that. Let me give you the
+          context we're working with. We've benchmarked four
+          comparable solutions in this space, and the market
+          range is $55,000 to $75,000 for our usage profile.
+          We'd like to start the conversation at $58,000."
+
+  <span class="hl-comment">/* You acknowledged their number without accepting it */</span>
+  <span class="hl-comment">/* You introduced market data as a new anchor */</span>
+  <span class="hl-comment">/* You placed your counter-anchor with justification */</span>
+
+<span class="hl-keyword">TECHNIQUE 2: The "Flinch" + Reset</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Them:  "Our consulting rate is $450/hour."
+
+  You:   [Pause. Let your genuine reaction show.]
+          "That's significantly above what we've seen in the
+          market for this type of engagement. The range we've
+          been quoted by other qualified firms is $180 to $240.
+          Can you help me understand what drives that premium?"
+
+  <span class="hl-comment">/* The visible reaction signals the anchor is unreasonable */</span>
+  <span class="hl-comment">/* The question forces them to justify or retreat */</span>
+
+<span class="hl-keyword">TECHNIQUE 3: Bracket the Midpoint</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  If they anchor at $120K and your target is $70K:
+  Counter-anchor at $20K (so midpoint = ~$70K, your target)
+
+  <span class="hl-function">Formula:</span>
+  Your counter = (2 x Your target) - Their anchor
+  Your counter = (2 x $70K) - $120K = <span class="hl-number">$20K</span>
+
+  <span class="hl-comment">/* This seems extreme, but it mathematically pulls the */</span>
+  <span class="hl-comment">/* midpoint (where many deals split) toward your target */</span>
+</pre>
+      </div>
+
+      <div class="callout danger">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+          The Split-the-Difference Trap
+        </div>
+        <p>
+          When someone says "Let's just split the difference," they are proposing that the midpoint between the two current offers becomes the deal. If their anchor was more aggressive than yours, splitting the difference rewards their aggression. Before agreeing, ask yourself: <strong>Is the midpoint actually fair, or is it just convenient?</strong> Reply with: "I appreciate the spirit of compromise, but let me explain why the midpoint doesn't reflect the market reality here."
+        </p>
+      </div>
+
+      <h3 id="loss-aversion">5. Leveraging Loss Aversion</h3>
+
+      <p>
+        Daniel Kahneman's research proved that people feel the pain of losing something roughly twice as intensely as the pleasure of gaining the same thing. In negotiations, this means framing proposals in terms of what the other side stands to lose is significantly more persuasive than framing in terms of what they stand to gain. Loss aversion is the most powerful framing tool you have.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Framework</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
 <pre>
 <span class="hl-comment">/* ── Loss Aversion Tactics ────────────────────────────────── */</span>
 
 <span class="hl-keyword">THE PSYCHOLOGY:</span>
   Losing $100 feels like losing $200 in emotional terms
   Gaining $100 feels like gaining $100
-  <span class="hl-function">→ Losses loom larger than gains (Kahneman, 1979)</span>
+  <span class="hl-function">Losses loom larger than gains (Kahneman, 1979)</span>
 
 <span class="hl-keyword">APPLICATION IN STARTUP NEGOTIATIONS:</span>
 
@@ -204,21 +1236,28 @@
   Strong: "Three of your portfolio companies compete in
           this space. Without a player like us, your
           thesis has a gap that competitors will exploit."
-  <span class="hl-string">→ Frame: what they LOSE by not investing</span>
+  <span class="hl-string">Frame: what they LOSE by not investing</span>
 
 <span class="hl-function">Enterprise Sale:</span>
   Weak:   "Our platform improves productivity by 25%"
   Strong: "Your competitors are already using tools like
           ours. Every quarter you wait widens the gap in
           engineering velocity."
-  <span class="hl-string">→ Frame: competitive loss from inaction</span>
+  <span class="hl-string">Frame: competitive loss from inaction</span>
 
 <span class="hl-function">Vendor Renewal:</span>
   Weak:   "We'd like a lower rate this year"
   Strong: "We've been evaluating alternatives. Losing a
           customer our size would impact your Q4 numbers.
           Let's find a rate that keeps us together."
-  <span class="hl-string">→ Frame: what they lose if you leave</span>
+  <span class="hl-string">Frame: what they lose if you leave</span>
+
+<span class="hl-function">Hiring:</span>
+  Weak:   "This role is a great opportunity"
+  Strong: "This window closes in two weeks. After that,
+          we're moving to our backup candidate and this
+          specific scope and equity package won't exist."
+  <span class="hl-string">Frame: scarcity + potential loss of the opportunity</span>
 
 <span class="hl-keyword">ETHICAL BOUNDARY:</span>
   Loss aversion is powerful. Use it honestly — to highlight
@@ -227,147 +1266,411 @@
 </pre>
       </div>
 
+      <h3 id="cognitive-biases">6. The Full Bias Landscape for Negotiators</h3>
 
+      <p>
+        Anchoring and framing are just two of many cognitive biases that influence negotiation outcomes. Understanding the full landscape helps you both leverage these tendencies and protect yourself against them. The biases below interact with anchoring and framing in ways that compound their effects.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Reference</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── Negotiation Bias Map ─────────────────────────────────── */</span>
+
+<span class="hl-keyword">CONFIRMATION BIAS</span>
+  We seek information that confirms our existing beliefs.
+  <span class="hl-function">In negotiation:</span> Once anchored, you notice data that
+  supports the anchor and ignore data that contradicts it.
+  <span class="hl-function">Defense:</span> Actively seek disconfirming evidence. Ask
+  "What would change my mind?" before entering negotiation.
+
+<span class="hl-keyword">ENDOWMENT EFFECT</span>
+  We overvalue things we already possess.
+  <span class="hl-function">Use it:</span> Give the other party something early (a trial,
+  a concession) — they will fight harder to keep it.
+  <span class="hl-function">Defense:</span> Evaluate offers as if you don't own anything yet.
+
+<span class="hl-keyword">STATUS QUO BIAS</span>
+  People prefer the current state over change, even when
+  change is objectively better.
+  <span class="hl-function">Use it:</span> Frame your proposal as maintaining the status quo
+  with an improvement, not as a radical change.
+  <span class="hl-function">Defense:</span> Evaluate the cost of inaction, not just action.
+
+<span class="hl-keyword">RECIPROCITY BIAS</span>
+  When someone gives us something, we feel obligated to
+  give something back — even if the original gift was small.
+  <span class="hl-function">Use it:</span> Make a small, visible concession early. The other
+  party will feel pressure to reciprocate with a larger one.
+  <span class="hl-function">Defense:</span> Evaluate each concession independently.
+
+<span class="hl-keyword">SUNK COST FALLACY</span>
+  The more time invested, the harder it is to walk away.
+  <span class="hl-function">Defense:</span> Regularly re-evaluate your reservation price.
+  Time already spent is gone regardless of the outcome.
+
+<span class="hl-keyword">CONTRAST EFFECT</span>
+  We evaluate options relative to what we just saw, not
+  on absolute merit.
+  <span class="hl-function">Use it:</span> Present an extreme option first to make your
+  real proposal seem reasonable by comparison.
+  <span class="hl-function">Defense:</span> Evaluate each option against your own criteria,
+  not against other options presented to you.
+</pre>
+      </div>
+
+      <div class="callout concept">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          The Ethics of Psychological Leverage
+        </div>
+        <p>
+          Using anchoring and framing is not inherently manipulative. Every price tag in a store is an anchor. Every product description is a frame. The ethical boundary is between <strong>legitimate influence</strong> (presenting your position in the most favorable truthful light) and <strong>manipulation</strong> (deliberately creating false impressions). The test: would you be comfortable if the other party understood exactly what you were doing? If yes, it is influence. If no, it may be manipulation.
+        </p>
+      </div>
+
+      <div class="diagram">
+<pre>
+  ┌─────────────────────────────────────────────────────────────────┐
+  │                   THE ANCHORING DECISION TREE                   │
+  └─────────────────────────────────────────────────────────────────┘
+
+  Do you know the market range well?
+       │
+       ├── YES ──→ Do you want to be aggressive?
+       │               │
+       │               ├── YES ──→ ANCHOR FIRST
+       │               │           Set anchor 15-25% beyond target
+       │               │           Justify with data
+       │               │
+       │               └── NO ───→ ANCHOR FIRST (moderately)
+       │                           Set anchor 5-10% beyond target
+       │                           Signal flexibility
+       │
+       └── NO ───→ Do you know more or less than the other party?
+                       │
+                       ├── LESS ──→ LET THEM ANCHOR
+                       │            Listen carefully
+                       │            Ask "How did you arrive at that?"
+                       │            Counter-anchor with market data
+                       │
+                       └── MORE ──→ ANCHOR FIRST
+                                    Your information advantage makes
+                                    your anchor more credible
+</pre>
+        <div class="diagram-caption">Figure 1: Decision framework for determining whether to anchor first or let the other party open</div>
+      </div>
 
       <hr class="section-divider">
 
+      <!-- ════════════════════════════════════════
+           SECTION 3: WATCH & LEARN
+           ════════════════════════════════════════ -->
       <h2 id="watch-learn">Watch &amp; Learn</h2>
 
-      <p>These videos demonstrate the concepts from this chapter applied in real-world negotiation scenarios.</p>
+      <p>
+        These videos demonstrate anchoring and framing concepts applied in real-world negotiation scenarios with practical examples.
+      </p>
 
       <div class="video-card">
         <div class="video-wrapper">
-          <iframe src="https://www.youtube.com/embed/CkHFGEljMO8?rel=0&amp;modestbranding=1" title="Chris Voss &mdash; How to use anchoring and framing in busin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+          <iframe
+            src="https://www.youtube.com/embed/CkHFGEljMO8?rel=0&amp;modestbranding=1"
+            title="Chris Voss on Anchoring and Framing"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
         </div>
-        <div class="video-caption"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg> Chris Voss &mdash; How to use anchoring and framing in business negotiations to control the conversation.</div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Chris Voss &mdash; How to use anchoring and framing in business negotiations to control the conversation.
+        </div>
       </div>
 
       <div class="video-card">
         <div class="video-wrapper">
-          <iframe src="https://www.youtube.com/embed/oJqaJD_6-1c?rel=0&amp;modestbranding=1" title="Harvard Business School &mdash; Behavioral economics in nego" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+          <iframe
+            src="https://www.youtube.com/embed/oJqaJD_6-1c?rel=0&amp;modestbranding=1"
+            title="Behavioral Economics in Negotiation"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
         </div>
-        <div class="video-caption"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg> Harvard Business School &mdash; Behavioral economics in negotiation: anchoring bias, loss aversion, and framing effects.</div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Harvard Business School &mdash; Behavioral economics in negotiation: anchoring bias, loss aversion, and framing effects.
+        </div>
       </div>
 
       <hr class="section-divider">
 
+      <!-- ════════════════════════════════════════
+           SECTION 4: FURTHER READING
+           ════════════════════════════════════════ -->
       <h2 id="further-reading">Further Reading</h2>
+
+      <p>Explore the science and practice behind anchoring, framing, and cognitive biases in negotiation.</p>
 
       <div class="resource-grid">
         <a class="resource-card" href="https://www.amazon.com/Thinking-Fast-Slow-Daniel-Kahneman/dp/0374533555" target="_blank" rel="noopener">
-          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-          <div class="resource-info"><div class="resource-title">Thinking, Fast and Slow &mdash; Kahneman</div><div class="resource-desc">The Nobel laureate's masterwork on cognitive biases including anchoring, loss aversion, and framing.</div></div>
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Thinking, Fast and Slow &mdash; Kahneman</div>
+            <div class="resource-desc">The Nobel laureate's masterwork on cognitive biases including anchoring, loss aversion, and framing.</div>
+          </div>
         </a>
+
         <a class="resource-card" href="https://www.amazon.com/Influence-Psychology-Persuasion-Robert-Cialdini/dp/006124189X" target="_blank" rel="noopener">
-          <div class="resource-icon docs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-          <div class="resource-info"><div class="resource-title">Influence &mdash; Robert Cialdini</div><div class="resource-desc">Six principles of persuasion. Essential reading on how framing and social proof drive negotiation outcomes.</div></div>
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Influence &mdash; Robert Cialdini</div>
+            <div class="resource-desc">Six principles of persuasion. Essential reading on how framing and social proof drive negotiation outcomes.</div>
+          </div>
         </a>
+
         <a class="resource-card" href="https://hbr.org/2015/06/the-right-way-to-make-a-first-offer" target="_blank" rel="noopener">
-          <div class="resource-icon article"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
-          <div class="resource-info"><div class="resource-title">HBR: The Right Way to Make a First Offer</div><div class="resource-desc">When to anchor, how aggressive to be, and how to justify your opening number with data.</div></div>
-        </a>
-        <a class="resource-card" href="https://www.pon.harvard.edu/daily/negotiation-skills-daily/what-is-anchoring-in-negotiation/" target="_blank" rel="noopener">
-          <div class="resource-icon article"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
-          <div class="resource-info"><div class="resource-title">Harvard PON: What Is Anchoring?</div><div class="resource-desc">Deep dive into anchoring bias with examples from real negotiations and strategies for both sides.</div></div>
+          <div class="resource-icon article">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">HBR: The Right Way to Make a First Offer</div>
+            <div class="resource-desc">When to anchor, how aggressive to be, and how to justify your opening number with data.</div>
+          </div>
         </a>
       </div>
 
       <hr class="section-divider">
 
+      <!-- ════════════════════════════════════════
+           SECTION 5: ASSIGNMENTS
+           ════════════════════════════════════════ -->
       <h2 id="assignments">Assignments</h2>
 
-      <p>Complete these in order. Each level builds on the previous one. Practice with a partner whenever possible.</p>
+      <p>
+        Complete these in order. Each level builds on the previous one. Practice with a partner whenever possible &mdash; anchoring and framing only make sense in the context of another human being's reactions.
+      </p>
 
+      <!-- Assignment 1: Level 1 -->
       <div class="assignment">
         <div class="assignment-header">
-          <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 1</div>
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 1
+          </div>
           <span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span>
         </div>
         <h4>Anchor Analysis Exercise</h4>
         <p>Analyze 3 recent negotiations (your own or case studies) and identify the anchors that were set, who set them, and how they influenced the outcome.</p>
+
         <ul class="checklist">
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Identify the first concrete number in each negotiation</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Determine who set the anchor and whether it was strategic</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Calculate how the final outcome related to the initial anchor</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write an alternative anchoring strategy for the weaker party</span></li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Identify the first concrete number in each negotiation</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Determine who set the anchor and whether it was strategic or accidental</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Calculate how the final outcome related to the initial anchor (percentage deviation)</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Write an alternative anchoring strategy for the weaker party in each scenario</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Identify any framing techniques that were used alongside the anchors</span>
+          </li>
         </ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0">
-          <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div>
-          <p>You have a written analysis of 3 negotiations showing anchor impact and alternative strategies.</p>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            You have a written analysis of 3 negotiations showing anchor impact and alternative strategies.
+          </p>
         </div>
       </div>
 
+      <!-- Assignment 2: Level 2 -->
       <div class="assignment">
         <div class="assignment-header">
-          <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 2</div>
-          <span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Applied</span>
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 2
+          </div>
+          <span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span>
         </div>
         <h4>Reframing Practice Session</h4>
         <p>Take 5 common startup negotiation positions and reframe each using at least 2 different techniques from this chapter.</p>
+
         <ul class="checklist">
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Reframe a SaaS pricing objection using cost-per-day and competitor comparison</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Reframe a salary request using total compensation and growth trajectory</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Reframe a vendor discount request using volume commitment and referral value</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Present your reframes to a partner and get feedback on which felt most compelling</span></li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Reframe a SaaS pricing objection using cost-per-day and competitor comparison</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Reframe a salary request using total compensation and growth trajectory</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Reframe a vendor discount request using volume commitment and referral value</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Reframe a project timeline objection using loss-of-opportunity framing</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Present your reframes to a partner and get feedback on which felt most compelling</span>
+          </li>
         </ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0">
-          <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div>
-          <p>You have 10+ reframes (2 per scenario) with partner feedback on effectiveness.</p>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            You have 10+ reframes (2 per scenario) with partner feedback on effectiveness.
+          </p>
         </div>
       </div>
 
+      <!-- Assignment 3: Level 3 -->
       <div class="assignment">
         <div class="assignment-header">
-          <div class="assignment-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Assignment 3</div>
-          <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Strategic</span>
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 3
+          </div>
+          <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Production-Ready</span>
         </div>
         <h4>Anchoring and Framing Negotiation Simulation</h4>
-        <p>Conduct a full negotiation where you must set the opening anchor and use at least 3 framing techniques. Your partner will try to de-anchor you.</p>
+        <p>Conduct a full negotiation where you must set the opening anchor and use at least 3 framing techniques. Your partner will try to de-anchor you using counter-anchoring methods.</p>
+
         <ul class="checklist">
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Design a 20-minute negotiation scenario with specific anchor targets</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Set your opening anchor with justification and external data</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Use loss aversion framing at least once during the negotiation</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Respond to at least one counter-anchor from your partner using reframing</span></li>
-          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Score the outcome: how close did the final deal land to your anchor vs. theirs?</span></li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Design a 20-minute negotiation scenario with specific anchor targets for both sides</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Set your opening anchor with justification and external data</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Use loss aversion framing at least once during the negotiation</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Respond to at least one counter-anchor from your partner using the techniques in this chapter</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Score the outcome: how close did the final deal land to your anchor vs. theirs?</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Swap roles and repeat with a different scenario to practice both sides</span>
+          </li>
         </ul>
-        <div class="callout success" style="margin-top:1rem;margin-bottom:0">
-          <div class="callout-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Done when</div>
-          <p>You have a scored negotiation with analysis of how anchoring and framing influenced the final terms.</p>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            You have a scored negotiation with analysis of how anchoring and framing influenced the final terms, completed from both perspectives.
+          </p>
         </div>
       </div>
 
       <hr class="section-divider">
 
+      <!-- ════════════════════════════════════════
+           SECTION 6: SELF-CHECK
+           ════════════════════════════════════════ -->
       <h2 id="self-check">Self-Check</h2>
 
-      <p>Before moving to the next chapter, honestly answer these questions.</p>
+      <p>Before moving to Chapter 05, honestly answer these questions. If any answer is uncertain, revisit the relevant section.</p>
 
       <details>
-        <summary>Can you explain why the first offer matters so much?</summary>
-        <div class="details-body"><p>The first number creates a psychological reference point that both parties use as a baseline. Even when people know about anchoring bias, research shows they still adjust insufficiently from the anchor. This is why preparation (knowing your anchor before the conversation) is so critical.</p></div>
+        <summary>Can you explain why the first offer matters so much in a negotiation?</summary>
+        <div class="details-body">
+          <p>
+            The first number creates a psychological reference point that both parties use as a baseline. Even when people know about anchoring bias, research shows they still adjust insufficiently from the anchor. First offers explain about 50% of the variance in final prices. This is why preparation &mdash; knowing your anchor before the conversation &mdash; is the highest-leverage negotiation activity.
+          </p>
+        </div>
       </details>
 
       <details>
         <summary>Do you know when to anchor first vs. when to let them go first?</summary>
-        <div class="details-body"><p>Anchor first when you have strong market data and know the ZOPA. Let them go first when you have limited information — their anchor might be more favorable than what you would have proposed, or it reveals their range.</p></div>
+        <div class="details-body">
+          <p>
+            Anchor first when you have strong market data and know the ZOPA. Let them go first when you have limited information &mdash; their anchor might be more favorable than what you would have proposed, or it reveals their range. Use the decision tree from this chapter: market knowledge + information advantage = anchor first; uncertainty + information disadvantage = let them open.
+          </p>
+        </div>
       </details>
 
       <details>
         <summary>Can you reframe a price objection using at least two different techniques?</summary>
-        <div class="details-body"><p>Try it right now: 'Your product is too expensive at $2,000/month.' Can you reframe using cost-per-day, ROI comparison, competitive risk, and loss framing? If you can do 2+ of these fluently, you are ready for Chapter 05.</p></div>
+        <div class="details-body">
+          <p>
+            Try it right now: "Your product is too expensive at $2,000/month." Can you reframe using cost-per-day ("That is $66/day"), ROI comparison ("It saves 20 hours/week worth $4,000"), competitive risk ("Your competitors already use it"), and loss framing ("Every month without it costs you $4,200 in lost productivity")? If you can do 2+ of these fluently, you are ready for the next chapter.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Can you name three counter-anchoring techniques and when to use each?</summary>
+        <div class="details-body">
+          <p>
+            <strong>Acknowledge and Redirect:</strong> Best for preserving rapport in ongoing relationships. <strong>The Flinch + Reset:</strong> Best when the anchor is genuinely unreasonable and you need to signal that. <strong>Bracket the Midpoint:</strong> Best in distributive negotiations where you expect the deal to land near the mathematical midpoint.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Can you identify the ethical line between legitimate influence and manipulation?</summary>
+        <div class="details-body">
+          <p>
+            The transparency test: would you be comfortable if the other party fully understood what you were doing and why? Anchoring with a well-researched number and clear rationale is legitimate influence. Creating false urgency, citing fabricated data, or exploiting personal vulnerabilities is manipulation. Ethical negotiators present the truth in its most favorable light without distorting reality.
+          </p>
+        </div>
       </details>
 
     </main>
 
+    <!-- Sidebar: Table of Contents -->
     <aside class="sidebar">
       <div class="sidebar-title">On this page</div>
       <ul class="toc-list">
         <li class="toc-item"><a href="#why-this-matters">Why This Matters</a></li>
         <li class="toc-item"><a href="#key-concepts">Key Concepts</a></li>
-        <li class="toc-item"><a href="#anchoring-bias" style="padding-left:28px;font-size:12px">The Science of Anchoring</a></li>
-        <li class="toc-item"><a href="#setting-anchors" style="padding-left:28px;font-size:12px">Setting Strategic Anchors</a></li>
-        <li class="toc-item"><a href="#reframing" style="padding-left:28px;font-size:12px">Reframing the Conversation</a></li>
-        <li class="toc-item"><a href="#loss-aversion" style="padding-left:28px;font-size:12px">Leveraging Loss Aversion</a></li>
+        <li class="toc-item"><a href="#anchoring-bias" style="padding-left: 28px; font-size: 12px;">The Science of Anchoring</a></li>
+        <li class="toc-item"><a href="#setting-anchors" style="padding-left: 28px; font-size: 12px;">Setting Strategic Anchors</a></li>
+        <li class="toc-item"><a href="#reframing" style="padding-left: 28px; font-size: 12px;">Reframing the Conversation</a></li>
+        <li class="toc-item"><a href="#counter-anchoring" style="padding-left: 28px; font-size: 12px;">Counter-Anchoring</a></li>
+        <li class="toc-item"><a href="#loss-aversion" style="padding-left: 28px; font-size: 12px;">Leveraging Loss Aversion</a></li>
+        <li class="toc-item"><a href="#cognitive-biases" style="padding-left: 28px; font-size: 12px;">Full Bias Landscape</a></li>
         <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a></li>
         <li class="toc-item"><a href="#further-reading">Further Reading</a></li>
         <li class="toc-item"><a href="#assignments">Assignments</a></li>
@@ -376,18 +1679,79 @@
     </aside>
   </div>
 
+  <!-- Footer Navigation -->
   <footer class="chapter-footer">
     <div class="chapter-footer-inner">
       <nav class="footer-nav">
-        <a class="footer-nav-link" href="chapter-03.html"><span class="footer-nav-label">&larr; Previous Chapter</span><span class="footer-nav-title">03: Active Listening and Communication</span></a>
-        <a class="footer-nav-link" href="chapter-05.html"><span class="footer-nav-label">Next Chapter &rarr;</span><span class="footer-nav-title">05: Salary and Compensation</span></a>
+        <a class="footer-nav-link" href="chapter-03.html">
+          <span class="footer-nav-label">&larr; Previous Chapter</span>
+          <span class="footer-nav-title">03: Active Listening and Communication</span>
+        </a>
+        <a class="footer-nav-link" href="chapter-05.html">
+          <span class="footer-nav-label">Next Chapter &rarr;</span>
+          <span class="footer-nav-title">05: Salary and Compensation</span>
+        </a>
       </nav>
-      <div class="footer-brand">ILA (Iksha Learning Academy) &middot; Negotiation Foundations &middot; Basic Track</div>
+      <div class="footer-brand">
+        ILA (Iksha Learning Academy) &middot; Negotiation Foundations &middot; Basic Track
+      </div>
     </div>
   </footer>
 
+  <!-- ════════════════════════════════════════
+       SCRIPTS
+       ════════════════════════════════════════ -->
   <script>
-    window.addEventListener('scroll',()=>{const s=window.scrollY;const d=document.documentElement.scrollHeight-window.innerHeight;const p=d>0?(s/d)*100:0;document.getElementById('progressBar').style.width=p+'%'});const tocLinks=document.querySelectorAll('.toc-item a');const sections=[];tocLinks.forEach(link=>{const id=link.getAttribute('href').slice(1);const el=document.getElementById(id);if(el)sections.push({id,el,link})});const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{const item=sections.find(s=>s.el===entry.target);if(item&&entry.isIntersecting){tocLinks.forEach(l=>l.classList.remove('active'));item.link.classList.add('active')}})},{rootMargin:'-80px 0px -60% 0px',threshold:0});sections.forEach(s=>observer.observe(s.el));function copyCode(btn){const pre=btn.closest('.code-block').querySelector('pre');navigator.clipboard.writeText(pre.textContent).then(()=>{btn.classList.add('copied');btn.textContent='Copied!';setTimeout(()=>{btn.classList.remove('copied');btn.textContent='Copy'},2000)})}
+    // ── Progress Bar ──
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      document.getElementById('progressBar').style.width = progress + '%';
+    });
+
+    // ── Active TOC ──
+    const tocLinks = document.querySelectorAll('.toc-item a');
+    const sections = [];
+
+    tocLinks.forEach(link => {
+      const id = link.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) sections.push({ id, el, link });
+    });
+
+    const observerOptions = {
+      rootMargin: '-80px 0px -60% 0px',
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const item = sections.find(s => s.el === entry.target);
+        if (item) {
+          if (entry.isIntersecting) {
+            tocLinks.forEach(l => l.classList.remove('active'));
+            item.link.classList.add('active');
+          }
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(s => observer.observe(s.el));
+
+    // ── Copy Code ──
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      const text = pre.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.classList.add('copied');
+        btn.textContent = 'Copied!';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.textContent = 'Copy';
+        }, 2000);
+      });
+    }
   </script>
 </body>
 </html>

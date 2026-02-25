@@ -8,7 +8,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
+    /* ═══════════════════════════════════════════════
+       ILA DESIGN SYSTEM — v1.0
+       Iksha Learning Academy
+       ═══════════════════════════════════════════════ */
+
     :root {
+      /* Palette */
       --ink:        #0f172a;
       --ink-light:  #334155;
       --ink-muted:  #64748b;
@@ -17,6 +23,8 @@
       --surface-warm:#fffbeb;
       --border:     #e2e8f0;
       --border-light:#f1f5f9;
+
+      /* Brand */
       --teal-50:  #f0fdfa;
       --teal-100: #ccfbf1;
       --teal-200: #99f6e4;
@@ -25,36 +33,48 @@
       --teal-700: #0f766e;
       --teal-800: #115e59;
       --teal-900: #134e4a;
+
       --blue-50:  #eff6ff;
       --blue-100: #dbeafe;
       --blue-500: #3b82f6;
       --blue-600: #2563eb;
       --blue-700: #1d4ed8;
+
       --amber-50:  #fffbeb;
       --amber-100: #fef3c7;
       --amber-500: #f59e0b;
       --amber-600: #d97706;
+
       --red-50:   #fef2f2;
       --red-100:  #fee2e2;
       --red-500:  #ef4444;
       --red-600:  #dc2626;
+
       --purple-50:  #faf5ff;
       --purple-100: #f3e8ff;
       --purple-500: #a855f7;
       --purple-600: #9333ea;
-      --green-50:  #f0fdf4;
-      --green-100: #dcfce7;
-      --green-500: #22c55e;
-      --green-600: #16a34a;
+
+      /* Typography */
       --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       --font-serif: 'Instrument Serif', Georgia, serif;
       --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
+
+      /* Spacing */
       --content-max: 780px;
+      --sidebar-width: 280px;
+
+      /* Transitions */
       --ease: cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
 
     body {
       font-family: var(--font-sans);
@@ -64,6 +84,7 @@
       background: var(--surface);
     }
 
+    /* ── PROGRESS BAR ─────────────────────────── */
     .progress-bar {
       position: fixed;
       top: 0;
@@ -75,6 +96,7 @@
       transition: width 0.15s var(--ease);
     }
 
+    /* ── TOP NAV ──────────────────────────────── */
     .top-nav {
       position: sticky;
       top: 0;
@@ -162,6 +184,7 @@
       padding: 0 4px;
     }
 
+    /* ── HERO ─────────────────────────────────── */
     .hero {
       background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%);
       border-bottom: 1px solid var(--border);
@@ -222,33 +245,117 @@
       color: var(--ink-muted);
     }
 
-    .content {
-      max-width: var(--content-max);
-      margin: 0 auto;
-      padding: 3rem 2rem 6rem;
+    .hero-meta-item svg {
+      width: 16px;
+      height: 16px;
+      color: var(--teal-600);
     }
 
+    /* ── MAIN LAYOUT ──────────────────────────── */
+    .main-layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr var(--sidebar-width);
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .content {
+      padding: 3rem 0 6rem;
+      min-width: 0;
+    }
+
+    /* ── SIDEBAR TOC ──────────────────────────── */
+    .sidebar {
+      position: sticky;
+      top: 76px;
+      padding: 2rem 0;
+      max-height: calc(100vh - 76px);
+      overflow-y: auto;
+    }
+
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-muted);
+      margin-bottom: 1rem;
+      padding-left: 14px;
+    }
+
+    .toc-list {
+      list-style: none;
+    }
+
+    .toc-item a {
+      display: block;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--ink-muted);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: all 0.2s var(--ease);
+      line-height: 1.5;
+    }
+
+    .toc-item a:hover {
+      color: var(--ink);
+      background: var(--surface-alt);
+    }
+
+    .toc-item a.active {
+      color: var(--teal-700);
+      border-left-color: var(--teal-500);
+      background: var(--teal-50);
+      font-weight: 500;
+    }
+
+    /* ── TYPOGRAPHY ────────────────────────────── */
     .content h2 {
       font-family: var(--font-serif);
       font-size: 1.85rem;
       font-weight: 400;
       color: var(--ink);
       margin: 3rem 0 1rem;
+      padding-top: 1rem;
       scroll-margin-top: 80px;
     }
 
-    .content h2:first-child { margin-top: 0; }
+    .content h2:first-child {
+      margin-top: 0;
+    }
 
     .content h3 {
       font-size: 1.15rem;
       font-weight: 600;
       color: var(--ink);
       margin: 2rem 0 0.75rem;
+      scroll-margin-top: 80px;
     }
 
     .content p {
       margin-bottom: 1.25rem;
       color: var(--ink-light);
+    }
+
+    .content strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .content a {
+      color: var(--teal-700);
+      text-decoration: underline;
+      text-decoration-color: var(--teal-200);
+      text-underline-offset: 3px;
+      transition: text-decoration-color 0.2s;
+    }
+
+    .content a:hover {
+      text-decoration-color: var(--teal-600);
     }
 
     .content ul, .content ol {
@@ -261,13 +368,25 @@
       color: var(--ink-light);
     }
 
-    .content li::marker { color: var(--teal-500); }
+    .content li::marker {
+      color: var(--teal-500);
+    }
 
+    /* ── SECTION DIVIDER ──────────────────────── */
+    .section-divider {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 3rem 0;
+    }
+
+    /* ── CALLOUT BOXES ────────────────────────── */
     .callout {
       padding: 1.25rem 1.5rem;
       border-radius: 12px;
       margin-bottom: 1.5rem;
       border: 1px solid;
+      position: relative;
     }
 
     .callout-header {
@@ -277,6 +396,12 @@
       font-size: 14px;
       font-weight: 600;
       margin-bottom: 0.5rem;
+    }
+
+    .callout-header svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
     }
 
     .callout p:last-child { margin-bottom: 0; }
@@ -293,6 +418,12 @@
     }
     .callout.important .callout-header { color: var(--amber-600); }
 
+    .callout.danger {
+      background: var(--red-50);
+      border-color: var(--red-100);
+    }
+    .callout.danger .callout-header { color: var(--red-600); }
+
     .callout.tip {
       background: var(--purple-50);
       border-color: var(--purple-100);
@@ -305,93 +436,403 @@
     }
     .callout.success .callout-header { color: var(--teal-700); }
 
-    .section-divider {
-      border: none;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--border), transparent);
-      margin: 3rem 0;
-    }
-
-    .coming-soon-banner {
-      background: var(--amber-50);
-      border: 1px solid var(--amber-100);
+    /* ── CODE BLOCKS ──────────────────────────── */
+    .code-block {
+      position: relative;
+      margin-bottom: 1.5rem;
       border-radius: 12px;
-      padding: 2.5rem;
-      text-align: center;
-      margin: 2rem 0;
+      overflow: hidden;
+      border: 1px solid var(--border);
     }
 
-    .coming-soon-banner h3 {
-      color: var(--amber-600);
-      margin-bottom: 0.5rem;
-    }
-
-    .coming-soon-banner p {
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+      background: var(--surface-alt);
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
       color: var(--ink-muted);
-      margin-bottom: 0;
     }
 
-    .topics-preview {
+    .code-lang {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .code-copy {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: white;
+      font-size: 11px;
+      font-family: var(--font-sans);
+      color: var(--ink-muted);
+      cursor: pointer;
+      transition: all 0.2s var(--ease);
+    }
+
+    .code-copy:hover {
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    .code-copy.copied {
+      background: var(--teal-50);
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    pre {
+      margin: 0;
+      padding: 1.25rem 1.5rem;
+      overflow-x: auto;
+      background: #1e293b;
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: #e2e8f0;
+    }
+
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.88em;
+    }
+
+    p code, li code {
+      padding: 2px 7px;
       background: var(--surface-alt);
       border: 1px solid var(--border);
+      border-radius: 5px;
+      color: var(--teal-800);
+      font-size: 0.85em;
+    }
+
+    /* Syntax highlights */
+    .hl-keyword  { color: #c084fc; }
+    .hl-string   { color: #86efac; }
+    .hl-comment  { color: #64748b; font-style: italic; }
+    .hl-function { color: #7dd3fc; }
+    .hl-number   { color: #fbbf24; }
+    .hl-flag     { color: #f472b6; }
+
+    /* ── COLLAPSIBLE (DETAILS) ────────────────── */
+    details {
+      margin-bottom: 1.25rem;
+      border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 1.5rem 2rem;
-      margin: 1.5rem 0;
+      overflow: hidden;
+      transition: border-color 0.2s var(--ease);
     }
 
-    .topics-preview h3 {
-      font-size: 0.95rem;
-      margin-bottom: 0.75rem;
+    details[open] {
+      border-color: var(--teal-200);
+    }
+
+    details summary {
+      padding: 1rem 1.25rem;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      background: var(--surface-alt);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.2s var(--ease);
+      user-select: none;
+    }
+
+    details summary::-webkit-details-marker { display: none; }
+
+    details summary::before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+      flex-shrink: 0;
+      transition: transform 0.2s var(--ease);
+    }
+
+    details[open] summary::before {
+      transform: rotate(90deg);
+    }
+
+    details summary:hover {
+      background: var(--teal-50);
+    }
+
+    .details-body {
+      padding: 1.25rem 1.5rem;
+    }
+
+    .details-body p:last-child { margin-bottom: 0; }
+
+    /* ── VIDEO EMBED ──────────────────────────── */
+    .video-card {
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      background: #0f172a;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .video-caption {
+      padding: 12px 16px;
+      background: var(--surface-alt);
+      font-size: 13px;
+      color: var(--ink-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .video-caption svg {
+      width: 14px;
+      height: 14px;
+      color: var(--red-500);
+    }
+
+    /* ── RESOURCE CARDS ───────────────────────── */
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .resource-card {
+      display: flex;
+      gap: 14px;
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      background: white;
+    }
+
+    .resource-card:hover {
+      border-color: var(--teal-300);
+      background: var(--teal-50);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .resource-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 18px;
+    }
+
+    .resource-icon.docs    { background: var(--blue-50);   color: var(--blue-600); }
+    .resource-icon.video   { background: var(--red-50);    color: var(--red-500); }
+    .resource-icon.github  { background: var(--ink);       color: white; }
+    .resource-icon.article { background: var(--amber-50);  color: var(--amber-600); }
+    .resource-icon.pdf     { background: var(--purple-50); color: var(--purple-600); }
+
+    .resource-info {
+      min-width: 0;
+    }
+
+    .resource-title {
+      font-size: 14px;
+      font-weight: 600;
       color: var(--ink);
+      margin-bottom: 2px;
+      line-height: 1.4;
     }
 
-    .topics-preview ul {
+    .resource-desc {
+      font-size: 12px;
+      color: var(--ink-muted);
+      line-height: 1.5;
+    }
+
+    /* ── ASSIGNMENT CARDS ─────────────────────── */
+    .assignment {
+      border: 2px solid var(--teal-200);
+      border-radius: 14px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--teal-50) 0%, white 100%);
+    }
+
+    .assignment-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .assignment-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--teal-700);
+    }
+
+    .assignment-difficulty {
+      display: inline-flex;
+      padding: 4px 10px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .difficulty-l1 { background: var(--teal-100); color: var(--teal-800); }
+    .difficulty-l2 { background: var(--amber-100); color: var(--amber-600); }
+    .difficulty-l3 { background: var(--red-100); color: var(--red-600); }
+
+    .assignment h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .assignment p {
+      font-size: 14px;
+    }
+
+    .checklist {
       list-style: none;
       padding: 0;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 0.5rem;
     }
 
-    .topics-preview li {
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-light);
       font-size: 14px;
-      color: var(--ink-light);
-      padding-left: 1.25rem;
-      position: relative;
     }
 
-    .topics-preview li::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 8px;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
+    .checklist li:last-child { border-bottom: none; }
+
+    .check-box {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      border: 2px solid var(--border);
+      flex-shrink: 0;
+      margin-top: 1px;
+      cursor: pointer;
+      transition: all 0.15s var(--ease);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .check-box:hover {
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked {
       background: var(--teal-500);
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+    }
+
+    /* ── ARCHITECTURE DIAGRAM ─────────────────── */
+    .diagram {
+      margin: 1.5rem 0;
+      padding: 2rem;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow-x: auto;
+    }
+
+    .diagram pre {
+      background: transparent;
+      color: var(--ink);
+      padding: 0;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .diagram-caption {
+      margin-top: 1rem;
+      font-size: 12px;
+      color: var(--ink-muted);
+      text-align: center;
+      font-style: italic;
+    }
+
+    /* ── FOOTER ───────────────────────────────── */
+    .chapter-footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      background: var(--surface-alt);
+    }
+
+    .chapter-footer-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
     }
 
     .footer-nav {
-      max-width: var(--content-max);
-      margin: 0 auto;
-      padding: 2rem;
       display: flex;
       justify-content: space-between;
-      border-top: 1px solid var(--border);
+      align-items: center;
+      gap: 1rem;
     }
 
     .footer-nav-link {
       display: flex;
       flex-direction: column;
-      text-decoration: none;
-      padding: 1rem;
+      gap: 4px;
+      padding: 1rem 1.5rem;
+      border: 1px solid var(--border);
       border-radius: 12px;
-      transition: background 0.2s var(--ease);
-      max-width: 45%;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      max-width: 320px;
+      background: white;
     }
 
     .footer-nav-link:hover {
-      background: var(--surface-alt);
+      border-color: var(--teal-300);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
     }
 
     .footer-nav-label {
@@ -399,46 +840,61 @@
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.06em;
-      color: var(--ink-muted);
-      margin-bottom: 4px;
+      color: var(--teal-600);
     }
 
     .footer-nav-title {
       font-size: 15px;
       font-weight: 600;
-      color: var(--teal-700);
+      color: var(--ink);
     }
 
-    .footer-nav-link.next { text-align: right; margin-left: auto; }
-
-    .footer {
+    .footer-brand {
       text-align: center;
-      padding: 2rem;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
       font-size: 13px;
       color: var(--ink-muted);
-      border-top: 1px solid var(--border);
     }
 
-    .footer a {
-      color: var(--teal-700);
-      text-decoration: none;
+    /* ── RESPONSIVE ───────────────────────────── */
+    @media (max-width: 960px) {
+      .main-layout {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        display: none;
+      }
+      .resource-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
-    .footer a:hover { text-decoration: underline; }
+    @media (max-width: 640px) {
+      .hero { padding: 2.5rem 1.25rem 2rem; }
+      .main-layout { padding: 0 1.25rem; }
+      .content { padding: 2rem 0 4rem; }
+      pre { padding: 1rem; font-size: 12.5px; }
+      .footer-nav { flex-direction: column; }
+      .footer-nav-link { max-width: 100%; width: 100%; }
+    }
 
-    @media (max-width: 768px) {
-      .hero { padding: 3rem 1.5rem 2.5rem; }
-      .content { padding: 2rem 1.5rem 4rem; }
-      .hero h1 { font-size: 2rem; }
-      .footer-nav { flex-direction: column; gap: 1rem; }
-      .footer-nav-link { max-width: 100%; }
-      .footer-nav-link.next { text-align: left; }
+    /* ── PRINT ────────────────────────────────── */
+    @media print {
+      .top-nav, .sidebar, .progress-bar { display: none; }
+      .main-layout { display: block; }
+      .content { padding: 0; }
+      .hero { background: white; border: none; }
+      pre { background: #f1f5f9; color: var(--ink); border: 1px solid var(--border); }
     }
   </style>
 </head>
 <body>
+  <!-- Progress Bar -->
   <div class="progress-bar" id="progressBar"></div>
 
+  <!-- Top Navigation -->
   <nav class="top-nav">
     <div class="top-nav-inner">
       <a class="nav-brand" href="index.html">
@@ -453,70 +909,644 @@
     </div>
   </nav>
 
+  <!-- Hero -->
   <header class="hero">
     <div class="hero-inner">
       <div class="hero-chapter-label">
-        <span>Chapter 04</span> 
+        <span>Chapter 04</span> &middot; Phase 2: Difficult Situations
       </div>
       <h1>Difficult Conversations</h1>
-      <p class="hero-subtitle">Underperformance, disagreements, saying no to clients, pushback techniques, emotional intelligence</p>
+      <p class="hero-subtitle">
+        Navigate the challenging conversations that define professional relationships: scope negotiations, contract disputes, performance concerns, and expectation resets. Build the skills to address conflict directly while preserving relationships.
+      </p>
       <div class="hero-meta">
-        <div class="hero-meta-item">3 Assignments</div>
-        <div class="hero-meta-item">~45 min read</div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Estimated: 3&ndash;4 hours
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          3 Advancement Levels
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          3 Assignments
+        </div>
       </div>
     </div>
   </header>
 
-  <main class="content">
-    <h2>Overview</h2>
-    <p>This chapter covers <strong>difficult conversations</strong> as part of the Advanced Client Communication curriculum. You will build practical skills through guided explanations, code examples, and hands-on assignments.</p>
+  <!-- Main Content + Sidebar -->
+  <div class="main-layout">
+    <main class="content">
 
-    <div class="topics-preview">
-      <h3>Topics Covered</h3>
+      <h2 id="why-this-matters">Why This Matters</h2>
+
+      <p>
+        Difficult conversations are the moments that define professional relationships. Anyone can
+        communicate well when things are going smoothly. The professional who can navigate conflict,
+        negotiate scope, and reset expectations while preserving the relationship is the one clients
+        trust for the long term.
+      </p>
+
+      <p>
+        Avoiding difficult conversations is the most expensive communication failure. A scope dispute
+        that is avoided in week 2 becomes a project crisis in week 12. A performance concern that
+        is not addressed becomes a client complaint. An expectation gap that is not reset becomes
+        a failed project. The short-term discomfort of a difficult conversation prevents the
+        long-term damage of avoidance.
+      </p>
+
+      <div class="callout concept">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Key Insight
+        </div>
+        <p>
+          The difficulty in difficult conversations is almost never about the content. It is about
+          the emotions: fear of damaging the relationship, anxiety about conflict, or worry about
+          the outcome. When you separate the emotional challenge from the practical challenge,
+          the conversation becomes manageable.
+        </p>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="key-concepts">Key Concepts</h2>
+
+      <h3 id="conversation-prep">1. Conversation Preparation Framework</h3>
+
+      <p>
+        The outcome of a difficult conversation is largely determined before the conversation
+        begins. Preparation is not optional &mdash; it is the most important variable.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">framework</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── DIFFICULT CONVERSATION PREP FRAMEWORK ──── */</span>
+
+<span class="hl-keyword">1. CLARIFY YOUR PURPOSE</span>
+What outcome do I need from this conversation?
+What am I willing to compromise on?
+What am I not willing to compromise on?
+
+<span class="hl-keyword">2. UNDERSTAND THEIR PERSPECTIVE</span>
+What outcome do they need?
+What pressures are they under?
+What is their best alternative if we cannot agree?
+
+<span class="hl-keyword">3. GATHER YOUR EVIDENCE</span>
+What facts (not opinions) support my position?
+What documentation can I reference?
+What data makes the case objectively?
+
+<span class="hl-keyword">4. PLAN YOUR OPENING</span>
+Write the first 2-3 sentences you will say.
+These set the tone for everything that follows.
+Make them factual, calm, and collaborative.
+
+<span class="hl-keyword">5. ANTICIPATE REACTIONS</span>
+What is the best-case response?
+What is the worst-case response?
+How will I handle each?
+
+<span class="hl-keyword">6. DEFINE YOUR WALK-AWAY</span>
+At what point does the conversation need to be
+escalated or paused? Know this before you start.
+</pre>
+      </div>
+
+      <h3 id="negotiation-techniques">2. Negotiation Techniques for Client Settings</h3>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">framework</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── CLIENT NEGOTIATION TECHNIQUES ─────────────── */</span>
+
+<span class="hl-keyword">TECHNIQUE 1: Interest-Based Negotiation</span>
+Focus on interests (why they want something) rather
+than positions (what they want).
+Position: "We need this feature by Friday."
+Interest: "Our VP is presenting to the board Monday
+and needs to show progress."
+Solution: "We can have a working prototype with
+sample data by Friday, and the full feature by
+next Wednesday."
+
+<span class="hl-keyword">TECHNIQUE 2: The Calibrated Question</span>
+Use "how" and "what" questions to guide the
+conversation without saying "no."
+Instead of: "We cannot do that in 2 weeks."
+Try: "How would you like us to handle the testing
+phase if we accelerate the development timeline?"
+This puts the trade-off decision in their hands.
+
+<span class="hl-keyword">TECHNIQUE 3: The Label</span>
+Name the emotion you see to defuse it.
+"It sounds like this timeline is creating
+significant pressure for your team."
+Labeling the emotion shows empathy without
+agreeing or conceding.
+
+<span class="hl-keyword">TECHNIQUE 4: The Summary</span>
+Summarize their position so completely that they
+say "That is right." When someone feels truly
+understood, their defensive posture drops and
+they become open to collaboration.
+</pre>
+      </div>
+
+      <h3 id="scope-negotiations">3. Scope Negotiation Conversations</h3>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">template</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── SCOPE NEGOTIATION SCRIPT ──────────────────── */</span>
+
+<span class="hl-keyword">Opening (collaborative framing):</span>
+"I want to make sure we deliver the highest value
+possible within our timeline and budget. I have
+identified a scope challenge that I would like to
+work through with you."
+
+<span class="hl-keyword">Problem Statement (facts only):</span>
+"The current scope includes [X features]. Our
+estimate for all [X] features is [Y weeks / $Z].
+We are currently at [% of budget / timeline used]
+with [% of scope delivered]."
+
+<span class="hl-keyword">Options (always provide 3):</span>
+"Option A: Deliver all features, extend timeline
+by [X weeks] and budget by [$Y].
+Option B: Deliver [priority features] by original
+deadline, move [remaining] to phase 2.
+Option C: Add [N] developers, maintain timeline
+and scope, budget increases by [$Z]."
+
+<span class="hl-keyword">Recommendation (with rationale):</span>
+"I recommend Option B because it delivers the
+features that affect 80% of your users on time,
+and gives us proper time for the remaining 20%
+in phase 2."
+
+<span class="hl-keyword">Decision Request:</span>
+"Which option aligns best with your priorities?
+Or is there a fourth option I have not considered?"
+</pre>
+      </div>
+
+      <h3 id="expectation-resets">4. Resetting Client Expectations</h3>
+
+      <p>
+        Sometimes the client's expectations and reality have diverged so far that a formal reset
+        is needed. This is a high-stakes conversation that requires careful preparation.
+      </p>
+
+      <div class="diagram">
+<pre>
+  +---------------------------------------------------------------+
+  |          EXPECTATION RESET PROCESS                              |
+  |                                                                 |
+  |   +-----------+    +-----------+    +-----------+               |
+  |   | DOCUMENT  |---&gt;|  ALIGN    |---&gt;|  COMMIT   |               |
+  |   |           |    |  1-on-1   |    |  in       |               |
+  |   | - What was|    |  with     |    |  writing  |               |
+  |   |   promised|    |  sponsor  |    |           |               |
+  |   | - What is |    |           |    | New scope |               |
+  |   |   possible|    | - Show    |    | New dates |               |
+  |   | - The gap |    |   the gap |    | New budget|               |
+  |   |           |    | - Present |    | Sign-off  |               |
+  |   |           |    |   options |    |           |               |
+  |   +-----------+    +-----------+    +-----------+               |
+  |                                                                 |
+  |   KEY RULES:                                                    |
+  |   1. Never reset expectations in a group meeting first          |
+  |   2. Always start with your project sponsor                     |
+  |   3. Document the new expectations in writing                   |
+  |   4. Get explicit sign-off before communicating broadly         |
+  +---------------------------------------------------------------+
+</pre>
+        <div class="diagram-caption">Figure 1: Expectation reset process &mdash; document, align privately, commit in writing</div>
+      </div>
+
+      <h3 id="de-escalation">5. De-Escalation Tactics</h3>
+
+      <p>
+        When a conversation escalates emotionally, these techniques bring it back to productive
+        territory.
+      </p>
+
       <ul>
-            <li>Underperformance</li>
-            <li>disagreements</li>
-            <li>saying no to clients</li>
-            <li>pushback techniques</li>
-            <li>emotional intelligence</li>
+        <li><strong>Lower your voice</strong> &mdash; When someone raises their voice, lowering yours forces them to quiet down to hear you. This is a physiological response, not a conscious choice.</li>
+        <li><strong>Slow the pace</strong> &mdash; Speak more slowly and deliberately. Speed signals urgency and anxiety. Deliberation signals control and thoughtfulness.</li>
+        <li><strong>Acknowledge the emotion</strong> &mdash; "I can see this is really frustrating for you." Acknowledging is not agreeing &mdash; it is showing you hear them.</li>
+        <li><strong>Suggest a pause</strong> &mdash; "I want to give this the attention it deserves. Can we take a 10-minute break and come back with fresh eyes?"</li>
+        <li><strong>Move to concrete facts</strong> &mdash; "Let me pull up the actual data so we are working from the same information." Facts cool emotions because they move the conversation from subjective to objective territory.</li>
       </ul>
-    </div>
 
-    <hr class="section-divider">
+      <div class="callout danger">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+          Never Do This
+        </div>
+        <p>
+          Never say "Calm down" or "You are overreacting." These phrases invalidate the other
+          person's emotional experience and escalate rather than de-escalate. Instead, validate
+          the emotion while steering toward solutions: "I understand why you feel that way. Let
+          us figure out the best path forward."
+        </p>
+      </div>
 
-    <div class="coming-soon-banner">
-      <h3>Content In Development</h3>
-      <p>Full chapter content with detailed explanations, code examples, video walkthroughs, and assignments is being developed. Check back soon.</p>
-    </div>
+      <h3 id="post-conversation">6. Post-Conversation Follow-Up</h3>
 
-    <div class="callout tip">
-      <div class="callout-header">What You Will Learn</div>
-      <p>By the end of this chapter, you will understand underperformance, disagreements, saying no to clients, pushback techniques, emotional intelligence and be able to apply these concepts in real-world scenarios.</p>
-    </div>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">template</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── POST-DIFFICULT-CONVERSATION FOLLOW-UP ─────── */</span>
 
-  </main>
+<span class="hl-keyword">Subject:</span> Follow-Up &mdash; [Topic] Discussion
 
-  <nav class="footer-nav">
-        <a class="footer-nav-link prev" href="chapter-03.html">
-          <span class="footer-nav-label">&larr; Previous</span>
-          <span class="footer-nav-title">Chapter 03: Delivering Bad News</span>
+Hi [Client Name],
+
+Thank you for the candid conversation today. I
+appreciate your directness and willingness to
+work through this together.
+
+<span class="hl-function">WHAT WE AGREED:</span>
+1. [Agreement point] &mdash; Owner: [Name] &mdash; By: [Date]
+2. [Agreement point] &mdash; Owner: [Name] &mdash; By: [Date]
+3. [Agreement point] &mdash; Owner: [Name] &mdash; By: [Date]
+
+<span class="hl-function">WHAT REMAINS OPEN:</span>
+- [Item] &mdash; We will revisit on [date]
+- [Item] &mdash; Pending input from [person]
+
+<span class="hl-function">NEXT CHECK-IN:</span>
+[Day, Date] at [Time] to review progress on
+the above items.
+
+I am committed to making this work and am
+available if anything comes up before our
+next check-in.
+
+Best,
+[Your name]
+</pre>
+      </div>
+
+      <details>
+        <summary>What if the difficult conversation does not reach resolution?</summary>
+        <div class="details-body">
+          <p>
+            Not every difficult conversation resolves in one session. If you reach an impasse, it is
+            better to pause than to force a poor agreement. Say: "I want to give us both time to
+            think about this. Can we reconvene on [date] with fresh perspectives?" Use the interim
+            to gather more data, consult with your team, or involve a mediator.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>When should you escalate instead of negotiating?</summary>
+        <div class="details-body">
+          <p>
+            Escalate when: the other party is not negotiating in good faith, when you lack the
+            authority to make the necessary concessions, when the conversation involves contractual
+            or legal issues, or when the client's behavior is unprofessional. Escalation is not
+            failure &mdash; it is bringing the right level of authority to the conversation.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>How do you prepare emotionally for a difficult conversation?</summary>
+        <div class="details-body">
+          <p>
+            Before the conversation: write down your emotional triggers and plan responses for each.
+            Practice deep breathing. Remind yourself that the goal is a better outcome, not winning.
+            Visualize a successful conclusion. After the conversation: debrief with a trusted
+            colleague, acknowledge your emotions, and document what you learned for next time.
+          </p>
+        </div>
+      </details>
+
+      <hr class="section-divider">
+
+      <h2 id="watch-learn">Watch &amp; Learn</h2>
+
+      <p>These videos cover negotiation, conflict resolution, and difficult conversations.</p>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/Unzc731iCUY?rel=0&amp;modestbranding=1"
+            title="Difficult Conversations &mdash; Navigating conflict while preserving professional relationships"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Difficult Conversations &mdash; Navigating conflict while preserving professional relationships
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/eIho2S0ZahI?rel=0&amp;modestbranding=1"
+            title="Client Negotiation &mdash; Interest-based techniques for scope, timeline, and budget discussions"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Client Negotiation &mdash; Interest-based techniques for scope, timeline, and budget discussions
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="further-reading">Further Reading</h2>
+
+      <p>Resources on negotiation, conflict resolution, and difficult conversations.</p>
+
+      <div class="resource-grid">
+        <a class="resource-card" href="https://www.amazon.com/Difficult-Conversations-Discuss-What-Matters/dp/0143118447" target="_blank" rel="noopener">
+          <div class="resource-icon article">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Difficult Conversations &mdash; Stone, Patton, Heen</div>
+            <div class="resource-desc">The Harvard Negotiation Project's guide to the conversations we dread most.</div>
+          </div>
         </a>
-        <a class="footer-nav-link next" href="chapter-05.html">
-          <span class="footer-nav-label">Next &rarr;</span>
-          <span class="footer-nav-title">Chapter 05: Executive Presentations</span>
+        <a class="resource-card" href="https://www.amazon.com/Never-Split-Difference-Negotiating-Depended/dp/0062407805" target="_blank" rel="noopener">
+          <div class="resource-icon article">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Never Split the Difference &mdash; Chris Voss</div>
+            <div class="resource-desc">FBI-tested negotiation techniques adapted for business settings.</div>
+          </div>
         </a>
-  </nav>
+        <a class="resource-card" href="https://www.amazon.com/Getting-Yes-Negotiating-Agreement-Without/dp/0143118757" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Getting to Yes &mdash; Fisher &amp; Ury</div>
+            <div class="resource-desc">The classic text on principled negotiation &mdash; separate people from problems.</div>
+          </div>
+        </a>
+        <a class="resource-card" href="https://hbr.org/2022/01/how-to-have-difficult-conversations-when-you-dont-like-conflict" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">HBR: How to Have Difficult Conversations</div>
+            <div class="resource-desc">Practical techniques for people who naturally avoid conflict.</div>
+          </div>
+        </a>
+      </div>
 
-  <footer class="footer">
-    ILA (Iksha Learning Academy) &middot; Advanced Client Communication &middot; <a href="index.html">All Chapters</a>
+      <hr class="section-divider">
+
+      <h2 id="assignments">Assignments</h2>
+
+      <p>Complete these using real or realistically simulated scenarios.</p>
+
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 1
+          </div>
+          <span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span>
+        </div>
+        <h4>Prepare for a Difficult Conversation</h4>
+        <p>Use the preparation framework to plan a difficult conversation you need to have.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Identify a real difficult conversation you have been avoiding</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Complete the 6-step preparation framework from this chapter</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write your opening statement (first 2-3 sentences)</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Anticipate 3 possible responses and plan your reaction to each</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Practice the opening with a trusted colleague and get feedback</span></li>
+        </ul>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>Your preparation framework is complete, and a colleague confirms your opening statement is factual, calm, and collaborative.</p>
+        </div>
+      </div>
+
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 2
+          </div>
+          <span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span>
+        </div>
+        <h4>Conduct a Scope Negotiation</h4>
+        <p>Navigate a scope negotiation conversation using the techniques from this chapter.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Identify a real or simulated scope challenge that needs negotiation</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Prepare 3 options with clear trade-offs for each</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Conduct the negotiation using interest-based techniques</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Use at least one calibrated question and one label during the conversation</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Document the agreement and send follow-up within 2 hours</span></li>
+        </ul>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>The negotiation reaches a documented agreement that both parties consider fair, and the relationship is preserved or strengthened.</p>
+        </div>
+      </div>
+
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 3
+          </div>
+          <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Production-Ready</span>
+        </div>
+        <h4>Build a Difficult Conversation Playbook for Your Team</h4>
+        <p>Create a team resource for handling the most common difficult conversations in your domain.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Identify the 5 most common difficult conversation scenarios your team faces</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create preparation frameworks and script templates for each</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Conduct role-play training sessions with your team for each scenario</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Document de-escalation techniques specific to your client context</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create a post-conversation review checklist for continuous improvement</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Run the training program and measure team confidence in difficult conversations</span></li>
+        </ul>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>Team members report increased confidence in handling difficult conversations, and at least one team member successfully uses the playbook in a real situation.</p>
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="self-check">Self-Check</h2>
+
+      <p>Before moving to Chapter 05, assess your difficult conversation skills.</p>
+
+      <details>
+        <summary>Are you avoiding any difficult conversations right now?</summary>
+        <div class="details-body">
+          <p>
+            Most professionals have at least one conversation they are putting off. Identify it.
+            The longer you wait, the harder it gets and the worse the outcome. Use the preparation
+            framework from this chapter and schedule the conversation this week.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Do you negotiate based on interests or positions?</summary>
+        <div class="details-body">
+          <p>
+            Record your next negotiation conversation (with permission) and listen back. Are you
+            saying "we cannot do X" (position) or "help me understand what outcome you need"
+            (interest)? The shift from positional to interest-based negotiation dramatically
+            improves outcomes.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Can you de-escalate a tense conversation?</summary>
+        <div class="details-body">
+          <p>
+            Practice with a colleague who intentionally escalates during a mock conversation.
+            Your goal is to bring the conversation back to productive territory within 60 seconds
+            using the techniques from this chapter. If you cannot do it in practice, you will
+            not be able to do it under pressure.
+          </p>
+        </div>
+      </details>
+
+    </main>
+
+    <!-- Sidebar: Table of Contents -->
+    <aside class="sidebar">
+      <div class="sidebar-title">On this page</div>
+      <ul class="toc-list">
+        <li class="toc-item"><a href="#why-this-matters">Why This Matters</a></li>
+        <li class="toc-item"><a href="#key-concepts">Key Concepts</a></li>
+        <li class="toc-item"><a href="#conversation-prep" style="padding-left: 28px; font-size: 12px;">Conversation Preparation</a></li>
+        <li class="toc-item"><a href="#negotiation-techniques" style="padding-left: 28px; font-size: 12px;">Negotiation Techniques</a></li>
+        <li class="toc-item"><a href="#scope-negotiations" style="padding-left: 28px; font-size: 12px;">Scope Negotiations</a></li>
+        <li class="toc-item"><a href="#expectation-resets" style="padding-left: 28px; font-size: 12px;">Expectation Resets</a></li>
+        <li class="toc-item"><a href="#de-escalation" style="padding-left: 28px; font-size: 12px;">De-Escalation Tactics</a></li>
+        <li class="toc-item"><a href="#post-conversation" style="padding-left: 28px; font-size: 12px;">Post-Conversation Follow-Up</a></li>
+        <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a></li>
+        <li class="toc-item"><a href="#further-reading">Further Reading</a></li>
+        <li class="toc-item"><a href="#assignments">Assignments</a></li>
+        <li class="toc-item"><a href="#self-check">Self-Check</a></li>
+      </ul>
+    </aside>
+  </div>
+
+  <!-- Footer Navigation -->
+  <footer class="chapter-footer">
+    <div class="chapter-footer-inner">
+      <nav class="footer-nav">
+        <a class="footer-nav-link" href="chapter-03.html">
+          <span class="footer-nav-label">&larr; Previous Chapter</span>
+          <span class="footer-nav-title">03: Delivering Bad News</span>
+        </a>
+        <a class="footer-nav-link" href="chapter-05.html">
+          <span class="footer-nav-label">Next Chapter &rarr;</span>
+          <span class="footer-nav-title">05: Executive Presentations</span>
+        </a>
+      </nav>
+      <div class="footer-brand">
+        ILA (Iksha Learning Academy) &middot; Client Communication Professional Certification &middot; Level 2
+      </div>
+    </div>
   </footer>
 
+  <!-- Scripts -->
   <script>
+    // ── Progress Bar ──
     window.addEventListener('scroll', () => {
-      const h = document.documentElement;
-      const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
-      document.getElementById('progressBar').style.width = Math.min(pct, 100) + '%';
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      document.getElementById('progressBar').style.width = progress + '%';
     });
+
+    // ── Active TOC ──
+    const tocLinks = document.querySelectorAll('.toc-item a');
+    const sections = [];
+
+    tocLinks.forEach(link => {
+      const id = link.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) sections.push({ id, el, link });
+    });
+
+    const observerOptions = {
+      rootMargin: '-80px 0px -60% 0px',
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const item = sections.find(s => s.el === entry.target);
+        if (item) {
+          if (entry.isIntersecting) {
+            tocLinks.forEach(l => l.classList.remove('active'));
+            item.link.classList.add('active');
+          }
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(s => observer.observe(s.el));
+
+    // ── Copy Code ──
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      const text = pre.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.classList.add('copied');
+        btn.textContent = 'Copied!';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.textContent = 'Copy';
+        }, 2000);
+      });
+    }
   </script>
 </body>
 </html>

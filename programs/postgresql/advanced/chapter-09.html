@@ -8,7 +8,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
+    /* ═══════════════════════════════════════════════
+       ILA DESIGN SYSTEM — v1.0
+       Iksha Learning Academy
+       ═══════════════════════════════════════════════ */
+
     :root {
+      /* Palette */
       --ink:        #0f172a;
       --ink-light:  #334155;
       --ink-muted:  #64748b;
@@ -17,6 +23,8 @@
       --surface-warm:#fffbeb;
       --border:     #e2e8f0;
       --border-light:#f1f5f9;
+
+      /* Brand */
       --teal-50:  #f0fdfa;
       --teal-100: #ccfbf1;
       --teal-200: #99f6e4;
@@ -25,36 +33,48 @@
       --teal-700: #0f766e;
       --teal-800: #115e59;
       --teal-900: #134e4a;
+
       --blue-50:  #eff6ff;
       --blue-100: #dbeafe;
       --blue-500: #3b82f6;
       --blue-600: #2563eb;
       --blue-700: #1d4ed8;
+
       --amber-50:  #fffbeb;
       --amber-100: #fef3c7;
       --amber-500: #f59e0b;
       --amber-600: #d97706;
+
       --red-50:   #fef2f2;
       --red-100:  #fee2e2;
       --red-500:  #ef4444;
       --red-600:  #dc2626;
+
       --purple-50:  #faf5ff;
       --purple-100: #f3e8ff;
       --purple-500: #a855f7;
       --purple-600: #9333ea;
-      --green-50:  #f0fdf4;
-      --green-100: #dcfce7;
-      --green-500: #22c55e;
-      --green-600: #16a34a;
+
+      /* Typography */
       --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       --font-serif: 'Instrument Serif', Georgia, serif;
       --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
+
+      /* Spacing */
       --content-max: 780px;
+      --sidebar-width: 280px;
+
+      /* Transitions */
       --ease: cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
 
     body {
       font-family: var(--font-sans);
@@ -64,6 +84,7 @@
       background: var(--surface);
     }
 
+    /* ── PROGRESS BAR ─────────────────────────── */
     .progress-bar {
       position: fixed;
       top: 0;
@@ -75,6 +96,7 @@
       transition: width 0.15s var(--ease);
     }
 
+    /* ── TOP NAV ──────────────────────────────── */
     .top-nav {
       position: sticky;
       top: 0;
@@ -162,6 +184,7 @@
       padding: 0 4px;
     }
 
+    /* ── HERO ─────────────────────────────────── */
     .hero {
       background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%);
       border-bottom: 1px solid var(--border);
@@ -222,33 +245,117 @@
       color: var(--ink-muted);
     }
 
-    .content {
-      max-width: var(--content-max);
-      margin: 0 auto;
-      padding: 3rem 2rem 6rem;
+    .hero-meta-item svg {
+      width: 16px;
+      height: 16px;
+      color: var(--teal-600);
     }
 
+    /* ── MAIN LAYOUT ──────────────────────────── */
+    .main-layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr var(--sidebar-width);
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .content {
+      padding: 3rem 0 6rem;
+      min-width: 0;
+    }
+
+    /* ── SIDEBAR TOC ──────────────────────────── */
+    .sidebar {
+      position: sticky;
+      top: 76px;
+      padding: 2rem 0;
+      max-height: calc(100vh - 76px);
+      overflow-y: auto;
+    }
+
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-muted);
+      margin-bottom: 1rem;
+      padding-left: 14px;
+    }
+
+    .toc-list {
+      list-style: none;
+    }
+
+    .toc-item a {
+      display: block;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--ink-muted);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: all 0.2s var(--ease);
+      line-height: 1.5;
+    }
+
+    .toc-item a:hover {
+      color: var(--ink);
+      background: var(--surface-alt);
+    }
+
+    .toc-item a.active {
+      color: var(--teal-700);
+      border-left-color: var(--teal-500);
+      background: var(--teal-50);
+      font-weight: 500;
+    }
+
+    /* ── TYPOGRAPHY ────────────────────────────── */
     .content h2 {
       font-family: var(--font-serif);
       font-size: 1.85rem;
       font-weight: 400;
       color: var(--ink);
       margin: 3rem 0 1rem;
+      padding-top: 1rem;
       scroll-margin-top: 80px;
     }
 
-    .content h2:first-child { margin-top: 0; }
+    .content h2:first-child {
+      margin-top: 0;
+    }
 
     .content h3 {
       font-size: 1.15rem;
       font-weight: 600;
       color: var(--ink);
       margin: 2rem 0 0.75rem;
+      scroll-margin-top: 80px;
     }
 
     .content p {
       margin-bottom: 1.25rem;
       color: var(--ink-light);
+    }
+
+    .content strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .content a {
+      color: var(--teal-700);
+      text-decoration: underline;
+      text-decoration-color: var(--teal-200);
+      text-underline-offset: 3px;
+      transition: text-decoration-color 0.2s;
+    }
+
+    .content a:hover {
+      text-decoration-color: var(--teal-600);
     }
 
     .content ul, .content ol {
@@ -261,13 +368,25 @@
       color: var(--ink-light);
     }
 
-    .content li::marker { color: var(--teal-500); }
+    .content li::marker {
+      color: var(--teal-500);
+    }
 
+    /* ── SECTION DIVIDER ──────────────────────── */
+    .section-divider {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 3rem 0;
+    }
+
+    /* ── CALLOUT BOXES ────────────────────────── */
     .callout {
       padding: 1.25rem 1.5rem;
       border-radius: 12px;
       margin-bottom: 1.5rem;
       border: 1px solid;
+      position: relative;
     }
 
     .callout-header {
@@ -277,6 +396,12 @@
       font-size: 14px;
       font-weight: 600;
       margin-bottom: 0.5rem;
+    }
+
+    .callout-header svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
     }
 
     .callout p:last-child { margin-bottom: 0; }
@@ -293,6 +418,12 @@
     }
     .callout.important .callout-header { color: var(--amber-600); }
 
+    .callout.danger {
+      background: var(--red-50);
+      border-color: var(--red-100);
+    }
+    .callout.danger .callout-header { color: var(--red-600); }
+
     .callout.tip {
       background: var(--purple-50);
       border-color: var(--purple-100);
@@ -305,93 +436,403 @@
     }
     .callout.success .callout-header { color: var(--teal-700); }
 
-    .section-divider {
-      border: none;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--border), transparent);
-      margin: 3rem 0;
-    }
-
-    .coming-soon-banner {
-      background: var(--amber-50);
-      border: 1px solid var(--amber-100);
+    /* ── CODE BLOCKS ──────────────────────────── */
+    .code-block {
+      position: relative;
+      margin-bottom: 1.5rem;
       border-radius: 12px;
-      padding: 2.5rem;
-      text-align: center;
-      margin: 2rem 0;
+      overflow: hidden;
+      border: 1px solid var(--border);
     }
 
-    .coming-soon-banner h3 {
-      color: var(--amber-600);
-      margin-bottom: 0.5rem;
-    }
-
-    .coming-soon-banner p {
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+      background: var(--surface-alt);
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
       color: var(--ink-muted);
-      margin-bottom: 0;
     }
 
-    .topics-preview {
+    .code-lang {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .code-copy {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: white;
+      font-size: 11px;
+      font-family: var(--font-sans);
+      color: var(--ink-muted);
+      cursor: pointer;
+      transition: all 0.2s var(--ease);
+    }
+
+    .code-copy:hover {
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    .code-copy.copied {
+      background: var(--teal-50);
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    pre {
+      margin: 0;
+      padding: 1.25rem 1.5rem;
+      overflow-x: auto;
+      background: #1e293b;
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: #e2e8f0;
+    }
+
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.88em;
+    }
+
+    p code, li code {
+      padding: 2px 7px;
       background: var(--surface-alt);
       border: 1px solid var(--border);
+      border-radius: 5px;
+      color: var(--teal-800);
+      font-size: 0.85em;
+    }
+
+    /* Syntax highlights (minimal) */
+    .hl-keyword  { color: #c084fc; }
+    .hl-string   { color: #86efac; }
+    .hl-comment  { color: #64748b; font-style: italic; }
+    .hl-function { color: #7dd3fc; }
+    .hl-number   { color: #fbbf24; }
+    .hl-flag     { color: #f472b6; }
+
+    /* ── COLLAPSIBLE (DETAILS) ────────────────── */
+    details {
+      margin-bottom: 1.25rem;
+      border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 1.5rem 2rem;
-      margin: 1.5rem 0;
+      overflow: hidden;
+      transition: border-color 0.2s var(--ease);
     }
 
-    .topics-preview h3 {
-      font-size: 0.95rem;
-      margin-bottom: 0.75rem;
+    details[open] {
+      border-color: var(--teal-200);
+    }
+
+    details summary {
+      padding: 1rem 1.25rem;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      background: var(--surface-alt);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.2s var(--ease);
+      user-select: none;
+    }
+
+    details summary::-webkit-details-marker { display: none; }
+
+    details summary::before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+      flex-shrink: 0;
+      transition: transform 0.2s var(--ease);
+    }
+
+    details[open] summary::before {
+      transform: rotate(90deg);
+    }
+
+    details summary:hover {
+      background: var(--teal-50);
+    }
+
+    .details-body {
+      padding: 1.25rem 1.5rem;
+    }
+
+    .details-body p:last-child { margin-bottom: 0; }
+
+    /* ── VIDEO EMBED ──────────────────────────── */
+    .video-card {
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      background: #0f172a;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .video-caption {
+      padding: 12px 16px;
+      background: var(--surface-alt);
+      font-size: 13px;
+      color: var(--ink-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .video-caption svg {
+      width: 14px;
+      height: 14px;
+      color: var(--red-500);
+    }
+
+    /* ── RESOURCE CARDS ───────────────────────── */
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .resource-card {
+      display: flex;
+      gap: 14px;
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      background: white;
+    }
+
+    .resource-card:hover {
+      border-color: var(--teal-300);
+      background: var(--teal-50);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .resource-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 18px;
+    }
+
+    .resource-icon.docs    { background: var(--blue-50);   color: var(--blue-600); }
+    .resource-icon.video   { background: var(--red-50);    color: var(--red-500); }
+    .resource-icon.github  { background: var(--ink);       color: white; }
+    .resource-icon.article { background: var(--amber-50);  color: var(--amber-600); }
+    .resource-icon.pdf     { background: var(--purple-50); color: var(--purple-600); }
+
+    .resource-info {
+      min-width: 0;
+    }
+
+    .resource-title {
+      font-size: 14px;
+      font-weight: 600;
       color: var(--ink);
+      margin-bottom: 2px;
+      line-height: 1.4;
     }
 
-    .topics-preview ul {
+    .resource-desc {
+      font-size: 12px;
+      color: var(--ink-muted);
+      line-height: 1.5;
+    }
+
+    /* ── ASSIGNMENT CARDS ─────────────────────── */
+    .assignment {
+      border: 2px solid var(--teal-200);
+      border-radius: 14px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--teal-50) 0%, white 100%);
+    }
+
+    .assignment-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .assignment-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--teal-700);
+    }
+
+    .assignment-difficulty {
+      display: inline-flex;
+      padding: 4px 10px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .difficulty-l1 { background: var(--teal-100); color: var(--teal-800); }
+    .difficulty-l2 { background: var(--amber-100); color: var(--amber-600); }
+    .difficulty-l3 { background: var(--red-100); color: var(--red-600); }
+
+    .assignment h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .assignment p {
+      font-size: 14px;
+    }
+
+    .checklist {
       list-style: none;
       padding: 0;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 0.5rem;
     }
 
-    .topics-preview li {
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-light);
       font-size: 14px;
-      color: var(--ink-light);
-      padding-left: 1.25rem;
-      position: relative;
     }
 
-    .topics-preview li::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 8px;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
+    .checklist li:last-child { border-bottom: none; }
+
+    .check-box {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      border: 2px solid var(--border);
+      flex-shrink: 0;
+      margin-top: 1px;
+      cursor: pointer;
+      transition: all 0.15s var(--ease);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .check-box:hover {
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked {
       background: var(--teal-500);
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+    }
+
+    /* ── ARCHITECTURE DIAGRAM ─────────────────── */
+    .diagram {
+      margin: 1.5rem 0;
+      padding: 2rem;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow-x: auto;
+    }
+
+    .diagram pre {
+      background: transparent;
+      color: var(--ink);
+      padding: 0;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .diagram-caption {
+      margin-top: 1rem;
+      font-size: 12px;
+      color: var(--ink-muted);
+      text-align: center;
+      font-style: italic;
+    }
+
+    /* ── FOOTER ───────────────────────────────── */
+    .chapter-footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      background: var(--surface-alt);
+    }
+
+    .chapter-footer-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
     }
 
     .footer-nav {
-      max-width: var(--content-max);
-      margin: 0 auto;
-      padding: 2rem;
       display: flex;
       justify-content: space-between;
-      border-top: 1px solid var(--border);
+      align-items: center;
+      gap: 1rem;
     }
 
     .footer-nav-link {
       display: flex;
       flex-direction: column;
-      text-decoration: none;
-      padding: 1rem;
+      gap: 4px;
+      padding: 1rem 1.5rem;
+      border: 1px solid var(--border);
       border-radius: 12px;
-      transition: background 0.2s var(--ease);
-      max-width: 45%;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      max-width: 320px;
+      background: white;
     }
 
     .footer-nav-link:hover {
-      background: var(--surface-alt);
+      border-color: var(--teal-300);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
     }
 
     .footer-nav-label {
@@ -399,46 +840,61 @@
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.06em;
-      color: var(--ink-muted);
-      margin-bottom: 4px;
+      color: var(--teal-600);
     }
 
     .footer-nav-title {
       font-size: 15px;
       font-weight: 600;
-      color: var(--teal-700);
+      color: var(--ink);
     }
 
-    .footer-nav-link.next { text-align: right; margin-left: auto; }
-
-    .footer {
+    .footer-brand {
       text-align: center;
-      padding: 2rem;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
       font-size: 13px;
       color: var(--ink-muted);
-      border-top: 1px solid var(--border);
     }
 
-    .footer a {
-      color: var(--teal-700);
-      text-decoration: none;
+    /* ── RESPONSIVE ───────────────────────────── */
+    @media (max-width: 960px) {
+      .main-layout {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        display: none;
+      }
+      .resource-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
-    .footer a:hover { text-decoration: underline; }
+    @media (max-width: 640px) {
+      .hero { padding: 2.5rem 1.25rem 2rem; }
+      .main-layout { padding: 0 1.25rem; }
+      .content { padding: 2rem 0 4rem; }
+      pre { padding: 1rem; font-size: 12.5px; }
+      .footer-nav { flex-direction: column; }
+      .footer-nav-link { max-width: 100%; width: 100%; }
+    }
 
-    @media (max-width: 768px) {
-      .hero { padding: 3rem 1.5rem 2.5rem; }
-      .content { padding: 2rem 1.5rem 4rem; }
-      .hero h1 { font-size: 2rem; }
-      .footer-nav { flex-direction: column; gap: 1rem; }
-      .footer-nav-link { max-width: 100%; }
-      .footer-nav-link.next { text-align: left; }
+    /* ── PRINT ────────────────────────────────── */
+    @media print {
+      .top-nav, .sidebar, .progress-bar { display: none; }
+      .main-layout { display: block; }
+      .content { padding: 0; }
+      .hero { background: white; border: none; }
+      pre { background: #f1f5f9; color: var(--ink); border: 1px solid var(--border); }
     }
   </style>
 </head>
 <body>
+  <!-- Progress Bar -->
   <div class="progress-bar" id="progressBar"></div>
 
+  <!-- Top Navigation -->
   <nav class="top-nav">
     <div class="top-nav-inner">
       <a class="nav-brand" href="index.html">
@@ -453,70 +909,1106 @@
     </div>
   </nav>
 
+  <!-- Hero -->
   <header class="hero">
     <div class="hero-inner">
       <div class="hero-chapter-label">
-        <span>Chapter 09</span> 
+        <span>Chapter 09</span> &middot; Phase 5: Production &amp; Capstone
       </div>
       <h1>Monitoring and Performance Tuning</h1>
-      <p class="hero-subtitle">pg_stat views, slow query analysis, vacuum tuning, memory configuration, bloat management</p>
+      <p class="hero-subtitle">
+        Instrument your PostgreSQL instance with pg_stat views for deep observability, identify and fix slow
+        queries, tune autovacuum for table health, and configure memory parameters to match your workload.
+        A database you cannot observe is a database you cannot manage.
+      </p>
       <div class="hero-meta">
-        <div class="hero-meta-item">3 Assignments</div>
-        <div class="hero-meta-item">~45 min read</div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Estimated: 4&ndash;5 days
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          6 Key Concepts
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          3 Assignments
+        </div>
       </div>
     </div>
   </header>
 
-  <main class="content">
-    <h2>Overview</h2>
-    <p>This chapter covers <strong>monitoring and performance tuning</strong> as part of the PostgreSQL Engineering curriculum. You will build practical skills through guided explanations, code examples, and hands-on assignments.</p>
+  <!-- Main Content + Sidebar -->
+  <div class="main-layout">
+    <main class="content">
 
-    <div class="topics-preview">
-      <h3>Topics Covered</h3>
-      <ul>
-            <li>pg_stat views</li>
-            <li>slow query analysis</li>
-            <li>vacuum tuning</li>
-            <li>memory configuration</li>
-            <li>bloat management</li>
+      <!-- ════════════════════════════════════════
+           SECTION 1: WHY THIS MATTERS
+           ════════════════════════════════════════ -->
+      <h2 id="why-this-matters">Why This Matters</h2>
+
+      <p>
+        Performance problems are rarely sudden &mdash; they creep in over weeks or months as data grows,
+        traffic patterns shift, and dead tuples accumulate. By the time a user complains about slowness,
+        the root cause is often weeks old. The only way to catch performance degradation early is
+        continuous monitoring with clear baselines and alerts.
+      </p>
+
+      <p>
+        PostgreSQL exposes an extraordinary amount of internal state through its <code>pg_stat_*</code>
+        views. Learning to read these views is like learning to read an X-ray &mdash; it reveals problems
+        that are invisible from the application layer. This chapter teaches you to build a monitoring
+        dashboard, diagnose slow queries, and tune the database for your specific workload.
+      </p>
+
+      <p>
+        Without observability, every performance investigation becomes guesswork. With it, you can
+        pinpoint the exact query, table, or configuration parameter responsible for degradation. The
+        difference between a junior DBA and a senior DBA is not the ability to write faster SQL &mdash;
+        it is the ability to diagnose <em>where</em> time is being lost and <em>why</em>.
+      </p>
+
+      <div class="callout concept">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Key Insight
+        </div>
+        <p>
+          The three pillars of PostgreSQL health are: <strong>query performance</strong>
+          (pg_stat_statements), <strong>table health</strong> (pg_stat_user_tables + VACUUM), and
+          <strong>resource utilization</strong> (memory, connections, disk I/O). Monitor all three, and
+          most performance problems become visible before they become incidents.
+        </p>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 2: KEY CONCEPTS
+           ════════════════════════════════════════ -->
+      <h2 id="key-concepts">Key Concepts</h2>
+
+      <h3 id="pg-stat-statements">1. pg_stat_statements and Slow Query Detection</h3>
+
+      <p>
+        The <code>pg_stat_statements</code> extension is the single most important monitoring tool for
+        PostgreSQL. It tracks execution statistics for every normalized query, including call count,
+        total time, mean time, rows returned, and shared block hits/reads. Without it, you are
+        completely blind to what your database is actually spending time on.
+      </p>
+
+      <p>
+        The extension normalizes queries by replacing literal values with parameter placeholders,
+        so <code>SELECT * FROM users WHERE id = 42</code> and <code>SELECT * FROM users WHERE id = 99</code>
+        are tracked as a single entry. This lets you see aggregate behavior across thousands of
+        executions of the same query pattern.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- Enable the extension (requires superuser, add to shared_preload_libraries)</span>
+<span class="hl-keyword">CREATE EXTENSION IF NOT EXISTS</span> pg_stat_statements;
+
+<span class="hl-comment">-- Top 10 queries by total execution time</span>
+<span class="hl-keyword">SELECT</span>
+  <span class="hl-function">left</span>(query, <span class="hl-number">80</span>) <span class="hl-keyword">AS</span> short_query,
+  calls,
+  <span class="hl-function">round</span>(total_exec_time::<span class="hl-keyword">numeric</span>, <span class="hl-number">2</span>) <span class="hl-keyword">AS</span> total_ms,
+  <span class="hl-function">round</span>(mean_exec_time::<span class="hl-keyword">numeric</span>, <span class="hl-number">2</span>) <span class="hl-keyword">AS</span> mean_ms,
+  <span class="hl-function">round</span>((<span class="hl-number">100</span> * shared_blks_hit /
+    <span class="hl-function">nullif</span>(shared_blks_hit + shared_blks_read, <span class="hl-number">0</span>))::<span class="hl-keyword">numeric</span>, <span class="hl-number">2</span>)
+    <span class="hl-keyword">AS</span> cache_hit_pct,
+  rows
+<span class="hl-keyword">FROM</span> pg_stat_statements
+<span class="hl-keyword">ORDER BY</span> total_exec_time <span class="hl-keyword">DESC</span>
+<span class="hl-keyword">LIMIT</span> <span class="hl-number">10</span>;
+</pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- Queries with the worst cache hit ratio (potential index candidates)</span>
+<span class="hl-keyword">SELECT</span>
+  <span class="hl-function">left</span>(query, <span class="hl-number">80</span>) <span class="hl-keyword">AS</span> short_query,
+  calls,
+  shared_blks_read,
+  shared_blks_hit,
+  <span class="hl-function">round</span>((<span class="hl-number">100</span> * shared_blks_hit /
+    <span class="hl-function">nullif</span>(shared_blks_hit + shared_blks_read, <span class="hl-number">0</span>))::<span class="hl-keyword">numeric</span>, <span class="hl-number">2</span>)
+    <span class="hl-keyword">AS</span> cache_hit_pct
+<span class="hl-keyword">FROM</span> pg_stat_statements
+<span class="hl-keyword">WHERE</span> calls &gt; <span class="hl-number">100</span>
+<span class="hl-keyword">ORDER BY</span> shared_blks_read <span class="hl-keyword">DESC</span>
+<span class="hl-keyword">LIMIT</span> <span class="hl-number">10</span>;
+
+<span class="hl-comment">-- Queries with the highest stddev (inconsistent performance)</span>
+<span class="hl-keyword">SELECT</span>
+  <span class="hl-function">left</span>(query, <span class="hl-number">80</span>) <span class="hl-keyword">AS</span> short_query,
+  calls,
+  <span class="hl-function">round</span>(mean_exec_time::<span class="hl-keyword">numeric</span>, <span class="hl-number">2</span>) <span class="hl-keyword">AS</span> mean_ms,
+  <span class="hl-function">round</span>(stddev_exec_time::<span class="hl-keyword">numeric</span>, <span class="hl-number">2</span>) <span class="hl-keyword">AS</span> stddev_ms,
+  <span class="hl-function">round</span>(min_exec_time::<span class="hl-keyword">numeric</span>, <span class="hl-number">2</span>) <span class="hl-keyword">AS</span> min_ms,
+  <span class="hl-function">round</span>(max_exec_time::<span class="hl-keyword">numeric</span>, <span class="hl-number">2</span>) <span class="hl-keyword">AS</span> max_ms
+<span class="hl-keyword">FROM</span> pg_stat_statements
+<span class="hl-keyword">WHERE</span> calls &gt; <span class="hl-number">50</span>
+<span class="hl-keyword">ORDER BY</span> stddev_exec_time <span class="hl-keyword">DESC</span>
+<span class="hl-keyword">LIMIT</span> <span class="hl-number">10</span>;
+
+<span class="hl-comment">-- Reset statistics (do this periodically to get fresh data)</span>
+<span class="hl-keyword">SELECT</span> <span class="hl-function">pg_stat_statements_reset</span>();
+</pre>
+      </div>
+
+      <div class="callout important">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          shared_preload_libraries Required
+        </div>
+        <p>
+          <code>pg_stat_statements</code> must be added to <code>shared_preload_libraries</code> in
+          <code>postgresql.conf</code> and requires a PostgreSQL restart. Simply running
+          <code>CREATE EXTENSION</code> is not enough. Without the shared library loaded, the extension
+          will track nothing.
+        </p>
+      </div>
+
+      <h3 id="pg-stat-user-tables">2. pg_stat_user_tables and Table Health</h3>
+
+      <p>
+        The <code>pg_stat_user_tables</code> view reveals how each table is being used: sequential scan
+        frequency, index scan frequency, dead tuple count, and when the last vacuum and analyze ran. It
+        is the primary tool for identifying tables that need indexes and tables where autovacuum is
+        falling behind.
+      </p>
+
+      <p>
+        A high ratio of sequential scans to index scans on a large table usually means a missing index.
+        A large <code>n_dead_tup</code> value relative to <code>n_live_tup</code> means autovacuum is
+        not keeping up. Stale <code>last_autoanalyze</code> timestamps mean the planner is making
+        decisions on outdated statistics.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- Tables with the most sequential scans (missing index candidates)</span>
+<span class="hl-keyword">SELECT</span>
+  schemaname, relname,
+  seq_scan, seq_tup_read,
+  idx_scan, idx_tup_fetch,
+  <span class="hl-keyword">CASE WHEN</span> seq_scan + idx_scan &gt; <span class="hl-number">0</span>
+    <span class="hl-keyword">THEN</span> <span class="hl-function">round</span>((<span class="hl-number">100</span> * idx_scan / (seq_scan + idx_scan))::<span class="hl-keyword">numeric</span>, <span class="hl-number">2</span>)
+    <span class="hl-keyword">ELSE</span> <span class="hl-number">0</span>
+  <span class="hl-keyword">END AS</span> idx_scan_pct,
+  n_live_tup, n_dead_tup,
+  last_vacuum, last_autovacuum,
+  last_analyze, last_autoanalyze
+<span class="hl-keyword">FROM</span> pg_stat_user_tables
+<span class="hl-keyword">ORDER BY</span> seq_scan <span class="hl-keyword">DESC</span>
+<span class="hl-keyword">LIMIT</span> <span class="hl-number">20</span>;
+
+<span class="hl-comment">-- Tables with the highest dead tuple ratio (need vacuum)</span>
+<span class="hl-keyword">SELECT</span>
+  schemaname, relname,
+  n_live_tup, n_dead_tup,
+  <span class="hl-function">round</span>((<span class="hl-number">100</span> * n_dead_tup /
+    <span class="hl-function">nullif</span>(n_live_tup + n_dead_tup, <span class="hl-number">0</span>))::<span class="hl-keyword">numeric</span>, <span class="hl-number">2</span>)
+    <span class="hl-keyword">AS</span> dead_pct,
+  last_autovacuum
+<span class="hl-keyword">FROM</span> pg_stat_user_tables
+<span class="hl-keyword">WHERE</span> n_dead_tup &gt; <span class="hl-number">1000</span>
+<span class="hl-keyword">ORDER BY</span> n_dead_tup <span class="hl-keyword">DESC</span>;
+
+<span class="hl-comment">-- Index usage report: which indexes are never used?</span>
+<span class="hl-keyword">SELECT</span>
+  schemaname, relname, indexrelname,
+  idx_scan <span class="hl-keyword">AS</span> times_used,
+  <span class="hl-function">pg_size_pretty</span>(<span class="hl-function">pg_relation_size</span>(indexrelid)) <span class="hl-keyword">AS</span> index_size
+<span class="hl-keyword">FROM</span> pg_stat_user_indexes
+<span class="hl-keyword">WHERE</span> idx_scan = <span class="hl-number">0</span>
+  <span class="hl-keyword">AND</span> indexrelname <span class="hl-keyword">NOT LIKE</span> <span class="hl-string">'%pkey'</span>
+<span class="hl-keyword">ORDER BY</span> <span class="hl-function">pg_relation_size</span>(indexrelid) <span class="hl-keyword">DESC</span>;
+</pre>
+      </div>
+
+      <h3 id="vacuum-tuning">3. VACUUM and Autovacuum Tuning</h3>
+
+      <p>
+        PostgreSQL uses MVCC (Multi-Version Concurrency Control), which means updates and deletes create
+        dead tuples instead of modifying data in place. VACUUM reclaims space from dead tuples, updates
+        the visibility map, and freezes old transaction IDs. Autovacuum does this automatically, but its
+        default settings are conservative and often need tuning for high-write workloads.
+      </p>
+
+      <p>
+        The default autovacuum trigger formula is: <code>threshold + scale_factor * n_live_tup</code>.
+        With defaults of threshold=50 and scale_factor=0.2, a table with 10 million rows will not
+        trigger autovacuum until it accumulates 2,000,050 dead tuples. That is an enormous amount of
+        bloat before cleanup begins.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- Check current autovacuum settings</span>
+<span class="hl-keyword">SHOW</span> autovacuum_vacuum_threshold;        <span class="hl-comment">-- default: 50</span>
+<span class="hl-keyword">SHOW</span> autovacuum_vacuum_scale_factor;     <span class="hl-comment">-- default: 0.2 (20%)</span>
+<span class="hl-keyword">SHOW</span> autovacuum_analyze_threshold;       <span class="hl-comment">-- default: 50</span>
+<span class="hl-keyword">SHOW</span> autovacuum_analyze_scale_factor;    <span class="hl-comment">-- default: 0.1 (10%)</span>
+<span class="hl-keyword">SHOW</span> autovacuum_naptime;                 <span class="hl-comment">-- default: 1min</span>
+<span class="hl-keyword">SHOW</span> autovacuum_max_workers;             <span class="hl-comment">-- default: 3</span>
+
+<span class="hl-comment">-- Tune per-table for high-write tables</span>
+<span class="hl-keyword">ALTER TABLE</span> orders <span class="hl-keyword">SET</span> (
+  autovacuum_vacuum_scale_factor = <span class="hl-number">0.01</span>,    <span class="hl-comment">-- 1% instead of 20%</span>
+  autovacuum_vacuum_threshold = <span class="hl-number">1000</span>,       <span class="hl-comment">-- trigger earlier</span>
+  autovacuum_analyze_scale_factor = <span class="hl-number">0.005</span>,  <span class="hl-comment">-- 0.5% for fresh stats</span>
+  autovacuum_vacuum_cost_delay = <span class="hl-number">2</span>          <span class="hl-comment">-- faster vacuum (ms)</span>
+);
+
+<span class="hl-comment">-- Global tuning for write-heavy workloads</span>
+<span class="hl-keyword">ALTER SYSTEM SET</span> autovacuum_max_workers = <span class="hl-number">6</span>;
+<span class="hl-keyword">ALTER SYSTEM SET</span> autovacuum_vacuum_cost_limit = <span class="hl-number">2000</span>;
+<span class="hl-keyword">ALTER SYSTEM SET</span> autovacuum_naptime = <span class="hl-string">'15s'</span>;
+
+<span class="hl-comment">-- Manual vacuum with verbose output for debugging</span>
+<span class="hl-keyword">VACUUM</span> (<span class="hl-keyword">VERBOSE</span>, <span class="hl-keyword">ANALYZE</span>) orders;
+</pre>
+      </div>
+
+      <div class="callout danger">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+          Transaction ID Wraparound
+        </div>
+        <p>
+          PostgreSQL uses 32-bit transaction IDs that wrap around at approximately 4 billion. If
+          autovacuum cannot keep up with dead tuple cleanup, you risk a <strong>transaction ID
+          wraparound emergency</strong> where PostgreSQL shuts down to prevent data corruption. Monitor
+          <code>age(datfrozenxid)</code> from <code>pg_database</code> and ensure it stays well below
+          2 billion. Set up alerting when it exceeds 500 million.
+        </p>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- Monitor transaction ID age per database</span>
+<span class="hl-keyword">SELECT</span>
+  datname,
+  <span class="hl-function">age</span>(datfrozenxid) <span class="hl-keyword">AS</span> xid_age,
+  <span class="hl-function">pg_size_pretty</span>(<span class="hl-function">pg_database_size</span>(datname)) <span class="hl-keyword">AS</span> db_size,
+  <span class="hl-keyword">CASE</span>
+    <span class="hl-keyword">WHEN</span> <span class="hl-function">age</span>(datfrozenxid) &gt; <span class="hl-number">1000000000</span> <span class="hl-keyword">THEN</span> <span class="hl-string">'CRITICAL'</span>
+    <span class="hl-keyword">WHEN</span> <span class="hl-function">age</span>(datfrozenxid) &gt; <span class="hl-number">500000000</span>  <span class="hl-keyword">THEN</span> <span class="hl-string">'WARNING'</span>
+    <span class="hl-keyword">ELSE</span> <span class="hl-string">'OK'</span>
+  <span class="hl-keyword">END AS</span> status
+<span class="hl-keyword">FROM</span> pg_database
+<span class="hl-keyword">ORDER BY</span> <span class="hl-function">age</span>(datfrozenxid) <span class="hl-keyword">DESC</span>;
+
+<span class="hl-comment">-- Monitor transaction ID age per table</span>
+<span class="hl-keyword">SELECT</span>
+  schemaname, relname,
+  <span class="hl-function">age</span>(relfrozenxid) <span class="hl-keyword">AS</span> xid_age,
+  <span class="hl-function">pg_size_pretty</span>(<span class="hl-function">pg_total_relation_size</span>(relid)) <span class="hl-keyword">AS</span> total_size
+<span class="hl-keyword">FROM</span> pg_stat_user_tables
+<span class="hl-keyword">ORDER BY</span> <span class="hl-function">age</span>(relfrozenxid) <span class="hl-keyword">DESC</span>
+<span class="hl-keyword">LIMIT</span> <span class="hl-number">20</span>;
+</pre>
+      </div>
+
+      <h3 id="memory-config">4. Memory Configuration</h3>
+
+      <p>
+        PostgreSQL's memory parameters have the single largest impact on performance after proper
+        indexing. The three most important settings are <code>shared_buffers</code>,
+        <code>work_mem</code>, and <code>effective_cache_size</code>. Getting these wrong can mean the
+        difference between a database that handles 10,000 transactions per second and one that struggles
+        with 500.
+      </p>
+
+      <p>
+        <strong>shared_buffers</strong> is PostgreSQL's own buffer pool, typically set to 25% of total
+        RAM. <strong>effective_cache_size</strong> tells the planner how much memory is available between
+        PostgreSQL buffers and the OS page cache, typically 75% of RAM. <strong>work_mem</strong> is the
+        per-operation memory for sorts and hash joins &mdash; it is allocated per sort, not per connection.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">conf</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># postgresql.conf — Memory tuning for a server with 32GB RAM</span>
+
+<span class="hl-comment"># Shared buffer pool: 25% of total RAM</span>
+<span class="hl-keyword">shared_buffers</span> = <span class="hl-string">8GB</span>
+
+<span class="hl-comment"># Per-operation sort/hash memory (per connection!)</span>
+<span class="hl-comment"># Be careful: 100 connections * 256MB = 25GB potential usage</span>
+<span class="hl-keyword">work_mem</span> = <span class="hl-string">256MB</span>
+
+<span class="hl-comment"># Hint to planner about OS cache size: 75% of total RAM</span>
+<span class="hl-keyword">effective_cache_size</span> = <span class="hl-string">24GB</span>
+
+<span class="hl-comment"># Maintenance operations (VACUUM, CREATE INDEX)</span>
+<span class="hl-keyword">maintenance_work_mem</span> = <span class="hl-string">2GB</span>
+
+<span class="hl-comment"># WAL settings for write-heavy workloads</span>
+<span class="hl-keyword">wal_buffers</span> = <span class="hl-string">64MB</span>
+<span class="hl-keyword">checkpoint_completion_target</span> = <span class="hl-number">0.9</span>
+<span class="hl-keyword">max_wal_size</span> = <span class="hl-string">4GB</span>
+<span class="hl-keyword">min_wal_size</span> = <span class="hl-string">1GB</span>
+
+<span class="hl-comment"># I/O concurrency for SSDs</span>
+<span class="hl-keyword">effective_io_concurrency</span> = <span class="hl-number">200</span>
+<span class="hl-keyword">random_page_cost</span> = <span class="hl-number">1.1</span>
+
+<span class="hl-comment"># Connection limits</span>
+<span class="hl-keyword">max_connections</span> = <span class="hl-number">200</span>
+</pre>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Pro Tip
+        </div>
+        <p>
+          <code>work_mem</code> is allocated <strong>per sort/hash operation per connection</strong>,
+          not per connection. A complex query with 5 sort operations uses 5x <code>work_mem</code>. Start
+          conservative (64MB) and increase only for specific workloads. Use
+          <code>SET LOCAL work_mem = '512MB'</code> for individual analytical queries that need more
+          memory, rather than raising the global default.
+        </p>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- Check current memory settings</span>
+<span class="hl-keyword">SELECT</span> name, setting, unit, short_desc
+<span class="hl-keyword">FROM</span> pg_settings
+<span class="hl-keyword">WHERE</span> name <span class="hl-keyword">IN</span> (
+  <span class="hl-string">'shared_buffers'</span>, <span class="hl-string">'work_mem'</span>, <span class="hl-string">'effective_cache_size'</span>,
+  <span class="hl-string">'maintenance_work_mem'</span>, <span class="hl-string">'wal_buffers'</span>, <span class="hl-string">'max_connections'</span>
+);
+
+<span class="hl-comment">-- Check buffer cache hit ratio (should be &gt; 99%)</span>
+<span class="hl-keyword">SELECT</span>
+  <span class="hl-function">round</span>(
+    <span class="hl-number">100</span> * <span class="hl-function">sum</span>(blks_hit) /
+    <span class="hl-function">nullif</span>(<span class="hl-function">sum</span>(blks_hit) + <span class="hl-function">sum</span>(blks_read), <span class="hl-number">0</span>)
+  , <span class="hl-number">2</span>) <span class="hl-keyword">AS</span> cache_hit_ratio
+<span class="hl-keyword">FROM</span> pg_stat_database
+<span class="hl-keyword">WHERE</span> datname = <span class="hl-function">current_database</span>();
+
+<span class="hl-comment">-- Per-table cache hit ratio</span>
+<span class="hl-keyword">SELECT</span>
+  schemaname, relname,
+  heap_blks_read, heap_blks_hit,
+  <span class="hl-function">round</span>(
+    <span class="hl-number">100</span> * heap_blks_hit /
+    <span class="hl-function">nullif</span>(heap_blks_hit + heap_blks_read, <span class="hl-number">0</span>)
+  , <span class="hl-number">2</span>) <span class="hl-keyword">AS</span> cache_hit_pct
+<span class="hl-keyword">FROM</span> pg_statio_user_tables
+<span class="hl-keyword">WHERE</span> heap_blks_read + heap_blks_hit &gt; <span class="hl-number">0</span>
+<span class="hl-keyword">ORDER BY</span> heap_blks_read <span class="hl-keyword">DESC</span>
+<span class="hl-keyword">LIMIT</span> <span class="hl-number">20</span>;
+</pre>
+      </div>
+
+      <h3 id="connection-lock-monitoring">5. Connection and Lock Monitoring</h3>
+
+      <p>
+        Connection exhaustion and lock contention are two of the most common causes of production
+        outages. Monitoring active connections, idle-in-transaction sessions, and lock waits gives you
+        early warning before these become incidents. A single idle-in-transaction session can hold locks
+        for hours, preventing autovacuum from cleaning up dead tuples on that table.
+      </p>
+
+      <p>
+        PostgreSQL's <code>pg_stat_activity</code> view shows every current connection: its state, the
+        query it is running, how long it has been running, and what it is waiting on. Combined with
+        <code>pg_locks</code>, you can trace exactly which connection is blocking which other connection,
+        forming a complete dependency tree.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- Connection state overview</span>
+<span class="hl-keyword">SELECT</span>
+  state,
+  <span class="hl-function">count</span>(*) <span class="hl-keyword">AS</span> connections,
+  <span class="hl-function">max</span>(<span class="hl-function">now</span>() - state_change) <span class="hl-keyword">AS</span> longest_duration
+<span class="hl-keyword">FROM</span> pg_stat_activity
+<span class="hl-keyword">WHERE</span> pid != <span class="hl-function">pg_backend_pid</span>()
+<span class="hl-keyword">GROUP BY</span> state
+<span class="hl-keyword">ORDER BY</span> connections <span class="hl-keyword">DESC</span>;
+
+<span class="hl-comment">-- Find long-running queries (potential problems)</span>
+<span class="hl-keyword">SELECT</span>
+  pid, usename, datname, state,
+  <span class="hl-function">now</span>() - query_start <span class="hl-keyword">AS</span> duration,
+  wait_event_type, wait_event,
+  <span class="hl-function">left</span>(query, <span class="hl-number">100</span>) <span class="hl-keyword">AS</span> short_query
+<span class="hl-keyword">FROM</span> pg_stat_activity
+<span class="hl-keyword">WHERE</span> state = <span class="hl-string">'active'</span>
+  <span class="hl-keyword">AND</span> <span class="hl-function">now</span>() - query_start &gt; <span class="hl-keyword">INTERVAL</span> <span class="hl-string">'30 seconds'</span>
+<span class="hl-keyword">ORDER BY</span> duration <span class="hl-keyword">DESC</span>;
+
+<span class="hl-comment">-- Kill idle-in-transaction sessions older than 1 hour</span>
+<span class="hl-keyword">SELECT</span> <span class="hl-function">pg_terminate_backend</span>(pid)
+<span class="hl-keyword">FROM</span> pg_stat_activity
+<span class="hl-keyword">WHERE</span> state = <span class="hl-string">'idle in transaction'</span>
+  <span class="hl-keyword">AND</span> <span class="hl-function">now</span>() - state_change &gt; <span class="hl-keyword">INTERVAL</span> <span class="hl-string">'1 hour'</span>
+  <span class="hl-keyword">AND</span> pid != <span class="hl-function">pg_backend_pid</span>();
+</pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- Find blocking locks (who is blocking whom)</span>
+<span class="hl-keyword">SELECT</span>
+  blocked_locks.pid <span class="hl-keyword">AS</span> blocked_pid,
+  blocked_activity.usename <span class="hl-keyword">AS</span> blocked_user,
+  blocking_locks.pid <span class="hl-keyword">AS</span> blocking_pid,
+  blocking_activity.usename <span class="hl-keyword">AS</span> blocking_user,
+  <span class="hl-function">now</span>() - blocked_activity.query_start <span class="hl-keyword">AS</span> blocked_duration,
+  <span class="hl-function">left</span>(blocked_activity.query, <span class="hl-number">60</span>) <span class="hl-keyword">AS</span> blocked_query,
+  <span class="hl-function">left</span>(blocking_activity.query, <span class="hl-number">60</span>) <span class="hl-keyword">AS</span> blocking_query
+<span class="hl-keyword">FROM</span> pg_catalog.pg_locks blocked_locks
+<span class="hl-keyword">JOIN</span> pg_catalog.pg_stat_activity blocked_activity
+  <span class="hl-keyword">ON</span> blocked_activity.pid = blocked_locks.pid
+<span class="hl-keyword">JOIN</span> pg_catalog.pg_locks blocking_locks
+  <span class="hl-keyword">ON</span> blocking_locks.locktype = blocked_locks.locktype
+  <span class="hl-keyword">AND</span> blocking_locks.relation = blocked_locks.relation
+  <span class="hl-keyword">AND</span> blocking_locks.pid != blocked_locks.pid
+<span class="hl-keyword">JOIN</span> pg_catalog.pg_stat_activity blocking_activity
+  <span class="hl-keyword">ON</span> blocking_activity.pid = blocking_locks.pid
+<span class="hl-keyword">WHERE NOT</span> blocked_locks.granted;
+
+<span class="hl-comment">-- Automatic idle-in-transaction timeout (PostgreSQL 9.6+)</span>
+<span class="hl-keyword">ALTER SYSTEM SET</span> idle_in_transaction_session_timeout = <span class="hl-string">'5min'</span>;
+<span class="hl-keyword">SELECT</span> <span class="hl-function">pg_reload_conf</span>();
+</pre>
+      </div>
+
+      <div class="diagram">
+<pre>
+  Connection Pool (pgBouncer)
+            |
+            v
+  ┌───────────────────────────────────────┐
+  │  pg_stat_activity (all connections)    │
+  │                                        │
+  │  active ────────── running queries     │
+  │  idle ──────────── waiting for work    │
+  │  idle in txn ───── DANGER: holding     │
+  │                    locks, blocking     │
+  │                    vacuum              │
+  │  disabled ──────── replication slots   │
+  └───────────────────────────────────────┘
+            |
+            v
+  ┌───────────────────────────────────────┐
+  │  pg_locks (lock dependencies)          │
+  │                                        │
+  │  Session A (AccessShareLock) ──────    │
+  │  Session B (ExclusiveLock) ── WAIT ──  │
+  │  Session C (RowExclusiveLock) ── WAIT  │
+  └───────────────────────────────────────┘
+</pre>
+        <div class="diagram-caption">Figure 1: Connection states and lock dependency chain</div>
+      </div>
+
+      <h3 id="bloat-detection">6. Bloat Detection and Remediation</h3>
+
+      <p>
+        Table and index bloat occurs when VACUUM cannot reclaim space fast enough, or when it can only
+        mark space as reusable without returning it to the operating system. Bloated tables waste disk
+        space, slow down sequential scans, and degrade cache efficiency because every buffer page may
+        contain a mix of live and dead data.
+      </p>
+
+      <p>
+        PostgreSQL's standard <code>VACUUM</code> marks dead space as reusable but does not shrink the
+        table file. Only <code>VACUUM FULL</code> (which takes an exclusive lock) or tools like
+        <code>pg_repack</code> (which works online) can actually reclaim disk space. For indexes,
+        <code>REINDEX CONCURRENTLY</code> rebuilds without blocking writes.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- Estimate table bloat using pgstattuple extension</span>
+<span class="hl-keyword">CREATE EXTENSION IF NOT EXISTS</span> pgstattuple;
+
+<span class="hl-keyword">SELECT</span>
+  table_len,
+  <span class="hl-function">pg_size_pretty</span>(table_len) <span class="hl-keyword">AS</span> table_size,
+  tuple_count <span class="hl-keyword">AS</span> live_tuples,
+  dead_tuple_count <span class="hl-keyword">AS</span> dead_tuples,
+  <span class="hl-function">round</span>((<span class="hl-number">100</span> * dead_tuple_len /
+    <span class="hl-function">nullif</span>(table_len, <span class="hl-number">0</span>))::<span class="hl-keyword">numeric</span>, <span class="hl-number">2</span>)
+    <span class="hl-keyword">AS</span> dead_pct,
+  free_space,
+  <span class="hl-function">pg_size_pretty</span>(free_space) <span class="hl-keyword">AS</span> free_space_pretty
+<span class="hl-keyword">FROM</span> <span class="hl-function">pgstattuple</span>(<span class="hl-string">'orders'</span>);
+
+<span class="hl-comment">-- Estimate index bloat</span>
+<span class="hl-keyword">SELECT</span>
+  <span class="hl-function">pg_size_pretty</span>(avg_leaf_density * leaf_pages * <span class="hl-number">8192</span>
+    / <span class="hl-number">100</span>) <span class="hl-keyword">AS</span> estimated_live,
+  <span class="hl-function">pg_size_pretty</span>(leaf_pages * <span class="hl-number">8192</span>) <span class="hl-keyword">AS</span> total_size,
+  avg_leaf_density <span class="hl-keyword">AS</span> density_pct,
+  leaf_fragmentation
+<span class="hl-keyword">FROM</span> <span class="hl-function">pgstatindex</span>(<span class="hl-string">'idx_orders_created_at'</span>);
+</pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">bash</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment"># Remediate bloat without locking using pg_repack</span>
+<span class="hl-comment"># Install: CREATE EXTENSION pg_repack; (in database)</span>
+<span class="hl-comment"># Run from command line:</span>
+pg_repack <span class="hl-flag">-d</span> app_production <span class="hl-flag">-t</span> orders
+
+<span class="hl-comment"># Repack specific indexes</span>
+pg_repack <span class="hl-flag">-d</span> app_production <span class="hl-flag">-i</span> idx_orders_created_at
+
+<span class="hl-comment"># For indexes, REINDEX CONCURRENTLY (PG 12+)</span>
+<span class="hl-comment"># Does not block writes, but uses extra disk space</span>
+</pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">sql</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">-- REINDEX CONCURRENTLY for zero-downtime index rebuild (PG 12+)</span>
+<span class="hl-keyword">REINDEX INDEX CONCURRENTLY</span> idx_orders_created_at;
+
+<span class="hl-comment">-- Rebuild all indexes on a table concurrently</span>
+<span class="hl-keyword">REINDEX TABLE CONCURRENTLY</span> orders;
+
+<span class="hl-comment">-- Create a comprehensive monitoring summary view</span>
+<span class="hl-keyword">CREATE OR REPLACE VIEW</span> <span class="hl-function">monitoring_summary</span> <span class="hl-keyword">AS</span>
+<span class="hl-keyword">SELECT</span>
+  (<span class="hl-keyword">SELECT</span> <span class="hl-function">count</span>(*) <span class="hl-keyword">FROM</span> pg_stat_activity) <span class="hl-keyword">AS</span> total_connections,
+  (<span class="hl-keyword">SELECT</span> <span class="hl-function">count</span>(*) <span class="hl-keyword">FROM</span> pg_stat_activity
+   <span class="hl-keyword">WHERE</span> state = <span class="hl-string">'active'</span>) <span class="hl-keyword">AS</span> active_queries,
+  (<span class="hl-keyword">SELECT</span> <span class="hl-function">count</span>(*) <span class="hl-keyword">FROM</span> pg_stat_activity
+   <span class="hl-keyword">WHERE</span> state = <span class="hl-string">'idle in transaction'</span>) <span class="hl-keyword">AS</span> idle_in_txn,
+  (<span class="hl-keyword">SELECT</span> <span class="hl-function">sum</span>(n_dead_tup) <span class="hl-keyword">FROM</span> pg_stat_user_tables) <span class="hl-keyword">AS</span> total_dead_tuples,
+  (<span class="hl-keyword">SELECT</span> <span class="hl-function">count</span>(*) <span class="hl-keyword">FROM</span> pg_locks
+   <span class="hl-keyword">WHERE NOT</span> granted) <span class="hl-keyword">AS</span> blocked_queries,
+  <span class="hl-function">pg_database_size</span>(<span class="hl-function">current_database</span>()) <span class="hl-keyword">AS</span> db_size_bytes,
+  <span class="hl-function">pg_size_pretty</span>(
+    <span class="hl-function">pg_database_size</span>(<span class="hl-function">current_database</span>())
+  ) <span class="hl-keyword">AS</span> db_size;
+</pre>
+      </div>
+
+      <details>
+        <summary>Why does VACUUM not return disk space to the OS?</summary>
+        <div class="details-body">
+          <p>
+            Standard <code>VACUUM</code> marks dead tuple space as reusable within the table file, but
+            it does not shrink the file itself. The file can only shrink if dead space is at the
+            <em>end</em> of the file, which is rare. This is by design &mdash; truncating files is
+            expensive and requires an exclusive lock. For actual space reclamation, use
+            <code>VACUUM FULL</code> (exclusive lock, rewrites entire table) or <code>pg_repack</code>
+            (online, no exclusive lock except briefly at the end).
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>How to detect if shared_buffers is too small</summary>
+        <div class="details-body">
+          <p>
+            Check the buffer cache hit ratio: query <code>pg_stat_database</code> and compute
+            <code>blks_hit / (blks_hit + blks_read)</code>. If this is below 99%, PostgreSQL is
+            frequently reading from disk instead of cache. Increase <code>shared_buffers</code>
+            incrementally (requires a restart) and re-measure. Also check per-table hit ratios using
+            <code>pg_statio_user_tables</code> to find which specific tables are causing cache misses.
+          </p>
+        </div>
+      </details>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 3: WATCH & LEARN
+           ════════════════════════════════════════ -->
+      <h2 id="watch-learn">Watch &amp; Learn</h2>
+
+      <p>
+        These videos cover the core monitoring and performance tuning concepts. Watch them before
+        attempting the assignments to build a strong mental model of PostgreSQL internals.
+      </p>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/clrtT_4WBAw?rel=0&amp;modestbranding=1"
+            title="PostgreSQL Performance Monitoring"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          PostgreSQL Performance Monitoring with pg_stat Views and Query Analysis
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/9sMRHZL-tRI?rel=0&amp;modestbranding=1"
+            title="VACUUM and Autovacuum Tuning"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          VACUUM and Autovacuum Tuning for Production PostgreSQL
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 4: FURTHER READING
+           ════════════════════════════════════════ -->
+      <h2 id="further-reading">Further Reading</h2>
+
+      <p>Deep-dive into the official documentation and expert resources for monitoring and performance tuning.</p>
+
+      <div class="resource-grid">
+        <a class="resource-card" href="https://www.postgresql.org/docs/current/pgstatstatements.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">PostgreSQL Docs: pg_stat_statements</div>
+            <div class="resource-desc">Extension reference for query statistics tracking, configuration, and reset functions.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://www.postgresql.org/docs/current/routine-vacuuming.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">PostgreSQL Docs: Routine Vacuuming</div>
+            <div class="resource-desc">VACUUM operations, autovacuum tuning, transaction ID wraparound prevention, and visibility maps.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://www.postgresql.org/docs/current/runtime-config-resource.html" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">PostgreSQL Docs: Resource Consumption</div>
+            <div class="resource-desc">shared_buffers, work_mem, effective_cache_size, and all memory-related configuration parameters.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://pgtune.leopard.in.ua/" target="_blank" rel="noopener">
+          <div class="resource-icon article">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">PGTune: Configuration Calculator</div>
+            <div class="resource-desc">Web-based tool that generates PostgreSQL configuration parameters based on your hardware specs.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://github.com/reorg/pg_repack" target="_blank" rel="noopener">
+          <div class="resource-icon github">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">pg_repack: Online Table Repacking</div>
+            <div class="resource-desc">Remove table and index bloat without exclusive locks. Essential for zero-downtime maintenance.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://github.com/pgexperts/pgx_scripts" target="_blank" rel="noopener">
+          <div class="resource-icon github">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">pgx_scripts: Monitoring Queries</div>
+            <div class="resource-desc">Collection of useful monitoring and diagnostic queries from PostgreSQL experts.</div>
+          </div>
+        </a>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 5: ASSIGNMENTS
+           ════════════════════════════════════════ -->
+      <h2 id="assignments">Assignments</h2>
+
+      <p>
+        Complete these in order. Each level builds on the previous one. Use <code>EXPLAIN (ANALYZE, BUFFERS, FORMAT TEXT)</code>
+        to validate your work and include the output in your submission.
+      </p>
+
+      <!-- Assignment 1: Level 1 -->
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 1
+          </div>
+          <span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span>
+        </div>
+        <h4>Slow Query Detection and Analysis</h4>
+        <p>Set up pg_stat_statements and build a slow query detection workflow. You will learn to identify the queries consuming the most database resources.</p>
+
+        <ul class="checklist">
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Install and enable <code>pg_stat_statements</code> in your PostgreSQL instance (add to <code>shared_preload_libraries</code>)</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Generate workload using <code>pgbench</code> to populate query statistics</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Write queries to find top 10 slowest queries by total time and mean time</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Use <code>EXPLAIN (ANALYZE, BUFFERS)</code> on the slowest query and identify optimization opportunities</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Create an index that improves the slowest query and measure the before/after performance</span>
+          </li>
+        </ul>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            You can identify the top slow queries in your database, explain why they are slow using
+            EXPLAIN output, and demonstrate a measurable improvement after adding an index.
+          </p>
+        </div>
+      </div>
+
+      <!-- Assignment 2: Level 2 -->
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 2
+          </div>
+          <span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span>
+        </div>
+        <h4>VACUUM Tuning and Table Health Monitoring</h4>
+        <p>Configure autovacuum for high-write tables and build a table health dashboard that flags problems before they become incidents.</p>
+
+        <ul class="checklist">
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Generate a high-write workload that creates significant dead tuples on a test table</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Query <code>pg_stat_user_tables</code> to measure dead tuple accumulation over time</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Tune per-table autovacuum settings to vacuum more aggressively on the high-write table</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Compare dead tuple counts before and after tuning autovacuum</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Create a monitoring view that flags tables needing attention (high dead tuple ratio, stale stats)</span>
+          </li>
+        </ul>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            Your high-write table stays under 5% dead tuples with tuned autovacuum, and your monitoring
+            view correctly identifies tables that need attention.
+          </p>
+        </div>
+      </div>
+
+      <!-- Assignment 3: Level 3 -->
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 3
+          </div>
+          <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Production-Ready</span>
+        </div>
+        <h4>Complete Performance Tuning Runbook</h4>
+        <p>Build a comprehensive performance monitoring and tuning system for a production-like database with documented procedures for every common performance problem.</p>
+
+        <ul class="checklist">
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Configure <code>shared_buffers</code>, <code>work_mem</code>, and <code>effective_cache_size</code> using PGTune recommendations</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Build a monitoring dashboard with connection state, lock contention, bloat detection, and cache hit ratios</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Detect and remediate table bloat using <code>pgstattuple</code> or <code>pg_repack</code></span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Benchmark before/after memory tuning using <code>pgbench</code> and document the results</span>
+          </li>
+          <li>
+            <div class="check-box" onclick="this.classList.toggle('checked')"></div>
+            <span>Write a performance tuning runbook with diagnostic queries, thresholds, and remediation steps</span>
+          </li>
+        </ul>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>
+            You have a documented, repeatable process for diagnosing and resolving the 5 most common
+            PostgreSQL performance problems, backed by monitoring queries and benchmark data.
+          </p>
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 6: SELF-CHECK
+           ════════════════════════════════════════ -->
+      <h2 id="self-check">Self-Check</h2>
+
+      <p>Before moving to Chapter 10, honestly answer these questions. If any answer is uncertain, go back and experiment.</p>
+
+      <details>
+        <summary>Can you find the top 5 slowest queries in your database right now?</summary>
+        <div class="details-body">
+          <p>
+            If not, install <code>pg_stat_statements</code> immediately. It is the single most important
+            observability tool for PostgreSQL. Without it, you are flying blind. Add it to
+            <code>shared_preload_libraries</code>, restart PostgreSQL, and run
+            <code>CREATE EXTENSION pg_stat_statements</code>.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Do you know the dead tuple ratio for your busiest table?</summary>
+        <div class="details-body">
+          <p>
+            Query <code>pg_stat_user_tables</code> for
+            <code>n_dead_tup / (n_live_tup + n_dead_tup)</code>. If any table is over 10%, autovacuum
+            is not keeping up and you need to tune its per-table settings or investigate long-running
+            transactions that are preventing cleanup.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Have you tuned shared_buffers and work_mem for your workload?</summary>
+        <div class="details-body">
+          <p>
+            The default settings (128MB shared_buffers, 4MB work_mem) are designed for a tiny development
+            machine. On a production server with 32GB+ RAM, these defaults leave massive performance on
+            the table. Use PGTune as a starting point, then benchmark and adjust.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Can you trace a lock contention chain from blocked query to blocker?</summary>
+        <div class="details-body">
+          <p>
+            Combine <code>pg_stat_activity</code> with <code>pg_locks</code> to find which session
+            holds the lock that another session is waiting for. In production, set
+            <code>idle_in_transaction_session_timeout</code> to automatically terminate sessions that
+            hold transactions open too long. Also consider <code>lock_timeout</code> to prevent
+            queries from waiting indefinitely for locks.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Do you have a buffer cache hit ratio above 99%?</summary>
+        <div class="details-body">
+          <p>
+            Check with: <code>SELECT round(100 * sum(blks_hit) / nullif(sum(blks_hit) + sum(blks_read), 0), 2) FROM pg_stat_database WHERE datname = current_database()</code>.
+            If below 99%, you are reading too much from disk. Increase <code>shared_buffers</code>, add
+            indexes to reduce the working set, or investigate which tables are causing the most cache
+            misses using <code>pg_statio_user_tables</code>.
+          </p>
+        </div>
+      </details>
+
+    </main>
+
+    <!-- Sidebar: Table of Contents -->
+    <aside class="sidebar">
+      <div class="sidebar-title">On this page</div>
+      <ul class="toc-list">
+        <li class="toc-item"><a href="#why-this-matters">Why This Matters</a></li>
+        <li class="toc-item"><a href="#key-concepts">Key Concepts</a></li>
+        <li class="toc-item"><a href="#pg-stat-statements" style="padding-left: 28px; font-size: 12px;">pg_stat_statements</a></li>
+        <li class="toc-item"><a href="#pg-stat-user-tables" style="padding-left: 28px; font-size: 12px;">Table Health</a></li>
+        <li class="toc-item"><a href="#vacuum-tuning" style="padding-left: 28px; font-size: 12px;">VACUUM Tuning</a></li>
+        <li class="toc-item"><a href="#memory-config" style="padding-left: 28px; font-size: 12px;">Memory Configuration</a></li>
+        <li class="toc-item"><a href="#connection-lock-monitoring" style="padding-left: 28px; font-size: 12px;">Connection/Lock Monitoring</a></li>
+        <li class="toc-item"><a href="#bloat-detection" style="padding-left: 28px; font-size: 12px;">Bloat Detection</a></li>
+        <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a></li>
+        <li class="toc-item"><a href="#further-reading">Further Reading</a></li>
+        <li class="toc-item"><a href="#assignments">Assignments</a></li>
+        <li class="toc-item"><a href="#self-check">Self-Check</a></li>
       </ul>
-    </div>
+    </aside>
+  </div>
 
-    <hr class="section-divider">
-
-    <div class="coming-soon-banner">
-      <h3>Content In Development</h3>
-      <p>Full chapter content with detailed explanations, code examples, video walkthroughs, and assignments is being developed. Check back soon.</p>
-    </div>
-
-    <div class="callout tip">
-      <div class="callout-header">What You Will Learn</div>
-      <p>By the end of this chapter, you will understand pg_stat views, slow query analysis, vacuum tuning, memory configuration, bloat management and be able to apply these concepts in real-world scenarios.</p>
-    </div>
-
-  </main>
-
-  <nav class="footer-nav">
-        <a class="footer-nav-link prev" href="chapter-08.html">
-          <span class="footer-nav-label">&larr; Previous</span>
-          <span class="footer-nav-title">Chapter 08: Backup and Disaster Recovery</span>
+  <!-- Footer Navigation -->
+  <footer class="chapter-footer">
+    <div class="chapter-footer-inner">
+      <nav class="footer-nav">
+        <a class="footer-nav-link" href="chapter-08.html">
+          <span class="footer-nav-label">&larr; Previous Chapter</span>
+          <span class="footer-nav-title">08: Backup and Disaster Recovery</span>
         </a>
-        <a class="footer-nav-link next" href="chapter-10.html">
-          <span class="footer-nav-label">Next &rarr;</span>
-          <span class="footer-nav-title">Chapter 10: Security, Compliance, and Capstone</span>
+        <a class="footer-nav-link" href="chapter-10.html">
+          <span class="footer-nav-label">Next Chapter &rarr;</span>
+          <span class="footer-nav-title">10: Security, Compliance, and Capstone</span>
         </a>
-  </nav>
-
-  <footer class="footer">
-    ILA (Iksha Learning Academy) &middot; PostgreSQL Engineering &middot; <a href="index.html">All Chapters</a>
+      </nav>
+      <div class="footer-brand">
+        ILA (Iksha Learning Academy) &middot; PostgreSQL Engineering Certification &middot; Level 2
+      </div>
+    </div>
   </footer>
 
+  <!-- ════════════════════════════════════════
+       SCRIPTS
+       ════════════════════════════════════════ -->
   <script>
+    // ── Progress Bar ──
     window.addEventListener('scroll', () => {
-      const h = document.documentElement;
-      const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
-      document.getElementById('progressBar').style.width = Math.min(pct, 100) + '%';
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      document.getElementById('progressBar').style.width = progress + '%';
     });
+
+    // ── Active TOC ──
+    const tocLinks = document.querySelectorAll('.toc-item a');
+    const sections = [];
+
+    tocLinks.forEach(link => {
+      const id = link.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) sections.push({ id, el, link });
+    });
+
+    const observerOptions = {
+      rootMargin: '-80px 0px -60% 0px',
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const item = sections.find(s => s.el === entry.target);
+        if (item) {
+          if (entry.isIntersecting) {
+            tocLinks.forEach(l => l.classList.remove('active'));
+            item.link.classList.add('active');
+          }
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(s => observer.observe(s.el));
+
+    // ── Copy Code ──
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      const text = pre.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.classList.add('copied');
+        btn.textContent = 'Copied!';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.textContent = 'Copy';
+        }, 2000);
+      });
+    }
   </script>
 </body>
 </html>

@@ -8,7 +8,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
+    /* ═══════════════════════════════════════════════
+       ILA DESIGN SYSTEM — v1.0
+       Iksha Learning Academy
+       ═══════════════════════════════════════════════ */
+
     :root {
+      /* Palette */
       --ink:        #0f172a;
       --ink-light:  #334155;
       --ink-muted:  #64748b;
@@ -17,6 +23,8 @@
       --surface-warm:#fffbeb;
       --border:     #e2e8f0;
       --border-light:#f1f5f9;
+
+      /* Brand */
       --teal-50:  #f0fdfa;
       --teal-100: #ccfbf1;
       --teal-200: #99f6e4;
@@ -25,36 +33,48 @@
       --teal-700: #0f766e;
       --teal-800: #115e59;
       --teal-900: #134e4a;
+
       --blue-50:  #eff6ff;
       --blue-100: #dbeafe;
       --blue-500: #3b82f6;
       --blue-600: #2563eb;
       --blue-700: #1d4ed8;
+
       --amber-50:  #fffbeb;
       --amber-100: #fef3c7;
       --amber-500: #f59e0b;
       --amber-600: #d97706;
+
       --red-50:   #fef2f2;
       --red-100:  #fee2e2;
       --red-500:  #ef4444;
       --red-600:  #dc2626;
+
       --purple-50:  #faf5ff;
       --purple-100: #f3e8ff;
       --purple-500: #a855f7;
       --purple-600: #9333ea;
-      --green-50:  #f0fdf4;
-      --green-100: #dcfce7;
-      --green-500: #22c55e;
-      --green-600: #16a34a;
+
+      /* Typography */
       --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       --font-serif: 'Instrument Serif', Georgia, serif;
       --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
+
+      /* Spacing */
       --content-max: 780px;
+      --sidebar-width: 280px;
+
+      /* Transitions */
       --ease: cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
 
     body {
       font-family: var(--font-sans);
@@ -64,6 +84,7 @@
       background: var(--surface);
     }
 
+    /* ── PROGRESS BAR ─────────────────────────── */
     .progress-bar {
       position: fixed;
       top: 0;
@@ -75,6 +96,7 @@
       transition: width 0.15s var(--ease);
     }
 
+    /* ── TOP NAV ──────────────────────────────── */
     .top-nav {
       position: sticky;
       top: 0;
@@ -162,6 +184,7 @@
       padding: 0 4px;
     }
 
+    /* ── HERO ─────────────────────────────────── */
     .hero {
       background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%);
       border-bottom: 1px solid var(--border);
@@ -222,33 +245,117 @@
       color: var(--ink-muted);
     }
 
-    .content {
-      max-width: var(--content-max);
-      margin: 0 auto;
-      padding: 3rem 2rem 6rem;
+    .hero-meta-item svg {
+      width: 16px;
+      height: 16px;
+      color: var(--teal-600);
     }
 
+    /* ── MAIN LAYOUT ──────────────────────────── */
+    .main-layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr var(--sidebar-width);
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .content {
+      padding: 3rem 0 6rem;
+      min-width: 0;
+    }
+
+    /* ── SIDEBAR TOC ──────────────────────────── */
+    .sidebar {
+      position: sticky;
+      top: 76px;
+      padding: 2rem 0;
+      max-height: calc(100vh - 76px);
+      overflow-y: auto;
+    }
+
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-muted);
+      margin-bottom: 1rem;
+      padding-left: 14px;
+    }
+
+    .toc-list {
+      list-style: none;
+    }
+
+    .toc-item a {
+      display: block;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--ink-muted);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: all 0.2s var(--ease);
+      line-height: 1.5;
+    }
+
+    .toc-item a:hover {
+      color: var(--ink);
+      background: var(--surface-alt);
+    }
+
+    .toc-item a.active {
+      color: var(--teal-700);
+      border-left-color: var(--teal-500);
+      background: var(--teal-50);
+      font-weight: 500;
+    }
+
+    /* ── TYPOGRAPHY ────────────────────────────── */
     .content h2 {
       font-family: var(--font-serif);
       font-size: 1.85rem;
       font-weight: 400;
       color: var(--ink);
       margin: 3rem 0 1rem;
+      padding-top: 1rem;
       scroll-margin-top: 80px;
     }
 
-    .content h2:first-child { margin-top: 0; }
+    .content h2:first-child {
+      margin-top: 0;
+    }
 
     .content h3 {
       font-size: 1.15rem;
       font-weight: 600;
       color: var(--ink);
       margin: 2rem 0 0.75rem;
+      scroll-margin-top: 80px;
     }
 
     .content p {
       margin-bottom: 1.25rem;
       color: var(--ink-light);
+    }
+
+    .content strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .content a {
+      color: var(--teal-700);
+      text-decoration: underline;
+      text-decoration-color: var(--teal-200);
+      text-underline-offset: 3px;
+      transition: text-decoration-color 0.2s;
+    }
+
+    .content a:hover {
+      text-decoration-color: var(--teal-600);
     }
 
     .content ul, .content ol {
@@ -261,13 +368,25 @@
       color: var(--ink-light);
     }
 
-    .content li::marker { color: var(--teal-500); }
+    .content li::marker {
+      color: var(--teal-500);
+    }
 
+    /* ── SECTION DIVIDER ──────────────────────── */
+    .section-divider {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 3rem 0;
+    }
+
+    /* ── CALLOUT BOXES ────────────────────────── */
     .callout {
       padding: 1.25rem 1.5rem;
       border-radius: 12px;
       margin-bottom: 1.5rem;
       border: 1px solid;
+      position: relative;
     }
 
     .callout-header {
@@ -277,6 +396,12 @@
       font-size: 14px;
       font-weight: 600;
       margin-bottom: 0.5rem;
+    }
+
+    .callout-header svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
     }
 
     .callout p:last-child { margin-bottom: 0; }
@@ -293,6 +418,12 @@
     }
     .callout.important .callout-header { color: var(--amber-600); }
 
+    .callout.danger {
+      background: var(--red-50);
+      border-color: var(--red-100);
+    }
+    .callout.danger .callout-header { color: var(--red-600); }
+
     .callout.tip {
       background: var(--purple-50);
       border-color: var(--purple-100);
@@ -305,93 +436,403 @@
     }
     .callout.success .callout-header { color: var(--teal-700); }
 
-    .section-divider {
-      border: none;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--border), transparent);
-      margin: 3rem 0;
-    }
-
-    .coming-soon-banner {
-      background: var(--amber-50);
-      border: 1px solid var(--amber-100);
+    /* ── CODE BLOCKS ──────────────────────────── */
+    .code-block {
+      position: relative;
+      margin-bottom: 1.5rem;
       border-radius: 12px;
-      padding: 2.5rem;
-      text-align: center;
-      margin: 2rem 0;
+      overflow: hidden;
+      border: 1px solid var(--border);
     }
 
-    .coming-soon-banner h3 {
-      color: var(--amber-600);
-      margin-bottom: 0.5rem;
-    }
-
-    .coming-soon-banner p {
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+      background: var(--surface-alt);
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
       color: var(--ink-muted);
-      margin-bottom: 0;
     }
 
-    .topics-preview {
+    .code-lang {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .code-copy {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: white;
+      font-size: 11px;
+      font-family: var(--font-sans);
+      color: var(--ink-muted);
+      cursor: pointer;
+      transition: all 0.2s var(--ease);
+    }
+
+    .code-copy:hover {
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    .code-copy.copied {
+      background: var(--teal-50);
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    pre {
+      margin: 0;
+      padding: 1.25rem 1.5rem;
+      overflow-x: auto;
+      background: #1e293b;
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: #e2e8f0;
+    }
+
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.88em;
+    }
+
+    p code, li code {
+      padding: 2px 7px;
       background: var(--surface-alt);
       border: 1px solid var(--border);
+      border-radius: 5px;
+      color: var(--teal-800);
+      font-size: 0.85em;
+    }
+
+    /* Syntax highlights (minimal) */
+    .hl-keyword  { color: #c084fc; }
+    .hl-string   { color: #86efac; }
+    .hl-comment  { color: #64748b; font-style: italic; }
+    .hl-function { color: #7dd3fc; }
+    .hl-number   { color: #fbbf24; }
+    .hl-flag     { color: #f472b6; }
+
+    /* ── COLLAPSIBLE (DETAILS) ────────────────── */
+    details {
+      margin-bottom: 1.25rem;
+      border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 1.5rem 2rem;
-      margin: 1.5rem 0;
+      overflow: hidden;
+      transition: border-color 0.2s var(--ease);
     }
 
-    .topics-preview h3 {
-      font-size: 0.95rem;
-      margin-bottom: 0.75rem;
+    details[open] {
+      border-color: var(--teal-200);
+    }
+
+    details summary {
+      padding: 1rem 1.25rem;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      background: var(--surface-alt);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.2s var(--ease);
+      user-select: none;
+    }
+
+    details summary::-webkit-details-marker { display: none; }
+
+    details summary::before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+      flex-shrink: 0;
+      transition: transform 0.2s var(--ease);
+    }
+
+    details[open] summary::before {
+      transform: rotate(90deg);
+    }
+
+    details summary:hover {
+      background: var(--teal-50);
+    }
+
+    .details-body {
+      padding: 1.25rem 1.5rem;
+    }
+
+    .details-body p:last-child { margin-bottom: 0; }
+
+    /* ── VIDEO EMBED ──────────────────────────── */
+    .video-card {
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      background: #0f172a;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .video-caption {
+      padding: 12px 16px;
+      background: var(--surface-alt);
+      font-size: 13px;
+      color: var(--ink-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .video-caption svg {
+      width: 14px;
+      height: 14px;
+      color: var(--red-500);
+    }
+
+    /* ── RESOURCE CARDS ───────────────────────── */
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .resource-card {
+      display: flex;
+      gap: 14px;
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      background: white;
+    }
+
+    .resource-card:hover {
+      border-color: var(--teal-300);
+      background: var(--teal-50);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .resource-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 18px;
+    }
+
+    .resource-icon.docs    { background: var(--blue-50);   color: var(--blue-600); }
+    .resource-icon.video   { background: var(--red-50);    color: var(--red-500); }
+    .resource-icon.github  { background: var(--ink);       color: white; }
+    .resource-icon.article { background: var(--amber-50);  color: var(--amber-600); }
+    .resource-icon.pdf     { background: var(--purple-50); color: var(--purple-600); }
+
+    .resource-info {
+      min-width: 0;
+    }
+
+    .resource-title {
+      font-size: 14px;
+      font-weight: 600;
       color: var(--ink);
+      margin-bottom: 2px;
+      line-height: 1.4;
     }
 
-    .topics-preview ul {
+    .resource-desc {
+      font-size: 12px;
+      color: var(--ink-muted);
+      line-height: 1.5;
+    }
+
+    /* ── ASSIGNMENT CARDS ─────────────────────── */
+    .assignment {
+      border: 2px solid var(--teal-200);
+      border-radius: 14px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--teal-50) 0%, white 100%);
+    }
+
+    .assignment-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .assignment-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--teal-700);
+    }
+
+    .assignment-difficulty {
+      display: inline-flex;
+      padding: 4px 10px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .difficulty-l1 { background: var(--teal-100); color: var(--teal-800); }
+    .difficulty-l2 { background: var(--amber-100); color: var(--amber-600); }
+    .difficulty-l3 { background: var(--red-100); color: var(--red-600); }
+
+    .assignment h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .assignment p {
+      font-size: 14px;
+    }
+
+    .checklist {
       list-style: none;
       padding: 0;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 0.5rem;
     }
 
-    .topics-preview li {
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-light);
       font-size: 14px;
-      color: var(--ink-light);
-      padding-left: 1.25rem;
-      position: relative;
     }
 
-    .topics-preview li::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 8px;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
+    .checklist li:last-child { border-bottom: none; }
+
+    .check-box {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      border: 2px solid var(--border);
+      flex-shrink: 0;
+      margin-top: 1px;
+      cursor: pointer;
+      transition: all 0.15s var(--ease);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .check-box:hover {
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked {
       background: var(--teal-500);
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+    }
+
+    /* ── DIAGRAM ──────────────────────────────── */
+    .diagram {
+      margin: 1.5rem 0;
+      padding: 2rem;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow-x: auto;
+    }
+
+    .diagram pre {
+      background: transparent;
+      color: var(--ink);
+      padding: 0;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .diagram-caption {
+      margin-top: 1rem;
+      font-size: 12px;
+      color: var(--ink-muted);
+      text-align: center;
+      font-style: italic;
+    }
+
+    /* ── FOOTER ───────────────────────────────── */
+    .chapter-footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      background: var(--surface-alt);
+    }
+
+    .chapter-footer-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
     }
 
     .footer-nav {
-      max-width: var(--content-max);
-      margin: 0 auto;
-      padding: 2rem;
       display: flex;
       justify-content: space-between;
-      border-top: 1px solid var(--border);
+      align-items: center;
+      gap: 1rem;
     }
 
     .footer-nav-link {
       display: flex;
       flex-direction: column;
-      text-decoration: none;
-      padding: 1rem;
+      gap: 4px;
+      padding: 1rem 1.5rem;
+      border: 1px solid var(--border);
       border-radius: 12px;
-      transition: background 0.2s var(--ease);
-      max-width: 45%;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      max-width: 320px;
+      background: white;
     }
 
     .footer-nav-link:hover {
-      background: var(--surface-alt);
+      border-color: var(--teal-300);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
     }
 
     .footer-nav-label {
@@ -399,46 +840,61 @@
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.06em;
-      color: var(--ink-muted);
-      margin-bottom: 4px;
+      color: var(--teal-600);
     }
 
     .footer-nav-title {
       font-size: 15px;
       font-weight: 600;
-      color: var(--teal-700);
+      color: var(--ink);
     }
 
-    .footer-nav-link.next { text-align: right; margin-left: auto; }
-
-    .footer {
+    .footer-brand {
       text-align: center;
-      padding: 2rem;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
       font-size: 13px;
       color: var(--ink-muted);
-      border-top: 1px solid var(--border);
     }
 
-    .footer a {
-      color: var(--teal-700);
-      text-decoration: none;
+    /* ── RESPONSIVE ───────────────────────────── */
+    @media (max-width: 960px) {
+      .main-layout {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        display: none;
+      }
+      .resource-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
-    .footer a:hover { text-decoration: underline; }
+    @media (max-width: 640px) {
+      .hero { padding: 2.5rem 1.25rem 2rem; }
+      .main-layout { padding: 0 1.25rem; }
+      .content { padding: 2rem 0 4rem; }
+      pre { padding: 1rem; font-size: 12.5px; }
+      .footer-nav { flex-direction: column; }
+      .footer-nav-link { max-width: 100%; width: 100%; }
+    }
 
-    @media (max-width: 768px) {
-      .hero { padding: 3rem 1.5rem 2.5rem; }
-      .content { padding: 2rem 1.5rem 4rem; }
-      .hero h1 { font-size: 2rem; }
-      .footer-nav { flex-direction: column; gap: 1rem; }
-      .footer-nav-link { max-width: 100%; }
-      .footer-nav-link.next { text-align: left; }
+    /* ── PRINT ────────────────────────────────── */
+    @media print {
+      .top-nav, .sidebar, .progress-bar { display: none; }
+      .main-layout { display: block; }
+      .content { padding: 0; }
+      .hero { background: white; border: none; }
+      pre { background: #f1f5f9; color: var(--ink); border: 1px solid var(--border); }
     }
   </style>
 </head>
 <body>
+  <!-- Progress Bar -->
   <div class="progress-bar" id="progressBar"></div>
 
+  <!-- Top Navigation -->
   <nav class="top-nav">
     <div class="top-nav-inner">
       <a class="nav-brand" href="index.html">
@@ -446,77 +902,745 @@
         <span class="nav-brand-text">Iksha Learning Academy</span>
       </a>
       <div class="nav-chapter-nav">
-        <a class="nav-btn" href="chapter-06.html">&larr; Previous</a>
+        <a class="nav-btn" href="chapter-06.html">&larr; Strategic Partnerships</a>
         <span class="nav-current">07 / 10</span>
-        <a class="nav-btn" href="chapter-08.html">Next &rarr;</a>
+        <a class="nav-btn" href="chapter-08.html">Crisis and High-Pressure Negotiations &rarr;</a>
       </div>
     </div>
   </nav>
 
+  <!-- Hero -->
   <header class="hero">
     <div class="hero-inner">
       <div class="hero-chapter-label">
-        <span>Chapter 07</span> 
+        <span>Chapter 07</span> &middot; Global Negotiation Intelligence
       </div>
       <h1>Cross-Cultural Negotiations</h1>
-      <p class="hero-subtitle">Cultural dimensions, communication styles, time orientation, hierarchy, global etiquette</p>
+      <p class="hero-subtitle">
+        In a globalized business landscape, your next critical negotiation may be with a counterpart from Tokyo, Berlin, Mumbai, or Sao Paulo. Cultural differences in communication style, relationship expectations, time orientation, and decision-making processes can make or break deals. This chapter equips you with frameworks to navigate cultural complexity without resorting to stereotypes.
+      </p>
       <div class="hero-meta">
-        <div class="hero-meta-item">3 Assignments</div>
-        <div class="hero-meta-item">~45 min read</div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Estimated: 60&ndash;80 min
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          5 Key Concepts
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          3 Assignments
+        </div>
       </div>
     </div>
   </header>
 
-  <main class="content">
-    <h2>Overview</h2>
-    <p>This chapter covers <strong>cross-cultural negotiations</strong> as part of the Advanced Negotiations curriculum. You will build practical skills through guided explanations, code examples, and hands-on assignments.</p>
+  <!-- Main Content + Sidebar -->
+  <div class="main-layout">
+    <main class="content">
 
-    <div class="topics-preview">
-      <h3>Topics Covered</h3>
-      <ul>
-            <li>Cultural dimensions</li>
-            <li>communication styles</li>
-            <li>time orientation</li>
-            <li>hierarchy</li>
-            <li>global etiquette</li>
+      <!-- ════════════════════════════════════════
+           SECTION 1: WHY THIS MATTERS
+           ════════════════════════════════════════ -->
+      <h2 id="why-this-matters">Why This Matters</h2>
+
+      <p>
+        The global technology economy has made cross-cultural negotiations an everyday reality, not a rare exception. Your startup may have investors in Singapore, engineering talent in Eastern Europe, manufacturing partners in China, and enterprise customers across the Middle East. Each of these relationships requires navigation of cultural expectations that differ dramatically from those you might encounter in your home market. Research from INSEAD demonstrates that <strong>cross-cultural misunderstandings account for the collapse of nearly 50% of international joint ventures</strong> within the first five years.
+      </p>
+
+      <p>
+        The cost of cultural miscalculation in negotiations is not limited to hurt feelings or awkward dinners. It manifests in real economic harm: deals that take twice as long to close because you misjudged the decision-making process, partnerships that collapse because you interpreted silence as agreement when it actually signaled discomfort, or sales that evaporate because your direct communication style was perceived as disrespectful. Understanding cultural dimensions is not a "soft skill" &mdash; it is a strategic competency with direct bottom-line impact.
+      </p>
+
+      <p>
+        This chapter gives you research-backed frameworks for diagnosing cultural differences before you enter a negotiation, adapting your communication style without losing authenticity, and structuring agreements that account for different cultural expectations around commitment, time, and relationship. You will learn to see culture as a negotiation variable that can be managed, not as an unpredictable obstacle.
+      </p>
+
+      <div class="callout concept">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Key Insight
+        </div>
+        <p>
+          Cultural intelligence in negotiation is not about memorizing country-specific etiquette rules. It is about developing a <strong>diagnostic framework</strong> that helps you read situations in real time and adapt your approach accordingly. The goal is not to become someone else &mdash; it is to expand your repertoire so you can meet your counterpart where they are while maintaining your own integrity.
+        </p>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 2: KEY CONCEPTS
+           ════════════════════════════════════════ -->
+      <h2 id="key-concepts">Key Concepts</h2>
+
+      <h3 id="cultural-dimensions">1. The Cultural Dimensions Framework for Negotiators</h3>
+
+      <p>
+        Building on the pioneering work of Geert Hofstede, Erin Meyer, and Edward T. Hall, we can identify key cultural dimensions that directly impact how negotiations unfold. Understanding where your counterpart's culture sits on each dimension &mdash; and where your own sits &mdash; reveals potential friction points and adaptation opportunities.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Framework</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── Cultural Dimensions for Negotiators ──────────────────── */</span>
+
+<span class="hl-keyword">1. COMMUNICATION STYLE</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Low-Context ◄─────────────────────────► High-Context
+  (Explicit, direct,        (Implicit, indirect,
+   words carry meaning)      context carries meaning)
+
+  US, Germany, Netherlands   Japan, Korea, India, China
+  "Say what you mean"        "Read between the lines"
+
+  <span class="hl-function">Impact on Negotiation:</span>
+  - Low-context: Proposals are literal, "no" means no
+  - High-context: Proposals carry subtext, silence does not mean agreement
+
+<span class="hl-keyword">2. RELATIONSHIP vs. TASK ORIENTATION</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Task-First ◄──────────────────────────► Relationship-First
+  (Business before personal,  (Personal trust before
+   efficiency prioritized)     business discussion)
+
+  US, UK, Scandinavia        China, Brazil, Saudi Arabia
+  "Let's get to the agenda"  "Let's get to know each other"
+
+  <span class="hl-function">Impact on Negotiation:</span>
+  - Task-first: Rushing to terms is expected and efficient
+  - Relationship-first: Rushing to terms signals untrustworthiness
+
+<span class="hl-keyword">3. HIERARCHY AND AUTHORITY</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Egalitarian ◄─────────────────────────► Hierarchical
+  (Decisions at any level,    (Decisions flow from top,
+   flat structures)            seniority matters greatly)
+
+  Sweden, Denmark, Israel    Japan, South Korea, India, Russia
+  "Anyone can challenge"      "Defer to the senior person"
+
+  <span class="hl-function">Impact on Negotiation:</span>
+  - Egalitarian: Your junior team member can propose terms
+  - Hierarchical: Only the most senior person can commit
+
+<span class="hl-keyword">4. TIME ORIENTATION</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Monochronic ◄─────────────────────────► Polychronic
+  (Linear time, schedules     (Fluid time, relationships
+   are sacred, punctuality)    over schedules, flexibility)
+
+  Germany, Switzerland, Japan  Brazil, India, Middle East
+  "The meeting starts at 9"    "The meeting starts when ready"
+
+  <span class="hl-function">Impact on Negotiation:</span>
+  - Monochronic: Deadlines are commitments, delays = disrespect
+  - Polychronic: Deadlines are aspirational, flexibility = wisdom
+
+<span class="hl-keyword">5. RISK TOLERANCE</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Risk-Embracing ◄──────────────────────► Risk-Averse
+  (Comfort with ambiguity,    (Need for certainty,
+   flexible agreements)        detailed contracts)
+
+  US, UK, Singapore           Germany, Japan, South Korea
+  "Let's figure it out"       "Let's define everything first"
+
+  <span class="hl-function">Impact on Negotiation:</span>
+  - Risk-embracing: Short MOU, iterate as you go
+  - Risk-averse: 80-page contract, every scenario addressed
+</pre>
+      </div>
+
+      <div class="callout important">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Avoiding Stereotypes
+        </div>
+        <p>
+          These dimensions describe <strong>tendencies within cultures, not rules about individuals</strong>. A German negotiator who has spent fifteen years working in Brazil may be far more relationship-oriented than the cultural average. A Japanese executive who studied at Stanford may be quite direct. Always use these frameworks as starting hypotheses to be tested, not as fixed assumptions. The individual sitting across from you is always more complex than any cultural profile.
+        </p>
+      </div>
+
+      <h3 id="communication-gaps">2. Bridging Communication Gaps</h3>
+
+      <p>
+        The most dangerous cross-cultural negotiation failures happen not when people disagree, but when they <em>think</em> they agree but actually mean different things. In high-context cultures, a "yes" may mean "I hear you" rather than "I agree." In low-context cultures, the absence of a "no" is interpreted as tentative agreement. These mismatches lead to commitments that one side never intended to make.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Negotiation Script</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── Communication Bridge Techniques ─────────────────────── */</span>
+
+<span class="hl-keyword">TECHNIQUE 1: THE MIRROR-BACK</span>
+  Used when: You suspect "yes" may not mean agreement.
+
+  You: "I want to make sure I understand correctly.
+       When you say 'that could work,' do you mean
+       your team is ready to move forward with these
+       specific terms, or that this is a direction
+       worth exploring further?"
+
+  <span class="hl-function">Why it works:</span> Gives them a face-saving way to clarify
+  without directly saying "no," which some cultures avoid.
+
+<span class="hl-keyword">TECHNIQUE 2: THE WRITTEN SUMMARY</span>
+  Used when: Negotiating across high-context / low-context divide.
+
+  You: "I've drafted a brief summary of what I believe
+       we've agreed to today. Could you review it and
+       let me know if there are any points where my
+       understanding differs from yours?"
+
+  <span class="hl-function">Why it works:</span> Creates a low-pressure checkpoint that
+  surfaces misunderstandings before they become commitments.
+
+<span class="hl-keyword">TECHNIQUE 3: THE CULTURAL BRIDGE QUESTION</span>
+  Used when: You are unsure about the decision-making process.
+
+  You: "In our organization, a deal like this would
+       typically need approval from our VP and legal team
+       before we can formally commit. I would love to
+       understand your process — who else on your side
+       would need to review and approve these terms?"
+
+  <span class="hl-function">Why it works:</span> Sharing your own process first makes the
+  question reciprocal rather than interrogative. Reveals
+  hierarchical dynamics without being presumptuous.
+
+<span class="hl-keyword">TECHNIQUE 4: THE PATIENCE SIGNAL</span>
+  Used when: Negotiating with relationship-first cultures.
+
+  You: "We are excited about this opportunity and committed
+       to taking the time needed to build a strong
+       foundation. There is no artificial deadline on our
+       side — we want to make sure this works well for
+       both organizations."
+
+  <span class="hl-function">Why it works:</span> Signals that you value the relationship
+  over speed, which builds trust in cultures where rushing
+  is interpreted as disrespect or desperation.
+</pre>
+      </div>
+
+      <h3 id="decision-patterns">3. Decision-Making Patterns Across Cultures</h3>
+
+      <p>
+        One of the most frustrating aspects of cross-cultural negotiation is discovering that the person you have been negotiating with for weeks does not have the authority to say "yes." In some cultures, the lead negotiator is empowered to make decisions in real time. In others, the lead negotiator is a representative who must take proposals back to a collective decision-making body.
+      </p>
+
+      <div class="diagram">
+<pre>
+  ┌──────────────────────────────────────────────────────────────┐
+  │              DECISION-MAKING PATTERN MATRIX                   │
+  ├──────────────┬──────────────────┬────────────────────────────┤
+  │  PATTERN     │  HOW IT WORKS    │  COMMON IN                 │
+  ├──────────────┼──────────────────┼────────────────────────────┤
+  │              │                  │                            │
+  │  TOP-DOWN    │  Senior leader   │  Russia, China,            │
+  │  DECISIVE    │  decides alone   │  Saudi Arabia, France      │
+  │              │  after hearing   │                            │
+  │              │  input           │  The "boss" may not        │
+  │              │                  │  attend early meetings     │
+  │              │                  │                            │
+  ├──────────────┼──────────────────┼────────────────────────────┤
+  │              │                  │                            │
+  │  CONSENSUS   │  Group discusses │  Japan (ringi system),     │
+  │  BUILDING    │  until all agree │  Scandinavia, Netherlands  │
+  │              │  — slow to       │                            │
+  │              │  decide, fast    │  Decision takes weeks      │
+  │              │  to execute      │  but sticks permanently    │
+  │              │                  │                            │
+  ├──────────────┼──────────────────┼────────────────────────────┤
+  │              │                  │                            │
+  │  DELEGATED   │  Empowered       │  United States, UK,        │
+  │  AUTHORITY   │  individual can  │  Australia                 │
+  │              │  commit within   │                            │
+  │              │  defined limits  │  Fast decisions, but       │
+  │              │                  │  may be reversed by boss   │
+  │              │                  │                            │
+  ├──────────────┼──────────────────┼────────────────────────────┤
+  │              │                  │                            │
+  │  COMMITTEE   │  Formal board    │  Germany, South Korea,     │
+  │  REVIEW      │  or committee    │  Large corporations       │
+  │              │  reviews and     │  globally                  │
+  │              │  approves        │                            │
+  │              │                  │  Requires formal proposal  │
+  │              │                  │  documentation             │
+  └──────────────┴──────────────────┴────────────────────────────┘
+</pre>
+        <div class="diagram-caption">Figure 1: Decision-making patterns across cultures and their negotiation implications</div>
+      </div>
+
+      <p>
+        The practical implication is clear: in a consensus culture like Japan, your goal is not just to convince the person at the table, but to equip them with the materials and arguments they need to build internal consensus. Provide detailed documentation, anticipate questions from stakeholders you will never meet, and demonstrate patience when the process takes longer than you expected.
+      </p>
+
+      <h3 id="relationship-building">4. Relationship Capital and Trust-Building Protocols</h3>
+
+      <p>
+        In many of the world's largest economies &mdash; China, India, Brazil, much of the Middle East and Africa &mdash; the relationship between negotiating parties is not a byproduct of the deal. It is a <strong>prerequisite for the deal</strong>. Attempting to negotiate substantive terms before establishing personal trust is perceived as transactional at best and offensive at worst.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Framework</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── Relationship-Building Protocols by Region ───────────── */</span>
+
+<span class="hl-keyword">CHINA (Guanxi)</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Core Concept: Personal network of trust and obligation
+  Timeline:     Weeks to months before substantive negotiation
+  Key Actions:
+  - Accept and reciprocate dinner invitations
+  - Bring thoughtful gifts (avoid clocks and white wrapping)
+  - Share personal stories; ask about family
+  - Use intermediaries for introductions when possible
+  - <span class="hl-function">Never cause "loss of face" in public settings</span>
+
+<span class="hl-keyword">JAPAN (Nemawashi)</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Core Concept: Informal consensus-building before formal meetings
+  Timeline:     Preliminary meetings over weeks or months
+  Key Actions:
+  - Exchange business cards (meishi) with both hands, study them
+  - Allow silence — it signals thinking, not discomfort
+  - Provide detailed written proposals in advance
+  - After-hours socializing (nomikai) is part of business
+  - <span class="hl-function">Decisions happen BETWEEN meetings, not during them</span>
+
+<span class="hl-keyword">INDIA (Jugaad — Flexible Innovation)</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Core Concept: Relationships enable creative deal-making
+  Timeline:     Initial trust built quickly, deepened over time
+  Key Actions:
+  - Invest in personal conversations before business
+  - Be prepared for non-linear negotiation — multiple issues
+    discussed simultaneously, revisited frequently
+  - Hierarchy matters — ensure your team seniority matches
+  - Flexibility is valued over rigid adherence to process
+  - <span class="hl-function">A handshake deal is meaningful but may evolve in details</span>
+
+<span class="hl-keyword">MIDDLE EAST (Wasta — Influence Networks)</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Core Concept: Trust networks and personal reputation
+  Timeline:     Significant — multiple visits over months
+  Key Actions:
+  - Accept hospitality graciously (tea, coffee, meals)
+  - Personal rapport with the decision-maker is essential
+  - Patience is a virtue — rushing signals weakness
+  - Use trusted mutual connections for introductions
+  - <span class="hl-function">Verbal commitments carry significant weight</span>
+
+<span class="hl-keyword">GERMANY (Sachlichkeit — Objectivity)</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  Core Concept: Trust through competence and thoroughness
+  Timeline:     Relationship built through professional quality
+  Key Actions:
+  - Come prepared with data, specifications, documentation
+  - Be punctual — five minutes late is disrespectful
+  - Directness is respected; vagueness is suspicious
+  - Separate personal and professional interactions
+  - <span class="hl-function">A signed contract is a binding commitment — period</span>
+</pre>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Pro Tip
+        </div>
+        <p>
+          <strong>When in doubt, slow down.</strong> The single most effective cross-cultural negotiation tactic is patience. Moving slower than your natural pace almost always builds more trust and reveals more information than moving fast. The deal that takes three months to close in a relationship-first culture will often be more durable and profitable than one you rushed through in three weeks.
+        </p>
+      </div>
+
+      <h3 id="adaptation-strategies">5. The Adaptive Negotiator: Strategies Without Losing Yourself</h3>
+
+      <p>
+        The challenge of cross-cultural negotiation is not just knowing <em>what</em> to adapt but knowing <em>how much</em> to adapt. Over-adapting can come across as inauthentic or condescending. Under-adapting signals arrogance or ignorance. The goal is what researchers call <strong>"cultural metacognition"</strong> &mdash; the ability to think about your own cultural assumptions while simultaneously reading your counterpart's cultural signals.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Framework</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── The Adaptive Negotiator's Decision Tree ─────────────── */</span>
+
+<span class="hl-keyword">BEFORE THE NEGOTIATION:</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  1. Research your counterpart's cultural dimensions
+     - Use Meyer's Culture Map or Hofstede's profiles
+     - Check: Is this the INDIVIDUAL or the CULTURE you expect?
+
+  2. Identify the biggest GAP between your style and theirs
+     - Communication? (Direct vs. indirect)
+     - Relationship? (Task-first vs. relationship-first)
+     - Time? (Monochronic vs. polychronic)
+     - Authority? (Egalitarian vs. hierarchical)
+
+  3. Plan your ADAPTATION BUDGET
+     <span class="hl-function">Adapt:</span> Pace, formality, relationship investment, patience
+     <span class="hl-function">Do not adapt:</span> Core values, ethical boundaries, deal-breakers
+
+<span class="hl-keyword">DURING THE NEGOTIATION:</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  4. Observe EARLY and adjust
+     - Watch body language, pacing, formality level
+     - Mirror their communication tempo (not content)
+     - Ask open-ended questions about their process
+
+  5. Use the "META-CONVERSATION" technique
+     You: "I know our teams come from different business
+          cultures. I want to make sure we are both
+          comfortable with how we are working together.
+          Is there anything about our approach that
+          you would like us to adjust?"
+
+     <span class="hl-function">Why it works:</span> Names the elephant in the room with
+     respect. Gives them permission to express preferences
+     without feeling they are criticizing your culture.
+
+<span class="hl-keyword">AFTER THE NEGOTIATION:</span>
+<span class="hl-string">━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+  6. Debrief with cultural lens
+     - What did I interpret correctly?
+     - What surprised me?
+     - Where did cultural gaps cause friction?
+     - What would I do differently next time?
+
+  7. Document cultural intelligence for your organization
+     - Build an internal playbook of cultural insights
+     - Share learnings across your team
+</pre>
+      </div>
+
+      <div class="callout concept">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          The Respect Principle
+        </div>
+        <p>
+          The single most important signal in cross-cultural negotiation is <strong>respect for the other side's way of doing business</strong>. You do not have to abandon your own style entirely. But demonstrating that you have taken the time to learn about their culture, their decision-making process, and their communication norms shows respect. And respect is the universal currency that opens doors in every culture on earth.
+        </p>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 3: WATCH & LEARN
+           ════════════════════════════════════════ -->
+      <h2 id="watch-learn">Watch &amp; Learn</h2>
+
+      <p>
+        These videos provide practical examples and expert perspectives on navigating cultural differences in business negotiations.
+      </p>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/zQvqDv4vbEg?rel=0&amp;modestbranding=1"
+            title="Erin Meyer - The Culture Map"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Erin Meyer &mdash; "The Culture Map" presentation. INSEAD professor explains eight cultural scales and how they affect business negotiations globally.
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/PSIzMOFpS3Y?rel=0&amp;modestbranding=1"
+            title="Cross-Cultural Negotiation Strategies"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Cross-Cultural Negotiation Strategies &mdash; Practical techniques for adapting your negotiation style when working across cultural boundaries.
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 4: FURTHER READING
+           ════════════════════════════════════════ -->
+      <h2 id="further-reading">Further Reading</h2>
+
+      <p>Deepen your cross-cultural negotiation capabilities with these essential resources.</p>
+
+      <div class="resource-grid">
+        <a class="resource-card" href="https://www.amazon.com/Culture-Map-Breaking-Invisible-Boundaries/dp/1610392507" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">The Culture Map &mdash; Erin Meyer</div>
+            <div class="resource-desc">INSEAD professor's definitive guide to navigating the invisible boundaries of international business. Eight cultural scales with practical applications.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://hbr.org/2015/12/getting-to-si-ja-oui-hai-and-da" target="_blank" rel="noopener">
+          <div class="resource-icon article">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">HBR: Getting to Si, Ja, Oui, Hai, and Da</div>
+            <div class="resource-desc">Erin Meyer's Harvard Business Review article on how to negotiate across five distinct cultural types. Includes specific tactical adaptations.</div>
+          </div>
+        </a>
+
+        <a class="resource-card" href="https://www.amazon.com/Kissinger-Negotiator-Lessons-Dealmaking-Highest/dp/0062694162" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Kissinger the Negotiator &mdash; Sebenius, Burns &amp; Mnookin</div>
+            <div class="resource-desc">Case studies of high-stakes international negotiations. Demonstrates how cultural intelligence operates at the highest diplomatic and business levels.</div>
+          </div>
+        </a>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 5: ASSIGNMENTS
+           ════════════════════════════════════════ -->
+      <h2 id="assignments">Assignments</h2>
+
+      <p>
+        Complete these assignments in order. Each progressively develops your ability to diagnose, adapt, and negotiate across cultural boundaries.
+      </p>
+
+      <!-- Assignment 1 -->
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 1
+          </div>
+          <span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span>
+        </div>
+        <h4>Cultural Dimensions Self-Assessment and Gap Analysis</h4>
+        <p>Map your own cultural negotiation profile and compare it to a specific counterpart culture you are likely to negotiate with.</p>
+
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Rate your own tendencies on all five dimensions (Communication, Relationship, Hierarchy, Time, Risk) on a 1-10 scale</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Select a specific counterpart culture and research their typical position on each dimension</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Identify the two largest gaps between your profile and theirs</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>For each gap, write two specific adaptation strategies you would use in a real negotiation</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Identify one thing about your own style you would NOT change, and explain why maintaining it matters to your authenticity</span></li>
+        </ul>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>You have a written cultural profile for yourself and your counterpart, a gap analysis, specific adaptation strategies, and a clear statement of what you will not compromise on.</p>
+        </div>
+      </div>
+
+      <!-- Assignment 2 -->
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 2
+          </div>
+          <span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Applied</span>
+        </div>
+        <h4>Cross-Cultural Role-Play: US Startup Meets Japanese Enterprise</h4>
+        <p>With a partner, role-play a partnership negotiation between an American SaaS startup and a Japanese enterprise buyer. Each side must adopt their assigned cultural style.</p>
+
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Partner A plays the US startup: Direct, time-pressured, egalitarian team structure, focused on closing quickly</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Partner B plays the Japanese enterprise: Indirect, relationship-focused, consensus-driven, hierarchical structure</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Conduct three 15-minute rounds: (1) Initial relationship meeting, (2) Proposal discussion, (3) Term negotiation</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>After each round, pause and document one cultural misunderstanding or friction point you observed</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Debrief: Discuss how each side could have adapted to reduce friction without abandoning core objectives</span></li>
+        </ul>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>You have completed all three rounds, documented at least three cultural friction points, and produced a written debrief with specific adaptation recommendations.</p>
+        </div>
+      </div>
+
+      <!-- Assignment 3 -->
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 3
+          </div>
+          <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Strategic</span>
+        </div>
+        <h4>Multi-Cultural Negotiation Simulation: Three-Party International Deal</h4>
+        <p>Design and facilitate a three-party negotiation involving representatives from three distinct cultural backgrounds negotiating a joint venture agreement.</p>
+
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Assign three participants to represent a US tech startup, a German manufacturing firm, and a Chinese distribution company</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create confidential briefs for each party: business objectives, cultural style requirements, and walk-away points</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Conduct the negotiation over 60 minutes, with each party maintaining their cultural style</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Document all cultural adaptation moments: successes and misunderstandings</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write a post-simulation report with: outcome analysis, cultural friction map, and recommended protocols for future multi-cultural negotiations</span></li>
+        </ul>
+
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>You have a complete simulation report including outcome analysis, a cultural friction map with at least five cross-cultural moments, and a practical protocol document for future international negotiations.</p>
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- ════════════════════════════════════════
+           SECTION 6: SELF-CHECK
+           ════════════════════════════════════════ -->
+      <h2 id="self-check">Self-Check</h2>
+
+      <p>Before moving to Chapter 08, honestly answer these questions. If any answer is uncertain, revisit the relevant section.</p>
+
+      <details>
+        <summary>Can you name the five key cultural dimensions and explain how each impacts negotiation?</summary>
+        <div class="details-body">
+          <p>The five dimensions are: (1) Communication Style (low-context vs. high-context), (2) Relationship vs. Task Orientation, (3) Hierarchy and Authority, (4) Time Orientation (monochronic vs. polychronic), and (5) Risk Tolerance. Each creates specific friction points when negotiating across cultures.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Do you understand why consensus and top-down decision-making require different approaches?</summary>
+        <div class="details-body">
+          <p>In consensus cultures (Japan, Scandinavia), equip your counterpart with materials for internal alignment. In top-down cultures (Russia, France), ensure the decision-maker is briefed. Misreading the pattern wastes weeks of negotiation effort.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Could you conduct a pre-negotiation cultural gap analysis for a specific counterpart?</summary>
+        <div class="details-body">
+          <p>A cultural gap analysis requires mapping your own profile, researching the counterpart's tendencies, identifying the biggest gaps, and planning specific adaptations while maintaining your core values. Use profiles as hypotheses to be tested, not fixed predictions.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Can you use the mirror-back technique to surface hidden disagreements?</summary>
+        <div class="details-body">
+          <p>The mirror-back involves reflecting back what you heard and offering a face-saving way to clarify. Instead of "Do you agree?" ask "When you say 'that could work,' do you mean ready to proceed, or worth exploring further?" This separates politeness from commitment.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Do you understand why patience is the most powerful cross-cultural tactic?</summary>
+        <div class="details-body">
+          <p>In relationship-first cultures, rushing signals untrustworthiness or desperation. Slowing down demonstrates respect, builds trust, and reveals information that time-pressured approaches miss. It also allows you to observe and adapt your approach based on real-time cultural signals.</p>
+        </div>
+      </details>
+
+    </main>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-title">On this page</div>
+      <ul class="toc-list">
+        <li class="toc-item"><a href="#why-this-matters">Why This Matters</a></li>
+        <li class="toc-item"><a href="#key-concepts">Key Concepts</a></li>
+        <li class="toc-item"><a href="#cultural-dimensions" style="padding-left: 28px; font-size: 12px;">Cultural Dimensions</a></li>
+        <li class="toc-item"><a href="#communication-gaps" style="padding-left: 28px; font-size: 12px;">Communication Gaps</a></li>
+        <li class="toc-item"><a href="#decision-patterns" style="padding-left: 28px; font-size: 12px;">Decision-Making Patterns</a></li>
+        <li class="toc-item"><a href="#relationship-building" style="padding-left: 28px; font-size: 12px;">Relationship Capital</a></li>
+        <li class="toc-item"><a href="#adaptation-strategies" style="padding-left: 28px; font-size: 12px;">Adaptive Negotiator</a></li>
+        <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a></li>
+        <li class="toc-item"><a href="#further-reading">Further Reading</a></li>
+        <li class="toc-item"><a href="#assignments">Assignments</a></li>
+        <li class="toc-item"><a href="#self-check">Self-Check</a></li>
       </ul>
-    </div>
+    </aside>
+  </div>
 
-    <hr class="section-divider">
-
-    <div class="coming-soon-banner">
-      <h3>Content In Development</h3>
-      <p>Full chapter content with detailed explanations, code examples, video walkthroughs, and assignments is being developed. Check back soon.</p>
-    </div>
-
-    <div class="callout tip">
-      <div class="callout-header">What You Will Learn</div>
-      <p>By the end of this chapter, you will understand cultural dimensions, communication styles, time orientation, hierarchy, global etiquette and be able to apply these concepts in real-world scenarios.</p>
-    </div>
-
-  </main>
-
-  <nav class="footer-nav">
-        <a class="footer-nav-link prev" href="chapter-06.html">
-          <span class="footer-nav-label">&larr; Previous</span>
-          <span class="footer-nav-title">Chapter 06: Strategic Partnerships</span>
+  <!-- Footer Navigation -->
+  <footer class="chapter-footer">
+    <div class="chapter-footer-inner">
+      <nav class="footer-nav">
+        <a class="footer-nav-link" href="chapter-06.html">
+          <span class="footer-nav-label">&larr; Previous Chapter</span>
+          <span class="footer-nav-title">06: Strategic Partnerships</span>
         </a>
-        <a class="footer-nav-link next" href="chapter-08.html">
-          <span class="footer-nav-label">Next &rarr;</span>
-          <span class="footer-nav-title">Chapter 08: Crisis and High-Pressure Negotiations</span>
+        <a class="footer-nav-link" href="chapter-08.html">
+          <span class="footer-nav-label">Next Chapter &rarr;</span>
+          <span class="footer-nav-title">08: Crisis and High-Pressure Negotiations</span>
         </a>
-  </nav>
-
-  <footer class="footer">
-    ILA (Iksha Learning Academy) &middot; Advanced Negotiations &middot; <a href="index.html">All Chapters</a>
+      </nav>
+      <div class="footer-brand">
+        ILA (Iksha Learning Academy) &middot; Negotiations &middot; Advanced Track
+      </div>
+    </div>
   </footer>
 
   <script>
     window.addEventListener('scroll', () => {
-      const h = document.documentElement;
-      const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
-      document.getElementById('progressBar').style.width = Math.min(pct, 100) + '%';
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      document.getElementById('progressBar').style.width = progress + '%';
     });
+
+    const tocLinks = document.querySelectorAll('.toc-item a');
+    const sections = [];
+    tocLinks.forEach(link => {
+      const id = link.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) sections.push({ id, el, link });
+    });
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const item = sections.find(s => s.el === entry.target);
+        if (item && entry.isIntersecting) {
+          tocLinks.forEach(l => l.classList.remove('active'));
+          item.link.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-80px 0px -60% 0px', threshold: 0 });
+
+    sections.forEach(s => observer.observe(s.el));
+
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      navigator.clipboard.writeText(pre.textContent).then(() => {
+        btn.classList.add('copied');
+        btn.textContent = 'Copied!';
+        setTimeout(() => { btn.classList.remove('copied'); btn.textContent = 'Copy'; }, 2000);
+      });
+    }
   </script>
 </body>
 </html>

@@ -8,7 +8,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
+    /* ═══════════════════════════════════════════════
+       ILA DESIGN SYSTEM — v1.0
+       Iksha Learning Academy
+       ═══════════════════════════════════════════════ */
+
     :root {
+      /* Palette */
       --ink:        #0f172a;
       --ink-light:  #334155;
       --ink-muted:  #64748b;
@@ -17,6 +23,8 @@
       --surface-warm:#fffbeb;
       --border:     #e2e8f0;
       --border-light:#f1f5f9;
+
+      /* Brand */
       --teal-50:  #f0fdfa;
       --teal-100: #ccfbf1;
       --teal-200: #99f6e4;
@@ -25,36 +33,48 @@
       --teal-700: #0f766e;
       --teal-800: #115e59;
       --teal-900: #134e4a;
+
       --blue-50:  #eff6ff;
       --blue-100: #dbeafe;
       --blue-500: #3b82f6;
       --blue-600: #2563eb;
       --blue-700: #1d4ed8;
+
       --amber-50:  #fffbeb;
       --amber-100: #fef3c7;
       --amber-500: #f59e0b;
       --amber-600: #d97706;
+
       --red-50:   #fef2f2;
       --red-100:  #fee2e2;
       --red-500:  #ef4444;
       --red-600:  #dc2626;
+
       --purple-50:  #faf5ff;
       --purple-100: #f3e8ff;
       --purple-500: #a855f7;
       --purple-600: #9333ea;
-      --green-50:  #f0fdf4;
-      --green-100: #dcfce7;
-      --green-500: #22c55e;
-      --green-600: #16a34a;
+
+      /* Typography */
       --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       --font-serif: 'Instrument Serif', Georgia, serif;
       --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
+
+      /* Spacing */
       --content-max: 780px;
+      --sidebar-width: 280px;
+
+      /* Transitions */
       --ease: cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
 
     body {
       font-family: var(--font-sans);
@@ -64,6 +84,7 @@
       background: var(--surface);
     }
 
+    /* ── PROGRESS BAR ─────────────────────────── */
     .progress-bar {
       position: fixed;
       top: 0;
@@ -75,6 +96,7 @@
       transition: width 0.15s var(--ease);
     }
 
+    /* ── TOP NAV ──────────────────────────────── */
     .top-nav {
       position: sticky;
       top: 0;
@@ -162,6 +184,7 @@
       padding: 0 4px;
     }
 
+    /* ── HERO ─────────────────────────────────── */
     .hero {
       background: linear-gradient(170deg, var(--teal-50) 0%, var(--surface) 50%, var(--blue-50) 100%);
       border-bottom: 1px solid var(--border);
@@ -222,33 +245,117 @@
       color: var(--ink-muted);
     }
 
-    .content {
-      max-width: var(--content-max);
-      margin: 0 auto;
-      padding: 3rem 2rem 6rem;
+    .hero-meta-item svg {
+      width: 16px;
+      height: 16px;
+      color: var(--teal-600);
     }
 
+    /* ── MAIN LAYOUT ──────────────────────────── */
+    .main-layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr var(--sidebar-width);
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .content {
+      padding: 3rem 0 6rem;
+      min-width: 0;
+    }
+
+    /* ── SIDEBAR TOC ──────────────────────────── */
+    .sidebar {
+      position: sticky;
+      top: 76px;
+      padding: 2rem 0;
+      max-height: calc(100vh - 76px);
+      overflow-y: auto;
+    }
+
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-muted);
+      margin-bottom: 1rem;
+      padding-left: 14px;
+    }
+
+    .toc-list {
+      list-style: none;
+    }
+
+    .toc-item a {
+      display: block;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--ink-muted);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: all 0.2s var(--ease);
+      line-height: 1.5;
+    }
+
+    .toc-item a:hover {
+      color: var(--ink);
+      background: var(--surface-alt);
+    }
+
+    .toc-item a.active {
+      color: var(--teal-700);
+      border-left-color: var(--teal-500);
+      background: var(--teal-50);
+      font-weight: 500;
+    }
+
+    /* ── TYPOGRAPHY ────────────────────────────── */
     .content h2 {
       font-family: var(--font-serif);
       font-size: 1.85rem;
       font-weight: 400;
       color: var(--ink);
       margin: 3rem 0 1rem;
+      padding-top: 1rem;
       scroll-margin-top: 80px;
     }
 
-    .content h2:first-child { margin-top: 0; }
+    .content h2:first-child {
+      margin-top: 0;
+    }
 
     .content h3 {
       font-size: 1.15rem;
       font-weight: 600;
       color: var(--ink);
       margin: 2rem 0 0.75rem;
+      scroll-margin-top: 80px;
     }
 
     .content p {
       margin-bottom: 1.25rem;
       color: var(--ink-light);
+    }
+
+    .content strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .content a {
+      color: var(--teal-700);
+      text-decoration: underline;
+      text-decoration-color: var(--teal-200);
+      text-underline-offset: 3px;
+      transition: text-decoration-color 0.2s;
+    }
+
+    .content a:hover {
+      text-decoration-color: var(--teal-600);
     }
 
     .content ul, .content ol {
@@ -261,13 +368,25 @@
       color: var(--ink-light);
     }
 
-    .content li::marker { color: var(--teal-500); }
+    .content li::marker {
+      color: var(--teal-500);
+    }
 
+    /* ── SECTION DIVIDER ──────────────────────── */
+    .section-divider {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 3rem 0;
+    }
+
+    /* ── CALLOUT BOXES ────────────────────────── */
     .callout {
       padding: 1.25rem 1.5rem;
       border-radius: 12px;
       margin-bottom: 1.5rem;
       border: 1px solid;
+      position: relative;
     }
 
     .callout-header {
@@ -277,6 +396,12 @@
       font-size: 14px;
       font-weight: 600;
       margin-bottom: 0.5rem;
+    }
+
+    .callout-header svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
     }
 
     .callout p:last-child { margin-bottom: 0; }
@@ -293,6 +418,12 @@
     }
     .callout.important .callout-header { color: var(--amber-600); }
 
+    .callout.danger {
+      background: var(--red-50);
+      border-color: var(--red-100);
+    }
+    .callout.danger .callout-header { color: var(--red-600); }
+
     .callout.tip {
       background: var(--purple-50);
       border-color: var(--purple-100);
@@ -305,93 +436,403 @@
     }
     .callout.success .callout-header { color: var(--teal-700); }
 
-    .section-divider {
-      border: none;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--border), transparent);
-      margin: 3rem 0;
-    }
-
-    .coming-soon-banner {
-      background: var(--amber-50);
-      border: 1px solid var(--amber-100);
+    /* ── CODE BLOCKS ──────────────────────────── */
+    .code-block {
+      position: relative;
+      margin-bottom: 1.5rem;
       border-radius: 12px;
-      padding: 2.5rem;
-      text-align: center;
-      margin: 2rem 0;
+      overflow: hidden;
+      border: 1px solid var(--border);
     }
 
-    .coming-soon-banner h3 {
-      color: var(--amber-600);
-      margin-bottom: 0.5rem;
-    }
-
-    .coming-soon-banner p {
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+      background: var(--surface-alt);
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
       color: var(--ink-muted);
-      margin-bottom: 0;
     }
 
-    .topics-preview {
+    .code-lang {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .code-copy {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: white;
+      font-size: 11px;
+      font-family: var(--font-sans);
+      color: var(--ink-muted);
+      cursor: pointer;
+      transition: all 0.2s var(--ease);
+    }
+
+    .code-copy:hover {
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    .code-copy.copied {
+      background: var(--teal-50);
+      border-color: var(--teal-500);
+      color: var(--teal-700);
+    }
+
+    pre {
+      margin: 0;
+      padding: 1.25rem 1.5rem;
+      overflow-x: auto;
+      background: #1e293b;
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: #e2e8f0;
+    }
+
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.88em;
+    }
+
+    p code, li code {
+      padding: 2px 7px;
       background: var(--surface-alt);
       border: 1px solid var(--border);
+      border-radius: 5px;
+      color: var(--teal-800);
+      font-size: 0.85em;
+    }
+
+    /* Syntax highlights */
+    .hl-keyword  { color: #c084fc; }
+    .hl-string   { color: #86efac; }
+    .hl-comment  { color: #64748b; font-style: italic; }
+    .hl-function { color: #7dd3fc; }
+    .hl-number   { color: #fbbf24; }
+    .hl-flag     { color: #f472b6; }
+
+    /* ── COLLAPSIBLE (DETAILS) ────────────────── */
+    details {
+      margin-bottom: 1.25rem;
+      border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 1.5rem 2rem;
-      margin: 1.5rem 0;
+      overflow: hidden;
+      transition: border-color 0.2s var(--ease);
     }
 
-    .topics-preview h3 {
-      font-size: 0.95rem;
-      margin-bottom: 0.75rem;
+    details[open] {
+      border-color: var(--teal-200);
+    }
+
+    details summary {
+      padding: 1rem 1.25rem;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      background: var(--surface-alt);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.2s var(--ease);
+      user-select: none;
+    }
+
+    details summary::-webkit-details-marker { display: none; }
+
+    details summary::before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+      flex-shrink: 0;
+      transition: transform 0.2s var(--ease);
+    }
+
+    details[open] summary::before {
+      transform: rotate(90deg);
+    }
+
+    details summary:hover {
+      background: var(--teal-50);
+    }
+
+    .details-body {
+      padding: 1.25rem 1.5rem;
+    }
+
+    .details-body p:last-child { margin-bottom: 0; }
+
+    /* ── VIDEO EMBED ──────────────────────────── */
+    .video-card {
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      background: #0f172a;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .video-caption {
+      padding: 12px 16px;
+      background: var(--surface-alt);
+      font-size: 13px;
+      color: var(--ink-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .video-caption svg {
+      width: 14px;
+      height: 14px;
+      color: var(--red-500);
+    }
+
+    /* ── RESOURCE CARDS ───────────────────────── */
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .resource-card {
+      display: flex;
+      gap: 14px;
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      background: white;
+    }
+
+    .resource-card:hover {
+      border-color: var(--teal-300);
+      background: var(--teal-50);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .resource-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 18px;
+    }
+
+    .resource-icon.docs    { background: var(--blue-50);   color: var(--blue-600); }
+    .resource-icon.video   { background: var(--red-50);    color: var(--red-500); }
+    .resource-icon.github  { background: var(--ink);       color: white; }
+    .resource-icon.article { background: var(--amber-50);  color: var(--amber-600); }
+    .resource-icon.pdf     { background: var(--purple-50); color: var(--purple-600); }
+
+    .resource-info {
+      min-width: 0;
+    }
+
+    .resource-title {
+      font-size: 14px;
+      font-weight: 600;
       color: var(--ink);
+      margin-bottom: 2px;
+      line-height: 1.4;
     }
 
-    .topics-preview ul {
+    .resource-desc {
+      font-size: 12px;
+      color: var(--ink-muted);
+      line-height: 1.5;
+    }
+
+    /* ── ASSIGNMENT CARDS ─────────────────────── */
+    .assignment {
+      border: 2px solid var(--teal-200);
+      border-radius: 14px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--teal-50) 0%, white 100%);
+    }
+
+    .assignment-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .assignment-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--teal-700);
+    }
+
+    .assignment-difficulty {
+      display: inline-flex;
+      padding: 4px 10px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .difficulty-l1 { background: var(--teal-100); color: var(--teal-800); }
+    .difficulty-l2 { background: var(--amber-100); color: var(--amber-600); }
+    .difficulty-l3 { background: var(--red-100); color: var(--red-600); }
+
+    .assignment h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .assignment p {
+      font-size: 14px;
+    }
+
+    .checklist {
       list-style: none;
       padding: 0;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 0.5rem;
     }
 
-    .topics-preview li {
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-light);
       font-size: 14px;
-      color: var(--ink-light);
-      padding-left: 1.25rem;
-      position: relative;
     }
 
-    .topics-preview li::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 8px;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
+    .checklist li:last-child { border-bottom: none; }
+
+    .check-box {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      border: 2px solid var(--border);
+      flex-shrink: 0;
+      margin-top: 1px;
+      cursor: pointer;
+      transition: all 0.15s var(--ease);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .check-box:hover {
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked {
       background: var(--teal-500);
+      border-color: var(--teal-500);
+    }
+
+    .check-box.checked::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: contain;
+    }
+
+    /* ── ARCHITECTURE DIAGRAM ─────────────────── */
+    .diagram {
+      margin: 1.5rem 0;
+      padding: 2rem;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow-x: auto;
+    }
+
+    .diagram pre {
+      background: transparent;
+      color: var(--ink);
+      padding: 0;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .diagram-caption {
+      margin-top: 1rem;
+      font-size: 12px;
+      color: var(--ink-muted);
+      text-align: center;
+      font-style: italic;
+    }
+
+    /* ── FOOTER ───────────────────────────────── */
+    .chapter-footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      background: var(--surface-alt);
+    }
+
+    .chapter-footer-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
     }
 
     .footer-nav {
-      max-width: var(--content-max);
-      margin: 0 auto;
-      padding: 2rem;
       display: flex;
       justify-content: space-between;
-      border-top: 1px solid var(--border);
+      align-items: center;
+      gap: 1rem;
     }
 
     .footer-nav-link {
       display: flex;
       flex-direction: column;
-      text-decoration: none;
-      padding: 1rem;
+      gap: 4px;
+      padding: 1rem 1.5rem;
+      border: 1px solid var(--border);
       border-radius: 12px;
-      transition: background 0.2s var(--ease);
-      max-width: 45%;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      max-width: 320px;
+      background: white;
     }
 
     .footer-nav-link:hover {
-      background: var(--surface-alt);
+      border-color: var(--teal-300);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
     }
 
     .footer-nav-label {
@@ -399,46 +840,61 @@
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.06em;
-      color: var(--ink-muted);
-      margin-bottom: 4px;
+      color: var(--teal-600);
     }
 
     .footer-nav-title {
       font-size: 15px;
       font-weight: 600;
-      color: var(--teal-700);
+      color: var(--ink);
     }
 
-    .footer-nav-link.next { text-align: right; margin-left: auto; }
-
-    .footer {
+    .footer-brand {
       text-align: center;
-      padding: 2rem;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
       font-size: 13px;
       color: var(--ink-muted);
-      border-top: 1px solid var(--border);
     }
 
-    .footer a {
-      color: var(--teal-700);
-      text-decoration: none;
+    /* ── RESPONSIVE ───────────────────────────── */
+    @media (max-width: 960px) {
+      .main-layout {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        display: none;
+      }
+      .resource-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
-    .footer a:hover { text-decoration: underline; }
+    @media (max-width: 640px) {
+      .hero { padding: 2.5rem 1.25rem 2rem; }
+      .main-layout { padding: 0 1.25rem; }
+      .content { padding: 2rem 0 4rem; }
+      pre { padding: 1rem; font-size: 12.5px; }
+      .footer-nav { flex-direction: column; }
+      .footer-nav-link { max-width: 100%; width: 100%; }
+    }
 
-    @media (max-width: 768px) {
-      .hero { padding: 3rem 1.5rem 2.5rem; }
-      .content { padding: 2rem 1.5rem 4rem; }
-      .hero h1 { font-size: 2rem; }
-      .footer-nav { flex-direction: column; gap: 1rem; }
-      .footer-nav-link { max-width: 100%; }
-      .footer-nav-link.next { text-align: left; }
+    /* ── PRINT ────────────────────────────────── */
+    @media print {
+      .top-nav, .sidebar, .progress-bar { display: none; }
+      .main-layout { display: block; }
+      .content { padding: 0; }
+      .hero { background: white; border: none; }
+      pre { background: #f1f5f9; color: var(--ink); border: 1px solid var(--border); }
     }
   </style>
 </head>
 <body>
+  <!-- Progress Bar -->
   <div class="progress-bar" id="progressBar"></div>
 
+  <!-- Top Navigation -->
   <nav class="top-nav">
     <div class="top-nav-inner">
       <a class="nav-brand" href="index.html">
@@ -453,70 +909,688 @@
     </div>
   </nav>
 
+  <!-- Hero -->
   <header class="hero">
     <div class="hero-inner">
       <div class="hero-chapter-label">
-        <span>Chapter 03</span> 
+        <span>Chapter 03</span> &middot; Phase 2: Difficult Situations
       </div>
       <h1>Delivering Bad News</h1>
-      <p class="hero-subtitle">Outage communication, missed deadlines, scope changes, budget overruns, transparency frameworks</p>
+      <p class="hero-subtitle">
+        Learn the frameworks, timing, and techniques for delivering difficult news to clients. From missed deadlines to budget overruns to feature cuts, master the art of transparency that preserves trust.
+      </p>
       <div class="hero-meta">
-        <div class="hero-meta-item">3 Assignments</div>
-        <div class="hero-meta-item">~45 min read</div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Estimated: 3&ndash;4 hours
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          3 Advancement Levels
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          3 Assignments
+        </div>
       </div>
     </div>
   </header>
 
-  <main class="content">
-    <h2>Overview</h2>
-    <p>This chapter covers <strong>delivering bad news</strong> as part of the Advanced Client Communication curriculum. You will build practical skills through guided explanations, code examples, and hands-on assignments.</p>
+  <!-- Main Content + Sidebar -->
+  <div class="main-layout">
+    <main class="content">
 
-    <div class="topics-preview">
-      <h3>Topics Covered</h3>
-      <ul>
-            <li>Outage communication</li>
-            <li>missed deadlines</li>
-            <li>scope changes</li>
-            <li>budget overruns</li>
-            <li>transparency frameworks</li>
+      <h2 id="why-this-matters">Why This Matters</h2>
+
+      <p>
+        Bad news is inevitable in every project. Deadlines slip. Budgets overflow. Features get cut.
+        Key team members leave. Technologies fail. The question is never whether bad news will happen
+        &mdash; it is how you deliver it. Handled well, bad news can actually strengthen a client
+        relationship. Handled poorly, it can destroy one.
+      </p>
+
+      <p>
+        The instinct when facing bad news is to delay, minimize, or bury it. This instinct is
+        catastrophically wrong. Research consistently shows that clients can forgive bad news but
+        cannot forgive being surprised by it, being misled about it, or finding out about it from
+        someone other than you. The damage is never from the news itself &mdash; it is from
+        the way it was handled.
+      </p>
+
+      <div class="callout concept">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Key Insight
+        </div>
+        <p>
+          Trust is built in drops and lost in buckets. A single instance of hiding bad news will
+          undo months of reliability and transparency. Conversely, a track record of honest,
+          timely delivery of difficult news creates a reputation for integrity that makes clients
+          more loyal, not less.
+        </p>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="key-concepts">Key Concepts</h2>
+
+      <h3 id="timing-framework">1. The Timing Framework</h3>
+
+      <p>
+        When you deliver bad news matters almost as much as how you deliver it. Too early and you
+        may alarm the client unnecessarily. Too late and they feel blindsided. The framework below
+        helps you choose the right moment.
+      </p>
+
+      <div class="diagram">
+<pre>
+  +---------------------------------------------------------------+
+  |              BAD NEWS TIMING FRAMEWORK                          |
+  |                                                                 |
+  |   CERTAINTY LEVEL        WHEN TO COMMUNICATE                    |
+  |   ──────────────         ──────────────────────────             |
+  |                                                                 |
+  |   POSSIBLE (20-40%)      Internal team only.                    |
+  |                          Monitor and assess.                    |
+  |                          Prepare contingency plans.             |
+  |                                                                 |
+  |   PROBABLE (40-70%)      Inform project sponsor.                |
+  |                          "Heads up &mdash; we are tracking       |
+  |                          a risk. Here is our plan."             |
+  |                                                                 |
+  |   CONFIRMED (70%+)       Inform all stakeholders.               |
+  |                          "We have confirmed [issue].            |
+  |                          Here is the impact and our plan."      |
+  |                                                                 |
+  |   HAPPENED (100%)        Immediate communication.               |
+  |                          "This has occurred. Here is our        |
+  |                          response and recovery plan."           |
+  |                                                                 |
+  |   RULE: When in doubt, communicate earlier rather               |
+  |   than later. A false alarm is better than a surprise.          |
+  +---------------------------------------------------------------+
+</pre>
+        <div class="diagram-caption">Figure 1: Bad news timing framework &mdash; communicate at the right certainty level</div>
+      </div>
+
+      <h3 id="delivery-structure">2. The SPARO Delivery Structure</h3>
+
+      <p>
+        SPARO stands for Situation, Problem, Accountability, Recovery, Outcome. It is a structured
+        way to deliver bad news that covers all the information a client needs to hear.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">framework</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── SPARO: Bad News Delivery Framework ────────── */</span>
+
+<span class="hl-keyword">S &mdash; Situation:</span> Set the context briefly
+"I am reaching out about the API integration
+milestone that was due this Friday."
+
+<span class="hl-keyword">P &mdash; Problem:</span> State the bad news clearly and factually
+"We have identified a compatibility issue with
+the legacy system that will prevent us from meeting
+the Friday deadline."
+
+<span class="hl-keyword">A &mdash; Accountability:</span> Own it without excuses
+"This is on us. We should have identified this
+compatibility issue during our technical assessment
+phase. We missed it."
+
+<span class="hl-keyword">R &mdash; Recovery:</span> Present options, not just the problem
+"We have three options:
+1. Extended timeline: Deliver by next Wednesday (+3 days)
+   with full legacy compatibility.
+2. Partial delivery: Deliver core endpoints Friday,
+   legacy compatibility by Wednesday.
+3. Alternative approach: Use the middleware adapter,
+   delivers Friday but adds $X to infrastructure costs.
+Our recommendation is Option 2 because..."
+
+<span class="hl-keyword">O &mdash; Outcome:</span> Describe what happens after resolution
+"Regardless of which option we choose, we will
+implement additional compatibility testing in our
+QA process to prevent this from happening again."
+</pre>
+      </div>
+
+      <div class="callout important">
+        <div class="callout-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Critical Rule
+        </div>
+        <p>
+          Never deliver bad news via email first. Always deliver it verbally (call or video) first,
+          then follow up with email documentation. Email lacks tone and context, and the client will
+          read it in their worst-case mental state. A voice conversation lets you manage the emotional
+          response in real time.
+        </p>
+      </div>
+
+      <h3 id="scenario-playbooks">3. Scenario-Specific Playbooks</h3>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">template</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── BAD NEWS SCENARIO PLAYBOOKS ───────────────── */</span>
+
+<span class="hl-keyword">MISSED DEADLINE</span>
+"The [deliverable] we committed to for [date]
+will not be ready on time. The revised delivery
+date is [new date]. This is because [honest reason].
+Here is what we have done to prevent this from
+affecting the overall project timeline: [mitigation]."
+
+<span class="hl-keyword">BUDGET OVERRUN</span>
+"Based on our current progress, we project that
+the project will exceed the original budget by
+approximately [X%] or [$amount]. The primary
+drivers are [reasons]. We have identified [savings]
+that can offset [portion] of the overage.
+We would like to discuss options for managing
+the remaining gap."
+
+<span class="hl-keyword">KEY TEAM MEMBER DEPARTURE</span>
+"I want to let you know that [Name], who has been
+[role] on your project, will be transitioning off
+the team effective [date]. We have already begun
+knowledge transfer to [New Name], who has [relevant
+experience]. Here is our transition plan to ensure
+zero disruption to your timeline."
+
+<span class="hl-keyword">TECHNICAL LIMITATION DISCOVERED</span>
+"During implementation, we discovered that [system]
+cannot support [requirement] as originally scoped.
+Here are the alternatives we have evaluated:
+[Options with trade-offs]. We recommend [option]
+because [reasoning]."
+
+<span class="hl-keyword">SCOPE REDUCTION NEEDED</span>
+"To meet the [date] deadline with quality standards
+we are both comfortable with, we need to reduce
+the scope of this release. We recommend moving
+[features] to the next release. These features
+affect [X%] of users and represent [Y hours] of
+development time. The core functionality that
+[Z%] of users need will ship on time."
+</pre>
+      </div>
+
+      <h3 id="emotional-management">4. Managing Emotional Responses</h3>
+
+      <p>
+        When you deliver bad news, the client may respond with anger, frustration, silence, or
+        blame. Your job is to remain calm and professional while acknowledging their emotional
+        response as valid.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">framework</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── EMOTIONAL RESPONSE MANAGEMENT ────────────── */</span>
+
+<span class="hl-keyword">Client Response: Anger</span>
+<span class="hl-function">Do:</span> "I understand your frustration. This is not the
+  news either of us wanted. Let me walk through
+  exactly what happened and what we are doing."
+<span class="hl-function">Do NOT:</span> Become defensive, match their energy,
+  or start explaining before they finish.
+
+<span class="hl-keyword">Client Response: Silence</span>
+<span class="hl-function">Do:</span> Give them time. Then: "I want to make sure
+  you have all the information you need. What
+  questions can I answer?"
+<span class="hl-function">Do NOT:</span> Fill the silence with nervous talking
+  or premature optimism.
+
+<span class="hl-keyword">Client Response: Blame</span>
+<span class="hl-function">Do:</span> Accept responsibility for what is yours:
+  "You are right that we should have caught this
+  earlier. Here is what we are doing differently."
+<span class="hl-function">Do NOT:</span> Accept blame for things outside your
+  control or throw team members under the bus.
+
+<span class="hl-keyword">Client Response: Escalation Threats</span>
+<span class="hl-function">Do:</span> "I understand you may need to escalate this.
+  I want to make sure you have complete information.
+  Would it be helpful if I joined the call with
+  your leadership to explain the situation directly?"
+<span class="hl-function">Do NOT:</span> Panic, over-promise, or make commitments
+  you cannot keep.
+</pre>
+      </div>
+
+      <h3 id="written-bad-news">5. Writing Bad News Communications</h3>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">template</span>
+          <button class="code-copy" onclick="copyCode(this)">Copy</button>
+        </div>
+<pre>
+<span class="hl-comment">/* ── BAD NEWS EMAIL (sent AFTER verbal delivery) ─ */</span>
+
+<span class="hl-keyword">Subject:</span> [Project] &mdash; [Issue] Update and Recovery Plan
+
+Hi [Client Name],
+
+Following up on our conversation today. I wanted
+to put the details in writing for your records.
+
+<span class="hl-function">SITUATION:</span>
+[Brief context &mdash; 1-2 sentences]
+
+<span class="hl-function">ISSUE:</span>
+[Clear statement of the problem &mdash; 2-3 sentences]
+
+<span class="hl-function">IMPACT:</span>
+- Timeline: [Specific impact]
+- Budget: [Specific impact, if any]
+- Scope: [Specific impact, if any]
+
+<span class="hl-function">OUR PLAN:</span>
+As discussed, we will proceed with [agreed option]:
+1. [Action item] &mdash; Owner: [Name] &mdash; By: [Date]
+2. [Action item] &mdash; Owner: [Name] &mdash; By: [Date]
+3. [Action item] &mdash; Owner: [Name] &mdash; By: [Date]
+
+<span class="hl-function">PREVENTION:</span>
+To prevent this from recurring, we are implementing:
+- [Process change]
+- [Additional check]
+
+I will send daily updates on recovery progress
+until this is fully resolved. Next update: [date/time].
+
+Please let me know if you need anything else or
+want to discuss further.
+
+Best,
+[Your name]
+</pre>
+      </div>
+
+      <h3 id="recovery-planning">6. Building Recovery Plans</h3>
+
+      <p>
+        A recovery plan is not just a revised timeline. It is a comprehensive response that
+        addresses the root cause, mitigates the impact, and prevents recurrence.
+      </p>
+
+      <div class="diagram">
+<pre>
+  +---------------------------------------------------------------+
+  |              RECOVERY PLAN STRUCTURE                             |
+  |                                                                 |
+  |   +-----------+    +-----------+    +-----------+               |
+  |   | IMMEDIATE |---&gt;|  SHORT    |---&gt;|   LONG    |               |
+  |   | (24 hrs)  |    |  TERM     |    |   TERM    |               |
+  |   |           |    | (1-2 wks) |    | (ongoing) |               |
+  |   +-----------+    +-----------+    +-----------+               |
+  |   |               |               |                             |
+  |   | - Contain     | - Execute     | - Process                   |
+  |   |   the issue   |   revised     |   improvements              |
+  |   | - Communicate |   plan        | - Prevention                |
+  |   |   to all      | - Daily       |   measures                  |
+  |   |   stakeholders|   updates     | - Retrospective             |
+  |   | - Assign      | - Track       | - Share                     |
+  |   |   recovery    |   progress    |   learnings                 |
+  |   |   owner       |   publicly    |   with org                  |
+  |   |               |               |                             |
+  +---------------------------------------------------------------+
+</pre>
+        <div class="diagram-caption">Figure 2: Recovery plan structure &mdash; immediate containment, short-term execution, long-term prevention</div>
+      </div>
+
+      <details>
+        <summary>What if the bad news is your client's fault?</summary>
+        <div class="details-body">
+          <p>
+            Even when the client caused the problem (unclear requirements, delayed approvals, changed
+            scope), never blame them directly. Instead, frame it collaboratively: "The requirement
+            changes we both agreed to on [date] have had a larger impact than expected. Here is what
+            we recommend to get back on track." Focus on moving forward, not assigning blame.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Should you deliver bad news to the entire stakeholder group at once?</summary>
+        <div class="details-body">
+          <p>
+            No. Deliver to your primary contact first. Then discuss together who else needs to know
+            and in what order. Your primary contact knows their organization's dynamics and can advise
+            on the best approach. Sometimes they will want to deliver certain messages to their own
+            leadership themselves.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>How do you handle cascading bad news (multiple problems at once)?</summary>
+        <div class="details-body">
+          <p>
+            Consolidate into a single, comprehensive communication. Multiple small bad news deliveries
+            feel worse than one bigger one. Frame it as: "I want to give you a complete picture of
+            where we stand. There are three items I need to address." Then present all three with a
+            unified recovery plan.
+          </p>
+        </div>
+      </details>
+
+      <hr class="section-divider">
+
+      <h2 id="watch-learn">Watch &amp; Learn</h2>
+
+      <p>These videos cover delivering difficult messages and managing client expectations.</p>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/GlSCMx5_bWA?rel=0&amp;modestbranding=1"
+            title="Delivering Bad News &mdash; Frameworks for honest, trust-preserving communication"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Delivering Bad News &mdash; Frameworks for honest, trust-preserving communication
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/LLiJYvzm0ko?rel=0&amp;modestbranding=1"
+            title="Managing Difficult Client Situations &mdash; Maintaining composure under pressure"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#fff" points="9.545 15.568 15.818 12 9.545 8.432"/></svg>
+          Managing Difficult Client Situations &mdash; Maintaining composure under pressure
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="further-reading">Further Reading</h2>
+
+      <p>Resources on delivering bad news, crisis communication, and trust recovery.</p>
+
+      <div class="resource-grid">
+        <a class="resource-card" href="https://www.amazon.com/Crucial-Conversations-Tools-Talking-Stakes/dp/1260474186" target="_blank" rel="noopener">
+          <div class="resource-icon article">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Crucial Conversations &mdash; Patterson et al.</div>
+            <div class="resource-desc">The definitive guide to high-stakes conversations where emotions run high.</div>
+          </div>
+        </a>
+        <a class="resource-card" href="https://hbr.org/2015/03/how-to-deliver-bad-news-to-your-employees" target="_blank" rel="noopener">
+          <div class="resource-icon article">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">How to Deliver Bad News (HBR)</div>
+            <div class="resource-desc">Research-backed approaches to delivering difficult messages with empathy and clarity.</div>
+          </div>
+        </a>
+        <a class="resource-card" href="https://www.amazon.com/Radical-Candor-Revised-Kick-Ass-Humanity/dp/1250235375" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Radical Candor &mdash; Kim Scott</div>
+            <div class="resource-desc">Caring personally while challenging directly &mdash; essential for difficult conversations.</div>
+          </div>
+        </a>
+        <a class="resource-card" href="https://www.amazon.com/Never-Split-Difference-Negotiating-Depended/dp/0062407805" target="_blank" rel="noopener">
+          <div class="resource-icon docs">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="resource-info">
+            <div class="resource-title">Never Split the Difference &mdash; Chris Voss</div>
+            <div class="resource-desc">Negotiation and empathy techniques from an FBI hostage negotiator.</div>
+          </div>
+        </a>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="assignments">Assignments</h2>
+
+      <p>Complete these using real or realistic scenarios.</p>
+
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 1
+          </div>
+          <span class="assignment-difficulty difficulty-l1">Level 1 &mdash; Foundation</span>
+        </div>
+        <h4>Write SPARO Scripts for Common Scenarios</h4>
+        <p>Write bad news delivery scripts using the SPARO framework for three common scenarios.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write a SPARO script for a missed deadline scenario</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write a SPARO script for a budget overrun scenario</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Write a SPARO script for a scope reduction scenario</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Practice delivering each script verbally to a peer (record if possible)</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Get feedback on clarity, tone, and completeness</span></li>
+        </ul>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>A peer confirms all three scripts are clear, honest, and include actionable recovery plans.</p>
+        </div>
+      </div>
+
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 2
+          </div>
+          <span class="assignment-difficulty difficulty-l2">Level 2 &mdash; Professional</span>
+        </div>
+        <h4>Deliver Bad News in a Real or Simulated Setting</h4>
+        <p>Practice the full bad news delivery cycle: verbal delivery, emotional management, and written follow-up.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Identify a real situation requiring bad news delivery (or simulate with a colleague)</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Deliver the bad news verbally using the SPARO structure</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Manage the emotional response using the techniques from this chapter</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Send written follow-up within 2 hours using the email template</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Track the recovery plan and send daily updates for 3 days</span></li>
+        </ul>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>The recipient confirms the news was delivered clearly and professionally, and the recovery plan is on track.</p>
+        </div>
+      </div>
+
+      <div class="assignment">
+        <div class="assignment-header">
+          <div class="assignment-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Assignment 3
+          </div>
+          <span class="assignment-difficulty difficulty-l3">Level 3 &mdash; Production-Ready</span>
+        </div>
+        <h4>Build a Bad News Response System</h4>
+        <p>Create a team-wide system for identifying, escalating, and communicating bad news.</p>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Define escalation thresholds for your project (when to communicate at each certainty level)</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Create scenario playbooks for the 5 most common bad news situations in your domain</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Train at least 2 team members on the SPARO delivery framework</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Conduct a tabletop exercise: simulate a bad news scenario with your team</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Document lessons learned and iterate on the system</span></li>
+          <li><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Present the system to your leadership as a risk communication standard</span></li>
+        </ul>
+        <div class="callout success" style="margin-top: 1rem; margin-bottom: 0;">
+          <div class="callout-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Done when
+          </div>
+          <p>Your team has a documented, practiced system for delivering bad news that is adopted as a standard practice.</p>
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <h2 id="self-check">Self-Check</h2>
+
+      <p>Before moving to Chapter 04, assess your bad news delivery skills.</p>
+
+      <details>
+        <summary>When was the last time you delivered bad news proactively?</summary>
+        <div class="details-body">
+          <p>
+            If the client found out about a problem before you told them, you communicated too late.
+            Review recent project issues and ask: in each case, did the client hear it from us first,
+            or did they discover it on their own?
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Do you always present solutions with problems?</summary>
+        <div class="details-body">
+          <p>
+            Coming to a client with a problem and no plan is a complaint. Coming with a problem and
+            a plan is professional leadership. Before any bad news conversation, prepare at least
+            two options for resolution.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Can you stay calm when a client reacts emotionally to bad news?</summary>
+        <div class="details-body">
+          <p>
+            If emotional client reactions make you defensive or flustered, practice with a colleague
+            who role-plays an angry client. The more you practice, the more natural your calm
+            response becomes. Remember: their emotion is valid even when it is not comfortable.
+          </p>
+        </div>
+      </details>
+
+    </main>
+
+    <!-- Sidebar: Table of Contents -->
+    <aside class="sidebar">
+      <div class="sidebar-title">On this page</div>
+      <ul class="toc-list">
+        <li class="toc-item"><a href="#why-this-matters">Why This Matters</a></li>
+        <li class="toc-item"><a href="#key-concepts">Key Concepts</a></li>
+        <li class="toc-item"><a href="#timing-framework" style="padding-left: 28px; font-size: 12px;">Timing Framework</a></li>
+        <li class="toc-item"><a href="#delivery-structure" style="padding-left: 28px; font-size: 12px;">Delivery Structure</a></li>
+        <li class="toc-item"><a href="#scenario-playbooks" style="padding-left: 28px; font-size: 12px;">Scenario Playbooks</a></li>
+        <li class="toc-item"><a href="#emotional-management" style="padding-left: 28px; font-size: 12px;">Emotional Management</a></li>
+        <li class="toc-item"><a href="#written-bad-news" style="padding-left: 28px; font-size: 12px;">Written Bad News</a></li>
+        <li class="toc-item"><a href="#recovery-planning" style="padding-left: 28px; font-size: 12px;">Recovery Planning</a></li>
+        <li class="toc-item"><a href="#watch-learn">Watch &amp; Learn</a></li>
+        <li class="toc-item"><a href="#further-reading">Further Reading</a></li>
+        <li class="toc-item"><a href="#assignments">Assignments</a></li>
+        <li class="toc-item"><a href="#self-check">Self-Check</a></li>
       </ul>
-    </div>
+    </aside>
+  </div>
 
-    <hr class="section-divider">
-
-    <div class="coming-soon-banner">
-      <h3>Content In Development</h3>
-      <p>Full chapter content with detailed explanations, code examples, video walkthroughs, and assignments is being developed. Check back soon.</p>
-    </div>
-
-    <div class="callout tip">
-      <div class="callout-header">What You Will Learn</div>
-      <p>By the end of this chapter, you will understand outage communication, missed deadlines, scope changes, budget overruns, transparency frameworks and be able to apply these concepts in real-world scenarios.</p>
-    </div>
-
-  </main>
-
-  <nav class="footer-nav">
-        <a class="footer-nav-link prev" href="chapter-02.html">
-          <span class="footer-nav-label">&larr; Previous</span>
-          <span class="footer-nav-title">Chapter 02: Cross-Functional Communication</span>
+  <!-- Footer Navigation -->
+  <footer class="chapter-footer">
+    <div class="chapter-footer-inner">
+      <nav class="footer-nav">
+        <a class="footer-nav-link" href="chapter-02.html">
+          <span class="footer-nav-label">&larr; Previous Chapter</span>
+          <span class="footer-nav-title">02: Cross-Functional Communication</span>
         </a>
-        <a class="footer-nav-link next" href="chapter-04.html">
-          <span class="footer-nav-label">Next &rarr;</span>
-          <span class="footer-nav-title">Chapter 04: Difficult Conversations</span>
+        <a class="footer-nav-link" href="chapter-04.html">
+          <span class="footer-nav-label">Next Chapter &rarr;</span>
+          <span class="footer-nav-title">04: Difficult Conversations</span>
         </a>
-  </nav>
-
-  <footer class="footer">
-    ILA (Iksha Learning Academy) &middot; Advanced Client Communication &middot; <a href="index.html">All Chapters</a>
+      </nav>
+      <div class="footer-brand">
+        ILA (Iksha Learning Academy) &middot; Client Communication Professional Certification &middot; Level 2
+      </div>
+    </div>
   </footer>
 
+  <!-- Scripts -->
   <script>
+    // ── Progress Bar ──
     window.addEventListener('scroll', () => {
-      const h = document.documentElement;
-      const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
-      document.getElementById('progressBar').style.width = Math.min(pct, 100) + '%';
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      document.getElementById('progressBar').style.width = progress + '%';
     });
+
+    // ── Active TOC ──
+    const tocLinks = document.querySelectorAll('.toc-item a');
+    const sections = [];
+
+    tocLinks.forEach(link => {
+      const id = link.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) sections.push({ id, el, link });
+    });
+
+    const observerOptions = {
+      rootMargin: '-80px 0px -60% 0px',
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const item = sections.find(s => s.el === entry.target);
+        if (item) {
+          if (entry.isIntersecting) {
+            tocLinks.forEach(l => l.classList.remove('active'));
+            item.link.classList.add('active');
+          }
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(s => observer.observe(s.el));
+
+    // ── Copy Code ──
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      const text = pre.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.classList.add('copied');
+        btn.textContent = 'Copied!';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.textContent = 'Copy';
+        }, 2000);
+      });
+    }
   </script>
 </body>
 </html>
